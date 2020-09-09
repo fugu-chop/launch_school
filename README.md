@@ -11,6 +11,8 @@ I like the fact that I don't have a fixed time limit to complete modules - I am 
 ## Approach
 I'm going to take physical notes, and put a lot more emphasis on practice. 
 
-One thing I found about doing web tutorials and taking notes on a computer was that I never remembered what I was doing 10 minutes after I did it. I used the computer as a memory dump, without really doing sufficient practice and reinforcement. I did some Codewars stuff, but this was fairly intermittent, and too discrete (not really focused on a building a whole project end to end). The web tutorials I did also focused on just pushing through content, rather than fully understanding it, and repeating it. 
+One thing I found about doing web tutorials and taking notes on a computer was that I never remembered what I was doing 10 minutes after I did it. I used the computer as a memory dump, without really doing sufficient practice and reinforcement. 
 
-I'll also time myself for how long I spend (more as a way to keep myself from studying too much!) and log this. 
+I did some Codewars stuff, but this was fairly intermittent, and too discrete (not really focused on a building a whole project end to end). The web tutorials I did also focused on just pushing through content, rather than fully understanding it, and repeating it. These were also typically more passive, with me just following along rather than taking time to understand it. 
+
+I'll also time myself for how long I spend (more as a way to keep myself from studying too much!) and log this. This isn't meant to be a target of hours spent, but rather to see __where__ I am spending my time - am I using sufficient time to reinforce concepts?
