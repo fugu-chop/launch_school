@@ -16,3 +16,6 @@ One thing I found about doing web tutorials and taking notes on a computer was t
 I did some Codewars stuff, but this was fairly intermittent, and too discrete (not really focused on a building a whole project end to end). The web tutorials I did also focused on just pushing through content, rather than fully understanding it, and repeating it. These were also typically more passive, with me just following along rather than taking time to understand it. 
 
 I'll also time myself for how long I spend (more as a way to keep myself from studying too much!) and log this. This isn't meant to be a target of hours spent, but rather to see __where__ I am spending my time - am I using sufficient time to reinforce concepts?
+
+## Schedule
+I will attempt to put in 2 hours per weekday, and 8 hours total over the weekend. Commitments, commitments. 
