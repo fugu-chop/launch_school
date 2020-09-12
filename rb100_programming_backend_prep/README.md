@@ -1,5 +1,5 @@
 # RB100 - Programming & Back-end Prep Notes and Log
-This is a repo to house my daily study log, notes and exercises for the RB100 course on Launch School.
+This is a repo to house my notes and exercises for the RB100 course on Launch School.
 
 ## General Course Notes
 I like the use of Codecademy as a first step to learning Ruby generally, but I'm glad that these are only preparatory courses. 
