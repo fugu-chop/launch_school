@@ -53,3 +53,26 @@ puts boolean_y
 
 boolean_z = !(700 / 10 == 70)
 puts boolean_z
+
+# Chaining booleans
+test_1 = 7 < 4 || !false
+puts test_1
+
+test_2 = (4 != 6 && !false) && (false || 3 != 4)
+puts test_2
+
+test_3 = !(3 > 5 || 5 > 3)
+puts test_3
+
+# Sample full flow
+print "Write something, peasant! "
+user_input = gets.chomp
+user_input.downcase!
+
+if user_input.include? "s"
+  user_input.gsub!(/s/, "th")
+else 
+  print "Your input has no \"S\" in it!"
+end
+
+puts "Your transformed string is #{user_input}."
