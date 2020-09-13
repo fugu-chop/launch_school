@@ -2,6 +2,7 @@
 - [10th, Thu](#100920-thu)
 - [11th, Fri](#110920-fri)
 - [12th, Sat](#120920-sat)
+- [13th, Sun](#130920-sun)
 
 ##### 10/09/20 (Thu)
 __*Concepts covered*__<br/>
@@ -69,10 +70,41 @@ __*Time spent*__<br/>
 242 minutes
 
 __*Thoughts*__<br/>
-Ruby is interesting, in that there appear to be multiple obvious ways of doing the exact same thing - e.g. `while` versus `until` loops and `loop do end` all seem to achieve the exact same thing, I'm not really sure why so many options exist, unless there is some performance variation. 
+Ruby is interesting, in that there appear to be multiple obvious ways of doing the exact same thing - e.g. `while` versus `until` loops and `loop do end` all seem to achieve the exact same thing, I'm not really sure why so many options exist, unless there is some performance variation.
 
 Loops and ~~functions~~ methods are generally where the power of programming starts to be observed, so this is probably where things start to get interesting and useful. 
 
 The face that what I regard as a `function` in other languages is called a `method` in Ruby is a bit disconcerting - I've always regarded methods as those `.action()` things you see appended to objects. Ruby treats calls these `.action()` methods `blocks`, which are equivalent to lambda functions in Python. 
 
 Getting up early in the morning is pretty handy - it's really the only extended period of time that I can work without interruptions. Timing myself while working also keeps me accountable. 
+
+##### 13/09/20 (Sun)
+__*Concepts covered*__<br/>
+- Codecademy - Hashes and Symbols
+    - Revision on hash notation
+    - Symbols
+    - Syntax for symbols as keys
+    - Converting symbols to strings
+    - `Case when` statements
+- Codecademy - The Zen of Ruby
+    - One line `if`, `unless` statements
+    - Folded `case when`
+    - Conditional assignment
+- Codecademy - Blocks, Procs & Lambdas
+    - `.collect` method
+    - The `yield` keyword
+    - Procs
+    - Converting to procs
+    - Starting lambdas
+
+__*Time spent*__<br/>
+244 minutes
+
+__*Thoughts*__<br/>
+I've learned some useful hacks for shortening statements in Ruby. Codecademy is starting to increase the complexity of the exercise, like building multiple layers of conditional logic, which I like. However I have noticed that the UI doesn't seem to play nicely with Firefox with uOriginBlock on it, since the code doesn't seem to update between exercises.
+
+The `yield` keyword was kind of tricky to understand. Hopping out of a method and back in is pretty trippy and could allow for some logic shenanigans, especially when we pass in arguments.
+
+I still don't really understand why we would use `yield` to execute logic outside of a method, especially when start saving blocks to Procs. Surely it's easier just to write a method that can do the same thing, with less code? I've just started covering `lambdas` too - why are there so many ways to do the same thing? 
+
+Lambdas v procs is an interesting topic. I'm curious to see how useful procs are, given the extra level of validation on lambdas, though returning a function immediately is a useful property.
