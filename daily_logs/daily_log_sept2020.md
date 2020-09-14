@@ -3,6 +3,8 @@
 - [11th, Fri](#110920-fri)
 - [12th, Sat](#120920-sat)
 - [13th, Sun](#130920-sun)
+- [14th, Mon](#140920-mon)
+
 
 ##### 10/09/20 (Thu)
 __*Concepts covered*__<br/>
@@ -108,3 +110,19 @@ The `yield` keyword was kind of tricky to understand. Hopping out of a method an
 I still don't really understand why we would use `yield` to execute logic outside of a method, especially when start saving blocks to Procs. Surely it's easier just to write a method that can do the same thing, with less code? I've just started covering `lambdas` too - why are there so many ways to do the same thing? 
 
 Lambdas v procs is an interesting topic. I'm curious to see how useful procs are, given the extra level of validation on lambdas, though returning a function immediately is a useful property.
+
+##### 14/09/20 (Mon)
+__*Concepts covered*__<br/>
+- Codecademy - Blocks, Procs and Lambdas
+    - Finished up the module with some exercises
+- Introduction to Programming with Ruby (Launch School book)
+    - How to interpret documentation
+    - Class and module names
+    - Class and instance methods
+- Revision of notes
+
+__*Time spent*__<br/>
+118 minutes
+
+__*Thoughts*__<br/>
+I definitely think spaced repetition is going to be necessary for me to retain anything. I cover a lot of ground very quickly, and being able to remember the syntax is a bit of a challenge currently. "Reading about programming and the act of programming are very different things. If you read this entire book without ever writing one piece of code, it is very likely that you will "understand" intellectually how to code, without being able to actually DO IT. Then, the next time you are in front of your editor with a blank screen and someone asks you to solve a problem with a computer program, you won't be able to complete the task." is a quote that *really* sticks with me - I have definitely experienced this. 
