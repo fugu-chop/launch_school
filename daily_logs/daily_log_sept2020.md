@@ -125,4 +125,8 @@ __*Time spent*__<br/>
 118 minutes
 
 __*Thoughts*__<br/>
-I definitely think spaced repetition is going to be necessary for me to retain anything. I cover a lot of ground very quickly, and being able to remember the syntax is a bit of a challenge currently. "Reading about programming and the act of programming are very different things. If you read this entire book without ever writing one piece of code, it is very likely that you will "understand" intellectually how to code, without being able to actually DO IT. Then, the next time you are in front of your editor with a blank screen and someone asks you to solve a problem with a computer program, you won't be able to complete the task." is a quote that *really* sticks with me - I have definitely experienced this. 
+I definitely think spaced repetition is going to be necessary for me to retain anything. I cover a lot of ground very quickly, and being able to remember the syntax is a bit of a challenge currently. 
+
+> "Reading about programming and the act of programming are very different things. If you read this entire book without ever writing one piece of code, it is very likely that you will "understand" intellectually how to code, without being able to actually DO IT. Then, the next time you are in front of your editor with a blank screen and someone asks you to solve a problem with a computer program, you won't be able to complete the task." 
+
+This is a quote that *really* sticks with me - I have definitely experienced this. 
