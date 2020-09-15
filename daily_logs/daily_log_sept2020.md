@@ -4,7 +4,7 @@
 - [12th, Sat](#120920-sat)
 - [13th, Sun](#130920-sun)
 - [14th, Mon](#140920-mon)
-
+- [15th, Tue](#150920-tue)
 
 ##### 10/09/20 (Thu)
 __*Concepts covered*__<br/>
@@ -130,3 +130,18 @@ I definitely think spaced repetition is going to be necessary for me to retain a
 > "Reading about programming and the act of programming are very different things. If you read this entire book without ever writing one piece of code, it is very likely that you will "understand" intellectually how to code, without being able to actually DO IT. Then, the next time you are in front of your editor with a blank screen and someone asks you to solve a problem with a computer program, you won't be able to complete the task." 
 
 This is a quote that *really* sticks with me - I have definitely experienced this. 
+
+##### 15/09/20 (Tue)
+__*Concepts covered*__<br/>
+- Converting handwritten notes to typed notes
+- Introduction to Programming with Ruby (Launch School book)
+    - Types, Data Structures (hashes & arrays)
+    - Variables (including scope)
+
+__*Time spent*__<br/>
+92 minutes
+
+__*Thoughts*__<br/>
+A lack of spaced repetition has come back to bite me. I don't recall a lot of the syntax I learned in the Codecademy preparation material and I find it hard to read through my written notes - there's just so much stuff all over the place. I typed notes up as revision, as well as to allow for indexing and better organisation.
+
+I also have given up using vim for now. It was just adding to the complexity and time without really providing much benefit outside of novelty. 
