@@ -139,7 +139,7 @@ __*Concepts covered*__<br/>
     - Variables (including scope)
 
 __*Time spent*__<br/>
-92 minutes
+127 minutes
 
 __*Thoughts*__<br/>
 A lack of spaced repetition has come back to bite me. I don't recall a lot of the syntax I learned in the Codecademy preparation material and I find it hard to read through my written notes - there's just so much stuff all over the place. I typed notes up as revision, as well as to allow for indexing and better organisation.
