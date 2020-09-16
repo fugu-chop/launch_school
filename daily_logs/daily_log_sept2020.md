@@ -145,3 +145,25 @@ __*Thoughts*__<br/>
 A lack of spaced repetition has come back to bite me. I don't recall a lot of the syntax I learned in the Codecademy preparation material and I find it hard to read through my written notes - there's just so much stuff all over the place. I typed notes up as revision, as well as to allow for indexing and better organisation.
 
 I also have given up using vim for now. It was just adding to the complexity and time without really providing much benefit outside of novelty. 
+
+##### 16/09/20 (Wed)
+__*Concepts covered*__<br/>
+- Converting handwritten notes to typed notes
+- Introduction to Programming with Ruby (Launch School book)
+    - Variables
+    - Methods
+    - Scope
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+Today was mostly revision again, though there was more detail in the book about different variable types and returning from methods. I didn't put it together previously, but methods automatically returning a value makes chaining methods possible. 
+
+I also found it weird (for some reason) that a method will always return it's last line until explicitly told to return something earlier, such that defining a variable inside a method as the last line (without an explicit return) will return that variable. 
+
+Hopefully I don't get tripped up by using `puts` as the final step in a method.
+
+The discussion about scope were really interesting and completely skipped over in the Codecademy course. This sounds like a pretty easy area to get tripped up by, so I'll be cognisant about what methods can access, and what/where other variables can access. 
+
+As part of this, mutating the caller was also weird, since what goes in (purely intuitively) shouldn't be changed by what comes out. 
