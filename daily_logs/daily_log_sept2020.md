@@ -5,6 +5,11 @@
 - [13th, Sun](#130920-sun)
 - [14th, Mon](#140920-mon)
 - [15th, Tue](#150920-tue)
+- [16th, Wed](#160920-wed)
+- [17th, Thu](#170920-thu)
+- [18th, Fri](#180920-fri)
+- [19th, Sat](#190920-sat)
+- [20th, Sun](#200920-sun)
 
 ##### 10/09/20 (Thu)
 __*Concepts covered*__<br/>
@@ -167,3 +172,41 @@ Hopefully I don't get tripped up by using `puts` as the final step in a method.
 The discussion about scope were really interesting and completely skipped over in the Codecademy course. This sounds like a pretty easy area to get tripped up by, so I'll be cognisant about what methods can access, and what/where other variables can access. 
 
 As part of this, mutating the caller was also weird, since what goes in (purely intuitively) shouldn't be changed by what comes out. 
+
+##### 17/09/20 (Thu)
+__*Concepts covered*__<br/>
+- Introduction to Programming with Ruby (Launch School book)
+    - Methods exercises
+    - Flow control
+    - All the loops (`loop`, `break`, `next`, `for`, `while`, `until`)
+    - Iterators
+    - Recursion
+
+__*Time spent*__<br/>
+126 minutes
+
+__*Thoughts*__<br/>
+Not much new so far, though it surprises me how things just seem unexpected if the syntax changes slightly, or if an expression is structured slightly differently to what I'm used it. 
+
+Recursion is confusing for me. I still don't really get the flow of code when a method is called within itself. In the provided example, I don't understand how the `start` variable is being incremented, since there's no actual change to the variable itself in the code. One for tomorrow, I think.
+
+##### 18/09/20 (Fri)
+__*Concepts covered*__<br/>
+
+__*Time spent*__<br/>
+
+__*Thoughts*__<br/>
+
+##### 19/09/20 (Sat)
+__*Concepts covered*__<br/>
+
+__*Time spent*__<br/>
+
+__*Thoughts*__<br/>
+
+##### 20/09/20 (Sun)
+__*Concepts covered*__<br/>
+
+__*Time spent*__<br/>
+
+__*Thoughts*__<br/>
