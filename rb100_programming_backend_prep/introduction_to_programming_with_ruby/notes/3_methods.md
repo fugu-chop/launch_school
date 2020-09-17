@@ -110,6 +110,7 @@ p "After mutate method: #{a}"
 ```
 We have permanently modified the local variable `a` by passing it to the mutate method, even though `a` is outside the method definition's scope. This is because the `pop` method mutates the caller. There's no obvious way to tell if a method will mutate the caller, other than referencing the documentation or trial and error. 
 
+###### p versus puts
 As a sidenote, we used `p` to print the string. This is different to `puts`, since there was no `nil` after the string was printed, as well as printing the quotes around the string. By default, `puts` returns `nil`. 
 
 ### Puts versus return

@@ -19,7 +19,7 @@ puts b
 => 4
 ```
 ### Getting user input
-We can use `gets` to obtain user input. We chain the `.chomp` method to remove the newline (`\n`) that gets added to `gets`. 
+We can use `gets` to obtain user input. We chain the `.chomp` method to remove the newline (`\n`) that gets added to `gets`. Note that `gets` __always gives us a string__.
 ```
 name = gets 
 "Bob"
