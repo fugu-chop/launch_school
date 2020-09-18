@@ -2,11 +2,12 @@
 
 ## Table of Contents
 - [What is a hash?](#what-is-a-hash)
+- [Iterating over hashes](#iterating-over-hashes)
 
 ### What is a hash?
 A hash is a data structure that stores __items by associated keys__. This is contrasted against arrays, which store items by an ordered index. Entries in a hash are often referred to as *key-value pairs*. This creates an associative representation of data.
 
-Most commonly, a hash is created using __symbols as keys and any data types as values__. All key-value pairs in a hash are surrounded by curly braces {} and comma separated.
+Most commonly, a hash is created using __symbols as keys and any data types as values__. All key-value pairs in a hash are surrounded by curly braces `{ }` and comma separated.
 
 Hashes can be created with two syntaxes. The older syntax comes with a => sign to separate the key and the value.
 ```
@@ -33,5 +34,25 @@ We can __retrieve__ a value from a hash via:
 new_hash[:existing_key]
 => "value"
 ```
-We can __merge__ two hashes together via the `merge` method. The `merge` method __does not permanently__ alter the original hash (i.e. the hash that has the .`merge` method applied to it). We can make it permanent by using the `!` method. 
-`old_hash.merge(new_hash)`
+We can __merge__ two hashes together via the `merge` method. The `merge` method __does not permanently__ alter the original hash (i.e. the hash that has the .`merge` method applied to it). We can make it permanent by using the `!` method. The `merge` method returns the merged hash. 
+```
+a = { name: "Ben", age: 25}
+b = { hobbies: "Chess" }
+a.merge(b)
+=> { name: "Ben", age: 25, hobbies: "Chess" }
+a
+=> { name: "Ben", age: 25}
+b
+=> { hobbies: "Chess" }
+```
+### Iterating over hashes
+Iterating over hashes is similar to arrays - we can use the `each` method. However, since each element in a hash has two values (a key and a value), we need to specify both parameters in our `each` method, even if we only want to use one, since Ruby will otherwise not know which we have passed as a parameter.
+```
+person = {name: 'Bob', age: 34, hair: 'brown'}
+person.each { |key, value| puts "Bob's #{key} is #{value}."}
+
+Bob's name's is Bob.
+Bob's age's is 34.
+Bob's hair's is brown.
+=> {:name=>"Bob", :age=>34, :hair=>"brown"}
+```

@@ -37,11 +37,12 @@ loop do
   end
 end
 
-=> 2
-=> 4
-=> 6
-=> 8
-=> 10 
+2
+4
+6
+8
+10 
+=> nil
 ```
 ### Next
 Similar to how we use `break` to exit a loop, we can use the keyword `next` to skip the rest of the current iteration and start executing the next iteration. 
@@ -58,46 +59,60 @@ loop do
   end
 end
 
-=> 2
-=> 6
-=> 8
-=> 10
+2
+6
+8
+10
+=> nil
 ```
-
 ### While loops
 A `while` loop is given a parameter that evaluates to a boolean. Once that boolean expression becomes `false`, the while loop is not executed again, and the program *continues after the `while` loop*. 
 ```
-x = gets.chomp.to_i
+x = 3
 
 while x >= 0
   puts x
   x = x - 1
 end
-
 puts "Done!"
+
+3
+2
+1
+0
+"All done!"
+=> nil
 ```
 ### Until loops
 These are basically the equivalent of a `while` loop, just expressed in the negative.
 ```
-x = gets.chomp.to_i
+x = 3
 
 until x < 0
   puts x
   x -= 1
 end
-
 puts "Done!"
+
+3
+2
+1
+0
+"All done!"
+=> nil
 ```
 ### Do While loops
 A `do/while` loop works in a similar way to a `while` loop. One important difference is that the code within the loop gets executed one time, __prior__ to the conditional check to see if the code should be executed. In a `do/while` loop, the __conditional check is placed at the end of the loop__ as opposed to the beginning.
 ```
 loop do
   puts "Do you want to do that again?"
-  answer = gets.chomp
+  answer = gets.chomp.to_s
   if answer != "Y"
     break
   end
 end
+
+# Note that the actual loop above doesn't return anything, since it's just put statements.
 ```
 ### For loops
 `for` loops are used to loop over a collection of elements. `for` loops have a definite end since it's looping over a finite number of elements. 
@@ -111,8 +126,14 @@ x = gets.chomp.to_i
 for i in 1..x do
   puts i
 end
-
 puts "Done!"
+
+1
+2
+3
+=> 1..3
+Done
+=> nil
 ```
 ### Conditional within loops
 To make loops more effective and precise, we can add conditional flow control within them to alter their behavior.
@@ -128,6 +149,12 @@ while x <= 10
   end
   x += 1
 end
+
+1
+5
+7
+9
+=> nil
 ```
 Note how if you place the `next` reserved word in a loop, it will jump from that line to the next loop iteration without executing the code beneath it. If you place the `break` reserved word in a loop, it will exit the loop immediately without executing any more code in the loop.
 
@@ -137,28 +164,34 @@ Iterators are methods that naturally loop over a given set of data and allow you
 names = ['Bob', 'Joe', 'Steve']
 
 names.each { |name| puts name }
-=> Bob
-=> Joe
-=> Steve
+Bob
+Joe
+Steve
+=> ['Bob', 'Joe', 'Steve']
 ```
 We have called the `each` method using the dot operator (`.`) on our array. 
 
 What this method does is loop through each element in our array, in order, starting from 'Bob'. Then it begins executing the code within the block. The block's starting and ending points are defined by the curly braces `{ }`. 
 
-Each time we iterate over the array, we need to assign the value of the element to a variable. In this example we have named the variable `name` and placed it in between two pipes (`|`). After that, we write the logic that we want to use to operate on the variable, which represents the current array element. 
+Each time we iterate over the array, we need to assign the value of the element to a variable. In this example we have named the variable `name` and placed it in between two pipes (`|`). After that, we write the logic that we want to use to operate on the variable, which represents the current array element. Here, the *original array* is returned after the `puts` statements.
 
 ### Blocks
 A block is just some lines of code ready to be executed. When working with blocks there are two styles you need to be aware of. 
 
 By convention, we use the curly braces (`{}`) when everything can be contained in one line. We use the words `do` and `end` when we are performing *multi-line operations*.
 ```
-names = ['Bob', 'Joe', 'Steve', 'Janice', 'Susan', 'Helen']
+names = ['Bob', 'Joe', 'Steve']
 x = 1
 
 names.each do |name|
   puts "#{x}. #{name}"
   x += 1
 end
+
+1. Bob
+2. Joe
+3. Steve
+=> ['Bob', 'Joe', 'Steve']
 ```
 ### Recursion
 Recursion is the act of calling a method from within itself. This effectively continues to run the loop until it reaches a predefined end point (usually through an `if` clause, and modifying the original argument). 

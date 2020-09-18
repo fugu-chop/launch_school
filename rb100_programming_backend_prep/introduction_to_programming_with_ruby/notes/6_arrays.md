@@ -22,6 +22,9 @@ my_array.last
 
 my_array[1]
 => "Bob"
+
+my_array[9]
+=> nil
 ```
 ### Modifying arrays
 If you'd like to take the last item off of an array *permanently*, you can use the `pop` method. 
@@ -33,7 +36,7 @@ my_array.pop
 my_array
 => [1, "Bob", 4.33]
 ```
-If you want to add items to an array *permanently*, we can use the `push` method, along with any desired parameters.
+If you want to add items to an array *permanently*, we can use the `push` method, along with any desired parameters. The full array is returned.
 ```
 my_array.push("test1", 42, false)
 => [1, "Bob", 4.33, "test1", 42, false]
@@ -41,8 +44,7 @@ my_array.push("test1", 42, false)
 We can also use the shovel operator `<<` to permanently add a *single* item to an array.
 ```
 my_array << 3
-my_array
-[1, "Bob", 4.33, "test1", 42, false, 3]
+=> [1, "Bob", 4.33, "test1", 42, false, 3]
 ```
 If we want to remove a specific item __permanently__ from an array, and we *know the index*, we can use the `delete_at` method. 
 ```
@@ -94,7 +96,7 @@ a
 ```
 If we want to filter specific elements from an array, we can use the `select` method. This method iterates over an array and *returns a new array* that includes any items that __return true__ to the expression provided. 
 
-Again, we can use the bang operator to make these changes permanent. 
+Again, we can use the bang operator (`!`) to make these changes permanent. 
 ```
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 numbers.select { |number| number > 4 }
@@ -116,7 +118,7 @@ The `unshift` method will *permanently* add an element to the start of the array
 ```
 b = [2, 3, 4]
 b.unshift(1)
-b = [1, 2, 3, 4]
+=> [1, 2, 3, 4]
 ```
 The `to_s` method is used to create a string representation of an array. Ruby actually does this behind the scenes when you use string interpolation to print an array to the screen.
 ```
@@ -150,16 +152,16 @@ The `each_index` method iterates through the array much like the `each` method, 
 ```
 a = [1, 2]
 a.each_index { |index| puts "This is index #{index}" }
-=> "This is index 0"
-=> "This is index 1"
+"This is index 0"
+"This is index 1"
 => [1, 2]
 ```
-The `each_with_index` method allows us to iterate through the array with both the index, and element at that index. The *first parameter passed to the block is the value and the second is the index*. Again, the original array is returned
+The `each_with_index` method allows us to iterate through the array with both the index, and element at that index. The *first parameter passed to the block is the value and the second is the index*. Again, the original array is returned.
 ```
 a = [1, 2]
 a.each_with_index { |index, value| puts "The value at index #{index} is: #{value}" }
-=> The value at index 1 is: 0.
-=> The value at index 2 is: 1.
+The value at index 1 is: 0.
+The value at index 2 is: 1.
 => [1, 2]
 ```
 The `sort` method allows us to sort the elements of an array. It returns the sorted array, but __does not__ modify the original array.
