@@ -177,13 +177,13 @@ As part of this, mutating the caller was also weird, since what goes in (purely 
 __*Concepts covered*__<br/>
 - Introduction to Programming with Ruby (Launch School book)
     - Methods exercises
-    - Flow control
-    - All the loops (`loop`, `break`, `next`, `for`, `while`, `until`)
+    - Flow control (inc. exercises)
+    - Loops (`loop`, `break`, `next`, `for`, `while`, `until`) inc. exercises
     - Iterators
     - Recursion
 
 __*Time spent*__<br/>
-126 minutes
+133 minutes
 
 __*Thoughts*__<br/>
 Not much new so far, though it surprises me how things just seem unexpected if the syntax changes slightly, or if an expression is structured slightly differently to what I'm used it. 
@@ -192,10 +192,23 @@ Recursion is confusing for me. I still don't really get the flow of code when a 
 
 ##### 18/09/20 (Fri)
 __*Concepts covered*__<br/>
+- Introduction to Programming with Ruby (Launch School book)
+    - Recursion
+    - Iterators exercises
+    - Arrays and array methods
+    - Bang operator
+    - Many array methods
+    - Hashes
 
 __*Time spent*__<br/>
+123 minutes
 
 __*Thoughts*__<br/>
+I ended up getting a basic understanding of recursion. It's basically running a function over and over within the same function until a condition is met. 
+
+This intro program is actually more detailed than any other online course that I've undertaken. I appreciate the level of explanation and focus on details, like returned value versus printed value, or whether or not the original object is mutated or not. 
+
+While working in the morning is positive, I'm finding the lack of sleep is actually affecting me in my day job. I am just tired all the time and find myself a little slower than normal. 
 
 ##### 19/09/20 (Sat)
 __*Concepts covered*__<br/>
