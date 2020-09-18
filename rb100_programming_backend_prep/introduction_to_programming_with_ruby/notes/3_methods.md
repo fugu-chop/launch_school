@@ -1,13 +1,13 @@
 # Methods
 
 ## Table of Contents
-[What is a method?](#what-is-a-method)
-[Parameters and Arguments](#parameters-and-arguments)
-[Method definition and local variable scope](#method-definition-and-local-variable-scope)
-[Mutating the caller](#mutating-the-caller)
-[Puts versus Return](#puts-versus-return)
-[Chaining methods](#chaining-methods)
-[Method calls as arguments](#method-calls-as-arguments)
+- [What is a method?](#what-is-a-method)
+- [Parameters and Arguments](#parameters-and-arguments)
+- [Method definition and local variable scope](#method-definition-and-local-variable-scope)
+- [Mutating the caller](#mutating-the-caller)
+- [Puts versus Return](#puts-versus-return)
+- [Chaining methods](#chaining-methods)
+- [Method calls as arguments](#method-calls-as-arguments)
 
 ### What is a method
 You'll often have a piece of code that needs to be executed many times in a program. Instead of writing that piece of code over and over, there's a feature in most programming languages called a procedure, which allows you to extract the common code to one place. 

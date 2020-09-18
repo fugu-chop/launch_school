@@ -1,17 +1,17 @@
 # Loops and Iterators
 
 ## Table of Contents
-[What is a loop?](#what-is-a-loop)
-[Break](#break)
-[Next](#next)
-[While loops](#while-loops)
-[Until loops](#until-loops)
-[Do-While loops](#do-while-loops)
-[For loops](#do-while-loops)
-[Conditional within loops](#conditional-within-loops)
-[Iterators](#iterators)
-[Blocks](#blocks)
-[Recursion](#recursion)
+- [What is a loop?](#what-is-a-loop)
+- [Break](#break)
+- [Next](#next)
+- [While loops](#while-loops)
+- [Until loops](#until-loops)
+- [Do-While loops](#do-while-loops)
+- [For loops](#do-while-loops)
+- [Conditional within loops](#conditional-within-loops)
+- [Iterators](#iterators)
+- [Blocks](#blocks)
+- [Recursion](#recursion)
 
 ### What is a loop?
 A loop is the *repetitive execution of a piece of code* for a given amount of repetitions or until a certain condition is met. We will cover `while` loops, `do/while` loops, and `for` loops.

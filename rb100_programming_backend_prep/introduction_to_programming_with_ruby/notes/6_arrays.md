@@ -1,11 +1,11 @@
 # Arrays
 
 ## Table of Contents
-[What is an array?](#what-is-an-array)
-[Modifying arrays](#modifying-arrays)
-[Iterating over an array](#iterating-over-an-array)
-[Common array methods](#common-array-methods)
-[Each v Map](#each-v-map)
+- [What is an array?](#what-is-an-array)
+- [Modifying arrays](#modifying-arrays)
+- [Iterating over an array](#iterating-over-an-array)
+- [Common array methods](#common-array-methods)
+- [Each v Map](#each-v-map)
 
 ### What is an array?
 An array is an *ordered list* of elements that can be of *any* type. You can define an array by placing a list of elements between square bracket `[ ]`.

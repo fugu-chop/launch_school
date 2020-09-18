@@ -1,9 +1,9 @@
 # Variables
 
 ## Table of Contents
-[What is a variable?](#what-is-a-variable)
-[Scope](#Scope)
-[Types of Variables](#types-of-variables)
+- [What is a variable?](#what-is-a-variable)
+- [Scope](#Scope)
+- [Types of Variables](#types-of-variables)
 
 ### What is a variable
 Variables are used to store information in memory, to be referenced and manipulated in a computer program, acting as containers. 

@@ -1,7 +1,7 @@
 # Hashes
 
 ## Table of Contents
-[What is a hash?](#what-is-a-hash)
+- [What is a hash?](#what-is-a-hash)
 
 ### What is a hash?
 A hash is a data structure that stores __items by associated keys__. This is contrasted against arrays, which store items by an ordered index. Entries in a hash are often referred to as *key-value pairs*. This creates an associative representation of data.

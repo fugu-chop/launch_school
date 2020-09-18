@@ -5,12 +5,12 @@ Welcome to Ruby! Why are we learning Ruby?
 - Object oriented: We can define data structures ourselves, like what type they are, and any methods that can be applied.  
 
 ## Table of Contents
-[Playing with Code](#playing-with-code)
-[Style Guidelines](#style-guidelines)
-[Types](#types)
-[Operations](#operations)
-[Data Structures](#data-structures)
-[Puts versus Return](#puts-v-return)
+- [Playing with Code](#playing-with-code)
+- [Style Guidelines](#style-guidelines)
+- [Types](#types)
+- [Operations](#operations)
+- [Data Structures](#data-structures)
+- [Puts versus Return](#puts-v-return)
 
 ### Playing with Code
 Execute Ruby code in the terminal via

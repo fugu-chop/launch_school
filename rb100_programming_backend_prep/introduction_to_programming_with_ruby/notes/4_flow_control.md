@@ -1,13 +1,13 @@
 # Flow Control
 
 ## Table of Contents
-[What is flow control?](#what-is-flow-control)
-[Conditionals](#conditionals)
-[Comparisons](#comparisons)
-[Combining expressions](#combining-expressions)
-[Ternary Operator](#ternary-operator)
-[Case Statements](#case-statements)
-[True and False](#true-and-false)
+- [What is flow control?](#what-is-flow-control)
+- [Conditionals](#conditionals)
+- [Comparisons](#comparisons)
+- [Combining expressions](#combining-expressions)
+- [Ternary Operator](#ternary-operator)
+- [Case Statements](#case-statements)
+- [True and False](#true-and-false)
 
 ### What is flow control?
 Flow control is conditional logic that we put in our program to make sure it executes the right decision in the right circumstances. 
