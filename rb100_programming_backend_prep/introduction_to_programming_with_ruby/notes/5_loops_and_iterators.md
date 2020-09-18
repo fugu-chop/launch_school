@@ -161,7 +161,9 @@ names.each do |name|
 end
 ```
 ### Recursion
-Recursion is the act of calling a method from within itself. 
+Recursion is the act of calling a method from within itself. This effectively continues to run the loop until it reaches a predefined end point (usually through an `if` clause, and modifying the original argument). 
+
+This is a way we can sense check our method to ensure it's not an endless loop - does the *recursion modify the original argument?* And have we returned an argument (after it's been subjected to all the recursion)?
 ```
 # Define our method
 def doubler(start)
@@ -172,7 +174,7 @@ end
 def doubler(start)
   puts start
   if start < 10
-    doubler(start * 2)
+    doubler(start * 2) 
   end
 end
 
@@ -183,4 +185,13 @@ doubler(2)
 16
 => nil
 ```
-
+The logic behind the above project is this:
+1. We input `start` = 2 in `doubler`. The method starts to execute.
+2. We print 2 to the console
+3. We hit the `if` statement -> 2 is less than 10, and so we enter the loop
+4. We print `start` * 2 as per line 173 (as if we're running the method fresh, but now `start` is 2 * 2)
+5. `start` * 2 is less than 10. 
+6. We print `start` * 2 * 2 (which is 8)
+7. `start` * 2 * 2 is less than 10.
+8. We print `start` * 2 * 2 * 2 (16)
+9. `start` now exceeds 10, and so the loop is exited. Since there's no more code in the method, the method ends as well. Phew!
