@@ -11,6 +11,7 @@ Welcome to Ruby! Why are we learning Ruby?
 - [Operations](#operations)
 - [Data Structures](#data-structures)
 - [Puts versus Return](#puts-v-return)
+- [Puts versus Print versus P](#puts-v-print-v-p)
 
 ### Playing with Code
 Execute Ruby code in the terminal via
@@ -155,3 +156,44 @@ puts a
 => nil
 ```
 `a` is assigned to the value returned by `puts "stuff"`, which is `nil`. Therefore, puts a results in `nil` being printed out. 
+
+### Puts v Print v P)
+`puts` will show something, then *add a new line* after whatever is shown. However, `puts` will print out each __element in an array on a new line__. `puts` attempts to convert everything into a string (by calling `to_s`). `puts` returns `nil`.
+
+This is important because if you’re trying to puts an array with nil values, `puts` will show blank lines. 
+```
+puts 123
+puts 456
+
+123
+456
+
+# puts on an array
+puts [1, 2]
+
+1
+2
+
+# puts with nil values
+puts [1,nil,nil,2]
+
+1
+
+
+2
+```
+`print` will show something, but __not__ add a new line after whatever is shown. `p` returns `nil`.
+```
+print 123
+print 456
+
+123456
+```
+`p` is a more *raw* method of displaying something. It doesn't attempt to convert the output to a string, and is useful for debugging, since it both __displays and returns__ whatever object you pass to it. This makes it particularly useful for *displaying arrays and hashes*. 
+```
+puts "Ruby Is Cool"
+Ruby Is Cool
+
+p "Ruby Is Cool"
+"Ruby Is Cool"
+```

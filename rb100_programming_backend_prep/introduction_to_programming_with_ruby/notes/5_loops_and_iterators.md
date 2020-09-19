@@ -123,7 +123,7 @@ x = gets.chomp.to_i
 
 # A range is a special type in Ruby that captures a range of elements. For example 1..3 is a range that captures the integers 1, 2, and 3.
 
-for i in 1..x do
+for i in 1..x
   puts i
 end
 puts "Done!"
