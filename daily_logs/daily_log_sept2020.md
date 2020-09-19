@@ -198,6 +198,7 @@ __*Concepts covered*__<br/>
     - Arrays and array methods
     - Bang operator
     - Many array methods
+    - Array exercises
     - Hashes
 
 __*Time spent*__<br/>
@@ -212,10 +213,19 @@ While working in the morning is positive, I'm finding the lack of sleep is actua
 
 ##### 19/09/20 (Sat)
 __*Concepts covered*__<br/>
+- Introduction to Programming with Ruby (Launch School book)
+    - Revising what is returned versus printed in flow control, loops and methods notes
+    - Hashes (inc. exercises)
 
 __*Time spent*__<br/>
+254 minutes
 
 __*Thoughts*__<br/>
+I spent some time going through the old notes, making sure that I was careful to specify what was returned versus what was printed from a particular program. 
+
+I spent (potentially way too much) time on the challenge exercise for the hashes section. I was pretty disappointed to not get the actual output, but I think this is because I am just not as comfortable with how to use loops in a way that synergises (?) with other code. 
+
+I am slightly encouraged because I was able to break down the what was required within the problem, I just couldn't put the final steps together to get the output in the correct format. Also, I learned to use `p` instead of `puts`, since `puts` messes up arrays and hashes when trying to debug the output of a method. 
 
 ##### 20/09/20 (Sun)
 __*Concepts covered*__<br/>
