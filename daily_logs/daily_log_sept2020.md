@@ -225,11 +225,28 @@ I spent some time going through the old notes, making sure that I was careful to
 
 I spent (potentially way too much) time on the challenge exercise for the hashes section. I was pretty disappointed to not get the actual output, but I think this is because I am just not as comfortable with how to use loops in a way that synergises (?) with other code. 
 
-I am slightly encouraged because I was able to break down the what was required within the problem, I just couldn't put the final steps together to get the output in the correct format. Also, I learned to use `p` instead of `puts`, since `puts` messes up arrays and hashes when trying to debug the output of a method. 
+I am slightly encouraged because I was able to break down what was required within the problem and actually get code for those intermediate steps, I just couldn't put the final steps together to get the output in the correct format. Also, I learned to use `p` instead of `puts`, since `puts` messes up arrays and hashes when trying to debug the output of a method. 
 
 ##### 20/09/20 (Sun)
 __*Concepts covered*__<br/>
+- Introduction to Programming with Ruby (Launch School book)
+    - Regex
+    - Variables as pointers
+    - Blocks & Procs
+    - Exception handling
+    - Exercises
+- Revising CLI Notes
+- Ruby Basics exercises
+    - Reading documentation
 
 __*Time spent*__<br/>
+243 minutes
 
 __*Thoughts*__<br/>
+Blocks and procs (though I covered them previously in Codecademy) are interesting. I can tell they'd be very useful, but still don't really have a strong idea of *how* they'd be useful. The Launch School book introduces it as a concept to be covered in detail later. I'm going to learn from my previous mistakes, and not dive into a hole and completely lose myself in details. 
+
+Positive news - I was actually able to solve the challenge problems, though I spent a long time and my solution is like 5x longer than the suggested solution. I am very pleased with this. 
+
+I also learned that there's a whole bunch of other methods that can be applied to arrays and hashes, which are located on the __*Enumerables*__ section of the ruby-doc website. More power!
+
+I also initially thought it was kind of goofy to have an exercise section dedicated just to reading documentation, but some of it is actually quite challenging - figuring out where to look and actually interpreting documentation is a core skill (and something I'm quite bad at)!
