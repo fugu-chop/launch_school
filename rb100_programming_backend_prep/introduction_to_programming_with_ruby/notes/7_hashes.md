@@ -28,10 +28,17 @@ We can __add__ a key-value pair to a hash like we would access an item, but inst
 new_hash[:key] = "value"
 => "value"
 ```
-We can __remove__ a key-value pair to a hash via the `delete` method. This __permanently__ alters the hash and returns the deleted value. 
+We can __remove__ a key-value pair from a hash via the `delete` method. This __permanently__ alters the hash and returns the deleted value. 
 ```
 new_hash.delete(:key)
 => deleted_value
+```
+We can __conditionally remove__ a key-value pair using the `delete_if` method. Again, this __permanently__ alters the hash. It returns the mutated hash.
+```
+hash = { "a" => 100, "b" => 200, "c" => 300 }
+hash.delete_if {|key, value| key >= "b" }   
+
+=> {"a"=>100}
 ```
 We can __retrieve__ a value from a hash via: 
 ```
