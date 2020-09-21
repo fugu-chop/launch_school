@@ -77,8 +77,24 @@ end
 puts a
 => 5
 ```
-`a` is accessible here since `for...do end` code __did not create a new inner scope__, since for is part of Ruby language and __not a method invocation__. When we use `each`, `times` and other method invocations, followed by `{ }` or `do end`, that's when a new block is created.
+`a` is accessible here since `for...do end` code __did not create a new inner scope__, since `for` is part of Ruby language and __not a method invocation__. When we use `each`, `times` and other method invocations, followed by `{ }` or `do end`, that's when a new block is created.
 
+###### Method definitions & scope
+Reassignment, including assignment operators like `+=`, `=`, do not mutate a variable in the context of a *method definition*; instead, it binds the variable to a new object. That is, the assignment operator sets the variable to point to a different object.
+
+Method definitions are *self-contained* with respect to local variables. Local variables outside the method definition are __not visible__ inside the method definition. Furthermore, local variables inside the method definition are not visible outside the method definition.
+
+In this example, the `a` variable defined outside the `my_value` method is __not visible__ to the `a` defined within the method, and vice versa. `a` is also an integer, which is __immutable__.
+```
+a = 7
+
+def my_value(a)
+  a += 10
+end
+
+my_value(a)
+puts a
+```
 ### Types of Variables
 ###### Constants
 `CONSTANTS` are declared by capitalizing every letter in the variable's name. They are used for storing data *that never needs to change*. 

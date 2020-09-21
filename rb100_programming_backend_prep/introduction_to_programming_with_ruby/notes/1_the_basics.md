@@ -7,6 +7,7 @@ Welcome to Ruby! Why are we learning Ruby?
 ## Table of Contents
 - [Playing with Code](#playing-with-code)
 - [Style Guidelines](#style-guidelines)
+- [Documentation](#documentation)
 - [Types](#types)
 - [Operations](#operations)
 - [Data Structures](#data-structures)
@@ -29,6 +30,27 @@ We can also enter `irb` in the terminal for a Ruby environment which executes co
 - When using `{ }` brackets for methods, try to have it on one line. If that's not possible, use a `do end` structure.
 - Don't terminate expressions with `;`
 - Use spaces __around__ operators, and __after__ commas, semicolons and colons.
+
+### Documentation
+Our most up-to-date documentation can be found here: https://docs.ruby-lang.org/en. 
+
+For now, the main part of each page contains descriptions for all methods associated with the class or module you are viewing. They are also listed on the left under the Methods header.
+
+There are two main types of methods: *instance methods*, which you will use most often, and *class methods*, which will become more important later. For now, you are mostly interested in the instance methods.
+
+On the left-hand side, __instance methods__ are identified with a `#`, e.g., `#size`, while __class methods__ and module methods are identified with a `::`, e.g., `::new`. This is merely a documentation convention; the `#` and `::` are not part of the method names, nor are they used to refer to methods in your programs.
+
+Sometimes, you just need to scan through the method names until you see something that sounds like it might do the trick. Other times, you will need to use your browser's in-page search capability to find something. On other occasions, you may be forced to scan through the entire page, or followup in the class's Parent or Included Modules (both of which we will see later).
+
+As an example, let's take the `upcase` documentation: https://docs.ruby-lang.org/en/master/String.html#method-i-upcase
+
+`upcase → new_str` - The part to the left of the → represents how the method is called, while the part to the right shows what the method returns. 
+
+In this case, the method call reads simply "upcase". Since `#upcase` is an instance method, we also know that it needs to be __applied to the string we want to operate on__. To do this, we prepend the string and a `.` to the method name.
+
+Reading the description of the method, we also see that the method
+> Returns __a copy__ of str with all lowercase letters replaced with their uppercase counterparts. 
+Reading "between the lines", this means the original String is not being modified, so we need to get the result by examining the return value.
 
 ### Types
 ###### Strings
@@ -158,9 +180,11 @@ puts a
 `a` is assigned to the value returned by `puts "stuff"`, which is `nil`. Therefore, puts a results in `nil` being printed out. 
 
 ### Puts v Print v P)
-`puts` will show something, then *add a new line* after whatever is shown. However, `puts` will print out each __element in an array on a new line__. `puts` attempts to convert everything into a string (by calling `to_s`). `puts` returns `nil`.
+`puts` will show something, then *add a new line* after whatever is shown. However, `puts` will print out each __element in an array on a new line__. `puts` attempts to convert everything into a string (by calling `to_s`). 
 
-This is important because if you’re trying to puts an array with nil values, `puts` will show blank lines. 
+This is important because if you’re trying to `puts` an array with nil values, `puts` will show blank lines. Also note that `puts` returns `nil`.
+
+If we want to `puts` an array, it's a good idea to add the `.inspect` method onto it, to ensure an intact printable version of the array.
 ```
 puts 123
 puts 456
@@ -181,6 +205,11 @@ puts [1,nil,nil,2]
 
 
 2
+
+# puts on an array with the inspect method
+puts [1, 2].inspect
+
+[1, 2]
 ```
 `print` will show something, but __not__ add a new line after whatever is shown. `p` returns `nil`.
 ```
