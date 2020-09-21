@@ -10,6 +10,7 @@
 - [18th, Fri](#180920-fri)
 - [19th, Sat](#190920-sat)
 - [20th, Sun](#200920-sun)
+- [21st, Mon](#210920-mon)
 
 ##### 10/09/20 (Thu)
 __*Concepts covered*__<br/>
@@ -250,3 +251,24 @@ Positive news - I was actually able to solve the challenge problems, though I sp
 I also learned that there's a whole bunch of other methods that can be applied to arrays and hashes, which are located on the __*Enumerables*__ section of the ruby-doc website. More power!
 
 I also initially thought it was kind of goofy to have an exercise section dedicated just to reading documentation, but some of it is actually quite challenging - figuring out where to look and actually interpreting documentation is a core skill (and something I'm quite bad at)!
+
+##### 21/09/20 (Mon)
+__*Concepts covered*__<br/>
+- Ruby Basics exercises
+    - Reading documentation
+    - Reading documentation 2
+    - Variable scope
+    - Loops 1
+
+__*Time spent*__<br/>
+124 minutes
+
+__*Thoughts*__<br/>
+I've never had a course actually go into *how* to read documentation, as well as provide exercises and guidance on interpretation. Most courses just say "read the documentation". This is super useful and I'm really appreciating it. 
+
+The variable scope exercises were a little confusing at first, but there's basically three rules that can help determine what value a variable will take:
+- Is there a method definition (i.e. `def...end`)? If so, variables within the local scope of the method have no context of variables outside of it's scope. Variables outside of the method definition also have no context of what is inside the method. 
+- Is there a mutating method? Variables from outside of a method definition can be passed in as an argument. If the expression within the method definition is a mutating one (e.g. "string"[2] = "-"), then it will mutate the variable in the outer scope. 
+- Is there a method invocation on a block (e.g. `{ }`, or `do...end`)? If so, then there is no method definition, and no creation of a local scope. Expressions that reassign values to variables will mutate variables outside the local block scope. 
+
+I still need to get more familiar with loop syntax and how to use them. 
