@@ -269,6 +269,20 @@ I've never had a course actually go into *how* to read documentation, as well as
 The variable scope exercises were a little confusing at first, but there's basically three rules that can help determine what value a variable will take:
 - Is there a method definition (i.e. `def...end`)? If so, variables within the local scope of the method have no context of variables outside of it's scope. Variables outside of the method definition also have no context of what is inside the method. 
 - Is there a mutating method? Variables from outside of a method definition can be passed in as an argument. If the expression within the method definition is a mutating one (e.g. "string"[2] = "-"), then it will mutate the variable in the outer scope. 
-- Is there a method invocation on a block (e.g. `{ }`, or `do...end`)? If so, then there is no method definition, and no creation of a local scope. Expressions that reassign values to variables will mutate variables outside the local block scope. 
+- Is there a method invocation on a block (e.g. `.each { }`, or `.each do...end`)? If so, then there is no method definition, and no creation of a local scope. Expressions that reassign values to variables will mutate variables outside the local block scope. 
 
 I still need to get more familiar with loop syntax and how to use them. 
+
+##### 22/09/20 (Tue)
+__*Concepts covered*__<br/>
+- Ruby Basics exercises
+    - Loops 1
+    - Loops 2
+        - `.between?`, `.size`, `.empty?`, `next` methods
+    - User Input
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+The User Input exercises have been helpful in training to use loops. I am enjoying these bite-size exercises, as they are gradually building up in complexity, but still short enough to churn through them quickly. I feel like this is a good way to consolidate my thinking on this. 
