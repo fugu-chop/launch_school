@@ -182,7 +182,7 @@ puts a
 ### Puts v Print v P)
 `puts` will show something, then *add a new line* after whatever is shown. However, `puts` will print out each __element in an array on a new line__. `puts` attempts to convert everything into a string (by calling `to_s`). 
 
-This is important because if you’re trying to `puts` an array with nil values, `puts` will show blank lines. Also note that `puts` returns `nil`.
+This is important because if you’re trying to `puts` an array with nil values, `puts` will show __blank lines__. Also note that `puts` returns `nil`.
 
 If we want to `puts` an array, it's a good idea to add the `.inspect` method onto it, to ensure an intact printable version of the array.
 ```

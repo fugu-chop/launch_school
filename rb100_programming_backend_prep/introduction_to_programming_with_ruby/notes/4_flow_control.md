@@ -112,7 +112,9 @@ else
   puts "a is neither 5, nor 6"
 end
 ```
-Unlike with `if/else` statements, we are able to save our `case` statements to a variable. This can help us reduce the amount of typing `puts`. 
+We are able to save our `case` statements to a variable. This can help us reduce the amount of typing `puts`. 
+
+We are also able to save the results of our `if/else` statements, so long as we don't `return` something at each stage of our evaluation. Technically we can use `puts`, but that will result in the evaluation returning `nil` or a blank line. 
 ```
 a = 5
 
@@ -126,7 +128,24 @@ answer = case a
   end
 
 puts answer
-```
 
+alt_answer = if a == 5
+    "a is 5"
+  elsif a == 6 
+    "a is 6"
+  else
+    "a is neither 5, nor 6"
+  end
+
+puts alt_answer
+```
 ### True and False
-In Ruby, __every expression evaluates to `true` when used in flow control, except for `false` and `nil`.__
+In Ruby, __every expression evaluates to `true` when used in flow control (truthy), except for `false` and `nil` (falsy).__
+
+if a == 5
+    "a is 5"
+  elsif a == 6 
+    "a is 6"
+  else
+    "a is neither 5, nor 6 
+  end

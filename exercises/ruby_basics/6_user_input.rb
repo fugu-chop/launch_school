@@ -89,10 +89,11 @@ loop do
   if num2.to_i == 0
     puts "You can't divide by zero, friend."
   elsif valid_number?(num1) && valid_number?(num2)
-    puts "#{num1.to_i} divided by #{num2.to_i} is equal to #{num1.to_i / num2.to_i}"
+    puts "#{num1.to_i} divided by #{num2.to_i} is equal to #{num1.to_f / num2.to_i}"
     break
+  else 
+    puts "You haven't entered valid numbers. Please try again"
   end
-  puts "You haven't entered valid numbers. Please try again"
 end
 
 # 9) Modify this program in Exercise 5 so it repeats itself after each input/print iteration, asking for a new number each time through. The program should keep running until the user enters q or Q.
@@ -108,6 +109,12 @@ loop do
   end
 end
 
-
-
-
+# 10) Write a program that requests two integers from the user, adds them together, and then displays the result. Furthermore, insist that one of the integers be positive, and one negative; however, the order in which the two integers are entered does not matter. Do not check for the positive/negative requirement until both integers are entered, and start over if the requirement is not met.
+loop do
+  puts "Please enter a number: "
+  num1 = gets.chomp.to_i
+  puts "Please enter another number: "
+  num2 = gets.chomp.to_i
+  break puts "The sum of #{num1} and #{num2} is #{num1 + num2}" if num1 * num2 < 0
+  puts "One of your numbers must be positive, and the other negative"
+end
