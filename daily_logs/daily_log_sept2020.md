@@ -38,13 +38,13 @@ __*Concepts covered*__<br/>
 - Using irb versus CLI (Ruby)
 - Styling in Ruby
 - Codecademy - Introduction to Ruby
-    - Data types
-    - Variable assignment
-    - General math operations
-    - Some useful methods
+  - Data types
+  - Variable assignment
+  - General math operations
+  - Some useful methods
 - Codecademy - Control flow in Ruby
-    - `if` statements
-    - Comparison operators (including `&&`, `||`, `!`)
+  - `if` statements
+  - Comparison operators (including `&&`, `||`, `!`)
 
 __*Time spent*__<br/>
 130 minutes
@@ -59,20 +59,20 @@ Comparison operators are pretty similar to JS, which I am somewhat familiar with
 ##### 12/09/20 (Sat)
 __*Concepts covered*__<br/>
 - Codecademy - Control flow in Ruby
-    - Comparison operators practice
+  - Comparison operators practice
 - Codecademy - Loops and iterators
-    - `while`, `until`, `for` loops
-    - `next` keyword
-    - Iterators (`loop do end`, `.each`, `x.times`)
-    - `.split()`
+  - `while`, `until`, `for` loops
+  - `next` keyword
+  - Iterators (`loop do end`, `.each`, `x.times`)
+  - `.split()`
 - Codecademy - Arrays and hashes
-    - How to create hashes
-    - How to iterate through an array and hash
+  - How to create hashes
+  - How to iterate through an array and hash
 - Codecademy - Methods, Blocks & Sorting
-    - What is a method?
-    - Method syntax & terminology
-    - Blocks (anonymous functions)
-    - Sorting
+  - What is a method?
+  - Method syntax & terminology
+  - Blocks (anonymous functions)
+  - Sorting
 
 __*Time spent*__<br/>
 242 minutes
@@ -89,21 +89,21 @@ Getting up early in the morning is pretty handy - it's really the only extended 
 ##### 13/09/20 (Sun)
 __*Concepts covered*__<br/>
 - Codecademy - Hashes and Symbols
-    - Revision on hash notation
-    - Symbols
-    - Syntax for symbols as keys
-    - Converting symbols to strings
-    - `Case when` statements
+  - Revision on hash notation
+  - Symbols
+  - Syntax for symbols as keys
+  - Converting symbols to strings
+  - `Case when` statements
 - Codecademy - The Zen of Ruby
-    - One line `if`, `unless` statements
-    - Folded `case when`
-    - Conditional assignment
+  - One line `if`, `unless` statements
+  - Folded `case when`
+  - Conditional assignment
 - Codecademy - Blocks, Procs & Lambdas
-    - `.collect` method
-    - The `yield` keyword
-    - Procs
-    - Converting to procs
-    - Starting lambdas
+  - `.collect` method
+  - The `yield` keyword
+  - Procs
+  - Converting to procs
+  - Starting lambdas
 
 __*Time spent*__<br/>
 244 minutes
@@ -120,11 +120,11 @@ Lambdas v procs is an interesting topic. I'm curious to see how useful procs are
 ##### 14/09/20 (Mon)
 __*Concepts covered*__<br/>
 - Codecademy - Blocks, Procs and Lambdas
-    - Finished up the module with some exercises
+  - Finished up the module with some exercises
 - Introduction to Programming with Ruby (Launch School book)
-    - How to interpret documentation
-    - Class and module names
-    - Class and instance methods
+  - How to interpret documentation
+  - Class and module names
+  - Class and instance methods
 - Revision of notes
 
 __*Time spent*__<br/>
@@ -141,8 +141,8 @@ This is a quote that *really* sticks with me - I have definitely experienced thi
 __*Concepts covered*__<br/>
 - Converting handwritten notes to typed notes
 - Introduction to Programming with Ruby (Launch School book)
-    - Types, Data Structures (hashes & arrays)
-    - Variables (including scope)
+  - Types, Data Structures (hashes & arrays)
+  - Variables (including scope)
 
 __*Time spent*__<br/>
 127 minutes
@@ -156,9 +156,9 @@ I also have given up using vim for now. It was just adding to the complexity and
 __*Concepts covered*__<br/>
 - Converting handwritten notes to typed notes
 - Introduction to Programming with Ruby (Launch School book)
-    - Variables
-    - Methods
-    - Scope
+  - Variables
+  - Methods
+  - Scope
 
 __*Time spent*__<br/>
 125 minutes
@@ -177,11 +177,11 @@ As part of this, mutating the caller was also weird, since what goes in (purely 
 ##### 17/09/20 (Thu)
 __*Concepts covered*__<br/>
 - Introduction to Programming with Ruby (Launch School book)
-    - Methods exercises
-    - Flow control (inc. exercises)
-    - Loops (`loop`, `break`, `next`, `for`, `while`, `until`) inc. exercises
-    - Iterators
-    - Recursion
+  - Methods exercises
+  - Flow control (inc. exercises)
+  - Loops (`loop`, `break`, `next`, `for`, `while`, `until`) inc. exercises
+  - Iterators
+  - Recursion
 
 __*Time spent*__<br/>
 133 minutes
@@ -194,13 +194,13 @@ Recursion is confusing for me. I still don't really get the flow of code when a 
 ##### 18/09/20 (Fri)
 __*Concepts covered*__<br/>
 - Introduction to Programming with Ruby (Launch School book)
-    - Recursion
-    - Iterators exercises
-    - Arrays and array methods
-    - Bang operator
-    - Many array methods
-    - Array exercises
-    - Hashes
+  - Recursion
+  - Iterators exercises
+  - Arrays and array methods
+  - Bang operator
+  - Many array methods
+  - Array exercises
+  - Hashes
 
 __*Time spent*__<br/>
 123 minutes
@@ -215,8 +215,8 @@ While working in the morning is positive, I'm finding the lack of sleep is actua
 ##### 19/09/20 (Sat)
 __*Concepts covered*__<br/>
 - Introduction to Programming with Ruby (Launch School book)
-    - Revising what is returned versus printed in flow control, loops and methods notes
-    - Hashes (inc. exercises)
+  - Revising what is returned versus printed in flow control, loops and methods notes
+  - Hashes (inc. exercises)
 
 __*Time spent*__<br/>
 254 minutes
@@ -231,14 +231,14 @@ I am slightly encouraged because I was able to break down what was required with
 ##### 20/09/20 (Sun)
 __*Concepts covered*__<br/>
 - Introduction to Programming with Ruby (Launch School book)
-    - Regex
-    - Variables as pointers
-    - Blocks & Procs
-    - Exception handling
-    - Exercises
+  - Regex
+  - Variables as pointers
+  - Blocks & Procs
+  - Exception handling
+  - Exercises
 - Revising CLI Notes
 - Ruby Basics exercises
-    - Reading documentation
+  - Reading documentation
 
 __*Time spent*__<br/>
 243 minutes
@@ -255,10 +255,10 @@ I also initially thought it was kind of goofy to have an exercise section dedica
 ##### 21/09/20 (Mon)
 __*Concepts covered*__<br/>
 - Ruby Basics exercises
-    - Reading documentation
-    - Reading documentation 2
-    - Variable scope
-    - Loops 1
+  - Reading documentation
+  - Reading documentation 2
+  - Variable scope
+  - Loops 1
 
 __*Time spent*__<br/>
 124 minutes
@@ -276,13 +276,34 @@ I still need to get more familiar with loop syntax and how to use them.
 ##### 22/09/20 (Tue)
 __*Concepts covered*__<br/>
 - Ruby Basics exercises
-    - Loops 1
-    - Loops 2
-        - `.between?`, `.size`, `.empty?`, `next` methods
-    - User Input
+  - Loops 1
+  - Loops 2 
+    - `.between?`, `.size`, `.empty?`, `next` methods
+  - User Input
 
 __*Time spent*__<br/>
 122 minutes
 
 __*Thoughts*__<br/>
 The User Input exercises have been helpful in training to use loops. I am enjoying these bite-size exercises, as they are gradually building up in complexity, but still short enough to churn through them quickly. I feel like this is a good way to consolidate my thinking on this. 
+
+##### 23/09/20 (Wed)
+__*Concepts covered*__<br/>
+- Ruby Basics exercises
+  - User Input
+  - Methods 
+    - `.sample` method for arrays.
+  - Return keyword
+  - Conditionals
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+The key to the `return` exercises, is to remember that `puts` always returns `nil`, and that unless `return` is explicitly called, a method will always return the last line of the code that's inside of it. If `return` doesn't have a value associated with it, the value is `nil`.
+
+The exercises continue to challenge my understanding of concepts. I somewhere along the line got confused about how variable assignment within a method definition worked, and somehow thought you couldn't assign variables within a method. 
+
+I also learned that `if/else` logical statements by themselves don't create their own scope, but are able to create variables and assign values to them, even if they didn't exist before. These aren't method invocations with a block, nor are they creating their own scope. 
+
+I also previously thought you couldn't assign `if/else` statements to variables. This is possible, so long as you don't `return` anything at each evaluation stage (technically this works with `puts`, but you'll end up with either `nil` or blank lines, depending on the print method used).
