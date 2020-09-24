@@ -11,6 +11,9 @@
 - [19th, Sat](#190920-sat)
 - [20th, Sun](#200920-sun)
 - [21st, Mon](#210920-mon)
+- [22nd, Tue](#220920-tue)
+- [23rd, Wed](#230920-wed)
+- [24th, Thu](#240920-thu)
 
 ##### 10/09/20 (Thu)
 __*Concepts covered*__<br/>
@@ -307,3 +310,17 @@ The exercises continue to challenge my understanding of concepts. I somewhere al
 I also learned that `if/else` logical statements by themselves don't create their own scope, but are able to create variables and assign values to them, even if they didn't exist before. These aren't method invocations with a block, nor are they creating their own scope. 
 
 I also previously thought you couldn't assign `if/else` statements to variables. This is possible, so long as you don't `return` anything at each evaluation stage (technically this works with `puts`, but you'll end up with either `nil` or blank lines, depending on the print method used).
+
+##### 24/09/20 (Thu)
+__*Concepts covered*__<br/>
+- Ruby Basics exercises
+  - Conditionals
+  - Strings
+  - Arrays
+- Revision of scope and return
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I'm still a little confused by what is returned and printed in methods. The revision was helpful, but I'll need to go through it again to be sure. The arrays exercises were reasonably straightforward. The hashes were a little trickier, since my recollection of the methods and what they return is a little hazy. The end of the prep course beckons!
