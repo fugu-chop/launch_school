@@ -69,7 +69,20 @@ a = 'ten'
 
 => "My favorite number is 10!"
 ```
+We can also use `%Q()` to wrap a string in double quotes, or `%q()` to wrap a string in single quotes.
+```
+%Q(I am the best)
+=> "I am the best"
+```
+We can replace instances of text with `.gsub()` (including being able to use regex), or mutate an existing string in a variable with `.replace`.
+```
+name = "Dean"
+name.gsub!("Dean", "Garry")
+=> "Garry"
 
+name.replace "Dean"
+=> "Dean"
+```
 ###### Symbols
 __Symbols__ can be thought of as names. Only one copy of a symbol can exist at any time, and are *immutable*. We normally use them if we don't intend to print the contents of a symbol or change it. 
 ```

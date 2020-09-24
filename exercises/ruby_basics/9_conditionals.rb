@@ -1,4 +1,4 @@
-# 1) n the code below, sun is randomly assigned as 'visible' or 'hidden'. Write an if statement that prints "The sun is so bright!" if sun equals 'visible'.
+# 1) In the code below, sun is randomly assigned as 'visible' or 'hidden'. Write an if statement that prints "The sun is so bright!" if sun equals 'visible'.
 sun = ['visible', 'hidden'].sample
 
 if sun == 'visible'
@@ -78,3 +78,42 @@ end
 
 puts productivity
 
+# 8) Currently, "5 is a cool number!" is being printed every time the program is run. Fix the code so that "Other numbers are cool too!" gets a chance to be executed.
+=begin
+number = rand(10)
+
+if number = 5
+  puts '5 is a cool number!'
+else
+  puts 'Other numbers are cool too!'
+end
+=end
+number = rand(10)
+
+if number == 5
+  puts '5 is a cool number!'
+else
+  puts 'Other numbers are cool too!'
+end
+
+# 9) Reformat the following case statement so that it only takes up 5 lines. 
+=begin
+stoplight = ['green', 'yellow', 'red'].sample
+
+case stoplight
+when 'green'
+  puts 'Go!'
+when 'yellow'
+  puts 'Slow down!'
+else
+  puts 'Stop!'
+end
+=end
+
+stoplight = ['green', 'yellow', 'red'].sample
+
+case stoplight 
+when 'green' then puts 'Go'
+when 'yellow' then puts 'Slow down!'
+else puts 'Stop!'
+end

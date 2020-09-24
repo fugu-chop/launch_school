@@ -94,7 +94,7 @@ a.map { |num| num**2 }
 a
 => [1, 2, 3, 4]
 ```
-If we want to filter specific elements from an array, we can use the `select` method. This method iterates over an array and *returns a new array* that includes any items that __return true__ to the expression provided. 
+If we want to filter specific elements from an array, we can use the `select` method. This method iterates over an array and *returns a new array* that includes any items that __return true__ to the expression provided. This allows us to save the new returned array to a variable.
 
 Again, we can use the bang operator (`!`) to make these changes permanent. 
 ```
@@ -182,6 +182,6 @@ The `each` method works on objects that allow for iteration and is commonly used
 ###### `map`
 `map` also works on objects that allow for iteration. Like `each`, when given a block it invokes the given block once for every element in the collection. 
 
-Where it really differs from `each` is the returned value. `map` __creates and returns a new array__ containing the values returned by the block. This makes it useful for transforming an array as a whole, rather than iterating through individual elements within an array (which `each` is better for).
+Where it really differs from `each` is the returned value. `map` __creates and returns a new array__ containing the values returned by the block. This makes it useful for transforming an array as a whole, rather than iterating through individual elements within an array (which `each` is better for). It also lets us save the result directly to a variable. 
 
 If no block is given, it also returns an *Enumerator* object. 

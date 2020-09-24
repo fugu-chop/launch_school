@@ -112,6 +112,16 @@ else
   puts "a is neither 5, nor 6"
 end
 ```
+If we're aiming for fewer lines of code and we only have one line of code as an output from an evaluation, we can have the output on the same line as the evaluation, if we use a `then` keyword.
+```
+a = 5
+
+case a
+when 5 then puts "a is 5"
+when 6 then puts "a is 6"
+else puts "a is neither 5, nor 6"
+end
+```
 We are able to save our `case` statements to a variable. This can help us reduce the amount of typing `puts`. 
 
 We are also able to save the results of our `if/else` statements, so long as we don't `return` something at each stage of our evaluation. Technically we can use `puts`, but that will result in the evaluation returning `nil` or a blank line. 

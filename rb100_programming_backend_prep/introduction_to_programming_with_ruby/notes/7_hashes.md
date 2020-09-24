@@ -67,6 +67,22 @@ Bob's age's is 34.
 Bob's hair's is brown.
 => {:name=>"Bob", :age=>34, :hair=>"brown"}
 ```
+We can do the same thing with the `.map` method, though note that the returned value will be __an array__ and __not__ a hash.
+```
+numbers = {
+  high:   100,
+  medium: 50,
+  low:    10
+}
+
+half_numbers = numbers.map do |key, value|
+  value / 2
+end
+p half_numbers
+
+[50, 25, 5]
+=> [50, 25, 5]
+```
 ### Hashes as optional parameters
 You can use a hash to accept optional parameters when you are creating methods as well. This can be helpful when you want to give your methods some more flexibility and expressivity.
 ```

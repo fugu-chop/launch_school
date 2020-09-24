@@ -38,7 +38,7 @@ end
 
 puts meal
 =end
-puts "The method will print Dinner Breakfast. The method itself will print something when executed, while puts will also print out whatever is returned by the function."
+puts "The method will print Dinner Breakfast. The method itself will print 'Dinner' when executed due to the puts method, while puts will also print out whatever is returned by the function."
 
 # 5) What will the following code print? Why?
 =begin
@@ -49,7 +49,9 @@ end
 
 p meal
 =end
-puts "The method will print Dinner, followed by nil. The p method does not convert outputs to strings, and will print both puts and returned values. A method will also always return the last line of code inside of it, unless return is explicitly called."
+puts "The method will print Dinner, followed by nil. The p method does not convert outputs to strings, and will print both puts and returned values. A method will also always return the last line of code inside of it, unless return is explicitly called. The 'Dinner' above the puts method doesn't do anything, nor is it returned."
+
+puts "In sequence, meal is defined. When we call meal (which is effectively the same thing as 'p meal'), it puts 'Dinner' as part of it's execution, and also prints nil (since puts returns nil, and p does not convert to string). Remember that a method can print a value, then return a different one."
 
 # 6) What will the following code print? Why?
 =begin
@@ -101,7 +103,7 @@ end
 
 p count_sheep
 =end
-puts "The method will print 0, 1, 2, nil. The return keyword will break out of the method once the if condition is met, which is when sheep == 2. Since return doesn't return a value, it defaults to returning nil, which is visible only if we use p (i.e. puts will return a blank line)."
+puts "The method will print 0, 1, 2, nil. The return keyword will break out of the method once the if condition is met, which is when sheep == 2. Since return doesn't provide a value, it defaults to returning nil, which is visible only if we use p (i.e. puts will print a blank line)."
 
 # 10) What will the following code print? Why?
 =begin
