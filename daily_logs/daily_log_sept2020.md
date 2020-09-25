@@ -14,6 +14,7 @@
 - [22nd, Tue](#220920-tue)
 - [23rd, Wed](#230920-wed)
 - [24th, Thu](#240920-thu)
+- [25th, Fri](#250920-fri)
 
 ##### 10/09/20 (Thu)
 __*Concepts covered*__<br/>
@@ -324,3 +325,22 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I'm still a little confused by what is returned and printed in methods. The revision was helpful, but I'll need to go through it again to be sure. The arrays exercises were reasonably straightforward. The hashes were a little trickier, since my recollection of the methods and what they return is a little hazy. The end of the prep course beckons!
+
+##### 25/09/20 (Fri)
+__*Concepts covered*__<br/>
+- Ruby Basics exercises
+  - Hashes
+  - Debugging
+- RB101 - Lesson 1: Preparation
+  - PEDAC Method
+  - Quiz 1
+- RB101 - Lesson 2: Small Programs
+  - Truthiness
+
+__*Time spent*__<br/>
+120 minutes 
+
+__*Thoughts*__<br/>
+Debugging is actually really fun. It's like a puzzle, tracing through the logs and figuring out logic fixes. Hopefully that bodes well for my career as a developer, since I hear a lot of time is spent debugging.
+
+I also made a start on RB101, up to 'truthiness'. I'm officially enrolled into Launch School proper. This is going to be good. 
