@@ -84,8 +84,8 @@ numbers = {
 }
 
 low_numbers = numbers.select do |key, value|
-                 value < 25
-               end
+  value < 25
+end
 
 p low_numbers
 p numbers
@@ -103,4 +103,29 @@ end
 p low_numbers
 p numbers
 
-# 9)
+# 9) Create a nested hash using the following data.
+=begin
+Car
+type 	color 	year
+sedan 	blue 	2003
+
+Truck
+type 	color 	year
+pickup 	red 	1998
+=end
+
+vehicle = {
+  car: {type: 'sedan',color: 'blue', year: 2003},
+  truck: {type: 'pickup', color: 'red', year: 1998}
+}
+
+# 10) Rewrite car as a nested array containing the same key-value pairs.
+=begin
+car = {
+  type:  'sedan',
+  color: 'blue',
+  year:  2003
+}
+=end
+
+car = [[:type, 'sedan'], [:color,'blue'], [:year, 2003]]
