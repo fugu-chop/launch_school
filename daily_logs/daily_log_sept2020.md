@@ -15,6 +15,7 @@
 - [23rd, Wed](#230920-wed)
 - [24th, Thu](#240920-thu)
 - [25th, Fri](#250920-fri)
+- [26th, Sat](#260920-sat)
 
 ##### 10/09/20 (Thu)
 __*Concepts covered*__<br/>
@@ -344,3 +345,25 @@ __*Thoughts*__<br/>
 Debugging is actually really fun. It's like a puzzle, tracing through the logs and figuring out logic fixes. Hopefully that bodes well for my career as a developer, since I hear a lot of time is spent debugging.
 
 I also made a start on RB101, up to 'truthiness'. I'm officially enrolled into Launch School proper. This is going to be good. 
+
+##### 26/09/20 (Sat)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 2: Small Programs
+  - Calculator (inc. Refactor)
+    - Heredocs
+    - `%w()` as way to convert strings into a comma separated array
+  - Pseudo-code (formal and casual)
+  - Rubocop
+  - Debugging
+  - Precedence
+    - `tap` method
+
+__*Time spent*__<br/>
+242 minutes
+
+__*Thoughts*__<br/>
+I like the frameworks for pseudo-code. I definitely have a bad habit of just jumping straight into the code, only to find out mid-way during the solution that my initial code isn't ideal or doesn't cover the necessary use cases. I will need to make sure I try to put this into practice to get good and fast at it. 
+
+Some of the precedence material is pretty crazy, like how `{}` and `do/end` actually have different priorities to each other, and that depending on which one you use, you could be returning a completely different value to what you expected. Sounds like a really easy way to get bugs in your program. 
+
+The `.tap` method looks really useful to me for debugging. I'll be able to just insert it between chained methods to see what exactly gets returned at each step. It feels like a really good timesaver. 
