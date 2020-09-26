@@ -8,7 +8,20 @@
 ### What is a variable
 Variables are used to store information in memory, to be referenced and manipulated in a computer program, acting as containers. 
 
-We assign variables using the `=` symbol. 
+We assign variables using the `=` symbol. Note that we have to be careful as to what we're assigning to a variable. Only expressions that __return a value__ can be usefully stored in a variable. 
+
+Take this example:
+```
+my_var = puts "a"
+my_var1 = "a"
+
+my_var
+=> nil
+
+my_var1
+=> "a"
+```
+Since `puts` does not return anything, we are assigning `nil` to `my_var`. However, since `"a"` returns itself as a value, `my_var` stores the `"a"` value. 
 
 The point about variables being stored in memory is pertinent - they are not linked in some deeper fashion when other variables change. Take the following example:
 ```
@@ -70,6 +83,19 @@ The key distinguishing factor for deciding whether code delimited by `{ }` or `d
 ```
 arr = [1, 2, 3]
 
+arr.each do |element|
+  a = element      # a is initialized here
+end
+
+puts a
+=> NameError (undefined local variable or method `a` for main:Object)
+```
+Here, we get a `NameError`, as we have a method invocation (`.each`) with a block (`do end`), which creates it's own scope. This means that variables (`a`) defined within the block are not accessible outside of it. 
+
+Contrast with this example:
+```
+arr = [1, 2, 3]
+
 for i in arr do
   a = 5      # a is initialized here
 end
@@ -77,7 +103,7 @@ end
 puts a
 => 5
 ```
-`a` is accessible here since `for...do end` code __did not create a new inner scope__, since `for` is part of Ruby language and __not a method invocation__. When we use `each`, `times` and other method invocations, followed by `{ }` or `do end`, that's when a new block is created.
+`a` is accessible here since `for...do end` code __did not create a new inner scope__, since `for` is part of Ruby language and __not a method invocation__. When we use `each`, `times`, `loop` and other method invocations, followed by `{ }` or `do end`, that's when a new block is created.
 
 ###### Method definitions & scope
 Reassignment, including assignment operators like `+=`, `=`, do not mutate a variable in the context of a *method definition*; instead, it binds the variable to a new object. That is, the assignment operator sets the variable to point to a different object.

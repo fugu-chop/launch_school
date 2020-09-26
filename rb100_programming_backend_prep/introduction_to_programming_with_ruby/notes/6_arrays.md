@@ -6,6 +6,7 @@
 - [Iterating over an array](#iterating-over-an-array)
 - [Common array methods](#common-array-methods)
 - [Each v Map](#each-v-map)
+- [Multiple assignment](#multiple-assignment)
 
 ### What is an array?
 An array is an *ordered list* of elements that can be of *any* type. You can define an array by placing a list of elements between square bracket `[ ]`.
@@ -185,3 +186,6 @@ The `each` method works on objects that allow for iteration and is commonly used
 Where it really differs from `each` is the returned value. `map` __creates and returns a new array__ containing the values returned by the block. This makes it useful for transforming an array as a whole, rather than iterating through individual elements within an array (which `each` is better for). It also lets us save the result directly to a variable. 
 
 If no block is given, it also returns an *Enumerator* object. 
+
+### Multiple Assignment
+When an array is assigned to two variables on the same line, *each element of that array gets assigned to one of the variables*. This type of assignment, where we assign more than one value on the same line, is called __multiple assignment__.
