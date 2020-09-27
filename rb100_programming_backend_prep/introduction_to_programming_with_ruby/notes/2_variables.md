@@ -105,10 +105,49 @@ puts a
 ```
 `a` is accessible here since `for...do end` code __did not create a new inner scope__, since `for` is part of Ruby language and __not a method invocation__. When we use `each`, `times`, `loop` and other method invocations, followed by `{ }` or `do end`, that's when a new block is created.
 
+Peer blocks cannot reference variables initialized in other blocks. This means that we could use the same variable name `a` in the block of code that follows the loop method invocation. However, it's __not the same variable as in the first block__.
+```
+2.times do
+  a = 'hi'
+  puts a      # 'hi' <= this will be printed out twice due to the loop
+end
+
+loop do
+  puts a      # => NameError: undefined local variable or method `a' for main:Object
+  break
+end
+
+puts a        # => NameError: undefined local variable or method `a' for main:Object
+```
+Nested blocks follow the same rules of inner and outer scoped variables. When dealing with nested blocks, our usage of what's "outer" or "inner" is going to be relative. We'll switch vocabulary and say "first level", "second level", etc.
+```
+a = 1           # first level variable
+
+loop do         # second level
+  b = 2
+
+  loop do       # third level
+    c = 3
+    puts a      # => 1
+    puts b      # => 2
+    puts c      # => 3
+    break
+  end
+
+  puts a        # => 1
+  puts b        # => 2
+  puts c        # => NameError
+  break
+end
+
+puts a          # => 1
+puts b          # => NameError
+puts c          # => NameError
+```
 ###### Method definitions & scope
 Reassignment, including assignment operators like `+=`, `=`, do not mutate a variable in the context of a *method definition*; instead, it binds the variable to a new object. That is, the assignment operator sets the variable to point to a different object.
 
-Method definitions are *self-contained* with respect to local variables. Local variables outside the method definition are __not visible__ inside the method definition. Furthermore, local variables inside the method definition are not visible outside the method definition.
+Method definitions are *self-contained* with respect to local variables. Local variables outside the method definition are __not visible__ *inside* the method definition, __unless passed in as arguments__ (at which point, the variable is assigned as a method parameter and made available to the method body as a local variable). Furthermore, local variables *inside* the method definition are not visible outside the method definition.
 
 In this example, the `a` variable defined outside the `my_value` method is __not visible__ to the `a` defined within the method, and vice versa. `a` is also an integer, which is __immutable__.
 ```

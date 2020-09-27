@@ -9,6 +9,9 @@
 - [Rubocop](#rubocop)
 - [Debugging](#debugging)
 - [Precedence](#precedence)
+- [Scoping with Constants](#scoping-with-constants)
+- [More on variable scope](#more-on-variable-scope)
+- [Pass by reference v pass by value](#pass-by-reference-v-pass-by-value)
 
 ### Style for Lesson 2 Only
 In this lesson we're going to always use parentheses when invoking a method. Example: we will use `gets().chomp()` instead of `gets.chomp`, just so we're clear on what is a method invocation and what is a local variable. 
@@ -249,7 +252,7 @@ How exactly did we get `#<Enumerator: [1, 2, 3]:map>`? With `do...end` being the
 
 Note that `p` doesn’t take a block. As with all methods called with a block that don’t accept one, __the block just gets ignored__.
 
-In other words, the binding of an argument to a method and the method name (`p` and the return value of `array.map`) is slightly *tighter* than the binding between a method call and a `do...end` block. Thus, `array.map` gets executed first, then the return value and the block get passed to `p` as separate arguments.
+In other words, the binding of an argument to a method and the method name (`p` and the return value of `array.map`) is slightly *tighter* than the binding between a method call and a `do...end` block. Thus, `array.map` gets executed first, then the return value and the block get passed to `p` as separate arguments.  The block following the method invocation is *an argument being passed into the method*. 
 
 A `{ }` block, on the other hand, has higher priority which means that it binds *more tightly* to `array.map`. Therefore, when we use `{}`, `array.map` is called with the block, then the return value of `array.map` gets passed to `p`.
 
@@ -289,3 +292,122 @@ One other use case for this method is to __debug intermediate objects__ in metho
 .map { |x| x*x }.tap { |x| p x }          # [4, 16, 36, 64, 100]
 ```
 Otherwise, we would have to add the `pry` debugger above the expression and execute each method in the chain one by one in order to see the output.
+
+### Scoping with Constants
+Constants are said to have *lexical scope*, which will have more meaningful consequences when we get to object oriented programming. For now, just remember that constants have different scoping rules from local variables.
+
+The scoping rules for constants is __not__ the same as local variables. In procedural style programming, constants behave like *globals*.
+```
+USERNAME = 'Batman'
+
+def authenticate
+  puts "Logging in #{USERNAME}"
+end
+
+authenticate    # => Logging in Batman
+```
+The rules for local variables apply in the same way to constants when dealing with method invocations with a block. 
+```
+FAVORITE_COLOR = 'taupe'
+
+1.times do
+  puts "I love #{FAVORITE_COLOR}!"  # => I love taupe!
+end
+```
+We can access constants, even when they are initialised in an inner scope. 
+```
+loop do
+  MY_TEAM = "Phoenix Suns"
+  break
+end
+
+puts MY_TEAM    # => Phoenix Suns
+```
+### More on variable scope
+__Method definition__ is when, within our code, we define a Ruby method using the `def` keyword.
+```
+def greeting
+  puts "Hello"
+end
+```
+__Method invocation__ is when we call a method, whether that happens to be an existing method from the Ruby Core API or core Library, or a custom method that we've defined ourselves using the `def` keyword.
+`greeting`.
+
+We've also seen examples of methods being called with blocks. 
+`[1, 2, 3].each { |num| puts num }`
+Technically __any__ method can be called with a block, but the block is only executed if the method is *defined in a particular way*. We'll cover this in more detail in the future, but for now, we want to remember that __a block is part of the method invocation__. In fact, method invocation followed by `{}` or `do..end` is the way in which we *define a block* in Ruby. Essentially the block *acts as an argument to the method*. 
+
+In the same way that a local variable can be passed as an argument to a method at invocation, *when a method is called with a block it acts as an argument to that method*.
+
+The way that an argument is used, whether it is a method parameter or a block, depends on how the method is defined.
+```
+# Block not executed
+def greetings
+  puts "Goodbye"
+end
+
+word = "Hello"
+
+greetings do
+  puts word
+end
+
+Goodbye
+
+# Block executed
+def greetings
+  yield
+  puts "Goodbye"
+end
+
+word = "Hello"
+
+greetings do
+  puts word
+end
+
+Hello
+Goodbye
+```
+The `yield` keyword is what controls the interaction with the block, in this case it executes the block once. Since the block has access to the local variable word, `Hello` is output when the block is executed. Don't focus here on what `yield` is or how it works.
+
+The important take-away for now is that blocks and methods can interact with each other; the level of that interaction is set by the method definition and then used at method invocation.
+
+When invoking a method with a block, we aren't just limited to executing code within the block; depending on the method definition, the method can use the *return value of the block* to perform some other action.
+```
+a = "hello"
+[1, 2, 3].map { |num| a } 
+
+["hello", "hello", "hello"]
+```
+The `Array#map` method is defined in such a way that it uses the return value of the block to perform transformation on each element in an array. In the above example, `#map` doesn't have direct access to a but it can use the value of `a` to perform transformation on the array since the block can access `a` and returns it to `#map`.
+
+*In summary:*
+1. We can think of __method definition__ as __setting a certain scope__ for any local variables in terms of the parameters that the method definition has, what it does with those parameters, and also how it interacts (if at all) with a block. 
+2. We can then think of __method invocation__ as __using the scope set by the method definition__. If the method is defined to use a block, then the scope of the block can provide additional flexibility in terms of how the method invocation interacts with its surroundings.
+
+### Pass by reference v pass by value
+This is a discussion about what happens to *objects when passed into methods*. In most programming languages, there are two ways of dealing with objects passed into methods. You can either treat these arguments as:
+1. "references" to the original object; or
+2. "values", which are copies of the original
+
+###### Pass by value
+When you "*pass by value*", the method only has __a copy of the original object__. Operations performed on the object within the method have __no effect on the original object__ outside of the method.
+
+Some Rubyists say Ruby is "pass by value" because re-assigning the object within the method doesn't affect the object outside the method. 
+```
+def change_name(name)
+  name = 'bob'      # does this reassignment change the object outside the method?
+end
+
+name = 'jim'
+change_name(name)
+puts name           
+
+jim
+```
+The code example above has two different local variables named `name`. There is one scoped *within* the method, and there is one in the *main scope*. 
+
+This is __not__ variable shadowing, because the main scope variable is __not accessible to the method__. Within the method, we could have named the variable something other than `name`.
+
+When we passed the `name` variable into the `change_name` method, it looks like the variable was *passed by value*, since re-assigning the variable only affected the *method-level variable*, and __not__ the *main scope variable*.

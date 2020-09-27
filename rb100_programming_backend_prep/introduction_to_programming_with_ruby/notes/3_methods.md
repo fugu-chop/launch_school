@@ -141,7 +141,6 @@ add_three(4)
 => 7
 ```
 The explicit `return` stops the method from evaluating subsequent code. 
-
 ```
 def just_assignment(number)
   foo = number + 3
@@ -151,6 +150,22 @@ just_assignment(3)
 => 6
 ```
 We didn't specify a `return` keyword, or a print command, but Ruby still returned the variable. 
+
+###### Good practice
+Your goal should be to build small methods that are like LEGO blocks: they should be stand-alone pieces of functionality that you can use to piece together larger structures. 
+
+You don't want these methods to be mentally taxing to use. Interesting structures are comprised of many hundreds or thousands of atomic LEGO pieces. Likewise, large programs are comprised of hundreds or thousands of small methods.
+
+It's generally recommended to have methods __either__ return a value, or have a side effect (i.e. __something other than returning a value__). Examples of side effects:
+- Writing to a file,
+- Printing output (e.g. `puts 'hello'`),
+- Raising an exception, and
+- Mutating a non-local variable.
+
+Other good practices include:
+- Method names should provide some level of inkling as to what it does - either returning a value, or producing a side effect (e.g. `total`, `update_total`, `print_hello`).
+- Methods should be at the same level of abstraction. E.g. We should be able to compartmentalise our methods, and for them to be fairly similar in respect of what they do or how they do them. 
+  - An example would be `deal()`, `hit()`, `stay()` and `iterate_through_cards()`. The first three methods are verbs in the context of the game, whereas the last method is a programming concern. 
 
 ### Chaining methods
 Because we know for certain that every method call returns something, we can chain methods together, which gives us the ability to write extremely expressive and succinct code.

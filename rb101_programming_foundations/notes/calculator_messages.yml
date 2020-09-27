@@ -1,0 +1,27 @@
+welcome_msg: 
+  "Welcome to Calculator!
+  You can use this application to do basic calculations, with two numbers.
+  Please enjoy!"
+
+name: "Please enter your name! "
+
+empty_name: "That looked like there was no text in the input!"
+
+first_num_enter: "Please enter the first number! "
+
+second_num_enter: "Please enter the second number! "
+
+invalid_num: "That doesn't look like a valid number - please try again!"
+
+operator_msg: "What operation would you like to perform?
+  You can press:
+    1 to Add
+    2 to Subtract
+    3 to Multiply
+    4 to Divide"
+
+invalid_operator: "Please enter a valid operator!"
+
+calculate_again: "Do you want to perform another calculation? Press 'Y' if so!"
+
+thank_you: ", thanks for using the calculator! I hope to see you again!"
