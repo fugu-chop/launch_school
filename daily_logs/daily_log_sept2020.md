@@ -16,6 +16,7 @@
 - [24th, Thu](#240920-thu)
 - [25th, Fri](#250920-fri)
 - [26th, Sat](#260920-sat)
+- [27th, Sun](#270920-sun)
 
 ##### 10/09/20 (Thu)
 __*Concepts covered*__<br/>
@@ -367,3 +368,23 @@ I like the frameworks for pseudo-code. I definitely have a bad habit of just jum
 Some of the precedence material is pretty crazy, like how `{}` and `do/end` actually have different priorities to each other, and that depending on which one you use, you could be returning a completely different value to what you expected. Sounds like a really easy way to get bugs in your program. 
 
 The `.tap` method looks really useful to me for debugging. I'll be able to just insert it between chained methods to see what exactly gets returned at each step. It feels like a really good timesaver. 
+
+##### 27/09/20 (Sun)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 2: Small Programs
+  - Porting messages to an external YAML file
+  - Home loan calculator
+  - Best practices with methods
+  - Revision on variable scope
+  - Method invocation versus definition
+  - Methods accessing local variables through block interactions
+
+__*Time spent*__<br/>
+241 minutes
+
+__*Thoughts*__<br/>
+The concept of having your messages live in an external file is pretty cool. I'm not sure what the performance implications are, but it seems like you could have improved security by not having everything live in the same script. 
+
+I'm getting some good practice with loops, and pseudocode with the home loan calculator. The loan calculator was a fun exercise, even if it did take me a while. The Rubocop alerts for style guide failures are kind of annoying, but necessary I guess. I find the truncated lines even harder to read, especially when there's lots of indenting involved. 
+
+Methods accessing local variables through blocks is weird. I think I only superficially understand it, and I'm not entirely sure what use cases there are to do so (our old friend `yield`).
