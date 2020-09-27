@@ -1,91 +1,120 @@
-welcome_msg = <<-MSG
-Welcome to the Home Loan calculator!
-This handy little tool will allows you to calculate your monthly payment, based on a few inputs:
+def welcome_msg
+  puts 'Welcome to the Home Loan calculator!
+This handy little tool will allow you to calculate your monthly payment,
+based on a few inputs:
 1. The annual interest rate (e.g. 5%)
 2. The loan amount ($)
-3. The loan duration (months)
+3. The loan duration (years)
 
-Let's get started!
-MSG
+Let\'s get started!'
+end
 
-# Create function to calculate the monthly repayment
-def monthly_payment(annual_interest_rate, loan_duration, loan_amount)
+def verify_number(input)
+  input.to_i.to_s == input && input.to_i > 0
+end
+
+def verify_interest_rate(input)
+  input.to_i > 0 &&
+    (input.to_f.to_s == input ||
+     input.to_i.to_s == input)
+end
+
+def get_loan_amount
+  loop do
+    puts "\n"
+    puts 'Please enter your loan amount without any commas or $ signs: '
+    loan_amount = gets.chomp
+    if verify_number(loan_amount)
+      puts "Thanks, your loan amount has been recorded as $#{loan_amount}."
+      return loan_amount
+    else
+      puts 'That doesn\'t look like a valid amount.
+Please enter a non-zero amount without commas and $ signs'
+    end
+  end
+end
+
+def get_interest_rate
+  loop do
+    puts "\n"
+    puts 'Please enter your annual interest rate, as a whole number: '
+    annual_interest_rate = gets.chomp
+    if verify_interest_rate(annual_interest_rate)
+      puts "Thanks, your annual interest rate has
+been recorded as #{annual_interest_rate}%."
+      return annual_interest_rate
+    else
+      puts 'That doesn\'t look like a valid rate.
+Please enter a non-zero rate, expressed as a whole number,
+without a % sign.'
+    end
+  end
+end
+
+def get_loan_duration
+  loop do
+    puts "\n"
+    puts 'Please enter your loan duration, in years: '
+    loan_duration = gets.chomp
+    if verify_number(loan_duration)
+      puts "Thanks, your loan duration has
+been recorded as #{loan_duration} years."
+      return loan_duration
+    else
+      puts 'That doesn\'t look like a valid loan duration.
+Please try again.'
+    end
+  end
+end
+
+def calculate_monthly_payment(annual_interest_rate, loan_duration, loan_amount)
   monthly_interest_rate = annual_interest_rate.to_f / 1200.0
   loan_duration = loan_duration.to_f * 12.0
   loan_amount.to_i * (monthly_interest_rate / (1 -
     (1 + monthly_interest_rate)**-(loan_duration)))
 end
 
-# Create a function to verify that the input is an integer
-def verify_number(input)
-  input.to_i.to_s == input && input.to_i > 0
+def display_output(loan_amount, annual_interest_rate,
+                   loan_duration, monthly_payment)
+  puts "\n"
+  puts "We've calculated your monthly payment at:
+#{format('$%.2f', monthly_payment)}.
+
+This calculation is based on a:
+- Loan payment of $#{loan_amount},
+- Annual interest rate of #{annual_interest_rate}% and
+- Loan duration of #{loan_duration} years."
 end
 
-puts welcome_msg
+def another_calculation?
+  puts "\n"
+  puts 'Would you like to perform another calculation?
+Please press \'y\' or \'n\'.'
+  loop do
+    answer = gets.chomp.downcase
+    if answer == 'y'
+      return true
+    elsif answer == 'n'
+      puts 'Thanks for using our loan calculator. We hope you found it useful.'
+      return false
+    else
+      puts 'That isn\'t a valid input. Please try again.'
+    end
+  end
+end
 
 annual_interest_rate = nil
 loan_duration = nil
 loan_amount = nil
 
-# loop to take in loan amount
+welcome_msg
 loop do
-  loop do
-    puts 'Please enter your loan amount without any commas or $ signs: '
-    loan_amount = gets.chomp
-    if verify_number(loan_amount)
-      puts "Thanks, your loan amount has been recorded as $#{loan_amount}."
-      puts "\n"
-      break
-    else
-      puts 'That doesn\'t look like a valid amount.
-      Did you remember to remove commas and $ signs?'
-      puts "\n"
-    end
-  end
-
-  # loop to take in annual interest rate
-  loop do
-    puts 'Please enter your annual interest rate, as a whole number: '
-    annual_interest_rate = gets.chomp
-    # The || statement accounts for where APR doesn't have a decimal place.
-    if annual_interest_rate.to_i > 0 &&
-       (annual_interest_rate.to_f.to_s == annual_interest_rate ||
-        annual_interest_rate.to_i.to_s == annual_interest_rate)
-      puts "Thanks, your annual interest rate has
-      been recorded as #{annual_interest_rate}%."
-      puts "\n"
-      break
-    else
-      puts 'That doesn\'t look like a valid rate.
-      Did you enter the rate as a whole number, without a % sign?'
-      puts "\n"
-    end
-  end
-
-  # loop to grab loan duration
-  loop do
-    puts 'Please enter your loan duration, in years: '
-    loan_duration = gets.chomp
-    if verify_number(loan_duration)
-      puts "Thanks, your loan duration has
-      been recorded as #{loan_duration} years."
-      puts "\n"
-      break
-    else
-      puts 'That doesn\'t look like a valid loan duration.
-      Please try again.'
-    end
-  end
-
-  puts "Your monthly payment is $#{format('%.2f',
-                                          monthly_payment(annual_interest_rate,
-                                                          loan_duration,
-                                                          loan_amount))}."
-  puts "\n"
-  puts 'Do you want to run another calculation? Press \'y\' if so!'
-  puts "\n"
-  if gets.chomp.downcase != 'y'
-    puts 'Thanks for using the home loan calculator. We hope to see you again!'
-    break
-  end
+  loan_amount = get_loan_amount
+  annual_interest_rate = get_interest_rate
+  loan_duration = get_loan_duration
+  monthly_payment = calculate_monthly_payment(annual_interest_rate,
+                                              loan_duration, loan_amount)
+  display_output(loan_amount, annual_interest_rate,
+                 loan_duration, monthly_payment)
+  break unless another_calculation? == true
 end
