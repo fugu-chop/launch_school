@@ -4,6 +4,8 @@
 - [What is a variable?](#what-is-a-variable)
 - [Scope](#Scope)
 - [Types of Variables](#types-of-variables)
+- [Immutability](#immutability)
+- [Mutability](#mutability)
 
 ### What is a variable
 Variables are used to store information in memory, to be referenced and manipulated in a computer program, acting as containers. 
@@ -31,6 +33,90 @@ a = 7
 puts b
 => 4
 ```
+When we assign an object to a variable, that variable is said to *reference* the object (it does so by storing the `object id` of the object). We can also talk of the variable as being __bound to the object__, or binding the variable to the object.
+
+Every object in Ruby has a unique `object id`, and that `object id` can be retrieved simply by calling `#object_id` on the object in question. Even literals, such as numbers, booleans, `nil`, and Strings have `object ids`.
+```
+5.object_id
+=> 11
+
+true.object_id
+=> 20
+
+nil.object_id
+=> 8
+
+"abc".object_id
+=> 70101471581080
+```
+Let's see what happens when we reassign a variable to another variable. 
+```
+greeting = 'Hello'
+
+whazzup = greeting
+=> "Hello"
+
+greeting
+=> "Hello"
+
+whazzup
+=> "Hello"
+
+greeting.object_id
+=> 70101471431160
+
+whazzup.object_id
+=> 70101471431160
+```
+This demonstrates that both `greeting` and `whazzup` not only reference a `String` with the same value, but are, in fact, references to the same String; `greeting` and `whazzup` are aliases for each other. We can show this by using one of the two variables to change the object.
+```
+greeting.upcase!
+=> "HELLO"
+
+greeting
+=> "HELLO"
+
+whazzup
+=> "HELLO"
+
+whazzup.concat('!')
+=> "HELLO!"
+
+greeting
+=> "HELLO!"
+
+whazzup
+=> "HELLO!"
+
+greeting.object_id
+=> 70101471431160
+
+whazzup.object_id
+=> 70101471431160
+```
+Since both variables are associated with the same object, using either variable to alter the object is reflected in the other variable. We can also see that the `object id` does not change.
+
+###### Reassignment
+```
+greeting = 'Dude!'
+=> "Dude!"
+
+puts greeting
+=> "Dude!"
+
+puts whazzup
+=> "HELLO!"
+
+greeting.object_id
+=> 70101479528400
+
+whazzup.object_id
+=> 70101471431160
+```
+Here, we see that `greeting` and `whazzup` no longer refer to the same object; they have different values and different `object ids`.
+
+What this shows is that reassignment to a variable doesn’t change the object referenced by that variable; instead, the variable is bound to a completely new object — made to reference a new object. The original object is merely disconnected from the variable.
+
 ### Getting user input
 We can use `gets` to obtain user input. We chain the `.chomp` method to remove the newline (`\n`) that gets added to `gets`. Note that `gets` __always gives us a string__.
 ```
@@ -187,3 +273,38 @@ We'll learn more when we get to OOP.
 
 ###### Local
 Local variables are the most common variables you will come across and *obey all scope boundaries*. These variables are declared by starting the variable name with neither `$` nor `@`, as well as not capitalising the entire variable name.
+
+### Immutability
+In Ruby, numbers and boolean values are immutable. Objects of some complex classes, such as `nil` (the only member of the `NilClass` class) and `Range` objects (e.g., `1..10`) are immutable. Any class can establish itself as immutable by simply not providing any methods that alter its state.
+
+Once we create an immutable object, we cannot change it.
+```
+number = 3
+=> 3
+
+number
+=> 3
+
+number = 2 * number
+=> 6
+
+number
+=> 6
+```
+As we saw above, this is reassignment which, as we learned, doesn’t change the object. Instead, it binds a new object to the variable. In this case, we create a new `Integer` with a value of `6` and assign it to `number`. 
+
+There are, in fact, __no methods available that let you alter the value of any immutable object__. All you can do is *reassign the variable so it references a different object*. 
+
+This disconnects the original object from the variable, which makes it available for garbage collection unless another reference to the object exists elsewhere.
+
+### Mutability
+Most objects in Ruby are mutable; they are objects of a class that __permit modification of the object’s state__ in some way. Whether modification is permitted by setter methods or by calling methods that perform more complex operations is unimportant; as long as you can modify an object, it is mutable. Mutable objects can be modified __without creating new objects__ (and hence the `object id` remains the same).
+
+A *setter method* (or simply, a setter) is a method defined by a Ruby object that allows a programmer to explicitly change the value of part of an object. Here's an example with the `Array#[]=` method. 
+```
+a = [1, 2, 3, 4, 5]
+a[3] = 0       # calls setter method
+a 
+
+[1, 2, 3, 0, 5]
+```

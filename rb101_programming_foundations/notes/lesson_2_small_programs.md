@@ -397,7 +397,7 @@ When you "*pass by value*", the method only has __a copy of the original object_
 Some Rubyists say Ruby is "pass by value" because re-assigning the object within the method doesn't affect the object outside the method. 
 ```
 def change_name(name)
-  name = 'bob'      # does this reassignment change the object outside the method?
+  name = 'bob'
 end
 
 name = 'jim'
@@ -411,3 +411,18 @@ The code example above has two different local variables named `name`. There is 
 This is __not__ variable shadowing, because the main scope variable is __not accessible to the method__. Within the method, we could have named the variable something other than `name`.
 
 When we passed the `name` variable into the `change_name` method, it looks like the variable was *passed by value*, since re-assigning the variable only affected the *method-level variable*, and __not__ the *main scope variable*.
+
+###### Pass by reference
+If Ruby was pure "pass by value", that means there should be no way for operations within a method to cause __changes to the original object__.
+```
+def cap(str)
+  str.capitalize!
+end
+
+name = "jim"
+cap(name)
+puts name
+
+Jim
+```
+This implies that Ruby is "pass by reference", because operations within the method __affected the original object__ when we passed the `name` variable into the `cap` method.
