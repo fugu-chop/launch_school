@@ -388,3 +388,18 @@ The concept of having your messages live in an external file is pretty cool. I'm
 I'm getting some good practice with loops, and pseudocode with the home loan calculator. The loan calculator was a fun exercise, even if it did take me a while. The Rubocop alerts for style guide failures are kind of annoying, but necessary I guess. I find the truncated lines even harder to read, especially when there's lots of indenting involved. 
 
 Methods accessing local variables through blocks is weird. I think I only superficially understand it, and I'm not entirely sure what use cases there are to do so (our old friend `yield`).
+
+##### 28/09/20 (Mon)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 2: Small Programs
+  - Home loan calculator refactor
+  - Pass by Reference
+- References and mutability in Ruby article
+
+__*Time spent*__<br/>
+119 minutes
+
+__*Thoughts*__<br/>
+Refactoring according to Rubocop creates some interesting challenges, like shortening all of your logic in methods to ensure compliance, or abstracting out logic to smaller methods. I have a bad habit of not using methods enough and just creating a whole bunch of code. 
+
+Reading back on the pass by value and reference stuff is good revision. It seems like a useful concept to preemptively avoid bugs. 
