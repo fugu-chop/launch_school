@@ -1,3 +1,7 @@
+def clear_screen
+  system "clear"
+end
+
 def welcome_msg
   puts 'Welcome to the Home Loan calculator!
 This handy little tool will allow you to calculate your monthly payment,
@@ -107,7 +111,10 @@ annual_interest_rate = nil
 loan_duration = nil
 loan_amount = nil
 
+clear_screen
+
 welcome_msg
+
 loop do
   loan_amount = get_loan_amount
   annual_interest_rate = get_interest_rate
