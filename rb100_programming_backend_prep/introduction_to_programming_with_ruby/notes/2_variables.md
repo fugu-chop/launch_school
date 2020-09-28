@@ -8,7 +8,7 @@
 ### What is a variable
 Variables are used to store information in memory, to be referenced and manipulated in a computer program, acting as containers. 
 
-We assign variables using the `=` symbol. Note that we have to be careful as to what we're assigning to a variable. Only expressions that __return a value__ can be usefully stored in a variable. 
+We assign variables using the `=` symbol. Note that we have to be careful as to what we're assigning to a variable. Only expressions that __return a value__ can be usefully stored in a variable. Variables don’t actually contain values, but instead serve as __references to objects__.
 
 Take this example:
 ```
