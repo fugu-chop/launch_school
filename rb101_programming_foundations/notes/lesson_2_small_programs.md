@@ -12,6 +12,8 @@
 - [Scoping with Constants](#scoping-with-constants)
 - [More on variable scope](#more-on-variable-scope)
 - [Pass by reference v pass by value](#pass-by-reference-v-pass-by-value)
+- [Immutability](#immutability)
+- [Mutability](#mutability)
 
 ### Style for Lesson 2 Only
 In this lesson we're going to always use parentheses when invoking a method. Example: we will use `gets().chomp()` instead of `gets.chomp`, just so we're clear on what is a method invocation and what is a local variable. 
@@ -392,7 +394,7 @@ This is a discussion about what happens to *objects when passed into methods*. I
 2. "values", which are copies of the original
 
 ###### Pass by value
-When you "*pass by value*", the method only has __a copy of the original object__. Operations performed on the object within the method have __no effect on the original object__ outside of the method.
+When you "*pass (an object) by value (to a variable/as an argument to a method)*", the method only has __a copy of the original object__. Operations performed on the object within the method have __no effect on the original object__ outside of the method.
 
 Some Rubyists say Ruby is "pass by value" because re-assigning the object within the method doesn't affect the object outside the method. 
 ```
@@ -426,3 +428,39 @@ puts name
 Jim
 ```
 This implies that Ruby is "pass by reference", because operations within the method __affected the original object__ when we passed the `name` variable into the `cap` method.
+
+
+### Immutability
+In Ruby, numbers and boolean values are immutable. Objects of some complex classes, such as `nil` (the only member of the `NilClass` class) and `Range` objects (e.g., `1..10`) are immutable. Any class can establish itself as immutable by simply not providing any methods that alter its state.
+
+Once we create an immutable object, we cannot change it.
+```
+number = 3
+=> 3
+
+number
+=> 3
+
+number = 2 * number
+=> 6
+
+number
+=> 6
+```
+As we saw above, this is reassignment which, as we learned, doesn’t change the object. Instead, it binds a new object to the variable. In this case, we create a new `Integer` with a value of `6` and assign it to `number`. 
+
+There are, in fact, __no methods available that let you alter the value of any immutable object__. All you can do is *reassign the variable so it references a different object*. 
+
+This disconnects the original object from the variable, which makes it available for garbage collection unless another reference to the object exists elsewhere.
+
+### Mutability
+Most objects in Ruby are mutable; they are objects of a class that __permit modification of the object’s state__ in some way. Whether modification is permitted by setter methods or by calling methods that perform more complex operations is unimportant; as long as you can modify an object, it is mutable. Mutable objects can be modified __without creating new objects__ (and hence the `object id` remains the same).
+
+A *setter method* (or simply, a setter) is a method defined by a Ruby object that allows a programmer to explicitly change the value of part of an object. Here's an example with the `Array#[]=` method. 
+```
+a = [1, 2, 3, 4, 5]
+a[3] = 0       # calls setter method
+a 
+
+[1, 2, 3, 0, 5]
+```
