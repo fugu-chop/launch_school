@@ -30,9 +30,11 @@ Parameters are used when you have data *outside of a method definition's scope*,
 
 __Arguments__ are pieces of information that are sent to a method invocation to be modified or used to return a specific result. We *pass* arguments to a method when we call it. 
 
-Here, we are using an argument to pass the word, or string of words, that we want to use in the say method definition. 
+In our example above, we are using an argument to pass the word, or string of words, that we want to use in the say method definition. 
 
 When we pass those words into the method definition, they're assigned to the *local* variable `words` and we can use them however we please from within the method definition. Note that the words local variable is scoped at the *method definition level*; that is, you __cannot__ reference this local variable outside of the `say` method definition.
+
+The `parameter` is a term that should only be used to describe the name listed in the `def` statement.  To refer to the value of that parameter, you should refer to the `argument`.
 
 ###### Default parameters
 Sometimes, we just want to make sure our program runs, even if a necessary parameters isn't given to the method. We can use default parameters for this purpose:
@@ -48,7 +50,7 @@ say()
 ### Method Definition and Local Variable Scope
 A method definition __creates its own scope__ outside the regular flow of execution. 
 
-This is why local variables *within* a method definition cannot be referenced from outside of the method definition. It's also the reason why local variables within a method definition cannot access data outside of the method definition (unless the data is passed in as a parameter).
+This is why local variables *within* a method definition cannot be referenced from outside of the method definition. It's also the reason why local variables within a method definition cannot access data outside of the method definition (unless the data is passed in as an argument).
 ```
 a = 5
 
@@ -199,6 +201,10 @@ def add_three(n)
 end
 
 add_three(1).times { puts "This should now print 4 times" }
+This should now print 4 times
+This should now print 4 times
+This should now print 4 times
+This should now print 4 times
 => 4
 ```
 ### Method calls as arguments

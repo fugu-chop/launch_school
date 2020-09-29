@@ -50,6 +50,7 @@ In this case, the method call reads simply "upcase". Since `#upcase` is an insta
 
 Reading the description of the method, we also see that the method
 > Returns __a copy__ of str with all lowercase letters replaced with their uppercase counterparts. 
+
 Reading "between the lines", this means the original String is not being modified, so we need to get the result by examining the return value.
 
 ### Types
@@ -192,7 +193,7 @@ puts a
 ```
 `a` is assigned to the value returned by `puts "stuff"`, which is `nil`. Therefore, puts a results in `nil` being printed out. 
 
-### Puts v Print v P)
+### Puts v Print v P
 `puts` will show something, then *add a new line* after whatever is shown. However, `puts` will print out each __element in an array on a new line__. `puts` attempts to convert everything into a string (by calling `to_s`). 
 
 This is important because if you’re trying to `puts` an array with nil values, `puts` will show __blank lines__. Also note that `puts` returns `nil`.

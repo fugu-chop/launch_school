@@ -105,15 +105,16 @@ The problem with pseudo-code, however, is that we cannot verify its logic. In or
 Before we can take our pseudo-code and translate it to program code, we need to first formalize the pseudo-code a little bit more. We'll still use English, but we'll use some keywords to help us break down the program logic into concrete commands, which will then make translating to program code much easier.
 
 We'll use the below keywords to assist us, along with their meaning.
-__*keyword*__ 	        __*meaning*__
-`START` 	              start of the program
-`SET` 	                sets a variable we can use for later
-`GET` 	                retrieve input from user
-`PRINT` 	              displays output to user
-`READ` 	                retrieve value from variable
-`IF / ELSE IF / ELSE` 	show conditional branches in logic
-`WHILE` 	              show looping logic
-`END` 	                end of the program
+
+__*keyword*__:__*meaning*__
+- `START`: start of the program
+- `SET`: sets a variable we can use for later
+- `GET`: retrieve input from user
+- `PRINT`: displays output to user
+- `READ`: retrieve value from variable
+- `IF / ELSE IF / ELSE`: show conditional branches in logic
+- `WHILE`: show looping logic
+- `END`: end of the program
 
 This could be an example of formal pseudo-code in practice:
 ```
@@ -187,7 +188,7 @@ By focusing on one error at a time!
   - Alternatively, we can exit the program by entering `exit-program`.  
 
 ###### Stack Traces
-Stack traces are one of our best tools for debugging code. The error message will include the first hint at where to start looking - specifically, we are looking for what type of error (e.g. a `NoMethodError`) and a location. Thus we can follow the error 'up the stack' - specifically, what inputs feed into other inputs, which will allow us to find where the error occurs. 
+Stack traces are one of our best tools for debugging code. An error message will include the first hint at where to start looking - specifically, we are looking for what type of error (e.g. a `NoMethodError`) and a location. Thus we can follow the error 'up the stack' - specifically, what inputs feed into other inputs, which will allow us to find where the error occurs. 
 
 ### Precedence
 The meaning of an expression in Ruby is determined by what is called *operator precedence*. It’s a set of rules that dictate how Ruby determines what operands each operator takes. In an expression, operators with __higher__ precedence are prioritized over those with __lower__ precedence. __Parentheses__ override the default evaluation order, and can be thought of having the highest possible precedence.
