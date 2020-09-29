@@ -17,6 +17,8 @@
 - [25th, Fri](#250920-fri)
 - [26th, Sat](#260920-sat)
 - [27th, Sun](#270920-sun)
+- [28th, Mon](#280920-mon)
+- [29th, Tue](#290920-tue)
 
 ##### 10/09/20 (Thu)
 __*Concepts covered*__<br/>
@@ -403,3 +405,27 @@ __*Thoughts*__<br/>
 Refactoring according to Rubocop creates some interesting challenges, like shortening all of your logic in methods to ensure compliance, or abstracting out logic to smaller methods. I have a bad habit of not using methods enough and just creating a whole bunch of code. 
 
 Reading back on the pass by value and reference stuff is good revision. It seems like a useful concept to preemptively avoid bugs. 
+
+##### 29/09/20 (Tue)
+__*Concepts covered*__<br/>
+- Mutating and Non-Mutating Methods in Ruby article
+- Object Passing in Ruby - Pass by Reference or Pass by Value Article
+- Revision
+  - The basics
+  - Variables
+  - Methods
+  - Precedence
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+The pass by value versus reference material is interesting. It's nice to be able to interpret a more complex concept like this that is intuitively what I have learned through previous exercises. 
+
+I feel like it's time for some review of the material covered, as I'm starting to read material and not fully remember what the concepts covered are. I will address this before the confusion compounds and makes it too difficult to follow the material. 
+
+Revision is helpful, as I've uncovered random little bits of logic I didn't put together previously:
+- If you can access a variable from the outer scope (e.g. a method invocation with a block accessing a main scoped variable), you can change what it's referencing (e.g. variable reassignment). 
+- `main` is an instance of `Object`, which loads modules, like `Kernel`, that enable us to call methods outside of classes (e.g. `puts`, `gets`)
+- In an arithmetic expression, Ruby first goes through an expression left-to-right and evaluates everything it can without calling any operators. Ruby needs to know what the values are in an arithmetic expression before it can execute the expression, meaning that Ruby may have to call certain methods left to right to ascertain values, before it executes the expression. 
+- Short-circuiting expressions, like `&&`, `||` and `?:`, can get around need to evaluate all values, since they only rely on one value before they can execute.  
