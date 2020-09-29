@@ -90,7 +90,6 @@ puts a
 => 5
 ```
 `number` is scoped at the method definition level and `a`'s value is unchanged. Therefore, we proved that method definitions *cannot modify arguments passed in to them permanently*. The exception is when we perform some action on the argument that mutates the caller, we can in fact permanently alter variables __outside the method definition's scope__.
-
 ```
 a = [1, 2, 3]
 

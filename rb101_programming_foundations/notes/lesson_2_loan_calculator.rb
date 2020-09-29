@@ -1,5 +1,5 @@
 def clear_screen
-  system "clear"
+  system('clear') || system('clr')
 end
 
 def welcome_msg

@@ -3,12 +3,13 @@
 ## Table of Contents
 - [What is a variable?](#what-is-a-variable)
 - [Scope](#Scope)
+- [Method definitions & scope](#method-definitions-&-scope)
 - [Types of Variables](#types-of-variables)
 
 ### What is a variable
-Variables are used to store information in memory, to be referenced and manipulated in a computer program, acting as containers. 
+Variables are used to store information in memory, to be referenced and manipulated in a computer program, acting as containers. Variables don’t actually contain values, but instead serve as __references to objects__.
 
-We assign variables using the `=` symbol. Note that we have to be careful as to what we're assigning to a variable. Only expressions that __return a value__ can be usefully stored in a variable. Variables don’t actually contain values, but instead serve as __references to objects__.
+We assign variables using the `=` symbol. Note that we have to be careful as to what we're assigning to a variable. Only expressions that __return a value__ can be usefully stored in a variable. 
 
 Take this example:
 ```
@@ -228,8 +229,44 @@ puts a          # => 1
 puts b          # => NameError
 puts c          # => NameError
 ```
-###### Method definitions & scope
-Reassignment, including assignment operators like `+=`, `=`, do not mutate a variable in the context of a *method definition*; instead, it binds the variable to a new object. That is, the assignment operator sets the variable to point to a different object.
+### Method definitions & scope
+Reassignment, including assignment operators like `+=`, `=`, do not mutate a variable in the context of a *method definition*; instead, it binds the variable to a new object. That is, the assignment operator sets the variable to point to a different object (you can verify this by look at an object's `object_id`).
+
+Ruby variables and constants aren’t objects, but are references to objects. Assignment *merely changes which object is bound to a particular variable*.
+
+Note that assignment always causes the target to reference a __possibly different object__. None of these operations mutate their operands by themselves.
+
+Contrast the below example:
+```
+def fix(value)
+  value = value.upcase!
+  value.concat('!')
+end
+
+s = 'hello'
+"hello"
+
+s.object_id
+70363946430440
+
+t = fix(s)
+"HELLO!"
+
+s
+"HELLO!"
+
+t
+"HELLO!"
+
+s.object_id
+70363946430440
+
+t.object_id
+70363946430440
+```
+Though we assigned a reference to `value`, we end up with both `s` and `t` referring to the same object. The reason for this is that `String#upcase!` returns a reference to its caller, `value`. 
+
+Since the reference returned by `value.upcase!` is the same (albeit modified) String we started with, the assignment effectively __rebinds value back to the object it was previously bound to__; nothing is changed by the assignment.
 
 Method definitions are *self-contained* with respect to local variables. Local variables outside the method definition are __not visible__ *inside* the method definition, __unless passed in as arguments__ (at which point, the variable is assigned as a method parameter and made available to the method body as a local variable). Furthermore, local variables *inside* the method definition are not visible outside the method definition.
 

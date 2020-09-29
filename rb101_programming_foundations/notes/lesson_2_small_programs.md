@@ -1,4 +1,3 @@
-
 # Lesson 2 - Small Programs
 ## Table of Contents
 - [Style for Lesson 2 Only](#style-for-lesson-2-only)
@@ -389,11 +388,19 @@ The `Array#map` method is defined in such a way that it uses the return value of
 2. We can then think of __method invocation__ as __using the scope set by the method definition__. If the method is defined to use a block, then the scope of the block can provide additional flexibility in terms of how the method invocation interacts with its surroundings.
 
 ### Pass by reference v pass by value
-This is a discussion about what happens to *objects when passed into methods*. In most programming languages, there are two ways of dealing with objects passed into methods. You can either treat these arguments as:
+This is a discussion about what happens to *objects when passed into methods*. 
+
+Every computer programming language uses some sort of evaluation strategy when passing objects. This strategy determines *when* expressions are evaluated, and what a method can do with the resulting objects. 
+
+The most common strategies are known as *strict evaluation* strategies. With strict evaluation, every expression is evaluated and converted to an object __before__ it is passed along to a method. Ruby uses strict evaluation exclusively.
+
+When dealing with objects passed into methods, we can either treat these arguments as:
 1. "references" to the original object; or
 2. "values", which are copies of the original
 
 ###### Pass by value
+With pass by value, a copy of an object is created, and it is that copy that gets passed around. Since it is merely a copy, it is impossible to change the original object; any attempt to change the copy just changes the copy and leaves the original object unchanged.
+
 When you "*pass (an object) by value (to a variable/as an argument to a method)*", the method only has __a copy of the original object__. Operations performed on the object within the method have __no effect on the original object__ outside of the method.
 
 Some Rubyists say Ruby is "pass by value" because re-assigning the object within the method doesn't affect the object outside the method. 
@@ -415,6 +422,8 @@ This is __not__ variable shadowing, because the main scope variable is __not acc
 When we passed the `name` variable into the `change_name` method, it looks like the variable was *passed by value*, since re-assigning the variable only affected the *method-level variable*, and __not__ the *main scope variable*.
 
 ###### Pass by reference
+With pass by reference, a *reference to an object is passed around*. This establishes an alias between the argument and the original object: both the argument and object refer to the __same location in memory__. If you modify the argument’s state, you also modify the original object.
+
 If Ruby was pure "pass by value", that means there should be no way for operations within a method to cause __changes to the original object__.
 ```
 def cap(str)
@@ -428,7 +437,6 @@ puts name
 Jim
 ```
 This implies that Ruby is "pass by reference", because operations within the method __affected the original object__ when we passed the `name` variable into the `cap` method.
-
 
 ### Immutability
 In Ruby, numbers and boolean values are immutable. Objects of some complex classes, such as `nil` (the only member of the `NilClass` class) and `Range` objects (e.g., `1..10`) are immutable. Any class can establish itself as immutable by simply not providing any methods that alter its state.
@@ -453,6 +461,10 @@ There are, in fact, __no methods available that let you alter the value of any i
 
 This disconnects the original object from the variable, which makes it available for garbage collection unless another reference to the object exists elsewhere.
 
+A method is said to be *non-mutating with respect to an argument* or its calling object if it __does not modify it__. Most methods you will encounter do not mutate their arguments or caller. Some do mutate their *caller*, but few mutate the *arguments*.
+
+All methods are non-mutating with respect to immutable objects. A method simply can’t modify an immutable object. Thus, any method that operates on numbers and boolean values is guaranteed to be non-mutating with respect to that value.
+
 ### Mutability
 Most objects in Ruby are mutable; they are objects of a class that __permit modification of the object’s state__ in some way. Whether modification is permitted by setter methods or by calling methods that perform more complex operations is unimportant; as long as you can modify an object, it is mutable. Mutable objects can be modified __without creating new objects__ (and hence the `object id` remains the same).
 
@@ -464,3 +476,60 @@ a
 
 [1, 2, 3, 0, 5]
 ```
+Note that setter methods for *class instance variables and indexed assignment* are __not the same__ as assignment. Setter methods and indexed assignment usually mutate the calling object. 
+
+Many, but not all, methods that mutate their caller use `!` as the last character of their name. However, this is not guaranteed to be the case. For instance, `String#concat` is a mutating method, but it does not include a `!`.
+
+###### Indexed assignment is mutating
+```
+str[3] = 'x'
+array[5] = Person.new
+hash[:age] = 25
+```
+This looks exactly like assignment, which is non-mutating, but is, in fact, mutating. `#[]` modifies the original object (the String, Array, or Hash). It __doesn’t change the binding__ of each variable.
+
+Consider this example:
+```
+a = [3, 5, 8]
+[3, 5, 8]
+
+a.object_id
+70240541515340
+
+a[1].object_id
+11
+
+a[1] = 9
+9
+
+a[1].object_id
+19
+
+a
+[3, 9, 8]
+
+a.object_id
+70240541515340
+```
+We have mutated the Array `a` by assigning a new value to `a[1]`, but have not created a new Array. This assignment changes `a[1]` so that it __references the new object__ `9` (i.e. not assigning anything new to `a`). 
+
+You can see this by looking at `a[1].object_id` both before and after the assignment. Despite this change, though, `a` itself still points to the same (now mutated) Array we started with.
+
+This is normal behavior when working with objects that support indexed assignment: the assignment does cause a new reference to be made, but it is the __collection element__ (e.g. `a[1]`) that is bound to the new object, __not the collection__ (enclosing object) itself.
+
+###### Concatenation is mutating
+The `#<<` method used by collections like Arrays and Hashes, as well as the String class, implements concatenation; this is very similar to the `+=` operator. However, there is a major difference; `+=` is non-mutating, but __`#<<` is mutating__. 
+
+###### Setters are mutating
+Setters are very similar to indexed assignment; they are methods that are defined to __modify the state of an object__. Both employ the `something = value` syntax, so they superficially look like assignments. 
+
+With indexed assignment, the elements of a collection (or the characters of a String) are replaced; with setters, __the state of the object is modified__, usually by modifying an instance variable.
+
+Setter invocation looks like this:
+```
+person.name = 'Bill'
+person.age = 23
+```
+This looks exactly like assignment, which is non-mutating, but, since these are setter calls, they actually __mutate the object bound to `person`__.
+
+It’s possible to define setter methods that don’t mutate the original object. Such setters should still be treated as mutating since they don’t create new copies of the original object.
