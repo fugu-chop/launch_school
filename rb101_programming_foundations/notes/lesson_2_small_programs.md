@@ -248,13 +248,15 @@ p array.map do |num|
   num + 1                   #  outputs #<Enumerator: [1, 2, 3]:map>
 end                           #  => #<Enumerator: [1, 2, 3]:map>
 ```
-Why did we get a different result? *Blocks have the lowest precedence of all operators*. But between the two, `{ }` has slightly higher precedence than `do...end`. This has an effect on which method call the block gets passed to. 
+Why did we get a different result? *Blocks have the lowest precedence of all operators*. But between the two, `{ }` has slightly higher precedence than `do...end`. This has an effect on *which method call* the block gets passed to. 
 
 How exactly did we get `#<Enumerator: [1, 2, 3]:map>`? With `do...end` being the “weakest” of all the operators, `array.map` gets bound to `p`, which first invokes `array.map`, returning an `Enumerator` object. The `Enumerator` is then passed to `p`, along with the block. `p` prints the `Enumerator`, but doesn't do anything with the block.
 
 Note that `p` doesn’t take a block. As with all methods called with a block that don’t accept one, __the block just gets ignored__.
 
-In other words, the binding of an argument to a method and the method name (`p` and the return value of `array.map`) is slightly *tighter* than the binding between a method call and a `do...end` block. Thus, `array.map` gets executed first, then the return value and the block get passed to `p` as separate arguments.  The block following the method invocation is *an argument being passed into the method*. 
+In other words, the binding of an argument to a method and the method name (the return value of `array.map` and `p`) is slightly *tighter* than the binding between a method call and a `do...end` block. Thus, `array.map` __gets executed first, then the return value and the block get passed to `p` as separate arguments__. 
+
+Basically, because of the low precedence of the `do...end` block, `p` sees two arguments being passed to it, rather than one. `p` displays the `Enumerator` object because Ruby has strict evaluation - i.e. every expression is evaluated and converted to an object before it is passed along to a method (`p`).
 
 A `{ }` block, on the other hand, has higher priority which means that it binds *more tightly* to `array.map`. Therefore, when we use `{}`, `array.map` is called with the block, then the return value of `array.map` gets passed to `p`.
 
@@ -270,7 +272,7 @@ p(array.map { |num| num + 1 })      # [2, 3, 4]
                                     # => [2, 3, 4]
 ```
 ###### The `tap` method
-There is an Object instance method, `tap`. It passes the calling object into a block, then returns that object. It allows you do something with an object inside of a block, and *always have that block return the object itself*.
+There is an Object instance method, `tap`. It passes the calling object into a block, then returns that calling object itself. It allows you do something with an object inside of a block, and *always have that block return the object itself*.
 ```
 array = [1, 2, 3]
 
@@ -343,7 +345,7 @@ In the same way that a local variable can be passed as an argument to a method a
 
 The way that an argument is used, whether it is a method parameter or a block, depends on how the method is defined.
 ```
-# Block not executed
+# Block tacked on to the end of the greetings method is not executed
 def greetings
   puts "Goodbye"
 end
@@ -356,7 +358,7 @@ end
 
 Goodbye
 
-# Block executed
+# Block on the end of the greetings method is executed
 def greetings
   yield
   puts "Goodbye"
@@ -382,7 +384,7 @@ a = "hello"
 
 ["hello", "hello", "hello"]
 ```
-The `Array#map` method is defined in such a way that it uses the return value of the block to perform transformation on each element in an array. In the above example, `#map` doesn't have direct access to a but it can use the value of `a` to perform transformation on the array since the block can access `a` and returns it to `#map`.
+The `Array#map` method is defined in such a way that it uses the return value of the block to perform transformation on each element in an array. In the above example, `#map` doesn't have direct access to `a` but it can use the value of `a` to perform transformation on the array since the block can access `a` and returns it to `#map`.
 
 *In summary:*
 1. We can think of __method definition__ as __setting a certain scope__ for any local variables in terms of the parameters that the method definition has, what it does with those parameters, and also how it interacts (if at all) with a block. 
