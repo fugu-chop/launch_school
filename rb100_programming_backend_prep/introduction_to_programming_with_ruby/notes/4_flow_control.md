@@ -151,7 +151,7 @@ puts alt_answer
 ```
 ### True and False
 In Ruby, __every expression evaluates to `true` when used in flow control (truthy), except for `false` and `nil` (falsy).__
-
+```
 if a == 5
     "a is 5"
   elsif a == 6 
@@ -159,3 +159,5 @@ if a == 5
   else
     "a is neither 5, nor 6 
   end
+  ```
+  

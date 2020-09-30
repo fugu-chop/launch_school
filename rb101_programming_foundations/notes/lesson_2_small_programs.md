@@ -442,6 +442,10 @@ Jim
 This implies that Ruby is "pass by reference", because operations within the method __affected the original object__ when we passed the `name` variable into the `cap` method.
 
 ### Immutability
+Methods can be either mutating or non-mutating. As you might expect, mutating methods change something; non-mutating methods do not. The object that may or may not be mutated is of concern when discussing whether a method is mutating or non-mutating. 
+
+For example, the method `String#sub!` is mutating with respect to the String used to *call it*, but non-mutating with respect to its arguments.
+
 In Ruby, numbers and boolean values are immutable. Objects of some complex classes, such as `nil` (the only member of the `NilClass` class) and `Range` objects (e.g., `1..10`) are immutable. Any class can establish itself as immutable by simply not providing any methods that alter its state.
 
 Once we create an immutable object, we cannot change it.
@@ -471,14 +475,8 @@ All methods are non-mutating with respect to immutable objects. A method simply 
 ### Mutability
 Most objects in Ruby are mutable; they are objects of a class that __permit modification of the object’s state__ in some way. Whether modification is permitted by setter methods or by calling methods that perform more complex operations is unimportant; as long as you can modify an object, it is mutable. Mutable objects can be modified __without creating new objects__ (and hence the `object id` remains the same).
 
-A *setter method* (or simply, a setter) is a method defined by a Ruby object that allows a programmer to explicitly change the value of part of an object. Here's an example with the `Array#[]=` method. 
-```
-a = [1, 2, 3, 4, 5]
-a[3] = 0       # calls setter method
-a 
+A *setter method* (or simply, a setter) is a method defined by a Ruby object that allows a programmer to explicitly change the value of *part of an object*. 
 
-[1, 2, 3, 0, 5]
-```
 Note that setter methods for *class instance variables and indexed assignment* are __not the same__ as assignment. Setter methods and indexed assignment usually mutate the calling object. 
 
 Many, but not all, methods that mutate their caller use `!` as the last character of their name. However, this is not guaranteed to be the case. For instance, `String#concat` is a mutating method, but it does not include a `!`.
@@ -533,6 +531,6 @@ Setter invocation looks like this:
 person.name = 'Bill'
 person.age = 23
 ```
-This looks exactly like assignment, which is non-mutating, but, since these are setter calls, they actually __mutate the object bound to `person`__.
+This looks exactly like assignment, which is non-mutating, but, since these are setter calls, they actually __mutate the object bound to `person`__. Like indexed assignments, we can observe that the values associated with a given key have *different `object_ids`* once reassigned; the value associated with that key now references a *different object*, but the underlying hash has the *same* `object_id` - it has been permanently mutated. 
 
-It’s possible to define setter methods that don’t mutate the original object. Such setters should still be treated as mutating since they don’t create new copies of the original object.
+It’s possible to define setter methods that don’t mutate the original object. Such setters should still be treated as mutating since they __don’t create new copies of the original object__.

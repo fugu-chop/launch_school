@@ -102,7 +102,7 @@ puts "Done!"
 => nil
 ```
 ### Do While loops
-A `do/while` loop works in a similar way to a `while` loop. One important difference is that the code within the loop gets executed one time, __prior__ to the conditional check to see if the code should be executed. In a `do/while` loop, the __conditional check is placed at the end of the loop__ as opposed to the beginning.
+A `do/while` loop works in a similar way to a `while` loop. In a `do/while` loop, the __conditional check is placed at the end of the loop__ as opposed to the beginning, meaning that the `do/while` loop will get executed one time, __prior__ to the conditional check.
 ```
 loop do
   puts "Do you want to do that again?"
