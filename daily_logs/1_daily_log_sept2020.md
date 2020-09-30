@@ -441,7 +441,7 @@ __*Concepts covered*__<br/>
   - Loops and iterators
 
 __*Time spent*__<br/>
-121 minutes
+125 minutes
 
 __*Thoughts*__<br/>
 Precedence was really confusing. I think I spent about 20 minutes just going over my notes and writing out different examples to properly understand it. I think I have a decent mental model of it now.
