@@ -107,7 +107,7 @@ numbers
 => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 ```
 ###### Comparing arrays
-We are able to compare arrays using the `==` operator.
+We are able to compare arrays using the `==` operator. Ruby will compare each element in the corresponding array, in order. 
 ```
 a = [1, 2, 3]
 b = [2, 3, 4]
@@ -160,9 +160,9 @@ a.each_index { |index| puts "This is index #{index}" }
 The `each_with_index` method allows us to iterate through the array with both the index, and element at that index. The *first parameter passed to the block is the value and the second is the index*. Again, the original array is returned.
 ```
 a = [1, 2]
-a.each_with_index { |index, value| puts "The value at index #{index} is: #{value}" }
-The value at index 1 is: 0.
-The value at index 2 is: 1.
+a.each_with_index { |value, index| puts "The value at index #{index} is: #{value}" }
+The value at index 0 is: 1.
+The value at index 1 is: 2.
 => [1, 2]
 ```
 The `sort` method allows us to sort the elements of an array. It returns the sorted array, but __does not__ modify the original array.
@@ -188,4 +188,14 @@ Where it really differs from `each` is the returned value. `map` __creates and r
 If no block is given, it also returns an *Enumerator* object. 
 
 ### Multiple Assignment
-When an array is assigned to two variables on the same line, *each element of that array gets assigned to one of the variables*. This type of assignment, where we assign more than one value on the same line, is called __multiple assignment__.
+When an array is assigned to two variables on the same line, *each element of that array gets assigned to one of the variables*. This type of assignment, where we assign more than one value on the same line, is called __multiple assignment__, which uses the principle of *array decomposition*.
+```
+first, second = ['uno', 'dos']
+=> ["uno", "dos"]
+
+first
+=> "uno"
+
+second
+=> "dos"
+```

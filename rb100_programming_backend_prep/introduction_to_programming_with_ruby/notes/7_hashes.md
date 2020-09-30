@@ -11,9 +11,9 @@
 ### What is a hash?
 A hash is a data structure that stores __items by associated keys__. This is contrasted against arrays, which store items by an ordered index. Entries in a hash are often referred to as *key-value pairs*. This creates an associative representation of data.
 
-Most commonly, a hash is created using __symbols as keys and any data types as values__. All key-value pairs in a hash are surrounded by curly braces `{ }` and comma separated.
+Most commonly, a hash is created using __symbols as keys and any data types as values__ (including arrays and hashes as values!). All key-value pairs in a hash are surrounded by curly braces `{ }` and comma separated.
 
-Hashes can be created with two syntaxes. The older syntax comes with a => sign to separate the key and the value.
+Hashes can be created with two syntaxes. The older syntax comes with a `=>` sign to separate the key and the value.
 ```
 # Old
 old_syntax_hash = {:name => 'bob'}
@@ -146,7 +146,7 @@ name_and_age.select { |key, value| (key == "Bob") }
 name_and_age.select { |key, value| (key == "Bob") || (value == 19) }
 => {"Bob"=>42, "Joe"=>19}
 ```
-The `fetch` method allows you to pass a given key and it will *return the value* for that key if it exists. You can also specify an option for return __if that key is not present__. 
+The `fetch` method allows you to pass a given key and it will *return the value* for that key if it exists. You can also specify an option for return __if that key is not present__ either as a block, or as an argument. 
 ```
 name_and_age.fetch("Steve")
 => 31
@@ -158,14 +158,14 @@ name_and_age.fetch("Larry", "Larry isn't in this hash")
 => "Larry isn't in this hash"
 
 name_and_age.fetch("Larry") { |n| "Sorry, #{n} isn't in this hash!" }
-=> "Larry isn't in this hash"
+=> "Sorry, Larry isn't in this hash!"
 ```
 The `to_a` method *returns an array version* of your hash when called. It __does not__ permanently modify the hash. 
 ```
 name_and_age.to_a
 => [["Bob", 42], ["Steve", 31], ["Joe", 19]]
 ```
-The `keys` and `values` methods allow us to easily fetch all the keys or values from a hash together, respectively. 
+The `keys` and `values` methods allow us to easily fetch all the keys or values from a hash together as an array, respectively. 
 ```
 name_and_age.keys
 => ["Bob", "Steve", "Joe"]

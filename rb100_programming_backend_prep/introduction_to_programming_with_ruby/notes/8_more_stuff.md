@@ -99,7 +99,7 @@ a << ", Bob"
 ```
 The line of code `a << ", Bob"` _did not result in reassigning `a` to a new string_. Rather, it __mutated the caller (`a`)__ and modified the existing string, which is also pointed to by the variable `b`. This explains why in this code, `b` reflects the changes to `a` - they're both pointing to the same thing.
 
-This is the major point of this section: __some operations mutate the address space in memory, but others simply change the variable to point to a different address space.__
+This is the major point of this section: __some operations mutate the address space in memory (i.e. the underlying value of the address space), but others simply change the variable to point to a different address space.__
 
 This also applies to variables that point to *arrays, hashes, or any data structure that has methods that mutate the caller*. If you call a method that mutates the caller, it will change the value in that address space, and any variables also pointing there will be affected. 
 ```
@@ -153,14 +153,18 @@ talk = Proc.new do
 end
 
 talk.call
+
+I am talking.
 ```
 Procs can also *take arguments* if specified.
 ```
 talk = Proc.new do |name|
-  puts "I am talking to #{name}"
+  puts "I am talking to #{name}."
 end
 
 talk.call("Bob")
+
+I am talking to Bob.
 ```
 Procs can also be *passed to methods*.
 ```
@@ -175,8 +179,14 @@ proc = Proc.new do |number|
 end
 
 take_proc(proc)
-```
 
+1. Proc being called in the method!
+2. Proc being called in the method!
+3. Proc being called in the method!
+4. Proc being called in the method!
+5. Proc being called in the method!
+=> [1, 2, 3, 4, 5]
+```
 ### Exception handling
 Exception handling is a specific process that deals with errors in a manageable and predictable way. 
 
