@@ -19,6 +19,7 @@
 - [27th, Sun](#270920-sun)
 - [28th, Mon](#280920-mon)
 - [29th, Tue](#290920-tue)
+- [30th, Wed](#300920-wed)
 
 ##### 10/09/20 (Thu)
 __*Concepts covered*__<br/>
@@ -429,3 +430,22 @@ Revision is helpful, as I've uncovered random little bits of logic I didn't put 
 - `main` is an instance of `Object`, which loads modules, like `Kernel`, that enable us to call methods outside of classes (e.g. `puts`, `gets`)
 - In an arithmetic expression, Ruby first goes through an expression left-to-right and evaluates everything it can without calling any operators. Ruby needs to know what the values are in an arithmetic expression before it can execute the expression, meaning that Ruby may have to call certain methods left to right to ascertain values, before it executes the expression. 
 - Short-circuiting expressions, like `&&`, `||` and `?:`, can get around need to evaluate all values, since they only rely on one value before they can execute.  
+
+##### 30/09/20 (Wed)
+__*Concepts covered*__<br/>
+- Revision
+  - Precedence
+  - Variable scoping
+  - Pass by value and reference
+  - Flow control
+  - Loops and iterators
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+Precedence was really confusing. I think I spent about 20 minutes just going over my notes and writing out different examples to properly understand it. I think I have a decent mental model of it now.
+- Since the precedence of `do/end` as a block is so low, when we pass a method invocation with a block to `p`, `p`, perceives two arguments being passed to it, rather than a single argument, since the method invocation is bound to `p` before the block is bound to the method invocation. 
+- Technically speaking, any method invocation can accept a block, but whether or not the method will do execute that block when called, depends on how the method is defined (requiring the `yield` keyword). 
+- Again, variables __aren't objects__ - they are references to objects. Therefore variable reassignment  changes which object is bound to a particular variable.
+- Indexed assignment is mutating. The underlying object (collection) is mutated (and hence it's `object_id` remains the same). The collection *element* references a new object (and hence has a different `object_id`). The same thing happens with setter methods. 
