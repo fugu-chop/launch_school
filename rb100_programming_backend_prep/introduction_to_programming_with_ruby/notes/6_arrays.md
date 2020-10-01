@@ -176,6 +176,12 @@ The `product` method returns an array that is a combination of each element of e
 [1, 2, 3].product([4, 5])
 => [[1, 4], [1, 5], [2, 4], [2, 5], [3, 4], [3, 5]]
 ```
+The `join` method allows us to extract the elements of an array, separated by a delimiter character of our choice and return a *single string* of those elements, concatenated together. 
+```
+a = [1, 2, 3]
+a.join('-')
+=> "1-2-3"
+```
 ### Each v Map
 ###### `each`
 The `each` method works on objects that allow for iteration and is commonly used along with a block. If given a block, `each` runs the code in the block once for every element in the collection and *returns the collection it was invoked on*. If no block is given, it returns an *Enumerator* object. 
