@@ -157,7 +157,7 @@ Your goal should be to build small methods that are like LEGO blocks: they shoul
 
 You don't want these methods to be mentally taxing to use. Interesting structures are comprised of many hundreds or thousands of atomic LEGO pieces. Likewise, large programs are comprised of hundreds or thousands of small methods.
 
-It's generally recommended to have methods __either__ return a value, or have a side effect (i.e. __something other than returning a value__). Examples of side effects:
+It's generally recommended to have methods __either__ return a value, __or__ have a side effect (i.e. __something other than returning a value__), and __not both__. Examples of side effects:
 - Writing to a file,
 - Printing output (e.g. `puts 'hello'`),
 - Raising an exception, and

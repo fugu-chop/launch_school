@@ -13,6 +13,7 @@
 - [Pass by reference v pass by value](#pass-by-reference-v-pass-by-value)
 - [Immutability](#immutability)
 - [Mutability](#mutability)
+- [Coding tips](#coding-tips)
 
 ### Style for Lesson 2 Only
 In this lesson we're going to always use parentheses when invoking a method. Example: we will use `gets().chomp()` instead of `gets.chomp`, just so we're clear on what is a method invocation and what is a local variable. 
@@ -487,7 +488,7 @@ str[3] = 'x'
 array[5] = Person.new
 hash[:age] = 25
 ```
-This looks exactly like assignment, which is non-mutating, but is, in fact, mutating. `#[]` modifies the original object (the String, Array, or Hash). It __doesn’t change the binding__ of each variable.
+This looks exactly like assignment, which is non-mutating, but is, in fact, mutating. `#[]` modifies the *original* object (the String, Array, or Hash). It __doesn’t change the binding__ of each variable.
 
 Consider this example:
 ```
@@ -521,6 +522,10 @@ This is normal behavior when working with objects that support indexed assignmen
 ###### Concatenation is mutating
 The `#<<` method used by collections like Arrays and Hashes, as well as the String class, implements concatenation; this is very similar to the `+=` operator. However, there is a major difference; `+=` is non-mutating, but __`#<<` is mutating__. 
 
+Note that when we use the `#<<` method on __individual elements within an array__, we __aren't mutating the underlying object__. That is, we aren't adding to or removing elements from the array. But we're in fact __mutating each element__ within the array. 
+
+In any case, it is bad practice to mutate the *collection* as you're iterating through it (i.e. adding or removing elements). You're free to mutate the *collection elements*, however. 
+
 ###### Setters are mutating
 Setters are very similar to indexed assignment; they are methods that are defined to __modify the state of an object__. Both employ the `something = value` syntax, so they superficially look like assignments. 
 
@@ -534,3 +539,72 @@ person.age = 23
 This looks exactly like assignment, which is non-mutating, but, since these are setter calls, they actually __mutate the object bound to `person`__. Like indexed assignments, we can observe that the values associated with a given key have *different `object_ids`* once reassigned; the value associated with that key now references a *different object*, but the underlying hash has the *same* `object_id` - it has been permanently mutated. 
 
 It’s possible to define setter methods that don’t mutate the original object. Such setters should still be treated as mutating since they __don’t create new copies of the original object__.
+
+### Coding Tips
+We need to learn to organize chunks of code to make it easier to read. In terms of where to insert blank lines, think of it like writing paragraphs. One way to think about where to insert lines is to divide out code into functionality, e.g. 
+1. Variable initialization
+2. User input and validation
+3. Using the variable
+
+This assists us in code legibility, but also debugging. 
+
+Other tips include:
+###### Name methods appropriately. 
+We should be able to tell what they do without having to refer to the code everytime we see it. 
+
+###### Methods should either return or product a side effect
+A method should either return a value, or produce a side effect (e.g. printing something, mutating the caller), __not__ both. It makes our methods more difficult to reuse and interpret in the future. 
+
+###### Not mutating the caller during iteration
+Don't mutate the caller during iteration (i.e. add or subtract elements). It's ok to mutate *collection elements* themselves, but not the *collection itself* while you're iterating through it.  
+
+###### Don't variable shadow
+It prevents our blocks from accessing variables from outside the block scope, and is confusing to read. 
+```
+name = 'johnson'
+
+['kim', 'joe', 'sam'].each do |name|
+  # We cannot access the outer scoped "name" due to variable shadowing
+  puts "#{name} #{name}"
+end
+
+kim kim
+joe joe
+sam sam
+```
+###### Don't use assignments in conditionals
+It's not clear whether we intend to assign a value to a variable (`=`), or test for equality (`==`). If you absolutely have to use assignment, wrap it in parentheses. 
+```
+# bad
+if some_variable = get_a_value_from_somewhere
+  puts some_variable
+end
+
+# good
+some_variable = get_a_value_from_somewhere
+if some_variable
+  puts some_variable
+end
+
+# ok, not the best
+numbers = [1, 2, 3, 4, 5]
+
+while (num = numbers.shift)
+  puts num
+end
+```
+###### Use underscores for unused variables
+Suppose you have an array of names, and you want to print out a string for every name in the array, but you __don't care about the actual names__. In those situations, use an *underscore* to signify that we don't care about this particular parameter.
+```
+names = ['kim', 'joe', 'sam']
+
+names.each { |_| puts "got a name!" }
+```
+Or, if you have an unused parameter when there are multiple parameters:
+```
+names = ['kim', 'joe', 'sam']
+
+names.each_with_index do|_, idx|
+  puts "#{idx+1}. got a name!"
+end
+```

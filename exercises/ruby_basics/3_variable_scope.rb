@@ -55,7 +55,7 @@ puts a
 =end
 puts "a will print Xy-zy. Strings are mutable - they can be modified. b[2] is a mutating method. Since we are actually modifying the string referenced by b, and b references the same string as a, the result from printing a shows an update to the value of the string."
 
-puts "An interesting tidbit - if we were to pass a + \"Y\" into my_value, a would remain unchanged. This is because the b argument in my_value is no longer referring to 'a' in the global scope, but a new instance of the variable (also since + \"Y\" is not a destructive method."
+puts "An interesting tidbit - if we were to pass a + \"Y\" into my_value, a would remain unchanged. This is because the b argument in my_value is no longer referring to 'a' in the global scope, but a new instance of the variable (also since + \"Y\" is not a destructive method)."
 
 # 5) What will the following code print, and why?
 =begin
@@ -122,6 +122,8 @@ puts a
 puts "a will print as 7. The array is also unchanged. Although this is a method invocation with a block, and 'a' already exists as a variable in the local outer scope, the 'a' represents elements within the array. This means that each element will have 1 added to itself (i.e. the inner block scope), rather than adding 1 to the 'a' variable in the local outer scope."
 
 puts "This problem demonstrates shadowing. Shadowing occurs when a block argument hides a local variable that is defined outside the block. Ruby will go looking for the definition for a from the inner most scope (the local block scope) and keep going outwards. In this case, it is able to find a definition of a in the local block scope - each element of the array. Since the outer 'a' is shadowed, the 'a += 1' has no effect on it."
+
+puts "Shadowing will prevent blocks from accessing variables from outside of the block scope."
 
 # 10) What will the following code print, and why?
 =begin
