@@ -1,30 +1,3 @@
-=begin
-PSEUDOCODE
-
-PART 3
-Keep score of the player's and computer's wins.
-When either the player or computer reaches five wins, the match is over,
-and the winning player becomes the grand winner.
-Don't add your incrementing logic to display_results.
-Keep your methods simple; they should perform one logical task.
-
-BEGIN
-SET two variables, one for computer, one for player
-IF someone wins, increment one to the tally
-WHEN tally = 5
-PRINT "You are the grand winner!"
-END
-
-computer_score = 0
-player_score = 0
-
-def score_incrementer(player, computer)
-  if win?(player1, player2)
-    player_score += 1
-  end
-end
-=end
-
 VALID_CHOICES = %w(rock paper scissors spock lizard)
 WIN_STATES = { rock: %w(scissors lizard),
                scissors: %w(paper lizard),
@@ -36,6 +9,8 @@ CHOICE_ACRONYMS = { sp: 'spock',
                     p: 'paper',
                     sc: 'scissors',
                     l: 'lizard' }
+score_tally = { player: 0,
+                computer: 0 }
 
 def win?(player1, player2)
   WIN_STATES.fetch(player1.to_sym()).include?(player2)
@@ -59,12 +34,18 @@ def get_choice_first_letter(player)
   end
 end
 
+def display_welcome
+  prompt('Welcome to Rock, Paper, Scissors, Spock, Lizard!')
+  prompt('The goal of this game is to select a choice that beats the computer.')
+  prompt('First to 5, wins!')
+  Kernel.puts("\n")
+end
+
 def choice_prompt
   Kernel.puts("\n")
-  prompt("Choose one: #{VALID_CHOICES.join(', ')}.
-You can also use the first letter of your choice, unless you're picking
-Spock or Scissors, in which case, use the first two letters!")
-  puts "\n"
+  prompt("Choose one: #{VALID_CHOICES.join(', ')}.")
+  prompt('You can also use the first letter of your choice, unless
+you\'re picking Spock or Scissors, in which case, use the first two letters!')
 end
 
 def incorrect_selection_prompt
@@ -94,11 +75,40 @@ end
 
 def display_results(player, computer)
   if win?(player, computer)
-    prompt('You win!')
+    prompt('You win this round!')
   elsif win?(computer, player)
-    prompt('You lose!')
+    prompt('You lost this round!')
   else
-    prompt('It\'s a draw!')
+    prompt('It\'s a draw for this round!')
+  end
+end
+
+def score_incrementer(player, computer, score_tally)
+  if win?(player, computer)
+    score_tally[:player] += 1
+  elsif win?(computer, player)
+    score_tally[:computer] += 1
+  end
+end
+
+def score_printer(score_tally)
+  Kernel.puts("\n")
+  prompt("Your total score is #{score_tally[:player]}.")
+  prompt("The total computer's score is #{score_tally[:computer]}.")
+end
+
+def score_check(score_tally)
+  if score_tally.value?(5)
+    Kernel.puts("\n")
+    prompt("The #{score_tally.key(5)} has reached a total score of 5.")
+    prompt("The #{score_tally.key(5)} wins the game!")
+    prompt("Scores will be reset.")
+  end
+end
+
+def score_reset(score_tally)
+  if score_tally.value?(5)
+    score_tally.each { |key, _value| score_tally[key] = 0 }
   end
 end
 
@@ -113,11 +123,17 @@ def display_farewell
   prompt('Thanks for playing! We hope to see you again.')
 end
 
+display_welcome
+
 loop do
   player = player_selection
   computer = VALID_CHOICES.sample()
   display_selection(player, computer)
   display_results(player, computer)
+  score_incrementer(player, computer, score_tally)
+  score_printer(score_tally)
+  score_check(score_tally)
+  score_reset(score_tally)
   break unless play_again?
 end
 
