@@ -9,6 +9,8 @@
 ### What is a variable
 Variables are used to store information in memory, to be referenced and manipulated in a computer program, acting as containers. Variables don’t actually contain values, but instead serve as __references to objects__.
 
+When an object is passed to a method call as an argument, the parameter assigned to it acts as a *pointer to the original object*. Ruby __does not__ create a copy of the object.
+
 We assign variables using the `=` symbol. Note that we have to be careful as to what we're assigning to a variable. Only expressions that __return a value__ can be usefully stored in a variable. 
 
 Take this example:
@@ -228,6 +230,15 @@ end
 puts a          # => 1
 puts b          # => NameError
 puts c          # => NameError
+```
+
+Blocks are delimited by either `{ }` or `do/end`; however, code enclosed in this way __does not always constitute a block__. It is considered a block (and thereby creates a new scope for variables) if the `{}` or `do/end` __immediately follows__ a __method invocation__. 
+```
+# Following the while keyword with do/end does not constitute a block
+while true do
+  a = 5
+  break
+end
 ```
 ### Method definitions & scope
 Reassignment, including assignment operators like `+=`, `=`, do not mutate a variable in the context of a *method definition*; instead, it binds the variable to a new object. That is, the assignment operator sets the variable to point to a different object (you can verify this by look at an object's `object_id`).
