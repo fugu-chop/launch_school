@@ -536,7 +536,7 @@ Setter invocation looks like this:
 person.name = 'Bill'
 person.age = 23
 ```
-This looks exactly like assignment, which is non-mutating, but, since these are setter calls, they actually __mutate the object bound to `person`__. Like indexed assignments, we can observe that the values associated with a given key have *different `object_ids`* once reassigned; the value associated with that key now references a *different object*, but the underlying hash has the *same* `object_id` - it has been permanently mutated. 
+This looks exactly like assignment, which is non-mutating, but, since these are setter calls, they actually __mutate the object bound to `person`__. Like indexed assignments, we can observe that the values associated with a given key have *different `object_ids`* once reassigned (the value associated with that key now references a *different object*), but the underlying hash has the *same* `object_id` - it has been permanently mutated. 
 
 It’s possible to define setter methods that don’t mutate the original object. Such setters should still be treated as mutating since they __don’t create new copies of the original object__.
 

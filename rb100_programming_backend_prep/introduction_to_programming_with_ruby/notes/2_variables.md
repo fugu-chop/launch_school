@@ -134,9 +134,10 @@ puts name
 ### Scope
 A variable's scope determines *where* in a program a variable is available for use. A variable's scope is defined by *where the variable is initialized or created*. 
 
+##### Block Scope
 In Ruby, variable scope is defined by a __block__. A block is a *piece of code following a method invocation*, usually delimited by either curly braces `{}` or `do end`. 
 
-__Inner scope can access variables initialized in an outer scope, but not vice versa.__
+__Inner scope can access variables initialized in an outer scope, but not vice versa for blocks.__
 ```
 a = 5             # variable is initialized in the outer scope
 
@@ -166,7 +167,7 @@ puts b
 ```
 This is because the variable `b` is not available outside of the method invocation with a block where it is initialized. When we call `puts b` it is not available within that outer scope.
 
-The key distinguishing factor for deciding whether code delimited by `{ }` or `do end` is considered a block (and thereby creates a new scope for variables), is seeing if the `{ }` or `do end` *immediately follows a method invocation*.
+The key distinguishing factor for deciding whether code delimited by `{ }` or `do end` is considered a block (and thereby __creates a new scope for variables__), is seeing if the `{ }` or `do end` *immediately follows a method invocation*.
 ```
 arr = [1, 2, 3]
 
