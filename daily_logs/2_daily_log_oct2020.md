@@ -58,4 +58,21 @@ The quiz was hard. I have a reasonable intuitive understanding of concepts, but 
 
 I am finding the medium problems quite difficult. It's being able to logically unpack what is required in the question, finding an appropriate method where possible and if not, writing something custom. Where I'm struggling is writing correct syntax to apply logic, as well as applying all of the rules in a sequential manner to figure out what the correct output should be.
 
-A lot of these exercises about object_ids changing are honestly really annoying (they're not proactive exercises, just time-consuming reading very verbose and poorly written methods), and I really question the necessity of learning such specific terminology, so long as we are able to implement them in our code. I will spend tomorrow revising the three blog posts regarding object_ids and how/what things get reassigned when variables are reassigned. 
+A lot of these exercises about `object_ids` changing are honestly really annoying (they're not proactive exercises, just time-consuming reading very verbose methods), and I really question the necessity of learning such specific terminology, so long as we are able to implement them in our code. I will spend tomorrow revising the three blog posts regarding object_ids and how/what things get reassigned when variables are reassigned. 
+
+##### 04/10/20 (Sun)
+__*Concepts covered*__<br/>
+- Revision
+  - Variables, pass by reference/value
+
+__*Time spent*__<br/>
+242 minutes
+
+__*Thoughts*__<br/>
+The revision was helpful. I don't think I fully absorbed the concepts about variables and pass by reference/value when first going through it. The exercises in Medium 2 (which I'm still not entirely a huge fan of), have helped expose those knowledge gaps. 
+
+I still need to sit down and work them out step by step to understand what each exercise is trying to show me, probably by simplifying the excessively long methods in the exercise. 
+
+After some serious mental crunching, I think I now have a better (although still not 100% solid) understanding of pass by reference versus value in Ruby. 
+
+With some help from the TA's, I've clarified some terminology confusion about *mutating the caller* and *mutating an argument* in a method - a method definition does not have an explicit caller - it takes in an argument, which can be mutated. By contrast, an object calls a method (e.g. `"string".upcase!`).
