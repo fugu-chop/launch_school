@@ -214,6 +214,10 @@ d_outer is 42 with an id of: 85 BEFORE and: 85 AFTER the method call.
 
 Even though we changed the values of our 'outer' variables inside the method call, we still have the same values and the same object id's down here AFTER the method call as we had before it!
 
-This is because our method call accepts VALUES as arguments. The names we give to those values in the definition of our method are SEPARATE from any other use of those same names."
+This is because our method call accepts VALUES as arguments. The names we give to those values in the definition of our method are SEPARATE from any other use of those same names.
+
+We used the same names there for convenience. We could just as easily have called the first parameter of our method definition a_Fred instead of a_outer.
+
+The method gets the VALUES of the arguments we pass, but the parameter variables inside the method have no other relationship to those outside of the method."
 
 puts "The sixth set of puts statements will error out, since it does not have access to variables created within the block scope of the an_illustrative_method method."

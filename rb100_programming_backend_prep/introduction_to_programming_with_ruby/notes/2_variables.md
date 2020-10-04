@@ -81,7 +81,7 @@ greeting.object_id
 whazzup.object_id
 => 70101471431160
 ```
-This demonstrates that both `greeting` and `whazzup` not only reference a `String` with the same value, but are, in fact, references to the same String; `greeting` and `whazzup` are aliases for each other, since in the variable assignment, the specific object `greeting` is referencing, has been assigned to `whazzup`.
+This demonstrates that both `greeting` and `whazzup` not only reference a `String` with the same value, but are, in fact, references to the same String; `greeting` and `whazzup` are *aliases for each other*, since in the variable assignment, the specific object `greeting` is referencing, has been assigned to `whazzup`.
 
 We can show this by using one of the two variables to change the object. 
 ```
