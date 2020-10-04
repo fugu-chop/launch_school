@@ -78,6 +78,8 @@ end
 
 ### Mutating the caller
 When calling a method, the *argument* can be altered permanently. We call this *mutating the caller*. 
+
+Integers are immutable, and so cannot be mutated by methods.
 ```
 def some_method(number)
   number = 7 # this is implicitly returned by the method, regardless of what we put in as a number

@@ -340,6 +340,7 @@ __Method invocation__ is when we call a method, whether that happens to be an ex
 
 We've also seen examples of methods being called with blocks. 
 `[1, 2, 3].each { |num| puts num }`
+
 Technically __any__ method can be called with a block, but the block is only executed if the method is *defined in a particular way*. We'll cover this in more detail in the future, but for now, we want to remember that __a block is part of the method invocation__. In fact, method invocation followed by `{}` or `do..end` is the way in which we *define a block* in Ruby. Essentially the block *acts as an argument to the method*. 
 
 In the same way that a local variable can be passed as an argument to a method at invocation, *when a method is called with a block it acts as an argument to that method*.
@@ -402,6 +403,8 @@ When dealing with objects passed into methods, we can either treat these argumen
 1. "references" to the original object; or
 2. "values", which are copies of the original
 
+In Ruby, when an object is passed to a method call as an argument, the parameter assigned to it acts as a *pointer to the original object*. Ruby __does not__ create a copy of the object for that method.
+
 ###### Pass by value
 With pass by value, a copy of an object is created, and it is that copy that gets passed around. Since it is merely a copy, it is impossible to change the original object; any attempt to change the copy just changes the copy and leaves the original object unchanged.
 
@@ -447,9 +450,9 @@ Methods can be either mutating or non-mutating. As you might expect, mutating me
 
 For example, the method `String#sub!` is mutating with respect to the String used to *call it*, but non-mutating with respect to its arguments.
 
-In Ruby, numbers and boolean values are immutable. Objects of some complex classes, such as `nil` (the only member of the `NilClass` class) and `Range` objects (e.g., `1..10`) are immutable. Any class can establish itself as immutable by simply not providing any methods that alter its state.
+In Ruby, numbers and boolean values are immutable. Objects of some complex classes, such as `nil` (the only member of the `NilClass` class) and `Range` objects (e.g., `1..10`) are immutable. Any class can establish itself as immutable by simply __not providing any methods that alter its state__.
 
-Once we create an immutable object, we cannot change it.
+Once we create an immutable object, we cannot change it. We can only perform variable reassignment.
 ```
 number = 3
 => 3
@@ -469,12 +472,38 @@ There are, in fact, __no methods available that let you alter the value of any i
 
 This disconnects the original object from the variable, which makes it available for garbage collection unless another reference to the object exists elsewhere.
 
-A method is said to be *non-mutating with respect to an argument* or its calling object if it __does not modify it__. Most methods you will encounter do not mutate their arguments or caller. Some do mutate their *caller*, but few mutate the *arguments*.
+A method is said to be *non-mutating with respect to an argument* or its calling object if it __does not modify it__. Most methods you will encounter do not mutate their arguments or caller. Some do mutate their *caller*, but few mutate the *arguments* - most of these methods reassign their arguments to *different address spaces* and are thus non-mutating.
+```
+test = 'hello'
+test.object_id
+=> 70209269130840
 
-All methods are non-mutating with respect to immutable objects. A method simply can’t modify an immutable object. Thus, any method that operates on numbers and boolean values is guaranteed to be non-mutating with respect to that value.
+test[4]
+=> 'o'
+
+test[4].object_id
+=> 70209269164880
+
+test.sub!('o', 'y')
+=> "helly"
+
+test.object_id
+=> 70209269130840
+
+test[4]
+=> 'y'
+
+test[4].object_id
+=> 70209298117720
+```
+All methods are non-mutating with respect to immutable objects. A method simply can’t modify an immutable object. Thus, *any method that operates on numbers and boolean values is guaranteed to be non-mutating with respect to that value* - the returned variable or value will exist in a different address space.
 
 ### Mutability
-Most objects in Ruby are mutable; they are objects of a class that __permit modification of the object’s state__ in some way. Whether modification is permitted by setter methods or by calling methods that perform more complex operations is unimportant; as long as you can modify an object, it is mutable. Mutable objects can be modified __without creating new objects__ (and hence the `object id` remains the same).
+Most objects in Ruby are mutable; they are objects of a class that __permit modification of the object’s state__ in some way. 
+
+A method is said to be mutating with respect to an argument or its caller if it modifies it.
+
+Whether modification is permitted by setter methods or by calling methods that perform more complex operations is unimportant; as long as you __can__ modify an object, it is mutable. Mutable objects can be modified __without creating new objects__ (and hence the reference to the object, or the `object_id` remains the same). Only the __state__ of the original object has been changed.
 
 A *setter method* (or simply, a setter) is a method defined by a Ruby object that allows a programmer to explicitly change the value of *part of an object*. 
 
@@ -513,9 +542,9 @@ a
 a.object_id
 70240541515340
 ```
-We have mutated the Array `a` by assigning a new value to `a[1]`, but have not created a new Array. This assignment changes `a[1]` so that it __references the new object__ `9` (i.e. not assigning anything new to `a`). 
+We have mutated the Array `a` by assigning a new value to `a[1]`, but have not created a new Array. This assignment changes `a[1]` so that it __references the new object__ `9` (i.e. we are modifying `a`, but not  `a[1]`, which is not modified, but reassigned). 
 
-You can see this by looking at `a[1].object_id` both before and after the assignment. Despite this change, though, `a` itself still points to the same (now mutated) Array we started with.
+You can see this by looking at how `a[1].object_id` changes before and after the assignment. Despite this change, though, `a` itself still points to the same (now mutated) Array we started with.
 
 This is normal behavior when working with objects that support indexed assignment: the assignment does cause a new reference to be made, but it is the __collection element__ (e.g. `a[1]`) that is bound to the new object, __not the collection__ (enclosing object) itself.
 

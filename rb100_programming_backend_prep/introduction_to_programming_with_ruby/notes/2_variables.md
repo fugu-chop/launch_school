@@ -7,11 +7,11 @@
 - [Types of Variables](#types-of-variables)
 
 ### What is a variable
-Variables are used to store information in memory, to be referenced and manipulated in a computer program, acting as containers. Variables don’t actually contain values, but instead serve as __references to objects__.
+Variables are used to store information in memory, to be referenced and manipulated in a computer program, acting as containers. Variables don’t actually contain values, but instead serve as __references/bound to objects__. 
 
-When an object is passed to a method call as an argument, the parameter assigned to it acts as a *pointer to the original object*. Ruby __does not__ create a copy of the object.
+An object is data that has state (i.e. a value) and has associated behaviours. 
 
-We assign variables using the `=` symbol. Note that we have to be careful as to what we're assigning to a variable. Only expressions that __return a value__ can be usefully stored in a variable. 
+We assign variables using the `=` symbol. We have to be careful as to what we're assigning to a variable. Only expressions that __return a value__ can be usefully stored in a variable. 
 
 Take this example:
 ```
@@ -34,9 +34,9 @@ a = 7
 puts b
 => 4
 ```
-When we assign an object to a variable, that variable is said to *reference* the object (it does so by storing the `object id` of the object). We can also talk of the variable as being __bound to the object__, or binding the variable to the object.
+We can say that variables act as *pointers to address space* in memory. This address space represents the object that the variable is referencing. 
 
-Every object in Ruby has a unique `object id`, and that `object id` can be retrieved simply by calling `#object_id` on the object in question. Even literals, such as numbers, booleans, `nil`, and Strings have `object ids`.
+Every object in Ruby has a unique `object_id`, and that `object_id` can be retrieved simply by calling `#object_id` on the object in question. Even literals, such as numbers, booleans, `nil`, and Strings have `object_ids`.
 ```
 5.object_id
 => 11
@@ -49,6 +49,18 @@ nil.object_id
 
 "abc".object_id
 => 70101471581080
+```
+It's also important to keep in mind that *different memory space can hold the same value*, but are still different places in memory. 
+```
+a = "hello"
+b = "hello"
+
+a.object_id
+=> 70294044607760
+
+# Despite holding the same 'value', b has a different memory space
+b.object_id
+=> 70294044643900
 ```
 Let's see what happens when we reassign a variable to another variable. 
 ```
@@ -69,7 +81,9 @@ greeting.object_id
 whazzup.object_id
 => 70101471431160
 ```
-This demonstrates that both `greeting` and `whazzup` not only reference a `String` with the same value, but are, in fact, references to the same String; `greeting` and `whazzup` are aliases for each other. We can show this by using one of the two variables to change the object.
+This demonstrates that both `greeting` and `whazzup` not only reference a `String` with the same value, but are, in fact, references to the same String; `greeting` and `whazzup` are aliases for each other, since in the variable assignment, the specific object `greeting` is referencing, has been assigned to `whazzup`.
+
+We can show this by using one of the two variables to change the object. 
 ```
 greeting.upcase!
 => "HELLO"
@@ -95,7 +109,7 @@ greeting.object_id
 whazzup.object_id
 => 70101471431160
 ```
-Since both variables are associated with the same object, using either variable to alter the object is reflected in the other variable. We can also see that the `object id` does not change.
+Since both variables are associated with the same object, using either variable to alter the object is reflected in the other variable. We can also see that the `object_id` does not change.
 
 ###### Reassignment
 ```
@@ -114,9 +128,9 @@ greeting.object_id
 whazzup.object_id
 => 70101471431160
 ```
-Here, we see that `greeting` and `whazzup` no longer refer to the same object; they have different values and different `object ids`.
+Here, we see that `greeting` and `whazzup` no longer refer to the same object; they have different values and different `object_ids`. This is because the two variables are initially pointing at the same *address space*, and not each other as 'variables'. If we reassign either of the two variables, the `object_ids` will be different, since they no longer point at the same object. 
 
-What this shows is that reassignment to a variable doesn’t change the object referenced by that variable; instead, the variable is bound to a completely new object — made to reference a new object. The original object is merely disconnected from the variable.
+What this shows is that reassignment to a variable doesn’t change the object referenced by that variable; instead, the variable is bound to a completely new object — made to __reference a new object__. The original object is merely disconnected from the variable.
 
 ### Getting user input
 We can use `gets` to obtain user input. We chain the `.chomp` method to remove the newline (`\n`) that gets added to `gets`. Note that `gets` __always gives us a string__.
@@ -191,8 +205,16 @@ end
 puts a
 => 5
 ```
-`a` is accessible here since `for...do end` code __did not create a new inner scope__, since `for` is part of Ruby language and __not a method invocation__. When we use `each`, `times`, `loop` and other method invocations, followed by `{ }` or `do end`, that's when a new block is created.
+`a` is accessible here since `for...do end` code __did not create a new inner scope__, since `for` is part of Ruby language and __not a method invocation__. A block (and thereby creates a new scope for variables) only exists if the `{}` or `do/end` __immediately follows__ a __method invocation__. 
 
+When we use `each`, `times`, `loop` and other method invocations, followed by `{ }` or `do end`, that's when a new block is created.
+```
+# Following the while keyword with do/end does not constitute a block
+while true do
+  a = 5
+  break
+end
+```
 Peer blocks cannot reference variables initialized in other blocks. This means that we could use the same variable name `a` in the block of code that follows the loop method invocation. However, it's __not the same variable as in the first block__.
 ```
 2.times do
@@ -232,19 +254,10 @@ puts a          # => 1
 puts b          # => NameError
 puts c          # => NameError
 ```
-
-Blocks are delimited by either `{ }` or `do/end`; however, code enclosed in this way __does not always constitute a block__. It is considered a block (and thereby creates a new scope for variables) if the `{}` or `do/end` __immediately follows__ a __method invocation__. 
-```
-# Following the while keyword with do/end does not constitute a block
-while true do
-  a = 5
-  break
-end
-```
 ### Method definitions & scope
 Reassignment, including assignment operators like `+=`, `=`, do not mutate a variable in the context of a *method definition*; instead, it binds the variable to a new object. That is, the assignment operator sets the variable to point to a different object (you can verify this by look at an object's `object_id`).
 
-Ruby variables and constants aren’t objects, but are references to objects. Assignment *merely changes which object is bound to a particular variable*.
+Ruby variables and constants aren’t objects, but are references to objects. Assignment *merely changes which object is bound to a particular variable*. While `=` is not an actual method in Ruby, it acts like a non-mutating method, and should be treated as such.
 
 Note that assignment always causes the target to reference a __possibly different object__. None of these operations mutate their operands by themselves.
 
