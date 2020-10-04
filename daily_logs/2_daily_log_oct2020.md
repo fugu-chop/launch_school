@@ -3,6 +3,7 @@
 - [2nd, Fri](#021020-fri)
 - [3rd, Sat](#031020-sat)
 - [4th, Sun](#041020-sun)
+- [5th, Mon](#051020-mon)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -76,3 +77,18 @@ I still need to sit down and work them out step by step to understand what each 
 After some serious mental crunching, I think I now have a better (although still not 100% solid) understanding of pass by reference versus value in Ruby. 
 
 With some help from the TA's, I've clarified some terminology confusion about *mutating the caller* and *mutating an argument* in a method - a method definition does not have an explicit caller - it takes in an argument, which can be mutated. By contrast, an object calls a method (e.g. `"string".upcase!`).
+
+##### 05/10/20 (Mon)
+__*Concepts covered*__<br/>
+- PEDAC Group Walkthrough
+- Rock Paper Scissors Refactor
+- Revision
+  - Medium 2 Exercises
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+The PEDAC session was helpful in breaking down a problem I ordinarily would have no idea how to solve. I think now it's just being able to efficiently recall Ruby syntax to actually complete these problems. 
+
+After drastically cutting down on the amount of verbiage in the Medium 2, Question 2 exercise, I think I finally grasp the concept. When we pass arguments to methods, we are passing *values*, __not variables__.
