@@ -341,7 +341,9 @@ __Method invocation__ is when we call a method, whether that happens to be an ex
 We've also seen examples of methods being called with blocks. 
 `[1, 2, 3].each { |num| puts num }`
 
-Technically __any__ method can be called with a block, but the block is only executed if the method is *defined in a particular way*. We'll cover this in more detail in the future, but for now, we want to remember that __a block is part of the method invocation__. In fact, method invocation followed by `{}` or `do..end` is the way in which we *define a block* in Ruby. Essentially the block *acts as an argument to the method*. 
+Technically __any__ method can be called with a block, but the block is only executed if the method is *defined in a particular way*. We'll cover this in more detail in the future, but for now, we want to remember that __a block is part of the method invocation__. 
+
+Method invocation followed by `{}` or `do..end` is the way in which we *define a block* in Ruby. Essentially the block *acts as an argument to the method*. 
 
 In the same way that a local variable can be passed as an argument to a method at invocation, *when a method is called with a block it acts as an argument to that method*.
 
@@ -403,14 +405,12 @@ When dealing with objects passed into methods, we can either treat these argumen
 1. "references" to the original object; or
 2. "values", which are copies of the original
 
-In Ruby, when an object is passed to a method call as an argument, the parameter assigned to it acts as a *pointer to the original object*. Ruby __does not__ create a copy of the object for that method.
+In Ruby, when an object is passed to a *method call as an argument*, the parameter assigned to it acts as a *pointer to the original object*. Ruby __does not__ create a copy of the object for that method.
 
 ###### Pass by value
-With pass by value, a copy of an object is created, and it is that copy that gets passed around. Since it is merely a copy, it is impossible to change the original object; any attempt to change the copy just changes the copy and leaves the original object unchanged.
+With pass by value, a copy of an object is created, and it is that copy that gets passed around. Since it is merely a copy, it is impossible to change the original object; any attempt to change the copy just changes the copy and leaves the original object unchanged. 
 
 When you "*pass (an object) by value (to a variable/as an argument to a method)*", the method only has __a copy of the original object__. Operations performed on the object within the method have __no effect on the original object__ outside of the method.
-
-Some Rubyists say Ruby is "pass by value" because re-assigning the object within the method doesn't affect the object outside the method. 
 ```
 def change_name(name)
   name = 'bob'
@@ -429,9 +429,9 @@ This is __not__ variable shadowing, because the main scope variable is __not acc
 When we passed the `name` variable into the `change_name` method, it looks like the variable was *passed by value*, since re-assigning the variable only affected the *method-level variable*, and __not__ the *main scope variable*.
 
 ###### Pass by reference
-With pass by reference, a *reference to an object is passed around*. This establishes an alias between the argument and the original object: both the argument and object refer to the __same location in memory__. If you modify the argument’s state, you also modify the original object.
+With pass by reference, a *reference to an object is passed around*. This establishes an *alias between the argument and the original object*, just like we saw when we set `a = b`. Both the argument and object refer to the __same location in memory__. With pass by reference, if you modify the argument’s state, you also modify the original object (__unlike__ previous examples with `a = b`).
 
-If Ruby was pure "pass by value", that means there should be no way for operations within a method to cause __changes to the original object__.
+If Ruby was pure "pass by value", that means there should be no way for operations within a method to cause changes to the original object.
 ```
 def cap(str)
   str.capitalize!
@@ -445,10 +445,33 @@ Jim
 ```
 This implies that Ruby is "pass by reference", because operations within the method __affected the original object__ when we passed the `name` variable into the `cap` method.
 
+###### Reconciling the two
+```
+def print_id(number)
+  puts "In method object id = #{number.object_id}"
+end
+
+value = 33
+puts "Outside method object id = #{value.object_id}"
+print_id(value)
+
+Outside method object id = 67
+In method object id = 67
+```
+Here, `number` and `value` reference the same object despite the object being immutable. We can also see that `value` was not copied. Thus, Ruby is not using pass by value. It appears to be using *pass by reference*.
+
+The key here is that __pass by reference isn’t limited to mutating methods__. A non-mutating method can use pass by reference as well, so pass by reference can be used with immutable objects. There may be a reference passed, but the reference isn’t a guarantee that the object can be modified.
+
+__Assignment__ is the weird exception here. The key is to remember that variables and constants aren’t objects, but are *references to objects*. Assignment merely changes __which__ object is bound to a particular variable.
+
+While we can change which object is bound to a variable *inside* of a method, __we can’t change the binding of the original arguments__. We can change the *objects* if the objects are *mutable*, but the __references themselves are immutable__ as far as the method is concerned. For assignment, Ruby is passes around __copies of the references__. 
+
 ### Immutability
 Methods can be either mutating or non-mutating. As you might expect, mutating methods change something; non-mutating methods do not. The object that may or may not be mutated is of concern when discussing whether a method is mutating or non-mutating. 
 
-For example, the method `String#sub!` is mutating with respect to the String used to *call it*, but non-mutating with respect to its arguments.
+For example, the method `String#sub!` is mutating with respect to the String used to *call it*, but non-mutating with respect to its arguments - the arguments being the pattern and the replacement string.
+
+As a side note, blocks are an argument, but __blocks are immutable__, so every method that takes a block is *non-mutating with respect to the block*. Mostly, though, you can ignore the blocks when talking about mutation of arguments.
 
 In Ruby, numbers and boolean values are immutable. Objects of some complex classes, such as `nil` (the only member of the `NilClass` class) and `Range` objects (e.g., `1..10`) are immutable. Any class can establish itself as immutable by simply __not providing any methods that alter its state__.
 

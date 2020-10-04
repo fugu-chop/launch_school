@@ -81,7 +81,9 @@ puts "The second set of puts statements will print:
 a_outer id was 85 before the block and is: 85 inside the block.
 b_outer id was 2152729580 before the block and is: 2152729580 inside the block.
 c_outer id was 2152729540 before the block and is: 2152729540 inside the block.
-d_outer id was 85 before the block and is: 85 inside the block."
+d_outer id was 85 before the block and is: 85 inside the block.
+
+Note how the object_ids do not change - this is passing by reference."
 
 puts "The third set of puts statements will print:
 a_outer inside after reassignment is 22 with an id of: 85 before and: 45 after.

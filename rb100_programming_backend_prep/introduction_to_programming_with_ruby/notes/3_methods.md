@@ -111,7 +111,21 @@ mutate(a)
 p "After mutate method: #{a}"
 => "After mutate method: [1, 2]"
 ```
-We have permanently modified the local variable `a` by passing it to the mutate method, even though `a` is outside the method definition's scope. This is because the `pop` method mutates the caller. There's no obvious way to tell if a method will mutate the caller, other than referencing the documentation or trial and error. 
+We have permanently modified the local variable `a` by passing it to the mutate method, even though `a` is outside the method definition's scope. This is because the `pop` method mutates the caller (the array).
+
+A note on terminology:
+```
+# This is an example of mutating the caller
+"Winner".sub!('r', 'y')
+
+# This is an example of mutating an argument
+def upcase(str)
+  str.upcase!
+end
+```
+The __`upcase` method definition does not have an explicit caller__ - it take an argument, and mutates that argument. The `.sub!` method mutates it's caller, because the `Winner` string is *calling* the method. Method __definitions do not have callers__ - they take arguments. 
+
+There's no obvious way to tell if a method will mutate the caller, other than referencing the documentation or trial and error. 
 
 ###### p versus puts
 As a sidenote, we used `p` to print the string. This is different to `puts`, since there was no `nil` after the string was printed, as well as printing the quotes around the string. By default, `puts` returns `nil`. 
