@@ -73,21 +73,27 @@ def display_selection(player, computer)
   Kernel.puts("\n")
 end
 
-def display_results(player, computer)
+def winner_check(player, computer)
   if win?(player, computer)
-    prompt('You win this round!')
+    'player'
   elsif win?(computer, player)
-    prompt('You lost this round!')
+    'computer'
   else
-    prompt('It\'s a draw for this round!')
+    'draw'
+  end
+end
+
+def display_results(player, computer)
+  if winner_check(player, computer) == 'draw'
+    prompt('It\'s a draw!')
+  else
+    prompt("The #{winner_check(player, computer).capitalize} wins!")
   end
 end
 
 def score_incrementer(player, computer, score_tally)
-  if win?(player, computer)
-    score_tally[:player] += 1
-  elsif win?(computer, player)
-    score_tally[:computer] += 1
+  if winner_check(player, computer) != 'draw'
+    score_tally[winner_check(player, computer).to_sym] += 1
   end
 end
 
@@ -123,6 +129,7 @@ def display_farewell
   prompt('Thanks for playing! We hope to see you again.')
 end
 
+clear_screen
 display_welcome
 
 loop do
@@ -135,6 +142,7 @@ loop do
   score_check(score_tally)
   score_reset(score_tally)
   break unless play_again?
+  clear_screen
 end
 
 display_farewell
