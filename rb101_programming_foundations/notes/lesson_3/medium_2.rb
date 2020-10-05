@@ -221,3 +221,90 @@ We used the same names there for convenience. We could just as easily have calle
 The method gets the VALUES of the arguments we pass, but the parameter variables inside the method have no other relationship to those outside of the method."
 
 puts "The sixth set of puts statements will error out, since it does not have access to variables created within the block scope of the an_illustrative_method method."
+
+# 3) Study the following code and state what will be displayed...and why:
+=begin
+def tricky_method(a_string_param, an_array_param)
+  a_string_param += "rutabaga"
+  an_array_param << "rutabaga"
+end
+
+my_string = "pumpkins"
+my_array = ["pumpkins"]
+tricky_method(my_string, my_array)
+
+puts "My string looks like this now: #{my_string}"
+puts "My array looks like this now: #{my_array}"
+=end
+puts "tricky_method will return 'pumpkins rutabaga' and ['pumpkins, 'rutabaga'].
+
+my_string remains as 'pumpkins', since we have only passed the value associated with my_string into  tricky_method. Also, the method definition does not have access to variables initialised outside of it's scope. my_array is mutated due to the << method being applied. 
+
+In both cases, Ruby passes the arguments 'by value', but unlike some other languages, the value that gets passed is a reference to some object. The string argument is passed to the method as a reference to an object of type String. Similarly, the array is passed to the method as a reference to an object of type Array.
+
+The important distinction is that while a reference is passed, the method initializes a new local variable for both the string and the array and assigns each reference to the new local variables. These are variables that only live within the scope of the method definition.
+
+The String#+= operation is re-assignment and creates a new String object. The reference to this new object is assigned to a_string_param. The local variable a_string_param now points to 'pumpkinsrutabaga, not 'pumpkins'. It has been re-assigned by the String#+= operation. This means that a_string_param and my_string no longer point to the same object.
+
+With the array, one array object can have any number of elements. When we attach an additional element to an array using the << operator, Ruby simply keeps using the same object that was passed in, and appends the new element to it.
+"
+
+# 4) Study the following code and state what will be displayed...and why:
+=begin
+def tricky_method_two(a_string_param, an_array_param)
+  a_string_param << 'rutabaga'
+  an_array_param = ['pumpkins', 'rutabaga']
+end
+
+my_string = "pumpkins"
+my_array = ["pumpkins"]
+tricky_method_two(my_string, my_array)
+
+puts "My string looks like this now: #{my_string}"
+puts "My array looks like this now: #{my_array}"
+=end
+puts "my_string is now 'pumpkinsrutabaga', while an_array_param is [pumpkins]. This is opposite situation of our previous question, where the mutating method is applied to the 'pumpkins' object referenced by my_string, while an_array_param is a local variable that references a new array object compared with the object referenced when passed in as an argument. "
+
+# 5) How can we refactor this practice problem to make the result easier to predict and easier for the next programmer to maintain?
+=begin
+def tricky_method(a_string_param, an_array_param)
+  a_string_param += "rutabaga"
+  an_array_param << "rutabaga"
+end
+
+my_string = "pumpkins"
+my_array = ["pumpkins"]
+tricky_method(my_string, my_array)
+
+puts "My string looks like this now: #{my_string}"
+puts "My array looks like this now: #{my_array}"
+=end
+def tricky_method(a_string_param, an_array_param)
+  a_string_param += "rutabaga"
+  an_array_param += ["rutabaga"]
+
+  return a_string_param, an_array_param
+end
+
+my_string = "pumpkins"
+my_array = ["pumpkins"]
+my_string, my_array = tricky_method(my_string, my_array)
+
+puts "My string looks like this now: #{my_string}"
+puts "My array looks like this now: #{my_array}"
+
+# 6) How could the unnecessary duplication in this method be removed?
+=begin
+def color_valid(color)
+  if color == "blue" || color == "green"
+    true
+  else
+    false
+  end
+end
+=end
+def color_valid(color)
+  color == 'blue' || color == 'green'
+end
+
+puts 'Ruby will automatically evaluate statements.'

@@ -405,7 +405,7 @@ When dealing with objects passed into methods, we can either treat these argumen
 1. "references" to the original object; or
 2. "values", which are copies of the original
 
-In Ruby, when an object is passed to a *method call as an argument*, the parameter assigned to it acts as a *pointer to the original object*. Ruby __does not__ create a copy of the object for that method.
+In Ruby, when an object is passed to a *method call as an argument*, the parameter assigned to it acts as a *pointer to the original object*. Ruby __does not__ create a copy of the object for that method. The object that gets passed is a __reference__ to some object. 
 
 ###### Pass by value
 With pass by value, a copy of an object is created, and it is that copy that gets passed around. Since it is merely a copy, it is impossible to change the original object; any attempt to change the copy just changes the copy and leaves the original object unchanged. 

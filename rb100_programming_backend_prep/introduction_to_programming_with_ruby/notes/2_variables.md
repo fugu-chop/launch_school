@@ -294,7 +294,7 @@ Though we assigned a reference to `value`, we end up with both `s` and `t` refer
 Since the reference returned by `value.upcase!` is the same (albeit modified) String we started with, the assignment effectively __rebinds `value` back to the object it was previously bound to__; nothing is changed by the assignment.
 
 ###### Method definitions
-Method definitions (i.e. creating new methods) are *self-contained* with respect to local variables. Local variables outside the method definition are __not visible__ *inside* the method definition, __unless passed in as arguments__ (at which point, the variable is assigned as a method parameter and made available to the method body as a local variable). Furthermore, local variables *inside* the method definition are not visible outside the method definition.
+Method definitions (i.e. creating new methods) are *self-contained* with respect to local variables. Local variables outside the method definition are __not visible__ *inside* the method definition, __unless passed in as arguments__ (at which point, the variable is assigned as a method parameter and made available to the method body as a *distinct* local variable). Furthermore, local variables *inside* the method definition are not visible outside the method definition.
 
 In this example, the `a` variable defined outside the `my_value` method is __not visible__ to the `a` defined within the method, and vice versa. `a` is also an integer, which is __immutable__.
 ```
