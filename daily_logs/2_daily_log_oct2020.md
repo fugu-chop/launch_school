@@ -4,6 +4,7 @@
 - [3rd, Sat](#031020-sat)
 - [4th, Sun](#041020-sun)
 - [5th, Mon](#051020-mon)
+- [6th, Tue](#061020-tue)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -92,3 +93,18 @@ __*Thoughts*__<br/>
 The PEDAC session was helpful in breaking down a problem I ordinarily would have no idea how to solve. I think now it's just being able to efficiently recall Ruby syntax to actually complete these problems. 
 
 After drastically cutting down on the amount of verbiage in the Medium 2, Question 2 exercise, I think I finally grasp the concept. When we pass arguments to methods, we are passing *values*, __not variables__.
+
+##### 06/10/20 (Tue)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 3: Practice Problems
+  - Medium 2
+  - Hard 1
+- RB101 - Lesson 4: Ruby Collections
+  - Collection Basics
+  - Looping
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+After the strangeness of Medium 2 exercises, Hard 1 problems seemed easier. Maybe that's just because the concepts are cumulative, and grasping the concepts initially is the hard bit. Lesson 4 seems relatively straightforward - we've covered this implicitly through all the other lessons so far. 
