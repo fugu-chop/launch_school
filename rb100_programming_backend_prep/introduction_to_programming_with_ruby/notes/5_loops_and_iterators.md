@@ -67,6 +67,8 @@ end
 ```
 ### While loops
 A `while` loop is given a parameter that evaluates to a boolean. Once that boolean expression becomes `false`, the while loop is not executed again, and the program *continues after the `while` loop*. 
+
+The `while` keyword always precedes a condition. If the condition evaluates to `true`, the loop will execute the code within the block. If the condition evaluates to false, the loop will stop. This means the code below break *may or may not execute at all*, depending on the condition.
 ```
 x = 3
 
@@ -102,7 +104,7 @@ puts "Done!"
 => nil
 ```
 ### Do While loops
-A `do/while` loop works in a similar way to a `while` loop. In a `do/while` loop, the __conditional check is placed at the end of the loop__ as opposed to the beginning, meaning that the `do/while` loop will get executed one time, __prior__ to the conditional check.
+A `do/while` loop works in a similar way to a `while` loop. In a `do/while` loop, the __conditional check is placed at the end of the loop__ as opposed to the beginning, meaning that the `do/while` loop will get executed at least one time, __prior__ to the conditional check. Contrast this with a `while` loop, which may not run at all, depending on the evaluation condition. 
 ```
 loop do
   puts "Do you want to do that again?"
