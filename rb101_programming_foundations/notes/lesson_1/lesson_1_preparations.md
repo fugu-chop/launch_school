@@ -23,3 +23,10 @@ This framework helps avoid:
   - Unforeseen Edge Cases
   - Hard to understand code
   - Code that’s difficult to maintain
+
+Useful questions include:
+1. Input formats? 
+2. Empty inputs?
+3. Output formats?
+4. Do I return a new output, or a mutated output?
+5. Verify your assumptions!

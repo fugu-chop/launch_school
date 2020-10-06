@@ -165,13 +165,26 @@ The `to_a` method *returns an array version* of your hash when called. It __does
 name_and_age.to_a
 => [["Bob", 42], ["Steve", 31], ["Joe", 19]]
 ```
-The `keys` and `values` methods allow us to easily fetch all the keys or values from a hash together as an array, respectively. 
+The `keys` and `values` methods allow us to easily fetch all the keys or values from a hash together as an array, respectively. This is a way to *loop* through a hash (since hashes don't have zero-based index, but key value pairs).
 ```
+name_and_age = { "Bob" => 42, "Steve" => 31, "Joe" => 19}
+
 name_and_age.keys
 => ["Bob", "Steve", "Joe"]
 
 name_and_age.values
 => [42, 31, 19]
+
+key_array = name_and_age.keys
+counter = 0
+
+loop do
+  break if counter == key_array.size
+  current_person = key_array[counter]
+  current_person_age = name_and_age[current_person]
+  puts "#{current_person} is #{current_person_age} years old!"
+  counter += 1
+end
 ```
 If we want to fetch keys or values sequentially, we can use `each_key` or `each_value`.
 ```

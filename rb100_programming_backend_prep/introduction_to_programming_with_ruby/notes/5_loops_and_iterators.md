@@ -16,6 +16,14 @@
 ### What is a loop?
 A loop is the *repetitive execution of a piece of code* for a given amount of repetitions or until a certain condition is met. We will cover `while` loops, `do/while` loops, and `for` loops.
 
+Looping comprises four basic elements: 
+1. A loop, 
+2. A counter, 
+3. A way to retrieve the current value, and 
+4. A way to exit the loop. 
+
+It's important to understand how to manually loop over collections with nothing more than these 4 tools. 
+
 The simplest way to create a loop in Ruby is using the `loop` method. `loop` takes a block, which is denoted by `{ ... }` or `do ... end`. 
 
 A loop will execute any code within the block (again, that's just between the `{ }` or `do ... end`) until you manually intervene with `Ctrl + C` or insert a `break` statement inside the block, which will force the loop to stop and the execution will continue after the loop.
