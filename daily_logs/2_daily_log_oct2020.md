@@ -5,6 +5,7 @@
 - [4th, Sun](#041020-sun)
 - [5th, Mon](#051020-mon)
 - [6th, Tue](#061020-tue)
+- [7th, Wed](#071020-wed)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -108,3 +109,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 After the strangeness of Medium 2 exercises, Hard 1 problems seemed easier. Maybe that's just because the concepts are cumulative, and grasping the concepts initially is the hard bit. Lesson 4 seems relatively straightforward - we've covered this implicitly through all the other lessons so far. 
+
+##### 07/10/20 (Wed)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 4: Ruby Collections
+  - Looping
+  - PEDAC Walkthrough
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Today was mainly revision. There was a huge amount of time dedicated to PEDAC on a fairly complex problem. I liked the fact there was a lot of detail, but the presenter on the videos was really...boring. He was clearly very knowledgable, just not a great presenter. 
