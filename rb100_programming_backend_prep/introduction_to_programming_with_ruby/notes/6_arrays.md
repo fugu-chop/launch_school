@@ -85,6 +85,27 @@ a
 If we want to apply a change to all elements of the array, we can use the `map` or `collect` method.
 It iterates over an array *applying a block to each element* of the array and __returns a new array__ with those results (the original array is not mutated). 
 
+The key to remember here is that `map` always performs transformation based on the *return value of the block*. 
+```
+[1, 2, 3].map do |num|
+  num.odd?
+end
+=> [true, false, true]
+```
+In this case, the return value of the block will be a boolean. This means that the collection returned by `map` will be an array of booleans. 
+
+Take care to remember that `map` doesn't care about truthiness, and takes the return value as the transformation criteria.
+```
+[1, 2, 3].map do |num|
+  num.odd?
+  puts num
+end
+
+1
+2
+3
+=> [nil, nil, nil]
+```
 Again, we can use the bang operator to make these changes permanent. 
 ```
 a = [1, 2, 3, 4]
@@ -95,7 +116,9 @@ a.map { |num| num**2 }
 a
 => [1, 2, 3, 4]
 ```
-If we want to filter specific elements from an array, we can use the `select` method. This method iterates over an array and *returns a new array* that includes any items that __return true__ to the expression provided. This allows us to save the new returned array to a variable.
+If we want to filter specific elements from an array, we can use the `select` method. This method iterates over an array and *returns a new array* that includes items based on the *truthiness* of the block's return value.
+
+If the block's return value is always "truthy", then all of the elements will be selected and placed in a __new__ collection. This allows us to save the new returned array to a variable.
 
 Again, we can use the bang operator (`!`) to make these changes permanent. 
 ```
