@@ -46,7 +46,6 @@ end
 say()
 => Hello!
 ```
-
 ### Method Definition and Local Variable Scope
 A method definition __creates its own scope__ outside the regular flow of execution. 
 
@@ -75,7 +74,6 @@ end
   puts num
 end
 ```
-
 ### Mutating the caller
 When calling a method, the *argument* can be altered permanently. We call this *mutating the caller*. 
 

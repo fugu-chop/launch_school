@@ -6,6 +6,7 @@
 - [Gotchas](#gotchas)
 - [Conversion](#conversion)
 - [Element assignment](#element-assignment)
+- [Other useful methods](#other-useful-methods)
 
 ### String elements
 Strings use an integer-based index that represents *each character in the string*. The index starts counting at *zero* and increments by one for the remaining index values. You can reference a specific character using this index.
@@ -192,4 +193,163 @@ hsh[:apple] = 'Fruit'
 
 hsh
 => { :apple => "Fruit", :carrot => "Produce", :pear => "Produce", :broccoli => "Produce" }
+```
+### Other useful methods
+`Enumerable#any?` <br/>
+This is a method available to both `Array` and `Hash` as part of the `Enumerable` module. 
+```
+a = [nil, false, nil]
+
+a.any?
+=> false
+
+[1, 2, 3].any? do |num|
+  num > 2
+end
+=> true
+
+{ a: "ant", b: "bear", c: "cat" }.any? do |key, value|
+  value.size > 4
+end
+
+=> false
+```
+There are two return values that we need to be aware of here:
+1. the return value of the method; and 
+2. the return value of the block. 
+
+`any?` looks at the truthiness of the block's return value in order to determine what the method's return value will be. If the block returns a "truthy" value for any element in the collection, then the method will return `true`.
+
+`Enumerable#all?` <br/>
+`all?` functions in a similar way to `any?`. It also looks at the truthiness of the block's return value, but the method only returns `true` if the block's return value in __every iteration is truthy__ (that is, not `false` or `nil`).
+```
+[1, 2, 3].all? do |num|
+  num > 2
+end
+=> false
+
+{ a: "ant", b: "bear", c: "cat" }.all? do |key, value|
+  value.length >= 3
+end
+=> true
+```
+`Enumerable#each_with_index` <br/>
+`each_with_index` is nearly identical to `each`. Unlike `each`, `each_with_index` takes a second argument which represents the *index of each element*. Just like `each`, `each_with_index` always returns the *original calling collection*.
+```
+[1, 2, 3].each_with_index do |num, index|
+  puts "The index of #{num} is #{index}."
+end
+
+The index of 1 is 0.
+The index of 2 is 1.
+The index of 3 is 2.
+=> [1, 2, 3]
+```
+When calling `each_with_index` on a hash, the first argument now represents *an array containing both the key and the value*.
+```
+{ a: "ant", b: "bear", c: "cat" }.each_with_index do |pair, index|
+  puts "The index of #{pair} is #{index}."
+end
+
+The index of [:a, "ant"] is 0.
+The index of [:b, "bear"] is 1.
+The index of [:c, "cat"] is 2.
+=> { :a => "ant", :b => "bear", :c => "cat" }
+```
+`Enumerable#each_with_object`<br/>
+Besides taking a block like the methods above, `each_with_object` takes a method argument. The method argument is a __collection object that will be returned by the method__. 
+
+On top of that, the block takes 2 arguments of its own. The first block argument represents the *current element* and the second block argument represents the *collection object that was passed in as an argument* to the method. Once it's done iterating, the method returns the __collection object that was passed in__. 
+```
+[1, 2, 3].each_with_object([]) do |num, array|
+  array << num if num.odd?
+end
+
+=> [1, 3]
+```
+In the above example, `array` is initialized to an empty array, `[]`. Inside the block, we can now manipulate `array`. In this case, we're just appending the current `num` into it if it's odd.
+
+Similar to each_with_index, the first block argument turns into an array when we invoke each_with_object on a hash.
+```
+{ a: "ant", b: "bear", c: "cat" }.each_with_object([]) do |pair, array|
+  array << pair.last
+end
+
+=> ["ant", "bear", "cat"]
+```
+As an additional quirk, it's possible to use parentheses to capture the key and value in the first block argument.
+```
+{ a: "ant", b: "bear", c: "cat" }.each_with_object({}) do |(key, value), hash|
+  hash[value] = key
+end
+
+=> { "ant" => :a, "bear" => :b, "cat" => :c }
+```
+`Enumerable#first` <br/>
+`first` __doesn't take a block__, but it does take an optional argument which represents the *number of elements to return*. When no argument is given, it returns *only the first element in the collection*.
+```
+[1, 2, 3].first
+=> 1
+```
+When an argument is provided, `first` will return the specified number of elements.
+```
+{ a: "ant", b: "bear", c: "cat" }.first(2)
+
+=> [[:a, "ant"], [:b, "bear"]]
+```
+There are a couple of interesting things of note here:
+1. Hashes are typically thought of as __unordered__ and values are retrieved by keys. In some programming languages, the order is not preserved at all. This used to be true for Ruby too, but since Ruby 1.9, order is preserved __according to the order of insertion__. Calling first on a hash doesn't quite make sense, but Ruby lets you do it.
+2. Notice that the return value of calling `first` on a hash with a numeric argument is a nested array. This is unexpected. Fortunately, turning this nested array back to a hash is easy enough: `[[:a, "ant"], [:b, "bear"]].to_h`.
+
+In practice, first is rarely called on a hash, and most often used with arrays.
+
+`Enumerable#include?`
+`include?` __doesn't take a block__, but it does require one argument. It returns `true` if the argument *exists in the collection* and `false` if it doesn't.
+```
+[1, 2, 3].include?(1)
+=> true
+```
+When called on a hash, `include?` only checks the *keys*, not the values.
+```
+{ a: "ant", b: "bear", c: "cat" }.include?("ant")
+=> false
+
+{ a: "ant", b: "bear", c: "cat" }.include?(:a)
+=> true
+```
+In fact, `Hash#include?` is essentially an alias for `Hash#key?` or `Hash#has_key?`. In practice, Rubyists would usually prefer these methods over `include?` as they make the intention more explicit.
+
+`Enumerable#partition` <br/>
+`partition` divides up elements in the current collection into two collections, depending on the block's return value.
+```
+[1, 2, 3].partition do |num|
+  num.odd?
+end
+
+=> [[1, 3], [2]]
+```
+The most idiomatic way to use `partition` is to parallel assign variables to capture the divided inner arrays:
+```
+odd, even = [1, 2, 3].partition do |num|
+  num.odd?
+end
+
+odd
+=> [1, 3]
+even
+=> [2]
+```
+Even if the collection is a hash, the return value of `partition` will always be an array.
+```
+long, short = { a: "ant", b: "bear", c: "cat" }.partition do |key, value|
+  value.size > 3
+end
+
+=> [[[:b, "bear"]], [[:a, "ant"], [:c, "cat"]]]
+
+long.to_h
+=> { :b => "bear" }
+
+short.to_h
+=> { :a => "ant", :c => "cat" }
 ```

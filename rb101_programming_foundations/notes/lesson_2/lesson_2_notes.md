@@ -424,7 +424,7 @@ jim
 ```
 The code example above has two different local variables named `name`. There is one scoped *within* the method, and there is one in the *main scope*. 
 
-This is __not__ variable shadowing, because the main scope variable is __not accessible to the method__. Within the method, we could have named the variable something other than `name`.
+This is __not__ variable shadowing, because the main scope variable is __not accessible to the method__. Within the method, we could have named the variable something other than `name`. We are only passing the __value__. 
 
 When we passed the `name` variable into the `change_name` method, it looks like the variable was *passed by value*, since re-assigning the variable only affected the *method-level variable*, and __not__ the *main scope variable*.
 
