@@ -6,6 +6,7 @@
 - [5th, Mon](#051020-mon)
 - [6th, Tue](#061020-tue)
 - [7th, Wed](#071020-wed)
+- [8th, Thu](#081020-thu)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -121,3 +122,18 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Today was mainly revision. There was a huge amount of time dedicated to PEDAC on a fairly complex problem. I liked the fact there was a lot of detail, but the presenter on the videos was really...boring. He was clearly very knowledgable, just not a great presenter. 
+
+##### 08/10/20 (Thu)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 4: Ruby Collections
+  - Transformations and Selection
+  - Methods (inc. the `Enumerable` module)
+  - Practice problems
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+There were a few exercises today where I really enjoyed having to manually write loops instead of relying on library methods. It gives me an opportunity to think about what I'm writing and writing code with intent, rather than classic hack and slash. 
+
+Practice problems are again, very enjoyable. They encourage sequentially thinking through logic, as well as distinguishing what gets returned and how an expression is evaluated.
