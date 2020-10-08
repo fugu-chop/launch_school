@@ -28,6 +28,7 @@ else
   puts "a is neither 3, nor 4"
 end
 ```
+Note when none of the conditions in an `if` statement evaluates as `true`, the `if` statement itself returns `nil`.
 
 ###### Other shenanigans
 We can shorten simple `if` statements to a single line, but we must use the `then` word:

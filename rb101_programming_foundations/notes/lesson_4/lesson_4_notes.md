@@ -303,7 +303,7 @@ There are a couple of interesting things of note here:
 
 In practice, first is rarely called on a hash, and most often used with arrays.
 
-`Enumerable#include?`
+`Enumerable#include?` <br/>
 `include?` __doesn't take a block__, but it does require one argument. It returns `true` if the argument *exists in the collection* and `false` if it doesn't.
 ```
 [1, 2, 3].include?(1)
