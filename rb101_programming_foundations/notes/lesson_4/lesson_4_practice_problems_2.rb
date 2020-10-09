@@ -96,3 +96,41 @@ numbers.each do |number|
 end
 
 puts "This would print 1, 2, and the numbers array would be [1, 2], as by the time the each method would have reached the 3rd element, it has been removed from the numbers array, leaving nothing to iterate over."
+
+# 9) Write your own version of the rails titleize implementation.
+def titleize (sentence)
+  sentence_array = sentence.split
+  sentence_array.map { |word| word.capitalize }.join(' ')
+end
+
+# 10) Modify the hash such that each member of the Munster family has an additional "age_group" key that has one of three values describing the age group the family member is in (kid, adult, or senior). Note: a kid is in the age range 0 - 17, an adult is in the range 18 - 64 and a senior is aged 65+. 
+munsters = {
+  "Herman" => { "age" => 32, "gender" => "male" },
+  "Lily" => { "age" => 30, "gender" => "female" },
+  "Grandpa" => { "age" => 402, "gender" => "male" },
+  "Eddie" => { "age" => 10, "gender" => "male" },
+  "Marilyn" => { "age" => 23, "gender" => "female"}
+}
+
+munsters.each_key do |key| 
+  if munsters[key]["age"] <= 17
+    munsters[key]["age_group"] = 'kid'
+  elsif munsters[key]["age"] > 17 && munsters[key]["age"] <= 64
+    munsters[key]["age_group"] = 'adult'
+  else 
+    munsters[key]["age_group"] = 'senior'
+  end
+end
+
+=begin
+munsters.each do |name, details|
+  case details["age"]
+  when 0...18
+    details["age_group"] = "kid"
+  when 18...65
+    details["age_group"] = "adult"
+  else
+    details["age_group"] = "senior"
+  end
+end
+=end
