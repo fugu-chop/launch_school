@@ -7,6 +7,7 @@
 - [6th, Tue](#061020-tue)
 - [7th, Wed](#071020-wed)
 - [8th, Thu](#081020-thu)
+- [9th, Fri](#091020-fri)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -137,3 +138,20 @@ __*Thoughts*__<br/>
 There were a few exercises today where I really enjoyed having to manually write loops instead of relying on library methods. It gives me an opportunity to think about what I'm writing and writing code with intent, rather than classic hack and slash. 
 
 Practice problems are again, very enjoyable. They encourage sequentially thinking through logic, as well as distinguishing what gets returned and how an expression is evaluated.
+
+Multiple assignment still trips me out - it just feels very weird to see two variables, separated by commas without parenthesis being assigned references to objects. 
+
+##### 09/10/20 (Fri)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 4: Ruby Collections
+  - Practice problems
+  - Additional practice problems
+  - Quiz
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+Once again, the quizzes prove to be exercises in interpretation of what the answers actually mean, rather than what the code actually returns. I'm still finding them vague and hard to answer, even if I know exactly what the code returns. 
+
+Still, they're valuable in making me __very__ carefully consider what code returns. 
