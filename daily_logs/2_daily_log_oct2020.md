@@ -8,6 +8,7 @@
 - [7th, Wed](#071020-wed)
 - [8th, Thu](#081020-thu)
 - [9th, Fri](#091020-fri)
+- [10th, Sat](#101020-sat)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -155,3 +156,22 @@ __*Thoughts*__<br/>
 Once again, the quizzes prove to be exercises in interpretation of what the answers actually mean, rather than what the code actually returns. I'm still finding them vague and hard to answer, even if I know exactly what the code returns. 
 
 Still, they're valuable in making me __very__ carefully consider what code returns. 
+
+##### 10/10/20 (Sat)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 4: Ruby Collections
+  - Quiz
+- RB101 - Lesson 5: Advanced Ruby Collections
+  - Sorting
+  - Nested collections
+  - Working with blocks
+
+__*Time spent*__<br/>
+242 minutes
+
+__*Thoughts*__<br/>
+Spent some time finishing off the quiz. I am still not really happy with how the quiz answers are expressed, since I find the questions vague, but the answers very specific. 
+
+Nested collections and shallow copies was interesting. It feels like a logical extension of how indexed assignment in arrays is mutating - shallow copies mean that the objects in nested collections are now arrays themselves, rather than individual elements like before. 
+
+Using nested blocks for comparison/sorting operations is pretty crazy. It seems pretty logical in hindsight, since it's the same principle as a nested `if` statement, but seeing it in action with `each`, `map` and `select` methods is eye-opening, and seems quite complex, since you have to account for what is returned and what is evaluated.
