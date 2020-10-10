@@ -209,10 +209,26 @@ a.join('-')
 ###### `each`
 The `each` method works on objects that allow for iteration and is commonly used along with a block. If given a block, `each` runs the code in the block once for every element in the collection and *returns the collection it was invoked on*. If no block is given, it returns an *Enumerator* object. 
 
+Let's walk through what happens when `.each` is called:
+```
+[[1, 2], [3, 4]].each do |arr|
+  puts arr.first
+end
+
+1
+3
+=> [[1, 2], [3, 4]]
+```
+The `Array#each` method is being called on the multi-dimensional array `[[1, 2], [3, 4]]`. Each inner array is passed to the block in turn and assigned to the local variable `arr`. The `Array#first` method is called on `arr` and returns the object at index 0 of the current array - in this case the integers 1 and 3, respectively. 
+
+The `puts` method then outputs a string representation of the integer. `puts` returns `nil` and, since this is the last evaluated statement within the block, the return value of the block is therefore `nil`. `.each` doesn't do anything with this returned value though, and since the return value of `each` is the calling object - in this case the nested array `[[1, 2], [3, 4]]` - this is what is ultimately returned.
+
 ###### `map`
 `map` also works on objects that allow for iteration. Like `each`, when given a block it invokes the given block once for every element in the collection. 
 
-Where it really differs from `each` is the returned value. `map` __creates and returns a new array__ containing the values returned by the block. This makes it useful for transforming an array as a whole, rather than iterating through individual elements within an array (which `each` is better for). It also lets us save the result directly to a variable. 
+Where it really differs from `each` is the returned value. Unlike `each`, `map` performs transformation based on the __return value of the block__.
+
+`map` __creates and returns a new array__ containing the values returned by the block. This makes it useful for transforming an array as a whole, rather than iterating through individual elements within an array (which `each` is better for). It also lets us save the result directly to a variable. 
 
 If no block is given, it also returns an *Enumerator* object. 
 
