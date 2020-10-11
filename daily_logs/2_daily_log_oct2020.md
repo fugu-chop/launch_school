@@ -175,3 +175,24 @@ Spent some time finishing off the quiz. I am still not really happy with how the
 Nested collections and shallow copies was interesting. It feels like a logical extension of how indexed assignment in arrays is mutating - shallow copies mean that the objects in nested collections are now arrays themselves, rather than individual elements like before. 
 
 Using nested blocks for comparison/sorting operations is pretty crazy. It seems pretty logical in hindsight, since it's the same principle as a nested `if` statement, but seeing it in action with `each`, `map` and `select` methods is eye-opening, and seems quite complex, since you have to account for what is returned and what is evaluated.
+
+##### 11/10/20 (Sun)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 4: Ruby Collections
+  - Revision of Methods
+- RB101 - Lesson 5: Advanced Ruby Collections
+  - Working with blocks revision
+  - Working with blocks practice problems
+  - Quiz
+- RB101 - Lesson 6: Slightly Larger Problems
+  - Debugging with pry
+
+__*Time spent*__<br/>
+241 minutes
+
+__*Thoughts*__<br/>
+Revision was helpful. One of the things that tripped me up was directly invoking a method with a block on the object that's being iterated on. Just a comfort thing, I think. 
+
+For some reason, I really have a hard time reading hashes nested in other collections. I can't seem to process that a hash can have multiple keys and multiple values per key when it's nested. 
+
+The quiz was really challenging. I had to interpret some pretty detailed nested loops without running them. It's very taxing mentally to keep a track of everything that's being returned and how it's being returned. I'm having a bit of difficulty understanding `select` and how it interacts with other methods and sub-blocks. 
