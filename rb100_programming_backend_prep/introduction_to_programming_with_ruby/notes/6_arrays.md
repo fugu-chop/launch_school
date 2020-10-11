@@ -120,6 +120,12 @@ If we want to filter specific elements from an array, we can use the `select` me
 
 If the block's return value is always "truthy", then all of the elements will be selected and placed in a __new__ collection. This allows us to save the new returned array to a variable.
 
+To perform selection, `select` evaluates the return value of the block. The block returns a value *on each iteration*, which then gets evaluated by `select`.
+
+When evaluating the block's return value, `select` only cares about its truthiness. If the return value of the block is "truthy", then the element during that iteration will be selected. If the return value of the block is "falsey" then the element will not be selected. 
+
+When an element is selected, it's __placed in a new collection__. 
+
 Again, we can use the bang operator (`!`) to make these changes permanent. 
 ```
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -207,7 +213,7 @@ a.join('-')
 ```
 ### Each v Map
 ###### `each`
-The `each` method works on objects that allow for iteration and is commonly used along with a block. If given a block, `each` runs the code in the block once for every element in the collection and *returns the collection it was invoked on*. If no block is given, it returns an *Enumerator* object. 
+The `each` method works on objects that allow for iteration and is commonly used along with a block. If given a block, `each` runs the code in the block once for every element in the collection and *returns the collection it was invoked on*. It __does not care about the return value of the block__. If no block is given, it returns an *Enumerator* object. 
 
 Let's walk through what happens when `.each` is called:
 ```
@@ -226,9 +232,9 @@ The `puts` method then outputs a string representation of the integer. `puts` re
 ###### `map`
 `map` also works on objects that allow for iteration. Like `each`, when given a block it invokes the given block once for every element in the collection. 
 
-Where it really differs from `each` is the returned value. Unlike `each`, `map` performs transformation based on the __return value of the block__.
+Where it really differs from `each` is the __returned value__. Unlike `each`, `map` performs transformation based on the __return value of the block__. This means that if we write some code in the block that's not a transformation instruction (e.g. it *returns* a boolean instead), `map` will evaluate the *truthiness* of the statement, meaning an *array of booleans*. Alternatively, if the last line of code to be evaluated in the block is a `puts` statement, a new array of `nil` will be returned (since `puts` returns `nil`).
 
-`map` __creates and returns a new array__ containing the values returned by the block. This makes it useful for transforming an array as a whole, rather than iterating through individual elements within an array (which `each` is better for). It also lets us save the result directly to a variable. 
+`map` __creates and returns a new array__ containing the values returned by the block. This makes it useful for transforming an array __as a whole__, rather than iterating through individual elements within an array (which `each` is better for). It also lets us save the result directly to a variable. 
 
 If no block is given, it also returns an *Enumerator* object. 
 
