@@ -145,6 +145,12 @@ name = gets.chomp
 puts name
 => "Bob"
 ```
+We can use `eval` to evaluate string equations, and return an integer. 
+```
+eval "2 + 2"
+=> 4
+```
+
 ### Scope
 A variable's scope determines *where* in a program a variable is available for use. A variable's scope is defined by *where the variable is initialized or created*. 
 
