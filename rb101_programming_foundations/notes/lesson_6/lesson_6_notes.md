@@ -12,7 +12,7 @@ We typically have two types of errors we need to fix:
 1. Syntax errors (non-conformance with programming language grammar, code doesn't run)
 2. Logical errors (code logic - the code runs, but unexpected results)
 
-We can use `pry` to debug our code. We can put `require: 'pry'` at the top of our code, then insert `binding.pry` in our code, above where the error occurs. 
+We can use `pry` to debug our code. We can put `require 'pry'` at the top of our code, then insert `binding.pry` in our code, above where the error occurs. 
 - A `binding` is something that contains references to any variables that were in scope at the point where it was created. Pry can *see* subsequently created variables, will not have access to their referenced objects (due to a concept named *hoisting*). 
 - `pry` interrupts execution and pries open the binding, so we can have a look around.
 
