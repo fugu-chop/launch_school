@@ -9,6 +9,8 @@
 - [8th, Thu](#081020-thu)
 - [9th, Fri](#091020-fri)
 - [10th, Sat](#101020-sat)
+- [11th, Sun](#111020-sun)
+- [12th, Mon](#121020-mon)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -196,3 +198,19 @@ Revision was helpful. One of the things that tripped me up was directly invoking
 For some reason, I really have a hard time reading hashes nested in other collections. I can't seem to process that a hash can have multiple keys and multiple values per key when it's nested. 
 
 The quiz was really challenging. I had to interpret some pretty detailed nested loops without running them. It's very taxing mentally to keep a track of everything that's being returned and how it's being returned. I'm having a bit of difficulty understanding `select` and how it interacts with other methods and sub-blocks. 
+
+##### 12/10/20 (Mon)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 6: Slightly Larger Problems
+  - Debugging with pry
+  - Tictactoe implementation
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I spent a decent amount of time playing around with `pry` and `pry-byebug`, which is a super helpful tool - being able to access variable values mid-execution is a gamechanger. 
+
+I also spent some time debugging a block of code I wasn't sure about - I *think* my conclusion is that the `Array#select` method is equivalent to `any?`, in that it will return the whole nested subarray if __any__ of the nested elements return `true`. 
+
+The tictactoe game is interesting to code in Ruby. As there's no visual element like there is HTML for Javascript, this makes for some incredibly ugly ASCII art, which I am getting a good laugh out of. 
