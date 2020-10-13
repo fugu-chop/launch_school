@@ -319,8 +319,6 @@ puts a
 
 While most programming languages do not allow you to change the value assigned to a constant, Ruby does. It will however throw a warning, letting you know that there was a previous definition for that variable.
 
-Constants __cannot__ be declared in method definitions (i.e. *you can't assign a constant in the body of a method*), and are available throughout your application's scopes.
-
 ###### Global
 `$global` variables are declared by starting the variable name with the `$`. These variables are available throughout your entire app, overriding all scope boundaries. 
 

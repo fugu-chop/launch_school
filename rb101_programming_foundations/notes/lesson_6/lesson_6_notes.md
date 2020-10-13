@@ -1,6 +1,7 @@
 # Slightly Larger Problems
 ## Table of Contents
 - [Debugging with pry](#debugging-with-pry)
+- [Splats](#splats)
 
 ### Debugging with pry
 We need to get good at identifying and fixing errors in our code. 
@@ -50,3 +51,37 @@ Useful commands include:
   - `next`, which jumps to the next executed line of the code (e.g. that our variables goes into as an argument, or is evaluated via an expression).
   - `step`, which will move into the subsequent line of code, whether or not it is executed for our variable (e.g. a value doesn't meet criteria and is not assigned to a new variable)
   - `continue`, which continues program execution and ends the `pry` session.
+
+### Splats
+The splat (`*`) operator has a few functions.
+
+*Catch-all* <br/>
+When calling a method, we can use the splat operator to act as a 'catch-all' variable for *multiple values*.
+```
+def go(x, *args)
+  puts args.inspect
+end
+
+go("a", "b", "c")
+
+['b', 'c']
+=> nil
+```
+In our above example, `'a'` is passed to the `go` method as an argument, via the `x` parameter, as it is the first value passed. The `*args` parameter will capture the rest of any values we pass in to `go`.
+
+*Using an array to pass multiple arguments* <br/>
+They let you pass an array into a function expecting multiple arguments. The first item in the array becomes the first argument, the second item becomes the second argument and so on.
+```
+def go(x, y)
+  puts x.inspect
+  puts y.inspect
+end
+
+point = [12, 10]
+go(*point)
+
+12
+10
+=> nil
+```
+The splat operator here is effectively acting as a wildcard - it is effectively creating a variable to hold each element in the array. It allows us to *destructure* an array - it is basically the same as calling `.flatten(1)` on an array, meaning it will only unnest __one__ level (won't unnest subarrays, etc).
