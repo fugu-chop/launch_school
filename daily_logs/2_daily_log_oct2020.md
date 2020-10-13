@@ -11,6 +11,7 @@
 - [10th, Sat](#101020-sat)
 - [11th, Sun](#111020-sun)
 - [12th, Mon](#121020-mon)
+- [13th, Tue](#131020-tue)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -214,3 +215,18 @@ I spent a decent amount of time playing around with `pry` and `pry-byebug`, whic
 I also spent some time debugging a block of code I wasn't sure about - I *think* my conclusion is that the `Array#select` method is equivalent to `any?`, in that it will return the whole nested subarray if __any__ of the nested elements return `true`. 
 
 The tictactoe game is interesting to code in Ruby. As there's no visual element like there is HTML for Javascript, this makes for some incredibly ugly ASCII art, which I am getting a good laugh out of. 
+
+##### 13/10/20 (Tue)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 6: Slightly Larger Problems
+  - Tictactoe implementation
+- Revision
+  - `select` method
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+A cool tip I learned is the ability to turn an object into a boolean, via the `!!` method. This can be a quick method of determining whether something exists (`true`) or not (`false`).
+
+After some further investigation, my conclusion yesterday about the `select` method was incorrect. The key to understanding was that `select` will __always__ return a collection, even if that collection is empty (e.g. if no true conditions are evaluated). This has implications for nested `select` calls, since `select` only cares about the truthiness of what is passed to it, and __empty arrays are still truthy__.  
