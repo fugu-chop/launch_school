@@ -19,6 +19,7 @@ We can use `pry` to debug our code. We can put `require 'pry'` at the top of our
 When the code reaches that line, a `pry` session is invoked. This stops the program from executing further, but gives us access to the program (e.g. access variables). 
 - If `binding.pry` is located in a loop or a method invocation with a block, it will be called multiple times, for each iteration.  
 - We can use `whereami` to show the code block where `pry` is invoked. `whereami` also takes an optional argument, which tells it how many lines above and below to show.
+- We can use `Ctrl + b` to step to the next instance of `binding.pry` in our code. 
 
 We can also type `pry` into our command line, which initiates a REPL. At a basic level, it enables us to evaluable Ruby code, just like in `irb`. However, there are additional debugging capabilities.
 

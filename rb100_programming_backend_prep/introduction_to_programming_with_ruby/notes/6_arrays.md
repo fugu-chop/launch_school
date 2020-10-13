@@ -118,11 +118,9 @@ a
 ```
 If we want to filter specific elements from an array, we can use the `select` method. This method iterates over an array and *returns a new array* that includes items based on the *truthiness* of the block's return value.
 
-If the block's return value is always "truthy", then all of the elements will be selected and placed in a __new__ collection. This allows us to save the new returned array to a variable.
-
 To perform selection, `select` evaluates the return value of the block. The block returns a value *on each iteration*, which then gets evaluated by `select`.
 
-When evaluating the block's return value, `select` only cares about its truthiness. If the return value of the block is "truthy", then the element during that iteration will be selected. If the return value of the block is "falsey" then the element will not be selected. 
+When evaluating the block's return value, `select` __only cares about its truthiness__. If the return value of the block is "truthy", then the element during that iteration will be selected. If the return value of the block is "falsey" then the element will not be selected. 
 
 When an element is selected, it's __placed in a new collection__. 
 
