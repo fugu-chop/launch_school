@@ -12,6 +12,7 @@ def prompt(msg)
 end
 
 # rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/MethodLength
 def display_board(board, score)
   system 'clear'
   puts "You're marking #{PLAYER_MARKER}'s. The computer is #{COMPUTER_MARKER}."
@@ -31,6 +32,7 @@ def display_board(board, score)
   puts
 end
 # rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/MethodLength
 
 def initialise_board
   new_board = Hash.new
@@ -54,7 +56,9 @@ def player_places_piece!(board)
     prompt("Choose a square: #{joiner(empty_squares(board))}")
     square = gets.chomp.to_i
     break if empty_squares(board).include?(square)
-    prompt('Sorry, that\'s not a value choice. Try again')
+    puts
+    prompt('Sorry, that\'s not a value choice. Try again.')
+    puts
   end
   board[square] = PLAYER_MARKER
 end
@@ -93,8 +97,8 @@ def score_incrementer(winner, score)
 end
 
 def score_display(score)
-  prompt("The player has won #{score[:player]} games.")
-  prompt("Computer has won #{score[:computer]} games.")
+  prompt("The player has won #{score[:player]} rounds.")
+  prompt("Computer has won #{score[:computer]} rounds.")
   puts
 end
 
@@ -114,7 +118,7 @@ loop do
   display_board(board, score)
 
   if someone_won?(board)
-    prompt("#{detect_winner(board)} won!")
+    prompt("#{detect_winner(board)} won this round!")
   else
     prompt('It\'s a tie!')
   end
@@ -127,4 +131,4 @@ loop do
   break unless answer.downcase.start_with?('y')
 end
 
-prompt('Thanks for playing tictactoe! Have a great day.')
+prompt('Thanks for playing Tictactoe! Have a great day.')
