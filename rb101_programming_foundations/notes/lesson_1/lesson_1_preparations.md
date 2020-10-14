@@ -4,18 +4,18 @@
 PEDAC is a problem solving framework by which we can break down problems in order to solve them more quickly and efficiently. 
 
 PEDAC stands for: 
-- Understand the __P__roblem
+- Understand the Problem
   - Identify expected input and output
   - Make the requirements explicit
   - Identify rules
   - Mental model of the problem (optional)
-- Write __E__xamples/Test Cases
+- Write Examples/Test Cases
   - Validate understanding of the problem
-- __D__ata Structure
+- Data Structure
   - How we represent data that we will work with when converting the input to output.
-- __A__lgorithm
+- Algorithm
   - Steps for converting input to output
-- __C__ode 
+- Code 
   - Implementation of Algorithm
 
 This framework helps avoid:
