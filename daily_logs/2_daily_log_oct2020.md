@@ -12,6 +12,7 @@
 - [11th, Sun](#111020-sun)
 - [12th, Mon](#121020-mon)
 - [13th, Tue](#131020-tue)
+- [14th, Wed](#141020-wed)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -229,4 +230,23 @@ __*Time spent*__<br/>
 __*Thoughts*__<br/>
 A cool tip I learned is the ability to turn an object into a boolean, via the `!!` method. This can be a quick method of determining whether something exists (`true`) or not (`false`).
 
-After some further investigation, my conclusion yesterday about the `select` method was incorrect. The key to understanding was that `select` will __always__ return a collection, even if that collection is empty (e.g. if no true conditions are evaluated). This has implications for nested `select` calls, since `select` only cares about the truthiness of what is passed to it, and __empty arrays are still truthy__.  
+After some further investigation, my conclusion yesterday about the `select` method was incorrect. The key to understanding was that `select` will __always__ return a collection, even if that collection is empty (e.g. if no true conditions are evaluated). This has implications for nested `select` calls, since `select` only cares about the truthiness of what is passed to it, and __empty arrays are still truthy__.
+
+##### 14/10/20 (Wed)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 6: Slightly Larger Problems
+  - Tictactoe code review (splat operator)
+  - Tictactoe rubocop & refactor
+  - Tictactoe enhancements (joiner method, incrementing scores)
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+Recently, I've been having some concern about the pace at which I'm going. I feel like I'm moving too quickly to fully absorb everything I'm learning, but too slowly to achieve my goals. I realise this is the sort of thinking that is the opposite of mastery based learning. 
+
+I spent a decent amount of time just unpicking code and reading about the splat operator, trying to understand what it does. I found this to be very useful, as well as reduce some concerns about whether the pace at which I'm going is "right". 
+
+> It does not matter how slowly you go, as long as you do not stop. 
+
+I spent time doing the enhancements to the Tictactoe project, making sure to write out the steps required before I started coding, just to get some rudimentary PEDAC practice. It's definitely helpful, and getting me to think through the problem. 
