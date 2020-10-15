@@ -1,6 +1,3 @@
-require 'pry'
-require 'pry-byebug'
-
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
@@ -47,20 +44,20 @@ def empty_squares(board)
   board.keys.select { |num| board[num] == INITIAL_MARKER }
 end
 
-def joiner(board, separator = ',', keyword = 'or')
+def joinor(board, separator = ',', keyword = 'or')
   full = board
-  if board.size > 1
-    last_element = " #{keyword} " + full.pop.to_s
-  else 
-    last_element = full.pop.to_s
-  end
+  last_element = if board.size > 1
+                   " #{keyword} " + full.pop.to_s
+                 else
+                   full.pop.to_s
+                 end
   full.join("#{separator} ") + last_element
 end
 
 def player_places_piece!(board)
   square = ''
   loop do
-    prompt("Choose a square: #{joiner(empty_squares(board))}")
+    prompt("Choose a square: #{joinor(empty_squares(board))}")
     square = gets.chomp.to_i
     break if empty_squares(board).include?(square)
     puts
@@ -70,36 +67,41 @@ def player_places_piece!(board)
   board[square] = PLAYER_MARKER
 end
 
-def defense_choice(board)
-  player_choices = board.select do |keys, value|
+def computer_defense_choice(board)
+  player_choices = board.select do |_keys, value|
     value == PLAYER_MARKER
-  end.keys
+  end.keys.uniq
 
   computer_choice = []
-  WINNING_COMBOS.select do |element|
+  WINNING_COMBOS.each do |element|
     (element - player_choices).each do |option|
       if (element - player_choices).size == 1
         computer_choice << option
       end
     end
   end
+  (computer_choice & empty_squares(board)).first
+end
 
-  # Check if the computer_choice is empty or not!
-  if true
-    # Need to 
-    computer_choice.first
-  else
-    computer_choice.first
-  end 
-  binding.pry
+def computer_offense_choice(board)
+  computer_choices = board.select do |_keys, value|
+    value == COMPUTER_MARKER
+  end.keys.uniq
+
+  computer_choice = []
+  WINNING_COMBOS.each do |element|
+    (element - computer_choices).each do |option|
+      if (element - computer_choices).size == 1
+        computer_choice << option
+      end
+    end
+  end
+  (computer_choice & empty_squares(board)).first
 end
 
 def computer_places_piece!(board)
-  if defense_choice(board) != nil
-    square = defense_choice(board)
-  else
-    square = empty_squares(board).sample
-  end
+  square = computer_offense_choice(board) || computer_defense_choice(board) ||
+           5 || empty_squares(board).sample
   board[square] = COMPUTER_MARKER
 end
 
@@ -138,7 +140,7 @@ def score_display(score)
 end
 
 def winner?(score)
-  score.key(5).to_s if score.key(5) != nil
+  score.key(5).to_s if !score.key(5).nil?
 end
 
 def winner_display(winner)
@@ -162,18 +164,17 @@ loop do
 
     player_places_piece!(board)
     break if someone_won?(board) || board_full?(board)
-    
+
     computer_places_piece!(board)
     break if someone_won?(board) || board_full?(board)
   end
 
   display_board(board, score)
 
+  puts
   if someone_won?(board)
-    puts
     prompt("#{detect_winner(board)} won this round!")
   else
-    puts
     prompt('It\'s a tie!')
   end
 
