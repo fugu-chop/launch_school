@@ -13,6 +13,7 @@
 - [12th, Mon](#121020-mon)
 - [13th, Tue](#131020-tue)
 - [14th, Wed](#141020-wed)
+- [15th, Thu](#151020-thu)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -250,3 +251,17 @@ I spent a decent amount of time just unpicking code and reading about the splat 
 > It does not matter how slowly you go, as long as you do not stop. 
 
 I spent time doing the enhancements to the Tictactoe project, making sure to write out the steps required before I started coding, just to get some rudimentary PEDAC practice. It's definitely helpful, and getting me to think through the problem. 
+
+##### 15/10/20 (Thu)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 6: Slightly Larger Problems
+  - Tictactoe enhancements (victory condition, AI defense)
+  - Tictactoe debugging (`score` not updated on last move, `joiner` punctuating a single element)
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+I worked on the AI defense portion of the Tictactoe problem. After some major struggling at finding appropriate syntax to return an array (`.select` really annoys me), I was able to come up with a method that can give a single choice for the computer. 
+
+I also encountered a bug - `pry-byebug` was incredibly helpful in actually stepping through the code - my method doesn't exclude already chosen squares, so it basically does nothing. I need to fix this tomorrow. It's very satisfying being able to bug fix, after all the initial frustration. I feel like I'm in a good spot to solve this tomorrow.
