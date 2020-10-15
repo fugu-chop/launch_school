@@ -45,7 +45,7 @@ We can press `q` to exit out of the documentation.
 
 `pry-byebug` is another Ruby gem that extends the functionality of `pry`, allowing us to step through code line by line.  
 
-We need to `require pry-byebug` in order to use it in our scripts (but we also require `pry`, but also a `binding.pry` in our code). 
+We need to `require: 'pry-byebug'` in order to use it in our scripts (but we also require `pry`, but also a `binding.pry` in our code). 
 
 Useful commands include:
   - `next`, which jumps to the next executed line of the code (e.g. that our variables goes into as an argument, or is evaluated via an expression).

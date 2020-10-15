@@ -1,3 +1,6 @@
+require 'pry'
+require 'pry-byebug'
+
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
@@ -46,7 +49,11 @@ end
 
 def joiner(board, separator = ',', keyword = 'or')
   full = board
-  last_element = " #{keyword} " + full.pop.to_s
+  if board.size > 1
+    last_element = " #{keyword} " + full.pop.to_s
+  else 
+    last_element = full.pop.to_s
+  end
   full.join("#{separator} ") + last_element
 end
 
@@ -63,8 +70,36 @@ def player_places_piece!(board)
   board[square] = PLAYER_MARKER
 end
 
+def defense_choice(board)
+  player_choices = board.select do |keys, value|
+    value == PLAYER_MARKER
+  end.keys
+
+  computer_choice = []
+  WINNING_COMBOS.select do |element|
+    (element - player_choices).each do |option|
+      if (element - player_choices).size == 1
+        computer_choice << option
+      end
+    end
+  end
+
+  # Check if the computer_choice is empty or not!
+  if true
+    # Need to 
+    computer_choice.first
+  else
+    computer_choice.first
+  end 
+  binding.pry
+end
+
 def computer_places_piece!(board)
-  square = empty_squares(board).sample
+  if defense_choice(board) != nil
+    square = defense_choice(board)
+  else
+    square = empty_squares(board).sample
+  end
   board[square] = COMPUTER_MARKER
 end
 
@@ -102,6 +137,23 @@ def score_display(score)
   puts
 end
 
+def winner?(score)
+  score.key(5).to_s if score.key(5) != nil
+end
+
+def winner_display(winner)
+  if winner
+    prompt("The #{winner.capitalize} has won the game with 5 wins!")
+  end
+end
+
+def score_reset(condition, score)
+  if condition
+    score[:player] = 0
+    score[:computer] = 0
+  end
+end
+
 loop do
   board = initialise_board
 
@@ -110,7 +162,7 @@ loop do
 
     player_places_piece!(board)
     break if someone_won?(board) || board_full?(board)
-
+    
     computer_places_piece!(board)
     break if someone_won?(board) || board_full?(board)
   end
@@ -118,13 +170,18 @@ loop do
   display_board(board, score)
 
   if someone_won?(board)
+    puts
     prompt("#{detect_winner(board)} won this round!")
   else
+    puts
     prompt('It\'s a tie!')
   end
 
   score_incrementer(detect_winner(board), score)
   score_display(score)
+
+  winner_display(winner?(score))
+  score_reset(winner?(score), score)
 
   prompt('Do you want to play again? (Please press y or n)')
   answer = gets.chomp
