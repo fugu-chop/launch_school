@@ -265,3 +265,22 @@ __*Thoughts*__<br/>
 I worked on the AI defense portion of the Tictactoe problem. After some major struggling at finding appropriate syntax to return an array (`.select` really annoys me), I was able to come up with a method that can give a single choice for the computer. 
 
 I also encountered a bug - `pry-byebug` was incredibly helpful in actually stepping through the code - my method doesn't exclude already chosen squares, so it basically does nothing. I need to fix this tomorrow. It's very satisfying being able to bug fix, after all the initial frustration. I feel like I'm in a good spot to solve this tomorrow.
+
+##### 16/10/20 (Fri)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 6: Slightly Larger Problems
+  - Tictactoe enhancements 
+    - AI offense
+    - AI enhancements
+    - Player order
+    - Refactor game loop logic
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+Really fun session again. It's super rewarding to get a working piece of code that's reasonably complex. 
+
+I also learned to take advantage of how `||` is evaluated - if you're going to set a reference for a particular variable, and one of those conditions could be falsy, but the other one will always return a truthy value, you don't need an `if/else` statement - just use `var = condition_falsy || condition_truthy` instead.
+
+Also, the `&` operator is super handy to get common elements of two arrays, in a new array. 
