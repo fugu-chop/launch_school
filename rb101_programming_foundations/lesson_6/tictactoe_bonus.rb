@@ -4,6 +4,7 @@ COMPUTER_MARKER = 'O'
 WINNING_COMBOS = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] +
                  [[1, 4, 7], [2, 5, 8], [3, 6, 9]] +
                  [[1, 5, 9], [3, 5, 7]]
+PLAYER_ORDER = 'choose'
 score = { player: 0,
           computer: 0 }
 
@@ -11,11 +12,28 @@ def prompt(msg)
   puts "=> #{msg}"
 end
 
+def who_goes_first
+  if PLAYER_ORDER == 'choose'
+    loop do
+      puts
+      prompt('Who should go first? Computer or player?')
+      answer = gets.chomp.downcase
+      if ['player', 'computer'].include?(answer)
+        return answer
+      else
+        prompt('Sorry, please choose computer or player.')
+      end
+    end
+  else
+    PLAYER_ORDER
+  end
+end
+
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/MethodLength
 def display_board(board, score)
   system 'clear'
-  puts "You're marking #{PLAYER_MARKER}'s. The computer is #{COMPUTER_MARKER}."
+  puts "You're marking #{PLAYER_MARKER}'s. The computer is #{COMPUTER_MARKER}'s."
   score_display(score)
   puts
   puts "     |     |"
@@ -101,7 +119,7 @@ end
 
 def computer_places_piece!(board)
   square = computer_offense_choice(board) || computer_defense_choice(board) ||
-           5 || empty_squares(board).sample
+           ([5] & empty_squares(board)).first || empty_squares(board).sample
   board[square] = COMPUTER_MARKER
 end
 
@@ -156,17 +174,32 @@ def score_reset(condition, score)
   end
 end
 
+system 'clear'
+prompt('Welcome to Tictactoe!')
+
 loop do
+  first_player = who_goes_first
   board = initialise_board
 
   loop do
     display_board(board, score)
 
-    player_places_piece!(board)
-    break if someone_won?(board) || board_full?(board)
+    if first_player == 'player'
+      player_places_piece!(board)
+      break if someone_won?(board) || board_full?(board)
 
-    computer_places_piece!(board)
-    break if someone_won?(board) || board_full?(board)
+      computer_places_piece!(board)
+      break if someone_won?(board) || board_full?(board)
+
+    else
+      computer_places_piece!(board)
+      break if someone_won?(board) || board_full?(board)
+
+      display_board(board, score)
+
+      player_places_piece!(board)
+      break if someone_won?(board) || board_full?(board)
+    end
   end
 
   display_board(board, score)
@@ -189,4 +222,5 @@ loop do
   break unless answer.downcase.start_with?('y')
 end
 
+puts
 prompt('Thanks for playing Tictactoe! Have a great day.')
