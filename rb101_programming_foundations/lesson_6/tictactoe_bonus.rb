@@ -33,7 +33,7 @@ end
 # rubocop:disable Metrics/MethodLength
 def display_board(board, score)
   system 'clear'
-  puts "You're marking #{PLAYER_MARKER}'s. The computer is #{COMPUTER_MARKER}'s."
+  puts "You're marking #{PLAYER_MARKER}. The computer is #{COMPUTER_MARKER}."
   score_display(score)
   puts
   puts "     |     |"
@@ -70,6 +70,18 @@ def joinor(board, separator = ',', keyword = 'or')
                    full.pop.to_s
                  end
   full.join("#{separator} ") + last_element
+end
+
+def alternate_player(current_player)
+  current_player == 'player' ? 'computer' : 'player'
+end
+
+def place_piece!(board, current_player)
+  if current_player == 'player'
+    player_places_piece!(board)
+  else
+    computer_places_piece!(board)
+  end
 end
 
 def player_places_piece!(board)
@@ -178,28 +190,14 @@ system 'clear'
 prompt('Welcome to Tictactoe!')
 
 loop do
-  first_player = who_goes_first
+  current_player = who_goes_first
   board = initialise_board
 
   loop do
     display_board(board, score)
-
-    if first_player == 'player'
-      player_places_piece!(board)
-      break if someone_won?(board) || board_full?(board)
-
-      computer_places_piece!(board)
-      break if someone_won?(board) || board_full?(board)
-
-    else
-      computer_places_piece!(board)
-      break if someone_won?(board) || board_full?(board)
-
-      display_board(board, score)
-
-      player_places_piece!(board)
-      break if someone_won?(board) || board_full?(board)
-    end
+    place_piece!(board, current_player)
+    current_player = alternate_player(current_player)
+    break if someone_won?(board) || board_full?(board)
   end
 
   display_board(board, score)
