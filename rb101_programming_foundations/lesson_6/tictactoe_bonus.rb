@@ -97,31 +97,15 @@ def player_places_piece!(board)
   board[square] = PLAYER_MARKER
 end
 
-def computer_defense_choice(board)
-  player_choices = board.select do |_keys, value|
-    value == PLAYER_MARKER
+def computer_choice(board, marker)
+  choices = board.select do |_keys, value|
+    value == marker
   end.keys.uniq
 
   computer_choice = []
   WINNING_COMBOS.each do |element|
-    (element - player_choices).each do |option|
-      if (element - player_choices).size == 1
-        computer_choice << option
-      end
-    end
-  end
-  (computer_choice & empty_squares(board)).first
-end
-
-def computer_offense_choice(board)
-  computer_choices = board.select do |_keys, value|
-    value == COMPUTER_MARKER
-  end.keys.uniq
-
-  computer_choice = []
-  WINNING_COMBOS.each do |element|
-    (element - computer_choices).each do |option|
-      if (element - computer_choices).size == 1
+    (element - choices).each do |option|
+      if (element - choices).size == 1
         computer_choice << option
       end
     end
@@ -130,7 +114,7 @@ def computer_offense_choice(board)
 end
 
 def computer_places_piece!(board)
-  square = computer_offense_choice(board) || computer_defense_choice(board) ||
+  square = computer_choice(board, COMPUTER_MARKER) || computer_choice(board, PLAYER_MARKER) ||
            ([5] & empty_squares(board)).first || empty_squares(board).sample
   board[square] = COMPUTER_MARKER
 end
