@@ -14,6 +14,8 @@
 - [13th, Tue](#131020-tue)
 - [14th, Wed](#141020-wed)
 - [15th, Thu](#151020-thu)
+- [16th, Fri](#161020-fri)
+- [17th, Sat](#171020-sat)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -284,3 +286,23 @@ Really fun session again. It's super rewarding to get a working piece of code th
 I also learned to take advantage of how `||` is evaluated - if you're going to set a reference for a particular variable, and one of those conditions could be falsy, but the other one will always return a truthy value, you don't need an `if/else` statement - just use `var = condition_falsy || condition_truthy` instead.
 
 Also, the `&` operator is super handy to get common elements of two arrays, in a new array. 
+
+##### 17/10/20 (Sat)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 6: Slightly Larger Problems
+  - Tictactoe enhancements 
+    - Refactor game loop logic
+  - Twenty-One
+    - Setting up the deck and shoe
+    - Player turn (inc. inputs)
+    - Dealer turn
+
+__*Time spent*__<br/>
+245 minutes
+
+__*Thoughts*__<br/>
+I started on the Twenty-One assignment, which is a simplified blackjack. Again, I really enjoy this type of work where I can build sequences of logic that rely on other bits of logic, like a scaffold. 
+
+Once again, I failed to read the assignment fully, and went off on a tangent, trying to code sequential player and dealer turns. Thankfully most of the code I wrote was still usable as is, but I did lose a fair bit of my win condition code, which needs to be re-written. 
+
+It's another reminder to slow down, and fully read the requirements.
