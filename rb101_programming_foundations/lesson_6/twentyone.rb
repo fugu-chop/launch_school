@@ -1,6 +1,3 @@
-require 'pry'
-require 'pry-byebug'
-
 number_cards = (2..10).to_a.map(&:to_s)
 face_cards = %w(King Queen Jack Ace)
 cards = number_cards + face_cards
@@ -14,15 +11,15 @@ end
 def welcome
   prompt("Welcome to Twenty-one!")
   puts
-  prompt("The goal of this game is to get to 21 before the dealer does.")
+  prompt("The goal of this game is to draw to 21.")
   prompt("If you go over 21, you bust.")
-  prompt("Dealer hits until 17.")
+  prompt("Dealer hits to 17 exclusive.")
   prompt("Dealer wins on draws.")
   prompt("No splitting or doubling down.")
   puts
 end
 
-def initial_hand(shoe)
+def initial_hand!(shoe)
   shoe.shuffle!.pop(2)
 end
 
@@ -52,54 +49,31 @@ def hand_value(hand)
   CARDS.values_at(*hand).reduce(:+)
 end
 
-def alternate_player(player)
-  player == 'Player' ? 'Dealer' : 'Player'
-end
-
-def alternate_hand(current_hand, dealer_hand, player_hand)
-  current_hand == player_hand ? dealer_hand : player_hand
-end
-
-def dealer_choice(shoe, dealer_hand)
-  # pull this out into a value check
-  if hand_value(dealer_hand) < 17
-    hit!(shoe)
-  end
+def dealer_choice(dealer_hand)
+  hand_value(dealer_hand) < 17
 end
 
 def dealer_turn(shoe, dealer_hand)
-  if dealer_choice(shoe, dealer_hand)
-    dealer_hand << dealer_choice(shoe, dealer_hand)
+  if dealer_choice(dealer_hand)
+    dealer_hand << hit!(shoe)
   else
     dealer_hand
   end
 end
 
-def player_turn(player_choice, shoe, player_hand)
-  if player_choice == 'hit'
-    player_hand << hit!(shoe)
-  else
-    player_hand
-  end
-end
-
-def win_check(hand)
+def player_win_or_bust(hand)
   # How do I account for multiple aces?
   if hand_value(hand) > 21
-    return 'busts'
+    'busts'
   elsif hand_value(hand) == 21
-    return 'wins'
+    'wins'
   end
 end
 
-def end_game_result(player, condition, hand)
+def win_or_bust_result(player, condition, hand)
   if condition == 'busts' || condition == 'wins'
     [player, condition, hand]
   end
-end
-
-def which_state(condition1, condition2)
-  condition1 ? condition1 : condition2
 end
 
 system 'clear'
@@ -107,25 +81,34 @@ welcome
 
 loop do
   shoe = CARDS.keys * 4
-  player_hand = initial_hand(shoe)
-  dealer_hand = initial_hand(shoe)
-  current_player = 'Dealer'
-  current_hand = dealer_hand
+  player_hand = initial_hand!(shoe)
+  dealer_hand = initial_hand!(shoe)
 
   print_initial_hands(player_hand, dealer_hand)
   loop do
-    player_turn(player_choice, shoe, player_hand)
-    prompt("Your hand is #{player_hand}")
-    break if end_game_result(alternate_player(current_player), win_check(player_hand), player_hand)
-    
-    dealer_turn(shoe, dealer_hand)
-    prompt('The dealer hits.')
-    break if end_game_result(alternate_player(current_player), win_check(dealer_hand), dealer_hand)
+    if player_choice == 'hit'
+      player_hand << hit!(shoe)
+      puts
+      prompt("Your hand is #{player_hand}")
+      break if player_win_or_bust(player_hand)
+    else
+      prompt("Your hand is #{player_hand}")
+      puts
+      break
+    end
   end
 
-  state = which_state(end_game_result(alternate_player(current_player), win_check(player_hand), player_hand), end_game_result(alternate_player(current_player), win_check(dealer_hand), dealer_hand))
+  break if player_win_or_bust(player_hand)
+  prompt('It\'s the dealer\'s turn!')
   puts
-  prompt("The #{state[0]} #{state[1]} with a hand of #{state[2]}!")
+  loop do
+    prompt("The dealer's hand is #{dealer_hand}")
+    break if !dealer_choice(dealer_hand)
+    dealer_turn(shoe, dealer_hand)
+    prompt('The dealer hits.')
+    puts
+  end
+
   puts
   prompt('Do you want to play again? Please enter \'yes\' or \'no\'.')
   input = gets.chomp.downcase
@@ -135,3 +118,9 @@ end
 
 puts
 prompt('Thanks for playing Twenty-one!')
+
+=begin
+To DOs:
+- win conditions
+- Ace logic
+=end
