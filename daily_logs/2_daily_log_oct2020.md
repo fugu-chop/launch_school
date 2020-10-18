@@ -16,6 +16,7 @@
 - [15th, Thu](#151020-thu)
 - [16th, Fri](#161020-fri)
 - [17th, Sat](#171020-sat)
+- [18th, Sun](#181020-sun)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -306,3 +307,24 @@ I started on the Twenty-One assignment, which is a simplified blackjack. Again, 
 Once again, I failed to read the assignment fully, and went off on a tangent, trying to code sequential player and dealer turns. Thankfully most of the code I wrote was still usable as is, but I did lose a fair bit of my win condition code, which needs to be re-written. 
 
 It's another reminder to slow down, and fully read the requirements.
+
+##### 18/10/20 (Sun)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 6: Slightly Larger Problems
+  - Twenty-One
+    - Win conditions
+    - Win display messages
+    - Refactor display methods
+    - Review the Launch School solution
+    - Bonus Features (score tally, arbitrary values, caching hand totals as variables)
+  - Tictactoe refactor
+
+__*Time spent*__<br/>
+244 minutes
+
+__*Thoughts*__<br/>
+Working through the Twenty-one assignment - the bonus features suggested didn't really apply that much to my program, as there isn't too much repetition of methods. I think one thing I could do better is not make methods take other methods as arguments, as this increases the complexity of reading code. 
+
+Another important factor I remember reading about (and encountered again in this assignment) was the `while` loop - the `while` keyword can restrict the entire loop from executing at least once. 
+
+I'm really glad for the code reviews Launch School provides. Ordinarily I would just be smashing logic into the one place, but having an experienced eye suggest specific things to clean up code is very helpful. I'll need to continue to keep an eye on the length of my methods, but I find refactoring to be a useful exercise. 
