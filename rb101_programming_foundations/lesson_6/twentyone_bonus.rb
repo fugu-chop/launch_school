@@ -155,6 +155,7 @@ end
 def display_scores(scores)
   prompt "The player has won #{scores[:player]} rounds."
   prompt "The dealer has won #{scores[:dealer]} rounds."
+  prompt "First to win #{ROUNDS_TO_WIN} rounds, wins the game!"
 end
 
 def score_check(scores)
