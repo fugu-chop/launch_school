@@ -5,11 +5,19 @@ WINNING_COMBOS = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] +
                  [[1, 4, 7], [2, 5, 8], [3, 6, 9]] +
                  [[1, 5, 9], [3, 5, 7]]
 PLAYER_ORDER = 'choose'
+ROUNDS_TO_WIN = 5
+COMBO_LENGTH = 3
 score = { player: 0,
           computer: 0 }
 
 def prompt(msg)
   puts "=> #{msg}"
+end
+
+def display_welcome
+  prompt 'Welcome to Tictactoe!'
+  prompt "The goal is to place #{COMBO_LENGTH} icons in a row."
+  prompt "The first to #{ROUNDS_TO_WIN} wins, wins the game!"
 end
 
 def who_goes_first
@@ -34,7 +42,7 @@ end
 def display_board(board, score)
   system 'clear'
   puts "You're marking #{PLAYER_MARKER}. The computer is #{COMPUTER_MARKER}."
-  score_display(score)
+  display_score(score)
   puts
   puts "     |     |"
   puts "  #{board[1]}  |  #{board[2]}  |  #{board[3]}"
@@ -114,8 +122,10 @@ def computer_choice(board, marker)
 end
 
 def computer_places_piece!(board)
-  square = computer_choice(board, COMPUTER_MARKER) || computer_choice(board, PLAYER_MARKER) ||
-           ([5] & empty_squares(board)).first || empty_squares(board).sample
+  square = computer_choice(board, COMPUTER_MARKER) ||
+           computer_choice(board, PLAYER_MARKER) ||
+           ([ROUNDS_TO_WIN] & empty_squares(board)).first ||
+           empty_squares(board).sample
   board[square] = COMPUTER_MARKER
 end
 
@@ -129,17 +139,17 @@ end
 
 def detect_winner(board)
   WINNING_COMBOS.each do |combo|
-    if board.values_at(*combo).count(PLAYER_MARKER) == 3
+    if board.values_at(*combo).count(PLAYER_MARKER) == COMBO_LENGTH
       return 'You'
     elsif board.values_at(*combo)
-               .count(COMPUTER_MARKER) == 3
+               .count(COMPUTER_MARKER) == COMBO_LENGTH
       return 'Computer'
     end
   end
   nil
 end
 
-def score_incrementer(winner, score)
+def increment_score(winner, score)
   if winner == 'You'
     score[:player] += 1
   elsif winner == 'Computer'
@@ -147,31 +157,36 @@ def score_incrementer(winner, score)
   end
 end
 
-def score_display(score)
-  prompt("The player has won #{score[:player]} rounds.")
-  prompt("Computer has won #{score[:computer]} rounds.")
+def display_score(score)
+  prompt "The player has won #{score[:player]} rounds."
+  prompt "Computer has won #{score[:computer]} rounds."
   puts
 end
 
 def winner?(score)
-  score.key(5).to_s if !score.key(5).nil?
+  score.key(ROUNDS_TO_WIN).to_s if !score.key(ROUNDS_TO_WIN).nil?
 end
 
-def winner_display(winner)
+def display_winner(winner)
   if winner
-    prompt("The #{winner.capitalize} has won the game with 5 wins!")
+    prompt "The #{winner.capitalize} has won with #{ROUNDS_TO_WIN} wins!"
   end
 end
 
-def score_reset(condition, score)
+def reset_score(condition, score)
   if condition
     score[:player] = 0
     score[:computer] = 0
   end
 end
 
+def display_farewell
+  puts
+  prompt 'Thanks for playing Tictactoe! Have a great day.'
+end
+
 system 'clear'
-prompt('Welcome to Tictactoe!')
+display_welcome
 
 loop do
   current_player = who_goes_first
@@ -188,21 +203,20 @@ loop do
 
   puts
   if someone_won?(board)
-    prompt("#{detect_winner(board)} won this round!")
+    prompt "#{detect_winner(board)} won this round!"
   else
-    prompt('It\'s a tie!')
+    prompt 'It\'s a tie!'
   end
 
-  score_incrementer(detect_winner(board), score)
-  score_display(score)
+  increment_score(detect_winner(board), score)
+  display_score(score)
 
-  winner_display(winner?(score))
-  score_reset(winner?(score), score)
+  display_winner(winner?(score))
+  reset_score(winner?(score), score)
 
-  prompt('Do you want to play again? (Please press y or n)')
+  prompt 'Do you want to play again? (Please press y or n)'
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')
 end
 
-puts
-prompt('Thanks for playing Tictactoe! Have a great day.')
+display_farewell
