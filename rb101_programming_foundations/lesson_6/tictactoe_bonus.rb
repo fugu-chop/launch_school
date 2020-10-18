@@ -7,8 +7,6 @@ WINNING_COMBOS = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] +
 PLAYER_ORDER = 'choose'
 ROUNDS_TO_WIN = 5
 COMBO_LENGTH = 3
-score = { player: 0,
-          computer: 0 }
 
 def prompt(msg)
   puts "=> #{msg}"
@@ -96,13 +94,14 @@ def player_places_piece!(board)
   square = ''
   loop do
     prompt("Choose a square: #{joinor(empty_squares(board))}")
-    square = gets.chomp.to_i
-    break if empty_squares(board).include?(square)
+    square = gets.chomp
+    break if empty_squares(board).include?(square.to_i) &&
+             square.to_f == square.to_i
     puts
     prompt('Sorry, that\'s not a value choice. Try again.')
     puts
   end
-  board[square] = PLAYER_MARKER
+  board[square.to_i] = PLAYER_MARKER
 end
 
 def computer_choice(board, marker)
@@ -158,8 +157,10 @@ def increment_score(winner, score)
 end
 
 def display_score(score)
+  puts
   prompt "The player has won #{score[:player]} rounds."
   prompt "Computer has won #{score[:computer]} rounds."
+  prompt 'First to 5 rounds, wins!'
   puts
 end
 
@@ -167,7 +168,16 @@ def winner?(score)
   score.key(ROUNDS_TO_WIN).to_s if !score.key(ROUNDS_TO_WIN).nil?
 end
 
-def display_winner(winner)
+def display_round_winner(board)
+  puts
+  if someone_won?(board)
+    prompt "#{detect_winner(board)} won this round!"
+  else
+    prompt 'It\'s a tie!'
+  end
+end
+
+def display_overall_winner(winner)
   if winner
     prompt "The #{winner.capitalize} has won with #{ROUNDS_TO_WIN} wins!"
   end
@@ -185,8 +195,23 @@ def display_farewell
   prompt 'Thanks for playing Tictactoe! Have a great day.'
 end
 
+def play_again?
+  answer = ''
+  loop do
+    prompt 'Do you want to play again? Please enter yes or no.'
+    answer = gets.chomp
+    break if ['yes', 'y', 'no', 'n'].include?(answer)
+    prompt 'That\'s not a valid response. Please enter yes or no.'
+    puts
+  end
+  ['yes', 'y'].include?(answer)
+end
+
 system 'clear'
 display_welcome
+
+score = { player: 0,
+          computer: 0 }
 
 loop do
   current_player = who_goes_first
@@ -200,23 +225,15 @@ loop do
   end
 
   display_board(board, score)
-
-  puts
-  if someone_won?(board)
-    prompt "#{detect_winner(board)} won this round!"
-  else
-    prompt 'It\'s a tie!'
-  end
+  display_round_winner(board)
 
   increment_score(detect_winner(board), score)
   display_score(score)
 
-  display_winner(winner?(score))
+  display_overall_winner(winner?(score))
   reset_score(winner?(score), score)
 
-  prompt 'Do you want to play again? (Please press y or n)'
-  answer = gets.chomp
-  break unless answer.downcase.start_with?('y')
+  break unless play_again?
 end
 
 display_farewell

@@ -7,7 +7,7 @@ DEALER_STAY = 17
 BLACKJACK = 21
 SUITS = 4
 STARTING_HAND_SIZE = 2
-ROUNDS_TO_WIN = 2
+ROUNDS_TO_WIN = 5
 scores = { player: 0,
            dealer: 0 }
 
@@ -15,7 +15,7 @@ def prompt(msg)
   puts "=> #{msg}"
 end
 
-def welcome
+def display_welcome
   prompt "Welcome to Twenty-one!"
   puts
   prompt "The goal of this game is to draw to 21."
@@ -31,7 +31,7 @@ def initial_hand!(shoe)
   shoe.shuffle!.pop(STARTING_HAND_SIZE)
 end
 
-def print_initial_hands(player_hand, dealer_hand)
+def display_initial_hand(player_hand, dealer_hand)
   prompt "The dealer has a #{dealer_hand[0]} and unknown card in hand."
   prompt "You have a #{player_hand[0]} and #{player_hand[1]} in hand."
   puts
@@ -47,6 +47,14 @@ def player_choice
     prompt 'Sorry, pick a valid choice - hit or stay.'
     puts
   end
+end
+
+def player_stay(player_hand, player, player_total)
+  prompt 'You\'ve chosen to stay.'
+  puts
+  display_hand(player_hand, player, player_total)
+  prompt 'It\'s the dealer\'s turn!'
+  sleep(0.5)
 end
 
 def hit!(shoe)
@@ -120,6 +128,19 @@ end
 def display_hand(hand, player, total)
   prompt "The #{player}'s hand is #{hand}."
   prompt "The #{player}'s hand value is #{total}."
+  puts
+end
+
+def display_dealer_stay(player, dealer_total)
+  if dealer_total < BLACKJACK
+    prompt "The #{player} stays."
+  end
+end
+
+def display_dealer_hits(player)
+  prompt "The #{player} hits."
+  sleep(0.5)
+  puts
 end
 
 def increment_score(score, player_total, dealer_total, player_hand, dealer_hand)
@@ -147,17 +168,37 @@ def display_game_winner(scores)
     puts
     prompt "The #{scores.key(ROUNDS_TO_WIN)} has won #{ROUNDS_TO_WIN} rounds!"
     prompt "The #{scores.key(ROUNDS_TO_WIN)} wins the game!"
+    puts
     true
   end
 end
 
-def score_reset(score)
+def reset_score(score)
   score[:player] = 0
   score[:dealer] = 0
 end
 
+def play_again?
+  input = nil
+  loop do
+    puts
+    prompt 'Do you want to play again? Please enter \'yes\' or \'no\'.'
+    input = gets.chomp.downcase
+    if !['yes', 'y', 'n', 'no'].include?(input)
+      prompt 'That\'s not a valid answer - please answer yes or no.'
+    end
+    break if ['yes', 'y', 'no', 'n'].include?(input)
+  end
+  ['yes', 'y'].include?(input)
+end
+
+def display_farewell
+  puts
+  prompt 'Thanks for playing Twenty-one!'
+end
+
 system 'clear'
-welcome
+display_welcome
 
 loop do
   shoe = CARDS.keys * SUITS
@@ -166,53 +207,45 @@ loop do
   player_total = hand_value(player_hand)
   dealer_total = hand_value(dealer_hand)
 
-  print_initial_hands(player_hand, dealer_hand)
+  display_initial_hand(player_hand, dealer_hand)
+
   loop do
-    player = 'player'
     break if win_or_bust(player_total)
+    player = 'player'
     if player_choice == 'hit'
       prompt 'You\'ve chosen to hit.'
       player_hand << hit!(shoe)
       player_total = hand_value(player_hand)
+      sleep(0.5)
       display_hand(player_hand, player, player_total)
-      puts
       break if win_or_bust(player_total)
     else
-      prompt 'You\'ve chosen to stay.'
-      display_hand(player_hand, player, player_total)
-      puts
-      prompt 'It\'s the dealer\'s turn!'
-      sleep(0.5)
+      player_stay(player_hand, player, player_total)
       break
     end
   end
 
-  puts
   loop do
+    break if win_or_bust(player_total)
     player = 'dealer'
     display_hand(dealer_hand, 'dealer', dealer_total)
-    break if win_or_bust(player_total) || !dealer_hit?(dealer_total)
+    if !dealer_hit?(dealer_total)
+      display_dealer_stay(player, dealer_total)
+      break
+    end
     dealer_turn(shoe, dealer_hand, dealer_total)
     dealer_total = hand_value(dealer_hand)
-    prompt "The #{player} hits."
-    sleep(0.5)
-    puts
+    display_dealer_hits(player)
   end
 
-  puts
   display_round_winner(player_total, dealer_total, player_hand, dealer_hand)
   increment_score(scores, player_total, dealer_total, player_hand, dealer_hand)
   display_scores(scores)
 
-  score_reset(scores) if display_game_winner(scores)
-  puts
+  reset_score(scores) if display_game_winner(scores)
 
-  prompt 'Do you want to play again? Please enter \'yes\' or \'no\'.'
-  input = gets.chomp.downcase
-  break unless input.start_with?('y')
-
+  break unless play_again?
   system 'clear'
 end
 
-puts
-prompt 'Thanks for playing Twenty-one!'
+display_farewell
