@@ -17,6 +17,7 @@
 - [16th, Fri](#161020-fri)
 - [17th, Sat](#171020-sat)
 - [18th, Sun](#181020-sun)
+- [19th, Mon](#191020-mon)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -328,3 +329,26 @@ Working through the Twenty-one assignment - the bonus features suggested didn't 
 Another important factor I remember reading about (and encountered again in this assignment) was the `while` loop - the `while` keyword can restrict the entire loop from executing at least once. 
 
 I'm really glad for the code reviews Launch School provides. Ordinarily I would just be smashing logic into the one place, but having an experienced eye suggest specific things to clean up code is very helpful. I'll need to continue to keep an eye on the length of my methods, but I find refactoring to be a useful exercise. 
+
+##### 19/10/20 (Mon)
+__*Concepts covered*__<br/>
+- RB101 - Lesson 6: Slightly Larger Problems
+  - Twenty-One
+    - Refactor
+  - Tictactoe
+    - Refactor
+  - Quiz & Feedback
+- RB109 - Assessment
+  - Reading about assessments, some blog posts, study guides
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I spent some time aggressively refactoring my Twenty-One script according to the feedback I got from Tictactoe. Hopefully it should pass muster. 
+
+I finally finished the RB101 coursework. It was a journey, that's for sure. I'm quite proud of myself in how far I've come in being able to decompose problems, as well as create somewhat production ready code (smaller methods, shorter logic) as opposed to my old, massive scripts with lots of repetition. 
+
+I'll start the Launch School problems tomorrow for RB109 preparation. I'm looking forward to seeing how my comprehension of the materials has been so far, on the first pass of the course materials. 
+
+Codewar Katas are also on my list of to-dos. Apparently being able to solve difficult 6 kyu and easier 5 kyu problems is a good benchmark to be ready for the interview. 
