@@ -8,8 +8,6 @@ BLACKJACK = 21
 SUITS = 4
 STARTING_HAND_SIZE = 2
 ROUNDS_TO_WIN = 5
-scores = { player: 0,
-           dealer: 0 }
 
 def prompt(msg)
   puts "=> #{msg}"
@@ -34,16 +32,15 @@ end
 def display_initial_hand(player_hand, dealer_hand)
   prompt "The dealer has a #{dealer_hand[0]} and unknown card in hand."
   prompt "You have a #{player_hand[0]} and #{player_hand[1]} in hand."
+  prompt "Your hand value is #{hand_value(player_hand)}."
   puts
 end
 
 def player_choice
   loop do
-    prompt 'Do you hit or stay?'
+    prompt 'Do you (h)it or (s)tay?'
     answer = gets.chomp.downcase
-    if ['hit', 'stay'].include?(answer)
-      return answer
-    end
+    return answer if ['hit', 'stay', 'h', 's'].include?(answer)
     prompt 'Sorry, pick a valid choice - hit or stay.'
     puts
   end
@@ -77,7 +74,12 @@ def dealer_hit?(dealer_total)
   dealer_total < DEALER_STAY
 end
 
-def dealer_turn(shoe, dealer_hand, dealer_total)
+def player_hit(player_hand, shoe)
+  player_hand << hit!(shoe)
+  hand_value(player_hand)
+end
+
+def display_action(shoe, dealer_hand, dealer_total)
   if dealer_hit?(dealer_total)
     dealer_hand << hit!(shoe)
   else
@@ -93,11 +95,11 @@ def win_or_bust(hand_total)
   end
 end
 
-def determine_winner(player_total, dealer_total, player_hand, dealer_hand)
-  if dealer_total > BLACKJACK ||
-     player_total == BLACKJACK ||
-     (player_total < BLACKJACK &&
-      player_total > dealer_total)
+def determine_winner(total, player_hand, dealer_hand)
+  if total[:dealer_total] > BLACKJACK ||
+     total[:player_total] == BLACKJACK ||
+     (total[:player_total] < BLACKJACK &&
+      total[:player_total] > total[:dealer_total])
     ['player', player_hand]
   else
     ['dealer', dealer_hand]
@@ -108,32 +110,35 @@ def alternate_player(player)
   player == 'player' ? 'dealer' : 'player'
 end
 
-def display_round_winner(player_total, dealer_total,
-                         player_hand, dealer_hand)
-  player = determine_winner(player_total, dealer_total,
-                            player_hand, dealer_hand)[0]
-  hand = determine_winner(player_total, dealer_total,
-                          player_hand, dealer_hand)[1]
-  if player_total > BLACKJACK || dealer_total > BLACKJACK
+def display_alternate_round_outcome(total, player)
+  if total[:player_total] > BLACKJACK || total[:dealer_total] > BLACKJACK
     prompt "The #{alternate_player(player)} busts!"
-  end
-  if player_total == dealer_total
+    true
+  elsif total[:player_total] == total[:dealer_total]
     prompt "It's a tie!"
-  else
-    prompt "The #{player} wins with #{hand}, totalling #{hand_value(hand)}!"
+    true
   end
+end
+
+def display_round_winner(total, player_hand, dealer_hand)
+  player = determine_winner(total, player_hand, dealer_hand)[0]
+  hand = determine_winner(total, player_hand, dealer_hand)[1]
+  return if display_alternate_round_outcome(total, player)
+  prompt "The #{player} wins with a total of #{hand_value(hand)}!"
   puts
 end
 
 def display_hand(hand, player, total)
-  prompt "The #{player}'s hand is #{hand}."
+  prompt "The #{player}'s hand is #{hand.join(', ')}."
   prompt "The #{player}'s hand value is #{total}."
   puts
 end
 
 def display_dealer_stay(player, dealer_total)
-  if dealer_total < BLACKJACK
+  if dealer_total <= BLACKJACK
     prompt "The #{player} stays."
+    sleep(0.5)
+    puts
   end
 end
 
@@ -143,11 +148,11 @@ def display_dealer_hits(player)
   puts
 end
 
-def increment_score(score, player_total, dealer_total, player_hand, dealer_hand)
-  if player_total == dealer_total
+def increment_score(score, total, player_hand, dealer_hand)
+  if total[:player_total] == total[:dealer_total]
     score
   else
-    score[determine_winner(player_total, dealer_total,
+    score[determine_winner(total,
                            player_hand, dealer_hand)[0].to_sym] += 1
   end
 end
@@ -185,10 +190,8 @@ def play_again?
     puts
     prompt 'Do you want to play again? Please enter \'yes\' or \'no\'.'
     input = gets.chomp.downcase
-    if !['yes', 'y', 'n', 'no'].include?(input)
-      prompt 'That\'s not a valid answer - please answer yes or no.'
-    end
     break if ['yes', 'y', 'no', 'n'].include?(input)
+    prompt 'That\'s not a valid answer - please answer yes or no.'
   end
   ['yes', 'y'].include?(input)
 end
@@ -198,49 +201,73 @@ def display_farewell
   prompt 'Thanks for playing Twenty-one!'
 end
 
+def player_turn(player_total, player, player_hand, shoe)
+  response = player_choice
+  if ['hit', 'h'].include?(response)
+    system 'clear'
+    prompt 'You\'ve chosen to hit.'
+    sleep(0.5)
+    player_total = player_hit(player_hand, shoe)
+    display_hand(player_hand, player, player_total)
+  else
+    player_stay(player_hand, player, player_total)
+  end
+  return [player_total, true] if win_or_bust(player_total) ||
+                                 ['stay', 's'].include?(response)
+  [player_total, false]
+end
+
+def dealer_turn(totals, player, shoe, dealer_hand, player_hand)
+  display_hand(dealer_hand, player, totals[:dealer_total])
+  display_hand(player_hand, alternate_player(player), totals[:player_total])
+  end_state = [totals[:dealer_total], false]
+  if !dealer_hit?(totals[:dealer_total])
+    display_dealer_stay(player, totals[:dealer_total])
+    end_state[1] = true
+  else
+    display_dealer_hits(player)
+  end
+  display_action(shoe, dealer_hand, totals[:dealer_total])
+  end_state[0] = hand_value(dealer_hand)
+  end_state
+end
+
 system 'clear'
 display_welcome
+
+scores = { player: 0,
+           dealer: 0 }
 
 loop do
   shoe = CARDS.keys * SUITS
   player_hand = initial_hand!(shoe)
   dealer_hand = initial_hand!(shoe)
-  player_total = hand_value(player_hand)
-  dealer_total = hand_value(dealer_hand)
+  totals = Hash.new
+  totals[:player_total] = hand_value(player_hand)
+  totals[:dealer_total] = hand_value(dealer_hand)
 
   display_initial_hand(player_hand, dealer_hand)
 
   loop do
-    break if win_or_bust(player_total)
+    break if win_or_bust(totals[:player_total])
     player = 'player'
-    if player_choice == 'hit'
-      prompt 'You\'ve chosen to hit.'
-      player_hand << hit!(shoe)
-      player_total = hand_value(player_hand)
-      sleep(0.5)
-      display_hand(player_hand, player, player_total)
-      break if win_or_bust(player_total)
-    else
-      player_stay(player_hand, player, player_total)
-      break
-    end
+    totals[:player_total], break_cond = player_turn(totals[:player_total],
+                                                    player, player_hand, shoe)
+    sleep(0.5)
+    break if break_cond
   end
 
   loop do
-    break if win_or_bust(player_total)
+    break if win_or_bust(totals[:player_total])
     player = 'dealer'
-    display_hand(dealer_hand, 'dealer', dealer_total)
-    if !dealer_hit?(dealer_total)
-      display_dealer_stay(player, dealer_total)
-      break
-    end
-    dealer_turn(shoe, dealer_hand, dealer_total)
-    dealer_total = hand_value(dealer_hand)
-    display_dealer_hits(player)
+    totals[:dealer_total], break_cond = dealer_turn(totals,
+                                                    player, shoe,
+                                                    dealer_hand, player_hand)
+    break if break_cond
   end
 
-  display_round_winner(player_total, dealer_total, player_hand, dealer_hand)
-  increment_score(scores, player_total, dealer_total, player_hand, dealer_hand)
+  display_round_winner(totals, player_hand, dealer_hand)
+  increment_score(scores, totals, player_hand, dealer_hand)
   display_scores(scores)
 
   reset_score(scores) if display_game_winner(scores)
