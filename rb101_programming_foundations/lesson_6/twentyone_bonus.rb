@@ -260,9 +260,9 @@ loop do
   loop do
     break if win_or_bust(totals[:player_total])
     player = 'dealer'
-    totals[:dealer_total], break_cond = dealer_turn(totals,
-                                                    player, shoe,
+    totals[:dealer_total], break_cond = dealer_turn(totals, player, shoe,
                                                     dealer_hand, player_hand)
+    sleep(0.5)
     break if break_cond
   end
 
