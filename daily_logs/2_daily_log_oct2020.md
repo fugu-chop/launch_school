@@ -18,6 +18,7 @@
 - [17th, Sat](#171020-sat)
 - [18th, Sun](#181020-sun)
 - [19th, Mon](#191020-mon)
+- [20th, Tue](#201020-tue)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -352,3 +353,20 @@ I finally finished the RB101 coursework. It was a journey, that's for sure. I'm 
 I'll start the Launch School problems tomorrow for RB109 preparation. I'm looking forward to seeing how my comprehension of the materials has been so far, on the first pass of the course materials. 
 
 Codewar Katas are also on my list of to-dos. Apparently being able to solve difficult 6 kyu and easier 5 kyu problems is a good benchmark to be ready for the interview. 
+
+##### 20/10/20 (Tue)
+__*Concepts covered*__<br/>
+- RB101 - Slightly Larger Problems
+  - Twenty-One Refactor
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+The refactor of logic into methods was absolutely hellish, due to:
+1. Method scoping rules - I wasn't able to replace local variables initiated outside of methods, without resorting to hashes or arrays with mutating methods. 
+2. Methods only really being able to return a single object, whereas in a loop in the local scope, you can reassign variables as and when needed. 
+
+Ultimately, I'm not sure how beneficial the refactor was. The main loop is about 50% shorter, but the overall code length is about 20% longer - I'm not sure which one has a more severe impact on performance here. 
+
+This took way longer than expected, but was good experience in extensive debugging and general programming pain. 
