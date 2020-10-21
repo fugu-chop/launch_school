@@ -370,3 +370,13 @@ The refactor of logic into methods was absolutely hellish, due to:
 Ultimately, I'm not sure how beneficial the refactor was. The main loop is about 50% shorter, but the overall code length is about 20% longer - I'm not sure which one has a more severe impact on performance here. 
 
 This took way longer than expected, but was good experience in extensive debugging and general programming pain. 
+
+##### 21/10/20 (Wed)
+__*Concepts covered*__<br/>
+Problem solving videos
+
+__*Time spent*__<br/>
+131 minutes
+
+__*Thoughts*__<br/>
+Today was mostly focused on watching problem solving videos, which were examples of PEDAC. It was a nice change of pace from refactoring and being deep in lower levels of abstraction in code. There's some more videos to watch, so that will probably take up tomorrow's time, before I jump into the exercises. 
