@@ -7,6 +7,8 @@ Welcome to Ruby! Why are we learning Ruby?
 ## Table of Contents
 - [Playing with Code](#playing-with-code)
 - [Style Guidelines](#style-guidelines)
+- [Syntactic Sugar](#syntactic-sugar)
+- [Where does code come from?](#where-does-code-come-from)
 - [Documentation](#documentation)
 - [Types](#types)
 - [Operations](#operations)
@@ -30,6 +32,30 @@ We can also enter `irb` in the terminal for a Ruby environment which executes co
 - When using `{ }` brackets for methods, try to have it on one line. If that's not possible, use a `do end` structure.
 - Don't terminate expressions with `;`
 - Use spaces __around__ operators, and __after__ commas, semicolons and colons.
+
+### Syntactic Sugar
+Ruby is a very expressive language, which allows it to be written to do many things whilst simultaneously being 'readable' by humans. However, it does create some situations where what the code is doing might not be exactly clear (i.e. it could be doing one of multiple things) - we are making syntax 'pretty', at the cost of being certain as to what the syntax is doing. 
+
+As an example, in Ruby, parentheses after method invocations are *optional* - e.g. for `puts 'hello'`, the `puts` method call doesn't require parentheses to print a string given to it as an argument. This can make it confusing to determine whether an isolated bit of code is a method call/invocation, or a variable.
+
+If we have two objects named the same thing, we can force Ruby to execute the method by adding parentheses.
+```
+str = 'A string'
+
+def str
+  'A method'
+end
+
+p str()
+=> A method
+```
+If we comment out the `str` method and try to run `str()`, Ruby will throw a `NoMethodError` message. If we rant the code above without parentheses on the `p str`, Ruby would default to *printing the variable first*.
+
+### Where does code come from?
+There are two main parts to where code in Ruby comes from:
+- Core API - this is what is loaded into the Ruby runtime, that allows us to invoke methods, which are organised into classes. 
+  - One of the most important classes is `Kernel`, as it provides methods available to all Ruby objects (e.g. `puts`). 
+- Standard API - This contains another set of classes, but is not automatically loaded (to reduce bloat). These set of methods aren't necessarily considered essential. We have to load these into our Ruby code via the `require: "x"` syntax at the top of our script.
 
 ### Documentation
 Our most up-to-date documentation can be found here: https://docs.ruby-lang.org/en. 
