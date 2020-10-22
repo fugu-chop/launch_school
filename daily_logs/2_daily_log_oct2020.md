@@ -19,6 +19,8 @@
 - [18th, Sun](#181020-sun)
 - [19th, Mon](#191020-mon)
 - [20th, Tue](#201020-tue)
+- [21st, Wed](#211020-wed)
+- [22nd, Thu](#221020-thu)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -379,4 +381,16 @@ __*Time spent*__<br/>
 131 minutes
 
 __*Thoughts*__<br/>
-Today was mostly focused on watching problem solving videos, which were examples of PEDAC. It was a nice change of pace from refactoring and being deep in lower levels of abstraction in code. There's some more videos to watch, so that will probably take up tomorrow's time, before I jump into the exercises. 
+Today was mostly focused on watching problem solving videos, which were examples of PEDAC. It was a nice change of pace from refactoring and being deep in lower levels of abstraction in code. There's some more videos to watch, so that will probably take up tomorrow's time, before I jump into the exercises.
+
+##### 22/10/20 (Thu)
+__*Concepts covered*__<br/>
+Beginning Ruby videos
+- Syntactical sugar, where code comes from, and variable scope
+- Pass by reference/value, variables as pointers, method side-effects vs return value
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+The videos I watched, despite aimed at beginners and covering topics I've learned already, still surfaced new concepts. I'm still at a stage in my learning that I'm always finding new and interesting things. It did make me realise that despite the content being great and useful, Launch School isn't the best at surfacing this stuff - it's sometimes tucked away and quite hard to find.
