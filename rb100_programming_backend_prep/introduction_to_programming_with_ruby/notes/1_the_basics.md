@@ -62,8 +62,15 @@ Our most up-to-date documentation can be found here: https://docs.ruby-lang.org/
 
 For now, the main part of each page contains descriptions for all methods associated with the class or module you are viewing. They are also listed on the left under the Methods header.
 
-There are two main types of methods: *instance methods*, which you will use most often, and *class methods*, which will become more important later. For now, you are mostly interested in the instance methods.
+There are two main types of methods: *instance methods*, which you will use most often, and *class methods*. We call *instance* methods on objects of a certain class, while we call *class* methods directly on classes themselves. 
+```
+# Call the class method File::path since we're calling it on the File class.
+puts File.path('bin')
 
+#Calls the instance method File#path since we're calling it on an object of the File class (f).
+f = File.new('my-file.txt')
+puts f.path
+```
 On the left-hand side, __instance methods__ are identified with a `#`, e.g., `#size`, while __class methods__ and module methods are identified with a `::`, e.g., `::new`. This is merely a documentation convention; the `#` and `::` are not part of the method names, nor are they used to refer to methods in your programs.
 
 Sometimes, you just need to scan through the method names until you see something that sounds like it might do the trick. Other times, you will need to use your browser's in-page search capability to find something. On other occasions, you may be forced to scan through the entire page, or followup in the class's Parent or Included Modules (both of which we will see later).
