@@ -80,6 +80,14 @@ Reading the description of the method, we also see that the method
 Reading "between the lines", this means the original String is not being modified, so we need to get the result by examining the return value.
 
 ### Types
+In Ruby, we commonly hear that __everything is an object__. This is because we can call methods on basically everything. In some other languages, Integers and Strings are primitive types, which themselves __cannot__ have methods called on them. Ruby itself *does not have* primitive types. 
+```
+# We can call a method directly on an integer
+2.times { puts 'hello!' }
+
+# Again, we call a method directly on a string
+'hi'.capitalize
+```
 ###### Strings
 __Strings__ are a list of characters in a specific sequence. They are surrounded by single or double quotes. If we want to use the same quote type within another quote type, we have to escape the character with a `\`.
 ```

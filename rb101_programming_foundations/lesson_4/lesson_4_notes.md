@@ -195,6 +195,8 @@ hsh
 => { :apple => "Fruit", :carrot => "Produce", :pear => "Produce", :broccoli => "Produce" }
 ```
 ### Other useful methods
+Many of these methods fall under the `Enumerable` module within the Core API, which can be used with arrays and hashes. These methods are 'enabled' because arrays and hashes both have access to an iteration method (i.e. `.each`).
+
 `Enumerable#any?` <br/>
 This is a method available to both `Array` and `Hash` as part of the `Enumerable` module. 
 ```
