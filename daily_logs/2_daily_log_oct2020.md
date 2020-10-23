@@ -385,12 +385,28 @@ Today was mostly focused on watching problem solving videos, which were examples
 
 ##### 22/10/20 (Thu)
 __*Concepts covered*__<br/>
-Beginning Ruby videos
-- Syntactical sugar, where code comes from, and variable scope
-- Pass by reference/value, variables as pointers, method side-effects vs return value
+- Beginning Ruby videos
+  - Syntactical sugar, where code comes from, and variable scope
+  - Pass by reference/value, variables as pointers, method side-effects vs return value
 
 __*Time spent*__<br/>
 120 minutes
 
 __*Thoughts*__<br/>
 The videos I watched, despite aimed at beginners and covering topics I've learned already, still surfaced new concepts. I'm still at a stage in my learning that I'm always finding new and interesting things. It did make me realise that despite the content being great and useful, Launch School isn't the best at surfacing this stuff - it's sometimes tucked away and quite hard to find.
+
+##### 23/10/20 (Fri)
+__*Concepts covered*__<br/>
+- Beginning Ruby videos
+  - Collections
+- RB101-109 Small Problems
+  - Documentation Again
+  - Easy 1
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+I'm still having a bit of trouble finding and interpreting documentation. I need to make sure to reference what class a particular method is being invoked on, and then look within the list of methods in that class to make sure I'm looking at the right thing. 
+
+Easy 1 problems are reasonably straightforward so far. I just need to become a bit more familiar with some of the syntactic sugar available in Ruby. 
