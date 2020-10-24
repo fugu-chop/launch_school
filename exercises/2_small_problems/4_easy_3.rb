@@ -131,3 +131,39 @@ palindrome?('Madam') == false          # (case matters)
 palindrome?("madam i'm adam") == false # (all characters matter)
 palindrome?('356653') == true
 =end
+
+def palindrome?(str)
+  str == str.reverse
+end
+
+# 8b) Write a method that determines whether an array is palindromic; that is, the element values appear in the same sequence both forwards and backwards in the array. 
+
+def palindrome_arr?(arr)
+  arr == arr.reverse
+end
+
+# 8c) Now write a method that determines whether an array or a string is palindromic; that is, write a method that can take either an array or a string argument, and determines whether that argument is a palindrome. You may not use an if, unless, or case statement or modifier.
+
+def palindrome_any?(obj)
+  obj == obj.reverse
+end
+
+# 9) Write another method that returns true if the string passed as an argument is a palindrome, false otherwise. This time, however, your method should be case-insensitive, and it should ignore all non-alphanumeric characters.
+
+def real_palindrome?(str)
+  str.gsub(/\W/, '').downcase == str.gsub(/\W/, '').downcase.reverse
+end
+
+# Suggested solution
+def real_palindrome?(string)
+  string = string.downcase.delete('^a-z0-9')
+  palindrome?(string)
+end
+
+# 10) Write a method that returns true if its integer argument is palindromic, false otherwise. A palindromic number reads the same forwards and backwards.
+def palindromic_number?(num)
+  num.to_s == num.to_s.reverse
+end
+
+# 10b) Suppose your number begins with one or more 0s. Will your method still work? Why or why not? Is there any way to address this?
+puts 'If the number starts with 0s, this may not work. I would warn the user to input a number without a zero. We can\'t reliably just strip zeros from the start of the number, as we can\'t necessarily be sure if the number is supposed to be in binary or a regular number.'
