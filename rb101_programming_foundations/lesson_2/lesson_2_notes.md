@@ -445,6 +445,25 @@ Jim
 ```
 This implies that Ruby is "pass by reference", because operations within the method __affected the original object__ when we passed the `name` variable into the `cap` method.
 
+Another example: 
+```
+array1 = %w(Moe Larry Curly Shemp Harpo Chico Groucho Zeppo)
+array2 = []
+array1.each { |value| array2 << value }
+array1.each { |value| value.upcase! if value.start_with?('C', 'S') }
+puts array2
+
+Moe
+Larry
+CURLY
+SHEMP
+Harpo
+CHICO
+Groucho
+Zeppo
+```
+The first each loop simply copies a bunch of references from `array1` to `array2`. When that first loop completes, both arrays not only contain the same values, they contain __the same String objects__. If you modify one of those Strings, that modification will show up in both Arrays.
+
 ###### Reconciling the two
 ```
 def print_id(number)
