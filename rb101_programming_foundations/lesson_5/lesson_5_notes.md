@@ -255,7 +255,7 @@ arr2
 arr1
 => ["cba", "def"]
 ```
-Remember, the __inner__ objects of the collections are shared. Even if you mutate that object by referencing it from within a particular array or other collection, it is the __inner object__ you are affecting rather than the *collection*.
+Remember, the __inner__ objects of the collections are __shared__. Even if you mutate that object by referencing it from within a particular array or other collection, it is the __inner object__ you are affecting rather than the *collection*.
 
 Consider the following examples
 ```
@@ -283,7 +283,7 @@ arr1
 arr2
 => ["A", "B", "C"]
 ```
-In the first example `arr2` is changed but `arr1` is not. Here, we call the destructive method `Array#map!` on `arr2`; this method modifies the array, replacing each element of arr2 with a new value. Since we are __changing the Array, not the elements within it__, `arr1` is left unchanged. We would have changed the *elements* within the array (and mutated `arr1`) if we had called.
+In the first example `arr2` is changed but `arr1` is not. Here, we call the destructive method `Array#map!` on `arr2`; this method modifies the *array*, replacing each element of `arr2` with a new value. Since we are __changing the Array, not the elements within it__, `arr1` is left unchanged. We would have changed the *elements* within the array (and mutated `arr1`) if we had called.
 ```
 arr2.map do |char|
   char.upcase!
