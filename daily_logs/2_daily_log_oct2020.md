@@ -410,3 +410,20 @@ __*Thoughts*__<br/>
 I'm still having a bit of trouble finding and interpreting documentation. I need to make sure to reference what class a particular method is being invoked on, and then look within the list of methods in that class to make sure I'm looking at the right thing. 
 
 Easy 1 problems are reasonably straightforward so far. I just need to become a bit more familiar with some of the syntactic sugar available in Ruby. 
+
+##### 24/10/20 (Sat)
+__*Concepts covered*__<br/>
+- RB101
+  - Shallow copy revision
+  - Pass by reference versus value
+- RB101-109 Small Problems
+  - Easy 1
+  - Easy 2
+  - Easy 3
+  - Easy 4
+
+__*Time spent*__<br/>
+242 minutes
+
+__*Thoughts*__<br/>
+Happily, all of the exercises in the Easy collections have been pretty easy so far, though they have been useful in uncovering some areas I need to revise - particularly in explaining pass by reference and pass by value, especially in the context of mutating methods. 
