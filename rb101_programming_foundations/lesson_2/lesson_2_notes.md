@@ -335,8 +335,7 @@ def greeting
   puts "Hello"
 end
 ```
-__Method invocation__ is when we call a method, whether that happens to be an existing method from the Ruby Core API or core Library, or a custom method that we've defined ourselves using the `def` keyword.
-`greeting`.
+__Method invocation__ is when we call a method, whether that happens to be an existing method from the Ruby Core API or core Library, or a custom method that we've defined ourselves using the `def` keyword, like `greeting` above.
 
 We've also seen examples of methods being called with blocks. 
 `[1, 2, 3].each { |num| puts num }`

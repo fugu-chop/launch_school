@@ -179,6 +179,14 @@ We can also use the `%` operator, to give us the remainder of a division operato
 
 In general though, modulo operations return a __positive__ integer when the __second operand is positive__, and a negative integer when the second operand is negative, though the value can be counter-intuitive. 
 
+A good way to check is to use the `.divmod(x)` method, which returns an *array* containing the quotient and modulus. This is especially useful when the object on which `.divmod(x)` is called is negative, since the quotient multiplied by the divisor may __exceed__ the original integer.
+```
+-13.divmod(4)
+=> [-4, 3]
+
+-4 * 4 = -16
+-16 + 3 = -13
+```
 ###### Comparisons
 We can test conditions between operands using comparison operators, which return *booleans*.
 - `==`
