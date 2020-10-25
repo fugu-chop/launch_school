@@ -21,6 +21,9 @@
 - [20th, Tue](#201020-tue)
 - [21st, Wed](#211020-wed)
 - [22nd, Thu](#221020-thu)
+- [23rd, Fri](#231020-fri)
+- [24th, Sat](#241020-sat)
+- [25th, Sun](#251020-sun)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -427,3 +430,21 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Happily, all of the exercises in the Easy collections have been pretty easy so far, though they have been useful in uncovering some areas I need to revise - particularly in explaining pass by reference and pass by value, especially in the context of mutating methods. 
+
+##### 25/10/20 (Sun)
+__*Concepts covered*__<br/>
+- RB101 Revision
+  - Pass by reference versus value
+- RB101-109 Small Problems
+  - Easy 4
+  - Easy 5
+
+__*Time spent*__<br/>
+246 minutes
+
+__*Thoughts*__<br/>
+I need to remember that `..` is inclusive when it comes to ranges. 
+
+The latter exercises of Easy 4 is where the problems have started to become slightly challenging, though I will note that a lot of the challenge comes from artificial restrictions, such as not being able to use pre-built methods. The difficulty is being aware of the logic, and awareness of more obscure methods that will help achieve this. 
+
+I definitely need to revise a lot of the concepts from earlier lessons. I feel like I can't accurately describe what I intuitively understand to happen in code. 
