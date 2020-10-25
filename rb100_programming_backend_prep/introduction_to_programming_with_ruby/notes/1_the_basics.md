@@ -49,13 +49,13 @@ end
 p str()
 => A method
 ```
-If we comment out the `str` method and try to run `str()`, Ruby will throw a `NoMethodError` message. If we rant the code above without parentheses on the `p str`, Ruby would default to *printing the variable first*.
+If we comment out the `str` method and try to run `str()`, Ruby will throw a `NoMethodError` message. If we ran the code above without parentheses on the `p str`, Ruby would default to *printing the variable first*.
 
 ### Where does code come from?
 There are two main parts to where code in Ruby comes from:
 - Core API - this is what is loaded into the Ruby runtime, that allows us to invoke methods, which are organised into classes. 
   - One of the most important classes is `Kernel`, as it provides methods available to all Ruby objects (e.g. `puts`). 
-- Standard API - This contains another set of classes, but is not automatically loaded (to reduce bloat). These set of methods aren't necessarily considered essential. We have to load these into our Ruby code via the `require: "x"` syntax at the top of our script.
+- Standard Library API - This contains another set of classes, but is not automatically loaded (to reduce bloat). These set of methods aren't necessarily considered essential. We have to load these into our Ruby code via the `require: "x"` syntax at the top of our script.
 
 ### Documentation
 Our most up-to-date documentation can be found here: https://docs.ruby-lang.org/en. 
@@ -104,7 +104,7 @@ __Strings__ are a list of characters in a specific sequence. They are surrounded
 # Ex 2: with single quotes and escaping
 'The man said, \'Hi there!\''
 ```
-Double quotes allow string interpolation, which lets us paste in variables into a string
+Double quotes allow *string interpolation*, which lets us paste in variables into a string.
 ```
 a = 'ten'
 "My favorite number is #{a}!"
@@ -133,7 +133,7 @@ __Symbols__ can be thought of as names. Only one copy of a symbol can exist at a
 :a_symbol
 :"surprisingly, this is also a symbol"
 ```
-Symbols must be valid Ruby variable names - the first letter after the colon has to be an underscore, or letter. 
+Symbols must be valid Ruby variable names - the first letter after the colon has to be an underscore, quotation mark, or letter. 
 
 ###### Numbers
 __Numbers__ typically fall under:
@@ -161,7 +161,7 @@ It is possible to check if something is a nil type by using `.nil?`
 "Hello, World".nil?
 => false
 ```
-Another important property is that `nil` is treated as a `false` boolean value (though `false` != `nil`) and can be used in a conditional statement.
+Another important property is that `nil` is treated as a `false` boolean value through the idea of falsiness (though `false` != `nil`) and can be used in a conditional statement.
 ```
 if nil
   puts "Hello world!"
@@ -171,7 +171,7 @@ end
 
 ### Operations
 ###### Arithmetic
-We can apply the `+, -, *, /` signs to perform arithmetic on integers, floats, as well as strings (concatenation and duplication). We can't add strings and integers together, however. 
+We can apply the `+, -, *, /` signs to perform arithmetic on integers, floats, as well as strings (concatenation and duplication). We can't add, subtract or divide strings and integers together, however. 
 
 Note that with *integers*, we only ever get a whole number returned when using `*` or `/`. To get decimal places, we need to use *floats*. When we use a float in an operation, a float will be returned, even if the other operand is an integer. 
 
@@ -234,13 +234,13 @@ puts 'stuff'
 stuff
 => nil
 ```
-The word stuff was printed to the console and then a `nil`, which is Ruby's way of saying 'nothing', was returned. See this:
+The word `stuff` was printed to the console and then a `nil`, which is Ruby's way of saying 'nothing', was returned. See this:
 ```
 a = puts "stuff"
 puts a
 => nil
 ```
-`a` is assigned to the value returned by `puts "stuff"`, which is `nil`. Therefore, puts a results in `nil` being printed out. 
+`a` is assigned to the value returned by `puts "stuff"`, which is `nil`. Therefore, `puts a` results in `nil` being printed out. 
 
 ### Puts v Print v P
 `puts` will show something, then *add a new line* after whatever is shown. However, `puts` will print out each __element in an array on a new line__. `puts` attempts to convert everything into a string (by calling `to_s`). 

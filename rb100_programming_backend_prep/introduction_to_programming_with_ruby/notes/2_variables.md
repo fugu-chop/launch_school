@@ -6,8 +6,8 @@
 - [Method definitions & scope](#method-definitions-&-scope)
 - [Types of Variables](#types-of-variables)
 
-### What is a variable
-Variables are used to store information in memory, to be referenced and manipulated in a computer program, acting as containers. Variables don’t actually contain values, but instead serve as __references/bound to objects__. 
+### What is a variable?
+Variables are used to store information in memory, to be referenced and manipulated in a computer program. Note that variables don’t actually contain values, but instead serve as __references/bound to objects__. 
 
 An object is data that has state (i.e. a value) and has associated behaviours. 
 
@@ -34,7 +34,7 @@ a = 7
 puts b
 => 4
 ```
-We can say that variables act as *pointers to address space* in memory. This address space represents the object that the variable is referencing. 
+We can say that variables act as *pointers to address space* in memory. This address space represents the __object__ that the variable is referencing. 
 
 Every object in Ruby has a unique `object_id`, and that `object_id` can be retrieved simply by calling `#object_id` on the object in question. Even literals, such as numbers, booleans, `nil`, and Strings have `object_ids`.
 ```
@@ -155,7 +155,7 @@ eval "2 + 2"
 A variable's scope determines *where* in a program a variable is available for use. A variable's scope is defined by *where the variable is initialized or created*. 
 
 ##### Block Scope
-In Ruby, variable scope is defined by a __block__. A block is a *piece of code following a method invocation*, usually delimited by either curly braces `{}` or `do end`. 
+In Ruby, variable scope is defined by a __block__. A block is a *piece of code following a method invocation*, usually delimited by either curly braces `{}` or `do end`. Be aware that __not all__ `do/end` pairs imply a block.
 
 __Inner scope can access variables initialized in an outer scope, but not vice versa for blocks.__
 ```
