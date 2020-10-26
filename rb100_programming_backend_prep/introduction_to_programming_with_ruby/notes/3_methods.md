@@ -239,3 +239,43 @@ end
 multiply(add(1, 2), subtract(4,2))
 => 6
 ```
+### The Call Stack
+The call stack helps Ruby keep track of __what__ method is executing as well as __where__ execution should resume when it returns. 
+
+To do that, it works like a stack of books: if you have a stack of books, you can put a new book on the top or remove the topmost book from the stack. In much the same way, the call stack puts information about the *current method on the top of the stack*, then *removes* that information when the method __returns__.
+
+Note that blocks, procs, and lambdas also use the call stack; in fact, they all use the same call stack as Ruby uses for methods. 
+
+Take the following example:
+```
+def first
+  puts "first method"
+end
+
+def second
+  first
+  puts "second method"
+end
+
+second
+puts "main method"
+```
+When this program starts running, the call stack initially has one item (called a __stack frame__) that represents the global (top-level) portion of the program. The initial stack frame is sometimes called the `main` method. Ruby uses this frame to keep track of what part of the main program it is currently working on.
+
+When program execution reaches the method invocation at `second`, it first updates the `main` stack frame with the current program location. Ruby will use this location later to determine where execution should resume when `second` finishes running.
+
+After setting the location in the current stack frame, Ruby creates a new stack frame for the `second` method and places it on the top of the call stack: we say that the __new frame is pushed onto the stack__. 
+
+The frame for the `second` method is now stacked on top of the main frame. While the `second` frame is still on the stack, `main` remains stuck beneath it, *inaccessible*. At the same time, the `main` method becomes dormant and the `second` method becomes active.
+
+The `second` method calls the `first` method. That action causes Ruby to update the `second` frame so that Ruby will know where to resume execution later. It then creates a new stack frame for the `first` method and pushes it to the call stack.
+
+Once the `first` method begins executing, it invokes the `puts` method. All Ruby methods, including the built-in ones like `puts`, share the __same call stack__. Therefore, we need to record our current location and then push a new frame to the stack.
+
+When `puts` returns, Ruby removes (pops) the top frame from the call stack. That's the frame for `puts` for this example. That leaves the previous stack frame exposed. Ruby uses this frame to determine where execution should resume. In this case, execution resumes immediately.
+
+Eventually, the `first` method will return. When that happens, the `first` frame gets popped from the stack. That exposes the stack frame for `second`, and that, in turn, tells Ruby that it should resume execution.
+
+Eventually, the `main` method has no more code to run. When this happens, the main `frame` gets popped from the stack, and the program ends.
+
+The call stack has a limited size that varies based on the Ruby implementation. That size is usually sufficient for more than 10000 stack entries. If the stack runs out of room, you will see a `SystemStackError` exception.

@@ -263,7 +263,7 @@ puts c          # => NameError
 ### Method definitions & scope
 Reassignment, including assignment operators like `+=`, `=`, do not mutate a variable in the context of a *method definition*; instead, it binds the variable to a new object. That is, the assignment operator sets the variable to point to a different object (you can verify this by look at an object's `object_id`).
 
-Ruby variables and constants aren’t objects, but are references to objects. Assignment *merely changes which object is bound to a particular variable*. While `=` is not an actual method in Ruby, it acts like a non-mutating method, and should be treated as such.
+Ruby variables and constants aren’t objects, but are references to objects. Assignment *merely changes which object is bound to a particular variable*. While `=` is not an actual method in Ruby, it acts like a __non-mutating method__, and should be treated as such.
 
 Note that assignment always causes the target to reference a __possibly different object__. None of these operations mutate their operands by themselves.
 
@@ -300,7 +300,7 @@ Though we assigned a reference to `value`, we end up with both `s` and `t` refer
 Since the reference returned by `value.upcase!` is the same (albeit modified) String we started with, the assignment effectively __rebinds `value` back to the object it was previously bound to__; nothing is changed by the assignment.
 
 ###### Method definitions
-Method definitions (i.e. creating new methods) are *self-contained* with respect to local variables. Local variables outside the method definition are __not visible__ *inside* the method definition, __unless passed in as arguments__ (at which point, the __value__ (i.e. variable is passed by value) is assigned as a method parameter and made available to the method body as a *distinct* local variable). Furthermore, local variables *inside* the method definition are not visible outside the method definition.
+Method definitions (i.e. creating new methods) are *self-contained* with respect to local variables. Local variables outside the method definition are __not visible__ *inside* the method definition, __unless passed in as arguments__ (at which point, the object is assigned as a method parameter and made available to the method body as a *distinct* local variable). Furthermore, local variables *inside* the method definition are not visible outside the method definition.
 
 In this example, the `a` variable defined outside the `my_value` method is __not visible__ to the `a` defined within the method, and vice versa. `a` is also an integer, which is __immutable__.
 ```
@@ -312,6 +312,9 @@ end
 
 my_value(a)
 puts a
+
+7
+=> nil
 ```
 ### Types of Variables
 ###### Constants
