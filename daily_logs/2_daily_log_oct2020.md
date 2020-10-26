@@ -24,6 +24,7 @@
 - [23rd, Fri](#231020-fri)
 - [24th, Sat](#241020-sat)
 - [25th, Sun](#251020-sun)
+- [26th, Mon](#261020-mon)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -448,3 +449,20 @@ I need to remember that `..` is inclusive when it comes to ranges.
 The latter exercises of Easy 4 is where the problems have started to become slightly challenging, though I will note that a lot of the challenge comes from artificial restrictions, such as not being able to use pre-built methods. The difficulty is being aware of the logic, and awareness of more obscure methods that will help achieve this. 
 
 I definitely need to revise a lot of the concepts from earlier lessons. I feel like I can't accurately describe what I intuitively understand to happen in code. 
+
+##### 26/10/20 (Mon)
+__*Concepts covered*__<br/>
+- RB100 Revision
+  - Lesson 1 Revision
+  - Lesson 2 Revision
+  - Call Stack
+- RB101-109 Small Problems
+  - Easy 5
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+I had trouble studying this morning. I was just exhausted when I woke up. Even with light background music, I struggled to stay focused (or awake). Progress was slow, but revision is still useful. I'm picking up concepts more quickly now, and am able to think of specific use cases within code. 
+
+I continually forget to convert arrays back into strings after I'm done with transforming elements within the array. 
