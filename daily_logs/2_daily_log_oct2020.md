@@ -466,3 +466,18 @@ __*Thoughts*__<br/>
 I had trouble studying this morning. I was just exhausted when I woke up. Even with light background music, I struggled to stay focused (or awake). Progress was slow, but revision is still useful. I'm picking up concepts more quickly now, and am able to think of specific use cases within code. 
 
 I continually forget to convert arrays back into strings after I'm done with transforming elements within the array. 
+
+##### 27/10/20 (Tue)
+__*Concepts covered*__<br/>
+- RB100 Revision
+  - Lesson 3 Revision (inc. Call Stack)
+- RB101-109 Small Problems
+  - Easy 5
+
+__*Time spent*__<br/>
+124 minutes
+
+__*Thoughts*__<br/>
+One of the challenges I'm encountering when revising my notes for earlier in the course is to second guess what I've written, now that I have the benefit of hindsight and more knowledge about core concepts. It means I'm going back to the source material frequently to ensure that what I've actually written is correct. It is time consuming, but I guess it's beneficial that I'm clarifying a lot of the lazy language I've unknowingly used in the past. 
+
+The exercises in Easy 5 are quite hard. I'm taking a significant amount of time to finish these problems, which is pretty disheartening, given they're labelled as Easy, and Easy goes up to 9. 
