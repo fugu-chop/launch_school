@@ -115,3 +115,106 @@ end
 =end
 
 puts "Calling the swap_first_last_characters method itself wouldn't work, since it would only work on the very first and last character of the string. The map method is required to apply this change to each word in a string, by breaking up the words in the string into elements of an array."
+
+# 5) Given a string that consists of some words (all lowercased) and an assortment of non-alphabetic characters, write a method that returns that string with all of the non-alphabetic characters replaced by spaces. If one or more non-alphabetic characters occur in a row, you should only have one space in the result (the result should never have consecutive spaces).
+=begin
+cleanup("---what's my +*& line?") == ' what s my line '
+=end
+
+def cleanup(str)
+  str.gsub(/\W/, ' ').squeeze(' ')
+end
+
+# 5b) Try writing the same method, without regex
+def cleanup(str)
+  alphabet = ('a'..'z')
+  clean_chars = []
+  str.chars.each do |element|
+    if alphabet.include?(element)
+      clean_chars << element
+    else
+      clean_chars << ' ' unless clean_chars.last == ' '
+    end
+  end
+  clean_chars.join
+end
+
+# 6) Write a method that takes a string with one or more space separated words and returns a hash that shows the number of words of different sizes. Words consist of any string of characters that do not include a space.
+=begin
+word_sizes('Four score and seven.') == { 3 => 1, 4 => 1, 5 => 1, 6 => 1 }
+word_sizes('Hey diddle diddle, the cat and the fiddle!') == { 3 => 5, 6 => 1, 7 => 2 }
+word_sizes("What's up doc?") == { 6 => 1, 2 => 1, 4 => 1 }
+word_sizes('') == {}
+=end
+
+def word_sizes(str)
+  words_hash = Hash.new
+  str.split(' ').each do |el|
+    if words_hash[el.length]
+      words_hash[el.length] += 1
+    else
+      words_hash[el.length] = 1
+    end
+  end
+  words_hash
+end
+
+# Suggested solution
+# If we initialize counts as {}, we will get an exception the first time counts[word.size] += 1 is executed. This is because that element doesn't exist, so counts[word.size] returns nil, and nil cannot be added to 1. To fix this, we use the default value form of initializing counts - counts = Hash.new(0), which forces any references to non-existing keys in counts to return 0.
+def word_sizes(words_string)
+  counts = Hash.new(0)
+  words_string.split.each do |word|
+    counts[word.size] += 1
+  end
+  counts
+end
+
+# 7) Modify the word_sizes method from the previous exercise to exclude non-letters when determining word size. For instance, the length of "it's" is 3, not 4.
+=begin
+word_sizes('Four score and seven.') == { 3 => 1, 4 => 1, 5 => 2 }
+word_sizes('Hey diddle diddle, the cat and the fiddle!') == { 3 => 5, 6 => 3 }
+word_sizes("What's up doc?") == { 5 => 1, 2 => 1, 3 => 1 }
+word_sizes('') == {}
+=end
+def word_sizes(str)
+  words_hash = Hash.new
+  str.gsub(/[^a-zA-Z\s]/, '').split(' ').each do |el|
+    if words_hash[el.length]
+      words_hash[el.length] += 1
+    else
+      words_hash[el.length] = 1
+    end
+  end
+  words_hash
+end
+
+# Suggested solution
+def word_sizes(words_string)
+  counts = Hash.new(0)
+  words_string.split.each do |word|
+    clean_word = word.delete('^A-Za-z')
+    counts[clean_word.size] += 1
+  end
+  counts
+end
+
+# 8) Write a method that takes an Array of Integers between 0 and 19, and returns an Array of those Integers sorted based on the English words for each number - zero, one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen
+=begin
+alphabetic_number_sort((0..19).to_a) == [
+  8, 18, 11, 15, 5, 4, 14, 9, 19, 1, 7, 17,
+  6, 16, 10, 13, 3, 12, 2, 0
+]
+=end
+
+def alphabetic_number_sort(arr)
+  values = %w(zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen)
+  arr.sort_by { |number| values[number] }
+end
+
+# For an extra challenge, rewrite your method to use Enumerable#sort
+def alphabetic_number_sort(arr)
+  values = %w(zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen)
+  arr.sort do |a, b|
+    values[a] <=> values[b]
+  end
+end

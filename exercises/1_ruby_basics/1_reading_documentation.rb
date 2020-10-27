@@ -21,5 +21,3 @@ puts "The documentation for strings can be found here: https://docs.ruby-lang.or
 
 # 8) Use the ruby documentation for the String class to determine which method can be used to right justify a String object.
 puts "We can use rjust to right-justify a string. The documentation is here: https://docs.ruby-lang.org/en/master/String.html#method-i-rjust"
-
-# 9) 

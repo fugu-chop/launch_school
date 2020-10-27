@@ -3,6 +3,7 @@
 ## Table of Contents
 - [What is a method?](#what-is-a-method)
 - [Parameters and Arguments](#parameters-and-arguments)
+- [Calling a method](#calling-a-method)
 - [Method definition and local variable scope](#method-definition-and-local-variable-scope)
 - [Mutating the caller](#mutating-the-caller)
 - [Puts versus Return](#puts-versus-return)
@@ -30,14 +31,14 @@ Parameters are used when you have data *outside of a method definition's scope*,
 
 __Arguments__ are pieces of information that are sent to a method invocation to be modified or used to return a specific result. We *pass* arguments to a method when we call it. 
 
-In our example above, we are using an argument to pass the word, or string of words, that we want to use in the say method definition. 
+In our example above, we are using an argument to pass the word, or string of words, that we want to use in the `say` method definition. 
 
 When we pass those words into the method definition, they're assigned to the *local* variable `words` and we can use them however we please from within the method definition. Note that the words local variable is scoped at the *method definition level*; that is, you __cannot__ reference this local variable outside of the `say` method definition.
 
-The `parameter` is a term that should only be used to describe the name listed in the `def` statement.  To refer to the value of that parameter, you should refer to the `argument`.
+The `parameter` is a term that should only be used to describe the name of inputs listed in the `def` statement.  To refer to the value (or data passed in) of that parameter, you should refer to the `argument`.
 
 ###### Default parameters
-Sometimes, we just want to make sure our program runs, even if a necessary parameters isn't given to the method. We can use default parameters for this purpose:
+Sometimes, we just want to make sure our program runs, even if a necessary parameter isn't given to the method. We can use default parameters for this purpose:
 ```
 def say(words="Hello")
   puts words
@@ -47,7 +48,7 @@ say()
 => Hello!
 ```
 ### Method Definition and Local Variable Scope
-A method definition __creates its own scope__ outside the regular flow of execution. 
+A method definition __creates its own scope__ outside the regular flow of execution. Method parameters (assigned as local variables within the method definition) are scoped at the *method definition level*, and are __not__ available *outside* of the method definition.
 
 This is why local variables *within* a method definition cannot be referenced from outside of the method definition. It's also the reason why local variables within a method definition cannot access data outside of the method definition (unless the data is passed in as an argument).
 ```
@@ -74,6 +75,11 @@ end
   puts num
 end
 ```
+### Calling a method
+There are two ways to call methods that we will discuss. 
+- The `some_method(obj)` format is when you send *arguments to a method call*; in the previous example, `obj` is the argument being passed in to the `some_method` method. 
+- Sometimes, you will see methods called with an explicit caller, like this `a_caller.some_method(obj)`. For now it's best to think of the previous code as some_method modifying `a_caller`.
+
 ### Mutating the caller
 When calling a method, the *argument* can be altered permanently. We call this *mutating the caller*. 
 
@@ -91,7 +97,7 @@ some_method(a)
 puts a
 => 5
 ```
-`number` is scoped at the method definition level and `a`'s value is unchanged. Therefore, we proved that method definitions *cannot modify arguments passed in to them permanently*. The exception is when we perform some action on the argument that mutates the caller, we can in fact permanently alter variables __outside the method definition's scope__.
+`number` is scoped at the method definition level and `a`'s value is unchanged. Therefore, we proved that method definitions *cannot modify arguments passed in to them permanently*. The exception is when we perform some action on the argument that mutates the *caller*, we can in fact permanently alter variables __outside the method definition's scope__.
 ```
 a = [1, 2, 3]
 
@@ -242,7 +248,7 @@ multiply(add(1, 2), subtract(4,2))
 ### The Call Stack
 The call stack helps Ruby keep track of __what__ method is executing as well as __where__ execution should resume when it returns. 
 
-To do that, it works like a stack of books: if you have a stack of books, you can put a new book on the top or remove the topmost book from the stack. In much the same way, the call stack puts information about the *current method on the top of the stack*, then *removes* that information when the method __returns__.
+To do that, it works like a stack of books: if you have a stack of books, you can put a new book on the top or remove the topmost book from the stack. In much the same way, the call stack puts information about the *current method on the top of the stack*, then *removes* that information when the method __returns__. It operates on a last in, first out basis.  
 
 Note that blocks, procs, and lambdas also use the call stack; in fact, they all use the same call stack as Ruby uses for methods. 
 
@@ -261,21 +267,71 @@ second
 puts "main method"
 ```
 When this program starts running, the call stack initially has one item (called a __stack frame__) that represents the global (top-level) portion of the program. The initial stack frame is sometimes called the `main` method. Ruby uses this frame to keep track of what part of the main program it is currently working on.
-
+```
+  Call Stack
+      -
+      -
+      -
+     main
+```
 When program execution reaches the method invocation at `second`, it first updates the `main` stack frame with the current program location. Ruby will use this location later to determine where execution should resume when `second` finishes running.
 
 After setting the location in the current stack frame, Ruby creates a new stack frame for the `second` method and places it on the top of the call stack: we say that the __new frame is pushed onto the stack__. 
-
+```
+  Call Stack
+      -
+      -
+    second
+  main: line 10
+```
 The frame for the `second` method is now stacked on top of the main frame. While the `second` frame is still on the stack, `main` remains stuck beneath it, *inaccessible*. At the same time, the `main` method becomes dormant and the `second` method becomes active.
 
-The `second` method calls the `first` method. That action causes Ruby to update the `second` frame so that Ruby will know where to resume execution later. It then creates a new stack frame for the `first` method and pushes it to the call stack.
-
+The `second` method calls the `first` method on line 6. That action causes Ruby to update the `second` frame so that Ruby will know where to resume execution later. It then creates a new stack frame for the `first` method and pushes it to the call stack.
+```
+  Call Stack
+      -
+    first
+second: line 6
+ main: line 10
+```
 Once the `first` method begins executing, it invokes the `puts` method. All Ruby methods, including the built-in ones like `puts`, share the __same call stack__. Therefore, we need to record our current location and then push a new frame to the stack.
-
-When `puts` returns, Ruby removes (pops) the top frame from the call stack. That's the frame for `puts` for this example. That leaves the previous stack frame exposed. Ruby uses this frame to determine where execution should resume. In this case, execution resumes immediately.
-
-Eventually, the `first` method will return. When that happens, the `first` frame gets popped from the stack. That exposes the stack frame for `second`, and that, in turn, tells Ruby that it should resume execution.
-
+```
+  Call Stack
+    puts
+ first: line 2
+ second: line 6
+ main: line 10
+```
+When `puts` __returns__, Ruby removes (pops) the top frame from the call stack. That's the frame for `puts` for this example. That leaves the previous stack frame exposed. Ruby uses this frame to determine where execution should resume. In this case, execution resumes immediately. Note we skipped a few `puts` steps - let's just assume only one occurs in this example. 
+```
+  Call Stack
+      -
+ first: line 2
+ second: line 6
+ main: line 10
+```
+Eventually, the `first` method will __return__. When that happens, the `first` frame gets popped from the stack. That exposes the stack frame for `second`, and that, in turn, tells Ruby that it should resume execution.
+```
+  Call Stack
+      -
+      -
+second: line 6
+  main: line 10
+```
+When `second` finishes executing, the stack frame for `second` gets popped from the call stack, exposing the stack frame for `main`. The `main` frame tells Ruby to resume execution.
+```
+  Call Stack
+      -
+      -
+      -
+ main: line 10
+```
 Eventually, the `main` method has no more code to run. When this happens, the main `frame` gets popped from the stack, and the program ends.
-
+```
+  Call Stack
+      -
+      -
+      -
+      -
+```
 The call stack has a limited size that varies based on the Ruby implementation. That size is usually sufficient for more than 10000 stack entries. If the stack runs out of room, you will see a `SystemStackError` exception.
