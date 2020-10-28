@@ -218,3 +218,107 @@ def alphabetic_number_sort(arr)
     values[a] <=> values[b]
   end
 end
+
+# 9) Write a method that takes a string argument and returns a new string that contains the value of the original string with all consecutive duplicate characters collapsed into a single character. You may not use String#squeeze or String#squeeze!.
+=begin
+crunch('ddaaiillyy ddoouubbllee') == 'daily double'
+crunch('4444abcabccba') == '4abcabcba'
+crunch('ggggggggggggggg') == 'g'
+crunch('a') == 'a'
+crunch('') == ''
+=end
+
+def crunch(str)
+  chars_to_keep = str[0]
+  str.chars.each do |letter|
+    chars_to_keep << letter if chars_to_keep[-1] != letter
+  end
+  chars_to_keep
+end
+
+#10 Write a method that will take a short line of text, and print it within a box.
+=begin
+print_in_box('To boldly go where no one has gone before.')
++--------------------------------------------+
+|                                            |
+| To boldly go where no one has gone before. |
+|                                            |
++--------------------------------------------+
+
+print_in_box('')
++--+
+|  |
+|  |
+|  |
++--+
+=end
+
+def print_in_box(str)
+  edge = "+#{'-' * (str.length + 2)}+"
+  space = "|#{' ' * (str.length + 2)}|"
+
+  puts edge
+  puts space
+  puts "| #{str} |"
+  puts space
+  puts edge
+end
+
+# 10b) Modify this method so it will truncate the message if it will be too wide to fit inside a standard terminal window (80 columns, including the sides of the box). 
+def print_in_box(str)
+  max_text_length = 76
+  str = str[0..76] if str.length > max_text_length
+  edge = "+#{'-' * (str.length + 2)}+"
+  space = "|#{' ' * (str.length + 2)}|"
+
+  puts edge
+  puts space
+  puts "| #{str} |"
+  puts space
+  puts edge
+end
+
+# 10c) For a real challenge, try word wrapping very long messages so they appear on multiple lines, but still within a box.
+def print_in_box(str)
+  max_text_length = 76
+  length_to_use = [max_text_length, str.length + 4]
+  string_holder = []
+
+  str.chars.each_slice(74) do |block|
+    string_holder << block
+  end
+
+  string_holder.map! do |element|
+    element.join
+  end
+
+  edge = "+#{'-' * (length_to_use.min)}+"
+  space = "|#{' ' * (length_to_use.min)}|"
+
+  puts edge
+  puts space
+  string_holder.each { |el| puts "| #{el}#{' ' * (max_text_length - (el.length + 1))}|" }
+  puts space
+  puts edge
+end
+
+# 11 You are given a method named spin_me that takes a string as an argument and returns a string that contains the same words, but with each word's characters reversed. Given the method's implementation, will the returned string be the same object as the one passed in as an argument or a different object?
+=begin
+def spin_me(str)
+  str.split.each do |word|
+    word.reverse!
+  end.join(" ")
+end
+
+spin_me("hello world") # "olleh dlrow"
+=end
+
+puts "Your initial hunch might have been that the method will return the same string object. Since we are using mutating method String#reverse! inside of the do..end block, and we are also calling each method on the resulting array, which also returns the original array.
+
+However, as soon as we have converted string into an array by calling split method on it, it is no longer possible for us to get back the original object again. Even just doing str.split.join(" ") returns a different object since you are splitting the string into an array and then joining that array back into a new string, with the same sequence of characters but still, a different object.
+
+Let's also break down what happens inside of the spin_me method. str.split converts the string into array ['hello', 'world']. When we call each method on this array and reverse each word inside of the array, our original array gets mutated and now it's values are ['olleh', 'dlrow'].
+
+So we have mutated the array that we got by splitting the string, but, when we join this array back into a string, a completely new string is returned.
+
+However, if we rework this method to use an array argument instead of a string and we reversed each word in it by calling the same methods, then the array that was passed in as an argument and the array that was returned from the method would be the same object."
