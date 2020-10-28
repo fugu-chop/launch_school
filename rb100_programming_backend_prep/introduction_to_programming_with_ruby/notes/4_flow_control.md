@@ -32,12 +32,15 @@ Note when none of the conditions in an `if` statement evaluates as `true`, the `
 
 ###### Other shenanigans
 We can shorten simple `if` statements to a single line, but we must use the `then` word:
+
 `if x == 3 then puts "x is 3" end`
 
 We can also change the order, if we want to have the `if` word at the end of the expression:
+
 `puts "x is 3" if x == 3`
 
 We can also use the `unless` word if we want to change the phrasing of our expression. 
+
 `puts "X is not 3" unless x == 3`
 
 ### Comparisons
@@ -53,7 +56,7 @@ A comparison operators _always return a boolean value_. We use `==, >, <, <=, >=
 => false
 ```
 
-`||` is the "or" operator. __Either__ the expression to the left has to be true, or the expression to the right has to be true for the entire expression to be evaluated to true. If both expressions are true, `||` will return `true`.
+`||` is the "or" operator. __Either__ the expression to the left has to be true, or the expression to the right has to be true for the entire expression to be evaluated to true. If __both__ expressions are true, `||` will return `true`.
 ```
 (4 == 4) || (5 == 5)
 => true
@@ -68,6 +71,17 @@ A comparison operators _always return a boolean value_. We use `==, >, <, <=, >=
 `!` is the "not" operator. When you add this in front of a boolean expression it will change that boolean value to its *opposite*.
 ```
 !(4 == 4)
+=> false
+```
+Note that `!!` is used to convert values to booleans.
+```
+!!nil
+=> false
+
+!!"abc"
+=> true
+
+!!false
 => false
 ```
 ###### Order of precedence
