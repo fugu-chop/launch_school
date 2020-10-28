@@ -481,3 +481,19 @@ __*Thoughts*__<br/>
 One of the challenges I'm encountering when revising my notes for earlier in the course is to second guess what I've written, now that I have the benefit of hindsight and more knowledge about core concepts. It means I'm going back to the source material frequently to ensure that what I've actually written is correct. It is time consuming, but I guess it's beneficial that I'm clarifying a lot of the lazy language I've unknowingly used in the past. 
 
 The exercises in Easy 5 are quite hard. I'm taking a significant amount of time to finish these problems, which is pretty disheartening, given they're labelled as Easy, and Easy goes up to 9. 
+
+##### 28/10/20 (Wed)
+__*Concepts covered*__<br/>
+- RB100 Revision
+  - Lesson 4 Revision
+- RB101-109 Small Problems
+  - Easy 5
+  - Easy 6
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+While it's time consuming, I really need to break out the problem into chunks and apply the PEDAC method. I'm finding that if I jump straight into the problem, I'm struggling to identify all the edge cases and can't put together a coherent solution.
+
+Easy 6 still proves to be uneven in difficulty - some are relatively straightforward, others not (generally when I have to come up with looping logic to recreate an existing method). 
