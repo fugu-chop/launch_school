@@ -497,3 +497,17 @@ __*Thoughts*__<br/>
 While it's time consuming, I really need to break out the problem into chunks and apply the PEDAC method. I'm finding that if I jump straight into the problem, I'm struggling to identify all the edge cases and can't put together a coherent solution.
 
 Easy 6 still proves to be uneven in difficulty - some are relatively straightforward, others not (generally when I have to come up with looping logic to recreate an existing method). 
+
+##### 29/10/20 (Thu)
+__*Concepts covered*__<br/>
+- RB100 Revision
+  - Lesson 3 Revision
+  - Lesson 5 Revision
+- RB101-109 Small Problems
+  - Easy 6
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+Easy 6 overall was ok. There was a fair bit of method hunting when there were artificial constraints imposed (e.g. basically having to duplicate pre-built methods without being able to use those methods specifically). I still need to slow myself down and break down the solution into chunks, rather than charging head long into the solution. 
