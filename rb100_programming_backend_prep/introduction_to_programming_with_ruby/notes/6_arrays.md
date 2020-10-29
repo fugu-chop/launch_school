@@ -29,7 +29,7 @@ my_array[9]
 ```
 ### Modifying arrays
 If you'd like to take the last item off of an array *permanently*, you can use the `pop` method. 
-Note that when we called the `pop` method, the *original* array variable was modified (ie, this is a method that __mutates the caller__), but the *returned* value is the popped element.
+Note that when we called the `pop` method, the *original* array variable was modified (i.e. this is a method that __mutates the caller__), but the *returned* value is the popped element.
 ```
 my_array.pop
 => true
@@ -37,12 +37,12 @@ my_array.pop
 my_array
 => [1, "Bob", 4.33]
 ```
-If you want to add items to an array *permanently*, we can use the `push` method, along with any desired parameters. The full array is returned.
+If you want to add items to an array *permanently*, we can use the `push` method, along with any desired parameters. The full array is returned, with the new elements appended to the __end__ of the array.
 ```
 my_array.push("test1", 42, false)
 => [1, "Bob", 4.33, "test1", 42, false]
 ```
-We can also use the shovel operator `<<` to permanently add a *single* item to an array.
+We can also use the shovel operator `<<` to permanently add a *single* item to the end of an array.
 ```
 my_array << 3
 => [1, "Bob", 4.33, "test1", 42, false, 3]
@@ -92,7 +92,7 @@ The key to remember here is that `map` always performs transformation based on t
 end
 => [true, false, true]
 ```
-In this case, the return value of the block will be a boolean. This means that the collection returned by `map` will be an array of booleans. 
+In this case, the return value of the block will be a boolean for each iteration. This means that the collection returned by `map` will be an array of booleans. 
 
 Take care to remember that `map` doesn't care about truthiness, and takes the return value as the transformation criteria.
 ```
@@ -115,6 +115,13 @@ a.map { |num| num**2 }
 # Original array is not mutated
 a
 => [1, 2, 3, 4]
+
+a.map! { |num| num**2 }
+=> [1, 4, 9, 16]
+
+# Original array is mutated
+a
+=> [1, 4, 9, 16]
 ```
 If we want to filter specific elements from an array, we can use the `select` method. This method iterates over an array and *returns a new array* that includes items based on the *truthiness* of the block's return value.
 

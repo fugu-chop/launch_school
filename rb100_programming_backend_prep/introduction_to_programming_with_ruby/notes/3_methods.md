@@ -81,8 +81,9 @@ end
 ```
 ### Calling a method
 There are two ways to call methods that we will discuss. 
-- The `some_method(obj)` format is when you send *arguments to a method call*; in the previous example, `obj` is the argument being passed in to the `some_method` method. 
-- Sometimes, you will see methods called with an explicit caller, like this `a_caller.some_method(param)`. For now it's best to think of the previous code as some_method modifying `a_caller`.
+- The `some_method(obj)` format is when you send *arguments to a method call*; in the previous example, we are passing an argument to the `obj` parameter in the `some_method` method. def some_method(number)
+  number = 7 # this is implicitly returned by the method, regardless of what we put in as a number
+- Sometimes, you will see methods called with an explicit caller, like this `a_caller.some_method(param)`. For now it's best to think of the previous code as `some_method` modifying `a_caller`.
 
 ### Mutating the caller
 When calling a method, the *argument* can be altered permanently. We call this *mutating the caller*. 

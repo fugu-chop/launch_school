@@ -303,7 +303,7 @@ There are a couple of interesting things of note here:
 1. Hashes are typically thought of as __unordered__ and values are retrieved by keys. In some programming languages, the order is not preserved at all. This used to be true for Ruby too, but since Ruby 1.9, order is preserved __according to the order of insertion__. Calling first on a hash doesn't quite make sense, but Ruby lets you do it.
 2. Notice that the return value of calling `first` on a hash with a numeric argument is a nested array. This is unexpected. Fortunately, turning this nested array back to a hash is easy enough: `[[:a, "ant"], [:b, "bear"]].to_h`.
 
-In practice, first is rarely called on a hash, and most often used with arrays.
+In practice, `first` is rarely called on a hash, and most often used with arrays.
 
 `Enumerable#include?` <br/>
 `include?` __doesn't take a block__, but it does require one argument. It returns `true` if the argument *exists in the collection* and `false` if it doesn't.
