@@ -31,11 +31,15 @@ Parameters are used when you have data *outside of a method definition's scope*,
 
 __Arguments__ are pieces of information that are sent to a method invocation to be modified or used to return a specific result. We *pass* arguments to a method when we call it. 
 
+The `parameter` is a term that should only be used to describe the name of inputs listed in the `def` statement.  To refer to the value (or data passed in) of that parameter, you should refer to the `argument`.
+
+To be even more precise:
+- Parameters are named variables you define as part of a method definition or block (e.g. a block parameter)
+- Arguments are values that you pass into a method (including for blocks)
+
 In our example above, we are using an argument to pass the word, or string of words, that we want to use in the `say` method definition. 
 
 When we pass those words into the method definition, they're assigned to the *local* variable `words` and we can use them however we please from within the method definition. Note that the words local variable is scoped at the *method definition level*; that is, you __cannot__ reference this local variable outside of the `say` method definition.
-
-The `parameter` is a term that should only be used to describe the name of inputs listed in the `def` statement.  To refer to the value (or data passed in) of that parameter, you should refer to the `argument`.
 
 ###### Default parameters
 Sometimes, we just want to make sure our program runs, even if a necessary parameter isn't given to the method. We can use default parameters for this purpose:
@@ -78,7 +82,7 @@ end
 ### Calling a method
 There are two ways to call methods that we will discuss. 
 - The `some_method(obj)` format is when you send *arguments to a method call*; in the previous example, `obj` is the argument being passed in to the `some_method` method. 
-- Sometimes, you will see methods called with an explicit caller, like this `a_caller.some_method(obj)`. For now it's best to think of the previous code as some_method modifying `a_caller`.
+- Sometimes, you will see methods called with an explicit caller, like this `a_caller.some_method(param)`. For now it's best to think of the previous code as some_method modifying `a_caller`.
 
 ### Mutating the caller
 When calling a method, the *argument* can be altered permanently. We call this *mutating the caller*. 
@@ -127,7 +131,7 @@ def upcase(str)
   str.upcase!
 end
 ```
-The __`upcase` method definition does not have an explicit caller__ - it take an argument, and mutates that argument. The `.sub!` method mutates it's caller, because the `Winner` string is *calling* the method. Method __definitions do not have callers__ - they take arguments. 
+The __`upcase` method definition does not have an explicit caller__ - it takes an argument, and mutates that argument. The `.sub!` method mutates it's caller, because the `Winner` string is *calling* the method. Method __definitions do not have callers__ - they take arguments. 
 
 There's no obvious way to tell if a method will mutate the caller, other than referencing the documentation or trial and error. 
 
@@ -135,9 +139,7 @@ There's no obvious way to tell if a method will mutate the caller, other than re
 As a sidenote, we used `p` to print the string. This is different to `puts`, since there was no `nil` after the string was printed, as well as printing the quotes around the string. By default, `puts` returns `nil`. 
 
 ### Puts versus return
-Ruby methods __always__ return the evaluated result of the last line of the expression unless an explicit return comes before it. The `return` reserved word is not required in order to return something from a method.
-
-An explicit `return` will stop the method from executing further. 
+Ruby methods __always__ return the evaluated result of the __last line__ of the expression unless an explicit `return` comes before it (which will stop further execution of the method). The `return` reserved word is not required in order to return something from a method.
 ```
 a = [1, 2, 3]
 
@@ -161,7 +163,7 @@ end
 add_three(4)
 => 7
 ```
-The explicit `return` stops the method from evaluating subsequent code. 
+Here, the explicit `return` stops the method from evaluating subsequent code. 
 ```
 def just_assignment(number)
   foo = number + 3

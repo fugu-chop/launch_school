@@ -74,9 +74,9 @@ end
 => nil
 ```
 ### While loops
-A `while` loop is given a parameter that evaluates to a boolean. Once that boolean expression becomes `false`, the while loop is not executed again, and the program *continues after the `while` loop*. 
+A `while` loop is given a __parameter__ that evaluates to a boolean. Once that boolean expression becomes `false`, the `while` loop is not executed again, and the program *continues after the `while` loop*. 
 
-The `while` keyword always precedes a condition. If the condition evaluates to `true`, the loop will execute the code within the block. If the condition evaluates to false, the loop will stop. This means the code below break *may or may not execute at all*, depending on the condition.
+The `while` keyword always precedes a condition. If the condition evaluates to `true`, the loop will execute the code within the block. If the condition evaluates to `false`, the loop will stop. This means the code below the break point *may or may not execute at all*, depending on the condition.
 ```
 x = 3
 
@@ -90,7 +90,7 @@ puts "Done!"
 2
 1
 0
-"All done!"
+"Done!"
 => nil
 ```
 ### Until loops
@@ -108,7 +108,7 @@ puts "Done!"
 2
 1
 0
-"All done!"
+"Done!"
 => nil
 ```
 ### Do While loops
@@ -183,7 +183,7 @@ We have called the `each` method using the dot operator (`.`) on our array.
 
 What this method does is loop through each element in our array, in order, starting from 'Bob'. Then it begins executing the code within the block. The block's starting and ending points are defined by the curly braces `{ }`. 
 
-Each time we iterate over the array, we need to assign the value of the element to a variable. In this example we have named the variable `name` and placed it in between two pipes (`|`). After that, we write the logic that we want to use to operate on the variable, which represents the current array element. Here, the *original array* is returned after the `puts` statements.
+Each time we iterate over the array, we need to assign the value of the element to a variable. In this example we have named the variable `name` and placed it in between two pipes (`|name|`). After that, we write the logic that we want to use to operate on the variable, which represents the current array element. Here, the *original array* is returned after the `puts` statements.
 
 ### Blocks
 A block is just some lines of code ready to be executed. When working with blocks there are two styles you need to be aware of. 
@@ -204,9 +204,9 @@ end
 => ['Bob', 'Joe', 'Steve']
 ```
 ### Recursion
-Recursion is the act of calling a method from within itself. This effectively continues to run the loop until it reaches a predefined end point (usually through an `if` clause, and modifying the original argument). 
+Recursion is the act of calling a method from within itself. This effectively continues to run the loop until it reaches a predefined end point (usually through an `if` clause, and modifying the value of the original parameter). 
 
-This is a way we can sense check our method to ensure it's not an endless loop - does the *recursion modify the original argument?* And have we returned an argument (after it's been subjected to all the recursion)?
+This is a way we can sense check our method to ensure it's not an endless loop - does the *recursion modify the value of the original parameter?* And have we returned a value (after it's been subjected to all the recursion)?
 ```
 # Define our method
 def doubler(start)
