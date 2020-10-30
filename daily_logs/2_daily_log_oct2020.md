@@ -25,6 +25,10 @@
 - [24th, Sat](#241020-sat)
 - [25th, Sun](#251020-sun)
 - [26th, Mon](#261020-mon)
+- [27th, Tue](#271020-tue)
+- [28th, Wed](#281020-wed)
+- [29th, Thu](#291020-thu)
+- [30th, Fri](#301020-fri)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -511,3 +515,20 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Easy 6 overall was ok. There was a fair bit of method hunting when there were artificial constraints imposed (e.g. basically having to duplicate pre-built methods without being able to use those methods specifically). I still need to slow myself down and break down the solution into chunks, rather than charging head long into the solution. 
+
+##### 30/10/20 (Fri)
+__*Concepts covered*__<br/>
+- RB100 Revision
+  - Lesson 3 Revision
+  - Lesson 4 Revision
+  - Lesson 6 Revision
+- Blog Post reading
+  - Advice for Ruby Programming Foundations Written Assessment (Part 1)
+- RB101-109 Small Problems
+  - Easy 7
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+Reading is ok, but I much prefer the exercises as a method of practicing problem solving. I need to clarify what the written assessment actually is - is it problem solving, or mainly explaining what is happening in the code?
