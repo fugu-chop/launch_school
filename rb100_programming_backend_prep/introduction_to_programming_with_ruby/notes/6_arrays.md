@@ -234,6 +234,17 @@ The `Array#each` method is being called on the multi-dimensional array `[[1, 2],
 
 The `puts` method then outputs a string representation of the integer. `puts` returns `nil` and, since this is the last evaluated statement within the block, the return value of the block is therefore `nil`. `.each` doesn't do anything with this returned value though, and since the return value of `each` is the calling object - in this case the nested array `[[1, 2], [3, 4]]` - this is what is ultimately returned.
 
+If we want to iterate through each element of the array, but mutate an object within each element, we need to reassign those mutated objects.
+```
+def word_cap(string)
+  new_arr = []
+  string_arr = string.downcase.split
+  string_arr.each do |word|
+    word[0] = word[0].upcase!
+  end
+  string_arr.join(' ')
+end
+```
 ###### `map`
 `map` also works on objects that allow for iteration. Like `each`, when given a block it invokes the given block once for every element in the collection. 
 
