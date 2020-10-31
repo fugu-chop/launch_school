@@ -29,6 +29,7 @@
 - [28th, Wed](#281020-wed)
 - [29th, Thu](#291020-thu)
 - [30th, Fri](#301020-fri)
+- [31st, Sat](#311020-sat)
 
 ##### 01/10/20 (Thu)
 __*Concepts covered*__<br/>
@@ -532,3 +533,21 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Reading is ok, but I much prefer the exercises as a method of practicing problem solving. I need to clarify what the written assessment actually is - is it problem solving, or mainly explaining what is happening in the code?
+
+##### 31/10/20 (Sat)
+__*Concepts covered*__<br/>
+- RB100 Revision
+  - Lesson 7 & 8 Revision
+  - Exercises Revision
+- Blog Post reading
+  - Advice for Ruby Programming Foundations Written Assessment (Part 2, 3, 4)
+- RB101-109 Small Problems
+  - Easy 7
+
+__*Time spent*__<br/>
+240 minutes
+
+__*Thoughts*__<br/>
+Pretty good day today. With more experience and applying PEDAC more rigorously, I'm finding Easy 7 problems slightly easier, though I did run into an issue with `each_with_index` - I wrote a method that was relying on side-effects (i.e. mutating the caller) rather than the return value of the method, which caused issues, since `each_with_index` doesn't care about the return value of the block. Something to remember. 
+
+I'm finding the descriptions of code kind of exhausting. Even a three line block of code has so much stuff to describe, with really precise language. 
