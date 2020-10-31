@@ -59,7 +59,7 @@ def word_cap(string)
   new_arr = []
   string_arr = string.downcase.split
   string_arr.each do |word|
-    word[0] = word[0].upcase!
+    word[0] = word[0].upcase
   end
   string_arr.join(' ')
 end
@@ -89,10 +89,50 @@ staggered_case('ignore 77 the 444 numbers') == 'IgNoRe 77 ThE 444 NuMbErS'
 =end
 
 def staggered_case(string)
-  # Break the string into array of words
-  # Iterate through the words
-  # iterate through the letters in the words (nested)
-  # Where the index is odd, upcase
-  # Where index is even, downcase
-  # Join the words array back together
+  string.downcase.chars.map.with_index do |char, idx|
+    if idx.even?
+      char = char.swapcase
+    else
+      char
+    end
+  end.join
+end
+
+# 5b) Can you modify this method so the caller can request that the first character be downcased rather than upcased? If the first character is downcased, then the second character should be upcased, and so on.
+def staggered_case(string, switch='even')
+  string.downcase.chars.map.with_index do |char, idx|
+    if switch == 'even' && idx.even?
+      char = char.swapcase
+    elsif switch != 'even' && idx.odd?
+      char = char.swapcase
+    else 
+      char
+    end
+  end.join
+end
+
+# 6) Modify the method from the previous exercise so it ignores non-alphabetic characters when determining whether it should uppercase or lowercase each letter. The non-alphabetic characters should still be included in the return value; they just don't count when toggling the desired case.
+=begin
+staggered_case('I Love Launch School!') == 'I lOvE lAuNcH sChOoL!'
+staggered_case('ALL CAPS') == 'AlL cApS'
+staggered_case('ignore 77 the 444 numbers') == 'IgNoRe 77 ThE 444 nUmBeRs'
+=end
+
+def staggered_case(string)
+  alphabetical_chars = ('a'..'z').to_a + ('A'..'Z').to_a
+  return_string = ''
+  counter = 0
+=begin
+  Typically, we should use map when we want to mutate something. 
+  
+  The return value isn’t used in .each so only the side effect matters. In our above example, if we used .each and used .swapcase!, swapcase! returns nil if it can't swap the case. 
+
+  In test case 3, since ‘7’.upcase! has no side effect, the element remains unchanged regardless of the nil return, unlike, say map.
+=end
+  string.downcase.chars.each do |char|
+    char = char.swapcase if counter.even?
+    counter += 1 if alphabetical_chars.include?(char)
+    return_string << char
+  end
+  return_string
 end

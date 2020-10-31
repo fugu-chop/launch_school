@@ -75,7 +75,7 @@ end
 
 puts count_sheep
 =end
-puts "The method will print out 0 1 2 3 4 5 on different lines. This is because in a .times method, |sheep| represents the range of numbers 0-4. The .times method also returns the original integer it was defined with - in this case, 5, because this is the last line (i.e returned) in the .times block."
+puts "The method will print out 'sheep' 5 times. This is because in a .times method, |sheep| represents the range of numbers 0-4. The .times method also returns the original integer it was defined with - in this case, 5, because this is the last line (i.e returned) in the .times block."
 
 # 8) What will the following code print? Why?
 =begin
@@ -88,7 +88,7 @@ end
 
 puts count_sheep
 =end
-puts "This method will print out 0, 1, 2, 3, 4, 10. Although the .times block still returns a 5, nothing is done with it. Since 10 is the last line in this method, it will be returned and printing with puts."
+puts "This method will print out 'sheep' 5 times, and return 10. Although the .times block still returns a 5, nothing is done with it. Since 10 is the last line in this method, it will be returned and printing with puts."
 
 # 9) What will the following code print? Why?
 =begin
@@ -103,7 +103,7 @@ end
 
 p count_sheep
 =end
-puts "The method will print 0, 1, 2, nil. The return keyword will break out of the method once the if condition is met, which is when sheep == 2. Since return doesn't provide a value, it defaults to returning nil, which is visible only if we use p (i.e. puts will print a blank line)."
+puts "The method will print 'sheep' three times, and return nil. The return keyword will break out of the method once the if condition is met, which is when sheep == 2. Since return doesn't provide a value, it defaults to returning nil, which is visible only if we use p (i.e. puts will print a blank line)."
 
 # 10) What will the following code print? Why?
 =begin

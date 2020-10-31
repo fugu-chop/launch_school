@@ -55,7 +55,7 @@ puts a
 =end
 puts "a will print Xy-zy. Strings are mutable - they can be modified. b[2] is a mutating method. Since we are actually modifying the string referenced by b, and b references the same string as a, the result from printing a shows an update to the value of the string."
 
-puts "An interesting tidbit - if we were to pass a + \"Y\" into my_value, a would remain unchanged. This is because the b argument in my_value is no longer referring to 'a' in the global scope, but a new instance of the variable (also since + \"Y\" is not a destructive method)."
+puts "An interesting tidbit - if we were to pass a + 'Y' into my_value (i.e. b += 'Y'), a would remain unchanged. This is because the b argument in my_value is no longer referring to 'a' in the global scope, but a new instance of the variable (also since + 'Y' is not a destructive method)."
 
 # 5) What will the following code print, and why?
 =begin

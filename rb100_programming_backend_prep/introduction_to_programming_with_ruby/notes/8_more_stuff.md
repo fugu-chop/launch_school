@@ -128,7 +128,6 @@ Therefore, always pay attention whether your variables are pointing to the same 
 ### Blocks and procs
 *Blocks*, like parameters, can be passed into a method just like normal variables.
 ```
-
 def take_block(number, &block)
   block.call(number)
 end
