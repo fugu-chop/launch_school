@@ -31,7 +31,7 @@ Parameters are used when you have data *outside of a method definition's scope*,
 
 __Arguments__ are pieces of information that are sent to a method invocation to be modified or used to return a specific result. We *pass* arguments to a method when we call it. 
 
-The `parameter` is a term that should only be used to describe the name of inputs listed in the `def` statement.  To refer to the value (or data passed in) of that parameter, you should refer to the `argument`.
+The `parameter` is a term that should only be used to describe the name of inputs listed in the `def` statement.  To refer to the value (or data passed in) of that parameter, you should refer to the `argument`. Methods are *defined* with parameters, but they are *called* with arguments.
 
 To be even more precise:
 - Parameters are named variables you define as part of a method definition or block (e.g. a block parameter)
@@ -40,6 +40,34 @@ To be even more precise:
 In our example above, we are using an argument to pass the word, or string of words, that we want to use in the `say` method definition. 
 
 When we pass those words into the method definition, they're assigned to the *local* variable `words` and we can use them however we please from within the method definition. Note that the words local variable is scoped at the *method definition level*; that is, you __cannot__ reference this local variable outside of the `say` method definition.
+
+###### Describing what's happening
+Take this example:
+```
+def example(str)
+  i = 3
+  loop do
+    puts str
+    i -= 1
+    break if i == 0
+  end
+end
+
+example('hello')
+```
+On lines 1–8 we are defining the method `example` which takes 1 __parameter__. 
+
+On line 2 of this code we are initializing the local variable `i` and assigning to it an integer with value `3`.
+
+On line 3 we are calling the method `loop` (`loop` is a method of the `Kernel` module) and passing in the `do..end` block as an argument. The block here is __passed to a method call as an argument__.  We are also calling the method `puts` and passing in __local variable__ `str` to it as an argument. 
+
+On line 5 the local variable `i` is reassigned. `-=` is reassignment; syntactical sugar for `i = i — 1` . Also note that `—` is __not an operator__ but a __method__ and that code can also be written as `i = i.-(1)`; another example of syntactical sugar. So inside of this code we are reassigning the local variable `i` to the return value of a method call `Integer#-` on a local variable `i` with integer `1` passed to it as an argument.
+
+On line 6 we are breaking out of the loop by using the keyword `break` if the __value of the object__ that local variable `i` is *referencing* is equal to `0`.
+
+On line 10 we are calling the method `example` and passing in string `hello` as an argument.
+
+Finally, this code __outputs__ the string `hello` 3 times and __returns__ `nil`. The last evaluated expression is returned since we don’t have an explicit `return` inside of the method definition. That last evaluated expression is `break if i == 0` in this case, which returns `nil`.
 
 ###### Default parameters
 Sometimes, we just want to make sure our program runs, even if a necessary parameter isn't given to the method. We can use default parameters for this purpose:

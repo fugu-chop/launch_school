@@ -4,6 +4,7 @@
 - [What is an array?](#what-is-an-array)
 - [Modifying arrays](#modifying-arrays)
 - [Iterating over an array](#iterating-over-an-array)
+- [Select](#select)
 - [Common array methods](#common-array-methods)
 - [Each v Map](#each-v-map)
 - [Multiple assignment](#multiple-assignment)
@@ -123,9 +124,10 @@ a.map! { |num| num**2 }
 a
 => [1, 4, 9, 16]
 ```
+### Select
 If we want to filter specific elements from an array, we can use the `select` method. This method iterates over an array and *returns a new array* that includes items based on the *truthiness* of the block's return value.
 
-To perform selection, `select` evaluates the return value of the block. The block returns a value *on each iteration*, which then gets evaluated by `select`.
+To perform selection, `select` evaluates the return value of the block for each iteration. 
 
 When evaluating the block's return value, `select` __only cares about its truthiness__. If the return value of the block is "truthy", then the element during that iteration will be selected. If the return value of the block is "falsey" then the element will not be selected. 
 
@@ -218,7 +220,7 @@ a.join('-')
 ```
 ### Each v Map
 ###### `each`
-The `each` method works on objects that allow for iteration and is commonly used along with a block. If given a block, `each` runs the code in the block once for every element in the collection and *returns the collection it was invoked on*. It __does not care about the return value of the block__. If no block is given, it returns an *Enumerator* object. 
+The `each` method works on objects that allow for iteration and is commonly used along with a block. If given a block, `each` runs the code in the block once for every element in the collection and *returns the collection it was invoked on*. It __does not care (or do anything) about the return value of the block__. If no block is given, it returns an *Enumerator* object. 
 
 Let's walk through what happens when `.each` is called:
 ```

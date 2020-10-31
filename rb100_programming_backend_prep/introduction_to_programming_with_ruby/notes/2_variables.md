@@ -2,7 +2,8 @@
 
 ## Table of Contents
 - [What is a variable?](#what-is-a-variable)
-- [Scope](#Scope)
+- [Scope](#scope)
+- [Variable Shadowing](#variable-shadowing)
 - [Method definitions & scope](#method-definitions-&-scope)
 - [Types of Variables](#types-of-variables)
 
@@ -260,6 +261,22 @@ puts a          # => 1
 puts b          # => NameError
 puts c          # => NameError
 ```
+### Variable Shadowing
+Variable shadowing occurs when __parameter name__ of the block is the __same__ as the name of the __local variable__ initialised outside of the block. The consequence of variable shadowing is that it *prevents access to variables of the same name* initialized __outside__ of the block.
+```
+a = 4
+b = 2
+
+2.times do |a|
+  a = 5
+  puts a
+end
+
+puts a
+puts b
+```
+On line 5 of this example, we are assigning the integer `5` to the local variable `a` passed in as a __parameter__ of the `do..end` block and the value of our local variable `a` initialised in outer scope remains `4`.
+
 ### Method definitions & scope
 Reassignment, including assignment operators like `+=`, `=`, do not mutate a variable in the context of a *method definition*; instead, it binds the variable to a new object. That is, the assignment operator sets the variable to point to a different object (you can verify this by look at an object's `object_id`).
 

@@ -118,21 +118,90 @@ staggered_case('ALL CAPS') == 'AlL cApS'
 staggered_case('ignore 77 the 444 numbers') == 'IgNoRe 77 ThE 444 nUmBeRs'
 =end
 
+=begin
+  Typically, we should use map when we want to mutate something. 
+  
+  The return value isn’t used in .each so only the side effect are applied. In our above example, if we used .each and .swapcase!, swapcase! returns nil if it can't swap the case. 
+
+  In test case 3, since ‘7’.swapcase! has no side effect (i.e. doesn't mutate anything), the element remains unchanged regardless of the nil return, unlike, say map. We are relying on side effects rather than the returned value to mutate the array, which is dangeous and can be hard to follow.
+=end
+
 def staggered_case(string)
   alphabetical_chars = ('a'..'z').to_a + ('A'..'Z').to_a
   return_string = ''
   counter = 0
-=begin
-  Typically, we should use map when we want to mutate something. 
-  
-  The return value isn’t used in .each so only the side effect matters. In our above example, if we used .each and used .swapcase!, swapcase! returns nil if it can't swap the case. 
 
-  In test case 3, since ‘7’.upcase! has no side effect, the element remains unchanged regardless of the nil return, unlike, say map.
-=end
-  string.downcase.chars.each do |char|
-    char = char.swapcase if counter.even?
+  string.downcase.chars.map do |char|
+    if counter.even?
+      char = char.swapcase 
+    else
+      char
+    end
     counter += 1 if alphabetical_chars.include?(char)
     return_string << char
   end
   return_string
+end
+
+# 6b) Modify this method so the caller can determine whether non-alphabetic characters should be counted when determining the upper/lowercase state. That is, you want a method that can perform the same actions that this method does, or operates like the previous version.
+
+def staggered_case(string, switch = 'new')
+  alphabetical_chars = ('a'..'z').to_a + ('A'..'Z').to_a
+  return_string = ''
+  counter = 0
+
+  if switch == 'new'
+    string.downcase.chars.map do |char|
+      if counter.even?
+        char = char.swapcase 
+      else
+        char
+      end
+      counter += 1 if alphabetical_chars.include?(char)
+      return_string << char
+    end
+  end
+
+  if switch != 'new'
+    string.downcase.chars.map.with_index do |char, idx|
+      if idx.even?
+        char = char.swapcase 
+      else
+        char
+      end
+      return_string << char
+    end
+  end
+
+  return_string
+end
+
+# 7) Write a method that takes an Array of integers as input, multiplies all the numbers together, divides the result by the number of entries in the Array, and then prints the result rounded to 3 decimal places. Assume the array is non-empty.
+=begin
+show_multiplicative_average([3, 5])                # => The result is 7.500
+show_multiplicative_average([6])                   # => The result is 6.000
+show_multiplicative_average([2, 5, 7, 11, 13, 17]) # => The result is 28361.667
+=end
+
+def show_multiplicative_average(arr)
+  format("%.3f", arr.reduce(&:*).to_f / arr.length)
+end
+
+# 9) Write a method that takes two Array arguments in which each Array contains a list of numbers, and returns a new Array that contains the product of each pair of numbers from the arguments that have the same index. You may assume that the arguments contain the same number of elements.
+=begin
+multiply_list([3, 5, 7], [9, 10, 11]) == [27, 50, 77]
+=end
+def multiply_list(arr1, arr2)
+  arr_index = 0
+  return_arr = []
+  while arr_index < arr1.length
+    return_arr << (arr1[arr_index] * arr2[arr_index])
+    arr_index += 1
+  end
+  return_arr
+end
+
+# 9b) The Array#zip method can be used to produce an extremely compact solution to this method.
+def multiply_list(arr1, arr2)
+  arr1.zip(arr2).map { |a, b| a * b }
 end
