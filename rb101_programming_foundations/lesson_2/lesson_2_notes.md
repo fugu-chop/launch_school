@@ -257,7 +257,7 @@ Note that `p` doesn’t take a block. As with all methods called with a block th
 
 In other words, the binding of an argument to a method and the method name (the return value of `array.map` and `p`) is slightly *tighter* than the binding between a method call and a `do...end` block. Thus, `array.map` __gets executed first, then the return value and the block get passed to `p` as separate arguments__. 
 
-Basically, because of the low precedence of the `do...end` block, `p` sees two arguments being passed to it, rather than one. `p` displays the `Enumerator` object because Ruby has strict evaluation - i.e. every expression is evaluated and converted to an object before it is passed along to a method (`p`).
+Basically, because of the low precedence of the `do...end` block, `p` sees two arguments being passed to it, rather than one. `p` displays the `Enumerator` object because Ruby has __strict evaluation__ - i.e. every expression is evaluated and converted to an object before it is passed along to a method (`p`).
 
 A `{ }` block, on the other hand, has higher priority which means that it binds *more tightly* to `array.map`. Therefore, when we use `{}`, `array.map` is called with the block, then the return value of `array.map` gets passed to `p`.
 
@@ -273,22 +273,22 @@ p(array.map { |num| num + 1 })      # [2, 3, 4]
                                     # => [2, 3, 4]
 ```
 ###### The `tap` method
-There is an Object instance method, `tap`. It passes the calling object into a block, then returns that calling object itself. It allows you do something with an object inside of a block, and *always have that block return the object itself*.
+There is an Object instance method, `tap`. It passes the calling object into a block, then returns that __calling__ object itself. It allows you do something with an object inside of a block, and *always have that block return the object itself*.
 ```
 array = [1, 2, 3]
 
 mapped_array = array.map { |num| num + 1 }
 mapped_array.tap { |value| p value }              # => [2, 3, 4]
 ```
-`array.map { |num| num + 1 }` resolves to `[2, 3, 4]`, which then gets used to call `tap`. `tap` takes the calling object and passed it to the block argument, then returns that same object. Typically, you will do something like print the object inside that block.
+`array.map { |num| num + 1 }` returns `[2, 3, 4]`, which then gets used to call `tap`. `tap` takes the calling object and passed it to the block argument, then returns that same object. Typically, you will do something like print the object inside that block.
 ```
 mapped_and_tapped = mapped_array.tap { |value| p 'hello' }   # ‘hello’
 
 mapped_and_tapped                                            # => [2, 3, 4]
 ```
-One other use case for this method is to __debug intermediate objects__ in method chains. The transformation performed and the resulting object at every step is now visible to us by just using `tap`.
+One use case for this method is to __debug intermediate objects__ in method chains. The transformation performed and the resulting object at every step is now visible to us by just using `tap`.
 ```
-(1..10).tap { |x| p x }.to_a.tap { |x| p x }.select {|x| x.even? }.tap { |x| p x }.map {|x| x*x }
+(1..10).tap { |x| p x }.to_a.tap { |x| p x }.select {|x| x.even? }.tap { |x| p x }.map {|x| x*x }.tap { |x| p x }
 
 # Broken up, we can see that calling the .tap method lets us see what that step of the chain returns
 (1..10).tap { |x| p x }                   # 1..10
@@ -335,7 +335,7 @@ def greeting
   puts "Hello"
 end
 ```
-__Method invocation__ is when we call a method, whether that happens to be an existing method from the Ruby Core API or core Library, or a custom method that we've defined ourselves using the `def` keyword, like `greeting` above.
+__Method invocation__ is when we call a method, whether that happens to be an existing method from the Ruby Core API or the Standard Library, or a custom method that we've defined ourselves using the `def` keyword, like `greeting` above.
 
 We've also seen examples of methods being called with blocks. 
 `[1, 2, 3].each { |num| puts num }`
@@ -407,7 +407,7 @@ When dealing with objects passed into methods, we can either treat these argumen
 In Ruby, when an object is passed to a *method call as an argument*, the parameter assigned to it acts as a *pointer to the original object*. Ruby __does not__ create a copy of the object for that method. The object that gets passed is a __reference__ to some object. 
 
 ###### Pass by value
-With pass by value, a copy of an object is created, and it is that copy that gets passed around. Since it is merely a copy, it is impossible to change the original object; any attempt to change the copy just changes the copy and leaves the original object unchanged. 
+With pass by value, a copy of an object is created, and it is that copy that gets passed around. Since it is merely a copy, it is impossible to change the original object; any attempt to change the object just changes the copy and leaves the original object unchanged. 
 
 When you "*pass (an object) by value (to a variable/as an argument to a method)*", the method only has __a copy of the original object__. Operations performed on the object within the method have __no effect on the original object__ outside of the method.
 ```
@@ -428,7 +428,7 @@ This is __not__ variable shadowing, because the main scope variable is __not acc
 When we passed the `name` variable into the `change_name` method, it looks like the variable was *passed by value*, since re-assigning the variable only affected the *method-level variable*, and __not__ the *main scope variable*.
 
 ###### Pass by reference
-With pass by reference, a *reference to an object is passed around*. This establishes an *alias between the argument and the original object*, just like we saw when we set `a = b`. Both the argument and object refer to the __same location in memory__. With pass by reference, if you modify the argument’s state, you also modify the original object (__unlike__ previous examples with `a = b`).
+With pass by reference, a *reference to an object is passed around*. This establishes an *alias between the argument and the original object*, just like we saw when we set `a = b`. Both the argument and object refer to the __same location in memory__. With pass by reference, if you modify the argument’s state, you also modify the original object.
 
 If Ruby was pure "pass by value", that means there should be no way for operations within a method to cause changes to the original object.
 ```
@@ -461,7 +461,7 @@ CHICO
 Groucho
 Zeppo
 ```
-The first each loop simply copies a bunch of references from `array1` to `array2`. When that first loop completes, both arrays not only contain the same values, they contain __the same String objects__. If you modify one of those Strings, that modification will show up in both Arrays.
+The first `#each` loop simply copies a bunch of references from `array1` to `array2`. When that first loop completes, both arrays not only contain the same values, they contain __the same String objects__. If you modify one of those Strings, that modification will show up in both Arrays.
 
 ###### Reconciling the two
 ```
@@ -482,7 +482,7 @@ The key here is that __pass by reference isn’t limited to mutating methods__. 
 
 __Assignment__ is the weird exception here. The key is to remember that variables and constants aren’t objects, but are *references to objects*. Assignment merely changes __which__ object is bound to a particular variable.
 
-While we can change which object is bound to a variable *inside* of a method, __we can’t change the binding of the original arguments__. We can change the *objects* if the objects are *mutable*, but the __references themselves are immutable__ as far as the method is concerned. For assignment, Ruby is passes around __copies of the references__. 
+While we can change which object is bound to a variable *inside* of a method, __we can’t change the binding of the original arguments__ through assignment. We can change the *objects* if the objects are *mutable*, but the __references themselves are immutable__ as far as the method is concerned. For assignment, Ruby is passes around __copies of the references__. 
 
 ### Immutability
 Methods can be either mutating or non-mutating. As you might expect, mutating methods change something; non-mutating methods do not. The object that may or may not be mutated is of concern when discussing whether a method is mutating or non-mutating. 
@@ -513,7 +513,7 @@ There are, in fact, __no methods available that let you alter the value of any i
 
 This disconnects the original object from the variable, which makes it available for garbage collection unless another reference to the object exists elsewhere.
 
-A method is said to be *non-mutating with respect to an argument* or its calling object if it __does not modify it__. Most methods you will encounter do not mutate their arguments or caller. Some do mutate their *caller*, but few mutate the *arguments* - most of these methods reassign their arguments to *different address spaces* and are thus non-mutating.
+A method is said to be *non-mutating with respect to an argument* or its calling object if it __does not modify it__. Most methods you will encounter do not mutate their arguments or caller. Some do mutate their *caller*, but few methods in the Core API or Standard Library mutate the *arguments* - most of these methods reassign their arguments to *different address spaces* and are thus non-mutating.
 ```
 test = 'hello'
 test.object_id
@@ -546,7 +546,7 @@ A method is said to be mutating with respect to an argument or its caller if it 
 
 Whether modification is permitted by setter methods or by calling methods that perform more complex operations is unimportant; as long as you __can__ modify an object, it is mutable. Mutable objects can be modified __without creating new objects__ (and hence the reference to the object, or the `object_id` remains the same). Only the __state__ of the original object has been changed.
 
-A *setter method* (or simply, a setter) is a method defined by a Ruby object that allows a programmer to explicitly change the value of *part of an object*. 
+A *setter method* (or simply, a setter) is a method defined by a Ruby object that allows a programmer to explicitly change the value of *part of an object*. Indexed assignment is a subset of setter methods.
 
 Note that setter methods for *class instance variables and indexed assignment* are __not the same__ as assignment. Setter methods and indexed assignment usually mutate the calling object. 
 
@@ -619,10 +619,10 @@ We need to learn to organize chunks of code to make it easier to read. In terms 
 This assists us in code legibility, but also debugging. 
 
 Other tips include:
-###### Name methods appropriately. 
+###### Name methods appropriately
 We should be able to tell what they do without having to refer to the code everytime we see it. 
 
-###### Methods should either return or product a side effect
+###### Methods should either return or produce a side effect
 A method should either return a value, or produce a side effect (e.g. printing something, mutating the caller), __not__ both. It makes our methods more difficult to reuse and interpret in the future. 
 
 ###### Not mutating the caller during iteration

@@ -20,12 +20,12 @@ PEDAC stands for:
 
 This framework helps avoid:
   - Missed requirements
-  - Unforeseen Edge Cases
+  - Unforeseen edge cases
   - Hard to understand code
   - Code that’s difficult to maintain
 
 Useful questions include:
-1. Input formats (e.g. data types, validation)?
+1. Input formats (e.g. data types, validation, spaces)?
 2. Empty inputs?
 3. Output formats?
 4. Do I return a new output, or a mutated output?

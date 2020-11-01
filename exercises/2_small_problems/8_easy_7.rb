@@ -205,3 +205,45 @@ end
 def multiply_list(arr1, arr2)
   arr1.zip(arr2).map { |a, b| a * b }
 end
+
+# 10) Write a method that takes two Array arguments in which each Array contains a list of numbers, and returns a new Array that contains the product of every pair of numbers that can be formed between the elements of the two Arrays. The results should be sorted by increasing value. You may assume that neither argument is an empty Array.
+=begin
+multiply_all_pairs([2, 4], [4, 3, 1, 2]) == [2, 4, 4, 6, 8, 8, 12, 16]
+=end
+def multiply_all_pairs(arr1, arr2)
+  return_arr = []
+  arr1.each do |element1|
+    arr2.each do |element2|
+      return_arr << element1 * element2
+    end
+  end
+  return_arr.sort
+end
+
+# Shortened solution
+def multiply_all_pairs(array_1, array_2)
+  array_1.product(array_2).map { |num1, num2| num1 * num2 }.sort
+end
+
+# 11) Write a method that returns the next to last word in the String passed to it as an argument. Words are any sequence of non-blank characters. You may assume that the input String will always contain at least two words.
+=begin
+penultimate('last word') == 'last'
+penultimate('Launch School is great!') == 'is'
+=end
+
+def penultimate(string)
+  string.split[-2]
+end
+
+# 11b) Write a method that returns the middle word of a phrase or sentence. It should handle all of the edge cases you thought of -  strings that contain just one word, and strings that contain no words.
+def mid(string)
+  string_arr = string.split
+  
+  return '' if string_arr.length == 0
+  return string_arr[0] if string_arr.length == 1
+  if string_arr.length.odd?
+    string_arr[(string_arr.length / 2)]
+  else
+    string_arr[(string_arr.length / 2) - 1]
+  end
+end

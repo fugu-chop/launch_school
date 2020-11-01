@@ -27,12 +27,14 @@ end
 def predict_weather
   sunshine = [true, false].sample
 
-  if sunshine
+  if sunshine == true
     puts "Today's weather will be sunny!"
   else
     puts "Today's weather will be cloudy!"
   end
 end
+
+puts "The code snippet will always print 'Today's weather will be sunny!' as the sunshine object is truthy (since the object itself is not nil or false), and evaluates to true, so the else statement will never execute."
 
 # 3) When the user inputs 10, we expect the program to print The result is 50!, but that's not the output we see. Why not?
 =begin
@@ -92,7 +94,11 @@ end
 puts 'Confucius says:'
 puts '"' + get_quote('Confucius') + '"'
 =end
-puts "The get_quote method does not explicitly return anything. This means the last line of code in our method will be returned, which is the 'Einstein' statement. This means anything else will return nil, and nil cannot be concatenated with strings."
+puts "The get_quote method does not explicitly return anything. This means the last line of code in our method will be returned, which is the 'Einstein' statement. 
+
+The last line is an if statement, which returns the evaluated result of the branch whose condition evaluates to true, or nil if there is no such branch. When we passed 'Confucius' or 'Yoda' in as the argument, the condition person == 'Einstein' evaluated to false, so the last if statement evaluated to nil. 
+
+This caused our original method to return nil every time an argument other than 'Einstein' is passed in, and nil cannot be concatenated with strings."
 
 def get_quote(person)
   if person == 'Yoda'
@@ -137,7 +143,7 @@ end
   balance = calculate_balance(month)
 end
 =end
-puts "This code is not appending each month's balance. Each time the .each method loops through a month, it is overwriting the balance variable with the most recent month's value, rather than adding it."
+puts "Each time the .each method loops through a month, it is overwriting the balance variable with the most recent month's value, rather than adding it."
 
 balance = 0
 

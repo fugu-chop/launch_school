@@ -63,6 +63,34 @@ a.object_id
 b.object_id
 => 70294044643900
 ```
+The exceptions are __integers and symbols__, which occupy the same physical space in memory (they are the same objects), even if assigned to different variables:
+```
+a = 5
+b = 5
+c = 5
+
+a.object_id
+=> 11
+
+b.object_id
+=> 11
+
+c.object_id
+=> 11
+
+a = :dog
+b = :dog
+c = :dog
+
+a.object_id
+=> 1516188
+
+b.object_id
+=> 1516188
+
+c.object_id
+=> 1516188
+```
 Let's see what happens when we reassign a variable to another variable. 
 ```
 greeting = 'Hello'
