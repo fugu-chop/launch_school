@@ -211,7 +211,7 @@ puts value(3) + value(5) * value(7)
 7
 38
 ```
-From the first 3 lines of output, you might conclude that Ruby is evaluating the expression left-to-right. However, the final result says otherwise -- you can only get that result if `value(5) * value(7)` gets evaluated first. 
+From the first 3 lines of output, you might conclude that Ruby is evaluating the expression left-to-right. However, the final result says otherwise - you can only get that result if `value(5) * value(7)` gets evaluated first. 
 
 The issue here is that operators like `+` and `*` need values that they can work with. Method invocations like `value(5)` and `value(7)` __are not values__. We can't invoke the `*` operator until we know what values those methods return. 
 
@@ -409,7 +409,7 @@ In Ruby, when an object is passed to a *method call as an argument*, the paramet
 ###### Pass by value
 With pass by value, a copy of an object is created, and it is that copy that gets passed around. Since it is merely a copy, it is impossible to change the original object; any attempt to change the object just changes the copy and leaves the original object unchanged. 
 
-When you "*pass (an object) by value (to a variable/as an argument to a method)*", the method only has __a copy of the original object__. Operations performed on the object within the method have __no effect on the original object__ outside of the method.
+When you "*pass (an object) by value (as an argument to a method)*", the method only has __a copy of the original object__. Operations performed on the object within the method have __no effect on the original object__ outside of the method.
 ```
 def change_name(name)
   name = 'bob'
@@ -478,11 +478,13 @@ In method object id = 67
 ```
 Here, `number` and `value` reference the same object despite the object being immutable. We can also see that `value` was not copied. Thus, Ruby is not using pass by value. It appears to be using *pass by reference*.
 
-The key here is that __pass by reference isn’t limited to mutating methods__. A non-mutating method can use pass by reference as well, so pass by reference can be used with immutable objects. There may be a reference passed, but the reference isn’t a guarantee that the object can be modified.
+The key here is that __pass by reference isn’t limited to mutating methods or mutable objects__. A non-mutating method can use pass by reference as well, so pass by reference can be used with immutable objects. There may be a reference passed, but the reference isn’t a guarantee that the object can be modified.
 
-__Assignment__ is the weird exception here. The key is to remember that variables and constants aren’t objects, but are *references to objects*. Assignment merely changes __which__ object is bound to a particular variable.
+__Assignment__ is the weird exception to the general 'pass by reference' strategy. The key is to remember that variables and constants aren’t objects, but are *references to objects*. Assignment merely changes __which__ object is bound to a particular variable. For __immutable objects and reassignment__, Ruby passes around __copies of the references__.
 
-While we can change which object is bound to a variable *inside* of a method, __we can’t change the binding of the original arguments__ through assignment. We can change the *objects* if the objects are *mutable*, but the __references themselves are immutable__ as far as the method is concerned. For assignment, Ruby is passes around __copies of the references__. 
+While we can change which object is bound to a variable *inside* of a method, __we can’t change the binding of the original arguments__. We can change the *objects* if the objects are *mutable*, but the __references themselves are immutable__ as far as the method is concerned. 
+
+Since pass by value (again, __variable reassignment and immutable objects__) passes copies of arguments into a method, Ruby appears to be making copies of the references, then passing those copies to the method. The method can use the references to modify the referenced object, but since the reference itself is a copy, the original reference cannot be changed.
 
 ### Immutability
 Methods can be either mutating or non-mutating. As you might expect, mutating methods change something; non-mutating methods do not. The object that may or may not be mutated is of concern when discussing whether a method is mutating or non-mutating. 
@@ -625,7 +627,7 @@ We should be able to tell what they do without having to refer to the code every
 ###### Methods should either return or produce a side effect
 A method should either return a value, or produce a side effect (e.g. printing something, mutating the caller), __not__ both. It makes our methods more difficult to reuse and interpret in the future. 
 
-###### Not mutating the caller during iteration
+###### Don't mutate the caller during iteration
 Don't mutate the caller during iteration (i.e. add or subtract elements). It's ok to mutate *collection elements* themselves, but not the *collection itself* while you're iterating through it.  
 
 ###### Don't variable shadow
