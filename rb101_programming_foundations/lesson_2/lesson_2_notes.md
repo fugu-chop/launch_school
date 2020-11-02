@@ -75,7 +75,7 @@ The `&&` and `||` operators exhibit a behavior called *short circuiting*, which 
 - The `||` will short circuit when it encounters the first `true` expression.
 
 ### What is truthiness?
-Truthiness differs from `true` in that Ruby considers more than the `true` object to be "truthy". In fact, Ruby is a very liberal language and *considers everything to be truthy other than `false` and `nil`*.
+Truthiness differs from `true` in that Ruby considers more than the `true` object to be "truthy". In fact, Ruby is a very liberal language and *considers everything to be truthy other than `false` and `nil`*. We can say that a *truthy object evaluates to `true` when used in a conditional.*
 
 This means that we can use *any expression in a conditional, or with logical operators*, and as long as it __doesn't__ evaluate to `false` or `nil`, it is considered true (even the integer `0`!). Note that an expression that Ruby considers true is __not the same as the `true` object__. This is what "truthiness" means. 
 
@@ -404,7 +404,7 @@ When dealing with objects passed into methods, we can either treat these argumen
 1. "references" to the original object; or
 2. "values", which are copies of the original
 
-In Ruby, when an object is passed to a *method call as an argument*, the parameter assigned to it acts as a *pointer to the original object*. Ruby __does not__ create a copy of the object for that method. The object that gets passed is a __reference__ to some object. 
+In Ruby, when an object is passed to a *method call as an argument*, the __parameter__ assigned to it acts as a *pointer to the original object*. Ruby __does not__ create a copy of the object for that method. The object that gets passed is a __reference__ to some object. 
 
 ###### Pass by value
 With pass by value, a copy of an object is created, and it is that copy that gets passed around. Since it is merely a copy, it is impossible to change the original object; any attempt to change the object just changes the copy and leaves the original object unchanged. 
@@ -423,9 +423,7 @@ jim
 ```
 The code example above has two different local variables named `name`. There is one scoped *within* the method, and there is one in the *main scope*. 
 
-This is __not__ variable shadowing, because the main scope variable is __not accessible to the method__. Within the method, we could have named the variable something other than `name`. We are only passing the __value__. 
-
-When we passed the `name` variable into the `change_name` method, it looks like the variable was *passed by value*, since re-assigning the variable only affected the *method-level variable*, and __not__ the *main scope variable*.
+This is __not__ variable shadowing, because the main scope variable is __not accessible to the method__. Within the method, we could have named the variable something other than `name`. When we passed the `name` variable into the `change_name` method, it looks like the variable was *passed by value*, since re-assigning the variable only affected the *method-level variable*, and __not__ the *main scope variable*.
 
 ###### Pass by reference
 With pass by reference, a *reference to an object is passed around*. This establishes an *alias between the argument and the original object*, just like we saw when we set `a = b`. Both the argument and object refer to the __same location in memory__. With pass by reference, if you modify the argument’s state, you also modify the original object.

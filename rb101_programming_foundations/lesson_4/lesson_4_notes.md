@@ -220,7 +220,7 @@ There are two return values that we need to be aware of here:
 1. the return value of the method; and 
 2. the return value of the block. 
 
-`any?` looks at the truthiness of the block's return value in order to determine what the method's return value will be. If the block returns a "truthy" value for any element in the collection, then the method will return `true`.
+`any?` looks at the truthiness of the *block's* return value in order to determine what the *method's* return value will be. If the block returns a "truthy" value for any element in the collection, then the method will return `true`.
 
 `Enumerable#all?` <br/>
 `all?` functions in a similar way to `any?`. It also looks at the truthiness of the block's return value, but the method only returns `true` if the block's return value in __every iteration is truthy__ (that is, not `false` or `nil`).

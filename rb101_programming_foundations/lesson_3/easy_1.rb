@@ -8,7 +8,6 @@ puts numbers
 puts 'I would expect the puts statement in this code to print out 1, 2, 2, 3, as .uniq is a non-mutating method. Puts formats the array into a string, which breaks it up into it\'s elements'
 
 # 2) Describe the difference between ! and ? in Ruby. And explain what would happen in the following scenarios.
-
 puts '! is a bang operator. It can make a non-mutating method into a mutating method, negate a boolean, as well as serve as a non-equality comparison operator. ? typically serves to indicate to a user that a method returns a boolean, but can also serve as a ternary operator.'
 
 # 2a) What is != and where should you use it? 

@@ -21,7 +21,7 @@ We can use the `=~` operator to see if we have a match in our regular expression
 "powerball" =~ /z/
 => nil
 ```
-This means that the first match that took place was at the fifth index of the string. Remember indices start counting from zero. Since 5 is a `truthy` value (i.e., in Ruby, 5 evaluates to true), we can use it as a boolean to check for matches.
+This means that the first match that took place was at the fifth index of the string. Remember indices start counting from zero. Since 5 is a `truthy` value (i.e. in Ruby, 5 evaluates to true), we can use it as a boolean to check for matches.
 ```
 def has_a_b?(string)
   if string =~ /b/

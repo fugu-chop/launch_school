@@ -39,7 +39,7 @@ To be even more precise:
 
 In our example above, we are using an argument to pass the word, or string of words, that we want to use in the `say` method definition. 
 
-When we pass those words into the method definition, they're assigned to the *local* variable `words` and we can use them however we please from within the method definition. Note that the words local variable is scoped at the *method definition level*; that is, you __cannot__ reference this local variable outside of the `say` method definition.
+When we pass those words into the method definition, they're assigned to the *local* variable `words` and we can use them however we please from within the method definition. Note that the `words` local variable is scoped at the *method definition level*; that is, you __cannot__ reference this local variable outside of the `say` method definition.
 
 ###### Describing what's happening
 Take this example:
