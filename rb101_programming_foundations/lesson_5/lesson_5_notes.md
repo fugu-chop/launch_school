@@ -106,13 +106,13 @@ end
 ```
 Since three of the arrays have the string `'a'` at their first index, these all come before the array that has the string `'b'` at its first index.
 
-You will have noticed that the sub-array that has `'b'` at its first index has an integer `2` at its second index. We already know that comparing an integer with a string will return `nil`, which will cause `sort` to throw an error. 
+You will have noticed that the sub-array that has `'b'` at its first index has an integer `2` at its second index. We already know that comparing an integer with a string will return `nil`, which will cause `sort` to raise an exception.
 
-In this case, since `sort` *did not need to compare the second item of that array* to be able to establish its order, the integer does not come into play here and so no error is thrown. 
+In this case, since `sort` *did not need to compare the second item of that array* to be able to establish its order, the integer does not come into play here and so no exception is raised. 
 
-There is another sub-array which contains an integer `['a', 'car', 'd', 3]`. In this case the integer __does__ come into play, but only in terms of *comparing the length of this array* with the array `['a', 'car', 'd']`. The integer __itself is not compared with a string__, so again no error is thrown.
+There is another sub-array which contains an integer `['a', 'car', 'd', 3]`. In this case the integer __does__ come into play, but only in terms of comparing the __length__ of this array with the array `['a', 'car', 'd']`. The integer __itself is not compared with a string__, so again no exception is raised.
 
-If the first item in that array had been an `'a'`, like the other arrays, then the integer would have come into play and an error would have been thrown.
+If the first item in that array had been an `'a'`, like the other arrays, then the integer would have come into play and an exception would have been raised.
 ```
 [['a', 'cat', 'b', 'c'], ['a', 2], ['a', 'car', 'd', 3], ['a', 'car', 'd']].sort
 
@@ -137,7 +137,7 @@ end
 
 => [[:Mike, 18], [:john, 25], [:Kate, 27]]
 ```
-`sort_by` __always returns an array__, even when called on a hash, so the result here is a new array with the key-value pairs as objects in nested arrays. If we need to convert this back into a hash we can call `Array#to_h` on it.
+`sort_by` __always returns an array__, even when called on a hash, so the result here is a __new__ array with the key-value pairs as objects in nested arrays. If we need to convert this back into a hash we can call `Array#to_h` on it.
 
 What if we want to order the hash by `name` rather than `age`? The `Symbol#<=>` documentation explains that the symbols are compared __after `to_s` is called on them__. By using `Symbol#<=>`, we are effectively comparing strings. 
 
@@ -195,7 +195,7 @@ arr
 
 => [[1, 3], [2]]
 ```
-The local variables `a` and `b` are pointing to Array objects. When we place the local variables as elements in an array, it looks like the same as adding the actual Array objects that they're pointing to into the array.
+The local variables `a` and `b` are pointing to Array objects. When we place the local variables as elements in an array, it looks the same as adding the actual Array objects that they're pointing to into the array.
 
 What happens if we modify `a` after placing it in `arr`?
 ```

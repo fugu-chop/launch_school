@@ -115,7 +115,7 @@ arr.fetch(-6)
 ```
 
 ###### Invalid Hash Keys
-`Hash` also has a `#fetch` method which can be useful when trying to disambiguate valid hash keys with a `nil` value from invalid hash keys.
+`Hash` also has a `#fetch` method which can be useful when trying to disambiguate valid hash __keys__ with a `nil` value from invalid hash keys.
 ```
 hsh = { :a => 1, 'b' => 'two', :c => nil }
 hsh[:c]
@@ -131,7 +131,7 @@ hsh.fetch('c')
 KeyError: key not found: "c"
 ```
 ### Conversion
-We can convert between strings and arrays using a number of library methods.
+We can convert between strings and arrays using a number of Core API methods.
 
 `String#chars` returns an __array__ of individual characters.
 ```
@@ -156,7 +156,7 @@ hsh.to_a
 ```
 `Array` has a `#to_h` method. When no block is given, the array must be an array of 2-element sub-arrays, where each sub-array is formed into a key-value pair in the new Hash.
 
-If a block is given, the results of the block on each element of the object will be used as pairs.
+If a block is given, the results of the block on each element of the object will be used as pairs. Note how we have to *wrap our key and value elements in an array*.
 ```
 a = [['foo', 'zero'], ['bar', 'one'], ['baz', 'two']]
 
@@ -168,15 +168,17 @@ a.to_h
 ```
 ### Element assignment
 ###### String element assignment
-We can use the element assignment notation of `String` in order to change the value of a specific character within a string by referring to its index. As mentioned in previous lessons, this is a __mutating method__. 
+We can use the element assignment notation of `String` in order to change the value of a specific character within a string by referring to its index. The element reassignment always returns the *assigned value*. This is a __mutating method__. 
 ```
 str = "Dobby's favorite color is blue"
 str[0] = 'B'
+=> "B"
+
 str
 => "Bobby's favorite color is blue"
 ```
 ###### Array element assignment
-We can assign elements of an array in the same way. This is a __mutating method__. 
+We can assign elements of an array in the same way. This is a __mutating method__ and the element reassignment __always__ returns the *assigned value*, even if the underlying array is *empty*.
 ```
 arr = [1, 2, 3, 4, 5]
 arr[0] += 1
@@ -184,12 +186,20 @@ arr[0] += 1
 
 arr
 => [2, 2, 3, 4, 5]
+
+test = []
+test[1] = 2
+=> 2
+
+test
+=> [nil, 2]
 ```
 ###### Hash element assignment
-Hash element assignment is not too dissimilar. The *hash key is used* instead of assigning a value using an index. This is a __mutating method__.
+Hash element assignment is not too dissimilar. The *hash key is used* instead of assigning a value using an index. This is a __mutating method__ and the element reassignment __always__ returns the *assigned value*.
 ```
 hsh = { apple: 'Produce', carrot: 'Produce', pear: 'Produce', broccoli: 'Produce' }
 hsh[:apple] = 'Fruit'
+=> "Fruit"
 
 hsh
 => { :apple => "Fruit", :carrot => "Produce", :pear => "Produce", :broccoli => "Produce" }
@@ -220,7 +230,7 @@ There are two return values that we need to be aware of here:
 1. the return value of the method; and 
 2. the return value of the block. 
 
-`any?` looks at the truthiness of the *block's* return value in order to determine what the *method's* return value will be. If the block returns a "truthy" value for any element in the collection, then the method will return `true`.
+`any?` looks at the truthiness of the *block's* return value in order to determine what the *method's* return value will be. If the *block* returns a "truthy" value for __any__ element in the collection, then the *method* will return `true`.
 
 `Enumerable#all?` <br/>
 `all?` functions in a similar way to `any?`. It also looks at the truthiness of the block's return value, but the method only returns `true` if the block's return value in __every iteration is truthy__ (that is, not `false` or `nil`).
@@ -236,7 +246,7 @@ end
 => true
 ```
 `Enumerable#each_with_index` <br/>
-`each_with_index` is nearly identical to `each`. Unlike `each`, `each_with_index` takes a second argument which represents the *index of each element*. Just like `each`, `each_with_index` always returns the *original calling collection*.
+`each_with_index` is nearly identical to `each`. Unlike `each`, `each_with_index` takes a second argument which represents the *index of each element*. Just like `each`, `each_with_index` always returns the __original calling collection__.
 ```
 [1, 2, 3].each_with_index do |num, index|
   puts "The index of #{num} is #{index}."
@@ -271,7 +281,7 @@ end
 ```
 In the above example, `array` is initialized to an empty array, `[]`. Inside the block, we can now manipulate `array`. In this case, we're just appending the current `num` into it if it's odd.
 
-Similar to each_with_index, the first block argument turns into an array when we invoke each_with_object on a hash.
+Similar to `each_with_index`, the first block argument turns into an array when we invoke `each_with_object` on a hash.
 ```
 { a: "ant", b: "bear", c: "cat" }.each_with_object([]) do |pair, array|
   array << pair.last
@@ -354,7 +364,7 @@ odd
 even
 => [2]
 ```
-Even if the collection is a hash, the return value of `partition` will always be an array.
+Even if the collection is a hash, the return value of `partition` will __always be an array__.
 ```
 long, short = { a: "ant", b: "bear", c: "cat" }.partition do |key, value|
   value.size > 3
