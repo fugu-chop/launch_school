@@ -552,7 +552,7 @@ Note that setter methods for *class instance variables and indexed assignment* a
 
 Many, but not all, methods that mutate their caller use `!` as the last character of their name. However, this is not guaranteed to be the case. For instance, `String#concat` is a mutating method, but it does not include a `!`.
 
-###### Indexed assignment is mutating
+###### Element assignment is mutating
 ```
 str[3] = 'x'
 array[5] = Person.new

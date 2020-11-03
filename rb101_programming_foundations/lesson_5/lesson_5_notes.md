@@ -235,7 +235,23 @@ Both of these methods create a __shallow copy__ of an object. This means that on
 ```
 arr1 = ["a", "b", "c"]
 arr2 = arr1.dup
+
+arr1.reverse!
+=> ["c", "b", "a"]
+
+arr2
+=> ["a", "b", "c"]
+```
+Remember, the __inner objects__ of the collections are __shared__. Even if you mutate that object by referencing it from within a particular array or other collection, it is the __inner object__ you are affecting rather than the *collection*. In the examples above, mutating methods were called on the object __within__ the array rather than the array itself. 
+```
+arr1 = ["a", "b", "c"]
+arr2 = arr1.dup
+
+arr1.reverse!
+=> ["c", "b", "a"]
+
 arr2[1].upcase!
+=> "B"
 
 arr2
 => ["a", "B", "c"]
@@ -255,8 +271,6 @@ arr2
 arr1
 => ["cba", "def"]
 ```
-Remember, the __inner__ objects of the collections are __shared__. Even if you mutate that object by referencing it from within a particular array or other collection, it is the __inner object__ you are affecting rather than the *collection*.
-
 Consider the following examples
 ```
 arr1 = ["a", "b", "c"]
@@ -283,7 +297,9 @@ arr1
 arr2
 => ["A", "B", "C"]
 ```
-In the first example `arr2` is changed but `arr1` is not. Here, we call the destructive method `Array#map!` on `arr2`; this method modifies the *array*, replacing each element of `arr2` with a new value. Since we are __changing the Array, not the elements within it__, `arr1` is left unchanged. We would have changed the *elements* within the array (and mutated `arr1`) if we had called.
+In the first example `arr2` is changed but `arr1` is not. Here, we call the destructive method `Array#map!` on `arr2`; this method modifies the *array*, replacing each element of `arr2` with a new value. Since we are __changing the Array, not the elements within it__, `arr1` is left unchanged.
+
+We would have changed the *elements* within the array (and mutated `arr1`) if we had called:
 ```
 arr2.map do |char|
   char.upcase!
@@ -315,15 +331,18 @@ arr
 
 => ["a", "b", "cd"]
 ```
-The main difference between `dup` and `clone` is that `clone` preserves the frozen state of the object.
+The main difference between `dup` and `clone` is that `clone` __preserves the frozen state__ of the object.
 ```
 arr1 = ["a", "b", "c"].freeze
 arr2 = arr1.clone
-arr2 << "d"
 
+arr2 << "d"
+=> RuntimeError: can't modify frozen Array
+
+arr2.reverse!
 => RuntimeError: can't modify frozen Array
 ```
-`dup` doesn't preserve the frozen state of the object.
+`dup` __doesn't__ preserve the frozen state of the object.
 ```
 arr1 = ["a", "b", "c"].freeze
 arr2 = arr1.dup
