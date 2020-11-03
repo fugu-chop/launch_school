@@ -125,7 +125,7 @@ a
 => [1, 4, 9, 16]
 ```
 ### Select
-If we want to filter specific elements from an array, we can use the `select` method. This method iterates over an array and *returns a new array* that includes items based on the *truthiness* of the block's return value.
+If we want to filter specific elements from an array or hash, we can use the `select` method. This method iterates over an array or hash and *returns a new collection* (either hash or array) that includes items based on the *truthiness* of the block's return value.
 
 To perform selection, `select` evaluates the return value of the block for each iteration. 
 
@@ -220,7 +220,11 @@ a.join('-')
 ```
 ### Each v Map
 ###### `each`
-The `each` method works on objects that allow for iteration and is commonly used along with a block. If given a block, `each` runs the code in the block once for every element in the collection and *returns the collection it was invoked on*. It __does not care (or do anything) about the return value of the block__. If no block is given, it returns an *Enumerator* object. 
+The `each` method works on objects that allow for iteration and is commonly used along with a block. 
+
+If given a block, `each` runs the code in the block once for every element in the collection and *returns the collection it was invoked on*. For each iteration, `each` sends the value of the current element to the block in the form of an *argument*. 
+
+It __does not care (or do anything) about the return value of the block__. If no block is given, it returns an *Enumerator* object. 
 
 Let's walk through what happens when `.each` is called:
 ```
@@ -232,27 +236,31 @@ end
 3
 => [[1, 2], [3, 4]]
 ```
-The `Array#each` method is being called on the multi-dimensional array `[[1, 2], [3, 4]]`. Each inner array is passed to the block in turn and assigned to the local variable `arr`. The `Array#first` method is called on `arr` and returns the object at index 0 of the current array - in this case the integers 1 and 3, respectively. 
+The `Array#each` method is being called on the multi-dimensional array `[[1, 2], [3, 4]]`. Each inner array is passed to the block in turn and assigned to the local variable `arr`. The `Array#first` method is called on `arr` and returns the object at index `0` of the current array - in this case the integers `1` and `3`, respectively. 
 
-The `puts` method then outputs a string representation of the integer. `puts` returns `nil` and, since this is the last evaluated statement within the block, the return value of the block is therefore `nil`. `.each` doesn't do anything with this returned value though, and since the return value of `each` is the calling object - in this case the nested array `[[1, 2], [3, 4]]` - this is what is ultimately returned.
+The `puts` method then outputs a string representation of the integer. `puts` returns `nil` and, since this is the last evaluated statement within the block, the return value of the block is therefore `nil`. `.each` *doesn't do anything with this returned value* though, and since the return value of `each` is the calling object - in this case the nested array `[[1, 2], [3, 4]]` - this is what is ultimately returned.
 
-If we want to iterate through each element of the array, but mutate an object within each element, we need to reassign those mutated objects.
+If we want to iterate through each element of the array, but mutate an object within each element, we need to reassign those mutated objects within the method or block.
 ```
 def word_cap(string)
   new_arr = []
   string_arr = string.downcase.split
   string_arr.each do |word|
-    word[0] = word[0].upcase!
+    word[0] = word[0].upcase
   end
   string_arr.join(' ')
 end
 ```
 ###### `map`
-`map` also works on objects that allow for iteration. Like `each`, when given a block it invokes the given block once for every element in the collection. 
+`map` also works on objects that allow for iteration. Like `each`, when given a block it invokes the given block once for every element in the *collection*. 
 
-Where it really differs from `each` is the __returned value__. Unlike `each`, `map` performs transformation based on the __return value of the block__. This means that if we write some code in the block that's not a transformation instruction (e.g. it *returns* a boolean instead), `map` will evaluate the *truthiness* of the statement, meaning an *array of booleans*. Alternatively, if the last line of code to be evaluated in the block is a `puts` statement, a new array of `nil` will be returned (since `puts` returns `nil`).
+Where it really differs from `each` is the __returned value__. Unlike `each`, `map` performs transformation based on the __return value of the block__. `map` takes the return value and places it in a __new array__ (*even if called on a hash*). This process is repeated for each element in the original collection. 
 
-`map` __creates and returns a new array__ containing the values returned by the block. This makes it useful for transforming an array __as a whole__, rather than iterating through individual elements within an array (which `each` is better for). It also lets us save the result directly to a variable. 
+This means that if we write some code in the block that's not a transformation instruction (e.g. it *returns* a boolean instead), `map` will evaluate the *truthiness* of the statement, meaning an *array of booleans*. 
+
+Alternatively, if the last line of code to be evaluated in the block is a `puts` statement, a new __array__ of `nil` will be returned (since `puts` returns `nil`).
+
+`map` __creates and returns a new array__ containing the values returned by the block. This makes it useful for transforming an object __as a whole__, rather than iterating through individual elements within an array (which `each` is better for). It also lets us save the result directly to a variable. 
 
 If no block is given, it also returns an *Enumerator* object. 
 

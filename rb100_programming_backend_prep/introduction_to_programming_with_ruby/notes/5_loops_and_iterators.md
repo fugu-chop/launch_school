@@ -125,7 +125,7 @@ end
 # Note that the actual loop above doesn't return anything, since it's just put statements.
 ```
 ### For loops
-`for` loops are used to loop over a collection of elements. `for` loops have a definite end since it's looping over a finite number of elements. 
+`for` loops are used to loop over a collection of elements. `for` loops have a definite end since it's looping over a finite number of elements. As with the `.each` method, the return value of a `for` loop is simply the *object it was called on*.
 
 It begins with the `for` reserved word, followed by a variable, then the `in` reserved word, and then a collection of elements. 
 ```
@@ -169,6 +169,7 @@ end
 Note how if you place the `next` reserved word in a loop, it will jump from that line to the next loop iteration without executing the code beneath it. If you place the `break` reserved word in a loop, it will exit the loop immediately without executing any more code in the loop.
 
 ### Iterators
+###### Each
 Iterators are methods that naturally loop over a given set of data and allow you to operate on each element in the collection.
 ```
 names = ['Bob', 'Joe', 'Steve']
@@ -179,11 +180,13 @@ Joe
 Steve
 => ['Bob', 'Joe', 'Steve']
 ```
-We have called the `each` method using the dot operator (`.`) on our array. 
+We have called the `each` method using the dot operator (`.`) on our array. The `each` method is functionally equivalent to using `loop` and represents a simpler way of accomplishing the same task. 
 
 What this method does is loop through each element in our array, in order, starting from 'Bob'. Then it begins executing the code within the block. The block's starting and ending points are defined by the curly braces `{ }`. 
 
-Each time we iterate over the array, we need to assign the value of the element to a variable. In this example we have named the variable `name` and placed it in between two pipes (`|name|`). After that, we write the logic that we want to use to operate on the variable, which represents the current array element. Here, the *original array* is returned after the `puts` statements.
+Each time we iterate over the array, we need to assign the value of the element to a variable. In this example we have named the variable `name` and placed it in between two pipes (`|name|`). After that, we write the logic that we want to use to operate on the variable, which represents the current array element. Here, the *original array* is returned after the `puts` statements. 
+
+An `.each` method invoked with a block will return the __original__ object it was called on, since the `each` is technically the last line of code (remember the block *acts like an argument* to the `each` method). It __does nothing__ with any values returned by the block. 
 
 ### Blocks
 A block is just some lines of code ready to be executed. When working with blocks there are two styles you need to be aware of. 

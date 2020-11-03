@@ -321,6 +321,19 @@ When called on a hash, `include?` only checks the *keys*, not the values.
 ```
 In fact, `Hash#include?` is essentially an alias for `Hash#key?` or `Hash#has_key?`. In practice, Rubyists would usually prefer these methods over `include?` as they make the intention more explicit.
 
+`Enumerable#reject` <br/>
+`reject` will return a __new__ collection that contains elements where the evaluation criteria are returned as `false` or `nil` (falsy).
+```
+1, 2, 3].reject do |num|
+  puts num
+end
+
+# puts returns nil, and nil is falsy
+1 
+2
+3
+=> [1, 2, 3]
+```
 `Enumerable#partition` <br/>
 `partition` divides up elements in the current collection into two collections, depending on the block's return value.
 ```
