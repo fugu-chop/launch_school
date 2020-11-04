@@ -312,7 +312,9 @@ end
 puts a
 puts b
 ```
-On line 5 of this example, we are assigning the integer `5` to the local variable `a` passed in as a __parameter__ of the `do..end` block and the value of our local variable `a` initialised in outer scope remains `4`.
+On line 5 of this example, we are assigning the integer `5` to the local variable `a` from the __parameter__ of the `do..end` block and the value of our local variable `a` initialised in outer scope remains `4`.
+
+Ruby will go looking for the definition for `a` from the inner most scope (the local block scope) and keep going outwards. In this case, it is able to find a definition of `a` in the local block scope - the `#Integer` object that the `times` method is invoked on.
 
 ### Method definitions & scope
 Reassignment, including assignment operators like `+=`, `=`, do not mutate a variable in the context of a *method definition*; instead, it binds the variable to a new object. That is, the assignment operator sets the variable to point to a different object (you can verify this by look at an object's `object_id`).

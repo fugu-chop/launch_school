@@ -109,8 +109,7 @@ end
 ```
 ### Calling a method
 There are two ways to call methods that we will discuss. 
-- The `some_method(obj)` format is when you send *arguments to a method call*; in the previous example, we are passing an argument to the `obj` parameter in the `some_method` method. def some_method(number)
-  number = 7 # this is implicitly returned by the method, regardless of what we put in as a number
+- The `some_method(obj)` format is when you send *arguments to a method call*; in the previous example, we are passing an argument to the `obj` parameter in the `some_method` method. 
 - Sometimes, you will see methods called with an explicit caller, like this `a_caller.some_method(param)`. For now it's best to think of the previous code as `some_method` modifying `a_caller`.
 
 ### Mutating the caller
@@ -148,7 +147,7 @@ mutate(a)
 p "After mutate method: #{a}"
 => "After mutate method: [1, 2]"
 ```
-We have permanently modified the local variable `a` by passing it to the mutate method, even though `a` is outside the method definition's scope. This is because the `pop` method mutates the caller (the array).
+We have permanently modified the local variable `a` by passing it to the `mutate` method, even though `a` is outside the method definition's scope. This is because the `pop` method mutates the caller (the array).
 
 A note on terminology:
 ```
