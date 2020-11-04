@@ -2,6 +2,7 @@
 - [1st, Sun](#011120-sun)
 - [2nd, Mon](#021120-mon)
 - [3rd, Tue](#031120-tue)
+- [4th, Wed](#041120-wed)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -55,3 +56,38 @@ I attended another study session, where I did a lot more exam style explaining o
 There's still a few concepts I had trouble explaining, like how `select` and `map` evaluate their blocks and what they return, as well as what happens to objects when they are not assigned to variables (the objects simply get lost if they're not returned). Nonetheless, I feel decent about my performance, and the TA seemed reasonably happy with my explanations. 
 
 I'm almost finished looking over my notes. In the coming days, I'll be seeking to practice my explanations of code. I am not sure whether I'll be ready to take the written assessment by this weekend - I'll just play it by ear and not cause myself undue pressure. 
+
+##### 04/11/20 (Wed)
+__*Concepts covered*__<br/>
+- RB100 Revision
+  - Variables, Methods
+- RB101 Revision
+  - Lesson 2, 5, 6
+  - Lesson 5 Practice Problems
+  - Quiz 5
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I still have some way to go in properly interpret `sort`. I have to remember that a `-1` return value means the first object is __smaller__ than the second one, and will appear __after__ the second item in the returned collection. 
+
+Also, I found I had some confusion with *variables as pointers*. Again, we __don't__ pass variables into methods - we pass the __objects__ they are referencing. If we pass a variable as an argument to a method, we are really passing a reference to the object, not the variable itself. 
+
+Therefore, in the context of a collection, if we pass in a variable *as an argument* and mutate the underlying object within the context of the array, the object referenced will be mutated, but the object the __variable__ is referencing most likely won't change. 
+```
+a = 'hi'
+english_greetings = ['hello', a, 'good morning']
+
+greetings = {
+  french: ['bonjour', 'salut', 'allo'],
+  english: english_greetings,
+  italian: ['buongiorno', 'buonasera', 'ciao']
+}
+
+greetings[:english][1] = 'hey'
+
+# We reassign the object in the array and mutate the array, but never explicitly modify the variable through reassignment.
+puts a # prints 'hi', returns nil. 
+```
+I feel like I am ready to make a start on actual practice problems (i.e. explaining code) tomorrow. 
