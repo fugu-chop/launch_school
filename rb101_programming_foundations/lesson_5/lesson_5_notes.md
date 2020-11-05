@@ -229,7 +229,7 @@ In the first example, the object is being modified through `a`. In the second ex
 ### Shallow copy
 Ruby has methods that allow us to copy collections - `dup` and `clone`.
 
-Both of these methods create a __shallow copy__ of an object. This means that only the object that the method is called on is copied. If the object __contains other objects__ - like a nested array - then those objects will be __shared__, not copied. This has major impact to nested collections.
+Both of these methods create a __shallow copy__ of an object. This means that only the object that the method is called on is copied. If the object __contains other objects__ - like a nested array - then those objects will be __shared__, not copied. This has a major impact on nested collections.
 
 `dup` allows objects within the copied object to be modified.
 ```
@@ -242,7 +242,9 @@ arr1.reverse!
 arr2
 => ["a", "b", "c"]
 ```
-Remember, the __inner objects__ of the collections are __shared__. Even if you mutate that object by referencing it from within a particular array or other collection, it is the __inner object__ you are affecting rather than the *collection*. In the examples above, mutating methods were called on the object __within__ the array rather than the array itself. 
+Remember, the __inner objects__ of the collections are __shared__. Even if you mutate that object by referencing it from within a particular array or other collection, it is the __inner object__ you are affecting rather than the *collection*. 
+
+In the example below, mutating methods were called on the object __within__ the array rather than the array itself. Note that __mutating__ the object is different from __reassigning__ the object! 
 ```
 arr1 = ["a", "b", "c"]
 arr2 = arr1.dup
@@ -257,7 +259,17 @@ arr2
 => ["a", "B", "c"]
 
 arr1
-=> ["a", "B", "c"]
+=> ["c", "B", "a"]
+
+arr2[0] = 'z'
+=> 'z'
+
+# Object reassignment is different from a mutating method in the context of a shallow copy
+arr1
+=> ["c", "B", "a"]
+
+arr2
+=> ["z", "B", "c"]
 ```
 `clone` works the same way.
 ```

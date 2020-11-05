@@ -131,7 +131,7 @@ To perform selection, `select` evaluates the return value of the block for each 
 
 When evaluating the block's return value, `select` __only cares about its truthiness__. If the return value of the block is "truthy", then the element during that iteration will be selected. If the return value of the block is "falsey" then the element will not be selected. 
 
-When an element is selected, it's __placed in a new collection__. 
+When an element is selected, it's __placed in a new collection__. If no element is truthy, an *empty collection* will be returned.
 
 Again, we can use the bang operator (`!`) to make these changes permanent. 
 ```
@@ -240,10 +240,9 @@ The `Array#each` method is being called on the multi-dimensional array `[[1, 2],
 
 The `puts` method then outputs a string representation of the integer. `puts` returns `nil` and, since this is the last evaluated statement within the block, the return value of the block is therefore `nil`. `.each` *doesn't do anything with this returned value* though, and since the return value of `each` is the calling object - in this case the nested array `[[1, 2], [3, 4]]` - this is what is ultimately returned.
 
-If we want to iterate through each element of the array, but mutate an object within each element, we need to reassign those mutated objects within the method or block.
+If we want to iterate through each element of the array, but mutate an object within each element, we need to reassign those mutated objects within the method or block. This is probably most applicable for hashes, since `map` will return a new array, even when called on a hash. Otherwise, it's probably best to use `map` for these situations.
 ```
 def word_cap(string)
-  new_arr = []
   string_arr = string.downcase.split
   string_arr.each do |word|
     word[0] = word[0].upcase
@@ -265,14 +264,17 @@ Alternatively, if the last line of code to be evaluated in the block is a `puts`
 If no block is given, it also returns an *Enumerator* object. 
 
 ### Multiple Assignment
-When an array is assigned to two variables on the same line, *each element of that array gets assigned to one of the variables*. This type of assignment, where we assign more than one value on the same line, is called __multiple assignment__, which uses the principle of *array decomposition*.
+When an array is assigned to two or more variables on the same line, *each element of that array gets assigned to one of the variables*. This type of assignment, where we assign more than one value on the same line, is called __multiple assignment__, which uses the principle of *array decomposition*.
 ```
-first, second = ['uno', 'dos']
-=> ["uno", "dos"]
+first, second, third = ['uno', 'dos', 'tres']
+=> ["uno", "dos", "tres"]
 
 first
 => "uno"
 
 second
 => "dos"
+
+third
+=> "tres"
 ```
