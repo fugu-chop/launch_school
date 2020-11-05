@@ -3,6 +3,7 @@
 - [2nd, Mon](#021120-mon)
 - [3rd, Tue](#031120-tue)
 - [4th, Wed](#041120-wed)
+- [5th, Thu](#051120-thu)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -91,3 +92,16 @@ greetings[:english][1] = 'hey'
 puts a # prints 'hi', returns nil. 
 ```
 I feel like I am ready to make a start on actual practice problems (i.e. explaining code) tomorrow. 
+
+##### 05/11/20 (Thu)
+__*Concepts covered*__<br/>
+- RB100 Revision
+  - Arrays
+- RB101 Revision
+  - Lesson 5
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+Writing these code summaries is honestly exhausting. I have to be so precise in the language I use, without trying to go berserk explaining absolutely every possible detail (unfortunate tendency of mine). I think I am honestly fine for time, it's just being precise with my language. 
