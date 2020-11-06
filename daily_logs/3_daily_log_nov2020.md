@@ -4,6 +4,7 @@
 - [3rd, Tue](#031120-tue)
 - [4th, Wed](#041120-wed)
 - [5th, Thu](#051120-thu)
+- [6th, Fri](#061120-fri)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -99,9 +100,26 @@ __*Concepts covered*__<br/>
   - Arrays
 - RB101 Revision
   - Lesson 5
+- RB109 Preparation
+  - Practice Problems
 
 __*Time spent*__<br/>
 121 minutes
 
 __*Thoughts*__<br/>
 Writing these code summaries is honestly exhausting. I have to be so precise in the language I use, without trying to go berserk explaining absolutely every possible detail (unfortunate tendency of mine). I think I am honestly fine for time, it's just being precise with my language. 
+
+##### 06/11/20 (Fri)
+__*Concepts covered*__<br/>
+- Blog Post reading
+  - Advice for Ruby Programming Foundations Written Assessment (Part 1-4)
+- RB109 Preparation
+  - Practice Problems
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+Reading the blog posts helps me reduce some of my self-doubt about the language I'm using in my answers. I'll walk back my previous assertion that I should be fine for time. I think there are time savings I can achieve by just being more familiar with specific phrases. 
+
+Writing about code is certainly less fun that writing code. I find myself currently unable to do more than 30 minutes at a time - it is just so boring. I can see why the developers at work aren't a big fan of writing documentation. I'm kind of dreading tomorrow - 4 hours of writing about code and being super precise sounds incredibly draining. 
