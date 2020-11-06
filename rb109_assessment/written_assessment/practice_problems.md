@@ -112,3 +112,147 @@ Also note in our case, the `+=` code is syntactical sugar for `sum = sum + arr[c
 On `line 8`, we reassign the local variable `counter` to the value of the integer object `counter` is referencing plus `1`. On `line 9` We break from the loop, if the value of the object `counter` is referencing is equal to the return value of the `size` method called on the object the local variable `arr` is referencing. 
 
 Finally, on `line 10`, we pass the `sum` variable (which references the integer object `10`) as an argument to the string object `"Your total is #{sum}"` via string interpolation. This string object is then passed to the `puts` method, which will output `"Your total is 10"` and return `nil`, since `puts` always returns `nil`. 
+
+*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+a = ​'Bob'
+5​.times ​do​ |x| 
+  a = ​'Bill'
+end
+
+p a
+```
+On `line 1`, we initialize a local variable `a` and assign it to the string object `'Bob'`. On `line 2`, we invoke the `times` method on the object integer `5`, and pass a block to the `times` method (denoted by the `do..end` reserved words immediately after the method invocation). The block takes a single parameter, `x`. 
+
+On `line 3`, the local variable `a` initialised in the outer scope is reassigned to the string object `'Bill'`. This occurs `5` times, on account of the `times` method executing the block 5 times. After the 5th iteration, the `times` methods returns the object it was called on - in this case, the integer object `5`. 
+
+On `line 6`, we pass the local variable `a` as an argument to the `p` method. This will output and return the string object `'Bill'`. This is because local variables initialised outside of a block are accessible within the block, allowing the reassignment of local variable `a` within the block. 
+
+*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+animal = ​"dog"
+loop ​do​ |_| 
+  animal = ​"cat" 
+  var = ​"ball" 
+  ​break
+end
+
+puts animal
+puts var
+```
+On `line 1`, we initialise a local variable `animal` and assign it to the string object `'dog'`. On `line 2`, we call the `loop` method, passing in a block as an argument (the block is denoted by the `do...end` reserved words immediately following the method call). 
+
+On `line 3`, the local variable `animal` initialised outside of the block is reassigned to the string object `'cat'`. This is possible because the block scope can access variables initialised outside of it. On `line 4`, a local variable `var` is initialised within the block, and assigned to the string object `'ball'`. 
+
+On `line 5`, we break out of the loop using the `break` reserved word. 
+
+On `line 8`, we pass the local variable `animal` as an argument to the `puts` method, which outputs `'dog'` and returns `nil`. On `line 9`, as we attempt to pass the `var` variable as an argument to the `puts` method, we will get a `NameError`, as variables initialised within a block scope cannot be accessed outside of that block. 
+
+*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+a = ​4
+b = ​2
+
+2​.times ​do​ |a| 
+  a = ​5
+  puts a
+end
+
+puts a
+puts b
+```
+On `line 1`, we initialise a local variable `a`, and assign it to the integer object `4`. We initialise a local variable `b` on `line 2`, assigning it to the integer object `2`. 
+
+On `line 4`, we call the `times` method on the integer object `2`, passing in a block as an argument (denoted by the `do...end` reserved words immediately following the method invocation). On `line 5`, the local variable `a` passed by the block parameter `a` is assigned to the integer object `5`. The local variable `a` referencing the integer `4` cannot be accessed by the block, as variable shadowing occurs. 
+
+Variable shadowing prevents an inner scope from accessing variables initialised outside of it when the block parameter is given the same name as the local variable that is being passed to it as an argument. On `line 5`, passing the local variable `a` initialised in the block scope to the `puts` method will output `5` and return `nil`. `Lines 5-6` will be executed twice, since the integer object `2` on which `times` was called on determines how many times the block will be executed. 
+
+Once the second execution finishes, the `times` method will return the object it was called on (the integer object `2`). 
+
+On `line 9`, we pass in the local variable `a` to the `puts` method, which will output the string object `'5'` and return `nil`, due to variable shadowing interfering with the attempted variable reassignment in the block. 
+
+On `line 10`, we pass in the local variable `b` to the `puts` method, which will output a string object `'2'` and return `nil` (since `puts` always returns `nil`). 
+
+*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+n = ​10 
+
+1​.times ​do​ |n|
+  n = ​11
+end
+
+puts n
+```
+On `line 1`, we initialise a local variable `n` and assign it to the integer object `10`. On `line 2`, we call the `times` method on the integer object `1`, and pass in a block as an argument to the `times` method. The `do...end` reserved words immediately following the `times` method invocation indicate that this is a block. 
+
+On `line 4`, a local variable `n` is passed by the block parameter `n` assigned to the integer object `11`. The local variable `n` in the outer scope is __not__ reassigned, as variable shadowing occurs. Variable shadowing stops the inner scope of the block accessing local variables initialised outside of the block scope when the block parameter has the same name as the local variable outside of the inner scope. 
+
+The `times` method executes once, since the number of times the method will execute the block depends on the integer object on which it is called. After `line 4` is executed, the `times` method will return `1`, the integer object on which it was called. 
+
+Finally, on `line 7`, we pass the local variable `n` as an argument to the `puts` method, which will output the string object `'10'` (no reassignment occurs in the block scope due to variable shadowing) and return `nil` (the `puts` method always returns `nil`). 
+
+*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+animal = ​"dog"
+
+loop ​do​ |animal| 
+  animal = ​"cat" 
+  ​break
+end
+
+puts animal
+```
+On `line 1`, we initialise a local variable `animal` and assign a string object, `'dog'` to it. On `line 3`, we call the `loop` method and pass a block that takes a parameter as an argument. On `line 4`, the local variable `animal` is passed by the block parameter `animal` and assigned to the string object `'cat'`. The local variable `animal` initialised outside of the block is __not__ reassigned due to variable shadowing. 
+
+Variable shadowing stops the inner scope from accessing local variables initialised outside of the block when the block parameter has the same name as the local variable initialised outside of the block. On `line 5`, the `break` reserved word exits the loop. Once the loop is finished executing, it returns `nil`, since there is no explicit `return` in this loop, `break` is the expression that gets returned, which returns `nil`. 
+
+On `line 8`, we pass the local variable `animal` (which still references the string object `'dog'`) to the `puts` method, which will output the string object `'dog'` and return `nil` (since `puts` always returns `nil`). 
+
+*What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a` and `b`?*
+```
+a = ​"hi there"
+b = a
+a = ​"not here"
+```
+On `line 1`, we initialise a local variable `a` and assign a string object `'hi there'` to it. This will also return the string object `'hi there'`. On `line 2`, we initialise a local variable `b`, and assign it to the same object that the local variable `a` is referencing (the string object `'hi there'`). This will also return `'hi there'`. 
+
+On `line 3`, we reassign the local variable `a` to reference a different string object. The local variable `b` will return `'hi there'`, as variables are references to objects, and not references to variables. 
+
+*What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a` and `b`?*
+```
+a = ​"hi there" 
+b = a
+a << ​", Bob"
+```
+On `line 1`, we initialise a local variable `a`, and assign the string object `'hi there'` to it. On `line 2`, we initialise the local variable `b`, and since variables are pointers to objects, we assign the same string object that the local variable `a` was pointing to to `b` (`'hi there'`). 
+
+On `line 3`, we use the shovel operator to append the string object `', Bob'` to the string object that local variable `a` was pointing to (`'hi there'`). The shovel operator is destructive, and so local variable `a` will return `'hi there, Bob'`. Local variable `b` will also return `'hi there, Bob'`, since the shovel operator is a destructive method, and does not result in reassignment of the local variable `a` to a different object. 
+
+*What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a`,`b` and `c`? What happens if the last line was `c = a.uniq!`?*
+```
+a = [​1​, ​2​, ​3​, ​3​]
+b = a
+c = a.uniq
+```
+On `line 1`, we initialise the local variable `a`, and assign an array object to it, containing 4 elements. On `line 2`, we initialise the local variable `b` and since variables are references to objects, `b` is assigned to the same array object that the local variable `a` is pointing towards. 
+
+On `line 3`, the local variable `c` is initialised, and assigned to the return value of calling the `uniq` method on `a`, which will be `[1, 2, 3]`. Therefore, the local variables `a` and `b` will return `[1, 2, 3, 3]`, while `c` will return `[1, 2, 3]`, as the `uniq` method is non-destructive, and the object returned by `a.uniq` is different to the object `a` is referencing. 
+
+If the last line was `c = a.uniq!`, then local variables `a`, `b` and `c` would all return `[1, 2, 3]`. This is because `uniq!` is a destructive method, altering the object, rather than creating a new object. This means that `a`, `b` and `c` are all pointing towards the same object. 
+
+*What does the following code return? What does it output? Why? What concept does it demonstrate? What is `a`? What if we called `map!` instead of `map`?*
+```
+def​ ​test​(b)
+  b.map! { |letter| ​"I like the letter: ​#{letter}​"​ }
+end
+
+a = [​'a'​, ​'b'​, ​'c'​] 
+test(a)
+```
+On `lines 1-3`, we are defining the `test` method, with a single parameter (`b`). On `line 5`, we initialise the local variable `a` and assign it to an array object, containing three string object elements. On `line 6`, we pass in the local variable `a` (which serves as a reference to an array object) as an argument to the `test method`. 
+
+On `line 2`, the `map` method is called on the array object referenced by the local variable `a`, which has been passed through the method parameter `b`. The `map` method is invoked with a block (signified by the `{}` immediately following the method invocation). The `map` method will return a new array object whose contents depend on the return value of the block. 
+
+As there is no explicit `return` in this method definition, Ruby will return the last expression evaluated. In this case, the `map` method is the last expression, which will return `['I like the letter: a', 'I like the letter: b', 'I like the letter: c']`. This is the returned object from the `test(a)` method call on `line 6`. The local variable `a` is still the array object `['a', 'b', 'c']`, as the `map` method returns a new object. 
+
+If we had used the `map!` instead of `map`, `test(a)` and `a` would both return `['I like the letter: a', 'I like the letter: b', 'I like the letter: c']`. This is because `map!` is a mutating method. Instead of creating a new array object with the returned values of the block like the `map` method would, it will reassign the values within the original `['a', 'b', 'c']` array to the values returned by the block. 
