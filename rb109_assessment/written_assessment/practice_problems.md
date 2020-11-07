@@ -245,7 +245,7 @@ If the last line was `c = a.uniq!`, then local variables `a`, `b` and `c` would 
 *15) What does the following code return? What does it output? Why? What concept does it demonstrate? What is `a`? What if we called `map!` instead of `map`?*
 ```
 def​ ​test​(b)
-  b.map! { |letter| ​"I like the letter: ​#{letter}​"​ }
+  b.map { |letter| ​"I like the letter: ​#{letter}​"​ }
 end
 
 a = [​'a'​, ​'b'​, ​'c'​] 
@@ -549,3 +549,114 @@ On `line 4`, we initialise a local variable `names`, and assign an array object 
 As `line 2` is the last expression evaluated in this method, and there is no explicit `return`, the array object `['bob', 'kim', 'jim']` is what will be returned from the method call on `line 5`. 
 
 Finally, we call the `puts` method on `line 7`, passing in the `names` local variable as an argument. This will output `'bob', 'kim', 'jim'` on separate lines, and return `nil` (since `puts` always returns `nil`). The array object referenced by `names` was mutated by the shovel operator on `line 2`, and hence a new array object was __not__ created. 
+
+*33) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+array = [​1​, ​2​, ​3​, ​4​, ​5​]
+
+array.select ​do​ |num| 
+  puts num ​if​ num.odd?
+end
+```
+On `line 1`, we initialise a local variable `array` and assign it to an array object, containing five integer object elements. 
+
+On `line 3`, we call the `.select` method on the local variable `array` passing in a block as an argument (as denoted by the `do..end` reserved words immediately following the `select` method invocation). This block has single parameter, `num`. 
+
+The `.select` methods returns a new array object based on the truthiness of the returned value of the block. In this example on `line 2`, we call the `.odd?` method on each array element passed to the block. Based on whether the element is evaluated as true in the `if` conditional (i.e. whether the integer object passed to the block is odd), the element will be passed as an argument to the `puts` method, which will output that element as a string and return `nil`. 
+
+The `select` method will output `1`, `2`, `3` as string objects, each on a new line. Since the `.select` method return a new array based on truthiness, a new empty array will be returned, as when the block evaluates to false, it is not passed to the `puts` method as an argument, and when block evaluates to true, `puts` always returns `nil` (which is __not__ truthy). 
+
+*34) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+arr = [​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​] 
+arr.select { |n| n.odd? }
+```
+On `line 1`, the local variable `arr` is initialised and assigned to an array object, with ten integer objects.
+On `line 2`, we call the `.select` method on the array object referenced by `arr`, with a block (as denoted by `{}` immediately following the `select` method call). This block is passed as an argument to the `select` method. The `select` method returns a new array object that is populated based on the truthiness of the return value of the block. 
+
+In this case, each element of the array object is passed to the block parameter `n`, which then passes the element to the block local variable `n`. The `.odd?` method is then called on the element, which evaluates whether the element passed to it is odd (returns `true` if odd). In this example, this will return a new array object `[1, 3, 5, 7, 9]`, since those are the integer elements for which the block will evaluate as `true`. 
+
+*35) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+arr = [​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]
+
+new_array = arr.select ​do​ |n| 
+  n + ​1
+end
+
+p new_array
+```
+On `line 1`, we initialise a local variable `arr` and assign it to the array object `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]`. On `line 3`, we initialise a local variable `new_array`, which we assign to the return value of the `.select` method call on the `arr` local variable. 
+
+The `.select` method is called on the array object referenced by the local variable `arr`, with a block passed as an argument (the block is denoted by the `do..end` reserved words immediately following the `select` method call). The block has a single parameter `n`, which is used to pass elements from the array object to the block as a local variable `n`. In this case, each element is passed to the block, upon which the `+` method is applied. 
+
+However, the `select` method only evaluates the truthiness of the return value of the block (the actual value returned is ignored). Everything in Ruby is evaluated as truthy except for `false` and `nil`. Since there is no explicit `return` within the block, the last evaluated expression will be returned. Therefore, each element will be evaluated by the block as true, since all integers are truthy. The `select` method returns a new array of elements where those elements are truthy. Therefore, when we pass the local variable `new_array` as an argument to the `p` method call, this will output and return `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]`.
+
+*36) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+arr = [​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]
+
+new_array = arr.select ​do​ |n| 
+  n + ​1
+  puts n
+end
+
+p new_array
+```
+On `line 1`, we initialise a local variable `arr` and assign it to the array object `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]`. 
+On `line 3`, we initialise a local variable `new_array` and assign it to the return value of calling the `.select` method with a block (as denoted by the `do...end` reserved words immediately following the `select` method call) passed as an argument on the array object referenced by `arr`. 
+
+The `.select` method will return a new array with elements returned by the block that are truthy. In Ruby, everything except for `false` and `nil` are evaluated as truthy. In our case, each element of the array object `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]` is passed to the block parameter `n`, which then assigns that element to the local block variable `n`. 
+
+The expression on `line 4` is executed, but ultimately ignored in the evaluation of the element's truthiness (the return value is not assigned to a variable at any stage or evaluated any further). On `line 5`, the local block variable `n` is passed to the `puts` method as an argument, which outputs the element, and returns `nil`. Since there is no explicit `return` in the block, Ruby will return the value of the last evaluated expression in the block. In this case, that return value is `nil`. All of the elements that are passed into the block will be evaluated as `nil` due to the `puts` statement being the last evaluated expression in the block. 
+
+Since none of the values returned by the block are truthy, the `select` method will return an empty array and this is assigned to the local variable `new_array`. When we pass the local variable `new_array` to the `p` method on `line 8`, this will both output and return an empty array. 
+
+*37) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+words = ​%w(jump trip laugh run talk)
+
+new_array = words.map ​do​ |word| 
+  word.start_with?(​"t"​)
+end
+
+p new_array
+```
+On `line 1`, we initialise a local variable `words` and assign it to an array object, which will be five string objects. The `w%` method converts any arguments passed to it into a string object, place it in an array, and return the array object. 
+
+On `line 3`, we initialise a local variable `new_array`, and assign it to the return value of the `map` method call on the array object referenced by the `words` local variable. The `.map` method takes a block as an argument (denoted by the `do...end` reserved words immediately following the `.map` method call). 
+
+The `.map` method will return a new array, and populate this array with the return values of the block. In this case, as each element within the array object referenced by the `words` local variable is passed to the block parameter `words`, the local variable `words` has each element assigned to it, upon which the `start_with?("t")` method is called on it. This method returns a boolean based on whether the first character of the string object the method is called on matches the character passed to the method as an argument. 
+
+In our case, this will return a new array `[false, true, false, false, true]`, since these are the return values as evaluated by the expression in the block. As such, the local variable `new_array` is assigned to the returned `[false, true, false, false, true]` array object. 
+
+When we pass the `new_array` variable as an argument to the `p` method call on `line 7`, this will output and return `[false, true, false, false, true]`.
+
+*38) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+arr = [​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​] 
+arr.each { |n| puts n }
+```
+On `line 1`, the local variable `arr` is initialised and assigned to an array object `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]`. On `line 2`, the `.each` method is called on the array object referenced by the local variable `arr`. The `.each` method is passed a block (as denoted by the `{}` immediately following the `.each` method call) as an argument, with a parameter `n`. 
+
+The `.each` method returns the original object it was called on (here, the `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]` array object referenced by `arr`), ignoring the return value of the block. 
+
+The `each` method iterates through each element of the array object, passing each element to the method parameter `n`, which passes the element to the local block variable `n`. This local variable `n` is then passed to the `puts` method call as an argument, which outputs each element of the array object, converted to a string object on a separate line, and returns `nil`.
+
+*39) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+arr = [​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]
+
+incremented = arr.map ​do​ |n| 
+  n + ​1
+​end 
+
+p incremented
+```
+On `line 1`, we initialise a local variable `arr` and assign it to the array object `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]`. On `line 3`, we initialise a local variable `incremented`, and assign it to the return value of calling the `.map` method on the array object referenced by `arr`. 
+
+The `.map` method has a block passed to it as an argument (as denoted by the `do...end` reserved words immediately following the `.map` method call), and iterates through each element of the array object, passing it to the block parameter `n`. This block parameter then passes the element to the local variable `n`. The `.map` method returns a new array, based on the return value of the block. In this case, each integer element of the array object (as referenced by the local block variable `n`) has the `+` method applied to it, so that each element has `1` added to it. 
+
+As there is no explicit `return` in the block, the last evaluated expression is returned - the value of `n + 1` in this case. As such, the `.map` method will return a new array object (since the `.map` method is non-destructive) of `[​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​, 11]`, and this is what is assigned to the local variable `incremented`.
+
+On `line 7`, we call the `p` method and pass the local variable `incremented` as an argument. This will output and return `[​​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​, 11]`.
