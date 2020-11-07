@@ -123,3 +123,17 @@ __*Thoughts*__<br/>
 Reading the blog posts helps me reduce some of my self-doubt about the language I'm using in my answers. I'll walk back my previous assertion that I should be fine for time. I think there are time savings I can achieve by just being more familiar with specific phrases. 
 
 Writing about code is certainly less fun that writing code. I find myself currently unable to do more than 30 minutes at a time - it is just so boring. I can see why the developers at work aren't a big fan of writing documentation. I'm kind of dreading tomorrow - 4 hours of writing about code and being super precise sounds incredibly draining. 
+
+##### 07/11/20 (Sat)
+__*Concepts covered*__<br/>
+- RB109 Preparation
+  - Answer review
+  - Practice Problems
+
+__*Time spent*__<br/>
+241 minutes
+
+__*Thoughts*__<br/>
+With an assessment where precision of language is so important, I'm a bit concerned about the blog post I've been using as a guide to the language I should use. They're written by a non-native English speaker, so sometimes I'm not sure if the guidance written is a result of grammatical mistakes, or acceptable precision. I guess if they've been there for several years and no amendments have been made, it should be ok? 
+
+I've found that doing these exercises is quite draining, as it takes considerable focus to get the precision of the language right. I'm just a little apprehensive whether I will be able to maintain a strong level of focus for three hours(!) of explaining code. 
