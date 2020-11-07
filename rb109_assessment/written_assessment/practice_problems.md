@@ -1,4 +1,4 @@
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*1) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 a = ​‘Hello’ 
 b = a
@@ -8,7 +8,7 @@ On `line 1`, the local variable `a` is initialised and assigned to the string ob
 
 When executed, `a` will return the string object `'Goodbye'`, while `b` will return the string object `'Hello'`.  This is because variables are pointers to objects, and are not themselves, values. On `line 2`, the local variable `b` is referencing the string object `'Goodbye'`, not the local variable `a`. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*2) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 a = ​4
 loop ​do 
@@ -28,7 +28,7 @@ Variables initialised within a block scope cannot be accessed outside of the blo
 
 After each of the `a` and `b` variables are assigned a reference to an integer object, the `break` keyword exits the loop. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*3) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 a = ​4 
 b = ​2
@@ -48,7 +48,7 @@ Within the block scope, the local variable `c` is initialised and assigned to th
 
 The local variable `a` (which is a reference to the integer object `3`) is passed as an argument to the `puts` method on `line 10`, which will output the integer object `3` and return `nil`, while `puts` method call on `line 11` will output the integer object `2` (as referenced by the local variable `b`) and return `nil`, since the local variable `b` was not reassigned to a different object within the loop. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*4) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 def​ ​example​(str)
   i = ​3
@@ -71,7 +71,7 @@ The `i -= 1` line makes use of syntactical sugar (equivalent to `i = i - 1`), wh
 
 The code on `line 10` will print `'Hello'` three times, and return `nil`. The reason `nil` is returned is that Ruby has an implicit return on the last line of code within a method. This is the `break if i == 0` expression, which returns `nil`. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*5) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 def​ ​greetings​(str) 
   puts str
@@ -87,7 +87,7 @@ On `line 2`, when the `greetings` method is invoked, the `str` local variable is
 
 The end result of calling the `greetings` method with the string object `'Hello'` as an argument on `line 7` is that both `'Hello'` and `'Goodbye'` are outputted, and `nil` is returned. `nil` is returned because without an explicit `return` reserved word, the last line of the expression evaluated in a method will be returned. In this case, `puts` returns `nil`. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*6) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 arr = [​1​, ​2​, ​3​, ​4​] 
 
@@ -115,7 +115,7 @@ On `line 8`, we reassign the local variable `counter` to the value of the intege
 
 Finally, on `line 10`, we pass the `sum` variable (which references the integer object `10`) as an argument to the string object `"Your total is #{sum}"` via string interpolation. This string object is then passed to the `puts` method, which will output `"Your total is 10"` and return `nil`, since `puts` always returns `nil`. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*7) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 a = ​'Bob'
 5​.times ​do​ |x| 
@@ -130,7 +130,7 @@ On `line 3`, the local variable `a` initialised in the outer scope is reassigned
 
 On `line 6`, we pass the local variable `a` as an argument to the `p` method. This will output and return the string object `'Bill'`. This is because local variables initialised outside of a block are accessible within the block, allowing the reassignment of local variable `a` within the block. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*8) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 animal = ​"dog"
 loop ​do​ |_| 
@@ -150,7 +150,7 @@ On `line 5`, we break out of the loop using the `break` reserved word.
 
 On `line 8`, we pass the local variable `animal` as an argument to the `puts` method, which outputs `'dog'` and returns `nil`. On `line 9`, as we attempt to pass the `var` variable as an argument to the `puts` method, we will get a `NameError`, as variables initialised within a block scope cannot be accessed outside of that block. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*9) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 a = ​4
 b = ​2
@@ -175,7 +175,7 @@ On `line 9`, we pass in the local variable `a` to the `puts` method, which will 
 
 On `line 10`, we pass in the local variable `b` to the `puts` method, which will output a string object `'2'` and return `nil` (since `puts` always returns `nil`). 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*10) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 n = ​10 
 
@@ -193,7 +193,7 @@ The `times` method executes once, since the number of times the method will exec
 
 Finally, on `line 7`, we pass the local variable `n` as an argument to the `puts` method, which will output the string object `'10'` (no reassignment occurs in the block scope due to variable shadowing) and return `nil` (the `puts` method always returns `nil`). 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*11) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 animal = ​"dog"
 
@@ -210,7 +210,7 @@ Variable shadowing stops the inner scope from accessing local variables initiali
 
 On `line 8`, we pass the local variable `animal` (which still references the string object `'dog'`) to the `puts` method, which will output the string object `'dog'` and return `nil` (since `puts` always returns `nil`). 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a` and `b`?*
+*12) What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a` and `b`?*
 ```
 a = ​"hi there"
 b = a
@@ -220,7 +220,7 @@ On `line 1`, we initialise a local variable `a` and assign a string object `'hi 
 
 On `line 3`, we reassign the local variable `a` to reference a different string object (`'not here'`). The local variable `b` will return `'hi there'`, as variables are references to objects, and not references to variables. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a` and `b`?*
+*13) What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a` and `b`?*
 ```
 a = ​"hi there" 
 b = a
@@ -230,7 +230,7 @@ On `line 1`, we initialise a local variable `a`, and assign the string object `'
 
 On `line 3`, we use the shovel operator to append the string object `', Bob'` to the string object that local variable `a` was pointing to (`'hi there'`). The shovel operator is destructive, and so local variable `a` will return `'hi there, Bob'`. Local variable `b` will also return `'hi there, Bob'`, since the shovel operator is a destructive method, and does not result in reassignment of the local variable `a` to a different object. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a`,`b` and `c`? What happens if the last line was `c = a.uniq!`?*
+*14) What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a`,`b` and `c`? What happens if the last line was `c = a.uniq!`?*
 ```
 a = [​1​, ​2​, ​3​, ​3​]
 b = a
@@ -242,7 +242,7 @@ On `line 3`, the local variable `c` is initialised, and assigned to the return v
 
 If the last line was `c = a.uniq!`, then local variables `a`, `b` and `c` would all return `[1, 2, 3]`. This is because `uniq!` is a destructive method, altering the object, rather than creating a new object. This means that `a`, `b` and `c` are all pointing towards the same object. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate? What is `a`? What if we called `map!` instead of `map`?*
+*15) What does the following code return? What does it output? Why? What concept does it demonstrate? What is `a`? What if we called `map!` instead of `map`?*
 ```
 def​ ​test​(b)
   b.map! { |letter| ​"I like the letter: ​#{letter}​"​ }
@@ -259,7 +259,7 @@ As there is no explicit `return` in this method definition, Ruby will return the
 
 If we had used the `map!` instead of `map`, `test(a)` and `a` would both return `['I like the letter: a', 'I like the letter: b', 'I like the letter: c']`. This is because `map!` is a mutating method. Instead of creating a new array object with the returned values of the block like the `map` method would, it will reassign the values within the original `['a', 'b', 'c']` array to the values returned by the block. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a` and `b`? Why?*
+*16) What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a` and `b`? Why?*
 ```
 a = ​5.2 
 b = ​7.3
@@ -274,7 +274,7 @@ On `line 6`, we reassign the local variable `b` to the value of `b` plus `1`. Th
 
 After this code executes, local variable `a` will return the float object `7.3`, while local variable `b` will return the float object `8.4`. Local variable `a` is not the same as local variable `b`, as reassignment is not destructive (float objects are also immutable). So when we reassign the local variable `b`, a new float object is being referenced. Variables act as pointers to objects, and are not linked to other variables. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*17) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 def​ ​test​(str) 
   str += ​'!' 
@@ -294,7 +294,7 @@ On `line 3`, the `downcase!` method is invoked on the local variable `str`, whic
 
 On `line 9`, we pass the `test_str` local variable to the `puts` method. This will output `'Written Assessment'` and return `nil` (`puts` always returns `nil`). The reason why `test_str` was not mutated is that while variables are pointers to objects, there was a variable reassignment on `line 2`, such that the destructive method on `line 3` was called on a different string object to the string object that `test_str` is referencing. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*18) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 def​ ​plus​(x, y) 
   x = x + y
@@ -316,7 +316,7 @@ As there is no explicit return statement, the last line evaluated of the express
 
 On `line 8`, we pass the local variable `a` as an argument to the `puts` method, which will output `3` and return `nil` (`puts` always returns `nil`). On `line 9`, we pass the local variable `b` to the `puts` method, which will output `5` and return `nil`. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*19) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 def​ ​increment​(x) 
   x << ​'b'
@@ -333,7 +333,7 @@ On `line 5`, we initialise a local variable `y` and assign it to the string obje
 
 On `line 8`, we pass the local variable `y` to the `puts` method, which outputs `'ab'` and returns `nil` (`puts` always returns `nil`). 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*20) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 def​ ​change_name​(name)
   name = ​'bob'​
@@ -351,7 +351,7 @@ On `line 7`, we pass the `name` local variable to the `puts` method. This will o
 
 Also, method definitions have their own scope, and cannot directly access local variables initialised outside of the method definition scope (this is also why this particular code is __not__ an example of variable shadowing). Therefore, `line 2` represents variable initialisation, rather than variable reassignment. 
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*21) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 def​ ​cap​(str) 
   str.capitalize!
@@ -367,7 +367,7 @@ On `line 4`, we initialise a local variable `name`, and assign it to the string 
 
 When we pass the local variable `name` as an argument to the `puts` method on `line 7`, this will output `'Jim'` and return `nil`. The string object that the local variable `name` was referencing was mutated as a result of passing the reference to the `'jim'` string object and calling the `.capitalize!` method on that object. 
 
-*What is `arr`? Why? What concept does it demonstrate?*
+*22) What is `arr`? Why? What concept does it demonstrate?*
 ```
 a = [​1​, ​3​] 
 b = [​2​]
@@ -383,7 +383,7 @@ On `line 3`, we initialise the local variable `arr`, and assign it to an array o
 
 On `line 6`, we are reassigning the object at index `1` of the array object local variable `a` is referencing, to the integer object `5`. This is known as indexed assignment and while the object at `a[1]` is reassigned, indexed assignment has the effect of mutating the *original* array object referenced by the local variable `a`. As such, on `line 7`, `arr` will return `[[1, 5], [2]]`.
 
-*What does the following code return? What does it output? Why? What concept does it demonstrate?*
+*23) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 arr1 = [​"a"​, ​"b"​, ​"c"​] 
 arr2 = arr1.dup 
@@ -403,7 +403,7 @@ On `line 8`, we call the `puts` method, passing the local variable `arr1` as an 
 
 On `line 9`, we call the `puts` method, passing the local variable `arr2` as an argument. This will output `'A', 'B', 'C'` on separate lines and return `nil`. This is due to the `.map!` method being destructive, replacing each element of the original array referenced by `arr2` with the return value of the block. 
 
-*What values do `s` and `t` have? Why?*
+*24) What values do `s` and `t` have? Why?*
 ```
 def​ ​fix​(value) 
   value.upcase! 
@@ -416,8 +416,136 @@ t = fix(s)
 ```
 On `line 7`, we initialise a local variable `s` and assign it to a string object `'hello'`. On `line 8`, we initialise a local variable `t` and assign it to the return value of calling the `fix` method, passing in `s` as an argument. 
 
-On `line 1-5`, we define the `fix` method with a single parameter (`value`). On `line 2`, we pass the local variable `value` from the `value` method parameter, and call the `.upcase!` method on the string object referenced by `value` (`'hello'`, in this example). This is a destructive method, permanently modifying the string object. On `line 3`, we call the `.concat` method, passing in `'!'` as an argument. This is also a destructive method, with the effect of appending the `'!'` to the string object referenced by `value`. 
+On `line 1-5`, we define the `fix` method with a single parameter (`value`). On `line 2`, we pass the local variable `value` from the `value` method parameter, and call the `.upcase!` method on the string object referenced by `value` (`'hello'`, in this example). This is a destructive method, permanently modifying the string object (instead of referencing a different string object). On `line 3`, we call the `.concat` method, passing in `'!'` as an argument. This is also a destructive method, with the effect of appending the `'!'` to the string object referenced by `value`. 
 
 As there is no explicit `return` in this method definition, when this method is called, it will return the last evaluated expression, which is the `value` local variable on `line 4`, which is `'HELLO!'` in this example. 
 
-After the `fix` method call, the local variable `s` is now pointing to a string object `'HELLO'`, while the local variable `t` is also pointing to that same string object (since variables are pointers to objects), with a value of `'HELLO'`, due to the destructive method calls within the `fix` method call. 
+After the `fix` method call, the local variable `s` is pointing to same string object as when the variable was initialised, however, it has been mutated to `'HELLO'`, while the local variable `t` is also pointing to that same string object (since variables are pointers to objects), with a value of `'HELLO'`, due to the destructive method calls within the `fix` method. 
+
+*25) What values do `s` and `t` have? Why?*
+```
+def​ ​fix​(value)
+  value = value.upcase 
+  value.concat(​'!'​)
+end
+
+s = ​'hello' 
+t = fix(s)
+```
+On `line 6`, we initialise a local variable `s`, and assign it to the string object `'hello'`. On `line 7`, we initialise a local variable `t`, and assign it to the return value of the `fix` method, where the local variable `s` is passed as an argument. 
+
+On `lines 1-4`, we define the `fix` method with a parameter `value`. On `line 2`, we initialise a local variable `value`, which is assigned to the return value of calling the `upcase` method on the object which is passed by reference by the `value` method parameter. As assignment is not mutating, this has the effect of initialising the local variable `value` on a new string object, `'HELLO'` per the returned value of calling `upcase` on the `'hello'` string object. 
+
+On `line 3`, we destructively change this `value` object by calling the `.concat` method on it, with the `'!'` string object passed as an argument. This has the ffect of permanently appending a `'!'` character to the `'HELLO'` string object. As there is no explicit `return` in this method, the return value of this `.concat` method call is what the `fix` method will return. 
+
+`s` will return `'hello'`, and `t` will return `'HELLO!'`. `s` is not mutated since on `line 2` in the method definition, we initialised the local variable `value` to reference a __new__ string object, since `.upcase` is not a destructive method and returns a new string object. 
+
+*26) What values do `s` and `t` have? Why?*
+```
+def​ ​fix​(value)
+  value << ​'xyz'
+  value = value.upcase 
+  value.concat(​'!'​)
+end
+
+s = ​'hello'
+t = fix(s)
+```
+On `line 7`, we initialise a local variable `s`, which is assigned to the string object `'hello'`. On `line 8`, we initialise a local variable `t`, which is assigned to the return value of the `fix` method with the local variable `s` passed to it as an argument. 
+
+On `lines 1-5`, we define a method, `fix` with a single parameter (`value`). On `line 2`, the local variable `value` is passed by the method parameter `value` (referencing the string object `'hello'`), and we use the shovel operator (`<<`) to destructively append the string object `'xyz'` to the string object referenced by the local variable `value`. This has the effect of mutating the original string object from `'hello'` to `'helloxyz'`.
+
+On `line 3`, we reassign the local variable `value` to the return value of calling the `.upcase` method on the string object referenced by `value`. Since the `upcase` method is non destructive, this creates a __new__ string object (`'HELLOXYZ!'`), which `value` is now referencing. On `line 4`, we call the `.concat` method on the local variable `value`, passing in a string object `'!'` as an argument. This has the effect of mutating the string object `'HELLOXYZ'` to `'HELLOXYZ!'`. As there is no explicit `return` in this method, and `line 4` is the last evaluated expression in this method, this method will return `'HELLOXYZ!'`. 
+
+As such, `s` will return `'helloxyz`, and `t` will return `'HELLOXYZ!'`. This is because the shovel operator mutated the string object referenced by `s` when it was passed as an argument to `fix`, but the `value` local variable was reassigned within the `fix` method to a new string object, since `upcase` is not a mutating method. This means that the `upcase` and `concat` methods were called on a new string object. 
+
+*27) What values do `s` and `t` have? Why?*
+```
+def​ ​fix​(value)
+  value = value.upcase! 
+  value.concat(​'!'​)
+end
+
+s = ​'hello' 
+t = fix(s)
+```
+We initialise a local variable `s` on `line 7` to a string object `'hello'`. On `line 8`, we initialise a local variable `t` to the returned value of the `fix` method call with the local variable `s` passed as an argument. 
+
+On `lines 1-4`, we define the `fix` method with a single parameter (`value`). On `line 2`, the local variable `value` is passed from the `value` method parameter and the `.upcase!` method is called on it. As `.upcase!` is a destructive method, this has the effect of mutating the string object that was passed as an argument to the `fix` method. While `line 2` also also reassigns the local variable `value` to the return value of this `.upcase!` method call, since the `.upcase!` method call is destructive (i.e. a new string object is __not__ created), the reassignment is rebinding the same string object to the `value` local variable. 
+
+On `line 3`, the `concat` method is called on the string object referenced by the local variable `value`, with the string object `'!'` passed in as an argument. The `concat` method is destructive, meaning that the string object is mutated and now has a value of `'hello!'`. As this is the last evaluated expression in the method, and there is no explicit `return`, this is what will be returned by the `fix` method call. 
+
+As such, after calling `fix(s)` on `line 7`, `s` will return `'HELLO!'`, and `t` will also return `'HELLO!'`, as they are referencing the same string object since `lines 2-3` of the `fix` method did not create a new string object, but mutated the original string object. 
+
+*28) What values do `s` and `t` have? Why?*
+```
+def​ ​fix​(value) 
+  value[​1​] = ​'x' 
+  value
+end
+
+s = ​'abc' 
+t = fix(s)
+```
+On `line 6`, we initialise the local variable `s` with a string object `'abc'`. On `line 7`, we initialise the local variable `t` and assign it to the return value of the `fix` method, with the local variable `s` passed as an argument. 
+
+On `line 1-4`, we define the `fix` method with one parameter (`value`). We pass in the local variable `value` from the `value` method parameter on `line 2`, and make use of indexed assignment, reassigning the string object at index `1` of `'abc'` to the string object `x`. This will mutate the string object referenced by the local variable `x`, such that the string object referenced by `value` is now `axc`. We do not create a new object, but mutate the original object on which the indexed assignment occurred. 
+
+Since there is no explicit `return` in this method, the last expression evaluated will be returned by the `fix` method, which is the string object referenced by the local variable `value`, per `line 3`. 
+
+As such, the return value of `fix(s)` is `'axc'`, which is assigned to the local variable `t`. As a result of calling `fix(s)`, the local variable `s` now returns `'axc'`, as does the local variable `t`, since they are now referencing the same string object due to the mutating effects of the indexed assignment on `line 2`. 
+
+*29) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+num = ​3
+num = ​2​ * num
+```
+On `line 1`, we initialise the local variable `num`, and assign it to the integer object `3`. On `line 2`, we reassign the `num` local variable to the value returned by multiplying the value of the object referenced by `num` by `2`, using the `*` method. 
+
+`num` will return the integer object `6`. It should be noted that integer objects are immutable - `line 2` was a variable reassignment. The `num` variable will reference different objects on `line 1` versus `line 2`. We can verify this by calling the `object_id` method on the `num` variable after the variable initialisation on `line 1`, which will return a different `object_id` to calling the `object_id` method on `num` after `line 2`. 
+
+*30) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+a = ​%w(abc) 
+a[​1​] = ​'-'
+p a
+```
+On `line 1`, we initialise the local variable `a` and assign it to an array object containing a single string object element. On `line 2`, we reassign the object at index `1` of the array object referenced by local variable `a` to the string object `'-'`. Since there is no object at index `1` of the array object referenced by `a`, this will create a `'-'` string object as an element at index `1`. Note that indexed assignment is mutating, such that the original array object is now `['abc', '-']`. 
+
+Therefore, when we pass the local variable `a` to the `p` method when we call the `p` method, this will output and return `['abc', '-']`.
+
+*31) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+def​ ​add_name​(arr, name) 
+  arr = arr + [name]
+end
+
+names = [​'bob'​, ​'kim'​] 
+add_name(names, ​'jim'​) 
+puts names
+```
+On `line 5`, we initialise a local variable `names` to an array object, with two string object elements. On `line 6`, we call the `add_name` method, passing in the `name` local variable and string object `'jim'` as arguments. 
+
+`Lines 1-3` is where we define the method with two parameters. On `line 2`, we reassign the `arr` local variable to the return value of calling the `+` method on the `arr` local variable (passed from the `arr` method parameter). The `+` method is non-destructive, meaning that the `+` method returns a __new__ array object (`['bob', 'kim', 'jim']`) and assigns this to the `arr` local variable. 
+
+As this is is the last evaluated expression of the `add_name` method, and there is no explicit `return`, this is `['bob', 'kim', 'jim']` object is what will be returned by the method call on `line 6`.
+
+On `line 7`, we call the `puts` method, passing in the local variable `name` as an argument. This will print `'bob', 'kim'` on new lines, and return `nil` (`puts` always returns `nil`). The array object referenced by `names` is not mutated, since `line 2` is variable reassignment, and no mutating methods are called. 
+
+*32) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+def​ ​add_name​(arr, name) 
+  arr = arr << name
+end
+
+names = [​'bob'​, ​'kim'​] 
+add_name(names, ​'jim'​) 
+puts names
+```
+On `line 4`, we initialise a local variable `names`, and assign an array object with two string object elements to it. On `line 5`, we call the `add_name` method, passing in the `names` local variable and string object `'jim'` as arguments. 
+
+`Lines 1-3` is where we define the `add_name` methods with two parameters. On `line 2`, we pass in the local variables `arr` and `name` from the method parameters. We reassign the `arr` variable to the return value of using the shovel operator to destructively append the string object referenced by `name` to the array object referenced by `arr`. Since the shovel operator mutates the original array object, the variable reassignment rebinds the `arr` variable to the same array object. 
+
+As `line 2` is the last expression evaluated in this method, and there is no explicit `return`, the array object `['bob', 'kim', 'jim']` is what will be returned from the method call on `line 5`. 
+
+Finally, we call the `puts` method on `line 7`, passing in the `names` local variable as an argument. This will output `'bob', 'kim', 'jim'` on separate lines, and return `nil` (since `puts` always returns `nil`). The array object referenced by `names` was mutated by the shovel operator on `line 2`, and hence a new array object was __not__ created. 
