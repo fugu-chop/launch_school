@@ -5,6 +5,8 @@
 - [4th, Wed](#041120-wed)
 - [5th, Thu](#051120-thu)
 - [6th, Fri](#061120-fri)
+- [7th, Sat](#071120-sat)
+- [8th, Sun](#081120-sun)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -137,3 +139,17 @@ __*Thoughts*__<br/>
 With an assessment where precision of language is so important, I'm a bit concerned about the blog post I've been using as a guide to the language I should use. They're written by a non-native English speaker, so sometimes I'm not sure if the guidance written is a result of grammatical mistakes, or acceptable precision. I guess if they've been there for several years and no amendments have been made, it should be ok? 
 
 I've found that doing these exercises is quite draining, as it takes considerable focus to get the precision of the language right. I'm just a little apprehensive whether I will be able to maintain a strong level of focus for three hours(!) of explaining code. 
+
+##### 08/11/20 (Sun)
+__*Concepts covered*__<br/>
+- RB109 Preparation
+  - Answer review
+  - Practice Problems
+
+__*Time spent*__<br/>
+239 minutes
+
+__*Thoughts*__<br/>
+I've been reviewing some of my earlier answers to the practice problems, and there's a few examples where I could have tidied up the language. Still, it's encouraging that my latter answers have required less amendments. There's still a few exam questions I'd like to go through before I attempt the test, but I feel like I'm in a good place to attempt the test during the week. 
+
+I can't wait to do this written test. I am kind of sick of doing the same thing repetitively - I've been doing this almost exclusively for the past 3 days. I just hope I pass. 
