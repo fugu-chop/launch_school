@@ -855,6 +855,9 @@ else
   puts ​"Hello is falsey" 
 end
 ```
+On `line 1`, we initialise the local variable `a` and assign the string object `'Hello'` to it. On `line 2`, the `if` conditional evaluates whether `a` is true. The local variable `a` is referencing a string object. 
+
+In Ruby, everything except for `false` and `nil` is truthy (evaluates to `true` in a conditional). Therefore, the `puts` method is called on `line 3`, with the string `'Hello is truthy'` passed in as an argument. This will print `'Hello is truthy'` and return `nil` (since the `puts` method always returns `nil`). 
 
 *52) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -870,6 +873,11 @@ else
   puts ​"interview" 
 end
 ```
+On `line 5`, we initialise the local variable `var` and assign it to the return value of the `test` method. On `lines 1-3`, we define the `test` method. When called, the `test` method outputs the string object `'written assessment'` and returns `nil` (the `puts` method always returns `nil`). Since there is no explicit `return` in the method definition, the last evaluated expression will be returned, which in this case, is `nil`. As such, the `var` local variable is assigned to `nil`. 
+
+On `line 7`, the `if` conditional evalutes whether the local variable `var` returns `true`. In Ruby, everything except `false` and `nil` is truthy (i.e. evaluates to `true` in a conditional). Since the local variable `var` references the `nil` object, the `puts` method on `line 8` is never called. 
+
+Instead, the `puts` method on `line 10` is called, with the string object `'interview'` passed as an argument. This will output `'interview'` and return `nil` (`puts` always returns `nil`, and this `puts` statement is the last evaluated expression, since there is no explicit `return` in the `if` conditional). 
 
 *53) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -878,6 +886,9 @@ end
   'hi'
 end
 ```
+On `line 1`, we call the `select` method on the array object `[1, 2, 3]`, with a block (denoted by the `do...end` reserved words immediately following the `select` method). The block takes a single parameter, `num`. The `select` method iterates through each element of the array object, passing it to the `num` block parameter. 
+
+On `line 2`, the local block variable `num` is initialise and assigned an element of the array object through the `num` block parameter. We then call the `#Integer#>` method on this element, passing `5` as an argument. This will return a boolean based on whether the value of the array element is greater than `5`. On `line 3`, a string object `'hi'` is returned. The return values on `lines 2-3` do not affect what the `select` method returns, since the `select` method does not do anything with returned values - it only returns the array object on which it was called. In this case, the `select` method will return `[1, 2, 3]`.
 
 *54) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -885,6 +896,11 @@ end
   str.length < 4
 end
 ```
+On `line 1`, we call the `count` method on the array object `['ant', 'bat', 'caterpillar']`. We also pass a block to the `count` method, denoted by the `do/end` reserved words immediately following the `count` method. The block takes a single parameter, `str`. When the block is passed to the `count` method, it will iterate through each element of the array object it was called on, and return an integer object based on what the block returns (a boolean).
+
+In our case, the `count` method iterates through the array, passing each element to the `str` block parameter. On `line 2`, we initialise a local variable `str` and assign it to the array element from the block parameter `str`. We then call the `length` method on the array element referenced by the local variable `str`, which returns an integer object representing the number of characters of the array element it's called on. This integer object has the `Integer#<` method called on it, with `4` passed as an argument. In our case, this returns a boolean based on whether the integer object the method is called on is smaller than `4`. 
+
+For this code, two elements in the array object have a string length of less than 4, so the `count` method will return `2`. 
 
 *55) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -892,6 +908,13 @@ end
   puts num
 end
 ```
+On `line 1`, we call the `reject` method on the array object `[1, 2, 3]` with a block (denoted by the `do/end` reserved words immediately following the `reject` method). The block takes a single parameter, `num`. 
+
+The `reject` method will iterate through each element of the array object and pass it to the block. The `reject` method returns a new array object with elements that are evaluated as `false` by the block. 
+
+On `line 2`, we initialise a local variable `num` and assign it to the integer objects that are passed to the block parameter `num`. The `puts` method is called, with the local variable `num` passed as an argument. This will output the element, and return `nil`. 
+
+In Ruby, everything is truthy, except for `nil` and `false`. Since the `puts` method always returns `nil`, this is treated as falsy by the `reject` method. The result of the `reject` method call is to print string objects `'1', '2', '3'`, each on a new line, and return a new array object `[1, 2, 3]`. 
 
 *56) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -899,17 +922,32 @@ end
   hash[value[0]] = value
 end
 ```
+On `line 1`, we call the `each_with_object` method on the array object `['ant', 'bear', 'cat']`, with a block (as denoted by the `do/end` reserved words immediately following the `each_with_object` method). The block takes two parameters, `value` and `hash`. We also pass the `each_with_object` method an empty hash as an argument. 
+
+The `each_with_object` method iterates through each element of the array object, passing it to the `value` block parameter. The empty hash that was passed as an argument is passed to the `hash` block parameter. 
+
+On `line 2`, the local block variable `hash` is initialised, and assigned to the empty hash object from the `hash` block parameter. We also initialise a local block variable `value`, and assign it to the array element object from the `value` parameter. The hash object referenced by the local variable `hash` then assigns key value pairs, where the keys are the first letter (string object) of each array element.
+
+This is achieved through the `String#[]` method call on each string object passed to the local block variable `value`, where the integer object `0` is passed as an argument, thus returning the first letter of the string object. 
+
+The value of the key-value pair assigned is the array element itself (a string object). This element assignment is destructive, meaning that the hash object referenced by `hash` is mutated. 
+
+Once all elements of the array object `['ant', 'bear', 'cat']` are iterated through, the `each_with_object` method will return the hash object that was originally passed to it as an argument. The mutated hash is now `{ "a"=>"ant", "b"=>"bear", "c"=>"cat" }`.
 
 *57) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 hash = { a: 'ant', b: 'bear' }
 hash.shift
 ```
+On `line 1`, we initialise the local variable `hash` and assign it to the hash object `{ a: 'ant', b: 'bear' }`. On `line 2`, we call the `shift` method on the hash object referenced by the local variable `hash`. When called on a hash object, the `hash` method destructively removes the first key-value pair and returns the key and value as elements in a new array object. 
+
+`Line 2` would return `[:a, "ant"]`. 
 
 *58) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
 ['ant', 'bear', 'caterpillar'].pop.size
 ```
+On `line 1`, we call the `pop` method on the array object `['ant', 'bear', 'caterpillar']`. The `pop` method destructively removes the last element of an array and returns it. In this case, the `pop` method would return the string object `'caterpillar'`. The `size` method is then called on the return value of the `pop` method. When called on a string object, the `size` method returns the number of characters in the string object. In this case, the method will return `11`.
 
 *59) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -918,6 +956,13 @@ hash.shift
   num.odd?
 end
 ```
+On `line 1`, the `any?` method is called on the array object `[1, 2, 3]` and passed a block (denoted by the `do/end` reserved words immediately following the `any?` method call). The block takes a single parameter `num`. 
+
+The `any?` method iterates through each element of the array object, passing it to the block parameter `num`. On `line 2`, the local block variable `num` is initialised and assigned the element from the block parameter `num`. The `puts` method is called and the local block variable `num` is passed to it as an argument. This will output the element of the array and return `nil` (the `puts` method call always returns `nil`). 
+
+On `line 3`, the `odd?` method is called on the array element referenced by the local block variable `num`. The `odd?` method returns a boolean depending on whether the value of the integer object calling the `odd?` method is odd or not. While there is no explicit `return` in this block, Ruby will implicitly return the boolean value that is evaluated from the `odd?` method call. 
+
+The `any?` method returns `true` if any of the elements of the array object it is called on, are evaluated as `true` by the block. In this case, the first and third element of the array object are odd integers, and so the `any?` method call would return `true`. 
 
 *60) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -927,6 +972,15 @@ end
   end
 end
 ```
+On `line 1`, we call the `map` method on the hash object `{ a: 'ant', b: 'bear' }`, with a block (as denoted by the `do/end` reserved words immediately following the `map` method call). The block takes two parameters, `key` and `value`. 
+
+The `map` method iterates through each key-value pair of the hash object, passing the key object to the `key` block parameter and the value object to the `value` block parameter.
+
+On `line 2`, we initialise a local block variable `value`, which is assigned to a string object (representing the value from a key value pair) from the `value` block parameter. We then call the `size` method on this string object, passing in `3` as an argument. This will return a boolean value, depending on whether the number of characters in the string object referenced by the local variable `value` is greater than `3`. 
+
+We also have a conditional `if` statement on `line 2`, which will evaluate whether the return value of the `size` method call is true. If the return value is true, the local block variable `value` will be returned. 
+
+The `map` value will return a new array object that contains the return value of the block. In our example, this will return `[nil, 'bear']`. The first `nil` element is returned as when none of the conditions in an `if` statement evaluates as `true`, or nothing is returned, the `if` statement itself returns `nil`. This occurs when we pass the string object `'ant'` to the block. 
 
 *61) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -937,4 +991,247 @@ end
     num
   end
 end
+```
+On `line 1`, we call the `map` method on the array object `[1, 2, 3]` with a block (denoted by the `do/end` reserved words immediately following the `map` method). The block takes a single parameter `num`. The `map` method iterates through each element of the array object on which it is called, and passes it to the `num` block parameter. 
+
+On `line 2`, the local variable `num` is initialised and assigned to the array element from the `num` block parameter. The `Integer#>` method is then called on the array element, passing the integer `1` as an argument. This method will return a boolean, depending on whether the value of the array element is greater than `1`. 
+
+This returned boolean is then evaluated by the `if` statement on `line 2`. If the boolean is `true`, the `puts` method is called, with the local block variable `num` passed to it as an argument. This will output the element, and return `nil` (the `puts` method always returns `nil`). If the returned boolean is `false`, the local block variable `num` will be returned. 
+
+The `map` method is non-destructive, and will return a new array object, with values based on the return value of the block for each element in the original array on which the `map` method was called. In our case, the `map` method call will output `2` and `3` as string objects, and return a new array object `[1, nil, nil]`, as the `2` and `3` integer objects in the original array are greater than `1`, and will be passed to the `puts` method, which will return `nil`. The `map` method does not care about truthiness - only the return value of the block. 
+
+*62) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+a = 7
+
+def my_value(b)
+  b += 10
+end
+
+my_value(a)
+puts a
+```
+On `line 1`, we initialise the local variable `a` and assign it to the integer object `7`. On `line 7`, we call the `my_value` method, passing in the local variable `a` as an argument. 
+
+On `line 3-5`, we define the `my_value` method, which takes a parameter `b`. On `line 4`, the local method variable `b` is initialised and assigned to the integer object passed from the method parameter `b` (in this case, the integer object `7`). The local method variable `b` is then reassigned to the returned value of calling the `Integer#+` method on the `7` integer object, passing in the integer object `10` as an argument. This returns the integer object `17`, which is reassigned to the local method variable `b`. As there is no explicit `return` in this method, the last evaluated expression is returned implicitly. Therefore, the returned value from `my_value(a)` is `17`. 
+
+On `line 8`, we call the `puts` method, passing in the local variable `a` as an argument. This will output `7` and return `nil` (the `puts` method always returns `nil`). 
+
+*63) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+a = 7
+
+def my_value(a)
+  a += 10
+end
+
+my_value(a)
+puts a
+```
+
+*64) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+a = 7
+
+def my_value(b)
+  a = b
+end
+
+my_value(a + 5)
+puts a
+```
+
+*65) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+a = "Xyzzy"
+
+def my_value(b)
+  b[2] = '-'
+end
+
+my_value(a)
+puts a
+```
+
+*66) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+a = "Xyzzy"
+
+def my_value(b)
+  b = 'yzzyX'
+end
+
+my_value(a)
+puts a
+```
+
+*67) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+a = 7
+
+def my_value(b)
+  b = a + a
+end
+
+my_value(a)
+puts a
+```
+
+*68) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+a = 7
+array = [1, 2, 3]
+
+array.each do |element|
+  a = element
+end
+
+puts a
+```
+
+*69) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+array = [1, 2, 3]
+
+array.each do |element|
+  a = element
+end
+
+puts a
+```
+
+*70) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+a = 7
+array = [1, 2, 3]
+
+array.each do |a|
+  a += 1
+end
+
+puts a
+```
+
+*71) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+a = 7
+array = [1, 2, 3]
+
+def my_value(ary)
+  ary.each do |b|
+    a += b
+  end
+end
+
+my_value(array)
+puts a
+```
+
+*72) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+def meal
+  return 'Breakfast'
+end
+
+puts meal
+```
+
+*73) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+def meal
+  'Evening'
+end
+
+puts meal
+```
+
+*74) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+def meal
+  return 'Breakfast'
+  'Dinner'
+end
+
+puts meal
+```
+
+*75) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+def meal
+  puts 'Dinner'
+  return 'Breakfast'
+end
+
+puts meal
+```
+
+*76) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+def meal
+  'Dinner'
+  puts 'Dinner'
+end
+
+p meal
+```
+
+*77) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+def meal
+  return 'Breakfast'
+  'Dinner'
+  puts 'Dinner'
+end
+
+puts meal
+```
+
+*78) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+def count_sheep
+  5.times do |sheep|
+    puts sheep
+  end
+end
+
+puts count_sheep
+```
+
+*79) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+def count_sheep
+  5.times do |sheep|
+    puts sheep
+  end
+  10
+end
+
+puts count_sheep
+```
+
+*80) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+def count_sheep
+  5.times do |sheep|
+    puts sheep
+    if sheep >= 2
+      return
+    end
+  end
+end
+
+p count_sheep
+```
+
+*81) What does the following code return? What does it output? Why? What concept does it demonstrate?*
+```
+def tricky_number
+  if true
+    number = 1
+  else
+    2
+  end
+end
+
+puts tricky_number
 ```
