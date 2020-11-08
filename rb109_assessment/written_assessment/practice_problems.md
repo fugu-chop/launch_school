@@ -253,9 +253,11 @@ test(a)
 ```
 On `lines 1-3`, we are defining the `test` method, which takes a single parameter (`b`). On `line 5`, we initialise the local variable `a` and assign it to an array object `[​'a'​, ​'b'​, ​'c'​]`. On `line 6`, we pass in the local variable `a` as an argument to the `test` method. 
 
-On `line 2`, the `map` method is called on the array object referenced by the local variable `a`. The `map` method is invoked with a block (signified by the `{}` immediately following the method invocation). On `line 6`, we pass the local variable `a` as an argument to the `test` method, which passes the array object referenced by the local variable `a` to the method parameter `b`, upon which we invoke the `map` method. 
+On `line 2`, the `map` method is called on the array object referenced by the local variable `a`. The `map` method is invoked with a block (signified by the `{}` immediately following the method invocation). 
 
-The `map` method will return a new array object whose contents depend on the return value of the block on each iteration. On each iteration, each element of the array object is passed to the block parameter `letter`. This element is then passed (through string interpolation) to the string `"I like the letter: #{letter}"`.
+On `line 6`, we pass the local variable `a` as an argument to the `test` method, which passes the array object referenced by the local variable `a` to the method parameter `b`, upon which we invoke the `map` method. The `map` method is called with a block (denoted by the `{}` immediately following the `map` method), which will be invoked once for each element in the calling array object. 
+
+The `map` method will return a new array object whose contents depend on the return values of the block across each iteration. On each iteration, each element of the array object is passed to the block parameter `letter`. This element is then passed (through string interpolation) to the string `"I like the letter: #{letter}"`.
 
 As there is no explicit `return` in this method definition, Ruby will return the last expression evaluated. In this case, the `map` method is the last expression, which will return `['I like the letter: a', 'I like the letter: b', 'I like the letter: c']`. This is the returned object from the `test(a)` method call on `line 6`. The local variable `a` is still the array object `['a', 'b', 'c']`, as the `map` method returns a new object. 
 
@@ -310,7 +312,7 @@ puts b
 ```
 On `line 5`, we initialise the local variable `a`, and assign it to the integer object `3`. On `line 4`, we initialise the local variable `b`, and assign it to the return value of calling the `plus` method, with the local variable `a` and the integer object `2` passed in as arguments. On `line 1-3`, we define the `plus` method which takes two parameters (`x` and `y`). 
 
-Within the `plus` method (`line 2`), we initialise a local variable `x`, and assign it to the return value of applying the `Integer#+` method with the integer object `2` as an argument to the integer object `3` (these objects were passed via the method parameters `x` and `y` respectively). This is an example of syntactic sugar, and `line 2` could be rewritten as `x = x =.+(y)`. 
+Within the `plus` method (`line 2`), we initialise a local variable `x`, and assign it to the return value of applying the `Integer#+` method with the integer object `2` as an argument to the integer object `3` (these objects were passed via the method parameters `x` and `y` respectively). This is an example of syntactic sugar, and `line 2` could be rewritten as `x = x.+(y)`. 
 
 As there is no explicit return statement in the method, the last line evaluated of the expression is `line 2`, which returns the integer object `5` in our case. 
 
@@ -399,7 +401,9 @@ puts arr2
 ```
 On `line 1`, we initialise a local variable `arr1`, and assign it to an array object `[​"a"​, ​"b"​, ​"c"​] `. On `line 2`, we initialise the local variable `arr2` and assign it to the return value of calling the `.dup` method on `arr1`. The `.dup` method returns a shallow copy of the array object `arr1`  is referencing, which is a new array object. 
 
-On `line 4`, we call the `map!` method on the array object `arr2` is referencing (again, this is __not__ the same array object that `arr1` is referencing), passing in a block (denoted by the `do..end` reserved words immediately following the `map!` method call) as an argument. The `map!` method is a destructive method, returning the object it was called on, where the elements are determined by the return value of the block on each iteration. In this case (`line 5`), the `.upcase` method is called on each element in the array object referenced by `arr2`. This has the effect of reassigning the elements within the `[​"a"​, ​"b"​, ​"c"​]` object, mutating it. 
+On `line 4`, we call the `map!` method on the array object `arr2` is referencing (again, this is __not__ the same array object that `arr1` is referencing), passing in a block (denoted by the `do..end` reserved words immediately following the `map!` method call) as an argument. The `map!` method invokes the block once for each element in the array upon which `map!` was called. The block itself takes a single parameter, `char`.
+
+The `map!` method is a destructive method, returning the mutated object it was called on, where the elements are determined by the return value of the block on each iteration. In this case (`line 5`), the `.upcase` method is called on each element in the array object referenced by `arr2` passed to the block through the block parameter `char`. This has the effect of reassigning the elements within the `[​"a"​, ​"b"​, ​"c"​]` object, mutating it. 
 
 On `line 8`, we call the `puts` method, passing the local variable `arr1` as an argument. This will output `'a', 'b', 'c'` on separate lines (i.e. converting each element of the array into a string object) and return `nil` (`puts` always returns `nil`). 
 
@@ -436,7 +440,7 @@ t = fix(s)
 ```
 On `line 6`, we initialise a local variable `s`, and assign it to the string object `'hello'`. On `line 7`, we initialise a local variable `t`, and assign it to the return value of the `fix` method, where the local variable `s` is passed as an argument. 
 
-On `lines 1-4`, we define the `fix` method which takes a single parameter `value`. On `line 2`, we initialise a local variable `value`, which is assigned to the return value of calling the `upcase` method on the object which is passed by reference by the `value` method parameter. As the `.upcase` method is not mutating, this has the effect of initialising the local variable `value` on a new string object, `'HELLO'` per the returned value of calling `upcase` on the `'hello'` string object. 
+On `lines 1-4`, we define the `fix` method which takes a single parameter `value`. On `line 2`, we reassign the local variable `value`, which is assigned to the return value of calling the `upcase` method on the object which is passed by reference by the `value` method parameter. As the `.upcase` method is not mutating, this has the effect of initialising the local variable `value` on a new string object, `'HELLO'` per the returned value of calling `upcase` on the `'hello'` string object. 
 
 On `line 3`, we mutate this `value` object by calling the destructive `.concat` method on it, with the `'!'` string object passed as an argument. This has the ffect of appending a `'!'` character to the `'HELLO'` string object. As there is no explicit `return` in this method, the return value of this `.concat` method call is what the `fix` method call will return (with the local variable `s` as an argument). 
 
@@ -455,7 +459,7 @@ t = fix(s)
 ```
 On `line 7`, we initialise a local variable `s`, which is assigned to the string object `'hello'`. On `line 8`, we initialise a local variable `t`, which is assigned to the return value of the `fix` method with the local variable `s` passed to it as an argument. 
 
-On `lines 1-5`, we define a method, `fix` which takes a single parameter (`value`). On `line 2`, the local variable `value` is initialised, and passed the string object by the method parameter `value` (`'hello'`). We use the shovel operator (`<<`) to destructively append the string object `'xyz'` to the original string object referenced by the local variable `value`. This has the effect of mutating the original string object from `'hello'` to `'helloxyz'`.
+On `lines 1-5`, we define a method, `fix` which takes a single parameter (`value`). On `line 2`, the string object referenced by the local variable `value` has the shovel operator (`<<`) applied to destructively append the string object `'xyz'`. This has the effect of mutating the original string object from `'hello'` to `'helloxyz'`.
 
 On `line 3`, we reassign the local variable `value` to the return value of calling the `.upcase` method on the string object referenced by `value`. Since the `.upcase` method is non destructive, this creates a __new__ string object (`'HELLOXYZ!'`), which `value` is now referencing. On `line 4`, we call the `.concat` method on the local variable `value`, passing in a string object `'!'` as an argument. This has the effect of mutating the string object referenced by `value` (`'HELLOXYZ'`) to `'HELLOXYZ!'`. As there is no explicit `return` in this method, and `line 4` is the last evaluated expression, this method will return `'HELLOXYZ!'`. 
 
@@ -473,7 +477,7 @@ t = fix(s)
 ```
 We initialise a local variable `s` on `line 7` to a string object `'hello'`. On `line 8`, we initialise a local variable `t` to the returned value of the `fix` method call with the local variable `s` passed as an argument. 
 
-On `lines 1-4`, we define the `fix` method with a single parameter (`value`). On `line 2`, the local variable `value` is initialised and passed a string object from the `value` method parameter and the `.upcase!` method is called on this string object. As `.upcase!` is a destructive method, this has the effect of mutating the string object that was passed as an argument to the `fix` method. While `line 2` also also reassigns the local variable `value` to the return value of this `.upcase!` method call, since the `.upcase!` method call is destructive (i.e. a new string object is __not__ created), the reassignment is rebinding the same string object to the `value` local variable. 
+On `lines 1-4`, we define the `fix` method with a single parameter (`value`). On `line 2`, the local variable `value` (which is referencing the string object `'hello'` passed as an argument) has the `upcase!` method is called on it. As `.upcase!` is a destructive method, this has the effect of mutating the string object that was passed as an argument to the `fix` method. While `line 2` also also reassigns the local variable `value` to the return value of this `.upcase!` method call, since the `.upcase!` method call is destructive (i.e. a new string object is __not__ created), the reassignment is rebinding the same string object to the `value` local variable. 
 
 On `line 3`, the `concat` method is called on the string object referenced by the local variable `value`, with the string object `'!'` passed in as an argument. The `concat` method is destructive, meaning that the string object is mutated and now has a value of `'hello!'`. As this is the last evaluated expression in the method, and there is no explicit `return`, `'hello!'` is what will be returned by the `fix` method call. 
 
@@ -566,7 +570,7 @@ On `line 1`, we initialise a local variable `array` and assign it to an array ob
 
 On `line 3`, we call the `select` method on the local variable `array` passing in a block (as denoted by the `do..end` reserved words immediately following the `select` method invocation). This block takes a single parameter, `num`. 
 
-The `select` method iterates through the elements of the array object it's called on, and returns a new array object based on the truthiness of the returned value of the block. 
+The `select` method iterates through the elements of the array object it's called on, and returns a new array object based on the truthiness of the returned value of the block. It invokes the block once for each element in the array object upon which the `select` method is called. 
 
 In this example on `line 2`, we call the `.odd?` method on each array element passed to the block. Based on whether the element is evaluated as true in the `if` conditional (i.e. whether the value of the integer object passed to the block through the block parameter `num` is odd), the element will be passed as an argument to the `puts` method call, which will output that element as a string and return `nil`. 
 
@@ -578,7 +582,7 @@ arr = [​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, �
 arr.select { |n| n.odd? }
 ```
 On `line 1`, the local variable `arr` is initialised and assigned to an array object `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]`.
-On `line 2`, we call the `select` method on the array object referenced by `arr`, with a block (as denoted by `{}` immediately following the `select` method call). This block is passed as an argument to the `select` method. The `select` method iterates through each element of the array object and returns a new array object that is populated based on the truthiness of the return value of the block. 
+On `line 2`, we call the `select` method on the array object referenced by `arr`, with a block (as denoted by `{}` immediately following the `select` method call). This block is passed as an argument to the `select` method. The `select` method iterates through each element of the array object and returns a new array object that is populated based on the truthiness of the return value of the block. The `select` method invokes the block once for each element in the calling array object. 
 
 On each iteration, each element of the array object is passed to the block parameter `n`. The `.odd?` method is then called on value of the block parameter `n`, which evaluates whether the element passed to it is odd (returns `true` if odd). In this example, this will return a new array object `[1, 3, 5, 7, 9]`, since those are the integer elements for which the block will evaluate as `true`. 
 
@@ -594,7 +598,9 @@ p new_array
 ```
 On `line 1`, we initialise a local variable `arr` and assign it to the array object `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]`. On `line 3`, we initialise a local variable `new_array`, which we assign to the return value of the `select` method call on the array object referenced by the `arr` local variable. 
 
-The `select` method is called on the array object referenced by the local variable `arr`, with a block passed as an argument (the block is denoted by the `do..end` reserved words immediately following the `select` method call). The block takes a single parameter `n`. In this case, each element in the array object is passed to the block through the block parameter `n`, upon which the `Integer#+` method is called. 
+The `select` method is called on the array object referenced by the local variable `arr`, with a block passed as an argument (the block is denoted by the `do..end` reserved words immediately following the `select` method call). The block takes a single parameter `n`. The `select` method invokes the block once for each element in the calling array object. 
+
+In this case, each element in the array object is passed to the block through the block parameter `n`, upon which the `Integer#+` method is called. 
 
 The `select` method only evaluates the truthiness of the return value of the block (the actual value returned is ignored). Everything in Ruby is evaluated as truthy except for `false` and `nil`. Since there is no explicit `return` within the block, the last evaluated expression will be returned. 
 
@@ -612,13 +618,13 @@ end
 p new_array
 ```
 On `line 1`, we initialise a local variable `arr` and assign it to the array object `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]`. 
-On `line 3`, we initialise a local variable `new_array` and assign it to the return value of calling the `select` method with a block (as denoted by the `do...end` reserved words immediately following the `select` method call) passed as an argument, on the array object referenced by `arr`. 
+On `line 3`, we initialise a local variable `new_array` and assign it to the return value of calling the `select` method with a block (as denoted by the `do...end` reserved words immediately following the `select` method call) passed as an argument, on the array object referenced by `arr`. The block takes a single parameter, `n`. The `select` method invokes the block once for each element in the calling array object. 
 
-The `select` method will return a new array with elements returned by the block that are truthy. In Ruby, everything except for `false` and `nil` are evaluated as truthy. In our case, each element of the array object `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]` is passed to the block parameter `n`.
+The `select` method will return a new array with elements returned by the block that are truthy. In Ruby, everything except for `false` and `nil` are evaluated as truthy. In our case, each element of the array object `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]` is passed to the block parameter `n`. 
 
-The expression on `line 4` is executed, but ultimately ignored in the evaluation of the element's truthiness (the return value is not assigned to a variable at any stage or evaluated any further). 
+On `line 4`, we initialise a local block variable `n` and assign it to the array element passed to the block parameter `n`. The expression on `line 4` is executed, but ultimately ignored in the evaluation of the element's truthiness (the return value is not assigned to a variable at any stage or evaluated any further). 
 
-On `line 5`, the value of the block parameter `n` is passed to the `puts` method as an argument, which outputs the element, and returns `nil`. Since there is no explicit `return` in the block, Ruby will return the value of the last evaluated expression in the block. In this case, that return value is `nil`. All of the elements that are passed into the block will be evaluated as `nil` due to the `puts` statement being the last evaluated expression in the block (the `puts` method call always returns `nil`). 
+On `line 5`, the local block variable `n` is passed to the `puts` method as an argument, which outputs the element, and returns `nil`. Since there is no explicit `return` in the block, Ruby will return the value of the last evaluated expression in the block. In this case, that return value is `nil` (the `puts` method call always returns `nil`). 
 
 Since none of the values returned by the block are truthy, the `select` method will return an empty array and this is assigned to the local variable `new_array`. When we pass the local variable `new_array` as an argument to the `p` method call on `line 8`, this will both output and return an empty array. 
 
@@ -634,13 +640,13 @@ p new_array
 ```
 On `line 1`, we initialise a local variable `words` and assign it to an array object, `['jump', 'trip', 'laugh', 'run', 'talk']`. The `w%` method converts any arguments passed to it into a string object, place it in an array, and return the array object. 
 
-On `line 3`, we initialise a local variable `new_array`, and assign it to the return value of the `map` method call on the array object referenced by the `words` local variable. The `map` method takes a block (denoted by the `do...end` reserved words immediately following the `map` method call). 
+On `line 3`, we initialise a local variable `new_array`, and assign it to the return value of the `map` method call on the array object referenced by the `words` local variable. The `map` method takes a block (denoted by the `do...end` reserved words immediately following the `map` method call). The `map` method will invoke the block once for each element in the calling object. The block takes a single parameter, `word`.
 
-The `map` method will iterate through each element of the array object and return a new array, populated with the return values of the block. In this case, as each element within the array object (referenced by the `words` local variable) is passed to the block parameter `words`, the `start_with?("t")` method is called on the value of the object passed by the block parameter `words`. 
+The `map` method will iterate through each element of the array object and return a new array, populated with the return values of the block. In this case, as each element within the array object is passed to the block parameter `word`, we initialise a local block variable `words` and assign that array element to it. The `start_with?("t")` method is called on the value of the object passed by the local block variable `words`. 
 
 This method returns a boolean based on whether the first character of the string object the method is called on, matches the character passed to the method as an argument. 
 
-In our case, this will return a new array `[false, true, false, false, true]`, since these are the return values as evaluated by the expression in the block. As such, the local variable `new_array` is assigned to the returned `[false, true, false, false, true]` array object. 
+In our case, this will return a new array `[false, true, false, false, true]`, since these are the return values as evaluated by the expression in the block. The local variable `new_array` is assigned to the returned `[false, true, false, false, true]` array object. 
 
 When we pass the `new_array` variable as an argument to the `p` method call on `line 7`, this will output and return `[false, true, false, false, true]`.
 
@@ -649,11 +655,13 @@ When we pass the `new_array` variable as an argument to the `p` method call on `
 arr = [​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​] 
 arr.each { |n| puts n }
 ```
-On `line 1`, the local variable `arr` is initialised and assigned to an array object `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]`. On `line 2`, the `each` method is called on the array object referenced by the local variable `arr`. The `each` method is passed a block (as denoted by the `{}` immediately following the `each` method call) as an argument, which takes a parameter `n`. 
+On `line 1`, the local variable `arr` is initialised and assigned to an array object `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]`. On `line 2`, the `each` method is called on the array object referenced by the local variable `arr`. The `each` method is passed a block (as denoted by the `{}` immediately following the `each` method call) as an argument, which takes a parameter `n`. It invokes the block once for each element in the calling array object. 
 
 The `each` method returns the original object it was called on (here, the `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]` array object referenced by `arr`), ignoring the return value of the block. 
 
-The `each` method iterates through each element of the array object, passing each element to the method parameter `n`. The object referenced by the block parameter `n` is then passed to the `puts` method call as an argument, which outputs each element of the array object, converted to a string object on a separate line, and returns `nil` (since there is no explicit `return`, the method will return the last evaluated expression in the method, which is the `puts` method call, which always returns `nil`).
+The `each` method iterates through each element of the array object, passing each element to the method parameter `n` and invoking the block. A local block variable `n` is initialised, which is assigned to the object referenced by the block parameter `n`. 
+
+The local block variable `n` is then passed to the `puts` method call as an argument, which outputs each element of the array object, converted to a string object on a separate line, and returns `nil` (since there is no explicit `return`, the method will return the last evaluated expression in the method, which is the `puts` method call, which always returns `nil`).
 
 *39) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -669,7 +677,7 @@ On `line 1`, we initialise a local variable `arr` and assign it to the array obj
 
 The `map` method has a block passed to it as an argument (as denoted by the `do...end` reserved words immediately following the `map` method call), and iterates through each element of the array object, passing it to the block parameter `n`. 
 
-The `map` method returns a new array, based on the return value of the block. In this case, each integer element of the array object (the value of the block parameter `n` on each iteration) has the `Integer#+` method applied to it, so that each element has `1` added to it (`1` is the object passed as an argument to the `Integer#+` method). 
+The `map` method returns a new array, based on the return values of the block across each iteration. In this case, each integer element of the array object (the value of the block parameter `n` on each iteration) has the `Integer#+` method called on it, so that each element has `1` added to it (`1` is the object passed as an argument to the `Integer#+` method). 
 
 As there is no explicit `return` in the block, the last evaluated expression is returned - the value of `n + 1` in this case. As such, the `map` method will return a new array object (since the `map` method is non-destructive) of `[​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​, 11]`, and this is what is assigned to the local variable `incremented`.
 
@@ -687,9 +695,11 @@ p new_array
 ```
 On `line 1`, we initialise the local variable `arr` and assign it to an array object `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]`. This will return `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]`. On `line 3`, we initialise the local variable `new_array` and assign it to the return value of calling the `map` method on the array object referenced by the local variable `arr`. 
 
-When we call the `map` method on the array object referenced by the local variable `arr`, we pass in a block (denoted by the `do...end` reserved words immediately following the `map` method call). The block takes a single parameter, `n`. The `map` method iterates through each element within the array object, and passes it to the block. The .`map` method returns a new array object, based on the return value of the block on each iteration. 
+When we call the `map` method on the array object referenced by the local variable `arr`, we pass in a block (denoted by the `do...end` reserved words immediately following the `map` method call). The block takes a single parameter, `n` and is invoked once for each element in the calling array object. 
 
-On `line 4`, we initialise the local variable `n`, which is passed each element of the array object from the block parameter `n`, and apply the integer method `Integer#>` to that element, with the integer object `1` passed as an argument. This returns a boolean if the value of that array element is greater than `1`. As this is the last evaluated expression in our block (there is no explicit `return`), the block will return this boolean on each iteration. 
+The `map` method iterates through each element within the array object, passing it to the block parameter `n`. The `map` method returns a new array object, based on the return values of the block across each iteration. 
+
+On `line 4`, we initialise the local variable `n`, which is passed each element of the array object from the block parameter `n`, and call the integer method `Integer#>` on that element, with the integer object `1` passed as an argument. This returns a boolean based on whether the value of that array element is greater than `1`. As this is the last evaluated expression in our block (there is no explicit `return`), the block will implicitly return this boolean on each iteration. 
 
 After all the elements are iterated through, the `map` method will return a new array object `[false, true, true, true, true, true, true, true, true, true]`. This is what is assigned to the local variable `new_array`.
 
@@ -708,11 +718,13 @@ p new_array
 ```
 On `line 1`, we initialise the local variable `arr` and assign the array object `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]` to it. 
 
-On `line 3`, we initialise the local variable `new_array` and assign the return value of calling the `map` method on the array object referenced by `arr`. As part of the `map` method call, we pass in a block (denoted by the `do...end` reserved words immediately following the `map` method call). The block takes a single parameter, `n`. 
+On `line 3`, we initialise the local variable `new_array` and assign the return value of calling the `map` method on the array object referenced by `arr`. As part of the `map` method call, we pass in a block (denoted by the `do...end` reserved words immediately following the `map` method call). The block takes a single parameter, `n` and is invoked once for each element in the calling array object. 
 
 The `map` method iterates through each element of the array object it is called on and returns a new array, whose contents are the return value of the block passed to it. 
 
-On `line 4`, we initialise a local variable `n`, and pass it an array element from the block parameter `n`. We call the `Integer#>` method on that array element, passing it an argument of `1`. This will evaluate whether the value of the array element is greater than `1`, and return a boolean on whether this condition is true or not. On `line 5`, we call the `puts` method and pass the local variable `n` to it (referencing value of the array element), which will output the array element, and return `nil` (the `puts` method always returns `nil`). 
+On `line 4`, we initialise a local variable `n`, and pass it an array element from the block parameter `n`. We call the `Integer#>` method on that array element, passing it an argument of `1`. This will evaluate whether the value of the array element is greater than `1`, and return a boolean on whether this condition is true or not. 
+
+On `line 5`, we call the `puts` method and pass the local variable `n` to it (referencing value of the array element), which will output the array element, and return `nil` (the `puts` method always returns `nil`). 
 
 After each element of the array has been iterated through by the .`map` method, it returns a new array object `[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]`. This is because there is no explicit `return` within the block, and so the last evaluated expression is returned - this is the `puts` method call, which always returns `nil`. The local variable `new_array` is assigned this `[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]` array object. 
 
@@ -723,7 +735,7 @@ We then call the `p` method on `line 8`, passing the local variable `new_array` 
 a = ​"hello"
 [​1​, ​2​, ​3​].map { |num| a }
 ```
-On `line 1`, we initialise the local variable `a` and assign it to the string object `'hello'`. On `line 2`, we call the `map` method on the array object `[1, 2, 3]`. We pass a block to the `map` method (denoted by `{}` immediately following the `map` method call). The block takes a single parameter, `num`. 
+On `line 1`, we initialise the local variable `a` and assign it to the string object `'hello'`. On `line 2`, we call the `map` method on the array object `[1, 2, 3]`. We pass a block to the `map` method (denoted by `{}` immediately following the `map` method). The block takes a single parameter, `num` and is invoked once for each element in the calling array object. 
 
 The `map` method iterates through each element of the array object on which it's called, passing each element to the block parameter `num`. In our example, the array element passed to the block parameter `n` is not used. Instead, we return the local variable `a`, as the inner block scope is able to access local variables initialised outside of the block. On each iteration, as there's no explicit `return` in the block, the block will implicitly return the last evaluated expression in the block, which is the `a` local variable. 
 
@@ -735,9 +747,9 @@ The `map` method returns a new array object, containing the returned value of th
   num > ​2
 end
 ```
-On `line 1`, we call the `.any?` method on the array object `[1, 2, 3]`. We pass a block to the `any?` method call (denoted by the `do...end` reserved words immediately following the `.any?` method call), which takes a single parameter `num`. The `.any?` method iterates through each of the elements in the array object passed, passing each element to the block parameter `num`. 
+On `line 1`, we call the `.any?` method on the array object `[1, 2, 3]`. We pass a block to the `any?` method call (denoted by the `do...end` reserved words immediately following the `.any?` method call), which takes a single parameter `num`. The block is invoked once for each element in the calling array object. The `.any?` method iterates through each of the elements in the array object passed, passing each element to the block parameter `num`. 
 
-On `line 2`, we initialise a local variable `num` and pass it an array element from the block parameter `num`. We then call the `Integer#>` method on that array element, passing in the integer `2` as an argument. This evaluates whether the value of the array element is greater than `2` and returns a boolean. Only the third  array element passed to the local variable `num` will evaluate to `true`. As there is no explicit `return` in our block, the implicit return value of the block will be the boolean returned by the `Integer#>` method.
+On `line 2`, we initialise a local block variable `num` and assign it to an array element from the block parameter `num`. We then call the `Integer#>` method on that array element, passing in the integer `2` as an argument. This evaluates whether the value of the array element is greater than `2` and returns a boolean. Only the third  array element passed to the local variable `num` will evaluate to `true`. As there is no explicit `return` in our block, the implicit return value of the block will be the boolean returned by the `Integer#>` method.
 
 The `.any?` method will return `true` if any of returned values of the block return `true`, which does occur in our example. 
 
@@ -749,9 +761,9 @@ end
 ```
 On `line 1`, we call the `.any?` method on the hash object `{ ​a:​ ​"ant"​, ​b:​ ​"bear"​, ​c:​ ​"cat"​ }`, passing in a block to the `.any?` method as an argument (the block is denoted by the `do...end` reserved words immediately following the `.any?` method call). The block takes two parameters, `key` and `value`.
 
-The `.any?` method passes each key and value pair of the hash object to the block parameters `key` and `value` respectively to be evaluated on `line 2`. On `line 2`, we initialise a local variable `value` and pass the value of key-value pair from the block parameter `value` and call the `.size` method on it. This will return an integer object representing the character length of the string object passed to it. 
+The `.any?` method passes each key and value pair of the hash object to the block parameters `key` and `value` respectively to be evaluated on `line 2`. On `line 2`, we initialise a local variable `value` and pass the value object of the key-value pair from the block parameter `value` and call the `.size` method on it. This will return an integer object representing the character length of the string object passed to it. 
 
-We then call the `Integer#>` method on the returned integer object value from the `.size` method call, passing in `4` as an argument. This evaluates whether the value of the integer object is greater than `4` and return a boolean based on whether this condition is true. As there is no explicit return in our block, this boolean will be returned by the block (since it is the last evaluated expression in the block).
+We then call the `Integer#>` method on the returned integer object from the `.size` method call, passing in `4` as an argument. This return a boolean based on whether the value of the integer object is greater than `4`. As there is no explicit return in our block, this boolean will be returned by the block (since it is the last evaluated expression in the block).
 
 The code will return `false`, since none of the string object values in the hash have more than `4` characters (`line 2` will never return `true`). 
 
@@ -761,7 +773,7 @@ The code will return `false`, since none of the string object values in the hash
   num > ​2
 end
 ```
-On `line 1`, we call the `.all?` method on the array object `[1, 2, 3]`, passing in a block (denoted by the `do...end` reserved words immediately following the `.all?` method call). The block takes a single parameter, `num`. 
+On `line 1`, we call the `.all?` method on the array object `[1, 2, 3]`, passing in a block (denoted by the `do...end` reserved words immediately following the `.all?` method call). The block takes a single parameter, `num` and is executed once per element in the calling array object. 
 
 The `.all?` method iterates through each element of the array object, passing it to the block parameter `num`. On `line 2`, the local variable `num` is initialised and assigned to the array element passed by the block parameter `num`. We then call the `Integer#>` method on this value, passing in an integer object `2` as an argument. This will return a boolean based on whether the value of the array element is greater than `2`. As there is no explicit return in our block, the boolean returned by the `Integer#>` method call is what will be implicitly returned by the block. 
 
@@ -773,7 +785,7 @@ The `.all?` method will return `true` if all of the return values of the block e
   value.length >= ​3
 end
 ```
-On `line 1`, we call the `.all?` method on the hash object `{ ​a:​ ​"ant"​, ​b:​ ​"bear"​, ​c:​ ​"cat"​ }`, passing in a block (denoted by the `do...end` reserved words immediatley following the `.all?` method call). The block takes two parameters, `key` and `value`. 
+On `line 1`, we call the `.all?` method on the hash object `{ ​a:​ ​"ant"​, ​b:​ ​"bear"​, ​c:​ ​"cat"​ }`, passing in a block (denoted by the `do...end` reserved words immediatley following the `.all?` method call). The block takes two parameters, `key` and `value` and is executed once per key-value pair in the calling hash object. 
 
 The `.all?` method interates through each key and value pair of the hash object, and passes them to the `key` and `value` block parameters respectively. On `line 2`, we initialise a local variable `value` and assign it to the string object passed by the `value` parameter (representing the value of the key-value pairs in the hash object). 
 
@@ -787,7 +799,7 @@ The `.all?` method will return `true` only if all of the returned values of the 
   puts ​"The index of ​#{num}​ is ​#{index}​."
 end
 ```
-On `line 1`, we call the `each_with_index` method on the array object `[1, 2, 3]`, passing in a block (denoted by the `do...end` reserved words immediately following the `each_with_index` method call). The block takes two parameters, `num` and `index`.
+On `line 1`, we call the `each_with_index` method on the array object `[1, 2, 3]`, passing in a block (denoted by the `do...end` reserved words immediately following the `each_with_index` method call). The block takes two parameters, `num` and `index` and is executed once per element in the calling array object. 
 
 The `each_with_index` method interates through each element in the array object, passing the element to the `num` block parameter, and the index of that element to the `index` block parameter. 
 
@@ -803,7 +815,7 @@ The `puts` method returns `nil` on each iteration. However, the `each_with_index
   array << pair.last
 end
 ```
-On `line 1`, we call the `each_with_object` method on the hash object `{ ​a:​ ​"ant"​, ​b:​ ​"bear"​, ​c:​ ​"cat"​ }`, passing in a block (denoted by the `do...end` reserved words immediately following the `each_with_object` method call). We also pass an empty array object as an argument to the `each_with_object` method.
+On `line 1`, we call the `each_with_object` method on the hash object `{ ​a:​ ​"ant"​, ​b:​ ​"bear"​, ​c:​ ​"cat"​ }`, passing in a block (denoted by the `do...end` reserved words immediately following the `each_with_object` method call). The block takes two parameters, and is executed once per key-value pair in the calling hash object. We also pass an empty array object as an argument to the `each_with_object` method.
 
 The `each_with_object` method iterates through each key-value pair in our hash object, passing them to the block parameter `pair`. On `line 2`, we initialise a local variable `array`, passing it the empty array object from the `array` block parameter. We initialise the local variable `pair`, assigning it an array containing a key and value from the `pair` block parameter. 
 
@@ -817,7 +829,7 @@ In our case, the `each_with_object` method returns a new array object populated 
   hash[value] = key
 end
 ```
-On `line 1`, we call the `each_with_object` method on the hash object `{ ​a:​ ​"ant"​, ​b:​ ​"bear"​, ​c:​ ​"cat"​ }`. We also pass in an empty hash object as an argument, as well as a block to the `each_with_object` method (denoted by the `do...end` reserved words immediately following the `each_with_object` method call). The block takes two parameters, `(key, value)` and `hash`. The `(key, value)` is technically a single parameter, but will take an array containing two values. 
+On `line 1`, we call the `each_with_object` method on the hash object `{ ​a:​ ​"ant"​, ​b:​ ​"bear"​, ​c:​ ​"cat"​ }`. We also pass in an empty hash object as an argument, as well as a block to the `each_with_object` method (denoted by the `do...end` reserved words immediately following the `each_with_object` method call). The block takes two parameters, `(key, value)` and `hash` and is executed once for each key-value pair in the calling hash object. The `(key, value)` is technically a single parameter, but will take an array containing two values. 
 
 The `each_with_object` iterates through each key-value pair in our hash object, and will pass these keys and values to the `(key, value)` parameter. We will use multiple assignment to assign these different values to different local block variables. 
 
@@ -836,7 +848,7 @@ end
 p odd
 p even
 ```
-On `line 1`, we initialise two local variables, `odd` and `even`, and assign them to the return values of the `.partition` method call on the array object `[1, 2, 3]` using multiple assignment. We pass a block to the `partition` method (denoted by the `do...end` reserved words immediately following the `partition` method call). The block takes a single parameter `num`. 
+On `line 1`, we initialise two local variables, `odd` and `even`, and assign them to the return values of the `.partition` method call on the array object `[1, 2, 3]` using multiple assignment. We pass a block to the `partition` method (denoted by the `do...end` reserved words immediately following the `partition` method call). The block takes a single parameter `num` and is executed once for each element in the calling array object.
 
 The `partition` method iterates through each element of the array object, passing it to the block. It will assign each element to two different variables depending on whether the block evaluates true or not for that array element. If the block evaluates to true, it will assign that element to the first variable. If the block evalutes to false, it will assign that element to the second variable. 
 
@@ -886,7 +898,7 @@ Instead, the `puts` method on `line 10` is called, with the string object `'inte
   'hi'
 end
 ```
-On `line 1`, we call the `select` method on the array object `[1, 2, 3]`, with a block (denoted by the `do...end` reserved words immediately following the `select` method). The block takes a single parameter, `num`. The `select` method iterates through each element of the array object, passing it to the `num` block parameter. 
+On `line 1`, we call the `select` method on the array object `[1, 2, 3]`, with a block (denoted by the `do...end` reserved words immediately following the `select` method). The block takes a single parameter, `num` and is executed once per element in the array. The `select` method iterates through each element of the array object, passing it to the `num` block parameter. 
 
 On `line 2`, the local block variable `num` is initialise and assigned an element of the array object through the `num` block parameter. We then call the `#Integer#>` method on this element, passing `5` as an argument. This will return a boolean based on whether the value of the array element is greater than `5`. On `line 3`, a string object `'hi'` is returned. The return values on `lines 2-3` do not affect what the `select` method returns, since the `select` method does not do anything with returned values - it only returns the array object on which it was called. In this case, the `select` method will return `[1, 2, 3]`.
 
@@ -896,7 +908,9 @@ On `line 2`, the local block variable `num` is initialise and assigned an elemen
   str.length < 4
 end
 ```
-On `line 1`, we call the `count` method on the array object `['ant', 'bat', 'caterpillar']`. We also pass a block to the `count` method, denoted by the `do/end` reserved words immediately following the `count` method. The block takes a single parameter, `str`. When the block is passed to the `count` method, it will iterate through each element of the array object it was called on, and return an integer object based on what the block returns (a boolean).
+On `line 1`, we call the `count` method on the array object `['ant', 'bat', 'caterpillar']`. We also pass a block to the `count` method, denoted by the `do/end` reserved words immediately following the `count` method. The block takes a single parameter, `str` and will be executed once for each element in the calling array object.
+
+When the block is passed to the `count` method, it will iterate through each element of the array object it was called on, and return an integer object based on what the block returns (a boolean).
 
 In our case, the `count` method iterates through the array, passing each element to the `str` block parameter. On `line 2`, we initialise a local variable `str` and assign it to the array element from the block parameter `str`. We then call the `length` method on the array element referenced by the local variable `str`, which returns an integer object representing the number of characters of the array element it's called on. This integer object has the `Integer#<` method called on it, with `4` passed as an argument. In our case, this returns a boolean based on whether the integer object the method is called on is smaller than `4`. 
 
@@ -908,7 +922,7 @@ For this code, two elements in the array object have a string length of less tha
   puts num
 end
 ```
-On `line 1`, we call the `reject` method on the array object `[1, 2, 3]` with a block (denoted by the `do/end` reserved words immediately following the `reject` method). The block takes a single parameter, `num`. 
+On `line 1`, we call the `reject` method on the array object `[1, 2, 3]` with a block (denoted by the `do/end` reserved words immediately following the `reject` method). The block takes a single parameter, `num` and will be invoked once for each element in the calling array object. 
 
 The `reject` method will iterate through each element of the array object and pass it to the block. The `reject` method returns a new array object with elements that are evaluated as `false` by the block. 
 
@@ -922,7 +936,7 @@ In Ruby, everything is truthy, except for `nil` and `false`. Since the `puts` me
   hash[value[0]] = value
 end
 ```
-On `line 1`, we call the `each_with_object` method on the array object `['ant', 'bear', 'cat']`, with a block (as denoted by the `do/end` reserved words immediately following the `each_with_object` method). The block takes two parameters, `value` and `hash`. We also pass the `each_with_object` method an empty hash as an argument. 
+On `line 1`, we call the `each_with_object` method on the array object `['ant', 'bear', 'cat']`, with a block (as denoted by the `do/end` reserved words immediately following the `each_with_object` method). The block takes two parameters, `value` and `hash`. The block will be invoked once for each element in the calling array object. We also pass the `each_with_object` method an empty hash as an argument. 
 
 The `each_with_object` method iterates through each element of the array object, passing it to the `value` block parameter. The empty hash that was passed as an argument is passed to the `hash` block parameter. 
 
