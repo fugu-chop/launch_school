@@ -7,6 +7,7 @@
 - [6th, Fri](#061120-fri)
 - [7th, Sat](#071120-sat)
 - [8th, Sun](#081120-sun)
+- [9th, Mon](#091120-mon)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -153,3 +154,19 @@ __*Thoughts*__<br/>
 I've been reviewing some of my earlier answers to the practice problems, and there's a few examples where I could have tidied up the language. Still, it's encouraging that my latter answers have required less amendments. There's still a few exam questions I'd like to go through before I attempt the test, but I feel like I'm in a good place to attempt the test during the week. 
 
 I can't wait to do this written test. I am kind of sick of doing the same thing repetitively - I've been doing this almost exclusively for the past 3 days. I just hope I pass. 
+
+##### 09/11/20 (Mon)
+__*Concepts covered*__<br/>
+- RB109 Preparation
+  - Answer review
+  - Practice Problems
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I think have been describing how iterators pass collection elements to the block incorrectly. I'm still not 100% sure I am describing it correctly, but my new explanation seems consistent with the `Introduction to Ruby` book that I read in the earlier courses. 
+
+I *believe* that what happens is that iterators pass elements to the block parameter, this initialises a local block variable and assigns that element to the local block variable (and can be referred to as such, based on Srdjan's blog post), before any of the rest of the block is executed. 
+
+What I previously had said was that a new local variable was initialised with the same name as the block parameter *after* the object had already been passed to the parameter (which doesn't seem to make sense in retrospect, as you would lose any previously referenced objects if you reassigned a variable). I'll make an effort to rewrite my previous incorrect answers. 
