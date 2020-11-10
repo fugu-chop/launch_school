@@ -26,7 +26,7 @@ Sorting is essentially carried out by comparing the items in a collection with e
 
 Under the hood, Ruby uses the spaceship operator (`<=>`) to help determine how to sort a collection. 
 
-Any object in a collection that we want to sort __must implement__ a `<=>` method. This method performs comparison between two objects of the __same type__ and __returns__ a `-1`, `0`, or `1`, depending on whether the first object is less than, equal to, or greater than the second object; if the two objects cannot be compared, then `nil` is returned.
+Any object in a collection that we want to sort __must implement__ a `<=>` operator. This method performs comparison between two objects of the __same type__ and __returns__ a `-1`, `0`, or `1`, depending on whether the first object is less than, equal to, or greater than the second object; if the two objects cannot be compared, then `nil` is returned.
 ```
 2 <=> 1
 => 1
