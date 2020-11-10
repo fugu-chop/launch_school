@@ -185,3 +185,13 @@ __*Thoughts*__<br/>
 I need to dedicate at least one or two lines at the end of my code descriptions to explain the general principle being demonstrated (e.g. variable shadowing, variables acting as pointers, variable scope). 
 
 I feel pretty good about taking the test tomorrow. I left two small examples as a warm up in the morning tomorrow. I don't feel like I'd make any measurable improvements by continuing to practice or putting the test off any longer. In any case, I should get some good feedback. 
+
+##### 11/11/20 (Wed)
+__*Concepts covered*__<br/>
+- RB109 Written assessment
+
+__*Time spent*__<br/>
+174 minutes
+
+__*Thoughts*__<br/>
+I feel like I completed the written assessment reasonably quickly - timing wasn't really an issue. Generally speaking, I feel like I prepared well enough that I was able to explain the relevant concepts quickly. The only question in my mind is whether the language I used was specifically what the assessors wanted. I really don't have a good sense, since so much of what I read and wrote seemed to differ. I used my best judgement - I'll see what the feedback is. The practice I did felt a little more difficult than what was on the actual assessment. I also like how the assessment questions were significantly more targetted than just 'explain this code please' and pointed you towards specifics they wanted you to answer. 
