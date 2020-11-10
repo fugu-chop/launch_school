@@ -8,6 +8,7 @@
 - [7th, Sat](#071120-sat)
 - [8th, Sun](#081120-sun)
 - [9th, Mon](#091120-mon)
+- [10th, Tue](#101120-tue)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -170,3 +171,17 @@ I think have been describing how iterators pass collection elements to the block
 I *believe* that what happens is that iterators pass elements to the block parameter, this initialises a local block variable and assigns that element to the local block variable (and can be referred to as such, based on Srdjan's blog post), before any of the rest of the block is executed. 
 
 What I previously had said was that a new local variable was initialised with the same name as the block parameter *after* the object had already been passed to the parameter (which doesn't seem to make sense in retrospect, as you would lose any previously referenced objects if you reassigned a variable). I'll make an effort to rewrite my previous incorrect answers. 
+
+##### 10/11/20 (Tue)
+__*Concepts covered*__<br/>
+- RB109 Preparation
+  - Answer review
+  - Practice Problems
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I need to dedicate at least one or two lines at the end of my code descriptions to explain the general principle being demonstrated (e.g. variable shadowing, variables acting as pointers, variable scope). 
+
+I feel pretty good about taking the test tomorrow. I left two small examples as a warm up in the morning tomorrow. I don't feel like I'd make any measurable improvements by continuing to practice or putting the test off any longer. In any case, I should get some good feedback. 
