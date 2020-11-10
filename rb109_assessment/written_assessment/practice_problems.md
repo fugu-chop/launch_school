@@ -1170,6 +1170,15 @@ end
 
 puts a
 ```
+On `line 1`, we initialise a local variable `a` and assign it to an integer object `7`. On `line 2`, we initialise a local variable `array` and assign it to the array object `[1, 2, 3]`.
+
+On `line 4`, we call the `each` method on the array object referenced by the local variable `array`. We pass a block (denoted by the `do/end` reserved words immediately following the `each` method call) to the `each` method, that takes a single parameter, `a`. The `each` method iterates through each element of the array object referenced by `array`, and passes it to the block. 
+
+On `line 5`, the local block variable `a` is assigned to the return value of calling the `Integer#+` method (with an argument of integer object `1`) on the array element passed to the block by the `each` method. However, the `each` method does not do anything with the return value of the block, instead returning the original array object referenced by the local variable `array`. 
+
+On `line 8`, we call the `puts` method, passing in the local variable `a` as an argument. This will output `a` and return `nil` (`puts` always returns `nil`). 
+
+This code snippet demonstrates the concept of variable shadowing. Variable shadowing prevents the block scope from accessing local variables initialised outside of the block where the block parameter has the same name as the local variable. This prevents the local variable `a` from being reassigned on `line 5`.
 
 *71) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -1185,6 +1194,15 @@ end
 my_value(array)
 puts a
 ```
+On `line 1`, we initialise the local variable `a` and assign it an integer object `7`. On `line 2`, we initialise the local variable `array`, assigning it to the array object `[1, 2, 3]`. On `line 10`, we call the `my_value` method, passing the local variable `array` as an argument. 
+
+On `lines 4-8`, we define the `my_value` method, which takes a single parameter `ary`. We pass the array object referenced by the local variable `array` to the method as an argument, upon which the `each` method is called with a block (denoted by the `do/end` reserved words immediately following the `each` method call). The block takes a single parameter, `b`. 
+
+The `each` method passes each element of the array object referenced by `array` to the block, where the local block variable `a` is initialised.
+
+However, since method definitions create their own scope and do not have access to variables initialised outside of that scope (we also did not pass in the object referenced by the local variable `a` as an argument to the `my_value` method), the `my_value` method will raise a `NoMethodError` exception, as we cannot call the `Integer#+` method on `nil`. The `my_value` method has no concept of what the object being referenced by the local variable `a` is).
+
+On `line 11`, we call the `puts` method, passing the local variable `a` as an argument. This will output a string (`'7'`) and return `nil`. 
 
 *72) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -1194,6 +1212,9 @@ end
 
 puts meal
 ```
+On `line 5`, we call the `puts` method, and pass the return value of calling the `meal` method. On `line 1-3` we define the `meal` method. Calling this method will return the string object `'Breakfast'`, as there is an explicit `return`. 
+
+Therefore, the `puts` method call will output a string object `'Breakfast'` and return `nil` (`puts` always returns `nil`). 
 
 *73) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -1203,6 +1224,9 @@ end
 
 puts meal
 ```
+On `line 4`, we call the `puts` method, passing the return value of the `meal` method call as an argument. On `lines 1-3`, we define the `meal` method. Where there is no explicit return in the method definition, Ruby will implicitly return the last evaluated expression in the method, which is the string object `'Evening'`. 
+
+Thus, when we call the `puts` method on `line 4`, we pass a string object `'Evening'` as an argument, which will output the string object `'Evening'` and return `nil` (`puts` always returns `nil`).
 
 *74) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -1213,6 +1237,9 @@ end
 
 puts meal
 ```
+On `line 5`, we call the `puts` method, passing in the return value of the `meal` mehod call as an argument. On `line 1-4`, we define the `meal` method. On `line 2`, there is an explicit `return` reserved word, which will return the expression immediately following it, and stop further execution of any code within the method definition when `meal` is called. As such, the return value of the `meal` method is the string object `'Breakfast'`. 
+
+When this is passed to the `puts` method as an argument, this prints the string object `'Breakfast'` and returns `nil` (since `puts` method calls always return `nil`).
 
 *75) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -1223,6 +1250,13 @@ end
 
 puts meal
 ```
+On `line 6`, we call the `puts` method, passing the return value of the `meal` method call as an argument. 
+
+On `lines 1-4`, we define the `meal` method. On `line 2`, the `puts` method is called with the string object `'Dinner'` as an argument. This will output `'Dinner'` and return `nil` (`puts` method calls always return `nil`). However, there is an additional expression after `line 2`, so in effect, this `nil` return value is ignored (though the string object `'Dinner'` is still output).
+
+On `line 3`, an explicit `return` reserved word is used, which will stop further execution of the method (there isn't anything further to execute here) and return the expression immediately following the `return` reserved word. In our case, the `meal` method will return the string object `'Breakfast'`. 
+
+Therefore, the `puts` method call on `line 6` will output `'Dinner'` and `'Breakfast'` on different lines and return `nil`. 
 
 *76) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -1233,6 +1267,13 @@ end
 
 p meal
 ```
+On `line 6`, we call the `p` method, and assign the return value of the `meal` method call to it. 
+
+On `line 1-4`, we define the `meal` method. On `line 2`, the string object `'Dinner'` is returned. However, since this object is not assigned to a variable and used elsewhere in the method, and is not the last expression evaluated in the method, it is ignored when the method is called. 
+
+On `line 3`, we call the `puts` method, passing the string object `'Dinner'` as an argument. This will output `'Dinner'` and return `nil` (`puts` method calls always return `nil`). Since there is no explicit `return` reserved word in our method definition, Ruby will implicitly return the value of the last evaluated expression in the method. In this case, `nil` due to the `puts` call. 
+
+Therefore, on `line 6`, the `p` method will output a string object `'Dinner'` and `nil` on separate lines, and return `nil`.
 
 *77) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -1244,6 +1285,11 @@ end
 
 puts meal
 ```
+On `line 7`, we call the `puts` method and pass in the return value of the `meal` method call as an argument. 
+
+On `line 1-5`, we define the `meal` method. As there is an explicit `return` in the method, this will stop the method from executing any further when called, and return the evaluated value of the expression immediately following the `return` - the string object `'Breakfast'`.
+
+As such, on `line 7`, the `puts` method will output `'Breakfast'` and return `nil` (the `puts` method always returns `nil`).
 
 *78) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -1255,6 +1301,13 @@ end
 
 puts count_sheep
 ```
+On `line 7`, we call the `puts` method, passing in the return value of the `count_sheep` method invocation. On `lines 1-5`, we define the `count_sheep` method. 
+
+On `line 2`, the `times` method is invoked with a block (denoted by the `do/end` reserved words immediately following the `times` method call) on the integer object `5`. This has the effect of executing the block `5` times - on each execution, the integer objects `0` to `4` are passed to the block. 
+
+On `line 3`, the `puts` method is called, with the local variable `sheep` passed as an argument. In our case, the local variable `sheep` is assigned an integer object each time the block is executed. The `puts` method will output string representations of the integer objects `0` to `4` inclusive. The `times` method ignores the `nil` returned by the block (`puts` method); instead, it will return the integer object on which the `times` method was invoked (`5`). 
+
+Thus, passing the `count_sheep` method to the `puts` method call on `line 7` will output a string representation of the objects `0` to `5` (since `puts` will also output the return value of the method alongside any side effects) and return `nil`. 
 
 *79) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
@@ -1267,6 +1320,15 @@ end
 
 puts count_sheep
 ```
+On `line 8`, we call the `puts` method, passing the return value of the `count_sheep` method call as an argument. 
+
+On `lines 1-6`, we define the `count_sheep` method. On `line 2`, the `times` method is invoked on the integer object `5`, with a block (denoted by the reserved `do/end` words immediately following the `times` method call). The block takes a single parameter, `sheep`. 
+
+The `times` method will iterate from `0` to `5` exclusive, passing the integer object to the block, where that integer object is assigned to the local block variable `sheep`. On each iteration, the local variable `sheep` is passed to the `puts` method as an argument. The `puts` method, when called, will output the integer object and return `nil`. The `times` method itself ignores the return value of the block, and returns the integer object it was called upon. 
+
+However, on `line 5`, the integer object `10` is returned. Since there is no explicit `return` in the method, the value of the last evaluated expression will be implicitly returned - in this case, the integer object `10`. 
+
+On `line 8`, we are passing the integer object `10` as as argument to the `puts` method when we call it. This will output the string objects `'0', '1', '2', '3', '4' ,'10'` and return `nil` (`puts` always returns `nil`), since the side effects (outputing string objects `'0', '1', '2', '3', '4'`) of calling the method are still displayed by `puts`. 
 
 *80) What does the following code return? What does it output? Why? What concept does it demonstrate?*
 ```
