@@ -195,3 +195,21 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I feel like I completed the written assessment reasonably quickly - timing wasn't really an issue. Generally speaking, I feel like I prepared well enough that I was able to explain the relevant concepts quickly. The only question in my mind is whether the language I used was specifically what the assessors wanted. I really don't have a good sense, since so much of what I read and wrote seemed to differ. I used my best judgement - I'll see what the feedback is. The practice I did felt a little more difficult than what was on the actual assessment. I also like how the assessment questions were significantly more targetted than just 'explain this code please' and pointed you towards specifics they wanted you to answer. 
+
+##### 12/11/20 (Thu)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Blog post reading
+  - Videos of others live coding
+
+__*Time spent*__<br/>
+62 minutes
+
+__*Thoughts*__<br/>
+Got the results of the written assessment back and somehow I got 100%. There wasn't much feedback returned. Looks like all the preparation I did paid off. 
+
+Today was pretty light. Just reading some articles on other students' past experiences with the RB109 written assessment, and seeing the approach expected within an interview setting. I did one less hour to make up for the extra hour I did yesterday. 
+
+The video was a good pointer into the level of explanation I should go into (basically explain everything in my mind). It also highlighted to me that I have some level to go before I can confidently solve assessment-level difficulty problems.
+
+I'll probably start off the problems again tomorrow. I think I'll also do a re-run of all the problems I've solved previously, explaining myself and seeing if I take as long as I used to. 
