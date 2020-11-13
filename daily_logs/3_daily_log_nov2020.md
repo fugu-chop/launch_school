@@ -9,6 +9,9 @@
 - [8th, Sun](#081120-sun)
 - [9th, Mon](#091120-mon)
 - [10th, Tue](#101120-tue)
+- [11th, Wed](#111120-wed)
+- [12th, Thu](#121120-thu)
+- [13th, Fri](#131120-fri)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -213,3 +216,14 @@ Today was pretty light. Just reading some articles on other students' past exper
 The video was a good pointer into the level of explanation I should go into (basically explain everything in my mind). It also highlighted to me that I have some level to go before I can confidently solve assessment-level difficulty problems.
 
 I'll probably start off the problems again tomorrow. I think I'll also do a re-run of all the problems I've solved previously, explaining myself and seeing if I take as long as I used to. 
+
+##### 12/11/20 (Thu)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems (Easy 8, 9)
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+It feels good to get back to coding again. Easy 8 has proven not too bad, but the time taken is still a little long for my taste (general problems take around 10 minutes, while the additional exploration can take 10 minutes as well). 
