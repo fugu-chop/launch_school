@@ -92,3 +92,105 @@ def palindromes_new(string)
     substring.length > 1 && substring == substring.reverse
   end
 end
+
+# 6) Write a method that takes two arguments: the first is the starting number, and the second is the ending number. Print out all numbers between the two numbers, except if a number is divisible by 3, print "Fizz", if a number is divisible by 5, print "Buzz", and finally if a number is divisible by 3 and 5, print "FizzBuzz".
+=begin
+fizzbuzz(1, 15) # -> 1, 2, Fizz, 4, Buzz, Fizz, 7, 8, Fizz, Buzz, 11, Fizz, 13, 14, FizzBuzz
+=end
+def fizzbuzz(num1, num2)
+  num_arr = []
+  num1.upto(num2) do |number|
+    if number % 3 == 0 && number % 5 == 0
+      num_arr << 'FizzBuzz'
+    elsif number % 3 == 0
+      num_arr << 'Fizz'
+    elsif number % 5 == 0
+      num_arr << "Buzz"
+    else
+      num_arr << number
+    end
+  end
+  puts num_arr.join(', ')
+end
+
+# 7) Write a method that takes a string, and returns a new string in which every character is doubled.
+=begin
+repeater('Hello') == "HHeelllloo"
+repeater("Good job!") == "GGoooodd  jjoobb!!"
+repeater('') == ''
+=end
+def repeater(string)
+  string.chars.map do |character|
+    character * 2
+  end.join
+end
+
+# 8) Write a method that takes a string, and returns a new string in which every consonant character is doubled. Vowels (a,e,i,o,u), digits, punctuation, and whitespace should not be doubled.
+=begin
+double_consonants('String') == "SSttrrinngg"
+double_consonants("Hello-World!") == "HHellllo-WWorrlldd!"
+double_consonants("July 4th") == "JJullyy 4tthh"
+double_consonants('') == ""
+=end
+def double_consonants(string)
+  consonant_array = ('a'..'z').to_a + ('A'..'Z').to_a
+  %w(a e i o u A E I O U).each do |letter|
+    consonant_array.delete(letter)
+  end
+
+  string.chars.map do |letter|
+    if consonant_array.include?(letter)
+      letter * 2
+    else
+      letter
+    end
+  end.join
+end
+
+# 9) Write a method that takes a positive integer as an argument and returns that number with its digits reversed. Don't worry about arguments with leading zeros - Ruby sees those as octal numbers, which will cause confusing results. For similar reasons, the return value for our fourth example doesn't have any leading zeros.
+=begin
+reversed_number(12345) == 54321
+reversed_number(12213) == 31221
+reversed_number(456) == 654
+reversed_number(12000) == 21 # No leading zeros in return value!
+reversed_number(12003) == 30021
+reversed_number(1) == 1
+=end
+def reversed_number(number)
+  zero_led_arr = []
+  reversed_string = number.to_s.reverse
+  if reversed_string[0] == '0'
+    reversed_string.chars.each do |character|
+      if character != '0'
+        zero_led_arr << character
+      end
+    end
+    zero_led_arr.join.to_i
+  else
+    reversed_string.to_i
+  end
+end
+
+# Suggested solution (lol)
+def reversed_number(number)
+  string = number.to_s
+  reversed_string = string.reverse
+  reversed_string.to_i
+end
+
+# 10) Write a method that takes a non-empty string argument, and returns the middle character or characters of the argument. If the argument has an odd length, you should return exactly one character. If the argument has an even length, you should return exactly two characters.
+=begin
+center_of('I love ruby') == 'e'
+center_of('Launch School') == ' '
+center_of('Launch') == 'un'
+center_of('Launchschool') == 'hs'
+center_of('x') == 'x'
+=end
+def center_of(string)
+  string_length = string.length
+  if string_length % 2 == 0
+    string[(string_length / 2 - 1)..(string_length / 2)]
+  else
+    string[(string_length / 2)]
+  end
+end
