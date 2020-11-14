@@ -72,45 +72,82 @@ The result is that 2 lights are left on, lights 1 and 4. The return value is [1,
 With 10 lights, 3 lights are left on: lights 1, 4, and 9. The return value is [1, 4, 9].
 =end
 def lights(switches)
-  # Track:
-    # Which iteration of the loop we are on 
-    # index of switches on
-
-  # Logic
-    # At the start, everything is off
-    # Round 1 you turn everything on (we could presumably skip this step - set everything to 1, and subtract one from the switches number to remove edge case logic)
-    # Round two, you start at index 1, only turn on every second light
-    # Round 3, you start at index 2, turn on every second light
-
-  # Data structures
-    # Create an array on/off states (could be 0/1, could be even/odd)
-    # Iterate through the on/off states n times, where n = switches
-    # On each iteration, you start at a different index of the array
-    # Increment index += 1 on each pass
-    # At each index, turn that light, 
-  
-  switches = 5
-
   switchboard = Array.new(switches, 1)
-  even_indices = []
-  odd_indices = []
   light_indices = []
+  lights_on = []
+  first_switch_change = 2
 
-  switchboard.each_with_index do |num, index| 
-    if index.even?
-      even_indices << index
-    else
-      odd_indices << index
+  first_switch_change.upto(switches) do |switch|
+    light_indices = (switch..switches).to_a.select { |element| element % switch == 0 }.map { |number| number - 1 }
+    light_indices.each do |index|
+      switchboard[index] += 1
     end
   end
 
-  # this goes through each switch and returns the index. 
-  # It skips the first one because you never go back to the first switch after turning it on
-  1.upto(switches - 1) do |index1|
-    
+  switchboard.each_with_index do |light, index|
+    lights_on << index + 1 if light.odd?
   end
 
-  # Return:
-    # Which switches are on, in an array, 
-    
+  lights_on
+end
+
+# 5) Write a method that displays a 4-pointed diamond in an n x n grid, where n is an odd integer that is supplied as an argument to the method. You may assume that the argument will always be an odd integer.
+=begin
+diamond(1)
+
+*
+
+diamond(3)
+
+ *
+***
+ *
+
+ diamond(9)
+
+    *
+   ***
+  *****
+ *******
+*********
+ *******
+  *****
+   ***
+    *
+=end
+def diamond(integer)
+  spaces = integer / 2
+  stars = 1
+  loop do 
+    puts ' ' * spaces + '*' * stars 
+    spaces -= 1
+    stars += 2
+    break if stars > integer
+  end
+
+  spaces = 1
+  stars = integer - 2
+  loop do 
+    puts ' ' * spaces + '*' * stars
+    spaces += 1
+    stars -= 2
+    break if stars < 1
+  end
+end
+
+# 5b) Try modifying your solution or our solution so it prints only the outline of the diamond
+=begin
+diamond_outline(5)
+
+  *
+ * *
+*   *
+ * *
+  *
+=end
+
+def diamond_outline(integer)
+  # Assume integer is odd again
+  # The spaces logic is still the same - i.e. floor of integer / 2, decremented by 
+  # The stars logic - we could just print out the same string, but replace everything except index 0 and -1 with spaces?
 end
