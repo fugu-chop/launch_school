@@ -12,6 +12,7 @@
 - [11th, Wed](#111120-wed)
 - [12th, Thu](#121120-thu)
 - [13th, Fri](#131120-fri)
+- [14th, Sat](#141120-sat)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -217,13 +218,33 @@ The video was a good pointer into the level of explanation I should go into (bas
 
 I'll probably start off the problems again tomorrow. I think I'll also do a re-run of all the problems I've solved previously, explaining myself and seeing if I take as long as I used to. 
 
-##### 12/11/20 (Thu)
+##### 13/11/20 (Fri)
 __*Concepts covered*__<br/>
 - RB109 Interview assessment
-  - Practice Problems (Easy 8, 9)
+  - Practice Problems 
+    - Easy 8, 9
 
 __*Time spent*__<br/>
 120 minutes
 
 __*Thoughts*__<br/>
 It feels good to get back to coding again. Easy 8 has proven not too bad, but the time taken is still a little long for my taste (general problems take around 10 minutes, while the additional exploration can take 10 minutes as well). 
+
+##### 14/11/20 (Sat)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Easy 9
+    - Medium 1
+
+__*Time spent*__<br/>
+243 minutes
+
+__*Thoughts*__<br/>
+I'm not sure if this is skill progression, but Easy 9 exercises felt significantly easier than Easy 8 (and even those weren't that bad). The Medium 1 problems feel like a noticable jump up in difficulty. I can solve them, but it takes a long time to actually understand the problem. 
+
+I spent an ungodly amount of time on Medium 1, Question 4, but solved it with my own implementation that's slightly shorter than the suggested answer. Feels good man. The silly thing was, it probably took me 15% longer than necessary because I kept getting confused with my block parameter names - specifically the difference between indices and objects within the array. 
+
+The suggested solution feels super complicated. I spent quite a while trying to digest what was happening across four different methods. 
+
+Medium 1 is pretty challenging. I can solve the problems, it just takes quite a while to do so. 
