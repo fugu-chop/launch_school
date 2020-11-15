@@ -13,6 +13,7 @@
 - [12th, Thu](#121120-thu)
 - [13th, Fri](#131120-fri)
 - [14th, Sat](#141120-sat)
+- [15th, Sun](#151120-sun)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -248,3 +249,20 @@ I spent an ungodly amount of time on Medium 1, Question 4, but solved it with my
 The suggested solution feels super complicated. I spent quite a while trying to digest what was happening across four different methods. 
 
 Medium 1 is pretty challenging. I can solve the problems, it just takes quite a while to do so. 
+
+##### 15/11/20 (Sun)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Medium 1
+    - Medium 2
+
+__*Time spent*__<br/>
+240 minutes
+
+__*Thoughts*__<br/>
+Did some more struggling with Medium 1 problems. I think it's better just to get a working solution built on something that you know is working (even if it's very inefficient or long), rather than trying to rebuild logic, which is incredibly time consuming. 
+
+A few of the middle Medium 1 problems annoyed me. Some of them because the problem logic is long and tedious to understand, without being exceptionally difficult, or covers concepts that we are specifically instructed  won't be covered in this assessment (recursion, regex). The difficulty feels either feels contrived or unnecessary to the actual assessment. 
+
+Medium 2 is much more 'fun'. It's pretty challenging, but I'm able to solve the problems (if a little slowly).
