@@ -147,7 +147,158 @@ diamond_outline(5)
 =end
 
 def diamond_outline(integer)
-  # Assume integer is odd again
-  # The spaces logic is still the same - i.e. floor of integer / 2, decremented by 
-  # The stars logic - we could just print out the same string, but replace everything except index 0 and -1 with spaces?
+  spaces = integer / 2
+  stars = 1
+  star_output = ''
+
+  loop do 
+    star_output = '*' * stars
+    if stars > 1
+      star_output[1..-2] = star_output[1..-2].chars.map! { |asterisk| asterisk = ' ' }.join 
+    end
+    puts ' ' * spaces + star_output 
+    spaces -= 1
+    stars += 2
+    break if stars > integer
+  end
+
+  spaces = 1
+  stars = integer - 2
+  loop do 
+    star_output = '*' * stars
+    if stars > 1
+      star_output[1..-2] = star_output[1..-2].chars.map! { |asterisk| asterisk = ' ' }.join 
+    end
+    puts ' ' * spaces + star_output
+    spaces += 1
+    stars -= 2
+    break if stars < 1
+  end
+end
+
+# 6) Write a method that implements a miniature stack-and-register-based programming language that has the following commands. All operations are integer operations (which is only important with DIV and MOD).Programs will be supplied to your language method via a string passed in as an argument. Your program may assume that all programs are correct programs; that is, they won't do anything like try to pop a non-existent value from the stack, and they won't contain unknown tokens. You should initialize the register to 0.
+=begin
+    n Place a value n in the "register". Do not modify the stack.
+    PUSH Push the register value on to the stack. Leave the value in the register.
+    ADD Pops a value from the stack and adds it to the register value, storing the result in the register.
+    SUB Pops a value from the stack and subtracts it from the register value, storing the result in the register.
+    MULT Pops a value from the stack and multiplies it by the register value, storing the result in the register.
+    DIV Pops a value from the stack and divides it into the register value, storing the integer result in the register.
+    MOD Pops a value from the stack and divides it into the register value, storing the integer remainder of the division in the register.
+    POP Remove the topmost item from the stack and place in register
+    PRINT Print the register value
+=end
+=begin
+minilang('PRINT')
+# 0
+
+minilang('5 PUSH 3 MULT PRINT')
+# 15
+
+minilang('5 PRINT PUSH 3 PRINT ADD PRINT')
+# 5
+# 3
+# 8
+
+minilang('5 PUSH POP PRINT')
+# 5
+
+minilang('3 PUSH 4 PUSH 5 PUSH PRINT ADD PRINT POP PRINT ADD PRINT')
+# 5
+# 10
+# 4
+# 7
+
+minilang('3 PUSH PUSH 7 DIV MULT PRINT ')
+# 6
+
+minilang('4 PUSH PUSH 7 MOD MULT PRINT ')
+# 12
+
+minilang('-3 PUSH 5 SUB PRINT')
+# 8
+
+minilang('6 PUSH')
+# (nothing printed; no PRINT commands)
+end
+=end
+def minilang(command)
+  register = 0
+  stack = []
+  command.split.each do |item|
+    case item 
+    when 'PUSH' then stack << register
+    when 'ADD' then register += stack.pop
+    when 'SUB' then register -= stack.pop
+    when 'MULT' then register *= stack.pop
+    when 'DIV' then register /= stack.pop
+    when 'MOD' then register %= stack.pop
+    when 'POP' then register = stack.pop
+    when 'PRINT' then puts register
+    else register = item.to_i
+    end
+  end
+end
+
+# 7) Write a method that takes a sentence string as input, and returns the same string with any sequence of the words 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine' converted to a string of digits.
+=begin
+word_to_digit('Please call me at five five five one two three four. Thanks.') == 'Please call me at 5 5 5 1 2 3 4. Thanks.'
+=end
+
+def word_to_digit(words)
+  digit_hash = {
+  'zero' => '0', 'one' => '1', 'two' => '2', 'three' => '3', 'four' => '4',
+  'five' => '5', 'six' => '6', 'seven' => '7', 'eight' => '8', 'nine' => '9'
+}.freeze
+
+  digit_hash.keys.each do |word|
+    words.gsub!(/\b#{word}\b/, digit_hash[word])
+  end
+  words
+end
+
+# 8) Write a recursive method that computes the nth Fibonacci number, where nth is an argument to the method.
+=begin
+fibonacci(1) == 1
+fibonacci(2) == 1
+fibonacci(3) == 2
+fibonacci(4) == 3
+fibonacci(5) == 5
+fibonacci(12) == 144
+fibonacci(20) == 6765
+=end
+
+# In essence, this recursive method will give you a bunch of zeros and ones at the lowest depth of the function (i.e. where number is either zero or one due to number - 1 and number - 2). Ruby will keep track of all the fibonacci(1) instances in the call stack. So, this function really adds up a very large number of ones - e.g. for fibonacci(12), we end up with 144 instances of fibonacci(1).
+def fibonacci(number)
+  if number < 2
+    number
+  else
+    fibonacci(number - 1) + fibonacci(number - 2)
+  end
+end
+
+# 9) Rewrite your recursive fibonacci method so that it computes its results without recursion (procedural)
+def fibonacci_proc(number)
+  num_sequence = [1, 1]
+  while num_sequence.length < number 
+    num_sequence << num_sequence[-1] + num_sequence[-2]
+  end
+  num_sequence.last
+end
+
+# 10) In this exercise, you are going to compute a method that returns the last digit of the nth Fibonacci number.
+=begin
+fibonacci_last(15)        # -> 0  (the 15th Fibonacci number is 610)
+fibonacci_last(20)        # -> 5 (the 20th Fibonacci number is 6765)
+fibonacci_last(100)       # -> 5 (the 100th Fibonacci number is 354224848179261915075)
+fibonacci_last(100_001)   # -> 1 (this is a 20899 digit number)
+fibonacci_last(1_000_007) # -> 3 (this is a 208989 digit number)
+fibonacci_last(123456789) # -> 4
+=end
+def fibonacci_last(number)
+  num_sequence = [1, 1]
+  while num_sequence.length < number 
+    num_sequence << num_sequence[-1] + num_sequence[-2]
+  end
+  num_sequence.last.to_s[-1].to_i
 end
