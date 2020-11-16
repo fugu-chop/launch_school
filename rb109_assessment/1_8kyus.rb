@@ -160,4 +160,100 @@ def area_or_perimeter(length, width)
   2 * (length + width)
 end
 
-# 22) 
+# 22) The cockroach is one of the fastest insects. Write a function which takes its speed in km per hour and returns it in cm per second, rounded down to the integer (= floored).
+=begin
+cockroach_speed(1.08) == 30
+=end
+def cockroach_speed(s)
+  (s / 0.036).floor
+end
+
+# 23) Fix the helper function they wrote so that it works as intended (i.e. make the first character in the string "word" upper case). Don't worry about numbers, special characters, or non-string types being passed to the function. The string lengths will be from 1 character up to 10 characters, but will never be empty.
+def capitalize_word(word)
+  word.capitalize
+end
+
+# 24) Write a function called repeat_str which repeats the given string src exactly count times.
+def repeat_str (n, s)
+  s * n
+end
+
+# 25) Given a string of digits, you should replace any digit below 5 with '0' and any digit 5 and above with '1'. Return the resulting string.
+def fake_bin(s)
+  s.chars.map do |num| 
+    num.to_i < 5 ? '0' : '1'
+  end.join
+end
+
+# 26) Given 2 strings, a and b, return a string of the form short+long+short, with the shorter string on the outside and the longer string on the inside. The strings will not be the same length, but they may be empty ( length 0 ).
+=begin
+solution("1", "22") # returns "1221"
+solution("22", "1") # returns "1221"
+=end
+def solution(a, b)
+  string_hash = { a => a.length,
+                  b => b.length }
+  short, long = [a.length, b.length].min, [a.length, b.length].max
+  string_hash.key(short) + string_hash.key(long) + string_hash.key(short)
+end
+
+# 27) Find the coefficients of quadratic equation of the given two roots (x1 and x2). Equation will be the form of ax^2 + bx + c = 0. The return is an Array containing coefficients of the equations in the order (a, b, c). Since there are infinitely many solutions to this problem, we fix a = 1. Remember, the roots can be written like (x-x1) * (x-x2) == 0. Inputs will be integers. When x1 == x2, this means the root has the multiplicity of two.
+
+=begin
+# This means (x-1) * (x-2) == 0; when we do the multiplication this becomes x^2 - 3x + 2 == 0
+quadratic(1,2) == (1, -3, 2)
+
+# This means (x-0) * (x-1) == 0; when we do the multiplication this becomes x^2 - x + 0 == 0
+quadratic(0,1) == (1, -1, 0)
+=end
+def quadratic(x1, x2)
+  c = x1 * x2
+  c == (x1 + x2) ? b = (x1 + x2) : b = -1 * (x1 + x2)
+  [1, b, c]
+end
+
+# 28) Create a function that checks if a number n is divisible by two numbers x AND y. All inputs are positive, non-zero digits.
+=begin
+Examples:
+1) n =   3, x = 1, y = 3 =>  true because   3 is divisible by 1 and 3
+2) n =  12, x = 2, y = 6 =>  true because  12 is divisible by 2 and 6
+3) n = 100, x = 5, y = 3 => false because 100 is not divisible by 3
+4) n =  12, x = 7, y = 5 => false because  12 is neither divisible by 7 nor 5
+=end
+def is_divisible(n,x,y)
+  n % x == 0 && n % y == 0
+end
+
+# 29) The first input array is the key to the correct answers to an exam, like ["a", "a", "b", "d"]. The second one contains a student's submitted answers. The two arrays are not empty and are the same length. Return the score for this array of answers, giving +4 for each correct answer, -1 for each incorrect answer, and +0 for each blank answer, represented as an empty string. If the score < 0, return 0.
+=begin
+check_exam(["a", "a", "b", "b"], ["a", "c", "b", "d"]) → 6
+check_exam(["a", "a", "c", "b"], ["a", "a", "b",  ""]) → 7
+check_exam(["a", "a", "b", "c"], ["a", "a", "b", "c"]) → 16
+check_exam(["b", "c", "b", "a"], ["",  "a", "a", "c"]) → 0
+=end
+def check_exam(student, answer)
+  score = 0
+  index = 0
+  while index < student.length
+    if student[index] == answer[index]
+      score += 4
+    elsif answer[index] == ''
+      score += 0
+    else
+      score -= 1
+    end
+    index += 1
+  end
+  score < 0 ? 0 : score
+end
+
+# 30) Build a program that takes a value, integer, and returns a list of its multiples up to another value, limit. If limit is a multiple of integer, it should be included as well. There will only ever be positive integers passed into the function, not consisting of 0. The limit will always be higher than the base. For example, if the parameters passed are (2, 6), the function should return [2, 4, 6] as 2, 4, and 6 are the multiples of 2 up to 6. If you can, try writing it in only one line of code.
+def find_multiples(integer, limit)
+  current_num = integer
+  multiples = [integer]
+  loop do
+    break if current_num == limit
+    multiples << current_num += integer
+  end
+  multiples
+end
