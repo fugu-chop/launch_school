@@ -266,3 +266,31 @@ Did some more struggling with Medium 1 problems. I think it's better just to get
 A few of the middle Medium 1 problems annoyed me. Some of them because the problem logic is long and tedious to understand, without being exceptionally difficult, or covers concepts that we are specifically instructed  won't be covered in this assessment (recursion, regex). The difficulty feels either feels contrived or unnecessary to the actual assessment. 
 
 Medium 2 is much more 'fun'. It's pretty challenging, but I'm able to solve the problems (if a little slowly).
+
+##### 16/11/20 (Mon)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Medium 2
+    - Codewars (8 kyus)
+  - Blog post 
+    - Interview for internal processors
+    - PEDAC revision
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+I've noticed myself getting into some bad habits, going back to hack and slash when I'm really struggling with a problem. I need to make an effort to
+- Slow down 
+- Plan first
+- then code 
+- Think about *why* I'm doing what I'm doing
+- Explain *what* the expected output is, at each step
+- Reread the algorithm while solving (prevents edge cases from creeping in)
+
+I should also make more of an effort to test as I'm writing code, to reduce the amount of review I have to do. 
+
+Up to now, I haven't really been verbalising my thoughts. I've been practicing just getting the PEDAC process right, and documenting my thought process. This has definitely been helpful, and I feel like I've gotten a decent grasp on this, enough to add one more layer of complexity - talking about my thought process. I'll particularly need to do this for errors I encounter.
+
+There's quite a bit of variation in the Codewars quality. It's pretty good, because it makes me actively think about edge cases and understanding what the problem is trying to convey.
