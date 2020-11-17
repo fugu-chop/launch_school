@@ -49,13 +49,37 @@ doubles('abbbzz') == 'ab'
 doubles('abba') == ""
 When we remove the b's in 'abba', the double a that results is then removed.
 =end
+# Failed attempt (did not pass all test cases) - this is because we need to update the new string/array at each iteration, not after we identify all duplicates. This prevents issues like the last test case.
 def doubles(string)
-  new_string = 'abbcccdddda'.chars
+  string_dup = string.dup
 
-  # Some looping will be required - break condition is when mutated new_string == mutated new_string.uniq
-  # The count approach won't work, since key value pairs won't care about the order of the letters in the string
-  # We need to iterate through the string_array instead, comparing the current character with the previous one. This should handle odd numbers of characters
-  # If it's equal, append that letter to a chars_to_delete array
-  # Take the uniq of this array, then delete 2 * chars from the new_string
+  loop do
+    new_string = string_dup.chars
+    index = 1
+    delete_chars = []
+    while index <= new_string.length - 1 do
+      delete_chars << new_string[index] if new_string[index] == new_string[index - 1]
+      index += 1
+    end
+    
+    delete_chars.each do |letter| 
+      delete_chars << letter if delete_chars.count(letter).odd?
+    end
 
+    delete_chars.each do |letter|
+      string_dup.sub!(letter, '')
+    end
+    break if delete_chars.length == 0
+  end
+
+  string_dup
+end
+
+# Suggested solution
+def doubles(s)
+  a = []
+  s.each_char do |i|
+    i == a[-1] ? a.pop : a.push(i)
+  end
+  a.join
 end
