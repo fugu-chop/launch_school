@@ -14,6 +14,8 @@
 - [13th, Fri](#131120-fri)
 - [14th, Sat](#141120-sat)
 - [15th, Sun](#151120-sun)
+- [16th, Mon](#161120-mon)
+- [17th, Tue](#171120-tue)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -294,3 +296,17 @@ I should also make more of an effort to test as I'm writing code, to reduce the 
 Up to now, I haven't really been verbalising my thoughts. I've been practicing just getting the PEDAC process right, and documenting my thought process. This has definitely been helpful, and I feel like I've gotten a decent grasp on this, enough to add one more layer of complexity - talking about my thought process. I'll particularly need to do this for errors I encounter.
 
 There's quite a bit of variation in the Codewars quality. It's pretty good, because it makes me actively think about edge cases and understanding what the problem is trying to convey.
+
+##### 17/11/20 (Tue)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (7 & 8 kyu)
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+There are quite a few debugging style questions, which aren't applicable to the interview assessment (I haven't noted them in the exercises files), but are useful in developing the ability to quickly scan and interpret other people's code. 
+
+Level 7 is probably the right level of difficulty for me currently. I'm definitely seeing the difference in quality of Codewars problems compared to those in Launch School. Some of the problems are very difficult to understand, especially when the person who wrote it doesn't have English as their first language. This compounds the difficulty of the problems.
