@@ -16,6 +16,7 @@
 - [15th, Sun](#151120-sun)
 - [16th, Mon](#161120-mon)
 - [17th, Tue](#171120-tue)
+- [18th, Wed](#181120-wed)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -310,3 +311,19 @@ __*Thoughts*__<br/>
 There are quite a few debugging style questions, which aren't applicable to the interview assessment (I haven't noted them in the exercises files), but are useful in developing the ability to quickly scan and interpret other people's code. 
 
 Level 7 is probably the right level of difficulty for me currently. I'm definitely seeing the difference in quality of Codewars problems compared to those in Launch School. Some of the problems are very difficult to understand, especially when the person who wrote it doesn't have English as their first language. This compounds the difficulty of the problems.
+
+##### 18/11/20 (Wed)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (7 kyu)
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+A deeply humbling experience today. I spent almost an hour trying to solve a single problem, which was 19 lines of code and still didn't pass all the test cases. The suggested solution was five lines of code and didn't involve any obscure methods. I've got a long way to go in developing 'programmer' logic.
+
+One positive aspect - I'm able to solve these problems without the fancy methods that a lot of the shorter solutions go into. I think this will stand me in good stead when I'm not able to look up methods in the actual interview. 
+
+After doing a few more examples, I feel a lot better about Kyu 7. I think I was just unlucky for the one problem I got first up being pretty challenging. 
