@@ -156,7 +156,7 @@ end
 
 # Suggested solution
 def max_gap(numbers)
-  numbers.sort.each_cons(2).map{ |a, b| b - a }.max
+  numbers.sort.each_cons(2).map { |a, b| b - a }.max
 end
 
 # 6) Given an array of N integers, you have to find how many times you have to add up the smallest numbers in the array until their Sum becomes greater or equal to K. The list size is at least 3. All numbers will be positive. Each numbers could occur more than once.
@@ -166,7 +166,6 @@ end
 # Then we add the next smallest number to it (3 + 3) , so the sum becomes 6 .
 # Now the result is greater or equal to 6 , Hence the output is (2) i.e (2) operations are required to do this .
 minimum_steps([1, 10, 12, 9, 2, 3], 6) == 2
-
 minimum_steps([8 , 9, 4, 2], 23) == 3
 minimum_steps([19,98,69,28,75,45,17,98,67], 464) == 8
 =end
@@ -217,5 +216,71 @@ end
 
 # Suggested solution
 def row_weights(array)
-  array.partition.with_index{ |a, b| b.even? }.map{ |e| e.reduce(:+) }
+  array.partition.with_index { |weight, index| index.even? }.map { |element| element.reduce(:+) }
+end
+
+# 9) Given two integers a and b, which can be positive or negative, find the sum of all the numbers between including them too and return it. If the two numbers are equal return a or b. Note: a and b are not ordered!
+=begin
+get_sum(1, 0) == 1   # 1 + 0 = 1
+get_sum(1, 2) == 3   # 1 + 2 = 3
+get_sum(0, 1) == 1   # 0 + 1 = 1
+get_sum(1, 1) == 1   # 1 Since both are same
+get_sum(-1, 0) == -1 # -1 + 0 = -1
+get_sum(-1, 2) == 2  # -1 + 0 + 1 + 2 = 2
+=end
+def get_sum(a, b)
+  return a if a == b
+  a, b = [a, b].sort
+  (a..b).reduce(:+)
+end
+
+# 10) Given a year, find the next happy year, where a happy year is a 4 digit number composed of distinct digits. The input will always be a positive integer.
+=begin
+next_happy_year (7712) == 7801
+next_happy_year (8989) == 9012
+next_happy_year (1001) == 1023
+=end
+def next_happy_year(year)
+  test_array = []
+  year += 1
+  loop do 
+    test_array = year.to_s.chars
+    break if test_array == test_array.uniq
+    year += 1
+  end
+  test_array.join.to_i 
+end
+
+# Suggested solution
+def next_happy_year(year)
+  year += 1
+  until year.digits.uniq.count == 4 do
+    year += 1
+  end
+  year
+end
+
+# 11) Given a number, find if it is disarium or not. A disarium number occurs if the sum of its digits to the power of its respective position is equal to the number itself.
+=begin
+# 8 ^ 1 + 9 ^ 2 == 89
+disarium_number(89) == "Disarium !!"
+disarium_number(564) == "Not !!"
+=end
+def disarium_number(n)
+  n == n.to_s.chars.map.with_index { |digit, index| digit.to_i ** (index + 1) }.reduce(:+) ? 'Disarium !!' : "Not !!"
+end
+
+# 12) Given an array of n integers, find maximum triplet sum in the array without duplications. The array will always be three elements, could contain duplicate numbers and elements within can be negative, positive or zero.
+=begin
+max_tri_sum([3,2,6,8,2,3]) == 17
+max_tri_sum([2,1,8,0,6,4,8,6,2,4]) == 18
+max_tri_sum([-7,12,-7,29,-5,0,-7,0,0,29]) == 41
+=end
+def max_tri_sum(numbers)
+  numbers.uniq.sort.each_cons(3).map { |subarray| subarray.reduce(:+) }.max
+end
+
+# Suggested solution
+def max_tri_sum(arr)
+  arr.uniq.max(3).sum
 end
