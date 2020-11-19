@@ -17,6 +17,7 @@
 - [16th, Mon](#161120-mon)
 - [17th, Tue](#171120-tue)
 - [18th, Wed](#181120-wed)
+- [19th, Thu](#191120-thu)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -327,3 +328,20 @@ A deeply humbling experience today. I spent almost an hour trying to solve a sin
 One positive aspect - I'm able to solve these problems without the fancy methods that a lot of the shorter solutions go into. I think this will stand me in good stead when I'm not able to look up methods in the actual interview. 
 
 After doing a few more examples, I feel a lot better about Kyu 7. I think I was just unlucky for the one problem I got first up being pretty challenging. 
+
+##### 19/11/20 (Thu)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (7 kyu)
+    - Revising previous suggested solutions
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+After doing a few more examples, I feel ok with Kyu 7. I'm basically able to solve most of the ones I come across (avoiding anything that looks like it needs Regex).
+
+I am slowly picking up a few tricks, like `each_cons` for iterating through multiple items in a collection at a time, passing arguments to methods like `max` (which I never seem to do).
+
+I definitely need some more practice around iterators, what they return, and how they interact with each other, like `each`, `select` and `map`, as they cut down on the amount of variables I need to define and code I need to write. 
