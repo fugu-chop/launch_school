@@ -32,7 +32,7 @@ end
 
 # Suggested solution
 def array_leaders(numbers)
-  numbers.select.with_index { |number, index| number > numbers[index + 1..-1].sum }
+  numbers.select_with_index { |number, index| number > numbers[index + 1..-1].sum }
 end
 
 # 3) Write a function doubles that will remove double string characters that are adjacent to each other. The strings will contain lowercase letters only.
@@ -283,4 +283,97 @@ end
 # Suggested solution
 def max_tri_sum(arr)
   arr.uniq.max(3).sum
+end
+
+# 13) Given an array of integers, find the Nth smallest element in this array of integers. The array will be three elements at least, will contain positives, negatives and zeroes, and will contain duplicates. 
+=begin
+nth_smallest([3,1,2], 2) == 2
+nth_smallest([15,20,7,10,4,3], 3) == 7
+nth_smallest([2,169,13,-5,0,-1], 4) == 2
+nth_smallest([177,225,243,-169,-12,-5,2,92], 5) == 92
+=end
+def nth_smallest(arr, pos)
+  arr.min(pos).max
+end
+
+# Suggested solution
+def nth_smallest(arr, pos)
+  arr.sort[pos-1]
+end
+
+# 14) Consider the word "abode". We can see that the letter a is in position 1 and b is in position 2. In the alphabet, a and b are also in positions 1 and 2. Notice also that d and e in abode occupy the positions they would occupy in the alphabet, which are positions 4 and 5. Given an array of words, return an array of the number of letters that occupy their positions in the alphabet for each word. Input will consist of alphabet characters, both uppercase and lowercase. No spaces.
+=begin
+solve(["abode","ABc","xyzD"]) = [4, 3, 1]
+=end
+def solve(array)
+  lookup_hash = (('a'..'z').zip(1..26)).to_h
+  array.map do |word|
+    word.downcase.chars.select.with_index do |letter, index|
+      lookup_hash[letter] == index + 1
+    end.length
+  end
+end
+
+# 15) a Jumping number is the number that All adjacent digits in it differ by 1. Given a number, Find if it is Jumping or not . The Number passed is always Positive. Return the result as String. The difference between ‘9’ and ‘0’ is not considered as 1. All single digit numbers are considered as Jumping numbers.
+=begin
+jumping_number(9) == 'Jumping!!'
+jumping_number(79) == 'Not!!'
+jumping_number(23) == 'Jumping!!'
+jumping_number(556847) == 'Not!!'
+jumping_number(32) == 'Jumping!!'
+jumping_number(89098) == 'Not!!'
+=end
+def jumping_number(n)
+  return 'Jumping!!' if n.to_s.length == 1
+  n.to_s.chars.each_cons(2).select do |pair|
+    (pair[0].to_i - pair[1].to_i).abs == 1
+  end.length == n.to_s.length - 1 ? 'Jumping!!' : 'Not!!'
+end
+
+# 16) Given a string, capitalize the letters that occupy even indexes and odd indexes separately, and return as shown below. Index 0 will be considered even.
+=begin
+capitalize("abcdef") == ['AbCdEf', 'aBcDeF']
+=end
+def capitalize(string)
+  result = string.downcase.chars.map.with_index do |letter, index|
+    index.even? ? letter.upcase : letter
+  end.join
+  [result, result.swapcase]
+end
+
+# 17) A number is a Special Number if it’s digits only consist 0, 1, 2, 3, 4 or 5. Given a number determine if it special number or not. The number passed will be positive (N > 0). All single-digit numbers with in the interval [0:5] are considered as special number.
+=begin
+special_number(2) == 'Special!!'
+special_number(9) == 'NOT!!'
+special_number(39) == 'NOT!!'
+special_number(513) == 'Special!!'
+=end
+def special_number(n)
+  comparison_array = (0..5).to_a
+  n.digits.all? do |number|
+    comparison_array.include?(number)
+  end ? 'Special!!' : "NOT!!"
+end
+
+# Shorter
+def special_number(n)
+  n.digits.all? { |dgt| dgt <= 5 } ? 'Special!!' : 'NOT!!'
+end
+
+# 18) you will be given a string that may have mixed uppercase and lowercase letters and your task is to convert that string to either lowercase only or uppercase only based on making as few changes as possible.If the string contains equal number of uppercase and lowercase letters, convert the string to lowercase.
+=begin
+solve("coDe") = "code". Lowercase characters > uppercase. Change only the "D" to lowercase.
+solve("CODe") = "CODE". Uppercase characters > lowecase. Change only the "e" to uppercase.
+solve("coDE") = "code". Upper == lowercase. Change all to lowercase.
+=end
+def solve(string)
+  upcase_letters = ('A'..'Z').to_a
+  string.chars.select do |letter|
+    upcase_letters.include?(letter)
+  end.length > string.chars.length / 2 ? string.upcase : string.downcase
+end
+
+# Shorter solution
+def solve(s)
+  s.count('A-Z') > s.count('a-z') ? s.upcase : s.downcase
 end
