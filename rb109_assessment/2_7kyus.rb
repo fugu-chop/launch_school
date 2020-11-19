@@ -377,3 +377,160 @@ end
 def solve(s)
   s.count('A-Z') > s.count('a-z') ? s.upcase : s.downcase
 end
+
+# 19) A Tidy number is a number whose digits are in non-decreasing order. Given a number, Find if it is Tidy or not. Number passed is always Positive. Return the result as a Boolean
+
+=begin
+tidy_number(12) == true
+tidy_number(32) == false
+tidy_number(1024) == false
+tidy_number(13579) == true
+tidy_number(2335) == false
+=end
+def tidy_number(number)
+  number.to_s.chars.each_cons(2).select do |a, b|
+    a <= b
+  end.length == number.to_s.chars.length - 1
+end
+
+# Suggested solution
+def tidy_number(n)
+  n.to_s.chars.sort.join.to_i == n
+end
+
+# 20) Triangular numbers are so called because of the equilateral triangular shape that they occupy when laid out as dots. You should return 0 for out of range values.
+=begin
+1st (1)   2nd (3)    3rd (6)
+*          **        ***
+           *         **
+                     *
+
+triangular(0)==0
+triangular(2)==3
+triangular(3)==6
+triangular(4)==10
+triangular(-10)==0
+=end
+def triangular(n)
+  return 0 if n <= 0
+  (1..n).reduce(:+)
+end
+
+# Handling the edge case on a single line
+def triangular(n)
+  (1..n).reduce(0, &:+)
+end
+
+# 21) Given an array of ints, return the index such that the sum of the elements to the right of that index equals the sum of the elements to the left of that index. If there is no such index, return -1. If there is more than one such index, return the left-most index. The special case of an array of zeros (for instance [0,0,0,0]) will not be tested. 
+=begin
+# The sum of the elements at indexes 0,1,2 == sum of elements at indexes 4,5,6. We don't sum index 3.
+peak([1,2,3,5,3,2,1]) = 3
+peak([1,12,3,3,6,3,1]) = 2
+peak([10,20,30,40]) = -1
+=end
+def peak(arr)
+  arr.each_index do |index|
+    return index if arr[0...index].sum == arr[index + 1..-1].sum
+  end
+  -1
+end
+
+# 22) Your task will be to return a list of ints detailing the count of uppercase letters, lowercase, numbers and special characters, given a string:
+=begin
+# the order is: uppercase letters, lowercase, numbers and special characters.
+solve("*'&ABCDabcde12345") = [4,5,5,3]. 
+=end
+def solve(string)
+  [string.count('A-Z'), string.count('a-z'), string.count('0-9'), string.length - (string.count('A-Z') + string.count('a-z') + string.count('0-9'))]
+end
+
+# Here's how to solve for special characters
+def solve s
+  [ s.count('A-Z'),
+    s.count('a-z'),
+    s.count('0-9'),
+    s.count('^a-zA-Z0-9') ]
+end
+
+# 23) Given a string of digits confirm whether the sum of all the individual even digits are greater than the sum of all the indiviudal odd digits. A string of numbers will be given.
+=begin
+If the sum of even numbers is greater than the odd numbers return: "Even is greater than Odd"
+If the sum of odd numbers is greater than the sum of even numbers return: "Odd is greater than Even"
+If the total of both even and odd numbers are identical return: "Even and Odd are the same"
+even_or_odd("12") == "Even is greater than Odd"
+even_or_odd("123") == "Odd is greater than Even"
+even_or_odd("112") == "Even and Odd are the same"
+=end
+def even_or_odd(string)
+  evens, odds = string.to_i.digits.partition { |digit| digit.even? }
+  if evens.sum < odds.sum 
+    'Odd is greater than Even'
+  elsif evens.sum > odds.sum 
+    'Even is greater than Odd'
+  else 
+    'Even and Odd are the same'
+  end
+end
+
+# Alternative solution
+def even_or_odd(s)
+  even_sum, odd_sum = s.chars.map(&:to_i).partition(&:even?).map(&:sum)
+  even_sum > odd_sum ? 'Even is greater than Odd' : odd_sum > even_sum ? 'Odd is greater than Even' : 'Even and Odd are the same'
+end
+
+# 24) You will be given a multi-dimensional array containing 2 or more sub-arrays of integers. Your task is to find the maximum product that can be formed by taking any one element from each sub-array. Each subarray could have more than two elements.
+=begin
+solve([[1, 2],[3, 4]]) == 8
+solve([[10,-15],[-1,-3]]) == 45
+solve([[1,-1],[2,3],[10,-100]]) == 300
+=end
+def solve(arr)
+  arr[0].product(*arr[1..-1]).map{ |i| i.reduce(&:*) }.max 
+end
+
+# 25) you will be given a lower case string and your task will be to remove k characters from that string using the following rule:
+=begin
+first remove all letter 'a', followed by letter 'b', then 'c', etc...
+remove the leftmost character first.
+
+For example: 
+solve('abracadabra', 1) = 'bracadabra' # remove the leftmost 'a'.
+solve('abracadabra', 2) = 'brcadabra'  # remove 2 'a' from the left.
+solve('abracadabra', 6) = 'rcdbr'      # remove 5 'a', remove 1 'b' 
+solve('abracadabra', 8) = 'rdr'
+solve('abracadabra',50) = ''
+=end
+def solve (s, k)
+  s.chars.sort.take(k).each { |c| s = s.sub(c, '') }
+  s
+end
+
+# 26) Given a list of numbers, determine whether the sum of its elements is odd or even. Give your answer as a string matching "odd" or "even". If the input array is empty consider it as: [0] (array with a zero).
+=begin
+odd_or_even([0])          ==  "even"
+odd_or_even([0, 1, 4])    ==  "odd"
+odd_or_even([0, -1, -5])  ==  "even"
+=end
+def odd_or_even(array)
+  # Note the zero argument covers off instances where the array is empty
+  array.reduce(0, &:+).odd? ? 'odd' : 'even'
+end
+
+# 27) In this Kata, we will check if a string contains consecutive letters as they appear in the English alphabet and if each letter occurs only once. 
+=begin
+solve("abc") = True, because it contains a,b,c
+solve("abd") = False, because a, b, d are not consecutive/adjacent in the alphabet, and c is missing.
+solve("dabc") = True, because it contains a, b, c, d
+solve("abbc") = False, because b does not occur once.
+solve("v") = True
+=end
+def solve(string)
+  string.chars.sort.each_cons(2).select do |a, b|
+    a.next == b
+  end.length == string.chars.length - 1
+end
+
+# We can shorten this slightly to 
+def solve(str)
+  str.chars.sort.each_cons(2).all? { |a,b| a.next == b }
+end
