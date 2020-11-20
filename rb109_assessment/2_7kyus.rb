@@ -485,7 +485,7 @@ solve([[10,-15],[-1,-3]]) == 45
 solve([[1,-1],[2,3],[10,-100]]) == 300
 =end
 def solve(arr)
-  arr.first.product(*arr[1..-1]).map{ |i| i.reduce(&:*) }.max 
+  arr.first.product(*arr[1..-1]).map { |i| i.reduce(&:*) }.max 
 end
 
 # 25) you will be given a lower case string and your task will be to remove k characters from that string using the following rule:
@@ -556,4 +556,148 @@ def consecutive(arr, a, b)
   arr.each_cons(2).any? do |pair|
     pair == [a, b].sort || pair == [a, b].sort.reverse
   end
+end
+
+# 30) You will be given an array of numbers in which two numbers occur once and the rest occur only twice. Your task will be to return the sum of the numbers that occur only once. 
+=begin
+# only the numbers 7 and 8 occur once, and their sum is 15. Every other number occurs twice. 
+repeats([4,5,7,5,4,8]) == 15
+=end
+def repeats(array)
+  array.select { |number| array.count(number) < 2 }.reduce(0, &:+)
+end
+
+# 31) Complete the solution so that it returns true if the first argument(string) passed in ends with the 2nd argument (also a string). 
+=begin
+solution('abc', 'bc') == true
+solution('abc', 'd') == false
+=end
+def solution(input_string, test_string)
+  input_string.end_with?(test_string)
+end
+
+# Non-helper method solution
+def solution(input_string, test_string)
+  return true if test_string.length == 0
+  input_string[-(test_string.length)..-1] == test_string
+end
+
+# 32) Implement the reverse function, which takes in input n and reverses it. For instance, reverse(123) should return 321. You should do this without converting the inputted number into a string. 
+=begin
+Don't use any methods from this list
+['encode','decode','join','zfill','codecs','chr','bytes','ascii', 'substitute','template','bin', 'os','sys','re', '"', "'", 'str','repr', '%s', 'format', 'type', '__', '.keys','eval','exec','subprocess']
+
+reverser(1234) == 4321
+reverser(4321) == 1234
+reverser(1001) == 1001
+reverser(1010) == 101
+=end
+def reverser(number)
+  number.digits.map.with_index do |element, index|
+    element * 10 ** ((number.digits.length) - (index+1))
+  end.reduce(0, &:+)
+end
+
+# 33) Your task is to remove all consecutive duplicate words from string, leaving only first words entries.
+=begin
+"alpha beta beta gamma gamma gamma delta alpha beta beta gamma gamma gamma delta"
+--> "alpha beta gamma delta alpha beta gamma delta"
+=end
+def remove_consecutive_duplicates(s)
+  non_dup_words = []
+  s.split.each do |word|
+    non_dup_words << word if non_dup_words[-1] != word
+  end
+  non_dup_words.join(' ')
+end
+
+# 34) Write a method which checks if a string has valid spacing. The function should return either True or False. For this kata, the definition of valid spacing is one space between words, and no leading or trailing spaces. 
+=begin
+'Hello world' = true
+' Hello world' = false
+'Hello world  ' = false
+'Hello  world' = false
+'Hello' = true
+'Helloworld' = true 
+'Helloworld ' = false
+' ' = false
+'' = true
+=end
+def valid_spacing(s)
+  s == s.strip.squeeze(' ')
+end
+
+# 35) Given an array of numbers and an index, return the index of the least number larger than the element at the given index, or -1 if there is no such index (or, where applicable, Nothing or a similarly empty value). Multiple correct answers may be possible. In this case, return any one of them. The given index will be inside the given array. The given array will, therefore, never be empty. 
+=begin
+least_larger( [4, 1, 3, 5, 6], 0 ) ==  3
+least_larger( [4, 1, 3, 5, 6], 4 ) == -1
+least_larger([1, 3, 5, 2, 4], 0) == 3
+=end
+def least_larger(array, idx)
+  eligible_indices = Hash.new(0)
+  array.each_with_index do |number, index|
+    eligible_indices[number] = index if number > array[idx]
+  end
+  eligible_indices.length > 0 ? eligible_indices.min.last : -1
+end
+
+# Suggested solution
+def least_larger(a, i)
+  a.index(a.select { |number| number > a[i] }.min) || -1
+end
+
+# 36) Given a string of words, return the length of the shortest word(s). String will never be empty and you do not need to account for different data types.
+=begin
+find_short("bitcoin take over the world maybe who knows perhaps") == 3
+find_short("turns out random test cases are easier than writing out basic ones") == 3
+find_short("lets talk about javascript the best language") == 3
+find_short("i want to travel the world writing code one day") == 1
+find_short("Lets all go on holiday somewhere very cold") == 2
+=end
+def find_short(string)
+  string.split.map { |word| word.length }.min
+end
+
+# 37) In this kata you will be given a username and their score, a score and you need to calculate how many kata you need to complete to equal their score. Let's assume only Beta kata and 8kyu kata are available. Worth 3 and 1 point respectively. Return a string in this format: "To beat <user>'s score, I must complete <x> Beta kata and <y> 8kyu kata." If the total number of kata you need to complete >1000, add "Dammit!" to the end of the string, like so: "To beat <user>'s score, I must complete <x> Beta kata and <y> 8kyu kata. Dammit!" If your score is higher than the user's already, return "Winning!" and if they are equal, return "Only need one!" Note: You are looking to complete as few kata as possible to get to your target.
+=begin
+leader_b('g964', 36097, 20000) == "To beat g964's score, I must complete 5365 Beta kata and 2 8kyu kata. Dammit!"
+leader_b('GiacomoSorbi', 23914, 23867) == "To beat GiacomoSorbi's score, I must complete 15 Beta kata and 2 8kyu kata."
+leader_b('ZozoFouchtra', 15991, 12000) == "To beat ZozoFouchtra's score, I must complete 1330 Beta kata and 1 8kyu kata. Dammit!"
+leader_b('webtechalex', 884, 900) == 'Winning!')
+leader_b('petegarvin1', 3307, 100) == "To beat etegarvin1's score, I must complete 1069 Beta kata and 0 8kyu kata. Dammit!"
+leader_b('myjinxin2015', 15720, 15720) == 'Only need one!')
+leader_b('AcesOfGlory', 2255, 1563) == "To beat AcesOfGlor's score, I must complete 230 Beta kata and 2 8kyu kata."
+
+=end
+def leader_b(user, user_score, your_score)
+  return 'Winning!' if your_score > user_score
+  return 'Only need one!' if your_score == user_score
+  score_diff = user_score - your_score
+  beta, kyu = score_diff.divmod(3)
+  "To beat #{user}'s score, I must complete #{beta} Beta kata and #{kyu} 8kyu kata.#{' Dammit!' if (beta + kyu) > 1000}"
+end
+
+# 38) Your task is to write a function that takes one parameter str that MUST be a string and removes all capital and small letters B, M and W. If data of the wrong data type was sent as a parameter the function must throw an error with the following specific message: "This program only works for text."
+def remove_bmw(str)
+  raise "This program only works for text." unless str.is_a?(String)
+  str.delete('bmwBMW')
+end
+
+# 39) An eviternity number is a number which contains only digits 8, 5 and 3, and the count of the digit 8 >= count of digit 5 >= count of digit 3. The first few eviternity numbers are as follows. You will be given two integers, a and b, and your task is to return the number of eviternity numbers in the range >= a and < b. The upper bound will not exceed 500,000.
+=begin
+[8, 58, 85, 88, 358, 385, 538, 583, 588, 835, 853, 858, 885, 888]
+solve(0,1000) == 14
+=end
+def solve(a,b)
+  rejected_nums = [1, 2, 4, 6, 7, 9, 0]
+  eviternity_digits = [3, 5, 8]
+  divisibility = (a..b).select { |num| num % 3 == 0 || num % 5 == 0 || num % 8 == 0 }
+  relevant_digits = divisibility.select do |filter_num|
+    filter_num.digits.none? do |digit|
+      rejected_nums.include?(digit)
+    end
+  end
+  # Test for digit counts now!
+    # The count of 8s must be >= than counts of 5, which must be >= counts of 3
+    # We need to figure out an easy to work with data structure on how to get a count of digits, that ties back to the original number. 
 end
