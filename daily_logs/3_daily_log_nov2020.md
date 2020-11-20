@@ -345,3 +345,17 @@ After doing a few more examples, I feel ok with Kyu 7. I'm basically able to sol
 I am slowly picking up a few tricks, like `each_cons` for iterating through multiple items in a collection at a time, passing arguments to methods like `max` (which I never seem to do).
 
 I definitely need some more practice around iterators, what they return, and how they interact with each other, like `each`, `select` and `map`, as they cut down on the amount of variables I need to define and code I need to write. 
+
+##### 20/11/20 (Fri)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (7 kyu)
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+There's some additional work that can be done around decomposing problem logic. I find myself going for the most obvious solution. This works, but can take more time than writing a more elegant solution. 
+
+On the other hand, there are some problems which just require brute forcing with some obscure methods (like `product`), which just can't be done with simple looping methods. 
