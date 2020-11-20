@@ -485,7 +485,7 @@ solve([[10,-15],[-1,-3]]) == 45
 solve([[1,-1],[2,3],[10,-100]]) == 300
 =end
 def solve(arr)
-  arr[0].product(*arr[1..-1]).map{ |i| i.reduce(&:*) }.max 
+  arr.first.product(*arr[1..-1]).map{ |i| i.reduce(&:*) }.max 
 end
 
 # 25) you will be given a lower case string and your task will be to remove k characters from that string using the following rule:
@@ -512,7 +512,7 @@ odd_or_even([0, 1, 4])    ==  "odd"
 odd_or_even([0, -1, -5])  ==  "even"
 =end
 def odd_or_even(array)
-  # Note the zero argument covers off instances where the array is empty
+  # Note the zero argument covers off instances where the array is empty (otherwise you get an error since you have nothing to sum onto)
   array.reduce(0, &:+).odd? ? 'odd' : 'even'
 end
 
@@ -533,4 +533,27 @@ end
 # We can shorten this slightly to 
 def solve(str)
   str.chars.sort.each_cons(2).all? { |a,b| a.next == b }
+end
+
+# 28) We will be generating a sequence: 0, 1, 3, 6, 10, 15, 21, 28, ... This sequence is generated with the pattern: "the nth term is the sum of numbers from 0 to n, inclusive". Complete the function that takes an integer n and returns a list/array of length abs(n) + 1 of the arithmetic series explained above. When n < 0, return the sequence with negative terms.
+=begin
+[ 0,  1,    3,      6,   ...]
+  0  0+1  0+1+2  0+1+2+3
+
+5  -->  [0,  1,  3,  6,  10,  15]
+-5  -->  [0, -1, -3, -6, -10, -15]
+7  -->  [0,  1,  3,  6,  10,  15,  21,  28]
+=end
+def sum_of_n(n)
+  return_arr = (0..n.abs).map do |element|
+    (0..element).reduce(0, &:+)
+  end
+  n < 0 ? return_arr.map { |element| element * -1 } : return_arr
+end
+
+# 29) You are given a list of unique integers arr, and two integers a and b. Your task is to find out whether or not a and b appear consecutively in arr, and return a boolean value (True if a and b are consecutive, False otherwise). It is guaranteed that a and b are both present in arr.
+def consecutive(arr, a, b)
+  arr.each_cons(2).any? do |pair|
+    pair == [a, b].sort || pair == [a, b].sort.reverse
+  end
 end
