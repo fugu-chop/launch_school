@@ -18,6 +18,8 @@
 - [17th, Tue](#171120-tue)
 - [18th, Wed](#181120-wed)
 - [19th, Thu](#191120-thu)
+- [20th, Fri](#201120-fri)
+- [21st, Sat](#201120-sat)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -359,3 +361,15 @@ __*Thoughts*__<br/>
 There's some additional work that can be done around decomposing problem logic. I find myself going for the most obvious solution. This works, but can take more time than writing a more elegant solution. 
 
 On the other hand, there are some problems which just require brute forcing with some obscure methods (like `product`), which just can't be done with simple looping methods. 
+
+##### 21/11/20 (Sat)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (7 kyu)
+
+__*Time spent*__<br/>
+242 minutes
+
+__*Thoughts*__<br/>
+More practice. I'm feeling ready to move to 6 kyu problems. There's still the occassional problem which is tricky at 7 kyu, but these generally rely on some more obscure methods. 
