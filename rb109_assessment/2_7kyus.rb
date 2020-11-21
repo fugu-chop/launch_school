@@ -688,16 +688,153 @@ end
 [8, 58, 85, 88, 358, 385, 538, 583, 588, 835, 853, 858, 885, 888]
 solve(0,1000) == 14
 =end
+# This solves all test cases, but Codewars doesn't accept it due to being too slow.
 def solve(a,b)
   rejected_nums = [1, 2, 4, 6, 7, 9, 0]
-  eviternity_digits = [3, 5, 8]
-  divisibility = (a..b).select { |num| num % 3 == 0 || num % 5 == 0 || num % 8 == 0 }
-  relevant_digits = divisibility.select do |filter_num|
+  relevant_digits = (a..b).select do |filter_num|
     filter_num.digits.none? do |digit|
       rejected_nums.include?(digit)
     end
   end
-  # Test for digit counts now!
-    # The count of 8s must be >= than counts of 5, which must be >= counts of 3
-    # We need to figure out an easy to work with data structure on how to get a count of digits, that ties back to the original number. 
+  relevant_digits.select do |number|
+    number.digits.count(8) >= number.digits.count(5) && number.digits.count(5) >= number.digits.count(3)
+  end.length
+end
+
+# 40) You get a list of integers, and you have to write a function mirror that returns the "mirror" (or symmetric) version of this list: i.e. the middle element is the greatest, then the next greatest on both sides, the the next greatest, and so on. The list will always consist of integers in range -1000..1000 and will vary in size between 0 and 10000. Your function should not mutate the input array, and this will be tested (where applicable). Notice that the returned list will always be of odd size, since there will always be a definitive middle element.
+=begin
+mirror([])  -->  []
+mirror([1])  -->  [1]
+mirror([2, 1])  -->  [1, 2, 1]
+mirror([1, 3, 2])  -->  [1, 2, 3, 2, 1]
+mirror([-8, 42, 18, 0, -16])  -->  [-16, -8, 0, 18, 42, 18, 0, -8, -16]
+mirror([-3, 15, 8, -1, 7, -1]) --> [-3, -1, -1, 7, 8, 15, 8, 7, -1, -1, -3]
+=end
+def mirror(data)
+  mirror_arr = []
+  data_copy = data.map { |num| num }
+  mirror_arr << data_copy.sort!.reverse!.slice!(0)
+  data_copy.each do |element|
+    mirror_arr.insert(0, element)
+    mirror_arr.insert(-1, element) 
+  end
+  data.length >= 1 ? mirror_arr : []
+end
+
+# Lmao shorter solution using addition
+def mirror(data)
+  # Note the exclusive range
+  data.sort[0...-1] + data.sort.reverse
+end
+
+# 41) Your task is to write a function that takes a string and return a new string with all vowels removed.
+=begin
+disemvowel("This website is for losers LOL!") == "Ths wbst s fr lsrs LL!"
+=end
+def disemvowel(sentence)
+  sentence.delete('AEIOUaeiuo')
+end
+
+# 42) Given an array of ones and zeroes, convert the equivalent binary value to an integer.
+=begin
+binary_array_to_number([0, 0, 0, 1]) == 1
+binary_array_to_number([0, 0, 1, 0]) == 2
+binary_array_to_number([0, 1, 0, 1]) == 5
+binary_array_to_number([1, 0, 0, 1]) == 9
+binary_array_to_number([0, 0, 1, 0]) == 2
+binary_array_to_number([0, 1, 1, 0]) == 6
+binary_array_to_number([1, 1, 1, 1]) == 15
+binary_array_to_number([1, 0, 1, 1]) == 11
+=end
+def binary_array_to_number(arr)
+  arr.map.with_index do |digit, index|
+    digit * (2 ** ((arr.length - 1) - index))
+  end.reduce(0, &:+)
+end 
+
+# 43) The vowel substrings in the word 'codewarriors' are o,e,a,io. The longest of these has a length of 2. Given a lowercase string that has alphabetic characters only (both vowels and consonants) and no spaces, return the length of the longest vowel substring. Vowels are any of 'aeiou'. 
+=begin
+solve("codewarriors") == 2
+solve("suoidea") == 3
+solve("iuuvgheaae") == 4
+solve("ultrarevolutionariees") == 3
+solve("strengthlessnesses") == 1
+solve("cuboideonavicuare") == 2
+solve("chrononhotonthuooaos") == 5
+solve("iiihoovaeaaaoougjyaw") == 8
+=end
+def solve(s)
+  vowels = %w(a e i o u)
+  vowel_counter = 0
+  vowel_store = []
+  s.chars.each do |letter|
+    if vowels.include?(letter)
+      vowel_counter += 1
+    else
+      vowel_store << vowel_counter 
+      vowel_counter = 0
+    end
+    vowel_store << vowel_counter 
+  end
+  vowel_store.max
+end
+
+#44) Your task is to make a function that can take any non-negative integer as an argument and return it with its digits in descending order. Essentially, rearrange the digits to create the highest possible number.
+=begin
+descending_order(0) == 0
+descending_order(1) == 1
+descending_order(123456789) == 987654321
+=end
+def descending_order(num)
+  num.to_s.chars.sort.reverse.join.to_i
+end
+
+# 45) You receive the name of a city as a string, and you need to return a string that shows how many times each letter shows up in the string by using an asterisk (*). The return string should include only the letters (not the dashes, spaces, apostrophes, etc). There should be no spaces in the output, and the different letters are separated by a comma (,) as seen in the example above.
+=begin
+get_letters("Chicago") == "c:**,h:*,i:*,a:*,g:*,o:*"
+get_letters("Bangkok") == "b:*,a:*,n:*,g:*,k:**,o:*"
+get_letters("Las Vegas") == "l:*,a:**,s:**,v:*,e:*,g:*"
+=end
+def get_letters(city)
+  letter_array = ('a'..'z').to_a
+  letter_hash = Hash.new
+  mod_city = city.downcase.chars.select do |letter|
+    letter_array.include?(letter)
+  end.each do |letter|
+    if letter_hash.keys.include?(letter)
+      letter_hash[letter] += '*' 
+    else 
+      letter_hash[letter] = '*'
+    end
+  end
+  letter_hash.to_a.map do |pair|
+    pair.join(':')
+  end.join(',')
+end
+
+# 46) ou have a string of numbers; starting with the third number each number is the result of an operation performed using the previous two numbers. Complete the function which returns a string of the operations in order and separated by a comma and a space, e.g. "subtraction, subtraction, addition"
+=begin
+The available operations are (in this order of preference):
+  addition
+  subtraction
+  multiplication
+  division
+
+say_me_operations("1 2 3 5 8") == "addition, addition, addition"
+say_me_operations("9 4 5 20 25") == "subtraction, multiplication, addition"
+say_me_operations("10 2 5 -3 -15 12") == "division, subtraction, multiplication, subtraction"
+say_me_operations("2 2 4") == "addition"
+=end
+def say_me_operations(numbers)
+  result = []
+  
+  numbers.split.map(&:to_i).each_cons(3) do |a, b, c|
+      result << case
+        when a + b == c then "addition"
+        when a - b == c then "subtraction"
+        when a * b == c then "multiplication"
+        when a / b == c then "division"
+        end
+      end
+  result.join(", ")
 end
