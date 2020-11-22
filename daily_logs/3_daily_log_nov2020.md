@@ -19,7 +19,8 @@
 - [18th, Wed](#181120-wed)
 - [19th, Thu](#191120-thu)
 - [20th, Fri](#201120-fri)
-- [21st, Sat](#201120-sat)
+- [21st, Sat](#211120-sat)
+- [22nd, Sun](#221120-sun)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -373,3 +374,19 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 More practice. I'm feeling ready to move to 6 kyu problems. There's still the occassional problem which is tricky at 7 kyu, but these generally rely on some more obscure methods. 
+
+##### 22/11/20 (Sun)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (6 & 7 kyu)
+
+__*Time spent*__<br/>
+250 minutes
+
+__*Thoughts*__<br/>
+I spent an inordinate amount of time trying to debug a simple loop. I was putting the increment for the tracking variable in the wrong place. How embarrassing. 
+
+Every time I move up a kyu, it's like uncovering a whole new world of complexity. It's an eye-opening experience. If I had to describe the difference, it's that there is generally an additional layer of logic required in this level compared to the previous stage, or that the immediately obvious solution generally will not work for the problems due to some constraint or edge cases. 
+
+Anyway, I solved my first 6 kyu problem. It took basically an hour to do so, with 30 lines of code. I couldn't help but laugh when the solution was three lines. Mine took significantly longer because I wasn't familiar with the `sort_by` notation - i.e. that you could use a `-` sign to reverse sort sublements within the block.
