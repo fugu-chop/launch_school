@@ -812,7 +812,7 @@ def get_letters(city)
   end.join(',')
 end
 
-# 46) ou have a string of numbers; starting with the third number each number is the result of an operation performed using the previous two numbers. Complete the function which returns a string of the operations in order and separated by a comma and a space, e.g. "subtraction, subtraction, addition"
+# 46) You have a string of numbers; starting with the third number each number is the result of an operation performed using the previous two numbers. Complete the function which returns a string of the operations in order and separated by a comma and a space, e.g. "subtraction, subtraction, addition"
 =begin
 The available operations are (in this order of preference):
   addition
@@ -837,4 +837,101 @@ def say_me_operations(numbers)
         end
       end
   result.join(", ")
+end
+
+# 47) Given positive integer, n, return true if it could be expressed as a sum of two or more consecutive positive numbers, otherwise return false. 2 ≤ N ≤ (2^32)-1 .
+=begin
+consecutive_ducks(6) == true (3 + 2 + 1)
+consecutive_ducks(10) == true (1 + 2 + 3 + 4)
+consecutive_ducks(13) == true (6 + 7)
+=end
+def consecutive_ducks(n)
+  # This is a bitwise operator. Honestly this problem is a bit of a wash. 
+  n & (n - 1) > 0
+end
+
+# 48) Given an array of integers, find the minimum sum which is obtained from summing each Two integers product. The array will contain positives only and will always have an even size.
+=begin
+# 5*2 + 3*4 = 22
+min_sum([5,4,2,3]) == 22
+
+26*3 + 24*6 + 12*10 = 342
+min_sum([12,6,10,26,3,24]) == 342
+
+9*0 + 8*2 +7*4 +6*5 = 74
+min_sum([9,2,8,7,5,4,0,6]) == 74
+
+min_sum([1,2]) == 2
+min_sum([]) == 0
+=end
+def min_sum(arr)
+  return 0 if arr.length == 0
+  new_arr = arr.sort.reverse
+  multiplication_arr = []
+  a_index = 0
+  b_index = new_arr.length - 1
+  while a_index <= (new_arr.length - 1) / 2
+    multiplication_arr << new_arr[a_index] * new_arr[b_index]
+    a_index += 1
+    b_index -= 1
+  end
+  multiplication_arr.reduce(:+)
+end
+
+# Suggested solution
+def min_sum(arr)
+  arr.sort!
+  (0...arr.size / 2).map { |i| arr[i] * arr[-i-1] }.sum
+end
+
+# 49) The function movie has 3 parameters: card (price of the card), ticket (normal price of a ticket), perc (fraction of what he paid for the previous ticket) and returns the first n such that ceil(price of System B) < price of System A.
+=begin
+System A : he buys a ticket (15 dollars) every time
+System B : he buys a card (500 dollars) and a first ticket for 0.90 times the ticket price, 
+then for each additional ticket he pays 0.90 times the price paid for the previous ticket.
+
+System A : 15 * 3 = 45
+System B : 500 + 15 * 0.90 + (15 * 0.90) * 0.90 + (15 * 0.90 * 0.90) * 0.90 ( = 536.5849999999999, no rounding for each ticket)
+
+movie(500, 15, 0.9) == 43
+movie(100, 10, 0.95) == 24
+=end
+def movie(card, ticket, perc)
+  num_tickets = 1
+  a_price = ticket
+  b_price = ticket * perc
+
+  until (b_price + card).ceil < a_price
+    num_tickets += 1
+    a_price += ticket
+    b_price += (ticket * (perc ** num_tickets))
+  end
+  num_tickets
+end
+
+# 50) Return the count of pairs that have consecutive numbers as follows:
+=begin
+pairs([1,2,5,8,-4,-3,7,6,5]) = 3
+The pairs are selected as follows [(1,2),(5,8),(-4,-3),(7,6),5]
+--the first pair is (1,2) and the numbers in the pair are consecutive; Count = 1
+--the second pair is (5,8) and are not consecutive
+--the third pair is (-4,-3), consecutive. Count = 2
+--the fourth pair is (7,6), also consecutive. Count = 3. 
+--the last digit has no pair, so we ignore.
+=end
+def pairs(array)
+  array.pop if array.length.odd?
+  counter = 0
+  index_counter = 0
+  loop do
+    break if index_counter > array.length - 2
+    counter += 1 if (array[index_counter] - array[index_counter + 1]).abs == 1
+    index_counter += 2
+  end
+  counter
+end
+
+# Suggested solution lmao
+def pairs arr
+  arr.each_slice(2).count {|a| a.max - a.min == 1}
 end
