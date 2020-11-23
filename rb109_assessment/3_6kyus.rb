@@ -154,21 +154,66 @@ multiplication_table(3) == [[1,2,3],[2,4,6],[3,6,9]]
 4 8 12 16
 =end
 def multiplication_table(size)
-  # size defines how many subarrays within our array
-  # The first element of the each subarray increments by 1
-  # The second element increments by 2
-  # The third element increments by 3
-  # And so on...
+  push_array = [(1..size).to_a]
+  loop do 
+    break if push_array.size == size
+    push_array << push_array.last.map.with_index do |number, index|
+      number += (index + 1)
+    end
+  end
+  push_array
+end
 
-  # Create a blank array for us to push our sub arrays into (push_array)
-  # Create a looping construct
-  # Break our loop when push_array.length == size (put at start of loop)
-    # When we create our first element, we can use (1..size).to_a
-    # Push this to our push_array
-    # Create a blank array []
-    # we want to take the last element of our push_array (potentially use each_with_object), with index
-      # [1,2,3]
-      # [] << element + index + 1
-    # Push the blank array to our push_array
-  # Return the push_array
+# Suggested solution (shorter)
+def multiplication_table(size)
+  (1..size).map do |i|
+    (1..size).map { |j| i * j }
+  end
+end
+
+# 7) Implement the encode function, using the following steps:
+=begin
+  convert every letter of the text to its ASCII value;
+  convert ASCII values to 8-bit binary;
+  triple every bit;
+  concatenate the result;
+
+input: "hey"
+--> 104, 101, 121                  // ASCII values
+--> 01101000, 01100101, 01111001   // binary
+--> 000111111000111000000000 000111111000000111000111 000111111111111000000111  // tripled
+--> "000111111000111000000000000111111000000111000111000111111111111000000111"  // concatenated
+
+
+encode("hey") == "000111111000111000000000000111111000000111000111000111111111111000000111"
+encode("The Sensei told me that i can do this kata") == "000111000111000111000000000111111000111000000000000111111000000111000111000000111000000000000000000111000111000000111111000111111000000111000111000111111000111111111000000111111111000000111111000111111000000111000111000111111000111000000111000000111000000000000000000111111111000111000000000111111000111111111111000111111000111111000000000111111000000111000000000000111000000000000000000111111000111111000111000111111000000111000111000000111000000000000000000111111111000111000000000111111000111000000000000111111000000000000111000111111111000111000000000000111000000000000000000111111000111000000111000000111000000000000000000111111000000000111111000111111000000000000111000111111000111111111000000000111000000000000000000111111000000111000000000111111000111111111111000000111000000000000000000111111111000111000000000111111000111000000000000111111000111000000111000111111111000000111111000000111000000000000000000111111000111000111111000111111000000000000111000111111111000111000000000111111000000000000111"
+encode("T3st") == "000111000111000111000000000000111111000000111111000111111111000000111111000111111111000111000000"
+encode("T?st!%") == "000111000111000111000000000000111111111111111111000111111111000000111111000111111111000111000000000000111000000000000111000000111000000111000111"
+
+=end
+def encode(s)
+  ascii = s.each_char.map { |char| char.ord }
+  binary = ascii.map do |value|
+    remainder = []
+    a = 0
+    loop do 
+      a, b = value.to_i.divmod(2)
+      remainder << b
+      value = a
+      break if a == 0
+    end
+    remainder.reverse.join
+  end
+  
+  binary.each do |bin|
+    until bin.length == 8
+      bin.insert(0, '0')
+    end
+  end
+  
+  binary.map do |value|
+    value.each_char.map do |digit|
+      digit * 3
+    end
+  end.join
 end
