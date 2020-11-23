@@ -217,3 +217,86 @@ def encode(s)
     end
   end.join
 end
+
+=begin
+decode("100111111000111001000010000111111000000111001111000111110110111000010111") == "hey"
+decode("000111000111000111000100000111111000111000001000000111111000010111000111000100111000000000000100000111000111000000111111000111111000000111000111000111111000111111111000000111111111000000111111000110111000000111000111000111111000111000000111000000111000000000000000000111111111000111000000000111111000111111111111000111111000111111000000000111111000000111000001000000111000000000001000000111111000111111000111000111111000000111000111000000111000000000000000000111111111000111000000000111111000111000000000000111111000000010000111000111111111000111000000000100111000000000000000000111111000111000000111000000111000000000000000000111111000000000111111000111111000000000000111000111111000111111111000000000111000000000000010000111111000000111000000000111111000111111110111000000111000000000000000000111111111000111000000000111111000111000000000000111111000111000000111000111111111000000111111000000111000000000000000000111111000111000111111000111111000000000000111000111111111000111000000000111111000000000000111") == "The Sensei told me that i can do this kata"
+decode("000111000111000111000010000000111111000000111111000111111111000000111111000111111111000111010000") == "T3st"
+decode("000111000111000111000001000000111111110111111111000111111111000000111111000111111111000111000000000000111000000000000111000000111000000111000111") == "T?st!%"
+=end
+def decode(s)
+    corrected_chars = s.chars.each_slice(3).map do |triplet|
+      triplet.map do |digit|
+        triplet.count('0') > triplet.count('1') ? digit = '0' : digit = '1'
+      end.uniq.join
+    end
+
+    bytes = corrected_chars.each_slice(8).each_with_object([]) do |byte, arr|
+      arr << byte
+    end
+
+    ascii = bytes.map do |subarr|
+      subarr.map.with_index do |element, index|
+        element.to_i * 2 ** ((subarr.length - 1) - index)
+      end.reduce(:+)
+    end
+
+    ascii.map do |ord|
+      ord.chr
+    end.join
+end
+
+# 8) You will be given an array of arrays and your task will be to return the number of unique arrays that can be formed by picking exactly one element from each subarray. 
+=begin
+# The below results in only 4 possiblites. They are [1,4,5],[1,4,6],[2,4,5],[2,4,6].
+solve([[1,2],[4],[5,6]]) == 4
+
+# We don't count duplicate combinations
+solve([[1,2],[4,4],[5,6,6]]) == 4
+solve([[1,2],[3,4],[5,6]]) == 8
+solve([[1,2,3],[3,4,6,6,7],[8,9,10,12,5,6]]) == 72
+=end
+def solve(arr)
+  arr.map { |subarr| subarr.uniq.length }.reduce(:*)
+end 
+
+# 9) Given the initial configuration of the cubes inside of the box as a 2D array, determine how the cubes are arranged after Bob switches the gravity. The box is 3D, with small cubes arranged in a matrix of n×m columns. It can change gravity to go in a certain direction, which can be 'L', 'R', 'D', and 'U' (left, right, down, and up).
+=begin
+BOX = [ [1, 3, 2],
+        [4, 5, 1],
+        [6, 5, 3],
+        [7, 2, 9] ]
+
+flip('R', BOX) ==
+  [ [1, 2, 3],
+    [1, 4, 5],
+    [3, 5, 6],
+    [2, 7, 9] ]
+
+flip('L', BOX) ==
+  [ [3, 2, 1],
+    [5, 4, 1],
+    [6, 5, 3],
+    [9, 7, 2] ]
+
+flip('U', BOX) ==
+  [ [7, 5, 9],
+    [6, 5, 3],
+    [4, 3, 2],
+    [1, 2, 1] ]
+
+flip('D', BOX) ==
+  [ [1, 2, 1],
+    [4, 3, 2],
+    [6, 5, 3],
+    [7, 5, 9] ]
+=end
+def flip(direction, box)
+  # Down and Up look like columnwise sorts (ascending and descending respectively), where subarrays need element replacing. 
+  case direction
+  when direction = 'R'
+    box.map { |subarr| subarr.sort }
+  when direction = 'L'
+    box.map { |subarr| subarr.sort.reverse }
+  end
+end
