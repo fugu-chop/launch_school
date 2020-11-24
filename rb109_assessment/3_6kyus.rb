@@ -292,11 +292,57 @@ flip('D', BOX) ==
     [7, 5, 9] ]
 =end
 def flip(direction, box)
-  # Down and Up look like columnwise sorts (ascending and descending respectively), where subarrays need element replacing. 
   case direction
-  when direction = 'R'
-    box.map { |subarr| subarr.sort }
-  when direction = 'L'
-    box.map { |subarr| subarr.sort.reverse }
+  when 'R' then box.map { |subarr| subarr.sort }
+  when 'L' then box.map { |subarr| subarr.sort.reverse }
+  when 'D' then box.transpose.map { |subarr| subarr.sort }.transpose
+  when 'U' then box.transpose.map { |subarr| subarr.sort.reverse }.transpose
   end
+end
+
+# 10) Write a function that when given a number >= 0, returns an Array of ascending length subarrays, populated by 1's.
+=begin
+pyramid(0) == [ ]
+pyramid(1) == [ [1] ]
+pyramid(2) == [ [1], [1, 1] ]
+pyramid(3) == [ [1], [1, 1], [1, 1, 1] ]
+=end
+def pyramid(numbers)
+  answer_array = []
+  return answer_array if numbers == 0
+  (1..numbers).map do |num|
+    num.times.map { |iteration| 1 }
+  end
+end
+
+# Suggested solution
+def pyramid(numbers)
+  # The * notation allows us to multiply each element in the array n times.
+  (1..numbers).map { |n| [1] * n }
+end
+
+# 11) We need to create a function to calculate an index. The index is calculated based on how many vowels are repeated more than once in a row and dividing them by the total number of vowels in a string. There will always be at least 1 vowel, and non-round integers should be rounded to 2 decimal places.
+=begin
+trump_detector("I will build a huge wall") == 0 
+# 4 extra "U", 3 extra "E" and 5 extra "A" on 3 different vowel groups
+trump_detector("HUUUUUGEEEE WAAAAAALL") == 4 
+#14 extra vowels on 9 base ones
+trump_detector("listen migrants: IIII KIIIDD YOOOUUU NOOOOOOTTT") == 1.56 
+=end
+def trump_detector(sentence)
+  # Count the extra number of repeated vowels (A)
+    # Break up our sentence via split then chars to get characters in an array
+    # Iterate through this array, using each_cons to take pairs
+    # Need to check if next_char is the same as the previous one
+
+
+    # Store this returned value as total_vowels
+    
+  # Count the number of vowels that aren't followed by another vowel (B)
+    # 
+  # Divide A by B, rounding to 2 decimal places
+    # Cast total_vowels.to_f
+    # Look up documentation on how to format. 
+  
+  
 end
