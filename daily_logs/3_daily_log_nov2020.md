@@ -22,6 +22,7 @@
 - [21st, Sat](#211120-sat)
 - [22nd, Sun](#221120-sun)
 - [23rd, Mon](#231120-mon)
+- [24th, Tue](#241120-tue)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -403,3 +404,19 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I definitely need to get better at chaining iterators. It takes me a long time to figure out the correct inputs and outputs at each stage of the iterators. Otherwise, I am starting to be able to solve 6 kyu problems. It takes me a while, and a lot of code, but it's already a significant improvement on 2 days ago, where I couldn't even digest the problems correctly. 
+
+##### 24/11/20 (Tue)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (6 kyu)
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Really happy with pretty complex problem of calculating hamming distance and correcting issues. I worked through it relatively well. I also managed to solve a 6 kyu problem in less than a minute with some careful reading. 
+
+I also gave a Regex problem a fair swing, but didn't end up succeeding - I'm just not sure how to concatenate multiple characters in a string, in a group and then replace that group. I also ran into a few problems that required extra modules, like `date` and `datetime` from the standard library. I'm going to avoid these style of problems for now. 
+
+I need to remember to slow down and apply the PEDAC method. I find myself kind of overwhelmed by the amount of steps required to solve a problem, and while I do break up the problem into bits, I immediately start jumping into those bits without piecing together the whole solution. I also spent a significant amount of time working on a problem, only to find I had got the requirements wrong.
