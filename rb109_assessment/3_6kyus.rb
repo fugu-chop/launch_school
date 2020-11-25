@@ -405,25 +405,6 @@ end
 
 # 14) See this description: https://www.codewars.com/kata/5f70c55c40b1c90032847588
 def points(dice)
-  # We're given a string of integers, length = 5
-  # Based on the combinations, we calculate a total points score. 
-  # We'll need to break up our string into characters in an array for counting purposes
-  # once this is broken up, we need to count how many instances of integers there are
-    # We can generate a new hash to keep track of counts
-    # Based on the counts, we can assign points. 
-    # Assigning points will probably be done in a case when statement based on hash values
-  # Our weird edge cases are
-    # Straights, in which case we'll need to sort our array. In order to determine a straight, there are two possibilities:
-      # [2..6]
-      # [1..5]
-        # With the caveat that the digit '1', as this take the value of any other number, at the start or end of the sequence.
-        # Therefore, our possible ranges
-          # 3, 4, 5, 6
-          # 2, 3, 4, 5 (both 1..5 and 2..6)
-          # 1, 2, 3, 4
-        # Note how the max - min is equal to 3
-  
-  dice = '54455'
   dice_counts = Hash.new(0)
   dice.chars.each do |die|
     if dice_counts.keys.include?(die)
@@ -436,6 +417,121 @@ def points(dice)
   return 50 if dice_counts.values.include?(5)
   return 40 if dice_counts.values.include?(4)
   return 30 if dice_counts.values.include?(3) && dice_counts.values.include?(2)
-  
+  return 20 if dice_counts.keys.count == 5 && dice_counts.keys.include?("5") && dice_counts.keys.include?("3")
   0
+end
+
+# Alternative syntax to my solution
+def points(dice)
+  counts = dice.chars.each_with_object({}) do |die, hash|
+    # This is a conditional assignment operator. It means if a is undefined or falsey, then evaluate b and set a to the result.
+    hash[die] ||= 0
+    hash[die] += 1
+  end
+  
+  return 50 if counts.values.any? { |c| c == 5 }
+  return 40 if counts.values.any? { |c| c == 4 }
+  return 30 if counts.values.any? { |c| c == 3 } && counts.values.any? { |c| c == 2 }
+  return 20 if ['12345', '23456', '13456'].include?(dice.chars.sort.join)
+  0
+end
+
+# 15) You have an array of numbers. Your task is to sort ascending odd numbers but even numbers must be on their places. Zero isn't an odd number and you don't need to move it. If you have an empty array, you need to return it.
+=begin
+sort_array([5, 3, 2, 8, 1, 4]) == [1, 3, 2, 8, 5, 4]
+=end
+def sort_array(array)
+    odd_nums = []
+    array.each_with_index do |number, index|
+      odd_nums << [number, index] if number.odd? 
+    end
+
+    odd_nums_index = []
+    odd_nums.each do |pair|
+      odd_nums_index << pair[1]
+    end
+
+    odd_nums.sort!.each_with_index do |pair, index|
+      array[odd_nums_index[index]] = pair[0]
+    end
+
+    array
+end
+
+# Shorter solution
+def sort_array(source_array)
+  odds = source_array.select(&:odd?).sort
+  # [5, 3, 2, 8, 1, 4]
+  # odds = [1, 3, 5]
+  # This tests whether each element of the source array is even (map generates a new array)
+    # If it's even, return that number
+    # If it's odd, instead of using that number in the source_array, use the first number of the odds array, removing it from future iterations, allowing us to continually use .shift
+  source_array.map { |n| n.even? ? n : odds.shift }
+end
+
+# 16) Read this: https://www.codewars.com/kata/5ce399e0047a45001c853c2b
+=begin
+ls = [1, 2, 3, 4, 5, 6] 
+parts_sums(ls) -> [21, 20, 18, 15, 11, 6, 0]
+
+ls = [744125, 935, 407, 454, 430, 90, 144, 6710213, 889, 810, 2579358]
+parts_sums(ls) -> [10037855, 9293730, 9292795, 9292388, 9291934, 9291504, 9291414, 9291270, 2581057, 2580168, 2579358, 0]
+=end
+def parts_sums(ls)
+  # Here, we set the end index to something outside of the range of ls, resulting in an empty array. That way, the reduce method will just add 0 (we defined this as a parameter)
+  (0..ls.length).map { |idx| ls[idx..-1].reduce(0, &:+) }
+end
+
+# Fast solution
+def parts_sums(ls)
+  ls.reduce([ls.sum]) { |sums, x| sums << sums.last - x }
+end
+
+# 17)  You are given N ropes, where the length of each rope is a positive integer. At each step, you have to reduce all the ropes by the length of the smallest rope. The step will be repeated until no ropes are left. Given the length of N ropes, print the number of ropes that are left before each step.
+=begin
+a = [3, 3, 2, 9, 7] == [5, 4, 2, 1]
+1. 5 ropes remain
+2. 4 ropes remain (2 is removed)
+3. 2 ropes remain (the two 3's are removed)
+4. 1 rope remains (the 7 is removed)
+
+cut_the_ropes([3, 3, 2, 9, 7]) == [5, 4, 2, 1]
+cut_the_ropes([1, 2, 3, 4, 3, 3, 2, 1]) == [8, 6, 4, 1]
+cut_the_ropes([13035, 6618, 13056, 20912, 1119, 13035, 6618, 6618, 8482, 13056]) == [10, 9, 6, 5, 3, 1]
+cut_the_ropes([9, 9, 9, 9, 7]) == [5, 4]
+=end
+def cut_the_ropes(arr)
+  array = arr.clone
+  array_lengths = []
+  until array.length < 1
+    array_lengths << array.length
+    array.delete(array.min)
+  end
+  array_lengths
+end
+
+# 18) Complete the function which accepts a string and return an array of character(s) that have the most spaces to their right and left.
+=begin
+Notes:
+  the string can have leading/trailing spaces - you should not count them
+  the strings contain only unique characters from a to z
+  the order of characters in the returned array doesn't matter
+
+"a b  c"                        -->  ["b"]
+"a bcs           d k"           -->  ["d"]
+"    a b  sc     p     t   k"   -->  ["p"]
+"a  b  c  de"                   -->  ["b", "c"]
+"     a  b  c de        "       -->  ["b"]
+"abc"                           -->  ["a", "b", "c"]
+=end
+def loneliest(s)
+  # First off, trim all the beginning and ending white spaces (these don't count)
+  # Break up our string into an array using split
+  # Next, set up a range of lowercase a-z. We will use this as a caller for .include?
+  # Using each with object ({}), Iterate through our array
+    # If .include? returns true, 
+      # we can start counting spaces (incrementing the hash value for that letter)
+      # Otherwise, use ||= 0 notation
+  
+  # the above covers spaces to the right. How about to the left? Can we just reverse our array and do this again?
 end
