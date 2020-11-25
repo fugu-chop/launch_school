@@ -328,21 +328,114 @@ trump_detector("I will build a huge wall") == 0
 trump_detector("HUUUUUGEEEE WAAAAAALL") == 4 
 #14 extra vowels on 9 base ones
 trump_detector("listen migrants: IIII KIIIDD YOOOUUU NOOOOOOTTT") == 1.56 
+
+# 15 / 6
+trump_detector("MEXICAAAAAAAANS GOOOO HOOOMEEEE") == 2.5
+
+# 17 / 9
+trump_detector("America NUUUUUKEEEE Oooobaaaamaaaaa") == 1.89
 =end
 def trump_detector(sentence)
-  # Count the extra number of repeated vowels (A)
-    # Break up our sentence via split then chars to get characters in an array
-    # Iterate through this array, using each_cons to take pairs
-    # Need to check if next_char is the same as the previous one
+  denom_counter = 0
+  nom_counter = 0
 
+  sentence.downcase.chars.each_cons(2) do |a, b| 
+    if b == a && %w(a e i o u).include?(b)
+      nom_counter += 1 
+    elsif b != a && %w(a e i o u).include?(b)
+      denom_counter += 1
+    end
+  end
 
-    # Store this returned value as total_vowels
-    
-  # Count the number of vowels that aren't followed by another vowel (B)
-    # 
-  # Divide A by B, rounding to 2 decimal places
-    # Cast total_vowels.to_f
-    # Look up documentation on how to format. 
+  denom_counter += 1 if %w(a e i o u).include?(sentence.downcase[0])
+
+  (nom_counter.to_f / denom_counter).round(2)
+end
+
+# 12) Given a number, return a string with dash'-'marks before and after each odd integer, but do not begin or end the string with a dash mark.
+=begin
+dashatize(274) == "2-7-4"
+dashatize(5311) == "5-3-1-1"
+dashatize(86320) == "86-3-20"
+dashatize(974302) == "9-7-4-3-02"
+dashatize(nil) == "nil"
+dashatize(0) == "0"
+dashatize(-1) == "1"
+dashatize(-28369) == "28-3-6-9"
+=end
+def dashatize(num)
+  return 'nil' if num == nil
+  num_string = num.abs.digits.reverse.map do |digit|
+    if digit.odd?
+      digit = "-#{digit}-"
+    else
+      digit.to_s
+    end
+  end.join.gsub('--', '-')
+  num_string[0] = '' if num_string[0] == '-'
+  num_string[-1] = '' if num_string[-1] == '-'
+  num_string
+end
+
+# 13) Given an integer n (n > 1), the function cycle(n) returns the length of the cycle if n and 10 are coprimes, otherwise returns -1.
+=begin
+cycle(5) == -1
+cycle(13) == 6 -> 0.076923 076923 0769
+cycle(21) == 6 -> 0.047619 047619 0476
+cycle(27) == 3 -> 0.037 037 037 037 0370
+cycle(33) == 2 -> 0.03 03 03 03 03 03 03 03
+cycle(37) == 3 -> 0.027 027 027 027 027 0
+cycle(94) == -1 
+cycle(22) == -1 since 1/22 ~ 0.0 45 45 45 45
+=end
+def cycle(n)
+  c = n.to_s.length
+  cycles = 1
+  r = (10 ** c) % n
+
+  return -1 if (n % 2 == 0) || (n % 5 == 0) 
+
+  until r == 10 ** (c - 1)
+    r = (r * 10) % n
+    cycles += 1
+  end
+
+  cycles
+end
+
+# 14) See this description: https://www.codewars.com/kata/5f70c55c40b1c90032847588
+def points(dice)
+  # We're given a string of integers, length = 5
+  # Based on the combinations, we calculate a total points score. 
+  # We'll need to break up our string into characters in an array for counting purposes
+  # once this is broken up, we need to count how many instances of integers there are
+    # We can generate a new hash to keep track of counts
+    # Based on the counts, we can assign points. 
+    # Assigning points will probably be done in a case when statement based on hash values
+  # Our weird edge cases are
+    # Straights, in which case we'll need to sort our array. In order to determine a straight, there are two possibilities:
+      # [2..6]
+      # [1..5]
+        # With the caveat that the digit '1', as this take the value of any other number, at the start or end of the sequence.
+        # Therefore, our possible ranges
+          # 3, 4, 5, 6
+          # 2, 3, 4, 5 (both 1..5 and 2..6)
+          # 1, 2, 3, 4
+        # Note how the max - min is equal to 3
   
+  dice = '54455'
+  dice_counts = Hash.new(0)
+  dice.chars.each do |die|
+    if dice_counts.keys.include?(die)
+      dice_counts[die] += 1
+    else
+      dice_counts[die] = 1
+    end
+  end
   
+  return 50 if dice_counts.values.include?(5)
+  return 40 if dice_counts.values.include?(4)
+  return 30 if dice_counts.values.include?(3) && dice_counts.values.include?(2)
+  
+  0
 end
