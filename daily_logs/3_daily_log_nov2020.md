@@ -23,6 +23,7 @@
 - [22nd, Sun](#221120-sun)
 - [23rd, Mon](#231120-mon)
 - [24th, Tue](#241120-tue)
+- [25th, Wed](#251120-wed)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -420,3 +421,17 @@ Really happy with pretty complex problem of calculating hamming distance and cor
 I also gave a Regex problem a fair swing, but didn't end up succeeding - I'm just not sure how to concatenate multiple characters in a string, in a group and then replace that group. I also ran into a few problems that required extra modules, like `date` and `datetime` from the standard library. I'm going to avoid these style of problems for now. 
 
 I need to remember to slow down and apply the PEDAC method. I find myself kind of overwhelmed by the amount of steps required to solve a problem, and while I do break up the problem into bits, I immediately start jumping into those bits without piecing together the whole solution. I also spent a significant amount of time working on a problem, only to find I had got the requirements wrong.
+
+##### 25/11/20 (Wed)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (6 kyu)
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Pretty happy that I was able to solve a few Regex problems with some non-regex methods. It took a while, but the logic is pretty basic and easy to follow. 
+
+I also encountered my first problem where I was just unable to decipher the maths behind the algorithm. That was frustrating. 
