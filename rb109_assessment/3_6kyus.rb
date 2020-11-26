@@ -510,28 +510,49 @@ def cut_the_ropes(arr)
   array_lengths
 end
 
-# 18) Complete the function which accepts a string and return an array of character(s) that have the most spaces to their right and left.
+# 18) Given a positive integer n written as abcd... (a, b, c, d... being digits) and a positive integer p, we want to find a positive integer k, if it exists, such as the sum of the digits of n taken to the successive powers of p is equal to k * n.
 =begin
-Notes:
-  the string can have leading/trailing spaces - you should not count them
-  the strings contain only unique characters from a to z
-  the order of characters in the returned array doesn't matter
-
-"a b  c"                        -->  ["b"]
-"a bcs           d k"           -->  ["d"]
-"    a b  sc     p     t   k"   -->  ["p"]
-"a  b  c  de"                   -->  ["b", "c"]
-"     a  b  c de        "       -->  ["b"]
-"abc"                           -->  ["a", "b", "c"]
+dig_pow(89, 1) should return 1 since 8¹ + 9² = 89 = 89 * 1
+dig_pow(92, 1) should return -1 since there is no k such as 9¹ + 2² equals 92 * k
+dig_pow(695, 2) should return 2 since 6² + 9³ + 5⁴= 1390 = 695 * 2
+dig_pow(46288, 3) should return 51 since 4³ + 6⁴+ 2⁵ + 8⁶ + 8⁷ = 2360688 = 46288 * 51
 =end
-def loneliest(s)
-  # First off, trim all the beginning and ending white spaces (these don't count)
-  # Break up our string into an array using split
-  # Next, set up a range of lowercase a-z. We will use this as a caller for .include?
-  # Using each with object ({}), Iterate through our array
-    # If .include? returns true, 
-      # we can start counting spaces (incrementing the hash value for that letter)
-      # Otherwise, use ||= 0 notation
-  
-  # the above covers spaces to the right. How about to the left? Can we just reverse our array and do this again?
+def dig_pow(n, p)
+    power_array = (p..(p + n.digits.length - 1)).to_a
+    array_sum = n.digits.reverse.map.with_index do |digit, index|
+      digit ** power_array[index]
+    end.reduce(:+)
+    array_sum % n == 0 ? array_sum / n : -1
+end
+
+# 19) A triangle number is a number where n objects form an equilateral triangle. Check if a given input is a valid triangle number. Return true if it is, false if it is not (note that any non-integers, including non-number types, are not triangle numbers). You are encouraged to develop an effective algorithm: test cases include really big numbers.
+=begin
+# Triangle Number
+  1
+ 2 3
+4 5 6
+
+# Not a triangle Number
+   1
+  2 3
+ 4 5 6
+7 8
+
+# Triangle number
+       1
+      2 3
+     4 5 6
+    7 8 9 10
+ 11 12 13 14 15
+16 17 18 19 20 21
+
+isTriangleNumber(3) == true
+isTriangleNumber(5) == false
+isTriangleNumber("hello!") == false
+isTriangleNumber(6.15) == false"
+=end
+def isTriangleNumber(number)
+  return false unless number.is_a? Fixnum
+  number = 15
+  (Math.sqrt(1+8*number)-1) % 2 == 0
 end
