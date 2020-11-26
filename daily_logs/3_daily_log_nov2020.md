@@ -24,6 +24,7 @@
 - [23rd, Mon](#231120-mon)
 - [24th, Tue](#241120-tue)
 - [25th, Wed](#251120-wed)
+- [26th, Thu](#261120-thu)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -435,3 +436,17 @@ __*Thoughts*__<br/>
 Pretty happy that I was able to solve a few Regex problems with some non-regex methods. It took a while, but the logic is pretty basic and easy to follow. 
 
 I also encountered my first problem where I was just unable to decipher the maths behind the algorithm. That was frustrating. 
+
+##### 26/11/20 (Thu)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (6 kyu)
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+I'm going to start skipping most of the string related problems. There's just too much Regex required in the solutions. Also, I'm having a fair bit of trouble with some of the mathematical ones, since they require obscure mathematical knowledge of algorithms that I would simply never get through only a few test cases. 6 kyu is challenging because of these factors - I can never guarantee whether I will be able to solve a problem just by looking at it. 
+
+I think I'll filter down to `Fundamentals` and see how I go with that. Right now whether I can solve a problem feels like more luck that skill.
