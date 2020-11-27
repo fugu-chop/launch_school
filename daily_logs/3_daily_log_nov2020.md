@@ -25,6 +25,7 @@
 - [24th, Tue](#241120-tue)
 - [25th, Wed](#251120-wed)
 - [26th, Thu](#261120-thu)
+- [27th, Fri](#271120-fri)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -450,3 +451,16 @@ __*Thoughts*__<br/>
 I'm going to start skipping most of the string related problems. There's just too much Regex required in the solutions. Also, I'm having a fair bit of trouble with some of the mathematical ones, since they require obscure mathematical knowledge of algorithms that I would simply never get through only a few test cases. 6 kyu is challenging because of these factors - I can never guarantee whether I will be able to solve a problem just by looking at it. 
 
 I think I'll filter down to `Fundamentals` and see how I go with that. Right now whether I can solve a problem feels like more luck that skill.
+
+##### 27/11/20 (Fri)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (6 kyu)
+    - Solution revision (#22)
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+6 Kyu is still honestly too hard for me. I need to rethink my approach. I'll post in the Launch School Slack and see if anyone has any resources that could help bridge the gap. This is incredibly depressing at the moment. 
