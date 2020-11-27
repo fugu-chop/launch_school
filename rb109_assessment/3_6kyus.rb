@@ -1,43 +1,4 @@
-# 1) Given a string, return the minimal number of parenthesis reversals needed to make balanced parenthesis. 
-=begin
-solve(")(") = 2 Because we need to reverse ")" to "(" and "(" to ")". These are 2 reversals. 
-solve("(((())") = 1 We need to reverse just one "(" parenthesis to make it balanced.
-solve("(((") = -1 Not possible to form balanced parenthesis. Return -1.
-
-
-solve(")()(") == 2
-solve("((()") == 1
-solve("(((") == -1
-solve("())(((") == 3
-solve("())()))))()()(") == 4
-=end
-def solve(str)
-  return -1 if str.length.odd?
-  o, c, t = [0, 0, 0]
-  
-  str.each_char do |p|
-    if p == '('
-      o += 1
-    else
-      c += 1
-      # If the total number of closing > opening, we add one to t, which is the total number of changes
-      # I don't understand why we are modifying o or c in the loop. It must be something to do with the position of the parentheses?
-      if c > o
-        o += 1
-        c -= 1
-        t += 1
-      end
-    end
-  end
-
-  # Why do we not do anything if c > o?
-  if o > c
-    t += (o - c) / 2
-  end
-  t
-end
-
-# 2) Sort elements in an array by decreasing frequency of elements. If two elements have the same frequency, sort them by increasing value. 
+# 1) Sort elements in an array by decreasing frequency of elements. If two elements have the same frequency, sort them by increasing value. 
 =begin
 solve([2,3,5,3,7,9,5,3,7]) == [3,3,3,5,5,7,7,2,9]
 solve([1,2,3,0,5,0,1,6,8,8,6,9,1]) == [1,1,1,0,0,6,6,8,8,2,3,5,9])
@@ -80,7 +41,7 @@ def solve(arr)
   arr.sort_by { |element| [-arr.count(element), element] }
 end
 
-# 3) Assume "#" is like a backspace in string. This means that string "a#bc#d" actually is "bd". Your task is to process a string with "#" symbols.
+# 2) Assume "#" is like a backspace in string. This means that string "a#bc#d" actually is "bd". Your task is to process a string with "#" symbols.
 =begin
 clean_string('abc#d##c') == "ac"
 clean_string('abc####d##c#') == "" 
@@ -100,7 +61,7 @@ def clean_string(str)
   str.chars.each_with_object([]) { |ch, o| ch == "#" ? o.pop : o << ch }.join
 end
 
-# 4) Define a function that takes one integer argument and returns logical value true or false depending on if the integer is a prime. Per Wikipedia, a prime number (or a prime) is a natural number greater than 1 that has no positive divisors other than 1 and itself. You can assume you will be given an integer input.You can not assume that the integer will be only positive. You may be given negative numbers as well (or 0).
+# 3) Define a function that takes one integer argument and returns logical value true or false depending on if the integer is a prime. Per Wikipedia, a prime number (or a prime) is a natural number greater than 1 that has no positive divisors other than 1 and itself. You can assume you will be given an integer input.You can not assume that the integer will be only positive. You may be given negative numbers as well (or 0).
 =begin
 is_prime(1) == false
 is_prime(2) == true
@@ -121,7 +82,7 @@ def is_prime?(num)
   num < 2 ? false : (2..Math.sqrt(num)).none?{ |i| num % i == 0 }
 end
 
-# 5) You will create the classic Pascal's triangle. Your function will be passed the depth of the triangle and you code has to return the corresponding pascal triangle up to that depth. The triangle should be returned as a nested array.
+# 4) You will create the classic Pascal's triangle. Your function will be passed the depth of the triangle and your code has to return the corresponding pascal triangle up to that depth. The triangle should be returned as a nested array.
 =begin
 pascal(5) # should return [[1], [1,1], [1,2,1], [1,3,3,1], [1,4,6,4,1]]
 =end
@@ -140,7 +101,7 @@ def pascal(rows)
   push_array
 end
 
-# 6) Your task, is to create NxN multiplication table, of size provided in parameter. 
+# 5) Your task, is to create NxN multiplication table, of size provided in parameter. 
 =begin
 multiplication_table(3) == [[1,2,3],[2,4,6],[3,6,9]]
 
@@ -171,7 +132,7 @@ def multiplication_table(size)
   end
 end
 
-# 7) Implement the encode function, using the following steps:
+# 6) Implement the encode function, using the following steps:
 =begin
   convert every letter of the text to its ASCII value;
   convert ASCII values to 8-bit binary;
@@ -246,7 +207,7 @@ def decode(s)
     end.join
 end
 
-# 8) You will be given an array of arrays and your task will be to return the number of unique arrays that can be formed by picking exactly one element from each subarray. 
+# 7) You will be given an array of arrays and your task will be to return the number of unique arrays that can be formed by picking exactly one element from each subarray. 
 =begin
 # The below results in only 4 possiblites. They are [1,4,5],[1,4,6],[2,4,5],[2,4,6].
 solve([[1,2],[4],[5,6]]) == 4
@@ -260,7 +221,7 @@ def solve(arr)
   arr.map { |subarr| subarr.uniq.length }.reduce(:*)
 end 
 
-# 9) Given the initial configuration of the cubes inside of the box as a 2D array, determine how the cubes are arranged after Bob switches the gravity. The box is 3D, with small cubes arranged in a matrix of n×m columns. It can change gravity to go in a certain direction, which can be 'L', 'R', 'D', and 'U' (left, right, down, and up).
+# 8) Given the initial configuration of the cubes inside of the box as a 2D array, determine how the cubes are arranged after Bob switches the gravity. The box is 3D, with small cubes arranged in a matrix of n×m columns. It can change gravity to go in a certain direction, which can be 'L', 'R', 'D', and 'U' (left, right, down, and up).
 =begin
 BOX = [ [1, 3, 2],
         [4, 5, 1],
@@ -300,7 +261,7 @@ def flip(direction, box)
   end
 end
 
-# 10) Write a function that when given a number >= 0, returns an Array of ascending length subarrays, populated by 1's.
+# 9) Write a function that when given a number >= 0, returns an Array of ascending length subarrays, populated by 1's.
 =begin
 pyramid(0) == [ ]
 pyramid(1) == [ [1] ]
@@ -311,7 +272,7 @@ def pyramid(numbers)
   answer_array = []
   return answer_array if numbers == 0
   (1..numbers).map do |num|
-    num.times.map { |iteration| 1 }
+    num.times.map { |_| 1 }
   end
 end
 
@@ -321,7 +282,7 @@ def pyramid(numbers)
   (1..numbers).map { |n| [1] * n }
 end
 
-# 11) We need to create a function to calculate an index. The index is calculated based on how many vowels are repeated more than once in a row and dividing them by the total number of vowels in a string. There will always be at least 1 vowel, and non-round integers should be rounded to 2 decimal places.
+# 10) We need to create a function to calculate an index. The index is calculated based on how many vowels are repeated more than once in a row and dividing them by the total number of vowels in a string. There will always be at least 1 vowel, and non-round integers should be rounded to 2 decimal places.
 =begin
 trump_detector("I will build a huge wall") == 0 
 # 4 extra "U", 3 extra "E" and 5 extra "A" on 3 different vowel groups
@@ -352,7 +313,7 @@ def trump_detector(sentence)
   (nom_counter.to_f / denom_counter).round(2)
 end
 
-# 12) Given a number, return a string with dash'-'marks before and after each odd integer, but do not begin or end the string with a dash mark.
+# 11) Given a number, return a string with dash'-'marks before and after each odd integer, but do not begin or end the string with a dash mark.
 =begin
 dashatize(274) == "2-7-4"
 dashatize(5311) == "5-3-1-1"
@@ -377,7 +338,7 @@ def dashatize(num)
   num_string
 end
 
-# 13) Given an integer n (n > 1), the function cycle(n) returns the length of the cycle if n and 10 are coprimes, otherwise returns -1.
+# 12) Given an integer n (n > 1), the function cycle(n) returns the length of the cycle if n and 10 are coprimes, otherwise returns -1.
 =begin
 cycle(5) == -1
 cycle(13) == 6 -> 0.076923 076923 0769
@@ -403,7 +364,7 @@ def cycle(n)
   cycles
 end
 
-# 14) See this description: https://www.codewars.com/kata/5f70c55c40b1c90032847588
+# 13) See this description: https://www.codewars.com/kata/5f70c55c40b1c90032847588
 def points(dice)
   dice_counts = Hash.new(0)
   dice.chars.each do |die|
@@ -436,7 +397,7 @@ def points(dice)
   0
 end
 
-# 15) You have an array of numbers. Your task is to sort ascending odd numbers but even numbers must be on their places. Zero isn't an odd number and you don't need to move it. If you have an empty array, you need to return it.
+# 14) You have an array of numbers. Your task is to sort ascending odd numbers but even numbers must be on their places. Zero isn't an odd number and you don't need to move it. If you have an empty array, you need to return it.
 =begin
 sort_array([5, 3, 2, 8, 1, 4]) == [1, 3, 2, 8, 5, 4]
 =end
@@ -469,7 +430,7 @@ def sort_array(source_array)
   source_array.map { |n| n.even? ? n : odds.shift }
 end
 
-# 16) Read this: https://www.codewars.com/kata/5ce399e0047a45001c853c2b
+# 15) Read this: https://www.codewars.com/kata/5ce399e0047a45001c853c2b
 =begin
 ls = [1, 2, 3, 4, 5, 6] 
 parts_sums(ls) -> [21, 20, 18, 15, 11, 6, 0]
@@ -487,7 +448,7 @@ def parts_sums(ls)
   ls.reduce([ls.sum]) { |sums, x| sums << sums.last - x }
 end
 
-# 17)  You are given N ropes, where the length of each rope is a positive integer. At each step, you have to reduce all the ropes by the length of the smallest rope. The step will be repeated until no ropes are left. Given the length of N ropes, print the number of ropes that are left before each step.
+# 16)  You are given N ropes, where the length of each rope is a positive integer. At each step, you have to reduce all the ropes by the length of the smallest rope. The step will be repeated until no ropes are left. Given the length of N ropes, print the number of ropes that are left before each step.
 =begin
 a = [3, 3, 2, 9, 7] == [5, 4, 2, 1]
 1. 5 ropes remain
@@ -510,7 +471,7 @@ def cut_the_ropes(arr)
   array_lengths
 end
 
-# 18) Given a positive integer n written as abcd... (a, b, c, d... being digits) and a positive integer p, we want to find a positive integer k, if it exists, such as the sum of the digits of n taken to the successive powers of p is equal to k * n.
+# 17) Given a positive integer n written as abcd... (a, b, c, d... being digits) and a positive integer p, we want to find a positive integer k, if it exists, such as the sum of the digits of n taken to the successive powers of p is equal to k * n.
 =begin
 dig_pow(89, 1) should return 1 since 8¹ + 9² = 89 = 89 * 1
 dig_pow(92, 1) should return -1 since there is no k such as 9¹ + 2² equals 92 * k
@@ -525,7 +486,7 @@ def dig_pow(n, p)
     array_sum % n == 0 ? array_sum / n : -1
 end
 
-# 19) A triangle number is a number where n objects form an equilateral triangle. Check if a given input is a valid triangle number. Return true if it is, false if it is not (note that any non-integers, including non-number types, are not triangle numbers). You are encouraged to develop an effective algorithm: test cases include really big numbers.
+# 18) A triangle number is a number where n objects form an equilateral triangle. Check if a given input is a valid triangle number. Return true if it is, false if it is not (note that any non-integers, including non-number types, are not triangle numbers). You are encouraged to develop an effective algorithm: test cases include really big numbers.
 =begin
 # Triangle Number
   1
@@ -555,4 +516,146 @@ def isTriangleNumber(number)
   return false unless number.is_a? Fixnum
   number = 15
   (Math.sqrt(1+8*number)-1) % 2 == 0
+end
+
+# 19) Given a List [] of n integers , find minimum number to be inserted in a list, so that sum of all elements of list should equal the closest prime number .
+=begin
+minimum_number([3,1,2]) == 1
+minimum_number([5,2]) == 0
+minimum_number([1,1,1]) == 0
+minimum_number([2,12,8,4,6]) == 5
+minimum_number([50,39,49,6,17,28]) == 2
+=end
+def minimum_number(array)
+  base = array.reduce(:+)
+  increment = 0
+  loop do
+    break if (2..Math.sqrt(base + increment)).none? { |divisor| (base + increment) % divisor == 0 }
+    increment += 1
+  end
+  increment
+end
+
+# 20) Given two arrays of strings a1 and a2, return a sorted array r in lexicographical order of the strings of a1 which are substrings of strings of a2. r must have no duplicates. Don't mutate the inputs.
+=begin
+a1 = ["arp", "live", "strong"]
+a2 = ["lively", "alive", "harp", "sharp", "armstrong"]
+==> ["arp", "live", "strong"]
+
+a1 = ["tarp", "mice", "bull"]
+a2 = ["lively", "alive", "harp", "sharp", "armstrong"]
+==> []
+=end
+def in_array(array1, array2)
+  return_array = []
+  array2.map do |comparison|
+    array1.select do |comparer|
+      comparison.include?(comparer)
+    end
+  end.flatten.uniq.sort
+end
+
+# 21) In this Kata, you will be given a number and your task will be to return the nearest prime number. If difference is equal, pick the lower one.
+=begin
+solve(3) == 3
+solve(11) == 11
+solve(4) == 3
+solve(110) == 109
+solve(1110) == 1109
+=end
+def solve(n)
+  upward = n
+  downward = n
+  until (2..(Math.sqrt(upward))).none? { |divisor| upward % divisor == 0 } == true
+    upward += 1
+  end
+  until (2..(Math.sqrt(downward))).none? { |divisor| downward % divisor == 0 } == true
+    downward -= 1
+  end
+  
+  n - downward > upward - n ? upward : downward
+end
+
+# 22) In this Kata, you will be given a number n (n > 0) and your task will be to return the smallest square number N (N > 0) such that n + N is also a perfect square. If there is no answer, return -1.
+=begin
+# because 36 is the smallest perfect square that can be added to 13 to form a perfect square => 13 + 36 = 49
+solve(13) = 36
+solve(3) = 1 # 3 + 1 = 4, a perfect square
+solve(12) = 4 # 12 + 4 = 16, a perfect square
+solve(9) = 16 
+solve(4) = -1
+=end
+# This passes our test cases, but it's too slow.
+def solve(number)
+  perfect_squares = (1..Math.sqrt(number)).map { |num| num ** 2 }
+  answer = perfect_squares.select do |square|
+    perfect_squares.include?(square + number)
+  end.min 
+  answer ? answer : -1
+end
+
+# Suggested solution
+def solve n
+  ans = -1 
+  (1..[n**0.5,5].max).each do |i| 
+    r = (n-i*i) / (2.0*i)
+    ans = r*r if r > 0 and r % 1 == 0
+  end
+  ans
+end
+
+# 23) You will be given a seed value for the test series and your task will be to return the number of integers that have to be generated in the test series before it converges to the base series. 
+=begin
+1, 2, 4, 8, 16, 22, 26, 38, 62, 74, 102, 104, 108, 116, 122
+  For single digit integers, add the number to itself to get the next element.
+  For other integers, multiply all the non-zero digits and add the result to the original number to get the next element.
+
+Let's begin the same series with a seed value of 3 instead of 1:
+
+3, 6, 12, 14, 18, 26, 38, 62, 74, 102, 104, 108, 116, 122
+
+Notice that the two sequences converge at 26 and are identical therefter. We will call the series seeded by a value of 1 the "base series" and the other series the "test series".
+
+You will be given a seed value for the test series and your task will be to return the number of integers that have to be generated in the test series before it converges to the base series. In the case above:
+
+convergence(3) = 5, the length of [3, 6, 12, 14, 18]. 
+
+convergence(3) == 5
+convergence(5) == 6
+convergence(10) == 5
+convergence(15) == 2
+convergence(500) == 29
+convergence(5000) == 283
+=end
+def convergence(n)
+  base = [1]
+  test = [n]
+
+  loop do
+    next_base = next_num(base.last)
+    next_test = next_num(test.last)
+
+    if next_base == next_test
+      # You can use break to return things!
+      break test.size
+    elsif base.include?(next_test)
+      break test.size
+    elsif test.include?(next_base)
+      break test.index(next_base)
+    else
+      base << next_base
+      test << next_test
+    end
+  end
+end
+
+def next_num(seed)
+  accum = seed
+  accum *= 2 if seed.digits.length == 1
+  if seed.digits.length > 1
+    a = seed.digits
+    a.delete(0)
+    accum += a.reduce(:*)
+  end
+  accum
 end
