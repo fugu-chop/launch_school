@@ -911,3 +911,176 @@ def order(sentence)
   end
   ordered_arr.join(' ')
 end
+
+# 37) Create a fibonacci function that given a signature array/list, returns the first n elements - signature included of the so seeded sequence.
+=begin
+tribonacci([1,1,1],10) == [1,1,1,3,5,9,17,31,57,105]
+tribonacci([0,0,1],10) == [0,0,1,1,2,4,7,13,24,44]
+tribonacci([0,1,1],10) == [0,1,1,2,4,7,13,24,44,81]
+tribonacci([1,0,0],10) == [1,0,0,1,1,2,4,7,13,24]
+tribonacci([0,0,0],10) == [0,0,0,0,0,0,0,0,0,0]
+tribonacci([1,2,3],10) == [1,2,3,6,11,20,37,68,125,230]
+tribonacci([3,2,1],10) == [3,2,1,6,9,16,31,56,103,190]
+tribonacci([1,1,1],1) == [1]
+=end
+# This passes, but takes too long. 
+def tribonacci(array, num)
+  return [] if num == 0
+  output_array = array.dup
+  loop do
+    break if output_array.length == num
+    output_array << output_array.last(3).reduce(:+)
+  end
+  output_array
+end
+
+# Non-timeout solution
+def tribonacci(signature,n)
+  n.times.map do |_| 
+    signature << signature.reduce(:+)
+    # Map creates an array of the return value of the block. In our case, the first element of signature is returned on each iteration.
+    # This also has the effect of incrementing the numbers that are summed on each iteration
+    # Signature is kept to 4 elements max at a time to reduce run-time.
+    signature.shift 
+  end
+end
+
+# 38) Given a string, replace every letter with its position in the alphabet. If anything in the text isn't a letter, ignore it and don't return it.
+=begin
+alphabet_position("The sunset sets at twelve o' clock.") == "20 8 5 19 21 14 19 5 20 19 5 20 19 1 20 20 23 5 12 22 5 15 3 12 15 3 11"
+alphabet_position("-.-'") == ""
+=end
+def alphabet_position(sentence)
+  comparison_hash = ('a'..'z').zip('1'..'26').to_h
+  sentence.downcase.chars.map do |letter|
+    comparison_hash[letter]
+  end.select do |values|
+    values != nil
+  end.join(' ')
+end
+
+# A mutating method
+def alphabet_position(text)
+  str = text.delete("^a-zA-Z")
+  # Subtracting 96 from the .bytes value gives the alphabetical position
+  string = str.downcase.bytes.map{|b| b - 96}
+  string.join(" ")
+end
+
+# 39) Write a function that accepts an array of 10 integers (between 0 and 9), that returns a string of those numbers in the form of a phone number.
+=begin
+createPhoneNumber([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]) == "(123) 456-7890"
+createPhoneNumber([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]) == "(111) 111-1111"
+createPhoneNumber([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]) == "(123) 456-7890"
+=end
+def createPhoneNumber(array)
+  a = array.first(3).join
+  b = array[3..5].join
+  c = array.last(4).join
+  "(#{a}) #{b}-#{c}"
+end
+
+# Neater solution using multiple assignment
+def createPhoneNumber(digits)
+  # Splat operator captures everything not assigned to a, b
+  a, b, *c = digits.each_slice(3).map { |slice| slice.join }
+  "(#{a}) #{b}-#{c.join}"
+end
+
+# 40) Let's assume that a song consists of some number of words (that don't contain WUB). To make the dubstep remix of this song, Polycarpus inserts a certain number of words "WUB" before the first word of the song (the number may be zero), after the last word (the number may be zero), and between words (at least one between any pair of neighbouring words), and then the boy glues together all the words, including "WUB", in one string and plays the song at the club. For example, a song with words "I AM X" can transform into a dubstep remix as "WUBWUBIWUBAMWUBWUBX" and cannot transform into "WUBWUBIAMWUBX".
+=begin
+song_decoder("AWUBBWUBC") == "A B C"
+song_decoder("AWUBWUBWUBBWUBWUBWUBC") == "A B C"
+song_decoder("WUBAWUBBWUBCWUB") == "A B C"
+=end
+def song_decoder(string)
+  string.gsub('WUB', ' ').strip.gsub(/\s+/, ' ')
+end
+
+# Another method
+def song_decoder(song)
+  song.gsub('WUB', ' ').strip.squeeze(' ')
+end
+
+# 41) You are going to be given an array of integers. Your job is to take that array and find an index N where the sum of the integers to the left of N is equal to the sum of the integers to the right of N. If there is no index that would make this happen, return -1. If you are given an array with multiple answers, return the lowest correct index. 
+=begin
+find_even_index([1,2,3,4,3,2,1]) == 3
+find_even_index([1,100,50,-51,1,1]) == 1
+find_even_index([1,2,3,4,5,6]) == -1
+find_even_index([20,10,30,10,10,15,35]) == 3
+find_even_index([20,10,-80,10,10,15,35]) == 0
+find_even_index([10,-80,10,10,15,35,20]) == 6
+=end
+def find_even_index(array)
+  slide_index = 0
+  loop do
+    break slide_index if array[0...slide_index].reduce(0, &:+) == array[slide_index + 1..-1].reduce(0, &:+)
+    break -1 if slide_index == array.length - 1
+    slide_index += 1
+  end
+end
+
+# Another solution
+def find_even_index(arr)
+  left_sum = 0
+  right_sum = arr.reduce(:+)
+  
+  arr.each_with_index do |e, ind|
+    right_sum -= e
+    
+    return ind if left_sum == right_sum
+
+    left_sum += e
+  end
+  
+  -1  
+end
+
+# 42) Implement the function unique_in_order which takes as argument a sequence and returns a list of items without any elements with the same value next to each other and preserving the original order of elements.
+=begin
+unique_in_order('AAAABBBCCDAABBB') == ['A', 'B', 'C', 'D', 'A', 'B']
+unique_in_order('ABBCcAD')         == ['A', 'B', 'C', 'c', 'A', 'D']
+unique_in_order([1,2,2,3,3])       == [1,2,3]
+=end
+def unique_in_order(sequence)
+  array_seq = sequence.is_a?(String) ? sequence.chars : sequence
+  uniq_array = []
+  array_seq.each do |element|
+    uniq_array << element if uniq_array.last != element
+  end
+  uniq_array
+end
+
+# 43) The new "Avengers" movie has just been released! There are a lot of people at the cinema box office standing in a huge line. Each of them has a single 100, 50 or 25 dollar bill. An "Avengers" ticket costs 25 dollars. Vasya is currently working as a clerk. He wants to sell a ticket to every single person in this line. Can Vasya sell a ticket to every person and give change if he initially has no money and sells the tickets strictly in the order people queue? Return YES, if Vasya can sell a ticket to every person and give change with the bills he has at hand at that moment. Otherwise return NO.
+=begin
+tickets([25, 25, 50]) == 'YES' 
+
+# Vasya will not have enough money to give change to 100 dollars
+tickets([25, 100])  == 'NO'. 
+
+# Vasya will not have the right bills to give 75 dollars of change (you can't make two bills of 25 from one of 50)
+tickets([25, 25, 50, 50, 100]) == 'NO' 
+=end
+def tickets(people)
+  money = {25 => 0, 50 => 0}
+  people.each do |bill|
+    case bill
+    when 25
+      money[25] += 1
+    when 50
+      return 'NO' if money[25] == 0
+      money[25] -= 1
+      money[50] += 1
+    when 100
+      if money[50] >= 1 and money[25] >= 1
+        money[50] -= 1
+        money[25] -= 1
+      elsif money[25] >= 3
+        money[25] -= 3
+      else
+        return 'NO'
+      end
+    end
+  end
+  'YES'
+end
