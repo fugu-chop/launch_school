@@ -627,6 +627,10 @@ convergence(15) == 2
 convergence(500) == 29
 convergence(5000) == 283
 =end
+def next_num(n)
+  n < 10 ? n * 2 : n + n.digits.reject(&:zero?).reduce(:*)
+end
+
 def convergence(n)
   base = [1]
   test = [n]
@@ -636,8 +640,8 @@ def convergence(n)
     next_test = next_num(test.last)
 
     if next_base == next_test
-      # You can use break to return things!
       break test.size
+    # At some point, there will be a convergence, just not necessarily at the same position in the array
     elsif base.include?(next_test)
       break test.size
     elsif test.include?(next_base)
@@ -649,13 +653,261 @@ def convergence(n)
   end
 end
 
-def next_num(seed)
-  accum = seed
-  accum *= 2 if seed.digits.length == 1
-  if seed.digits.length > 1
-    a = seed.digits
-    a.delete(0)
-    accum += a.reduce(:*)
+# 24) If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23. Finish the solution so that it returns the sum of all the multiples of 3 or 5 below the number passed in. Note: If the number is a multiple of both 3 and 5, only count it once. Also, if a number is negative, return 0.
+=begin
+solution(10) == 23
+solution(20) == 78
+solution(200) == 9168
+=end
+def solution(limit)
+  return -1 if limit < 0
+  (1...limit).select { |number| number % 3 == 0 || number % 5 == 0 }.reduce(0, &:+)
+end
+
+# 25) Given an array of integers, find the one that appears an odd number of times. There will always be only one integer that appears an odd number of times.
+=begin
+find_it([20,1,-1,2,-2,3,3,5,5,1,2,4,20,4,-1,-2,5]) == 5
+find_it([1,1,2,-2,5,2,4,4,-1,-2,5]) == -1
+find_it([20,1,1,2,2,3,3,5,5,4,20,4,5]) == 5
+find_it([10]) == 10
+find_it([1,1,1,1,1,1,10,1,1,1,1]) == 10
+=end
+def find_it(array)
+  array.each_with_object ({}) do |integer, hash|
+    hash.keys.include?(integer) ? hash[integer] += 1 : hash[integer] = 1
+  end.select { |key, value| value.odd? }.keys.first
+end
+
+# 26) Digital root is the recursive sum of all the digits in a number. Given n, take the sum of the digits of n. If that value has more than one digit, continue reducing in this way until a single-digit number is produced. The input will be a non-negative integer.
+=begin
+    16  -->  1 + 6 = 7
+   942  -->  9 + 4 + 2 = 15  -->  1 + 5 = 6
+132189  -->  1 + 3 + 2 + 1 + 8 + 9 = 24  -->  2 + 4 = 6
+493193  -->  4 + 9 + 3 + 1 + 9 + 3 = 29  -->  2 + 9 = 11  -->  1 + 1 = 2
+
+digital_root(16) == 7
+digital_root(942) == 6
+digital_root(132189) == 6
+digital_root(493193) == 2
+=end
+def digital_root(n)
+  return n if n.digits.length == 1
+  reduced_sum = n.digits.reduce(:+)
+  loop do
+    reduced_sum = reduced_sum.digits.reduce(:+)
+    break if reduced_sum.digits.length == 1
   end
-  accum
+  reduced_sum
+end
+
+# Recursive method (mutating)
+def digital_root(n)
+  n < 10 ? n : digital_root(n.digits.sum)
+end
+
+# 27) Write a function, persistence, that takes in a positive parameter num and returns its multiplicative persistence, which is the number of times you must multiply the digits in num until you reach a single digit.
+=begin
+persistence(39) # returns 3, because 3*9=27, 2*7=14, 1*4=4
+                # and 4 has only one digit
+
+persistence(999) # returns 4, because 9*9*9=729, 7*2*9=126,
+                # 1*2*6=12, and finally 1*2=2
+
+persistence(4) # returns 0, because 4 is already a one-digit number
+
+persistence(39) == 3
+persistence(4) == 0
+persistence(25) == 2
+persistence(999) == 4
+=end
+def persistence(n)
+  return 0 if n.digits.length == 1
+  counter = 1
+  multiply = n.digits.reduce(:*)
+  loop do 
+    break if multiply.digits.length == 1
+    counter += 1
+    multiply = multiply.digits.reduce(:*)
+  end
+  counter
+end
+
+# More recursion
+def persistence(n)
+  # Here, the return value on each iteration is 1 + (return value of next iteration. The final iteration ends up being 0)
+  n < 10 ? 0 : 1 + persistence(n.digits.reduce(:*))
+end
+
+# 28) Write a function that takes in a string of one or more words, and returns the same string, but with all five or more letter words reversed (Just like the name of this Kata). Strings passed in will consist of only letters and spaces. Spaces will be included only when more than one word is present.
+=begin
+spinWords("Hey fellow warriors") == "Hey wollef sroirraw"
+=end
+def spinWords(string)
+  string.split.map do |word|
+    word.length >= 5 ? word.reverse : word
+  end.join(' ')
+end
+
+# 29) Write a function that will return the count of distinct case-insensitive alphabetic characters and numeric digits that occur more than once in the input string. The input string can be assumed to contain only alphabets (both uppercase and lowercase) and numeric digits.
+=begin
+duplicate_count("") == 0
+duplicate_count("abcde") == 0
+duplicate_count("abcdeaa") == 1
+duplicate_count("abcdeaB") == 2
+duplicate_count("Indivisibilities") == 2
+=end
+def duplicate_count(string)
+  string.downcase.chars.each_with_object({}) do |letter, hash|
+    hash.keys.include?(letter) ? hash[letter] += 1 : hash[letter] = 1
+  end.select { |key, value| value > 1 }.size
+end
+
+# 30) You are given an array (which will have a length of at least 3, but could be very large) containing integers. The array is either entirely comprised of odd integers or entirely comprised of even integers except for a single integer N. Write a method that takes the array as an argument and returns this "outlier" N.
+=begin
+find_outlier([0, 1, 2]) == 1
+find_outlier([1, 2, 3]) == 2
+find_outlier([2,6,8,10,3]) == 3
+=end
+def find_outlier(array)
+  array.count { |digit| digit.odd? } > array.count { |digit| digit.even? } ? 
+  array.select { |digit| digit.even? }.first :
+  array.select { |digit| digit.odd? }.first
+end
+
+# Partition is a useful method:
+def find_outlier(integers)
+  odd, even = integers.partition(&:odd?)
+  odd.length > 1 ? even[0] : odd[0]
+end
+
+# 31) Implement a function likes :: [String] -> String, which must take in input array, containing the names of people who like an item. It must return the display text as shown in the examples. For 4 or more names, the number in and 2 others simply increases.
+=begin
+likes [] -- must be "no one likes this"
+likes ["Peter"] -- must be "Peter likes this"
+likes ["Jacob", "Alex"] -- must be "Jacob and Alex like this"
+likes ["Max", "John", "Mark"] -- must be "Max, John and Mark like this"
+likes ["Alex", "Jacob", "Mark", "Max"] -- must be "Alex, Jacob and 2 others like this"
+=end
+def likes(names)
+  plural = 'like this'
+  singular = 'likes this'
+  return "no one #{singular}" if names.length < 1
+  case names.length
+  when 1 then "#{names.first} #{singular}"
+  when 2 then "#{names.first} and #{names.last} #{plural}"
+  when 3 then "#{names.first}, #{names[1]} and #{names.last} #{plural}"
+  else
+    "#{names.first}, #{names[1]} and #{names.length - 2} others #{plural}"
+  end
+end
+
+# 32) The goal of this exercise is to convert a string to a new string where each character in the new string is "(" if that character appears only once in the original string, or ")" if that character appears more than once in the original string. Ignore capitalization when determining if a character is a duplicate.
+=begin
+duplicate_encode("din") == "((("
+duplicate_encode("recede") == "()()()"
+duplicate_encode("Success") == ")())())"
+duplicate_encode("(( @") =="))(("
+=end
+def duplicate_encode(string)
+  duplicates = string.downcase.chars.each_with_object({}) do |character, hash|
+    hash.keys.include?(character) ? hash[character] += 1 : hash[character] = 1
+  end.select { |key, value| value > 1 }.keys
+
+  string.downcase.chars.map do |character|
+    duplicates.include?(character) ? ')' : '('
+  end.join
+end
+
+# Use count on the original string!
+def duplicate_encode(word)
+  word.downcase.chars.map do |char| 
+    word.downcase.count(char) > 1 ? letter = ')' : letter = '(' 
+  end.join
+end
+
+# 33) You always walk only a single block for each letter (direction) and you know it takes you one minute to traverse one city block, so create a function that will return true if the walk the app gives you will take you exactly ten minutes (you don't want to be early or late!) and will, of course, return you to your starting point. Return false otherwise.
+=begin
+is_valid_walk(['n','s','n','s','n','s','n','s','n','s']) == true
+is_valid_walk(['w','e','w','e','w','e','w','e','w','e','w','e']) == false
+is_valid_walk(['w']) == false
+is_valid_walk(['n','n','n','s','n','s','n','s','n','s']) == false
+=end
+def is_valid_walk(array)
+  return false if array.length != 10
+  direction_count = array.each_with_object({}) do |direction, hash|
+    hash.keys.include?(direction) ? hash[direction] += 1 : hash[direction] = 1
+  end
+  direction_count['n'] == direction_count['s'] && direction_count['e'] == direction_count['w']
+end
+
+# Shorter lol
+def isValidWalk(walk)
+  walk.count('w') == walk.count('e') &&
+  walk.count('n') == walk.count('s') &&
+  walk.count == 10
+end
+
+# 34) Write a function that takes an integer as input, and returns the number of bits that are equal to one in the binary representation of that number. You can guarantee that input is non-negative.
+=begin
+count_bits(0) == 0
+count_bits(4) == 1
+count_bits(7) == 3
+count_bits(9) == 2
+count_bits(10) == 2
+=end
+def count_bits(integer)
+  bits = []
+  loop do
+    a, b =  integer.divmod(2)
+    bits << b
+    integer = a
+    break if a == 0 
+  end
+  bits.count(1)
+end
+
+# Shorter
+def count_bits(n)
+  # .to_s(2) converts a number to binary
+  n.to_s(2).count("1")
+end
+
+# 35) Implement a difference function, which subtracts one list from another and returns the result. It should remove all values from list a, which are present in list b. If a value is present in b, all of its occurrences must be removed from the other.
+=begin
+array_diff([1,2], [1]) == [2]
+array_diff([1,2,2], [1]) == [2,2]
+array_diff([1,2,2], [2]) == [1]
+array_diff([1,2,2], []) == [1,2,2]
+array_diff([], [1,2]) == []
+=end
+def array_diff(a, b)
+  a_dup = a.dup
+  b.each do |element|
+    a_dup.delete(element) if a_dup.include?(element)
+  end
+  a_dup
+end
+
+#lmao
+def array_diff(a, b)
+  a - b
+end
+
+# 36) Your task is to sort a given string. Each word in the string will contain a single number. This number is the position the word should have in the result. If the input string is empty, return an empty string. The words in the input String will only contain valid consecutive numbers.
+=begin
+order("is2 Thi1s T4est 3a") == "Thi1s is2 3a T4est"
+order("4of Fo1r pe6ople g3ood th5e the2") == "Fo1r the2 g3ood 4of th5e pe6ople"
+order("") == ""
+=end
+def order(sentence)
+  ordered_arr = []
+  num = 1
+  loop do 
+    sentence.split.each do |word|
+      ordered_arr << word if word.include?(num.to_s)
+    end
+    num += 1
+    break if ordered_arr.length == sentence.split.length
+  end
+  ordered_arr.join(' ')
 end
