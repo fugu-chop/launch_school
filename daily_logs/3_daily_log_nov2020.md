@@ -26,6 +26,7 @@
 - [25th, Wed](#251120-wed)
 - [26th, Thu](#261120-thu)
 - [27th, Fri](#271120-fri)
+- [28th, Sat](#281120-sat)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -464,3 +465,19 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 6 Kyu is still honestly too hard for me. I need to rethink my approach. I'll post in the Launch School Slack and see if anyone has any resources that could help bridge the gap. This is incredibly depressing at the moment. 
+
+##### 28/11/20 (Sat)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (6 kyu)
+
+__*Time spent*__<br/>
+248 minutes
+
+__*Thoughts*__<br/>
+I got a super handy tip from the Launch School Slack - sort by the most completed Katas, as these are much better written and tend to have less reliance on mathematical/algorithmic knowledge. With this one tweak, I am now powering through the exercises. 
+
+I also managed to get a document from one of the other students which detailed a list of problems which, if I can solve them properly, should indicate that I'm ready for the actual assessment. 
+
+Most frustrating was the problem I was 95% of the way through solving. It took me way too long, but I still gave up too early, especially after I changed my algorithm midway through. 
