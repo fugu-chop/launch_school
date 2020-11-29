@@ -481,3 +481,19 @@ I got a super handy tip from the Launch School Slack - sort by the most complete
 I also managed to get a document from one of the other students which detailed a list of problems which, if I can solve them properly, should indicate that I'm ready for the actual assessment. 
 
 Most frustrating was the problem I was 95% of the way through solving. It took me way too long, but I still gave up too early, especially after I changed my algorithm midway through. 
+
+##### 29/11/20 (Sun)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (6 kyu)
+
+__*Time spent*__<br/>
+237 minutes
+
+__*Thoughts*__<br/>
+I really need to read the problems more clearly. I spent way too long on a problem that I made more complex by not understanding the problem correctly.
+
+Ended up on a very frustrating problem (#54) - the sort that requires me to keep track of current state and order. I learned that:
+- If you're failing a test case, you can see what that test case is using a p statement. CodeWars is stupid in that it doesn't let you always see what test case you're actually failing. 
+- You can keep track of things in reverse order in a separate array.
