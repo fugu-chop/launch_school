@@ -1062,7 +1062,10 @@ tickets([25, 100])  == 'NO'.
 tickets([25, 25, 50, 50, 100]) == 'NO' 
 =end
 def tickets(people)
-  money = {25 => 0, 50 => 0}
+  money = people.each_with_object({}) do |bill, hash|
+    hash.keys.include?(bill) ? hash[bill] += 1 : hash[bill] = 1
+  end
+
   people.each do |bill|
     case bill
     when 25
@@ -1083,4 +1086,132 @@ def tickets(people)
     end
   end
   'YES'
+end
+
+# 45) There is a queue for the self-checkout tills at the supermarket. Your task is write a function to calculate the total time required for all the customers to check out!
+=begin
+inputs:
+  customers: an array of positive integers representing the queue. Each integer represents a customer, and its value is the amount of time they require to check out.
+  n: a positive integer, the number of checkout tills
+
+queue_time([5,3,4], 1)
+# should return 12
+# because when n=1, the total time is just the sum of the times
+
+queue_time([10,2,3,3], 2)
+# should return 10
+# because here n=2 and the 2nd, 3rd, and 4th people in the 
+# queue finish before the 1st person has finished.
+
+queue_time([2,3,10], 2)
+# should return 12
+=end
+def queue_time(customers, n)
+  occupied_tills = []
+  [customers.length, n].min.times { occupied_tills << customers.shift }
+  customers.each do |customer|
+    occupied_tills[occupied_tills.index(occupied_tills.min)] += customer
+  end
+  occupied_tills.max ? occupied_tills.max : 0
+end
+
+# 43) You are given an array(list) strarr of strings and an integer k. Your task is to return the first longest string consisting of k consecutive strings taken in the array.
+=begin
+strarr = ["tree", "foling", "trashy", "blue", "abcdef", "uvwxyz"], k = 2
+
+Concatenate the consecutive strings of strarr by 2, we get:
+
+treefoling   (length 10)  concatenation of strarr[0] and strarr[1]
+folingtrashy ("      12)  concatenation of strarr[1] and strarr[2]
+trashyblue   ("      10)  concatenation of strarr[2] and strarr[3]
+blueabcdef   ("      10)  concatenation of strarr[3] and strarr[4]
+abcdefuvwxyz ("      12)  concatenation of strarr[4] and strarr[5]
+
+Two strings are the longest: "folingtrashy" and "abcdefuvwxyz".
+The first that came is "folingtrashy" so 
+longest_consec(strarr, 2) should return "folingtrashy".
+
+In the same way:
+longest_consec(["zone", "abigail", "theta", "form", "libe", "zas", "theta", "abigail"], 2) --> "abigailtheta"
+=end
+def longest_consec(strarr, k)
+  return '' if k <= 0 || strarr.length == 0 || k > strarr.length
+  concat_words = strarr.each_cons(k).map do |pair|
+    pair.join
+  end
+  
+  max_length = concat_words.map do |words|
+    words.length
+  end.max
+
+  concat_words.select do |words|
+    words.length == max_length
+  end.first
+end
+
+# max_by could help here
+def longest_consec(strarr, k)
+  return "" unless k.between?(1, strarr.length)
+  strarr.each_cons(k).map(&:join).max_by(&:length) || ""
+end
+
+# 44) Your task is to construct a building which will be a pile of n cubes. The cube at the bottom will have a volume of n^3, the cube above will have volume of (n-1)^3 and so on until the top which will have a volume of 1^3. You are given the total volume m of the building. Being given m can you find the number n of cubes you will have to build? You have to return the integer n such as n^3 + (n-1)^3 + ... + 1^3 = m if such a n exists or -1 if there is no such n.
+=begin
+find_nb(1071225) == 45
+find_nb(91716553919377) == -1
+=end
+def find_nb(m)
+  counter = 0
+  while m > 0
+    counter += 1
+    m -= counter**3
+  end
+  m == 0 ? counter : -1
+end
+
+# 45) Given two arrays a and b write a function comp(a, b) (compSame(a, b) in Clojure) that checks whether the two arrays have the "same" elements, with the same multiplicities. "Same" means, here, that the elements in b are the elements in a squared, regardless of the order. If a or b are nil, return false
+def comp(array1, array2)
+  return false if array1 == nil || array2 == nil
+  array1.sort.map { |num| num ** 2 } == array2.sort
+end
+
+#46) Complete the method/function so that it converts dash/underscore delimited words into camel casing. The first word within the output should be capitalized only if the original word was capitalized (known as Upper Camel Case, also often referred to as Pascal case). 
+=begin
+to_camel_case('') == ''
+to_camel_case("the_stealth_warrior") == "theStealthWarrior"
+to_camel_case("The-Stealth-Warrior") == "TheStealthWarrior"
+to_camel_case("A-B-C") == "ABC"
+=end
+def to_camel_case(str)
+  str.split(/[-_]/).map.with_index do |word, index|
+    index != 0 ? word.capitalize : word
+  end.join
+end
+
+# Without regex
+def to_camel_case(str)
+  str.gsub('_', '-').split('-').map.with_index do |word, index|
+    index != 0 ? word.capitalize : word
+  end.join
+end
+
+# 47) Given: an array containing hashes of names, Return: a string formatted as a list of names separated by commas except for the last two names, which should be separated by an ampersand.
+=begin
+list([ {name: 'Bart'}, {name: 'Lisa'}, {name: 'Maggie'} ])
+# returns 'Bart, Lisa & Maggie'
+
+list([ {name: 'Bart'}, {name: 'Lisa'} ])
+# returns 'Bart & Lisa'
+
+list([ {name: 'Bart'} ])
+# returns 'Bart'
+
+list([])
+# returns ''
+=end
+def list names
+  names = names.map { |name| name[:name] }
+  last_name = names.pop
+  return last_name.to_s if names.empty?
+  "#{names.join(', ')} & #{last_name}"
 end
