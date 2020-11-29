@@ -1215,3 +1215,120 @@ def list names
   return last_name.to_s if names.empty?
   "#{names.join(', ')} & #{last_name}"
 end
+
+# 48) Your code must return true or false depending upon whether the given number is a Narcissistic number in base 10. A Narcissistic Number is a positive number which is the sum of its own digits, each raised to the power of the number of digits in a given base. In this Kata, we will restrict ourselves to decimal (base 10).
+=begin
+narcissistic?(5) == true
+narcissistic?(153) == true
+narcissistic?(1633) == false
+=end
+def narcissistic?(num)
+  num.digits.map do |digit|
+    digit ** num.digits.length
+  end.reduce(:+) == num
+end
+
+# 49) There is an array with some numbers. All numbers are equal except for one. Try to find it! It’s guaranteed that array contains at least 3 numbers. The tests contain some very huge arrays, so think about performance.
+=begin
+find_uniq([ 1, 1, 1, 2, 1, 1 ]) == 2
+find_uniq([ 0, 0, 0.55, 0, 0 ]) == 0.55
+=end
+# This works. It's just too slow
+def find_uniq(array)
+  array.sort_by do |a, b|
+    array.count(a)
+  end.first
+end
+
+# This is fast.
+def find_uniq(array)
+  common_nums = []
+  array.each do |number|
+    if number == common_nums.last
+      array.delete(number)
+    else
+      common_nums << number
+    end
+  end
+  array.first
+end
+
+# 50) Write a method that takes an array of consecutive (increasing) letters as input and that returns the missing letter in the array. You will always get an valid array. And it will be always exactly one letter be missing. The length of the array will always be at least 2. The array will always contain letters in only one case.
+=begin
+find_missing_letter(["a","b","c","d","f"]) == "e"
+find_missing_letter(["O","Q","R","S"]) == "P"
+find_missing_letter(["b","d"]) == "c"
+find_missing_letter(["a","b","d"]) == "c"
+find_missing_letter(["b","d","e"]) == "c"
+=end
+def find_missing_letter(arr)
+  comparison_array = ('a'..'z').to_a
+  comparison_array.map! { |letter| letter.upcase } if !comparison_array.include?(arr.first)
+  (comparison_array[comparison_array.index(arr.first).. comparison_array.index(arr.first) + arr.length + 1] - arr).first
+end
+
+# Smart
+def find_missing_letter(arr)
+  ((arr.first..arr.last).to_a - arr).first
+end
+
+# 51) A pangram is a sentence that contains every single letter of the alphabet at least once. For example, the sentence "The quick brown fox jumps over the lazy dog" is a pangram, because it uses the letters A-Z at least once (case is irrelevant). Given a string, detect whether or not it is a pangram. Return True if it is, False if not. Ignore numbers and punctuation.
+=begin
+panagram?("The quick brown fox jumps over the lazy dog.") == true
+panagram?("This is not a pangram.") == false
+=end
+def panagram?(sentence)
+  ('a'..'z').select do |letter|
+    sentence.downcase.include?(letter)
+  end == ('a'..'z').to_a
+end
+
+# Here's how to use all?
+def panagram?(string)
+  ('a'..'z').all? { |x| string.downcase.include? (x) } 
+end
+
+# 52) Given a list lst and a number N, create a new list that contains each number of lst at most N times without reordering. 
+=begin
+For example if N = 2, and the input is [1,2,3,1,2,1,2,3], you take [1,2,3,1,2], drop the next [1,2] since this would lead to 1 and 2 being in the result 3 times, and then take 3, which leads to [1,2,3,1,2,3].
+
+delete_nth ([1,1,1,1],2) == [1,1]
+delete_nth ([20,37,20,21],1) == [20,37,21]
+delete_nth([1,1,3,3,7,2,2,2,2], 3) == [1, 1, 3, 3, 7, 2, 2, 2]
+=end
+def delete_nth(order, max_e)
+  order.each_with_object([]) do |number, deduped|
+    deduped << number if deduped.count(number) < max_e
+  end
+end
+
+# 53) Complete the solution so that it splits the string into pairs of two characters. If the string contains an odd number of characters then it should replace the missing second character of the final pair with an underscore ('_').
+=begin
+solution("abcdef") == ["ab", "cd", "ef"]
+solution("abcdefg") == ["ab", "cd", "ef", "g_"]
+solution("") == []
+=end
+def solution(sentence)
+  sentence.chars.each_slice(2).map do |pairs|
+    (pairs.length < 2 ? pairs << '_' : pairs).join
+  end
+end
+
+# 54) Write a function that takes a string of braces, and determines if the order of the braces is valid. It should return true if the string is valid, and false if it's invalid. A string of braces is considered valid if all braces are matched with the correct brace. All input strings will be nonempty, and will only consist of parentheses, brackets and curly braces: ()[]{}.
+=begin
+validBraces( "()" ) == true
+validBraces( "[(])" ) == false
+=end
+def validBraces(braces)
+  stack = []
+  braces.each_char do |c|
+    stack.push ')' if c == '('
+    stack.push ']' if c == '['
+    stack.push '}' if c == '{'
+    # We keep track of unclosed braces in the stack array, in reverse order
+    # If we see that the brace gets closed, we remove that brace from the stack array
+    # This only happens if the innermost opening bracket is immediately closed
+    stack.pop if c == stack.last
+  end
+  braces.count('(') == braces.count(')') && braces.count('[') == braces.count(']') && braces.count('{') == braces.count('}') && stack.empty?
+end
