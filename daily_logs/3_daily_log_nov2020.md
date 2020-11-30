@@ -27,6 +27,8 @@
 - [26th, Thu](#261120-thu)
 - [27th, Fri](#271120-fri)
 - [28th, Sat](#281120-sat)
+- [29th, Sun](#291120-sun)
+- [30th, Mon](#301120-mon)
 
 ##### 01/11/20 (Sun)
 __*Concepts covered*__<br/>
@@ -497,3 +499,19 @@ I really need to read the problems more clearly. I spent way too long on a probl
 Ended up on a very frustrating problem (#54) - the sort that requires me to keep track of current state and order. I learned that:
 - If you're failing a test case, you can see what that test case is using a p statement. CodeWars is stupid in that it doesn't let you always see what test case you're actually failing. 
 - You can keep track of things in reverse order in a separate array.
+
+##### 30/11/20 (Mon)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Watch others code videos
+  - RB101-109 Small Problems
+    - Debugging
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Today I just needed a bit of a break from endless problem solving. I watched some videos about others coding that gave me a better idea of what level of explanation I'll need to provide in the actual interview. It's a lot more than I would do, normally. I'll also use the phone stand to record myself solving problems from tomorrow. 
+
+The debugging problems are a nice change of pace. Trying to break apart others' code and reconstructing it is a different type of challenge. 
