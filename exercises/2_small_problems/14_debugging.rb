@@ -194,7 +194,6 @@ def move(n, from_array, to_array)
 end
 
 # Example
-
 todo = ['study', 'walk the dog', 'coffee with Tom']
 done = ['apply sunscreen', 'go to the beach']
 
@@ -209,3 +208,289 @@ def move(n, from_array, to_array)
   to_array << from_array.shift
   move(n - 1, from_array, to_array)
 end
+
+# What happens if the length of the from_array is smaller than n? The `move` method will attempt to shift the contents of an empty array (from_array) and append it to the to_array. In this case, it will append `nil`.
+
+# 7) We wrote a neutralize method that removes negative words from sentences. However, it fails to remove all of them. What exactly happens?
+=begin
+def neutralize(sentence)
+  words = sentence.split(' ')
+  words.each do |word|
+    words.delete(word) if negative?(word)
+  end
+
+  words.join(' ')
+end
+
+def negative?(word)
+  [ 'dull',
+    'boring',
+    'annoying',
+    'chaotic'
+  ].include?(word)
+end
+
+puts neutralize('These dull boring cards are part of a chaotic board game.')
+# Expected: These cards are part of a board game.
+# Actual: These boring cards are part of a board game.
+=end
+# The `neutralize` method won't remove consecutive negative words due to the implementation of the `delete` method within the `each` method. Basically, once a word is deleted from the `words` array, each element will shift left to fill the deleted element. The `each` method keeps track of indexes when iterating through an array, so it will skip the word that fills the index position of the deleted word. 
+
+def neutralize(sentence)
+  words = sentence.split(' ')
+  nice_words = []
+  words.each do |word|
+    nice_words << word if !negative?(word)
+  end
+
+  nice_words.join(' ')
+end
+
+def negative?(word)
+  [ 'dull',
+    'boring',
+    'annoying',
+    'chaotic'
+  ].include?(word)
+end
+
+puts neutralize('These dull boring cards are part of a chaotic board game.')
+
+# 8) The following code prompts the user to set their own password if they haven't done so already, and then prompts them to login with that password. However, the program throws an error. What is the problem and how can you fix it? Once you get the program to run without error, does it behave as expected? Verify that you are able to log in with your new password.
+=begin
+password = nil
+
+def set_password
+  puts 'What would you like your password to be?'
+  new_password = gets.chomp
+  password = new_password
+end
+
+def verify_password
+  puts '** Login **'
+  print 'Password: '
+  input = gets.chomp
+
+  if input == password
+    puts 'Welcome to the inside!'
+  else
+    puts 'Authentication failed.'
+  end
+end
+
+if !password
+  set_password
+end
+
+verify_password
+=end
+def set_password
+  puts 'What would you like your password to be?'
+  new_password = gets.chomp
+  password = new_password
+end
+
+def verify_password(password)
+  puts '** Login **'
+  print 'Password: '
+  input = gets.chomp
+
+  if input == password
+    puts 'Welcome to the inside!'
+  else
+    puts 'Authentication failed.'
+  end
+end
+
+password = set_password if password == nil
+verify_password(password)
+# The problem here is that method definitions create their own scope for local variables. In the `set_password` method, we can't access local variables initialised outside of the method - we can only accept values referenced by the variables (in our case, we don't even take a parameter). Also, the `verify_password` method doesn't accept any parameters, so we can't pass in a value for our conditional. We can remedy this by passing in the object referenced by the local variable `password` as an argument to the `verify_password` method. 
+
+# 9) A friend of yours wrote a number guessing game. The first version he shows you picks a random number between 1 and a provided maximum number and offers you a given number of attempts to guess it. However, when you try it, you notice that it's not working as expected. Run the code and observe its behavior. Can you figure out what is wrong?
+=begin
+def valid_integer?(string)
+  string.to_i.to_s == string
+end
+
+def guess_number(max_number, max_attempts)
+  winning_number = (1..max_number).to_a.sample
+  attempts = 0
+
+  loop do
+    attempts += 1
+    break if attempts > max_attempts
+
+    input = nil
+    until valid_integer?(input)
+      print 'Make a guess: '
+      input = gets.chomp
+    end
+
+    guess = input.to_i
+
+    if guess == winning_number
+      puts 'Yes! You win.'
+    else
+      puts 'Nope. Too small.' if guess < winning_number
+      puts 'Nope. Too big.'   if guess > winning_number
+
+      # Try again:
+      guess_number(max_number, max_attempts)
+    end
+  end
+end
+
+guess_number(10, 3)
+=end
+def valid_integer?(string)
+  string.to_i.to_s == string
+end
+
+def guess_number(max_number, max_attempts)
+  winning_number = (1..max_number).to_a.sample
+  attempts = 0
+
+  loop do
+    attempts += 1
+    break 'Too many attempts!' if attempts > max_attempts
+
+    input = nil
+    until valid_integer?(input)
+      print 'Make a guess: '
+      input = gets.chomp
+    end
+
+    guess = input.to_i
+
+    if guess == winning_number
+      puts 'Yes! You win.'
+    else
+      puts 'Nope. Too small.' if guess < winning_number
+      puts 'Nope. Too big.'   if guess > winning_number
+    end
+  end
+end
+
+guess_number(10, 3)
+# The original method failed to break out of the loop when too many attempts were made, since every time the `guess_number` method was called within the loop, the local method variable `attempts` would be reassigned to 0, meaning, if you didn't guess the number correctly on your first attempt on each loop, the loop would just continue to execute, since `attempts` would never increment. 
+
+# 10) A friend of yours wants to build a basic search engine and starts reading up on information extraction. He decides to try a simple implementation of TF-IDF, a measure of the information content a term holds for a particular document in a document collection. However, he just started learning to code and somehow his numbers do not match what is expected. He knows you're enrolled in an awesome developer school, so he asks you to have a look.
+=begin
+# A measure of how important a term is to a document in a collection of documents (the importance increases proportionally to the term frequency in the document, but decreases with the frequency of the word across documents)
+def tfidf(term, document, documents)
+  tf(term, document) * idf(term, documents)
+end
+
+# the number of times a term occurs in a document
+def tf(term, document)
+  document.split(/[\s-]/).count { |word| word.downcase == term }
+end
+
+# Inverse document frequency: measure of how much information the word provides, based on the number of documents in which it occurs (the rarer it is, the more information it provides).
+def idf(term, documents)
+  number_of_documents = documents.length
+  number_of_documents_with_term = documents.count { |d| tf(term, d) > 0 }
+
+  Math.log(number_of_documents / number_of_documents_with_term)
+end
+
+document1 = "Schrödinger's cat is a thought experiment often featured in discussions of the interpretation of quantum mechanics. The Austrian physicist Erwin Schrödinger devised " +
+"it in 1935 as an argument against the Copenhagen interpretation of quantum mechanics, which states that an object in a physical system can simultaneously exist in all possible configurations, " +
+"a state called quantum superposition, and only observing the system forces the object into just one of those possible states. Schrödinger disagreed with this interpretation. In particular, " +
+"quantum superposition could not work with larger objects. As an illustration, he presented a scenario with a cat in a sealed box, whose fate was linked to a subatomic event that may or may not occur. " +
+"In a quantum superposed state of the subatomic particles, the cat would be both alive and dead, until someone opened the box and observed it."
+
+document2 = "The domestic cat is a small, furry, carnivorous mammal. The term cat can, however, also refer to wild cats, which include animals like lions, tigers and leopards. " +
+"Cats are claimed to have a lower social IQ than dogs but can solve more difficult cognitive problems and have a longer-term memory. International Cat Day is celebrated on August 8. " +
+"Famous cats include Schrödinger's cat as well as Pudding and Butterscotch, which occur in some of the Launch School assignments."
+
+document3 = "One of the core values that sets Launch School apart from some other coding schools out there is our emphasis on Mastery-based Learning. If the key to becoming a competent and confident Software Engineer " +
+"is deep understanding of first principles, then the key to acquiring that understanding is through Mastery-based Learning. The core of Mastery-based Learning is replacing time with mastery. There's no graduation, " +
+"but a continual learning journey of micro-improvements. At Launch School, we're not trying to catch a wave or take advantage of a surge in demand. Instead, we're trying to focus on things that'll be useful to you for decades to come, " +
+"such as a systematic problem-solving approach or learning how to deconstruct a programming language or building sound mental representations of how web application work. Everything we're trying to do at " +
+"Launch School is with an eye towards sustainable studying habits and building skills for a long-term career."
+
+documents = [document1, document2, document3]
+
+puts tfidf("cat", document1, documents) # ~ 1.2
+puts tfidf("cat", document2, documents) # ~ 1.6
+puts tfidf("cat", document3, documents) # 0
+
+puts tfidf("quantum", document1, documents) # ~ 5.5
+puts tfidf("quantum", document2, documents) # 0
+puts tfidf("quantum", document3, documents) # 0
+
+puts tfidf("mastery", document1, documents) # 0
+puts tfidf("mastery", document2, documents) # 0
+puts tfidf("mastery", document3, documents) # ~ 3.3
+
+puts tfidf("some", document1, documents) # 0
+puts tfidf("some", document2, documents) # ~ 0.4
+puts tfidf("some", document3, documents) # ~ 0.4
+=end
+def tfidf(term, document, documents)
+  tf(term, document) * idf(term, documents)
+end
+
+# the number of times a term occurs in a document
+def tf(term, document)
+  document.split(/[\s-]/).count { |word| word.downcase == term }
+end
+
+# Inverse document frequency: measure of how much information the word provides, based on the number of documents in which it occurs (the rarer it is, the more information it provides).
+def idf(term, documents)
+  number_of_documents = documents.length
+  number_of_documents_with_term = documents.count { |d| tf(term, d) > 0 }
+
+  Math.log(number_of_documents.to_f / number_of_documents_with_term)
+end
+
+document1 = "Schrödinger's cat is a thought experiment often featured in discussions of the interpretation of quantum mechanics. The Austrian physicist Erwin Schrödinger devised " +
+"it in 1935 as an argument against the Copenhagen interpretation of quantum mechanics, which states that an object in a physical system can simultaneously exist in all possible configurations, " +
+"a state called quantum superposition, and only observing the system forces the object into just one of those possible states. Schrödinger disagreed with this interpretation. In particular, " +
+"quantum superposition could not work with larger objects. As an illustration, he presented a scenario with a cat in a sealed box, whose fate was linked to a subatomic event that may or may not occur. " +
+"In a quantum superposed state of the subatomic particles, the cat would be both alive and dead, until someone opened the box and observed it."
+
+document2 = "The domestic cat is a small, furry, carnivorous mammal. The term cat can, however, also refer to wild cats, which include animals like lions, tigers and leopards. " +
+"Cats are claimed to have a lower social IQ than dogs but can solve more difficult cognitive problems and have a longer-term memory. International Cat Day is celebrated on August 8. " +
+"Famous cats include Schrödinger's cat as well as Pudding and Butterscotch, which occur in some of the Launch School assignments."
+
+document3 = "One of the core values that sets Launch School apart from some other coding schools out there is our emphasis on Mastery-based Learning. If the key to becoming a competent and confident Software Engineer " +
+"is deep understanding of first principles, then the key to acquiring that understanding is through Mastery-based Learning. The core of Mastery-based Learning is replacing time with mastery. There's no graduation, " +
+"but a continual learning journey of micro-improvements. At Launch School, we're not trying to catch a wave or take advantage of a surge in demand. Instead, we're trying to focus on things that'll be useful to you for decades to come, " +
+"such as a systematic problem-solving approach or learning how to deconstruct a programming language or building sound mental representations of how web application work. Everything we're trying to do at " +
+"Launch School is with an eye towards sustainable studying habits and building skills for a long-term career."
+
+documents = [document1, document2, document3]
+
+puts tfidf("cat", document1, documents) # ~ 1.2
+puts tfidf("cat", document2, documents) # ~ 1.6
+puts tfidf("cat", document3, documents) # 0
+
+puts tfidf("quantum", document1, documents) # ~ 5.5
+puts tfidf("quantum", document2, documents) # 0
+puts tfidf("quantum", document3, documents) # 0
+
+puts tfidf("mastery", document1, documents) # 0
+puts tfidf("mastery", document2, documents) # 0
+puts tfidf("mastery", document3, documents) # ~ 3.3
+
+puts tfidf("some", document1, documents) # 0
+puts tfidf("some", document2, documents) # ~ 0.4
+puts tfidf("some", document3, documents) # ~ 0.4
+
+# 11) Josh wants to print an array of numeric strings in reverse numerical order. However, the output is wrong. Without removing any code, help Josh get the expected output.
+=begin
+arr = ["9", "8", "7", "10", "11"]
+p arr.sort do |x, y|
+    y.to_i <=> x.to_i
+  end
+
+# Expected output: ["11", "10", "9", "8", "7"] 
+# Actual output: ["10", "11", "7", "8", "9"] 
+=end
+arr = ["9", "8", "7", "10", "11"]
+p (arr.sort do |x, y|
+    y.to_i <=> x.to_i
+  end)
+  

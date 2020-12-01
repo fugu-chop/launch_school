@@ -1164,12 +1164,12 @@ def find_nb(m)
   counter = 0
   while m > 0
     counter += 1
-    m -= counter**3
+    m -= counter ** 3
   end
   m == 0 ? counter : -1
 end
 
-# 45) Given two arrays a and b write a function comp(a, b) (compSame(a, b) in Clojure) that checks whether the two arrays have the "same" elements, with the same multiplicities. "Same" means, here, that the elements in b are the elements in a squared, regardless of the order. If a or b are nil, return false
+# 45) Given two arrays a and b write a function comp(a, b) that checks whether the two arrays have the "same" elements, with the same multiplicities. "Same" means, here, that the elements in b are the elements in a squared, regardless of the order. If a or b are nil, return false
 def comp(array1, array2)
   return false if array1 == nil || array2 == nil
   array1.sort.map { |num| num ** 2 } == array2.sort
@@ -1331,4 +1331,19 @@ def validBraces(braces)
     stack.pop if c == stack.last
   end
   braces.count('(') == braces.count(')') && braces.count('[') == braces.count(']') && braces.count('{') == braces.count('}') && stack.empty?
+end
+
+# 55) Write a function that takes an array of numbers (integers for the tests) and a target number. It should find two different items in the array that, when added together, give the target value. The indices of these items should then be returned in an array like so: [index1, index2]. For the purposes of this kata, some tests may have multiple answers; any valid solutions will be accepted. The input will always be valid (numbers will be an array of length 2 or greater, and all of the items will be numbers; target will always be the sum of two different items from that array).
+=begin
+two_sum([1, 2, 3], 4).sort == [0, 2]
+two_sum([1234, 5678, 9012], 14690).sort == [1, 2]
+two_sum([2, 2, 3], 4).sort == [0, 1]
+=end
+def two_sum(numbers, target)
+  numbers.each_with_index do |n1, i1|
+    # You can iterate the same thing within another loop!
+    numbers.each_with_index do |n2, i2|
+      return [i1, i2] if (n1 + n2) == target && i1 != i2
+    end
+  end
 end
