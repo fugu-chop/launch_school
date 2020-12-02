@@ -1,5 +1,6 @@
 # December 2020
 - [1st, Tue](#011220-tue)
+- [2nd, Wed](#021220-wed)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -17,3 +18,16 @@ __*Thoughts*__<br/>
 The debugging exercises were reasonably simple. This is encouraging as it makes me feel like I have a good intuition of where and what to look for when code throws errors. 
 
 I need to get better with simultaneous loops. Intuitively, I can grasp the concept. I have real trouble writing code that expresses it, which is incredibly frustrating. 
+
+##### 02/12/20 (Wed)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Watch others code videos
+    - Codewars (6 kyu)
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Polished off some more 6 kyu problems. Not too bad, though a lack of useful test cases does sometimes hurt and ruin the solution. I feel like I'm getting closer to 5th Kyu. I didn't end up recording myself just yet, since I'm taking the morning sessions to watch the live coding videos. 
