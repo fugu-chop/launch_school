@@ -1347,3 +1347,65 @@ def two_sum(numbers, target)
     end
   end
 end
+# 56) Given a string of words, you need to find the highest scoring word. Each letter of a word scores points according to its position in the alphabet: a = 1, b = 2, c = 3 etc. You need to return the highest scoring word as a string. If two words score the same, return the word that appears earliest in the original string. All letters will be lowercase and all inputs will be valid.
+=begin
+high('man i need a taxi up to ubud') == 'taxi'
+high('what time are we climbing up the volcano') == 'volcano'
+high('take me to semynak') == 'semynak'
+high('aaa b') == 'aaa'
+=end
+def high(sentence)
+  lookup = ('a'..'z').to_a.zip((1..26).to_a).to_h
+  words_arr = sentence.split
+  values = words_arr.map do |word|
+    word.each_char.map do |letter|
+      lookup[letter]
+    end.reduce(:+)
+  end
+  words_arr[values.index(values.max)]
+end
+
+# 57) You will be given a number and you will need to return it as a string in Expanded Form.
+=begin
+expanded_form(12); # Should return '10 + 2'
+expanded_form(42); # Should return '40 + 2'
+expanded_form(70304); # Should return '70000 + 300 + 4'
+=end
+def expanded_form(number)
+  digit_arr = number.digits.reverse
+  multiplied = digit_arr.map.with_index do |number, index|
+    number * 10 ** ((digit_arr.length - index) - 1) if number > 0
+    # We could use .compact to remove nils
+  end.select do |digit|
+    digit != nil
+  end
+  remainder = multiplied[1..-1].map do |num|
+    " + #{num}"
+  end.join
+  multiplied.first.to_s + remainder
+end
+
+# 58) The main idea is to count all the occurring characters in a string. If you have a string like aba, then the result should be {'a': 2, 'b': 1}. What if the string is empty? Then the result should be empty object literal, {}.
+=begin
+count_chars("aba") == {"a" => 2, "b" => 1}
+count_chars("") == {}
+=end
+def count_chars(string)
+  string.chars.each_with_object({}) do |letter, hash|
+    hash.keys.include?(letter) ? hash[letter] += 1 : hash[letter] = 1
+  end
+end
+
+# 59) In this simple Kata your task is to create a function that turns a string into a Mexican Wave. You will be passed a string and you must return that string in an array where an uppercase letter is a person standing up. 
+=begin
+wave("hello") == ["Hello", "hEllo", "heLlo", "helLo", "hellO"]
+=end
+def wave(string)
+  (string.length).times.map do |integer|
+    next if string[integer] == ' '
+    base = string.chars
+    base[integer] = base[integer].upcase
+    base.join
+  # next returns nil, but compact gets rid of the nil
+  end.compact
+end
