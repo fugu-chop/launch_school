@@ -1409,3 +1409,39 @@ def wave(string)
   # next returns nil, but compact gets rid of the nil
   end.compact
 end
+
+# 60) A string is considered to be in title case if each word in the string is either (a) capitalised (that is, only the first letter of the word is in upper case) or (b) considered to be an exception and put entirely into lower case unless it is the first word, which is always capitalised. 
+
+# Write a function that will convert a string into title case, given an optional list of exceptions (minor words). The list of minor words will be given as a string with each word separated by a space. Your function should ignore the case of the minor words string -- it should behave in the same way even if the case of the minor word string is changed. 
+
+=begin
+First argument (required): the original string to be converted.
+Second argument (optional): space-delimited list of minor words that must always be lowercase except for the first word in the string.
+
+title_case('a clash of KINGS', 'a an the of') == 'A Clash of Kings'
+title_case('THE WIND IN THE WILLOWS', 'The In') == 'The Wind in the Willows'
+title_case('the quick brown fox') == 'The Quick Brown Fox'
+=end
+def title_case(title, minor_words = '')
+  return '' if title.length == 0
+  sentence_arr = title.downcase.split
+  new_sentence = sentence_arr.map do |word|
+    if !minor_words.downcase.split.include?(word)
+      broken_up = word.chars
+      start = broken_up[0].upcase
+      broken_up.delete_at(0)
+      broken_up.insert(0, start).join
+    else
+      word
+    end
+  end.join(' ')
+  new_sentence[0] = new_sentence[0].upcase
+  new_sentence
+end
+
+# I forgot there was a capitalize method lol
+def title_case(title, minor_words = '')
+  title.capitalize.split.map do |a| 
+    minor_words.downcase.split.include?(a) ? a : a.capitalize
+  end.join(' ')
+end
