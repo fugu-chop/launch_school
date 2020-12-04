@@ -180,3 +180,93 @@ def cakes(recipe, ingredients)
     relevant_ingredients[key] / recipe[key]
   end.min
 end
+
+# 9) Create a function that generates a hashtag. It must start with a hashtag (#). All words must have their first letter capitalized. If the final result is longer than 140 chars it must return false. If the input or the result is an empty string it must return false.
+=begin
+generateHashtag("") == false
+generateHashtag(" " * 200) == false
+generateHashtag("Do We have A Hashtag") == "#DoWeHaveAHashtag"
+generateHashtag("Codewars") == "#Codewars"
+generateHashtag("Codewars Is Nice") == "#CodewarsIsNice"
+generateHashtag("Codewars is nice") == "#CodewarsIsNice"
+generateHashtag("code" + " " * 140 + "wars") == "#CodeWars"
+generateHashtag("Looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong Cat") == false
+generateHashtag("a" * 139) == "#A" + "a" * 138
+generateHashtag("a" * 140) == false
+=end
+def generateHashtag(str)
+  return false if str.split.join.length == 0 || str.split.join.length > 139
+  str.split.map { |word| word.capitalize }.insert(0, '#').join
+end
+
+# 10) Write a function named first_non_repeating_letter that takes a string input, and returns the first character that is not repeated anywhere in the string. Upper and lowercase letters are considered the same character, but the function should return the correct case for the initial letter. For example, the input 'sTreSS' should return 'T'. If a string contains all repeating characters, it should return an empty string ("")
+=begin
+first_non_repeating_letter('a') == 'a'
+first_non_repeating_letter('stress') == 't'
+first_non_repeating_letter('moonmen') == 'e'
+first_non_repeating_letter('') == ''
+=end
+def first_non_repeating_letter(string)
+  return '' if string.length == 0
+  string.chars.select do |letter|
+    string.downcase.count(letter.downcase) == 1
+  end.first == nil ? '' : string.chars.select do |letter|
+    string.downcase.count(letter.downcase) == 1
+  end.first
+end
+
+# 11) Write a program that will calculate the number of trailing zeros in a factorial of a given number. Hint: You're not meant to calculate the factorial. Find another way to find the number of zeros.
+=begin
+# 6! = 1 * 2 * 3 * 4 * 5 * 6 = 720 --> 1 trailing zero
+zeros(6) == 1
+
+# 12! = 479001600 --> 2 trailing zeros
+zeros(12) == 2
+=end
+def zeros(n)
+  zeros = 0
+  zeros += n /= 5 while n >= 1
+  zeros
+end
+
+# 12) Complete the function scramble(str1, str2) that returns true if a portion of str1 characters can be rearranged to match str2, otherwise returns false. Only lower case letters will be used (a-z). No punctuation or digits will be included.
+=begin
+scramble('rkqodlw', 'world') == true
+scramble('cedewaraaossoqqyt', 'codewars') == true
+scramble('katas', 'steak') == false
+=end
+def scramble(base, search)
+  base_chars = base.chars
+  a = search.chars.each do |character|
+    if base_chars.include?(character)
+      base_chars.delete_at(base_chars.index(character)) 
+    else
+      break false
+    end
+  end
+  a != false
+end
+
+# 13) Given two integers m, n (1 <= m <= n) we want to find all integers between m and n whose sum of squared divisors is itself a square. 
+=begin
+42 is such a number, since:
+Divisors of 42 are : 1, 2, 3, 6, 7, 14, 21, 42. These divisors squared are: 1, 4, 9, 36, 49, 196, 441, 1764. The sum of the squared divisors is 2500 which is 50 * 50, a square!
+
+list_squared(1, 250) == [[1, 1], [42, 2500], [246, 84100]]
+list_squared(42, 250) == [[42, 2500], [246, 84100]]
+=end
+def list_squared(start, end)
+  # We are given two integers as input, which will serve as a range of numbers.
+  # From these numbers, we return an array, with subarrays as elements.
+    # The first element of each subarray should be a 'square number', and the second element should be the sum of the squared divisors of the first number.
+
+  # We take the range, (start..end) inclusive.
+  # We then need to iterate through this range
+    # We need to check what the divisors are - 
+    # we need to check off all the numbers between 1 and that number, and select any where num % divisor == 0 (we could filter this)
+    # Once we have this new array, we can map:
+      # square each number
+      # Reduce this array.
+      # HOw do we check if something is a square? WE check if Math.sqrt(reduced_num).divmod(1)[1] == 0
+        # If yes, we then return an array of divisor, plus the reduced figure
+end
