@@ -118,24 +118,65 @@ end
 
 # 6) Generate a function that calculates whether the input number can be obtained by multiplying two consecutive Fibonacci numbers. It should return the two Fibonacci numbers, and a boolean (depending on whether the numbers are consecutive), in an array. If you can't multiply consecutive Fibonacci numbers to get to the input number, return the two closest consecutive Fibonacci numbers.
 =begin
-productFib(714) # should return (21, 34, true), 
-                # since F(8) = 21, F(9) = 34 and 714 = 21 * 34
-
-productFib(800) # should return (34, 55, false), 
-                # since F(8) = 21, F(9) = 34, F(10) = 55 and 21 * 34 < 800 < 34 * 55
------
-productFib(714) # should return [21, 34, true], 
-productFib(800) # should return [34, 55, false], 
------
-productFib(714) # should return {21, 34, 1}, 
-productFib(800) # should return {34, 55, 0},        
------
-productFib(714) # should return {21, 34, true}, 
-productFib(800) # should return {34, 55, false}, 
+productFib(714) # should return [21, 34, true], since F(8) = 21, F(9) = 34 and 714 = 21 * 34
+productFib(800) # should return [34, 55, false], since F(8) = 21, F(9) = 34, F(10) = 55 and 21 * 34 < 800 < 34 * 55
 
 productFib(4895) == [55, 89, true]
 productFib(5895) == [89, 144, false]
 =end
-def productFib(num)
+def fibonacci(number)
+  latest_val = 0
+  fibos = [0, 1]
+  until fibos.length > number
+    latest_val = fibos[-2] + fibos.last
+    fibos << latest_val
+  end
+  fibos.last
+end
 
+def productFib(num)
+  series_counter = 0
+  loop do 
+    if fibonacci(series_counter) * fibonacci(series_counter + 1) > num
+      return [fibonacci(series_counter), fibonacci(series_counter + 1), false]
+    elsif fibonacci(series_counter) * fibonacci(series_counter + 1) == num
+      return [fibonacci(series_counter), fibonacci(series_counter + 1), true]
+    else
+      series_counter += 1
+    end
+  end
+end
+
+# 7) One of those long-ass descriptions: https://www.codewars.com/kata/55c6126177c9441a570000cc
+=begin
+order_weight("103 123 4444 99 2000") == "2000 103 123 4444 99"
+order_weight("2000 10003 1234000 44444444 9999 11 11 22 123") == "11 11 2000 10003 22 123 1234000 44444444 9999")
+=end
+def order_weight(string)
+  string.split.sort do |a, b|
+    if a.chars.map(&:to_i).reduce(:+) == b.chars.map(&:to_i).reduce(:+)
+      a <=> b
+    else
+      a.chars.map(&:to_i).reduce(:+) <=> b.chars.map(&:to_i).reduce(:+)
+    end
+  end.join(' ')
+end
+
+# 8) Write a function cakes(), which takes the recipe (a hash) and the available ingredients (also a hash) and returns the maximum number of cakes Pete can bake (integer). The first hash is the recipe, while the second is the ingredients. 
+=begin
+cakes({"flour"=>500, "sugar"=>200, "eggs"=>1},{"flour"=>1200, "sugar"=>1200, "eggs"=>5, "milk"=>200}) == 2
+cakes({"cream"=>200, "flour"=>300, "sugar"=>150, "milk"=>100, "oil"=>100},{"sugar"=>1700, "flour"=>20000, "milk"=>20000, "oil"=>30000, "cream"=>5000}) == 11
+cakes({"apples"=>3, "flour"=>300, "sugar"=>150, "milk"=>100, "oil"=>100},{"sugar"=>500, "flour"=>2000, "milk"=>2000}) == 0
+cakes({"apples"=>3, "flour"=>300, "sugar"=>150, "milk"=>100, "oil"=>100},{"sugar"=>500, "flour"=>2000, "milk"=>2000, "apples"=>15, "oil"=>20}) == 0
+cakes({"eggs"=>4, "flour"=>400},{}) == 0
+cakes({"cream"=>1, "flour"=>3, "sugar"=>1, "milk"=>1, "oil"=>1, "eggs"=>1},{"sugar"=>1, "eggs"=>1, "flour"=>3, "cream"=>1, "oil"=>1, "milk"=>1}) == 1
+=end
+def cakes(recipe, ingredients)
+  relevant_ingredients = ingredients.select do |key, _|
+    recipe[key]
+  end
+  return 0 if recipe.keys.all? { |key| ingredients.keys.include?(key) } == false
+  relevant_ingredients.map do |key, value|
+    relevant_ingredients[key] / recipe[key]
+  end.min
 end
