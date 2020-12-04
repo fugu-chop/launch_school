@@ -255,18 +255,99 @@ Divisors of 42 are : 1, 2, 3, 6, 7, 14, 21, 42. These divisors squared are: 1, 4
 list_squared(1, 250) == [[1, 1], [42, 2500], [246, 84100]]
 list_squared(42, 250) == [[42, 2500], [246, 84100]]
 =end
-def list_squared(start, end)
-  # We are given two integers as input, which will serve as a range of numbers.
-  # From these numbers, we return an array, with subarrays as elements.
-    # The first element of each subarray should be a 'square number', and the second element should be the sum of the squared divisors of the first number.
+# This passes, but is too slow
+def list_squared(start_num, end_num)
+  divisors = (start_num..end_num).map do |num|
+    [num, (1..Math.sqrt(num)).select do |divisor|
+      num % divisor == 0
+    end]
+  end
 
-  # We take the range, (start..end) inclusive.
-  # We then need to iterate through this range
-    # We need to check what the divisors are - 
-    # we need to check off all the numbers between 1 and that number, and select any where num % divisor == 0 (we could filter this)
-    # Once we have this new array, we can map:
-      # square each number
-      # Reduce this array.
-      # HOw do we check if something is a square? WE check if Math.sqrt(reduced_num).divmod(1)[1] == 0
-        # If yes, we then return an array of divisor, plus the reduced figure
+  divisor_squares = divisors.map do |original_num, subarr|
+    [original_num, subarr.map do |element|
+      element ** 2
+    end]
+  end
+  
+  sums = divisor_squares.map { |original_num, subarr| [original_num, subarr.reduce(:+)] }
+  sums.select do |num, reduced_num|
+    Math.sqrt(reduced_num).divmod(1)[1] == 0
+  end
+end
+
+# This executes quickly enough
+def list_squared(m, n)
+  res = []
+  (m..n).each do |num|
+    divisor = []
+    i = 1
+    while i*i <= num
+      if (num % i == 0)
+        divisor.push(num/i) if i*i != num
+        divisor.push(i)
+      end
+      i += 1
+    end
+    sum = divisor.reduce(0){|sum, i| sum + i*i}
+    res << [num, sum] if sum**0.5 == (sum**0.5).round
+  end
+  res
+end
+
+# 14) Given a list of integers and a single sum value, return the first two values (parse from the left please) in order of appearance that add up to form the sum.
+=begin
+sum_pairs([11, 3, 7, 5],         10)
+#              ^--^      3 + 7 = 10
+== [3, 7]
+
+sum_pairs([4, 3, 2, 3, 4],         6)
+#          ^-----^         4 + 2 = 6, indices: 0, 2 *
+#             ^-----^      3 + 3 = 6, indices: 1, 3
+#                ^-----^   2 + 4 = 6, indices: 2, 4
+#  entire pair is earlier, and therefore is the correct answer
+== [4, 2]
+
+sum_pairs([0, 0, -2, 3], 2)
+#  there are no pairs of values that can be added to produce 2.
+== None/nil/undefined (Based on the language)
+
+sum_pairs([10, 5, 2, 3, 7, 5],         10)
+#              ^-----------^   5 + 5 = 10, indices: 1, 5
+#                    ^--^      3 + 7 = 10, indices: 3, 4 *
+#  entire pair is earlier, and therefore is the correct answer
+== [3, 7]
+=end
+# This passes, but is too slow because of the sort
+def sum_pairs(array, target)
+  stored_nums = []
+  array.each_with_index do |first_num, index1|
+    array.each_with_index do |second_num, index2|
+      stored_nums << [index1, index2] if first_num + second_num == target && index1 != index2
+    end
+  end
+
+  stored_nums = stored_nums.map do |pair|
+    pair.sort
+  end.uniq.sort_by { |a, b| b[1] <=> a[1] }
+
+  a, b = stored_nums.last
+  stored_nums.empty? ? nil : [array[a], array[b]]
+end
+
+# Suggested solution
+def sum_pairs(ints, s)
+  ints = [1, 2, 3, 4, 1, 0]
+  s = 2
+  seen = {}
+  ints.each do |int|
+    # You're adding key value pairs as you iterate through the array. It's nice because you don't have to dick around with indices.
+    # On each iteration:
+      # Check the other number required to make the pair, by subtracting int from s
+      # Check if the subtracted number already exists in the hash
+      # If it does, return the pair, since that means it's the earliest possible pair.
+      # Otherwise, set that subtracted key-value pair to true for future iterations
+    return [s-int, int] if seen[s-int]
+    seen[int] = true
+  end
+  nil
 end
