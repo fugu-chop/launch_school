@@ -351,3 +351,371 @@ def sum_pairs(ints, s)
   end
   nil
 end
+
+# 15) Read this: https://www.codewars.com/kata/551dd1f424b7a4cdae0001f0. The input data consist of an array which contains at least 1 name, and single integer n.
+=begin
+For example, Penny drinks the third can of cola and the queue will look like this:
+Rajesh, Howard, Sheldon, Sheldon, Leonard, Leonard, Penny, Penny
+
+who_is_next(["Sheldon", "Leonard", "Penny", "Rajesh", "Howard"], 1) == "Sheldon"
+who_is_next(["Sheldon", "Leonard", "Penny", "Rajesh", "Howard"], 52) == "Penny"
+who_is_next(["Sheldon", "Leonard", "Penny", "Rajesh", "Howard"], 7230702951) == "Leonard"
+=end
+def whoIsNext(names, r)
+  r -= 1
+  while r >= names.size
+    r -= names.size
+    r /= 2
+  end
+  names[r]
+end
+
+# 16) A perfect power is a classification of positive integers: In mathematics, a perfect power is a positive integer that can be expressed as an integer power of another positive integer. More formally, n is a perfect power if there exist natural numbers m > 1, and k > 1 such that mk = n. Your task is to check wheter a given integer is a perfect power. If it is a perfect power, return a pair m and k with mk = n as a proof. Otherwise return nil. For a perfect power, there might be several pairs. For example 81 = 3^4 = 9^2, so (3,4) and (9,2) are valid solutions. However, the tests take care of this, so if a number is a perfect power, return any pair that proves it.
+=begin
+isPP(4) => [2,2]
+isPP(9) => [3,2]
+isPP(5) => nil
+=end
+# The test cases are broken on Codewars
+def isPP(num)
+  (2..9).each do |power|
+    if (power == 3 || power == 9) && (num ** (1.0 / power)).divmod(1)[1].to_s[2..7] == '999999'
+      return [(num ** (1.0 / power)).to_i.round, power] 
+    elsif (num ** (1.0 / power)).divmod(1)[1] == 0
+      return [(num ** (1.0 / power)).to_i, power] 
+    end
+  end
+  nil
+end
+
+# 17) See this kata: https://www.codewars.com/kata/559a28007caad2ac4e000083 (it has pictures)
+=begin
+perimeter(5) == 80
+perimeter(7) == 216
+perimeter(20) == 114624
+perimeter(30) == 14098308
+perimeter(100) == 6002082144827584333104
+=end
+def fibonacci(index)
+  series = [1, 1]
+  until series.length == index
+    series << series[-1] + series[-2]
+  end
+  series
+end
+
+def perimeter(num)
+  fibonacci(num+1).reduce(:+) * 4
+end
+
+# 18) See this kata: https://www.codewars.com/kata/5270d0d18625160ada0000e4 (too much text). Don't mutate the input.
+=begin
+Three 1's => 1000 points
+Three 6's =>  600 points
+Three 5's =>  500 points
+Three 4's =>  400 points
+Three 3's =>  300 points
+Three 2's =>  200 points
+One   1   =>  100 points
+One   5   =>   50 point
+
+score( [2, 3, 4, 6, 2] ) == 0
+score( [2, 2, 2, 3, 3] ) == 200
+score( [2, 4, 4, 5, 4] ) == 450
+=end
+def score(dice)
+  counts = Hash.new(0)
+  score_array = []
+  dice.each do |die|
+    counts.keys.include?(die) ? counts[die] += 1 : counts[die] = 1
+  end
+
+  loop do
+    break if counts.values.all? { |value| value <= 0 }
+    counts.each do |key, value|
+      if key == 1 && value >= 3
+        score_array << 1000
+        counts[1] -= 3
+      elsif key == 6 && value >= 3
+        score_array << 600
+        counts[6] -= 3
+      elsif key == 5 && value >= 3
+        score_array << 500
+        counts[5] -= 3
+      elsif key == 4 && value >= 3
+        score_array << 400
+        counts[4] -= 3
+      elsif key == 3 && value >= 3
+        score_array << 300
+        counts[3] -= 3
+      elsif key == 2 && value >= 3
+        score_array << 200
+        counts[2] -= 3
+      elsif key == 1 && value > 0
+        score_array << 100
+        counts[1] -= 1            
+      elsif key == 5 && value > 0
+        score_array << 50
+        counts[5] -= 1
+      else
+        counts[key] -= 1        
+      end
+    end
+  end
+
+  score_array.reduce(0, &:+)
+end
+
+# Much smarter method lol
+def score( dice )
+  [ dice.count(1) / 3 * 1000,
+    dice.count(6) / 3 * 600,
+    dice.count(5) / 3 * 500,
+    dice.count(4) / 3 * 400,
+    dice.count(3) / 3 * 300,
+    dice.count(2) / 3 * 200,
+    dice.count(1) % 3 * 100,
+    dice.count(5) % 3 * 50 ].reduce(:+)
+end
+
+# 19) We will write a function gap with parameters. This function should return the first pair of two prime numbers spaced with a gap of g between the limits m, n if these numbers exist. Otherwise, return nil.
+=begin
+  g (integer >= 2) which indicates the gap we are looking for
+  m (integer > 2) which gives the start of the search (m inclusive)
+  n (integer >= m) which gives the end of the search (n inclusive)
+
+# First pair between 3 and 50 with a 2-gap.
+gap(2, 3, 50) == [3, 5]
+gap(2, 5, 7) == [5, 7]
+gap(2, 5, 5) == nil
+gap(4, 130, 200) == [163, 167]
+=end
+# As expected, this passes test cases but is too slow (due to prime checking)
+def gap(gap, start_prime, end_prime)
+  prime_arr = (start_prime..end_prime).select do |prime|
+    (2..Math.sqrt(prime)).none? { |i| prime % i == 0 }
+  end
+
+  prime_arr.each_cons(2).select do |a, b|
+    b - a == gap
+  end.first
+end
+
+# 20) Write a function done_or_not, passing a Sudoku board (list of lists) as an argument. If the board is valid return 'Finished!', otherwise return 'Try again!'
+=begin
+done_or_not([[5, 3, 4, 6, 7, 8, 9, 1, 2], 
+            [6, 7, 2, 1, 9, 5, 3, 4, 8],
+            [1, 9, 8, 3, 4, 2, 5, 6, 7],
+            [8, 5, 9, 7, 6, 1, 4, 2, 3],
+            [4, 2, 6, 8, 5, 3, 7, 9, 1],
+            [7, 1, 3, 9, 2, 4, 8, 5, 6],
+            [9, 6, 1, 5, 3, 7, 2, 8, 4],
+            [2, 8, 7, 4, 1, 9, 6, 3, 5],
+            [3, 4, 5, 2, 8, 6, 1, 7, 9]]) == 'Finished!'
+
+done_or_not([[5, 3, 4, 6, 7, 8, 9, 1, 2], 
+            [6, 7, 2, 1, 9, 0, 3, 4, 9],
+            [1, 0, 0, 3, 4, 2, 5, 6, 0],
+            [8, 5, 9, 7, 6, 1, 0, 2, 0],
+            [4, 2, 6, 8, 5, 3, 7, 9, 1],
+            [7, 1, 3, 9, 2, 4, 8, 5, 6],
+            [9, 0, 1, 5, 3, 7, 2, 1, 4],
+            [2, 8, 7, 4, 1, 9, 6, 3, 5],
+            [3, 0, 0, 4, 8, 1, 1, 7, 9]]) == 'Try again!'            
+=end
+
+def row_test(board)
+  board.each do |row|
+    break 'Try again!' if row.sort != (1..9).to_a
+  end != 'Try again!'
+end
+
+def col_test(board)
+  index_counter = 0
+  loop do 
+    break if index_counter == 9
+    col_nums = []
+    board.each do |row|
+      col_nums << row[index_counter]
+    end
+    break 'Try again!' if col_nums.sort != (1..9).to_a
+    index_counter += 1
+  end != 'Try again!'
+end
+
+def region_test(board)
+  region_start = 0
+  region_end = 2
+  loop do 
+    break if region_end > 8
+    arr_test = []
+    board.each_slice(3) do |rows|
+      rows.each do |region|
+        arr_test << region[region_start..region_end]
+      end
+    end
+    break 'Try again!' if arr_test.each_slice(3) do |slice|
+      break 'Try again!' if slice.flatten.sort != (1..9).to_a
+    end == 'Try again!'
+    region_start += 3
+    region_end += 3
+  end != 'Try again!'
+end
+
+def done_or_not(board)
+  row_test(board) && col_test(board) && region_test(board) ? 'Finished!' : 'Try again!'
+end
+
+# 21) John and Mary want to travel between a few towns A, B, C ... Mary has on a sheet of paper a list of distances between these towns. ls = [50, 55, 57, 58, 60]. John is tired of driving and he says to Mary that he doesn't want to drive more than t = 174 miles and he will visit only 3 towns. Which distances, hence which towns, they will choose so that the sum of the distances is the biggest possible to please Mary and John? 
+=begin
+With list ls and 3 towns to visit they can make a choice between: [50,55,57],[50,55,58],[50,55,60],[50,57,58],[50,57,60],[50,58,60],[55,57,58],[55,57,60],[55,58,60],[57,58,60].
+
+The sums of distances are then: 162, 163, 165, 165, 167, 168, 170, 172, 173, 175.
+
+The biggest possible sum taking a limit of 174 into account is then 173 and the distances of the 3 corresponding towns is [55, 58, 60].
+If this isn't possible, return nil.
+
+choose_best_sum(163, 3, [50, 55, 56, 57, 58]) == 163
+choose_best_sum(163, 3, [50]) == nil
+choose_best_sum(230, 3, [91, 74, 73, 85, 73, 81, 87]) == 228
+=end
+def choose_best_sum(t, k, ls)
+  perms = ls.combination(k).map do |perm|
+    perm.sort
+  end.uniq
+
+  a = perms.select do |perm|
+    perm.reduce(0, &:+) <= t
+  end
+
+  return nil if ls.length < k 
+
+  a.map do |perm|
+    perm.reduce(0, &:+)
+  end.max
+end
+
+# 22) You are given an array of numbers, which represent fractions. You need to find the lowest common denominator among these and convert those fractions to that denominator. 
+=begin
+convertFracts([[1, 2], [1, 3], [1, 4]]) == [[6, 12], [4, 12], [3, 12]]
+=end
+# This passes, but times out
+def convertFracts(array) 
+  denominators = array.map do |pairs|
+    pairs[1]
+  end
+  min_var = array.sort { |subarr| subarr[1] }.reverse.first[1]
+  counter = min_var
+
+  loop do 
+    lcd = denominators.select { |denom| counter % denom == 0 }
+    break if lcd.length == denominators.length
+    counter += min_var
+  end
+
+  multipliers = denominators.map { |denom| counter / denom }
+
+  numerators = array.map do |pairs|
+    pairs[0]
+  end
+
+  idx = 0
+  new_numerators = []
+  until idx == numerators.length
+    new_numerators << numerators[idx] * multipliers[idx]
+    idx += 1
+  end
+
+  new_numerators.map { |num| [num, counter] }
+end
+
+# This passes (built method)
+def convertFracts(lst)
+  # x represents the accumulator, y represents the subarray in lst
+  # On each iteration, x is replaced by the lowest common multiple of the subarray[1] elements - e.g. x = 1.lcm(2), which is 2.
+    # On the next iteration, x = 2, 2.lcm(3) == 6, x is now equal to 6
+  lcm = lst.reduce(1) { |x, y| x.lcm(y[1]) }
+  lst.map { |x| [lcm / x[1] * x[0], lcm] }
+end
+
+# 23) Your job is to write a function which increments a string, to create a new string. If the string already ends with a number, the number should be incremented by 1. If the string does not end with a number. the number 1 should be appended to the new string. If the number has leading zeros the amount of digits should be considered.
+=begin
+increment_string("foo") == "foo1"
+increment_string("foobar001") == "foobar002"
+increment_string("foobar1") == "foobar2"
+increment_string("foobar00") == "foobar01"
+increment_string("foobar99") == "foobar100"
+increment_string("") == "1"
+=end
+def increment_string(string)
+  string = "dttxqwlnc8"
+  num_comparison = ('0'..'9').to_a
+  num_start_index = nil
+  string.chars.each_with_index do |char, index| 
+    break num_start_index = index if num_comparison.include?(char)
+  end
+
+  return string + '1' if num_start_index == nil || !num_comparison.include?(string[-1])
+  
+  num_portion = string[num_start_index..-1]
+
+  digit_portion = num_portion.chars.map.with_index do |digit_str, index|
+    if digit_str == '0' || digit_str == '9'
+      digit_str
+    elsif digit_str != '0' && digit_str != '9' && index == num_portion.length - 1
+      (digit_str.to_i + 1).to_s
+    else
+      digit_str
+    end
+  end.join
+
+  if digit_portion.include?('9')
+    nines = digit_portion.chars.reverse.map.with_index do |digit, index|
+      if digit == '9'
+        next
+      else
+        break digit_portion.length - index - 1
+      end
+    end
+  end
+
+  if digit_portion.include?('9') && nines != nil && [nines].flatten.include?(nil) && string[-1] == '9'
+    digit_portion = (digit_portion.to_i + 1).to_s
+  elsif digit_portion.include?('9') && string[-1] == '9'
+    digit_portion[nines..-1] = (digit_portion[nines..-1].to_i + 1).to_s
+  end
+
+  digit_portion[-1] = '1' if digit_portion[-1] == '0' && !string.include?('9')
+
+  string[0...num_start_index] + digit_portion
+end
+
+# 24) Our goal is to create a function that will check if there is a winner in Tictactoe. Assume that the board comes in the form of a 3x3 array, where the value is 0 if a spot is empty, 1 if it is an "X", or 2 if it is an "O", like so. You may assume that the board passed in is valid in the context of a game of Tic-Tac-Toe.
+=begin
+[[0, 0, 1],
+[0, 1, 2],
+[2, 1, 0]]
+
+We want our function to return:
+  -1 if the board is not yet finished (there are empty spots),
+  1 if "X" won,
+  2 if "O" won,
+  0 if a draw occurs
+
+is_solved([[0,0,1],[0,1,2],[2,1,0]]) == -1
+is_solved([[0,0,1],[2,2,2],[2,1,0]]) ==  2
+is_solved([[1,0,1],[0,1,2],[2,1,1]]) ==  1
+=end
+def is_solved(board)
+  # We receive an array of 3 sub elements, which can only be populated by 0, 1, 2
+  # We need to check if there is a draw
+    # i.e. if we flatten the subarrays, and there are any 0's, we return -1 for the incomplete
+  # Next we check for wins or draws
+    # Rows
+      # check for each subarray (counts of 1 or 2 == 3), return 1 or 2
+    # Columns
+      # check for index 0, 1, 2 of each subarray (counts of 1, 2 == 3), return 1 or 2
+    # Diagonals
+      # Check for index 0 in subarr1, 1 in subarr2, 2 in subarr3
+      # Check for index 2 in subarr1, 1 in subarr2, 0 in subarr3
+end
