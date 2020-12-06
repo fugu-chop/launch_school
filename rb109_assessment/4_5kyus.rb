@@ -706,16 +706,77 @@ is_solved([[0,0,1],[0,1,2],[2,1,0]]) == -1
 is_solved([[0,0,1],[2,2,2],[2,1,0]]) ==  2
 is_solved([[1,0,1],[0,1,2],[2,1,1]]) ==  1
 =end
+
+
+  board = [[0,0,1],[0,1,2],[2,1,0]]
+  board = [[0,0,1],[2,2,2],[2,1,0]]
+  board = [[1,0,1],[1,0,2],[1,1,0]]
+
+  board[0][2] [1][1], [2][0]
+
 def is_solved(board)
-  # We receive an array of 3 sub elements, which can only be populated by 0, 1, 2
-  # We need to check if there is a draw
-    # i.e. if we flatten the subarrays, and there are any 0's, we return -1 for the incomplete
-  # Next we check for wins or draws
-    # Rows
-      # check for each subarray (counts of 1 or 2 == 3), return 1 or 2
-    # Columns
-      # check for index 0, 1, 2 of each subarray (counts of 1, 2 == 3), return 1 or 2
-    # Diagonals
-      # Check for index 0 in subarr1, 1 in subarr2, 2 in subarr3
-      # Check for index 2 in subarr1, 1 in subarr2, 0 in subarr3
+  board.each do |rows|
+    return 1 if rows.count(1) == 3
+    return 2 if rows.count(2) == 3
+  end
+
+  col_counter = 0
+  until col_counter > 3
+    col = board.map do |row|
+      row[col_counter]
+    end
+    return 1 if col.count(1) == 3
+    return 2 if col.count(2) == 3
+    col_counter += 1
+  end
+
+  diag_counter = 0
+  diags1 = []
+  diags2 = []
+  until diag_counter == 3
+    diags1 << board[diag_counter][diag_counter]
+    diag_counter += 1
+  end
+
+  until diag_counter < 1
+    diag_counter -= 1
+    diags2 << board[2 - diag_counter][diag_counter]
+  end
+
+  return 1 if diags1.count(1) == 3 || diags2.count(1) == 3
+  return 2 if diags1.count(2) == 3 || diags2.count(2) == 3
+  
+  return -1 if board.flatten.count(0) > 0
+  
+  0
+end
+
+# 25) Josephius permutation - see description here: https://www.codewars.com/kata/5550d638a99ddb113e0000a2
+=begin
+josephus(7,3)
+  n=7
+  k=3
+
+[1,2,3,4,5,6,7] - initial sequence
+[1,2,4,5,6,7] => 3 is counted out and goes into the result [3]
+[1,2,4,5,7] => 6 is counted out and goes into the result [3,6]
+[1,4,5,7] => 2 is counted out and goes into the result [3,6,2]
+[1,4,5] => 7 is counted out and goes into the result [3,6,2,7]
+[1,4] => 5 is counted out and goes into the result [3,6,2,7,5]
+[4] => 1 is counted out and goes into the result [3,6,2,7,5,1]
+[] => 4 is counted out and goes into the result [3,6,2,7,5,1,4]
+
+josephus([1,2,3,4,5,6,7,8,9,10],1) == [1,2,3,4,5,6,7,8,9,10]
+josephus([1,2,3,4,5,6,7,8,9,10],2) == [2, 4, 6, 8, 10, 3, 7, 1, 9, 5]
+josephus(["C","o","d","e","W","a","r","s"],4) == ['e', 's', 'W', 'o', 'C', 'd', 'r', 'a']
+josephus(["C",0,"d",3,"W",4,"r",5],4) == [3, 5, 'W', 0, 'C', 'd', 'r', 4]
+josephus([1,2,3,4,5,6,7],3) == [3, 6, 2, 7, 5, 1, 4]
+josephus([],3) == []
+josephus([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50],11) == [11, 22, 33, 44, 5, 17, 29, 41, 3, 16, 30, 43, 7, 21, 36, 50, 15, 32, 48, 14, 34, 1, 20, 39, 9, 28, 2, 25, 47, 24, 49, 27, 8, 38, 19, 6, 42, 35, 26, 23, 31, 40, 4, 18, 12, 13, 46, 37, 45, 10]
+josephus([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],40) == [10, 7, 8, 13, 5, 4, 12, 11, 3, 15, 14, 9, 1, 6, 2]
+josephus([1],3) == [1]
+josephus([true,false,true,false,true,false,true,false,true],9) == [true, true, true, false, false, true, false, true, false]
+=end
+def josephus(items,k)
+  (Array.new(items.length)){items.rotate!(k-1).shift}
 end
