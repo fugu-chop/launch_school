@@ -3,6 +3,8 @@
 - [2nd, Wed](#021220-wed)
 - [3rd, Thu](#031220-thu)
 - [4th, Fri](#041220-fri)
+- [5th, Sat](#051220-sat)
+- [6th, Sun](#061220-sun)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -59,3 +61,28 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 5 kyu problems have gone relatively smoothly so far. The more mathematical ones are probably still a little too tricky for me at the moment, or the ones that require optimisation (which probably aren't that appropriate in the first place). The grind continues. 
+
+##### 05/12/20 (Sat)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Reading RB109 preparation articles
+  - Practice Problems
+    - Codewars (5 kyu)
+
+__*Time spent*__<br/>
+240 minutes
+
+__*Thoughts*__<br/>
+Ran into a very hairy problem that required playing around with indexes and numbers. Those kinds of problems are always tricky where you have to simultaneously keep track of multiple variables. I managed to solve it, but it was too slow for Codewars. The solution was pretty novel, in that it used the order of iteration in it's favour to remove the need to track indices. Very clever.
+
+##### 06/12/20 (Sun)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (5 kyu)
+
+__*Time spent*__<br/>
+240 minutes
+
+__*Thoughts*__<br/>
+Doing regex problems without regex is very annoying. It basically relies on really complex logic and conditional comparisons. I did manage to solve a reasonably complex regex problem, but it took me over an hour to get all the conditions working to handle all the weird edge cases (some of which were artificially contrived as part of the problem). Nonetheless, I am pretty happy that I was able to persist and get the solution out.
