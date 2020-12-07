@@ -829,3 +829,79 @@ def to_underscore(string)
     char == char.upcase && !string_nums.include?(char) ? '_' + char.downcase : char
   end.join[1..-1]
 end
+
+# 29) You have a positive number n consisting of digits. You can do at most one operation: Choosing the index of a digit in the number, remove this digit at that index and insert it back to another or at the same place in the number in order to find the smallest number you can get. 
+=begin
+Return an array with
+    1) the smallest number you got
+    2) the index i of the digit d you took, i as small as possible
+    3) the index j (as small as possible) where you insert this digit d to have the smallest number.
+
+smallest(261235) == [126235, 2, 0]
+smallest(209917) == [29917, 0, 1]
+smallest(285365) == [238565, 3, 1]
+smallest(269045) == [26945, 3, 0]
+smallest(296837) == [239687, 4, 1]
+
+=end
+def smallest(number)
+  num_arr = number.digits.reverse
+  min_num = if num_arr.min == num_arr[0]
+    num_arr[1..-1].min
+  else
+    num_arr.min 
+  end
+  min_num_index = num_arr.index(min_num)
+  num_arr.delete_at(num_arr.index(min_num))
+  insert_index = 0
+
+  num_arr.each_with_index do |num, index|
+    if min_num < num
+      num_arr.insert(index, min_num) 
+      insert_index = index
+      break
+    end
+  end
+
+  [num_arr.join.to_i, min_num_index, insert_index]
+end
+
+# 30) Write a function called LCS that accepts two sequences and returns the longest subsequence common to the passed in sequences. A subsequence is different from a substring. The terms of a subsequence need not be consecutive terms of the original sequence.
+=begin
+lcs( "abcdef" , "abc" ) == "abc"
+lcs( "abcdef" , "acf" ) == "acf"
+lcs( "132535365" , "123456789" ) == "12356"
+=end
+def lcs(str1, str2)
+  return '' if str1.chars & str2.chars == [] 
+  comparer = str1.chars.length < str2.chars.length ? str1.chars : str2.chars
+  base = str1.chars.length >= str2.chars.length ? str1.chars : str2.chars
+  lowest_common_index = base.index(comparer[0])
+  common_chars = []
+  comparer.each do |b_letter|
+    common_chars << b_letter if base[lowest_common_index..-1].include?(b_letter)
+  end
+  common_chars.join
+end
+
+# 31) Write an algorithm that takes an array and moves all of the zeros to the end, preserving the order of the other elements.
+=begin
+move_zeros([1,2,0,1,0,1,0,3,0,1]) == [ 1, 2, 1, 1, 3, 1, 0, 0, 0, 0 ]
+=end
+def move_zeroes(array)
+  zero_count = array.count(0)
+  array.delete(0)
+  zero_count.times { |_| array.push(0) } 
+  array
+end
+
+# 32) Complete the function that accepts two integer arrays of equal length, compares the value each member in one array to the corresponding member in the other, squares the absolute value difference between those two values and returns the average of those squared absolute value difference between each member pair.
+=begin
+[1, 2, 3], [4, 5, 6]              -->   9   because (9 + 9 + 9) / 3
+[10, 20, 10, 2], [10, 25, 5, -2]  -->  16.5 because (0 + 25 + 25 + 16) / 4
+[-1, 0], [0, -1]                  -->   1   because (1 + 1) / 2
+
+solution([1, 2, 3], [4, 5, 6]) == 9
+solution([10, 20, 10, 2], [10, 25, 5, -2]) == 16.5
+solution([-1, 0], [0, -1]) == 1
+=end
