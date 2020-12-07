@@ -706,14 +706,6 @@ is_solved([[0,0,1],[0,1,2],[2,1,0]]) == -1
 is_solved([[0,0,1],[2,2,2],[2,1,0]]) ==  2
 is_solved([[1,0,1],[0,1,2],[2,1,1]]) ==  1
 =end
-
-
-  board = [[0,0,1],[0,1,2],[2,1,0]]
-  board = [[0,0,1],[2,2,2],[2,1,0]]
-  board = [[1,0,1],[1,0,2],[1,1,0]]
-
-  board[0][2] [1][1], [2][0]
-
 def is_solved(board)
   board.each do |rows|
     return 1 if rows.count(1) == 3
@@ -751,7 +743,7 @@ def is_solved(board)
   0
 end
 
-# 25) Josephius permutation - see description here: https://www.codewars.com/kata/5550d638a99ddb113e0000a2
+# 25) Josephus permutation - see description here: https://www.codewars.com/kata/5550d638a99ddb113e0000a2
 =begin
 josephus(7,3)
   n=7
@@ -778,5 +770,62 @@ josephus([1],3) == [1]
 josephus([true,false,true,false,true,false,true,false,true],9) == [true, true, true, false, false, true, false, true, false]
 =end
 def josephus(items,k)
-  (Array.new(items.length)){items.rotate!(k-1).shift}
+  # The Array.new function takes the items.length as an argument, which creates an empty array of items.length elements
+  # When we pass it a block, the array is populated from element 0 to items.length sequentially by the return value of the block.
+  # The rotate method takes an argument, which takes k-1 elements from the front of the array and deposits them at the end of the array. 
+  Array.new(items.length) { items.rotate!(k-1).shift }
+end
+
+# 26) In this kata, we need to find the last element of the Josephus array. The challenge here is that the arrays can be very large, so we need to find a more efficient way of doing this. 
+=begin
+josephus_survivor(7,3) == 4
+josephus_survivor(11,19) == 10
+josephus_survivor(1,300) == 1
+josephus_survivor(14,2) == 13
+josephus_survivor(100,1) == 100
+=end
+def josephus_survivor(n, k)
+  a = (1..n).to_a
+  arr_test = []
+  n.times do |sth|
+    arr_test << a.rotate!(k - 1).shift
+  end
+  arr_test.last
+end
+
+# 27) We need to find the prime factors of a given number. Each prime factor might need to be raised to a certain power in order for the equation to work. We should return a string of the factors, separated by brackets and raised to the power where necessary.
+=begin
+prime_factors(86240) == "(2**5)(5)(7**2)(11)"
+prime_factors(7775460) == "(2**2)(3**3)(5)(7)(11**2)(17)"
+=end
+def prime_factors(n)
+  factors = Hash.new
+  divisor = 2
+  # This solution relies on the ability to 'exhaust' a factor before you move onto the next one (i.e. assuming there is only one valid solution)
+  # We set up the outer loop, which iterates through a bunch of numbers
+  while divisor <= n
+    # This inner loop continues to decrement n by the same divisor, until that divisor no longer cleanly divides into n (i.e. n % divisor != 0) - on the first iteration, we continually divide by 2, incrementing the hash value, which represents the number of iterations and the power to which we raise 2.
+    # My key question would be how do you ensure that divisor is limited to just prime numbers? Is it that every number that's not a prime can be achieved by multiplying primes (sometimes to the power) together? 
+    while n % divisor == 0
+      n /= divisor
+      factors.has_key?(divisor.to_s) ? factors[divisor.to_s] += 1 : factors[divisor.to_s] = 1
+    end
+    divisor += 1
+  end
+  factors.map { |key,value| value == 1 ? "(" + key + ")" : "(" + key + "**" + value.to_s + ")" }.join
+end
+
+# 28) Complete the function/method so that it takes CamelCase string and returns the string in snake_case notation. Lowercase characters can be numbers. If method gets number, it should return string.
+=begin
+to_underscore('TestController') == 'test_controller'
+to_underscore('MoviesAndBooks') == 'movies_and_books'
+to_underscore('App7Test') == 'app7_test'
+to_underscore(1) == '1'
+=end
+def to_underscore(string)
+  string_nums = ('0'..'9').to_a
+  return string.to_s if !string.instance_of?(String)
+  string.chars.map do |char|
+    char == char.upcase && !string_nums.include?(char) ? '_' + char.downcase : char
+  end.join[1..-1]
 end
