@@ -648,7 +648,6 @@ increment_string("foobar99") == "foobar100"
 increment_string("") == "1"
 =end
 def increment_string(string)
-  string = "dttxqwlnc8"
   num_comparison = ('0'..'9').to_a
   num_start_index = nil
   string.chars.each_with_index do |char, index| 
@@ -905,3 +904,45 @@ solution([1, 2, 3], [4, 5, 6]) == 9
 solution([10, 20, 10, 2], [10, 25, 5, -2]) == 16.5
 solution([-1, 0], [0, -1]) == 1
 =end
+def solution(arr1, arr2)
+  arr1.zip(arr2).map do |pair|
+    pair.reduce(:-).abs
+  end.map do |num|
+    num ** 2
+  end.reduce(:+) / arr1.length.to_f
+end
+
+# 33) A beer can pyramid will square the number of cans in each level - 1 can in the top level, 4 in the second, 9 in the next, 16, 25. Complete the beeramid function to return the number of complete levels of a beer can pyramid you can make, given the parameters of your referral bonus, and the price of a beer can.
+=begin
+beeramid(1500, 2) == 12
+beeramid(5000, 3) == 16
+=end
+def beeramid(bonus, price)
+  beers = (bonus/price).floor
+  layers = 0
+  loop do
+    beers -= layers ** 2
+    break if (layers + 1) ** 2 > beers
+    layers += 1
+  end
+  layers
+end
+
+# 34) We need a function to collect these numbers, that may receive two integers a, b that defines the range [a, b] (inclusive) and outputs a list of the sorted numbers in the range, whose digits are 'Eureka' traited.
+=begin
+89 = 8^1 + 9^2
+135 = 1^1 + 3^2 + 5^3
+
+sum_dig_pow(1, 10) == [1, 2, 3, 4, 5, 6, 7, 8, 9]
+sum_dig_pow(1, 100) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 89]
+sum_dig_pow(90, 100) == []
+=end
+def sum_dig_pow(start_range, end_range)
+  eureka_nums = []
+  (start_range..end_range).each do |number|
+    number.digits.reverse.map.with_index do |digit, index|
+      digit ** (index + 1)
+    end.reduce(:+) == number ? eureka_nums << number : next
+  end
+  eureka_nums
+end
