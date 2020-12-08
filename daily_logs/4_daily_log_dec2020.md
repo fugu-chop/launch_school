@@ -6,6 +6,7 @@
 - [5th, Sat](#051220-sat)
 - [6th, Sun](#061220-sun)
 - [7th, Mon](#071220-mon)
+- [8th, Tue](#081220-tue)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -101,3 +102,17 @@ __*Thoughts*__<br/>
 I've been grinding away super consistently for almost three full months now. Today is honestly the first day that I've just completely not felt like doing any coding. I'm just super tired all the time and find that I have no time for anything. It might be tricky to get all my coding done this weekend, given all the events on the social calendar. I might consider taking Sunday off. 
 
 I'm starting to encounter more mathematical problems. They're basically impossible to solve unless you have a specific method or knowledge of the required algorithm. They're still useful in learning new methods, though. 
+
+##### 08/12/20 (Tue)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (5 kyu)
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I'm starting to encounter the badly worded 5 kyu problems, which makes them pretty hard to parse and write solutions for. I'm having to look in the discussions tab to find out what exactly the problem is asking for. 
+
+It took me absolutely ages to figure out a relatively simple problem. I just couldn't muster the brain power to figure out the correct break condition, even though it was very simple in the end. That was incredibly frustrating. 
