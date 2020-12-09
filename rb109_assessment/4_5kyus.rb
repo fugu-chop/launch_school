@@ -946,3 +946,40 @@ def sum_dig_pow(start_range, end_range)
   end
   eureka_nums
 end
+
+# 35) Complete the solution so that it returns the number of times the search_text is found within the full_text. If the searchText is empty, it should return 0.
+=begin
+search_substr('aa_bb_cc_dd_bb_e', 'bb') # should return 2 since bb shows up twice
+search_substr('aaabbbcccc', 'bbb') # should return 1
+search_substr( 'aaa', 'aa' ) # should return 2
+search_substr( 'aaa', '' ) # should return 0
+search_substr( 'aaa', 'aa', false ) # should return 1
+=end
+def search_substr(full_text, search_text, allow_overlap = true)
+  overlap_duplicate = full_text.dup
+  start_index = 0
+  end_index = search_text.length - 1
+  
+  return 0 if search_text.empty? || full_text.empty?
+  match_count = 0
+  if allow_overlap
+    full_text.chars.each_cons(search_text.length) do |cons|
+      match_count += 1 if cons.join.include?(search_text)
+    end
+  else
+    loop do
+      if overlap_duplicate[start_index..end_index].include?(search_text)
+        match_count += 1
+        start_index += search_text.length 
+        end_index += search_text.length
+      else
+        start_index += 1
+        end_index += 1
+      end
+      break if end_index > overlap_duplicate.length - 1
+    end
+  end
+  match_count
+end
+
+# 36) 
