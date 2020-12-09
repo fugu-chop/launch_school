@@ -7,6 +7,7 @@
 - [6th, Sun](#061220-sun)
 - [7th, Mon](#071220-mon)
 - [8th, Tue](#081220-tue)
+- [9th, Wed](#091220-wed)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -116,3 +117,18 @@ __*Thoughts*__<br/>
 I'm starting to encounter the badly worded 5 kyu problems, which makes them pretty hard to parse and write solutions for. I'm having to look in the discussions tab to find out what exactly the problem is asking for. 
 
 It took me absolutely ages to figure out a relatively simple problem. I just couldn't muster the brain power to figure out the correct break condition, even though it was very simple in the end. That was incredibly frustrating. 
+
+##### 09/12/20 (Wed)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Revision of existing solutions
+    - Codewars (5 kyu)
+
+__*Time spent*__<br/>
+130 minutes
+
+__*Thoughts*__<br/>
+Going through some of the older problems and the more novel solutions for them was actually really valuable, as it reminded me of additional methods, things to watch out for, and tools which I can use to more easily solve problems. 
+
+The 5 kyu problems continue to get more mathematical. It's a genuine struggle to find problems that aren't mathematical, optimisation or Regex based.
