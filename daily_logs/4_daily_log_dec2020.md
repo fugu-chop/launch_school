@@ -8,6 +8,7 @@
 - [7th, Mon](#071220-mon)
 - [8th, Tue](#081220-tue)
 - [9th, Wed](#091220-wed)
+- [10th, Thu](#101220-thu)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -132,3 +133,22 @@ __*Thoughts*__<br/>
 Going through some of the older problems and the more novel solutions for them was actually really valuable, as it reminded me of additional methods, things to watch out for, and tools which I can use to more easily solve problems. 
 
 The 5 kyu problems continue to get more mathematical. It's a genuine struggle to find problems that aren't mathematical, optimisation or Regex based.
+
+##### 10/12/20 (Thu)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Codewars (5 kyu)
+  - Study Session
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+I did a live study session. It was a good benchmark of the level of detail I need to provide in my algorithm, as well as emphasising the need to include rules and test cases. I think I'll still a ways off in terms of identifying how to solve a given problem, so back to CodeWars I go. 
+
+I definitely do need to spend more time in the algorithm naming variables and fully fleshing out the solution before I start coding. I still have a bad habit of hacking and slashing when I am unsure about the algorithm. It's also ok to not be too clever about the solution - I feel like I've spent a lot of time trying to think about the most optimal solution, but sometimes this doesn't cover all edge cases. 
+
+Today was just super disheartening. I feel like I am nowhere near the level of skill required to actually solve any of these problems. I think I am just wasting my time on the 5 kyu Codewars problems now, since all the relevant problems seem to require Regex, mathematics, or algorithmic knowledge. I don't feel like I'm getting any better, either. 
+
+I'm going to start recording myself doing problems from the compiled Launch School Codewars problems. 
