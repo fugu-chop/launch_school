@@ -1029,3 +1029,31 @@ def luck_check (str)
   first_half.to_i.digits.sum == second_half.to_i.digits.sum
 end
 
+# 38) Your task is to Combine two Strings. Input Strings a and b: For every character in string a swap the casing of every occurrence of the same character in string b. Then do the same casing swap with the inputs reversed. Return a single string consisting of the changed version of a followed by the changed version of b. A char of a is in b regardless if it's in upper or lower case
+=begin
+work_on_strings("abc","cde") == "abCCde"
+work_on_strings("abcdeFgtrzw", "defgGgfhjkwqe") == "abcDeFGtrzWDEFGgGFhjkWqE"
+work_on_strings("abcdeFg", "defgG") == "abcDEfgDEFGg"
+work_on_strings("abab", "bababa") == "ABABbababa"
+=end
+def work_on_strings(str1, str2)
+  result_string_1 = ''
+  str1.each_char do |char|
+    swaptimes = str2.downcase.count(char.downcase)
+    swaptimes.times do |iteration|
+      char = char.swapcase
+    end
+    result_string_1 << char
+  end
+
+  result_string_2 = ''
+  str2.each_char do |char|
+    swaptimes = str1.downcase.count(char.downcase)
+    swaptimes.times do |iteration|
+      char = char.swapcase
+    end
+    result_string_2 << char
+  end
+
+  result_string_1 + result_string_2
+end
