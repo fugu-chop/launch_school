@@ -9,6 +9,7 @@
 - [8th, Tue](#081220-tue)
 - [9th, Wed](#091220-wed)
 - [10th, Thu](#101220-thu)
+- [11th, Fri](#111220-fri)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -152,3 +153,16 @@ I definitely do need to spend more time in the algorithm naming variables and fu
 Today was just super disheartening. I feel like I am nowhere near the level of skill required to actually solve any of these problems. I think I am just wasting my time on the 5 kyu Codewars problems now, since all the relevant problems seem to require Regex, mathematics, or algorithmic knowledge. I don't feel like I'm getting any better, either. 
 
 I'm going to start recording myself doing problems from the compiled Launch School Codewars problems. 
+
+##### 11/12/20 (Fri)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Compiled Codewars problems
+  - Revision
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+Some decent practice with fully documenting the PEDAC processes. I'll start voicing my thoughts as well tomorrow. 
