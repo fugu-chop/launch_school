@@ -242,3 +242,309 @@ def solve(string)
   end
   counter_storage.max
 end
+
+# 6) 
+=begin
+Problem
+  Given a string of integers, return the number of odd-numbered substrings that can be formed. For example, in the case of "1341", they are 1, 1, 3, 13, 41, 341, 1341, a total of 7 numbers. 
+
+  Inputs
+    A string of integers
+
+  Outputs
+    An integer object
+
+  Rules
+    We are taking substrings, so we need to preserve the order of the numbers in which they appear (e.g. in the above example 431 is not a listed odd number).
+    Individual odd numbers "don't have to align to order" - e.g. in our example above, 1 appears twice, despite the second 1 appearing as the last element in the array.
+
+  Questions
+    Do we have to deal with empty strings? Strings that contain no numbers?
+
+Examples
+  solve("1341") == 7
+  solve("1357") == 10
+  solve("13471") == 12
+  solve("134721") == 13
+  solve("1347231") == 20
+  solve("13472315") == 28
+
+Data Structures
+  We probably want to iterate through an array to check if numbers are odd
+
+Algorithm
+  We need to break up our input string object into an array of digits (digit_arr)
+  We then need to iterate through this array
+    We start from the first digit, check if it's odd (converting it to an integer along the way)
+      If it's odd, append it to an array (odd_arr)
+      If not, continue looping
+    We then capture the first and second digits (probably with index notation), convert this to a integer
+      We'll use 'end_index', which will be initialised as the integer as start_index initially
+      Repeat above steps.
+    We continue capturing more digits, until we reach the length of the digit_arr
+    We then change our starting index (start_index) to 1, and then repeat the above
+    We then check the length of our odd_arr, returning it. 
+=end
+
+def solve(num_string)
+  odd_arr = []
+  start_index = 0
+  end_index = 0
+  digit_arr = num_string.chars
+  loop do
+    break if end_index == digit_arr.length
+    loop do
+      break if end_index == digit_arr.length
+      odd_arr << digit_arr[start_index..end_index].join if digit_arr[start_index..end_index].join.to_i.odd?
+      end_index += 1
+    end
+    start_index += 1
+    end_index = start_index
+  end
+  odd_arr.length
+end
+
+# 7) https://www.codewars.com/kata/565b112d09c1adfdd500019c/train/ruby
+=begin
+Problem
+  Complete the function that takes an array of words. You must concatenate the nth letter from each word to construct a new word which should be returned as a string, where n is the position of the word in the list.
+
+  Input
+    Array of strings (could be empty)
+
+  Output
+    A string (could be empty)
+
+  Rules
+    Test cases contain valid input only - i.e. a string array or an empty array; and each word will have enough letters.
+
+Examples
+  nth_char(['yoda', 'best', 'has']) == 'yes'
+  nth_char([]) == ''
+  nth_char(['X-ray']) == 'X'
+  nth_char(['No', 'No']) == 'No'
+  nth_char(['Chad', 'Morocco', 'India', 'Algeria', 'Botswana', 'Bahamas', 'Ecuador', 'Micronesia']) == 'Codewars'
+
+Data Structures
+  Input is an array, which we'll have to iterate through
+
+Algo
+  Our input array (input), iterate through this (map)
+  On each iteration, we need to reference the index
+  We take the index of our word that's passed to the block
+  Afterwards, we join the mapped array back together (return this)
+=end
+
+def nth_char(input)
+  input.map.with_index do |word, index|
+    word[index]
+  end.join
+end
+
+# 8) https://www.codewars.com/kata/5491689aff74b9b292000334/train/ruby
+=begin
+Problem
+  For a given nonempty string s find a minimum substring t and the maximum number k, such that the entire string s is equal to t repeated k times. The input string consists of lowercase latin letters. Your function should return an array, [t, k].
+
+  Input
+    A string
+
+  Output
+    An array of two elements
+      the first element is a string
+      2nd element is an integer
+
+  Rules
+    Our input string is not empty
+    If the substring cannot be repeated, return the string, and 1
+
+
+Examples
+  f("ababab") == ["ab", 3]
+  f("abcde") == ["abcde", 1]
+
+Data Structures
+  Our input will be string
+  Our output will be a string
+  We'll probably ned to iterate through the input string, so we'll need to use another array
+
+Algo
+  We should iterate through our string (input)
+  We can grab a substring using indexing, starting at 0, ending at 1 (minimum substring length)
+    input[0..substr_length]
+    if input[0..substr_length] * input / input[0..substr_length].length == input[0..substr_length], push it to the success_arr
+=end
+def f(input)
+  success_arr = [[input, 1]]
+  substr = 2
+  loop do
+    break if input[0...(input.length / substr)].length == 1
+    success_arr << [input[0...(input.length / substr)], substr] if input[0...(input.length / substr)] * substr == input
+    substr += 1
+  end
+  success_arr.last
+end
+
+def f(input)
+  substr_length = 1
+  length = (input.length / input[0..substr_length].length)
+  loop do
+    break [input, 1] if substr_length == input.length - 1
+    return [input[0..substr_length], length] if input[0..substr_length] * length == input
+    substr_length += 1
+    length = (input.length / input[0..substr_length].length)
+  end
+end
+
+# 9) https://www.codewars.com/kata/55953e906851cf2441000032/train/ruby
+=begin
+Problem
+  Return a string where:
+  1) the first and last characters remain in original place for each word
+  2) characters between the first and last characters must be sorted alphabetically
+  3) punctuation should remain at the same place as it started, for example: shan't -> sahn't
+
+  Input
+    A string
+
+  Output
+    A string
+
+  Rules
+    words are seperated by single spaces
+    only spaces separate words, special characters do not,
+    special characters do not take the position of the non special characters
+    puctuation is limited to 4 characters: hyphen(-), apostrophe('), comma(,) and period(.) 
+    ignore capitalisation
+    We could have single letter or empty strings
+
+Examples
+  scramble_words('professionals') == 'paefilnoorsss'
+  scramble_words('i') == 'i'
+  scramble_words('') == ''
+  scramble_words('me') == 'me'
+  scramble_words('you') == 'you'
+  scramble_words('card-carrying') == 'caac-dinrrryg'
+  scramble_words("shan't") == "sahn't"
+  scramble_words('-dcba') == '-dbca'
+  scramble_words('dcba.') == 'dbca.'
+  scramble_words("you've gotta dance like there's nobody watching, love like you'll never be hurt, sing like there's nobody listening, and live like it's heaven on earth.") == "you've gotta dacne like teehr's nbdooy wachintg, love like ylo'ul neevr be hrut, sing like teehr's nbdooy leiinnstg, and live like it's haeevn on earth."
+
+Data Structures
+  We will need to iterate through our string, so we need an array
+
+Algo
+  We're given a string
+  We should split this via spaces, into an array (so the code can handle multiple words)
+  On each iteration, we have a word
+    We should only sort letters in between the first and last letter, so we can handle this by indexing [1...-1]
+  # We need to sort the remaining characters, alphabetically
+    # We need to convert remaining characters to an array to sort them
+    # We need to deal with punctuation - how?
+
+=end
+def scramble_words(words)
+  words.split(' ').map { |word| scramble(word) }.join(' ')
+end
+
+def scramble(word)
+  word = 'card-carrying'
+  chars = word.chars
+  letters = chars.select { |char| letter?(char) }
+  scrambled_letters = scramble_letters(letters.join).chars
+  chars.map do |char|
+    letter?(char) ? scrambled_letters.shift : char
+  end
+    .join
+end
+
+def scramble_letters(word)
+  return word if word.length <= 2
+  
+  word[0] + word[1...-1].chars.sort.join + word[-1]
+end
+
+def letter?(char)
+  char.match? /[a-z]/
+end
+
+# 10) https://www.codewars.com/kata/51e056fe544cf36c410000fb/train/ruby
+=begin
+Problem
+  Write a function that, given a string of text (possibly with punctuation and line-breaks), returns an array of the top-3 most occurring words, in descending order of the number of occurrences.
+
+  Input
+    A string
+
+  Output
+    An array, of three string objects
+
+  Rules
+    Matches should be case-insensitive, and the words in the result should be lowercased.
+    Ties may be broken arbitrarily.
+    If a text contains fewer than three unique words, then either the top-2 or top-1 words should be returned, or an empty array if a text contains no words.
+
+Examples
+  top_3_words("a a a  b  c c  d d d d  e e e e e") == ["e", "d", "a"]
+  top_3_words("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e") == ["e", "ddd", "aa"]
+  top_3_words("  //wont won't won't ") == ["won't", "wont"]
+  top_3_words("  , e   .. ") == ["e"]
+  top_3_words("  ...  ") == []
+  top_3_words("  '  ") == []
+  top_3_words("  '''  ") == []
+  top_3_words(In a village of La Mancha, the name of which I have no desire to call to mind, there lived not long since one of those gentlemen that keep a lance in the lance-rack, an old buckler, a lean hack, and a greyhound for coursing. An olla of rather more beef than mutton, a salad on most nights, scraps on Saturdays, lentils on Fridays, and a pigeon or so extra on Sundays, made away with three-quarters of his income.) == ["a", "of", "on"]
+
+Data Structures
+  Need to work with an array
+  Hash?
+
+Algo
+  We need to split up our input string into 'words' - i.e. we define 'words' as integer objects separated by spaces
+  Once we have our words, we need to verify:
+    Is it a word? i.e. does it contain at least one alphabetic character? (e.g. see test case 5)
+      # If not, we just return an empty array
+    Once we've verified it's an actual word, we need to strip out any non-alphabetic characters from the start or end of the word - see test case 2
+
+    Helper method
+      We could iterate through the word
+      If the start of the word is non-alphabetical, move to the next character, incrementing an index (this is where we know to start capturing the word)
+      Break this iterator once we hit an alphabetical character
+      We do the same thing, but iterate from the end of the string
+      We return the word, cleaned of trailing/leading punctuation
+
+    Once we've removed all the trailing/starting punctuation, we then count the number of times a word occurs in the word array (possibly via a hash)
+    We return the top three hash keys as assessed by the maximum three values
+=end
+def cleaner(word)
+  start_index = 0
+  word.chars.each do |letter|
+    if letter.downcase.match(/[a-z]/)
+      break
+    else
+      start_index += 1
+    end
+  end
+
+  end_index = -1
+  word.chars.reverse.each do |letter|
+    if letter.downcase.match(/[a-z]/)
+      break
+    else
+      end_index -= 1
+    end
+  end
+
+  word[start_index..end_index]
+end
+
+def top_3_words(sentence)
+  clean_sentence = sentence.split.map do |word|
+    cleaner(word).downcase
+  end.select { |word| !word.empty? }
+
+  word_counts = clean_sentence.each_with_object({}) do |word, hash|
+    hash.keys.include?(word) ? hash[word] += 1 : hash[word] = 1
+  end
+
+  word_counts.keys.max_by(3) { |key| word_counts[key] }
+end
