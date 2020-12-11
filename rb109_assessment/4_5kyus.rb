@@ -1057,3 +1057,21 @@ def work_on_strings(str1, str2)
 
   result_string_1 + result_string_2
 end
+
+# 39) Read this: https://www.codewars.com/kata/58b38256e51f1c2af0000081/solutions/ruby
+=begin
+best_match([6, 4],[1, 2]) == 1
+best_match([1],[0]) == 0
+best_match([1, 2, 3, 4, 5],[0, 1, 2, 3, 4]) == 4
+best_match([3, 4, 3],[1, 1, 2]) == 2
+best_match([4, 3, 4],[1, 1, 1]) == 1
+=end
+def best_match(zam, al)
+  diffs = zam.map.with_index do |score, index|
+    [zam[index] - al[index], al[index], index]
+  end
+
+  diffs.sort_by do |match|
+    [match[0], -match[1]]
+  end.first[2]
+end
