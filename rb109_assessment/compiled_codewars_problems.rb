@@ -448,7 +448,6 @@ def scramble_words(words)
 end
 
 def scramble(word)
-  word = 'card-carrying'
   chars = word.chars
   letters = chars.select { |char| letter?(char) }
   scrambled_letters = scramble_letters(letters.join).chars
@@ -547,4 +546,205 @@ def top_3_words(sentence)
   end
 
   word_counts.keys.max_by(3) { |key| word_counts[key] }
+end
+
+# 11) https://www.codewars.com/kata/514a024011ea4fb54200004b/train/ruby
+=begin
+Problem 
+  Write a function that when given a URL as a string, parses out just the domain name and returns it as a string.
+
+  Input
+    A string
+
+  Output
+    A string
+
+  Rules
+    The domain name will be preceeded by 'http://', 'www.' or 'https://'
+    The domain name will always be following by '.x'
+
+Examples
+  domain_name("http://google.com") == "google"
+  domain_name("http://google.co.jp") == "google"
+  domain_name("www.xakep.ru") == "xakep"
+  domain_name("https://youtube.com") == "youtube"
+
+Data Structure
+  An array, 
+
+Algo
+  Take our input string (url)
+  split on a number of possible fields 
+    'w.'
+    '//
+    .
+  Create an array of delimiters
+  Iterate through this array of delimiters
+    We want to save our split url to split_url
+    ON each iteration, we want to split the split_url by the delimiter, rewriting the variable each time
+    In The returned array, the domain should exist at index 1
+    We then delimit again by '.', which should leave the clean domain at index 0
+=end
+def domain_name(url)
+  delimiters = ['www.', 'https://', 'http://', 'http://www.', 'https://www.']
+  leading_removed = delimiters.map do |delimiter|
+    url.split(delimiter) if url.include?(delimiter)
+  end.compact.flatten.last
+
+  leading_removed == nil ? url.split('.').first : leading_removed.split('.').first
+end
+
+# 12) https://www.codewars.com/kata/545cedaa9943f7fe7b000048/train/ruby
+=begin
+Problem
+  Given a string, detect whether or not it is a pangram.
+
+  Input
+    String
+
+  Output
+    Boolean (true if string is a pangram)
+
+  Rules
+    A pangram is a sentence that contains every single letter of the alphabet at least once.
+
+Examples
+  panagram?("The quick brown fox jumps over the lazy dog.") == true
+  panagram?("This is not a pangram.") == false
+
+Data Structures
+  Array
+  Hash
+
+Algo
+  We break up our input string into an array for iteration
+  We iterate through this array of letters, counting how many times a letter appears (each_with_object)
+  We then have a comparison array of 'a' to 'z' (alphabet)
+  We take the keys of our hash and compare to alphabet (returning a boolean)
+=end
+def panagram?(sentence)
+  alphabet = ('a'..'z').to_a
+  sentence = sentence.downcase.split
+  letter_count = sentence.each_with_object({}) do |word, hash|
+    word.chars.each do |letter|
+      hash.keys.include?(letter) ? hash[letter] += 1 : hash[letter] = 1 if alphabet.include?(letter)
+    end
+  end
+
+  letter_count.keys.sort == alphabet
+end
+
+# 13) https://www.codewars.com/kata/57f8ff867a28db569e000c4a/train/ruby
+=begin
+Problem
+  Modify the kebabize function so that it converts a camel case string into a kebab case.
+
+  Input
+    A string
+  
+  Output
+    A string
+  
+  Rules
+    Kebab case has all lowercase words, where each word is separated by a dash
+    Numbers are removed
+
+Examples
+  kebabize('myCamelCasedString') == 'my-camel-cased-string'
+  kebabize('myCamelHas3Humps') == 'my-camel-has-humps'
+
+Data Structures
+  String
+  Array
+
+Algo
+  We need to remove all numbers from our string (string_clean)
+  Once we've removed numbers, we need to iterate through (string_clean), converting our string to an array of characters
+  We'll want to iterate through these characters, checing if each character is lowercase (map)
+    # check if n = n.downcase
+    # if it's lowercase, next
+    # if it's uppercase, replace with '-' and lowercase version of the string
+  # Map will return an array of strings, which we can join (return this)
+=end
+def kebabize(input)
+  string_clean = input.chars.reject do |letter|
+    !('a'..'z').include?(letter.downcase)
+  end.join
+
+  (string_clean[0] + string_clean[1..-1].chars.map do |character|
+    character == character.downcase ? character : "-#{character}"
+  end.join).downcase
+end
+
+# 14) https://www.codewars.com/kata/551dc350bf4e526099000ae5/train/ruby
+=begin
+Problem
+  We're given a string, and we have to replace any instances of 'WUB' with a single space
+
+  INput
+    String
+
+  Output
+    String
+
+  Rules
+    If there are multiple WUBs, we only have a single space (not one for each WUB)
+
+Examples
+  song_decoder("AWUBBWUBC") == "A B C"
+  song_decoder("AWUBWUBWUBBWUBWUBWUBC") == "A B C"
+  song_decoder("WUBAWUBBWUBCWUB") == "A B C"
+
+Data Structures
+  String
+
+Algo
+  We want to take our string, and replace 'WUB' with a ' '.
+  We can then squeeze any duplicate spaces to return a single space
+=end
+def song_decoder(string)
+  new_string = string.gsub('WUB', ' ').squeeze(' ').strip
+end
+
+# 15) https://www.codewars.com/kata/54da539698b8a2ad76000228/train/ruby
+=begin
+Problem
+We need to establish whether all of the directions in our array, will return us to our starting direction, but also if there are 10 elements in the array
+
+  Input
+    Array of string elements
+
+  Output
+    Boolean
+
+  Rules
+    We can only walk in 4 directions
+    Each direction takes one minute
+    Array won't be empty
+    There must be 10 elements in the array (otherwise you'll be early or late)
+    The count of each direction must be equal (otherwise you won't end up where you started)
+
+Examples
+is_valid_walk(['n','s','n','s','n','s','n','s','n','s'] == true
+is_valid_walk(['w','e','w','e','w','e','w','e','w','e','w','e'] == false
+is_valid_walk(['w']) == false  
+is_valid_walk(['n','n','n','s','n','s','n','s','n','s']) == false
+
+Data Structures
+  Our input is an array
+  A hash, so we can keep track of the counts of our directions
+
+Algo
+  First, check if the array is 10 elements. If not, just return false straight away. 
+  Otherwise, we need to iterate through our array of directions.
+  We will initialise a hash and use the directions as keys, incrementing the values for each time it occurs
+  We then check if the values of n == s, e == w
+=end
+def is_valid_walk(directions)
+  return false if directions.length != 10
+  direction_count = directions.each_with_object({}) do |direction, hash|
+    hash.keys.include?(direction) ? hash[direction] += 1 : hash[direction] = 1
+  end
+
+  direction_count['n'] == direction_count['s'] && direction_count['e'] == direction_count['w']
 end
