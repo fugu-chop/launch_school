@@ -748,3 +748,333 @@ def is_valid_walk(directions)
 
   direction_count['n'] == direction_count['s'] && direction_count['e'] == direction_count['w']
 end
+
+# 16) https://www.codewars.com/kata/5264d2b162488dc400000001
+=begin
+Problem
+  Write a function that takes in a string of one or more words, and returns the same string, but with all five or more letter words reversed (Just like the name of this Kata). Strings passed in will consist of only letters and spaces. Spaces will be included only when more than one word is present.
+
+  Input
+    A string
+
+  Output
+    A string
+
+  Rules
+
+Examples
+  spinWords("Hey fellow warriors") == "Hey wollef sroirraw"
+
+Data Structures
+  An array so we can iterate through words in a sentence
+
+Algo
+  Convert our sentence into an array of words
+  Iterate through our words
+    If the legnth of the word is >= 5, reverse the word
+    If not, just return the word
+  Join the words back together to get a string output
+=end
+def spinWords(sentence)
+  sentence.split.map do |word|
+    word.length >= 5 ? word.reverse : word
+  end.join(' ')
+end
+
+# 17) https://www.codewars.com/kata/5842df8ccbd22792a4000245
+=begin
+Problem
+  You will be given a number and you will need to return it as a string in Expanded Form.
+
+  Input
+    Integer object
+
+  Output
+    String object
+
+  Rules
+    All numbers will be whole numbers greater than 0.
+    If a number includes a zero, don't return that
+
+Examples
+  expanded_form(12) == '10 + 2'
+  expanded_form(42) == '40 + 2'
+  expanded_form(70304) == '70000 + 300 + 4'
+
+Data Structure
+  Integer
+  String
+  Array 
+
+Algo
+  Break up our integer object into digits (remember that digits reverses the order) - an array
+  Capture the length of the digits array (digits_len) - 1
+  Map through the array (with index)
+    On each iteration, multiply the digit by 10 ** (digits_len - index)
+    Convert to string
+  Join the resultant array with ' + '
+=end
+def expanded_form(number)
+  digits_idx = number.digits.reverse.length - 1
+  number.digits.reverse.map.with_index do |digit, index|
+    digit != 0 ? (digit * 10 ** (digits_idx - index)).to_s : nil
+  end.compact.join(' + ')
+end
+
+# 18) https://www.codewars.com/kata/55bf01e5a717a0d57e0000ec/train/ruby
+=begin
+Problem
+  Write a function, persistence, that takes in a positive parameter num and returns its multiplicative persistence, which is the number of times you must multiply the digits in num until you reach a single digit.
+
+  Input
+    Positive integer object
+
+  Output
+    >= 0 integer object
+
+  Rules
+    We're having to break up the number into it's digits and multiplying them down until the result of multiplying those digits is a single digit. We're keeping track of the number of times we have to do this (this is the integer object returned)
+
+Examples
+  persistence(39) == 3
+  persistence(4) == 0
+  persistence(25) == 2
+  persistence(999) == 4
+
+Data Structures
+  An array, where we keep track of the digits in a number?
+
+Algo
+  Initialise a variable, persistence_count = 0
+  Return persistence_count if input number (input) < 10 == 0
+
+  Otherwise:
+    Increment persistence_count
+    Break up our number into digits
+    We need to multiply all the digits
+    
+    Check if the multiplication of those digits is < 10
+      If so, return persistence count
+      If not, loop through again
+      Break the loop once our multiplication result < 10
+=end
+def persistence(input)
+  persistence_count = 0
+  loop do
+    return persistence_count if input < 10
+    persistence_count += 1
+    input = input.digits.reverse.reduce(:*)
+  end
+end
+
+# 19) https://www.codewars.com/kata/5202ef17a402dd033c000009
+=begin
+Problem
+  Write a function that will convert a string into title case, given an optional list of exceptions (minor words). The list of minor words will be given as a string with each word separated by a space. Your function should ignore the case of the minor words string -- it should behave in the same way even if the case of the minor word string is changed.
+
+  Input
+    A string to titlecase
+    (Optional) String to exclude from titlecasing
+
+  Output
+    String
+
+  Rules
+    A string is considered to be in title case if each word in the string is either (a) capitalised (that is, only the first letter of the word is in upper case) or (b) considered to be an exception and put entirely into lower case unless it is the first word, which is always capitalised.
+
+Examples
+  title_case('') == ''
+  title_case('a clash of KINGS', 'a an the of') == 'A Clash of Kings'
+  title_case('THE WIND IN THE WILLOWS', 'The In') == 'The Wind in the Willows'
+  title_case('the quick brown fox') == 'The Quick Brown Fox'
+
+Data Structures
+  An array
+
+Algo
+  Check if there is a list of optional (exclusions) (set as boolean) - set up as optional parameter
+      If it exists, break up into array of words (downcase)
+  Take our list of input strings (input)
+    Downcase our string
+    Break up into an array of words
+      Check if the downcased word appears in the exclusions
+        If not, capitalise it
+        If so, return the original word
+      We end up with a new array of strings
+      Capitalise the first word, just in case
+      Return the joined array (output string)
+=end
+def title_case(input, exclusions = '')
+  return '' if input.length < 1
+  exclusions = exclusions.downcase.split
+  input = input.downcase.split.map do |word|
+    exclusions.include?(word) ? word : word.capitalize
+  end
+  input[0].capitalize!
+  input.join(' ')
+end
+
+# 20) https://www.codewars.com/kata/528d9adf0e03778b9e00067e/train/ruby
+=begin
+Problem
+  Write a function mineLocation that accepts a 2D array, and returns the location of the mine. 
+
+  Input
+    An array of subarrays, containing 1's or 0's
+
+  Output
+    A single array, with the indexes of the mine (i.e. where the 1 occurs)
+
+  Rules
+    The mine is represented as the integer 1 in the 2D array. 
+    Areas in the 2D array that are not the mine will be represented as 0s. 
+    First element is the row index, and the second element is the column index of the bomb location (both should be 0 based). 
+      First number is which subarr
+      Second number is which element in that subarr
+    All 2D arrays passed into your function will be square (NxN)
+    There will only be one mine in the array.
+
+Examples
+  mineLocation([ [1, 0], [0, 0] ]) == [0, 0]
+  mineLocation([ [1, 0, 0], [0, 0, 0], [0, 0, 0] ]) == [0, 0]
+  mineLocation([ [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 0] ]) == [2, 2]
+
+Data Structures
+  Given an array, also need to output an array
+
+Algo
+  We are given our input (minefield)
+  Initialise a row_index, col_index variable
+  We need to iterate through minefield, with an index
+    We pass each subarray to the block
+    Test if it contains 1
+    If it does, assign the index to a variable (row_index)
+  We do the same thing within the index, except with col_index
+=end
+def mineLocation(minefield)
+  row_idx, col_idx = 0, 0
+  minefield.each_with_index do |row, idx_row|
+    row.each_with_index do |col, idx_col|
+      row_idx, col_idx = idx_row, idx_col if row.include?(1) && col == 1
+    end
+  end
+  [row_idx, col_idx]
+end
+
+# 21) https://www.codewars.com/kata/55c04b4cc56a697bb0000048/train/ruby
+=begin
+Problem
+  Complete the function scramble(str1, str2) that returns true if a portion of str1 characters can be rearranged to match str2, otherwise returns false.
+
+  Input
+    Two strings - one to search through, one 'searcher'
+
+  Output
+    Boolean
+
+  Rules
+    We return true if the str2 characters are found in str1, otherwise return false
+    Each letter of str2 must occur in str1
+    Only lower case letters will be used (a-z). 
+    No punctuation or digits will be included.
+    The character in str1 must occur >= str2
+
+Example
+  scramble('rkqodlw','world') == true
+  scramble('cedewaraaossoqqyt','codewars') == true
+  scramble('katas','steak') == false
+  scramble('scriptjava','javascript') == true
+  scramble('scriptingjava','javascript') == true
+  scramble("scriptjavx", "javascript") == false
+  scramble("javscripts", "javascript") == false
+
+Data Structures
+  Array
+
+Algo
+  Iterate through our str2, by converting it to an array
+  Create a duplicate copy of str1 to avoid mutating input (str1_dup)
+  ON each iteration, see if the letter is contained in str1
+    If yes, remove that character from str1_dup
+    If not, return false
+
+=end
+def scramble(str1, str2)
+  str1_dup = str1.dup.chars
+  str2.chars.each do |letter|
+    if str1_dup.include?(letter)
+      str1_dup.delete_at(str1_dup.index(letter))
+    else
+      return false
+    end
+  end
+  true
+end
+
+# 22) https://www.codewars.com/kata/5a7f58c00025e917f30000f1
+=begin
+Problem
+  Find the longest substring in alphabetical order.
+
+  Input
+    String
+
+  Output
+    String
+  
+  Rules
+    The input will only consist of lowercase characters and will be at least one letter long.
+    If there are multiple solutions, return the one that appears first.
+
+    If a letter is the same as the previous one, that counts as being 'in alphabetical order'
+    If nothing is in order, just return the first character
+    If there's only one character, just return that character
+
+    I assume that reverse is not alphabetical order
+
+Examples
+  longest('asd') == 'as'
+  longest('nab') == 'ab'
+  longest('abcdeapbcdef') == 'abcde'
+  longest('asdfaaaabbbbcttavvfffffdf') == 'aaaabbbbctt'
+  longest('asdfbyfgiklag') == 'fgikl'
+  longest('z') == 'z'
+  longest('zyba') == 'z'
+
+Data Structures
+  Array to capture all the strings that occur by alphabet
+
+Algo
+  Break up our input string to characters for iteration
+  We need some method to compare the alphabetical order
+    # We need to replace our letters with their alphabetical number values
+    # We need to compare current with next character (each_cons)
+      If the current character == next character, or next character is equal to current_character.succ, increment a counter (streak)
+      If test condition above isn't met, 
+        Append streak to an empty array (streaks)
+        reset streak to 0
+
+  Find the max value of streaks array
+=end
+def longest(string)
+  current_substring = ''  
+  longest_substring = '' 
+  
+  string.each_char.with_index do |char, index|
+    if index == 0
+      current_substring << char
+    elsif char >= current_substring[-1]  
+      current_substring << char
+    else
+      longest_substring = current_substring if current_substring.size > longest_substring.size
+      current_substring = char
+    end
+  end
+
+  if current_substring.size > longest_substring.size
+    longest_substring = current_substring
+  end
+  
+  longest_substring
+end
+
