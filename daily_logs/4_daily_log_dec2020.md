@@ -11,6 +11,7 @@
 - [10th, Thu](#101220-thu)
 - [11th, Fri](#111220-fri)
 - [12th, Sat](#121220-sat)
+- [13th, Sun](#131220-sun)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -182,3 +183,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I did more of the compiled Codewars problems. It's a bit hit and miss. Sometimes I can easily solve them, sometimes I can't. I hope that just by doing more, I will get faster at it. The explanation part isn't too bad, but I do forget to step back and update the algorithm if my code doesn't work - I do explain my thought process, but a lot of it is probably hack and slash.
+
+##### 13/12/20 (Sun)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Compiled Codewars problems
+
+__*Time spent*__<br/>
+243 minutes
+
+__*Thoughts*__<br/>
+The PEDAC method is helping, but I'm still finding I jump through the diagnosis process too fast, missing test cases. I need to slow down.
