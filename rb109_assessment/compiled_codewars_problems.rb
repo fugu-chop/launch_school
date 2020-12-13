@@ -1078,3 +1078,270 @@ def longest(string)
   longest_substring
 end
 
+# 23) https://www.codewars.com/kata/525c65e51bf619685c000059/train/ruby
+=begin
+Problem
+  Write a function cakes(), which takes the recipe (object) and the available ingredients (also an object) and returns the maximum number of cakes Pete can bake (integer). 
+
+  Input
+    Two hashes
+      One represents the recipe
+      One represents the ingredients available
+
+  Output
+    An integer object, represneting how many cakes can be baked with the ingredients available
+
+  Rules
+    For simplicity there are no units for the amounts (e.g. 1 lb of flour or 200 g of sugar are simply 1 or 200). 
+    Ingredients that are not present in the objects, can be considered as 0.
+
+Examples
+  cakes({"flour"=>500, "sugar"=>200, "eggs"=>1},{"flour"=>1200, "sugar"=>1200, "eggs"=>5, "milk"=>200}) == 2
+  cakes({"cream"=>200, "flour"=>300, "sugar"=>150, "milk"=>100, "oil"=>100},{"sugar"=>1700, "flour"=>20000, "milk"=>20000, "oil"=>30000, "cream"=>5000}) == 11
+  cakes({"apples"=>3, "flour"=>300, "sugar"=>150, "milk"=>100, "oil"=>100},{"sugar"=>500, "flour"=>2000, "milk"=>2000}) == 0
+  cakes({"apples"=>3, "flour"=>300, "sugar"=>150, "milk"=>100, "oil"=>100},{"sugar"=>500, "flour"=>2000, "milk"=>2000, "apples"=>15, "oil"=>20}) == 0
+  cakes({"eggs"=>4, "flour"=>400},{}) == 0
+  cakes({"cream"=>1, "flour"=>3, "sugar"=>1, "milk"=>1, "oil"=>1, "eggs"=>1},{"sugar"=>1, "eggs"=>1, "flour"=>3, "cream"=>1, "oil"=>1, "milk"=>1}) == 1
+
+Data Structures
+  Hashes
+
+Algos
+  We're given two hashes, one represents the ingredients we have, one represents the recipe
+  We need to divide the recipe by the quantities present, finding the smallest divided result.
+  We need to access each hash key in both the recipe and the ingredients
+    We divide the ingredients by the recipe
+    Append the result to an array (mins)
+  If we can't find the a key in the ingredient hash, return 0
+  After finish iterating, find the min of mins and return it
+=end
+def cakes(recipe, ingredients)
+  mins_arr = []
+  recipe.each do |key, value|
+    if ingredients.keys.include?(key)
+      mins_arr << ingredients[key] / value 
+    else
+      return 0
+    end
+  end
+  mins_arr.min
+end
+
+# 24) https://www.codewars.com/kata/51edd51599a189fe7f000015/train/ruby
+=begin
+Problem
+  Complete the function that
+    accepts two integer arrays of equal length
+    compares the value each member in one array to the corresponding member in the other
+    squares the absolute value difference between those two values
+    and returns the average of those squared absolute value difference between each member pair.
+
+  Input
+    two arrays, of equal length
+
+  Output
+    Integer object
+  
+  Rules
+    Array will have same number of elements, 
+    Only given two array
+
+Examples
+  solution([1, 2, 3], [4, 5, 6]) == 9
+  solution([10, 20, 10, 2], [10, 25, 5, -2]) == 16.5
+  solution([-1, 0], [0, -1]) == 1
+
+Data Structures
+  Arrays 
+
+Algo
+we are given two arrays
+we need to iterate through an array (arr1)
+  We need to capture the equivalent element at the same index in the second array (arr2)
+  On each iteration, we
+    Subtract arr_1[x] - arr_2[x]
+    Take the absolute value of this
+    Square it
+    Append to a new array, called (squares)
+  We then reduce the squares array, and divid by the length of the str_1 array
+=end
+def solution(arr1, arr2)
+  squares = []
+  arr1.each_index do |index|
+    squares << ((arr1[index] - arr2[index]).abs) ** 2
+  end
+
+  squares.reduce(0, &:+) / arr1.length.to_f
+end
+
+# 25) https://www.codewars.com/kata/5251f63bdc71af49250002d8/train/ruby
+=begin
+Problem
+  Create a method called "power" that takes two integers and returns the value of the first argument raised to the power of the second. 
+
+  Input
+    Two integers (could be zero) - that sounds like an edge case
+
+  Output
+    An integer
+
+  Rules
+    Note: The ** operator has been disabled.
+    Return nil if the second argument is negative.
+
+Examples
+  power(2, 3) # 8
+  power(10, 0) # 1
+  power(-5, 3) # -125
+  power(-4, 2) # 16
+
+Data Structure
+  Integers
+
+Algo
+  Return 0 if 2nd arg (power) is zero
+  Need to multiply the first number (base) by itself, power times - returning this integer
+
+=end
+def power(base, power)
+  cumulative = 1
+  return 0 if power == 0
+  return nil if power < 0
+  power.times do |_|
+    cumulative *= base
+  end
+  cumulative
+end
+
+# 26) 
+=begin
+Problem
+  Write a function that will find all the anagrams of a word from a list. 
+  
+  Inputs
+    You will be given two inputs a word and an array with words. 
+
+  Outputs
+    Array of strings
+  
+  Rules  
+    You should return an array of all the anagrams or an empty array if there are none. 
+
+Examples
+anagrams('abba', ['aabb', 'abcd', 'bbaa', 'dada']) == ['aabb', 'bbaa']
+anagrams('racer', ['crazer', 'carer', 'racar', 'caers', 'racer']) == ['carer', 'racer']
+anagrams('laser', ['lazing', 'lazy',  'lacer']) == []
+
+Data Structures
+  An array
+
+Algo
+  At least for the test cases we have, we can iterate through our array of strings
+    We test for whether the sorted version of this is equal to the sorted string of our search_string (they need to be the same length if they're an anagram)
+  Return this array of matches
+=end
+def anagrams(search, string_array)
+  string_array.select do |string|
+    string.chars.sort == search.chars.sort
+  end
+end
+
+# 27) https://www.codewars.com/kata/515de9ae9dcfc28eb6000001/train/ruby
+=begin
+Problem
+  Complete the solution so that it splits the string into pairs of two characters. 
+  If the string contains an odd number of characters then it should replace the missing second character of the final pair with an underscore ('_').
+
+  Input
+    String (could be empty)
+
+  OUtput
+    An array of string elements, each of which should be length 2
+
+Examples
+  solution("abcdef") == ["ab", "cd", "ef"]
+  solution("abcdefg") ==  ["ab", "cd", "ef", "g_"]
+  solution("") ==  []
+
+Data Structures
+  An array
+
+Algo
+  Return [] if string.length < 1
+  We break our string into an array, so we can iterate through it
+  We can use the each_slice(2) method, to take two elements at a time, returning a new array (map)
+  We save this array
+  We map through this array
+    If the element's length is less than two, we append '_'
+  We return this mapped array
+=end
+def solution(string)
+  return [] if string.length < 1
+  paired_arr = string.chars.each_slice(2).map do |slice|
+    slice.join
+  end
+
+  paired_arr.map do |pair|
+    pair.length < 2 ? pair + '_' : pair
+  end
+end
+
+# 28) https://www.codewars.com/kata/5b1b27c8f60e99a467000041
+=begin
+Problem
+  Given two words, how many letters do you have to remove from them to make them anagrams?
+
+  Input
+    Two string objects
+    Either or both could be blank
+    
+  Output
+    One integer object
+
+  Rules
+    All inputs will be lowercase.
+    The integer object should be the sum of the letters removed from str1 and str2
+
+Examples
+  anagram_difference('', '') == 0
+  anagram_difference('a', '') == 1
+  anagram_difference('', 'a') == 1
+  anagram_difference('ab', 'a') == 1
+  anagram_difference('ab', 'ba') == 0
+  anagram_difference('ab', 'cd') == 4
+  anagram_difference('aab', 'a') == 2
+  anagram_difference('a', 'aab') == 2
+  anagram_difference('codewars', 'hackerrank') == 10
+
+Data Structures
+  An array
+
+Algo
+  We convert each string to an array
+  We subtract an array from the other to show the common elements
+=end
+def anagram_difference(str1, str2)
+  str1_dup = str1.chars
+  str2_dup = str2.chars
+  str1.each_char do |char|
+    str2_dup.delete_at(str2_dup.index(char)) if str2.include?(char) && str2_dup.index(char) != nil
+  end
+
+  str2.each_char do |char|
+    str1_dup.delete_at(str1_dup.index(char)) if str1.include?(char) && str1_dup.index(char) != nil
+  end
+
+  str1_dup.length + str2_dup.length
+end
+
+# Alternate solution
+def anagram_difference(string1, string2)
+  same_chars_count = 0
+  string1.chars.each do |char|
+    if string2.include?(char)
+      string2.sub!(char, '')
+      same_chars_count += 1
+    end
+  end
+  string2.size + (string1.size - same_chars_count)
+end
