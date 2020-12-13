@@ -1529,3 +1529,198 @@ def find_suspects(pockets, allowed_items)
   return nil if culprits.empty?
   culprits
 end
+
+# 33) https://www.codewars.com/kata/58f5c63f1e26ecda7e000029/train/ruby
+=begin
+Problem
+  your task is to create a function that turns a string into a Mexican Wave. 
+
+  Input
+    You will be passed a string
+
+  Output
+    Return the input string in an array where an uppercase letter is a person standing up. 
+
+  Rules
+    The input string will always be lower case but maybe empty.
+    If the character in the string is whitespace then pass over it as if it was an empty seat
+
+Examples
+  wave("hello") == ["Hello", "hEllo", "heLlo", "helLo", "hellO"]
+  wave("codewars") == ["Codewars", "cOdewars", "coDewars", "codEwars", "codeWars", "codewArs", "codewaRs", "codewarS"]
+  wave("") == []
+  wave("two words") ==  ["Two words", "tWo words", "twO words", "two Words", "two wOrds", "two woRds", "two worDs", "two wordS"]
+  wave(" gap ") == [" Gap ", " gAp ", " gaP "]
+
+Data Structures
+  Array
+
+Algo
+  We have an input string
+  return [] if there's a blank string
+  want to iterate through each index of our string
+    If the letter at a particular index is a space, we want to skip to the next iteration
+    Otherwise, capitalise at that index, pass it to an empty array (wave)
+    We can index from string[0...idx] + string[idx].capitalize + string[idx+1..-1]
+  Return wave
+=end
+def wave(sentence)
+  wave = []
+  return wave if sentence.length < 1
+  sentence.chars.each_index do |idx|
+    next if sentence[idx] == ' '
+    wave << sentence[0...idx] + sentence[idx].capitalize + sentence[idx+1..-1]
+  end
+  wave
+end
+
+# *34) https://www.codewars.com/kata/5894318275f2c75695000146/train/ruby
+=begin
+Problem
+  Given an integer n, find the maximal number you can obtain by deleting exactly one digit of the given number.
+
+  Input
+    INteger object
+
+  Output
+    Integer object
+
+  Rules
+    10 ≤ n ≤ 1000000
+
+Examples
+  delete_digit(152) == 52
+  delete_digit(1001) == 101
+  delete_digit(10) == 1
+  delete_digit(495421) == 95421
+  delete_digit(646785) == 66785
+  delete_digit(270246) == 70246
+  delete_digit(888815) == 88885
+
+Data Structures
+  Array
+
+Algo
+  Split input integer into an array of digits (digits_arr)
+    Remember to Reverse
+  We iterate through our digits_arr
+    We take pairs of digits
+      If the first number is smaller than the second, 
+      Delete that first number from digits_arr
+      break the iteration
+      return a join.to_i digits arr
+      Otherwise, continue through our loop
+      If we run into the case where the smallest number is at the end, we just delete the last number from digits_arr
+=end
+def delete_digit(number)
+  num_arr = number.digits.reverse
+  num_arr.each_cons(2) do |a, b|
+    if a < b
+      num_arr.delete_at(num_arr.index(a))
+      return num_arr.join.to_i
+    end 
+  end
+  num_arr.pop
+  num_arr.join.to_i
+end
+
+# 35) https://www.codewars.com/kata/514b92a657cdc65150000006/train/ruby
+=begin
+Problem
+  Finish the solution so that it returns the sum of all the multiples of 3 or 5 below the number passed in.
+
+  Input
+    AN integer object
+
+  Output
+    Integer object
+
+  Rules
+    If the number is a multiple of both 3 and 5, only count it once. 
+    If a number is negative, return 0
+
+Examples
+  solution(10) == 23
+  solution(20) == 78
+  solution(200) == 9168
+
+Data Structures
+  Array
+
+Algo
+  Return 0 if input < 0
+  We get a range of numbers from 0..input
+    We test for divisibility of input by 3 or 5
+    We get an array back of the factors (factor_arr)
+    We then sum the elements of factor_arr
+=end
+def solution(input)
+  factor_arr = (0...input).select do |num|
+    num % 3 == 0 || num % 5 == 0
+  end
+
+  factor_arr.reduce(0, &:+)
+end
+
+# 36) https://www.codewars.com/kata/5878520d52628a092f0002d0/train/ruby
+=begin
+Problem
+  Given a string, return a new string that has transformed based on the input: Change case of every character, ie. lower case to upper case, upper case to lower case. Reverse the order of words from the input.
+
+  Input
+    String
+
+  Output
+    String
+
+  Rules
+    You will have to handle multiple spaces, and leading/trailing spaces.
+
+Examples
+  string_transformer('Example string'), 'STRING eXAMPLE')
+  string_transformer("You Know When  THAT  Hotline Bling") == "bLING hOTLINE  that  wHEN kNOW yOU"
+  string_transformer(" A b C d E f G ") == " g F e D c B a "
+
+Data Structures
+  Array to reverse our string
+
+Algo
+  We apply the swapcase method to our input string, assign to variable (swapped)
+  Break this up into an array of characters (swapped_chars)
+  Iterate through swapped_chars
+    Set up an empty string, string_block
+    Set up an empty string, spaces
+    Set up an empty array, final_string
+    As we iterate through swapped_chars
+      If the char is a letter (test through ('a'..'z').include?(char.downcase))
+        append spaces to final_string
+        reset spaces
+        append that letter to string_block
+      If it's a space
+        Insert string_block to final_string
+        reset string_block
+        append a space to 'spaces'
+    Join final_string, return it
+=end
+def string_transformer(input)
+  swapped = input.swapcase
+  final_string = []
+  string_block = ''
+  spaces = ''
+  swapped.chars.each do |char|
+    if ('a'..'z').include?(char.downcase)
+      final_string << spaces
+      spaces = ''
+      string_block << char
+    elsif char = ' '
+      final_string << string_block
+      string_block = ''
+      spaces << char
+    end
+  end
+
+  final_string << spaces
+  final_string << string_block
+
+  final_string.reverse.join
+end
