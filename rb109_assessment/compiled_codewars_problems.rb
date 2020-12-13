@@ -243,7 +243,7 @@ def solve(string)
   counter_storage.max
 end
 
-# 6) 
+# 6) https://www.codewars.com/kata/59da47fa27ee00a8b90000b4/train/ruby
 =begin
 Problem
   Given a string of integers, return the number of odd-numbered substrings that can be formed. For example, in the case of "1341", they are 1, 1, 3, 13, 41, 341, 1341, a total of 7 numbers. 
@@ -396,7 +396,7 @@ def f(input)
   end
 end
 
-# 9) https://www.codewars.com/kata/55953e906851cf2441000032/train/ruby
+# *9) https://www.codewars.com/kata/55953e906851cf2441000032/train/ruby
 =begin
 Problem
   Return a string where:
@@ -452,6 +452,7 @@ def scramble(word)
   letters = chars.select { |char| letter?(char) }
   scrambled_letters = scramble_letters(letters.join).chars
   chars.map do |char|
+    # The solution hinges on this particular line. On the original string, if our sorted string doesn't contain that character (in this use case, it can only be a punctuation character), use the character. Otherwise, use the sorted letter (the scrambled_letters don't have any punctuation).
     letter?(char) ? scrambled_letters.shift : char
   end
     .join
@@ -467,7 +468,7 @@ def letter?(char)
   char.match? /[a-z]/
 end
 
-# 10) https://www.codewars.com/kata/51e056fe544cf36c410000fb/train/ruby
+# *10) https://www.codewars.com/kata/51e056fe544cf36c410000fb/train/ruby
 =begin
 Problem
   Write a function that, given a string of text (possibly with punctuation and line-breaks), returns an array of the top-3 most occurring words, in descending order of the number of occurrences.
@@ -1011,7 +1012,7 @@ def scramble(str1, str2)
   true
 end
 
-# 22) https://www.codewars.com/kata/5a7f58c00025e917f30000f1
+# *22) https://www.codewars.com/kata/5a7f58c00025e917f30000f1
 =begin
 Problem
   Find the longest substring in alphabetical order.
@@ -1286,7 +1287,7 @@ def solution(string)
   end
 end
 
-# 28) https://www.codewars.com/kata/5b1b27c8f60e99a467000041
+# *28) https://www.codewars.com/kata/5b1b27c8f60e99a467000041
 =begin
 Problem
   Given two words, how many letters do you have to remove from them to make them anagrams?
@@ -1328,6 +1329,7 @@ def anagram_difference(str1, str2)
   end
 
   str2.each_char do |char|
+    # Can use str1_dup.sub!(char, '') instead of this very long code, as sub only deletes the first instance, much like how our .index(char) method works. 
     str1_dup.delete_at(str1_dup.index(char)) if str1.include?(char) && str1_dup.index(char) != nil
   end
 
@@ -1344,4 +1346,186 @@ def anagram_difference(string1, string2)
     end
   end
   string2.size + (string1.size - same_chars_count)
+end
+
+# 29) https://www.codewars.com/kata/529eef7a9194e0cbc1000255
+=begin
+Problem
+  Complete the function to return true if the two arguments given are anagrams of each other; return false otherwise.
+
+  Input
+    Two strings - non-blank?
+
+  Output
+    Boolean
+
+  Rules
+    Anagrams are not case sensitive
+
+Examples
+  is_anagram('Creative', 'Reactive') == true
+  is_anagram("foefet", "toffee") == true
+  is_anagram("Buckethead", "DeathCubeK") == true
+  is_anagram("Twoo", "WooT") == true
+  is_anagram("dumble", "bumble") == false
+  is_anagram("ound", "round") == false
+  is_anagram("apple", "pale") == false
+
+Data Structures
+  Array to sort our strings
+
+Algo
+  convert each string to an array
+  Sort each string
+  Compare each string
+=end
+def is_anagram(word1, word2)
+  word1.downcase.chars.sort == word2.downcase.chars.sort
+end
+
+# 30) https://www.codewars.com/kata/57eb8fcdf670e99d9b000272
+=begin
+Problem
+  Given a string of words, you need to find the highest scoring word. Each letter of a word scores points according to its position in the alphabet. You need to return the highest scoring word as a string.
+
+  Input
+    A string of words, separated by spaces
+
+  Output
+    A single string object
+
+  Rules
+    If two words score the same, return the word that appears earliest in the original string.
+    All letters will be lowercase and all inputs will be valid.
+
+Examples
+  high('man i need a taxi up to ubud') == 'taxi'
+  high('what time are we climbing up the volcano') == 'volcano'
+  high('take me to semynak') == 'semynak'
+  high('aaa b') == 'aaa'
+
+Data Structures
+  Hash to keep track of letter scores
+  Array when we split up our words
+
+Algo
+  Create a hash with alphabet as keys, alphabet position as values
+  Split up our input string into an array of words
+  Map through this array, providing a word to the block
+    Map through each word - replace with the value in the hash
+    Reduce the returned letter arrays
+
+  On the returned array, find the highest value, and it's index
+  Reference the original string array, with that saved index
+=end
+def high(sentence)
+  alphabet = ('a'..'z').zip(1..26).to_h
+  values = sentence.split.map do |word|
+    [word, word.chars.map do |letter|
+      alphabet[letter]
+    end.reduce(0, &:+)]
+  end
+  values.max_by do |subarr|
+    [subarr[1], subarr[0]]
+  end.first
+end
+
+# 31) https://www.codewars.com/kata/546f922b54af40e1e90001da
+=begin
+Problem
+  Given a string, replace every letter with its position in the alphabet.
+
+  Input
+    Sentence
+
+  Output
+    String
+
+  Rules
+    If anything in the text isn't a letter, ignore it and don't return it.
+
+Examples
+  alphabet_position("The sunset sets at twelve o' clock.") == "20 8 5 19 21 14 19 5 20 19 5 20 19 1 20 20 23 5 12 22 5 15 3 12 15 3 11"
+  alphabet_position("-.-'") == ""
+
+Data Structures
+  Hash to keep track of alphabet position associated with letters
+  Arrays (we'll need to split up our sentence to iterate through it)
+
+Algo
+  Set up a hash of letters and their position in the alphabet
+  Split up our sentence into an array of words
+  Iterate through this array of words
+  Split up each word into characters
+  Iterate each through each character
+    Replace each letter with the position in the alphabet (reference via the hash)
+      If the key doesn't exist, ignore it
+    Join the array
+=end
+def alphabet_position(sentence)
+  alphabet = ('a'..'z').zip('1'..'26').to_h
+  sentence.downcase.split.map do |word|
+    word.chars.map do |letter|
+      alphabet[letter]
+    end.compact
+  end.join(' ').squeeze(' ').strip
+end
+
+# *32) https://www.codewars.com/kata/53bb1201392478fefc000746
+=begin
+Problem
+  Write a method which helps Sherlock to find suspects. 
+
+  Input
+    A hash
+
+  Output
+    An array of symbols (hash keys)
+
+  Rules
+    If no suspect is found or there are no pockets (pockets == nil), the method should return nil.
+    We need to verify whether the values for each key match the input.
+      If not, return that person
+
+Examples
+  find_suspects({}, [1, 3]) == nil
+  find_suspects({ tom: [2], bob: [2], julia: [3], meg: [3] }, [2, 3]) == nil
+  find_suspects({ meg: [1, 3], tom: [5, 3] }, [1, 3]) == [:tom]
+  find_suspects({ meg: [3], tom: [5] }, []) == [:meg, :tom]
+
+Data Structures
+  Array (that's our output)
+  Hash (we need to reference hash key and values)
+
+Algo
+  Check for edge cases - if pockets is empty, return nil
+    If allowed_items is empty, return pockets.keys
+  
+  Otherwise, iterate through our hash
+    We should select the keys where the values != the allowed_items
+    This should return an array.
+=end
+def find_suspects(pockets, allowed_items)
+  return nil if pockets.empty? || pockets.values.all? { |val| val == nil || val.empty? }
+
+  return pockets.keys - pockets.keys.select do |key|
+    pockets[key] == nil || pockets[key].empty?
+  end if allowed_items.empty? 
+
+  result = pockets.keys.select do |key|
+    !(pockets[key] - allowed_items).empty?
+  end
+
+  result.empty? ? nil : result
+end
+
+# Alt solution - the any? method helps us quickly iterate through each element in items
+def find_suspects(pockets, allowed_items)
+  culprits = []
+  pockets.each do |suspect, items|
+    next unless items
+    culprits << suspect if items.any? { |item| !allowed_items.include?(item) }
+  end
+  return nil if culprits.empty?
+  culprits
 end
