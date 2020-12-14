@@ -12,6 +12,7 @@
 - [11th, Fri](#111220-fri)
 - [12th, Sat](#121220-sat)
 - [13th, Sun](#131220-sun)
+- [14th, Mon](#141220-mon)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -195,3 +196,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The PEDAC method is helping, but I'm still finding I jump through the diagnosis process too fast, missing test cases. I need to slow down.
+
+##### 14/12/20 (Mon)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Compiled Codewars problems
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I am making progress on reading the test cases more closely, but sometimes the katas don't reveal the true problem (useful test cases) until you actually attempt the problem, which feels a bit wasteful. I am also reducing my hack and slash tendencies, but I need to also verbalise my thought process as I think about updating algorithms.
