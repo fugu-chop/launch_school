@@ -1724,3 +1724,258 @@ def string_transformer(input)
 
   final_string.reverse.join
 end
+
+# 37) https://www.codewars.com/kata/529872bdd0f550a06b00026e/train/ruby
+=begin
+Problem
+  Complete the greatestProduct method so that it'll find the greatest product of five consecutive digits in the given string of digits.
+
+  Input
+    String object
+
+  Output
+    Integer object
+
+  Rules
+    The input string always has more than five digits.
+    We will take a group of five characters from our string, multiplying those digits
+    Compare the products
+    Return an integer object
+
+Examples
+  greatest_product("123834539327238239583") == 3240
+  greatest_product("395831238345393272382") == 3240
+  greatest_product("92494737828244222221111111532909999") == 5292
+  greatest_product("92494737828244222221111111532909999") == 5292
+  greatest_product("02494037820244202221011110532909999") == 0
+
+Data Structures
+  Array
+
+Algo
+  We're given a string object, min 5 characters
+  We'll want to initialise an empty array (multiples), to capture all of our multiplications
+  We'll want to break up our string object into an array
+  Take 5 elements at a time
+    Convert each of those elements into an integer 
+    Multiply those 5 elements together
+    Store the result in multiples array
+    Max of the multiples array
+=end
+def greatest_product(number)
+  multiples = []
+  number.chars.each_cons(5) do |group|
+    multiples << group.map do |integer|
+      integer.to_i
+    end.reduce(:*)
+  end
+  multiples.max
+end
+
+# 38) https://www.codewars.com/kata/54b42f9314d9229fd6000d9c/train/ruby
+=begin
+Problem 
+The goal of this exercise is to convert a string to a new string where each character in the new string is "(" if that character appears only once in the original string, or ")" if that character appears more than once in the original string. 
+
+  Input
+    String object (assume it's non-empty)
+
+  Output
+    String object of left and right parenthesis
+
+  Rules
+    Ignore capitalization when determining if a character is a duplicate.
+    Spaces are counted as characters for the purposes of counting
+
+Examples
+  duplicate_encode("din") == "((("
+  duplicate_encode("recede") == "()()()"
+  duplicate_encode("Success") == ")())())"
+  duplicate_encode("(( @") == "))(("
+
+Data Structures
+  Array
+
+Algo
+  String input
+  Break downcased string input into an array of characters
+  Iterate through our characters (map)
+  If the count of the character > 1, return ')'
+  Else return '('
+  This will return an array
+  Join this array (returning it)
+=end
+def duplicate_encode(input)
+  input.downcase.chars.map do |char|
+    input.downcase.count(char) > 1 ? ')' : '('
+  end.join
+end
+
+# 39) https://www.codewars.com/kata/5727bb0fe81185ae62000ae3/train/ruby
+=begin
+Problem
+Assume "#" is like a backspace in string. This means that string "a#bc#d" actually is "bd". Your task is to process a string with "#" symbols.
+
+  Input
+    String object, with at least one #
+
+  Output
+    String object (might be empty)
+
+  Rules
+    We treat the # symbol as deleting the character immediately preceeding it
+
+Examples
+  clean_string('abc#d##c') == "ac"
+  clean_string('abc####d##c#') == "" 
+
+Data Structures
+  Array
+
+Algo
+  String input
+  Initialise an empty array (clean_letters)
+  Break up our input string into an array
+  Iterate through the array
+  If the character passed to the block is not '#', append it to our clean_array
+  If the character is '#', we apply the pop method to the clean_array
+  We join clean_array, and return it
+=end
+def clean_string(input)
+  clean_array = []
+  input.chars.each do |char|
+    char != '#' ? clean_array << char : clean_array.pop
+  end
+  clean_array.join
+end
+
+# 39) https://www.codewars.com/kata/51f41fe7e8f176e70d0002b9/train/ruby
+=begin
+Problem
+Sort the given strings in alphabetical order, case insensitive
+
+  Input
+    Single array of string objects
+    The single array might only have a single object
+
+  Output
+    Single array of sorted string objects
+
+  Rules
+    When sorting, ignore case
+    
+
+Example
+  sortme(["Hello", "there", "I'm", "fine"]) == ["fine", "Hello", "I'm", "there"]
+  sortme(["C", "d", "a", "B"]) == ["a", "B", "C", "d"]
+  sortme(["CodeWars"]) == ["CodeWars"]
+
+Data Structures
+  Array
+
+Algo
+  Given input array of string
+  Sort the downcased elements in that string
+  Return the array, sorted
+=end
+def sortme(input)
+  input.sort_by do |element|
+    element.downcase
+  end
+end
+
+# 40) https://www.codewars.com/kata/5a946d9fba1bb5135100007c/train/ruby
+=begin
+Problem
+Given a List [] of n integers , find minimum number to be inserted in a list, so that sum of all elements of list should equal the closest prime number.
+
+  Input
+    An array of at least 2 integer objects (integers will be > 0)
+
+  Output
+    Integer object
+
+  Rules
+    List size is at least 2 .
+    List's numbers will only positives (n > 0) .
+    Repetition of numbers in the list could occur 
+    The newer list's sum should equal the closest prime number .
+
+Example 
+  minimum_number([3,1,2]) == 1
+  minimum_number([5,2]) == 0
+  minimum_number([1,1,1]) == 0
+  minimum_number([2,12,8,4,6]) == 5
+  minimum_number([50,39,49,6,17,28]) == 2
+
+Data Structures
+  Array
+
+Algo
+  Given an array of integer objects
+  We want to sum up the integer objects (arr_sum)
+  Initialise a variable called additional_num = 0
+  We want to verify whether arr_sum is prime?
+    
+  Prime? - Helper method
+    If we divide by all the numbers from 2 up to that number and none of them divide evenly, it's a prime number
+
+    If it is, return additional_num
+  Otherwise, we increment additional_num by 1 and add it to arr_sum
+    Check if it's prime
+    If so, return additional_num
+    Otherwise, continue iterating
+=end
+def prime?(num)
+  (2..Math.sqrt(num)).all? do |integer|
+    num % integer != 0
+  end
+end
+
+def minimum_number(arr)
+  additional_num = 0
+  loop do
+    return additional_num if prime?(arr.reduce(:+) + additional_num)
+    additional_num += 1
+  end
+end
+
+# 41) 
+=begin
+Problem
+Write a function that will return the count of distinct case-insensitive alphabetic characters and numeric digits that occur more than once in the input string. 
+
+  Input
+    String (could be empty)
+
+  Output
+    Integer object
+
+  Rules
+    The input string can be assumed to contain only alphabets (both uppercase and lowercase) and numeric digits.
+
+Examples
+  duplicate_count("") == 0
+  duplicate_count("abcde") == 0
+  duplicate_count("abcdeaa") == 1
+  duplicate_count("abcdeaB") == 2
+  duplicate_count("Indivisibilities") == 2
+
+Data Structures
+  Array
+
+Algo
+  Downcase our string
+  Break up our string into an array
+  We iterate through this array
+  We select the characters that have a count > 1
+    We need to ensure that we are counting lowercase characters
+  We'll get an array of letters that meet this criteria
+  We return the length of this array
+=end
+def duplicate_count(string)
+  duplicate_chars = string.downcase.chars.select do |char|
+    string.downcase.count(char) > 1
+  end
+  duplicate_chars.uniq.length
+end
