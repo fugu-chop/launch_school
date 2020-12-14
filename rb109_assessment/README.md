@@ -5,3 +5,5 @@ This is a repo to house my notes and exercises for the RB109 assessment on Launc
 - Start date: 20th October, 2020
 - Written assessment completion date: 11th November, 2020
 - Interview assessment completion date: 
+
+## General Thoughts
