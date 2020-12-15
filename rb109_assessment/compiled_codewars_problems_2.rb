@@ -408,6 +408,16 @@ def delete_digit(number)
   num_arr.join.to_i
 end
 
+# Alt solution
+def delete_digit(n)
+  numbers = []
+  n_array = n.to_s.chars
+  n_array.each_with_index do |num, idx|
+    numbers << n_array[0...idx] + n_array[idx + 1..-1]
+  end
+  numbers.max.join.to_i
+end
+
 # 35) https://www.codewars.com/kata/514b92a657cdc65150000006/train/ruby
 =begin
 Problem
@@ -828,11 +838,159 @@ end
 # 43) https://www.codewars.com/kata/541c8630095125aba6000c00/train/ruby
 =begin
 Problem
+A digital root is the recursive sum of all the digits in a number. Given n, take the sum of the digits of n. If that value has more than one digit, continue reducing in this way until a single-digit number is produced. 
+  
+  Input
+    Integer object
 
+  Output
+    Integer object
+
+  Rules
+    The input will be a non-negative integer.
 
 Example
+  digital_root(16) == 7
+  digital_root(942) == 6
+  digital_root(132189) == 6
+  digital_root(493193) == 2
 
 Data Structure
+  Array
 
 Algo
+  Break up our input number into an array of digits
+  We then add up all these digits
+  Check if the answer is a single digit
+    If so, return this answer
+    If not, repeat the loop
 =end
+def digital_root(input)
+  loop do 
+    return input.digits.reduce(:+) if input.digits.reduce(:+) < 10
+    input = input.digits.reduce(:+)
+  end
+end
+
+# 44) https://www.codewars.com/kata/523f5d21c841566fde000009/train/ruby
+=begin
+Problem
+Implement a difference function, which subtracts one list from another and returns the result. It should remove all values from list a, which are present in list b.
+
+  Input
+    Two arrays
+
+  Output
+    An array
+
+  Rules
+    If an element is present in b, remove ALL instances of that element in a.
+
+Examples
+  array_diff([1,2], [1]) == [2]
+  array_diff([1,2,2], [1]) == [2,2]
+  array_diff([1,2,2], [2]) == [1]
+  array_diff([1,2,2], []) == [1,2,2]
+  array_diff([], [1,2]) == []
+
+Data Structures
+  Array
+
+Algo
+  Subtract b from a
+=end
+def array_diff(a, b)
+  a - b
+end
+
+# *44) https://www.codewars.com/kata/58539230879867a8cd00011c/train/ruby
+=begin
+Problem
+Place all people in alphabetical order where Mothers are followed by their children, i.e. "aAbaBb" => "AaaBbb". 
+
+  Input
+    A string (could be empty)
+
+  Output
+    A string (could also be empty)
+
+  Rules
+    Uppercase letters stands for mothers, lowercase stand for their children, i.e. "A" mother's children are "aaaa".
+    Function input: String contains only letters, uppercase letters are unique. 
+
+Example
+  find_children("abBA") == "AaBb"
+  find_children("AaaaaZazzz") == "AaaaaaZzzz"
+  find_children("CbcBcbaA") == "AaBbbCcc"
+  find_children("xXfuUuuF") == "FfUuuuXx"
+  find_children("") == ""
+
+Data Structures
+  Array
+
+Algo
+  We need to break up our string into an array of characters (char_arr)
+  We can split up char_arr into two variables, capitals and lowers
+  We iterate through lowers
+    If the character in lower is equal to the corresponding character in capitals, insert it at the index of the capital letter + 1
+    Return capital, joined together
+  
+=end
+def find_children(dancing_brigade)
+  # First we compare by downcased characters, which will group all the letters together. After this sort, we sort by char (where capitals come before lowercase letters)
+  dancing_brigade.chars.sort_by { |char| [char.downcase, char] }.join
+end
+
+# The other method is to not sort, but generate an entirely new object
+def find_children(dancing_brigade)
+  letters = dancing_brigade.downcase.chars.uniq.sort
+  result = []
+  letters.each do |letter|
+    str = ''
+    dancing_brigade.downcase.count(letter).times { str << letter }
+    result << str.capitalize
+  end
+  result.join
+end
+
+# 45) https://www.codewars.com/kata/5552101f47fc5178b1000050/train/ruby
+=begin
+Problem
+Given a positive integer n written as abcd... (a, b, c, d... being digits) and a positive integer p, we want to find a positive integer k, if it exists, such as the sum of the digits of n taken to the successive powers of p is equal to k * n. 
+
+  Input
+    Two integer objects
+
+  Output
+    An integer object
+
+  Rules
+    If it is the case we will return k, if not return -1.
+    n and p will always be given as strictly positive integers.
+
+Example
+  dig_pow(89, 1) ==  1
+  dig_pow(92, 1) == -1
+  dig_pow(46288, 3) ==  51
+
+Data Structure
+  Array
+
+Algo
+  We need to break up our number into an array of digits
+  Based on the index of the digit, we need to raise that digit p, incrementing p by the number of digits
+  We then add those 'powered_digits' up
+  Divide the sum of powered_digits by input num
+    If this evenly divides, return that result
+    Otherwise, return -1
+=end
+def dig_pow(k, power)
+  k_digits = k.digits.reverse
+  counter_start = power
+  powered_digits = []
+  k_digits.each do |digit|
+    powered_digits << digit ** power
+    power += 1
+  end
+  powered_digits.reduce(:+) % k == 0 ? powered_digits.reduce(:+) / k : -1
+end
