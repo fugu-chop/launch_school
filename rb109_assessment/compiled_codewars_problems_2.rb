@@ -1115,3 +1115,156 @@ def revrot(str, sz)
   end
   final.join
 end
+
+# 48) https://www.codewars.com/kata/581e014b55f2c52bb00000f8
+=begin
+Problem
+You are given a secret message you need to decipher. Here are the things you need to know to decipher it:
+For each word:
+  the second and the last letter is switched (e.g. Hello becomes Holle)
+  the first letter is replaced by its character code (e.g. H becomes 72)
+
+  Input
+    A string object (sentence, separated by spaces)
+
+  Output
+    A string object
+
+  Rules
+    There are no special characters used, only letters and spaces
+
+Examples
+decipher_this("65 119esi 111dl 111lw 108dvei 105n 97n 111ka") == "A wise old owl lived in an oak"
+decipher_this("84eh 109ero 104e 115wa 116eh 108sse 104e 115eokp") == "The more he saw the less he spoke"
+decipher_this("84eh 108sse 104e 115eokp 116eh 109ero 104e 104dare") == "The less he spoke the more he heard"
+decipher_this("87yh 99na 119e 110to 97ll 98e 108eki 116tah 119esi 111dl 98dri") == "Why can we not all be like that wise old bird"
+decipher_this("84kanh 121uo 80roti 102ro 97ll 121ruo 104ple") == "Thank you Piotr for all your help"
+
+Data Structures
+  Array, because we need to iterate between words
+
+Algo
+  Identifying characters from numbers
+    We could iterate through the letters in our sentence by breaking it up into an array (arr_char)
+    We set up an empty array to capture the digits (dig_arr)
+    We then iterate through char_arr
+      we set up an empty string, num_str
+      If the character is between 0-9, 
+        append it to num_str 
+      If the character isn't between 0-9
+        Pass num_str to dig_arr
+        reset num_str to empty string
+
+    We then iterate through dig_arr:
+      We use the sub! method to replace each 'number' in the dig_arr with 'number'.chr
+
+  Reverting last character to index 1
+    We break up our sentence into an array
+    we iterate through this array
+      for each word, we break off the last letter
+        Insert the letter at index 1
+  Join it back together, and return it.
+=end
+def decipher_this(string)
+  dig_arr = []
+  num_str = ''
+  arr_char = string.chars
+
+  arr_char.each do |char|
+    if ('0'..'9').include?(char)
+      num_str << char
+    elsif num_str.length > 1
+      dig_arr << num_str
+      num_str = ''
+    end
+  end
+
+  dig_arr.each do |num|
+    string.sub!(num, num.to_i.chr)
+  end
+
+  string.split.map do |word|
+    if word.length > 1
+      word[1], word[-1] = word[-1], word[1]
+      word
+    else
+      word
+    end
+  end.join(' ')
+end
+
+# 49) https://www.codewars.com/kata/5544c7a5cb454edb3c000047
+=begin
+Problem
+How many times will the mother see the ball pass in front of her window (including when it's falling and bouncing?
+
+  Input
+    Three integer objects
+
+  Output
+    A single integer object
+
+  Rules
+    Float parameter "h" in meters must be greater than 0
+    Float parameter "bounce" must be greater than 0 and less than 1
+    Float parameter "window" must be less than h.
+    If all three conditions above are fulfilled, return a positive integer, otherwise return -1.
+    The ball can only be seen if the height of the rebounding ball is strictly greater than the window parameter.
+
+Example
+  bouncingBall(3, 0.66, 1.5) == 3
+  bouncingBall(30, 0.66, 1.5) == 15
+  bouncingBall(30, 0.75, 1.5) == 21
+  bouncingBall(30, 0.4, 10) == 3
+  bouncingBall(40, 1, 10) == -1
+  bouncingBall(-5, 0.66, 1.5) == -1
+
+Data Structure
+  A looping structure
+
+Algo
+  Return -1 if any of the conditions are not met
+  
+  Set up a counter variable, set at 1 (since the child has to drop the ball initially)
+  Create a loop
+    Multiply h by bounce (mult)
+      If mult > window, increment counter by 2 (since it bounces up and down again)
+    Break the loop if mult <= window
+  Return counter
+=end
+def bouncingBall(h, bounce, window)
+  return -1 if h <= 0 || bounce <= 0 || bounce >= 1 || window >= h
+
+  seen = 1
+  mult = bounce * h
+  loop do
+    seen += 2 if mult > window
+    mult *= bounce
+    break if mult <= window
+  end
+  seen
+end
+
+# 50) https://www.codewars.com/kata/52b757663a95b11b3d00062d
+=begin
+Problem
+Write a function that accepts a string, and returns the same string with all even indexed characters in each word upper cased, and all odd indexed characters in each word lower cased.
+
+  Input
+
+  Output
+
+  Rules
+    The passed in string will only consist of alphabetical characters and spaces(' '). 
+    Spaces will only be present if there are multiple words. 
+    Words will be separated by a single space(' ').
+
+Example
+  Test.assert_equals(weirdcase('This') == 'ThIs'
+  Test.assert_equals(weirdcase('is') == 'Is'
+  Test.assert_equals(weirdcase('This is a test') == 'ThIs Is A TeSt'
+
+Data Structures
+
+Algo
+=end
