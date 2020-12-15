@@ -994,3 +994,124 @@ def dig_pow(k, power)
   end
   powered_digits.reduce(:+) % k == 0 ? powered_digits.reduce(:+) / k : -1
 end
+
+# 46) https://www.codewars.com/kata/5679aa472b8f57fb8c000047/train/ruby
+=begin
+Problem
+You are going to be given an array of integers. Your job is to take that array and find an index N where the sum of the integers to the left of N is equal to the sum of the integers to the right of N. If there is no index that would make this happen, return -1.
+  
+  Input
+    Array of integers
+
+  Output
+    An integer object
+
+  Rules
+    If there is no index that would make this happen, return -1.
+    An integer array of length 0 < arr < 1000. The numbers in the array can be any integer positive or negative.
+    If you are given an array with multiple answers, return the lowest correct index. 
+    When summing values in the array, we exclude index N
+
+Examples
+find_even_index([1,2,3,4,3,2,1]) == 3
+find_even_index([1,100,50,-51,1,1]) == 1
+find_even_index([1,2,3,4,5,6]) == -1
+find_even_index([20,10,30,10,10,15,35]) == 3
+find_even_index([20,10,-80,10,10,15,35]) == 0
+find_even_index([10,-80,10,10,15,35,20]) == 6
+find_even_index(Array(1..100)) == -1
+find_even_index([0,0,0,0,0]) == 0
+find_even_index([-1,-2,-3,-4,-3,-2,-1]) == 3
+find_even_index(Array(-100..-1)) == -1
+
+Data Structures
+  Array
+
+Algo
+  We start at index 0
+  We sum all the elements to the left of index 0, and to the right of index 0 [1..-1]
+    How do we sum the elements to the left of an index?
+      We need to utilise array selection (excluding the index)
+    If they equal to each other, return the index number
+    Otherwise, increment the index
+  Return -1 once the index reaches the length of the array - 1
+=end
+def find_even_index(input)
+  input.each_index do |index|
+    return index if input[0...index].reduce(0, &:+) == input[index + 1..-1].reduce(0, &:+)
+  end
+  -1
+end
+
+# *47) https://www.codewars.com/kata/56b5afb4ed1f6d5fb0000991
+=begin
+Problem
+The input is a string str of digits. Cut the string into chunks (a chunk here is a substring of the initial string) of size sz (ignore the last chunk if its size is less than sz).
+
+If a chunk represents an integer such as the sum of the cubes of its digits is divisible by 2, reverse that chunk; otherwise rotate the first character to the right. Put together these modified chunks and return the result as a string.
+
+  Input
+    String object, integer object
+
+  Output
+    String object
+
+  Rules
+    sz is <= 0 or if str is empty return ""
+    sz is greater (>) than the length of str, it is impossible to take a chunk of size sz hence return ""
+
+Example
+  revrot("1234", 0) == ""
+  revrot("", 0) == ""
+  revrot("1234", 5) == ""
+  revrot("733049910872815764", 5) == "330479108928157"
+
+Data Structure 
+  Array
+
+Algo
+  Given a string object (str) and a chunk size (sz)
+  Return '' if str.length == 0, or sz <= 0, or sz > str.length
+  Break up the string object into length sz slices
+  Test whether the chunk size is less than sz
+    If it is less than sz, return 
+
+chunk_test
+  For Each slice
+    Break up our slice into digits
+    Cube the digits
+    Sum the cube of digits
+    Test for divisibility by 2
+
+  Set up an empty array (final)
+
+      If divisible by 2, reverse the chunk
+        Insert into final
+      If not divisble by 2, 
+        get the first digit of the chunk and put it at the end
+
+    Join our sub arrays
+=end
+def chunk_test?(chunk)
+  chunk_arr = chunk.map(&:to_i)
+  chunk_arr.map do |digit|
+    digit ** 3
+  end.reduce(0, &:+).even?
+end
+
+def revrot(str, sz)
+  return '' if str.length == 0 || sz > str.length || sz <= 0
+  final = []
+  str.chars.each_slice(sz) do |slice|
+    if chunk_test?(slice) && slice.length >= sz
+      final << slice.reverse.join
+    elsif slice.length < sz
+      next
+    else
+      a = slice.shift
+      slice << a
+      final << slice.join
+    end
+  end
+  final.join
+end
