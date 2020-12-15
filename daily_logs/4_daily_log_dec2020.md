@@ -13,6 +13,7 @@
 - [12th, Sat](#121220-sat)
 - [13th, Sun](#131220-sun)
 - [14th, Mon](#141220-mon)
+- [15th, Tue](#151220-tue)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -208,3 +209,19 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I am making progress on reading the test cases more closely, but sometimes the katas don't reveal the true problem (useful test cases) until you actually attempt the problem, which feels a bit wasteful. I am also reducing my hack and slash tendencies, but I need to also verbalise my thought process as I think about updating algorithms.
+
+##### 15/12/20 (Tue)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Compiled Codewars problems
+
+__*Time spent*__<br/>
+127 minutes
+
+__*Thoughts*__<br/>
+I'm starting to feel burned out. My life has just been an endless series of Codewars problems. I'm finding it hard to manage all the things I have to do in life while still maintaining practice. The next few days are going to be rough, with a large amount of life stuff interfering with study. 
+
+I'm glad I booked the assessment. I'm not sure if I'm ready honestly, but I just want some goal to aim for. I don't think I can do this Codewars grind for much longer. 
+
+Frustratingly, I don't feel as though I am improving a lot. Progress is grinding and I find that I'm still not able to consistently identify good solutions to problems that are very easy compared to the assessment questions. My confidence in passing is currently very low.
