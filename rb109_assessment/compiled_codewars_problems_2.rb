@@ -1251,8 +1251,10 @@ Problem
 Write a function that accepts a string, and returns the same string with all even indexed characters in each word upper cased, and all odd indexed characters in each word lower cased.
 
   Input
+    String object
 
   Output
+    String object
 
   Rules
     The passed in string will only consist of alphabetical characters and spaces(' '). 
@@ -1260,11 +1262,27 @@ Write a function that accepts a string, and returns the same string with all eve
     Words will be separated by a single space(' ').
 
 Example
-  Test.assert_equals(weirdcase('This') == 'ThIs'
-  Test.assert_equals(weirdcase('is') == 'Is'
-  Test.assert_equals(weirdcase('This is a test') == 'ThIs Is A TeSt'
+  weirdcase('This') == 'ThIs'
+  weirdcase('is') == 'Is'
+  weirdcase('This is a test') == 'ThIs Is A TeSt'
 
 Data Structures
+  Array
 
 Algo
+  Break up our string into an array of words (words_arr)
+  Break up each word in words_arr into an array of characters (char_arr)
+  Iterate through our char_arr
+    If the index is even, return an uppercase letter
+    If the index is odd, return a lowercase letter
+    Join these letters back together
+  Join the returned array to form a string
 =end
+def weirdcase(input)
+  words_arr = input.split
+  words_arr.map do |word|
+    word.chars.map.with_index do |letter, index|
+      index.even? ? letter.upcase : letter.downcase
+    end.join
+  end.join(' ')
+end
