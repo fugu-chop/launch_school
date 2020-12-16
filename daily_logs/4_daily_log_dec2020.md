@@ -14,6 +14,7 @@
 - [13th, Sun](#131220-sun)
 - [14th, Mon](#141220-mon)
 - [15th, Tue](#151220-tue)
+- [16th, Wed](#161220-wed)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -225,3 +226,15 @@ I'm starting to feel burned out. My life has just been an endless series of Code
 I'm glad I booked the assessment. I'm not sure if I'm ready honestly, but I just want some goal to aim for. I don't think I can do this Codewars grind for much longer. 
 
 Frustratingly, I don't feel as though I am improving a lot. Progress is grinding and I find that I'm still not able to consistently identify good solutions to problems that are very easy compared to the assessment questions. My confidence in passing is currently very low.
+
+##### 16/12/20 (Wed)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Compiled Codewars problems
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+The problems for today weren't too bad. I didn't really struggle with any of them - the ones that took a while were because I didn't get a full grasp of the problem based on the test cases, and thus attempted to implement a 'lazy' solution. It's another reminder to read the test cases and the problem, at least 5 times. 
