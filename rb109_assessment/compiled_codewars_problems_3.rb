@@ -117,11 +117,6 @@ Algo
   We want to find the subarray with the smallest difference and return the key (the first element)
 =end
 def nexus(input)
-  equal_arr = input.keys.select do |key|
-    key if key == input[key]
-  end
-  return equal_arr.min if !equal_arr.empty?
-
   min_diff = input.map do |key, value|
     [key, (key - value).abs]
   end
@@ -129,4 +124,95 @@ def nexus(input)
   min_diff.sort_by do |subarr|
     [subarr.last, subarr.first]
   end.first.first
+end
+
+# 54) https://www.codewars.com/kata/5808ff71c7cfa1c6aa00006d
+=begin
+Problem 
+You've to count lowercase letters in a given string and return the letter count in a hash with 'letter' as key and count as 'value'. The key must be 'symbol' instead of string in Ruby
+
+  Input
+    String object
+
+  Output
+    Hash, with letters as keys, counts as values
+
+  Rules
+    The keys must be symbols
+    We are counting lowercase letters
+
+Examples
+  letter_count('codewars') == {:a=>1, :c=>1, :d=>1, :e=>1, :o=>1, :r=>1, :s=>1, :w=>1}
+  letter_count('activity') == {:a=>1, :c=>1, :i=>2, :t=>2, :v=>1, :y=>1}
+  letter_count('arithmetics') == {:a=>1, :c=>1, :e=>1, :h=>1, :i=>2, :m=>1, :r=>1, :s=>1, :t=>2}
+
+Data Structures
+  Hash
+  Array
+
+Algo
+  Get the string input
+  Break it up into a series of letters (arr_char)
+  Iterate through arr_char
+    Create a blank hash
+    If the letter exists as a key (symbol) in the hash, increment the value by one
+    Otherwise, initialise a key-value pair, with the letter as a symbol as key, with value = 1
+=end
+def letter_count(input)
+  input.chars.each_with_object(Hash.new(0)) do |letter, hash|
+    hash[letter.to_sym] += 1
+  end
+end
+
+# 55) https://www.codewars.com/kata/55d5434f269c0c3f1b000058
+=begin
+Problem
+Write a function which takes numbers num1 and num2 and returns 1 if there is a straight triple of a number at any place in num1 and also a straight double of the same number in num2. If this isn't the case, return 0. 
+
+  Input
+    Two integer objects as an input
+
+  Output
+    Integer object (0 or 1)
+
+Examples
+  triple_double(451999277, 41177722899) == 1
+  triple_double(1222345, 12345) == 0
+  triple_double(12345, 12345) == 0
+  triple_double(666789, 12345667) == 1
+  triple_double(10560002, 100) == 1
+  triple_double(1112, 122) == 0
+
+Data Structures
+  Array
+
+Algo
+  break up num1 into an array of numbers (arr1_num)
+    Iterate through arr1_num, 3 elements at a time
+    If those elements are all the same, 
+      if the uniq elements array length == 1
+
+      join the result
+      append this to empty string, called triple
+    If there is no triple (i.e. triple remains empty), return 0
+  
+  Break up arr2 into an array (arr2_num)
+    take the first two elements of triple via indexing
+    Check if arr2_num contains this
+    If so, return 1, otherwise, return 0
+    
+=end
+def triple_double(num1, num2)
+  arr1_num = num1.to_s.chars
+  triple = []
+
+  arr1_num.each_cons(3) do |triplet|
+    triple << triplet.join if triplet.uniq.length == 1
+  end
+
+  return 0 if triple.empty?
+
+  triple.any? do |triplet|
+    num2.to_s.include?(triplet[1..-1])
+  end ? 1 : 0
 end
