@@ -490,3 +490,116 @@ def is_int_array(arr)
     element.is_a?(Integer) || element.is_a?(Float) && element == element.to_i
   end
 end
+
+# *62) https://www.codewars.com/kata/56b861671d36bb0aa8000819/train/ruby
+=begin
+Problem
+Your task is to Reverse and Combine Words.
+
+  Input
+    String containing different "words" separated by spaces
+
+  Output
+
+  Rules
+    More than one word? Reverse each word and combine first with second, third with fourth and so on (odd number of words => last one stays alone, but has to be reversed too)
+    Start it again until there's only one word without spaces
+    Return your result
+
+Example
+  reverse_and_combine_text("abc def") == "cbafed")
+  reverse_and_combine_text("abc def ghi jkl") == "defabcjklghi"
+  reverse_and_combine_text("dfghrtcbafed") == "dfghrtcbafed"
+  reverse_and_combine_text("234hh54 53455 sdfqwzrt rtteetrt hjhjh lllll12  44") == "trzwqfdstrteettr45hh4325543544hjhjh21lllll"
+  reverse_and_combine_text("sdfsdf wee sdffg 342234 ftt") == "gffds432243fdsfdseewttf"
+
+Data Structure
+  Array
+
+Algo
+  Split our string intput into an array of words (arr_words)
+  if arr_words length is one, return that element as is
+  if arr_words length > 1
+    Reverse each element
+    Join pairs together
+    Repeat until the array length is one
+    Return the element in that array (string object)
+=end
+def reverse_and_combine_text(str_input)
+  return str_input if str_input.split.length == 1
+  reversed_arr = str_input.split
+  loop do
+    reversed_arr = reversed_arr.map do |word|
+      word.reverse
+    end
+
+    reversed_arr = reversed_arr.each_slice(2).map do |pair|
+      pair.length == 2 ? pair[0] + pair[1] : pair
+    end.flatten
+
+    return reversed_arr.first if reversed_arr.length == 1
+  end
+end
+
+# *63) https://www.codewars.com/kata/59fd6d2332b8b9955200005f/ruby
+=begin
+Problem
+You will be given two integers n and k and your task is to remove k-digits from n and return the lowest number possible, without changing the order of the digits in n. Return the result as a string.
+
+  Input
+    2 integer objects
+
+  Output
+    String
+
+  Rules
+
+Examples
+  solve(123056,1) == '12056'
+  solve(123056,2) == '1056'
+  solve(123056,3) == '056'
+  solve(123056,4) == '05'
+  solve(1284569,1) == '124569'
+  solve(1284569,2) == '12456'
+  solve(1284569,3) == '1245'
+  solve(1284569,4) == '124'
+
+Data Structures
+  Array
+
+Algo
+  Break up our n into an array of digits (make sure to reverse the .digits return value!), converting it to a string - arr_digits
+  We iterate through arr_digits, k times
+    On each iteration
+      Compare whether the left digit is less than the digit to it's right
+        If it is, next
+        If it isn't, we want to:
+          Destructively remove the left digit from arr_digits
+            We could use 'sub' here to remove only first instance
+    After we finish iterating:
+      Join arr_digits back together (which will return a string)
+=end
+def solve(n, k)
+  arr_digits = n.digits.reverse.map { |digit| digit.to_s }
+
+  k.times do |_|
+    arr_length_prior = arr_digits.length
+    arr_digits.each_cons(2) do |a, b|
+      if a <= b
+        next
+      else
+        arr_digits.delete_at(arr_digits.index(a))
+        
+        break
+      end
+    end
+    arr_digits.pop if arr_length_prior == arr_digits.length
+  end
+
+  arr_digits.join
+end
+
+# Alt solution
+def solve(n,k)
+  n.digits.reverse.combination(n.digits.size - k).map(&:join).min
+end
