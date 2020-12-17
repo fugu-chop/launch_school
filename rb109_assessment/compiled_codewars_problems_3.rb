@@ -216,3 +216,277 @@ def triple_double(num1, num2)
     num2.to_s.include?(triplet[1..-1])
   end ? 1 : 0
 end
+
+# 56) https://www.codewars.com/kata/550554fd08b86f84fe000a58/train/ruby
+=begin
+Problem
+Given two arrays of strings a1 and a2 return a sorted array r in lexicographical order of the strings of a1 which are substrings of strings of a2.
+
+  Input
+    Two arrays, of string objects (might be empty)
+
+  Output
+    An array (could be empty)
+
+  Rules
+    The returned array must be without duplicates.
+    Don't mutate the inputs.
+
+Examples
+  in_array(["arp", "live", "strong"], ["lively", "alive", "harp", "sharp", "armstrong"]) == ["arp", "live", "strong"]
+  in_array(["tarp", "mice", "bull"], ["lively", "alive", "harp", "sharp", "armstrong"]) == []
+
+Data Structures
+  Array
+
+Algo
+  given two arrays, a1 and a2
+  We iterate through a2, and a1
+    We want to check if a1 appears in a2
+    If it does, return that element of a1
+    Append that a1 element to common_substr (an empty array)
+  Remove duplicates from common_substr
+  Sort common_substr
+  Return common_substr
+=end
+def in_array(a1, a2)
+  common_substr = []
+  a2.each do |word2|
+    a1.each do |word1|
+      common_substr << word1 if word2.include?(word1)
+    end
+  end
+  common_substr.uniq.sort.flatten
+end
+
+# 57) https://www.codewars.com/kata/53368a47e38700bd8300030d/
+=begin
+Problem
+Given an array containing hashes of names, return a string formatted as a list of names separated by commas except for the last two names, which should be separated by an ampersand.
+
+  Input
+    An array, which contains a number of hashes, each hash has the 'name' as a key (type is symbol)
+
+  Output
+    A string object
+
+  Rules
+    All the hashes are pre-validated and will only contain A-Z, a-z, '-' and '.'.
+
+Examples
+  list([{name: 'Bart'},{name: 'Lisa'},{name: 'Maggie'},{name: 'Homer'},{name: 'Marge'}]) == 'Bart, Lisa, Maggie, Homer & Marge'
+  list([{name: 'Bart'},{name: 'Lisa'}]) == 'Bart & Lisa'
+  list([{name: 'Bart'}]) == 'Bart'
+
+Data Structures
+  Array
+  Hashes
+
+Algo
+  Given an array
+  Iterate through this array
+  Capture all of the values of the keys in a separate array (name_arr)
+  We should have an array of string objects
+  Check how many string objects are in name_arr
+    If length is 1, return the first element of name_arr
+    if length is 2, return first and last elements of name_arr, separated by ampersand
+    If length is > 2, return name_arr[0...-3].join(', ') + " " + #{name_arr[-2]} & #{name_arr[-1]}
+=end
+def list(input_arr)
+  return '' if input_arr.empty?
+  name_arr = input_arr.each_with_object([]) do |hash, arr|
+    arr << hash[:name]
+  end
+
+  name_arr.length == 1 ? "#{name_arr.first}" : name_arr[0..-2].join(', ') + " & #{name_arr[-1]}"
+end
+
+# Alt solution - less conditional nonsense
+def list(names)
+  names = names.map { |name| name[:name] }
+  last_name = names.pop
+  return last_name.to_s if names.empty?
+  "#{names.join(', ')} & #{last_name}"
+end
+
+# 58) https://www.codewars.com/kata/5839edaa6754d6fec10000a2
+=begin
+Problem
+Write a method that takes an array of consecutive (increasing) letters as input and that returns the missing letter in the array.
+
+  Input
+    An array of string objects
+
+  Output
+    Integer object
+
+  Rules
+    You will always get an valid array. 
+    The array will be always exactly one letter be missing. 
+    The length of the array will always be at least 2.
+    The array will always contain letters in only one case.
+
+Examples
+  find_missing_letter(["a","b","c","d","f"]) ==  "e"
+  find_missing_letter(["O","Q","R","S"]) ==  "P"
+  find_missing_letter(["b","d"]) ==  "c"
+  find_missing_letter(["a","b","d"]) ==  "c"
+  find_missing_letter(["b","d","e"]) ==  "c"
+
+Data Structures
+  Array
+
+Algo
+  Take input array
+  Sort it, just in case
+  Take the first string object element, assign to variable 'start_char'
+  Take the last string object element, assign to variable 'end_char'
+  Take a range of characters from start_char to end_char, save that to an array (full_range)
+  Subtract input array from full range
+  This should return a single character (string object)
+=end
+def find_missing_letter(input_arr)
+  input_arr = input_arr.sort
+  start_char = input_arr.first
+  end_char = input_arr.last
+  full_range = (start_char..end_char).to_a
+  (full_range - input_arr).first
+end
+
+# 59) https://www.codewars.com/kata/5266876b8f4bf2da9b000362
+=begin
+Problem
+Implement a function 'likes' which must take in input array, containing the names of people who like an item. 
+
+  Input
+    An array of string objects
+
+  Output
+    String object
+
+  Rules
+    For 4 or more names, the number in and 2 others simply increases.
+
+Examples
+  likes([]) ==  'no one likes this'
+  likes(['Peter']) ==  'Peter likes this'
+  likes(['Jacob', 'Alex']) ==  'Jacob and Alex like this'
+  likes(['Max', 'John', 'Mark']) ==  'Max, John and Mark like this'
+  likes(['Alex', 'Jacob', 'Mark', 'Max']) ==  'Alex, Jacob and 2 others like this'
+
+Data Structures
+  Array 
+
+Algo
+  Input array (could be empty)
+  want to assign the string ' like this' to variable end_str_singular
+  assign the string ' likes this' to variable end_str_plural
+    If input array is empty, return 'no one' + end_str_singular
+    If input array is one person, return first element of array + end_str_singular
+    If input array is two or three people, save the last element as last_plural (pop to remove)
+      join the other elements with (', ') + ' ' + last_plural + end_str_plural
+    If the input >= 4 elements, take the first two elements, join with ', ', then count the remaining elements, pass that to the string + end_str_plural
+=end
+def likes(likers)
+  end_str_singular = ' like this'
+  end_str_plural = ' likes this'
+  if likers.empty?
+    'no one' + end_str_plural
+  elsif likers.length == 1
+    likers.first + end_str_plural
+  elsif likers.length <= 3
+    likers_new = likers.map { |person| person.dup }
+    last_person = likers_new.pop
+    likers_new.join(', ') + ' and ' + last_person + end_str_singular
+  else
+    likers[0..1].join(', ') + " and #{likers[2..-1].length} others#{end_str_singular}"
+  end
+end
+
+# 60) https://www.codewars.com/kata/5526fc09a1bbd946250002dc
+=begin
+Problem
+Write a method that takes the array as an argument and returns this "outlier" N.
+
+  Input
+    Array of integer objects
+
+  Output
+    Integer object
+
+  Rules
+    You are given an array (which will have a length of at least 3, but could be very large) containing integers. 
+    The array is either entirely comprised of odd integers or entirely comprised of even integers except for a single integer N. 
+    If there are more even integers than odd integers, we're looking for an odd integer
+      Inverse is true
+
+Example
+  find_outlier([0, 1, 2]) == 1
+  find_outlier([1, 2, 3]) == 2
+  find_outlier([2,6,8,10,3]) == 3
+
+Data Structures
+  Array
+
+Algo
+  Given an input array
+  Determine whether there are more odd or even numbers
+    we count the even numbers, subtract this from the length of the full array
+    If odd is greater, select even number from our array
+    If even is greater, select odd from array
+  Return the first item of this array (since we'll only have a single outlier)
+=end
+def find_outlier(input_arr)
+  evens = input_arr.select { |num| num.even? }.size
+  odds = input_arr.length - evens
+  evens > odds ? input_arr.select { |num| num.odd? }.first : input_arr.select { |num| num.even? }.first
+end
+
+# 61) https://www.codewars.com/kata/52a112d9488f506ae7000b95
+=begin
+Problem
+Write a function that:
+  returns true if every element in an array is an integer or a float with no decimals.
+  returns true if array is empty.
+  returns false for every other input.
+
+  Input
+    An array of differing object types
+
+  Output
+    Boolean
+
+  Rules
+
+Examples
+  is_int_array([]) == true
+  is_int_array([1, 2, 3, 4]) == true
+  is_int_array([-11, -12, -13, -14]) == true
+  is_int_array([1.0, 2.0, 3.0]) == true
+  is_int_array([1, 2, nil]) == false
+  is_int_array(nil) == false
+  is_int_array("") == false
+  is_int_array([nil]) == false
+  is_int_array([1.0, 2.0, 3.0001]) == false
+  is_int_array(["-1"]) == false
+
+Data Structures
+  Array
+
+Algo
+  Given an array
+  Return true if the array is empty
+  Iterate through the array
+    Return true if all items are 
+      integer types (.is_a?(Integer))
+      Floats with no 'remainder'
+        We can compare the float converted to integer versus the float itself
+  Otherwise, return false
+=end
+def is_int_array(arr)
+  return false if arr == nil || arr == ''
+  return true if arr.is_a?(Array) && arr.empty?
+  arr.all? do |element|
+    element.is_a?(Integer) || element.is_a?(Float) && element == element.to_i
+  end
+end
