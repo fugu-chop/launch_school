@@ -589,7 +589,6 @@ def solve(n, k)
         next
       else
         arr_digits.delete_at(arr_digits.index(a))
-        
         break
       end
     end
@@ -597,6 +596,26 @@ def solve(n, k)
   end
 
   arr_digits.join
+end
+
+# Alt solution without cons (helps with cons not assessing the last digit by itself)
+def solve(integer1, remove)
+  digits_array = integer1.digits.reverse
+  
+  remove.times do     
+    digits_array.each_with_index do |digit, index|      
+      if digits_array[index + 1] != nil && digit > digits_array[index + 1]
+        digits_array.delete_at(index)
+        break
+      elsif digits_array[index + 1] == nil
+        digits_array.delete_at(index)
+        break
+      end
+    end    
+  end
+  
+  digits_array.map! { |digit| digit.to_s }
+  digits_array.join  
 end
 
 # Alt solution

@@ -629,7 +629,7 @@ def convertFracts(array)
   new_numerators.map { |num| [num, counter] }
 end
 
-# This passes (built method)
+# This passes (built-in method)
 def convertFracts(lst)
   # x represents the accumulator, y represents the subarray in lst
   # On each iteration, x is replaced by the lowest common multiple of the subarray[1] elements - e.g. x = 1.lcm(2), which is 2.
@@ -1074,4 +1074,34 @@ def best_match(zam, al)
   diffs.sort_by do |match|
     [match[0], -match[1]]
   end.first[2]
+end
+
+# 40) You will write a function that returns the positions and the values of the "peaks" (or local maxima) of a numeric array. The output will be returned as an object with two properties: pos and peaks. Both of these properties should be arrays. If there is no peak in the given array, then the output should be {pos: [], peaks: []}.
+=begin
+pick_peaks([1,2,3,6,4,1,2,3,2,1]) == {"pos"=>[3,7], "peaks"=>[6,3]}
+pick_peaks([3,2,3,6,4,1,2,3,2,1,2,3]) == {"pos"=>[3,7], "peaks"=>[6,3]}
+pick_peaks([3,2,3,6,4,1,2,3,2,1,2,2,2,1]) == {"pos"=>[3,7,10], "peaks"=>[6,3,2]}
+pick_peaks([2,1,3,1,2,2,2,2,1]) == {"pos"=>[2,4], "peaks"=>[3,2]}
+pick_peaks([2,1,3,1,2,2,2,2]) == {"pos"=>[2], "peaks"=>[3]}
+=end
+def pick_peaks(array)
+  pos = []
+  # Choosing nil, as 0 is a valid index. 
+  peak = nil
+  # starting index from 1 avoids the first element of the array
+  (1...array.size).each do |index|
+    # On each iteration, we're checking if the next number is larger than the previous
+    # On plateaus, peak doesn't update - very clever!
+    if array[index] > array[index-1]
+      peak = index
+    # If the next number is lower, we know we have reached the peak
+    # This handles plateaus, since the index of the start of the plateau has been saved, but not updated as we encounter more duplicate numbers. 
+    # We then append the number to pos and reset peak, ready for another peak
+    elsif array[index] < array[index-1] && peak
+      pos << peak
+      peak = nil
+    end
+  end
+
+  { "pos" => pos, "peaks" => pos.map { |p| array[p] } }
 end
