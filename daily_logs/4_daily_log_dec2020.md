@@ -15,6 +15,8 @@
 - [14th, Mon](#141220-mon)
 - [15th, Tue](#151220-tue)
 - [16th, Wed](#161220-wed)
+- [17th, Thu](#171220-thu)
+- [18th, Fri](#181220-fri)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -238,3 +240,27 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The problems for today weren't too bad. I didn't really struggle with any of them - the ones that took a while were because I didn't get a full grasp of the problem based on the test cases, and thus attempted to implement a 'lazy' solution. It's another reminder to read the test cases and the problem, at least 5 times. 
+
+##### 17/12/20 (Thu)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Compiled Codewars problems
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+The joys of debugging. I still have some practice to do to make sure I keep talking through my debugging steps. I made an effort to read through a lot of the test cases, but it's sometimes hard to pick up all the necessary nuances. I'm worried that if I don't solve the problem on the first go, I will run out of time for the assessment. 
+
+##### 18/12/20 (Fri)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - 5 kyu
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Some more 5 kyu problems. After all the PEDAC practice I've had, I can now solve them, albeit slowly (some are still very mathematical). It's been a distracting day, but I managed to get the practice in. I will say, the quality of the practice was not as high. 
