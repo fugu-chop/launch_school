@@ -1105,3 +1105,37 @@ def pick_peaks(array)
 
   { "pos" => pos, "peaks" => pos.map { |p| array[p] } }
 end
+
+# 41) Write a function that returns all of the sublists of a list/array.
+=begin
+power([1,2,3]) == [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+power(["a","b"]) == [[], ["a"], ["b"], ["a", "b"]]
+=end
+def power(s)
+  final_arr = []
+  (0..s.length).each do |idx|
+    final_arr << s.combination(idx).to_a
+  end
+  final_arr.flatten(1)
+end
+
+# 42) Given two positive integers start and limit, the function buddy(start, limit) should return the first pair (n, m) of buddy pairs such that n (positive integer) is between start (inclusive) and limit (inclusive); m can be greater than limit and has to be greater than n. If there is no buddy pair satisfying the conditions, then return "Nothing".
+=begin
+  buddy(1071625, 1103735) == "(1081184 1331967)"
+  buddy(57345, 90061) == "(62744 75495)""
+  buddy(2177, 4357) == "Nothing"
+=end
+# This the step that slows down the solution. Having to iterate one digit at a time through extremely large numbers is very slow. Instead, we only go up to the square root of the number, which is much faster. 
+def factor_sum(num)
+  (2...Math.sqrt(num)).each_with_object([]) do |i, arr|
+    # To ensure that we capture factors that are higher than just the square root of the number, we don't just append i (which is limited to numbers equal to or lower than sqrt), but also the number divided by the factor, which will give us the 'high side' of the factor - e.g. 2 is a factor of 50, but the 'high' side of the 2 factor is 25. This allows us to capture two factors at a time. 
+    arr << i << num / i if num % i == 0
+  end.reduce(0, &:+)
+end
+
+def buddy(start_num, end_num)
+  (start_num..end_num).each do |num|
+    return "(#{num} #{factor_sum(num)})" if num == factor_sum(factor_sum(num)) && factor_sum(num) > num
+  end
+  'Nothing'
+end
