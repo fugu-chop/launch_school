@@ -1139,3 +1139,180 @@ def buddy(start_num, end_num)
   end
   'Nothing'
 end
+
+# 43) See this extremely badly worded question: https://www.codewars.com/kata/57591ef494aba64d14000526
+def generate_seq(n, person)
+  ann = [1]
+  john = [0]
+  for day in 1...n
+    john[day] = day - ann[john[day-1]]
+    ann[day] = day - john[ann[day-1]]
+  end
+  person == :john ? john : ann
+end
+
+def john(n)
+  generate_seq(n, :john)
+end
+
+def ann(n)
+  generate_seq(n, :ann)
+end
+
+def sum_john(n)
+  john(n).inject(&:+)
+end
+
+def sum_ann(n)
+  ann(n).inject(&:+)
+end
+
+# 44) Write a function that calculates the least common multiple of its arguments; each argument is assumed to be a non-negative integer. In the case that there are no arguments, return 1.
+=begin
+  lcm(2,5) == 10
+  lcm(2,3,4) == 12
+  lcm(9) == 9
+  lcm(0) == 0
+  lcm(0,1) == 0
+=end
+def lcm(*nums)
+  return 1 if nums.empty?
+  nums.reduce(1) { |num, cum_mult| cum_mult = cum_mult.lcm(num) }
+end
+
+
+# 45) Read this: https://www.codewars.com/kata/5536a85b6ed4ee5a78000035
+=begin
+  friends1 = ["A1", "A2", "A3", "A4", "A5"]
+  fTowns1 = [["A1", "X1"], ["A2", "X2"], ["A3", "X3"], ["A4", "X4"]]
+  distTable1 = Hash["X1", 100.0, "X2", 200.0, "X3", 250.0, "X4", 300.0]
+  tour(friends1, fTowns1, distTable1) == 889
+=end
+def tour(friends, fTowns, distTable)
+  fTowns = fTowns.select { |pair| friends.include?(pair.first) }
+  distance_arr = []
+  distance_arr << distTable[fTowns.first.last] << distTable[fTowns.last.last]
+  fTowns.each_cons(2) do |a, c|
+    distance_arr << Math.sqrt(distTable[c.last] ** 2 - distTable[a.last] ** 2)
+  end
+  distance_arr.reduce(:+).to_i
+end
+
+# 46) Write a method that takes a maximum bound and returns all primes up to and including the maximum bound.
+=begin
+  prime(11) == [2, 3, 5, 7, 11]
+=end
+# This times out, unfortunately
+def prime(limit)
+  (2..limit).select do |num|
+    (2...num).none? { |i| num % i == 0 }
+  end
+end
+
+# 47) The aim of the kata is to decompose n! (factorial n) into its prime factors.
+=begin
+  decomp(17) == "2^15 * 3^6 * 5^3 * 7^2 * 11 * 13 * 17"
+  decomp(5) == "2^3 * 3 * 5"
+  decomp(22) == "2^19 * 3^9 * 5^4 * 7^3 * 11^2 * 13 * 17 * 19"
+=end
+def prime(limit)
+  (2..limit).select do |num|
+    (2...num).none? { |i| num % i == 0 }
+  end
+end
+
+def decomp(n)
+  # We never end up dealing with a factorial calc - I'm not sure how the maths works on this one. 
+  prime(n).map do |i|
+    # Divide the factorial number by a prime factor
+    k = n / i
+    # This looks like a counter of the power
+    c = 0
+    while k > 0
+      # The number of times a factor divides into n is the power.
+      c += k
+      k /= i
+    end
+    c == 1 ? i.to_s : "#{i}^#{c}"
+  end.join(' * ')
+end
+
+# 48) Given a string representing a simple fraction x/y, your function must return a string representing the corresponding mixed fraction in the following format - a b/c
+=begin
+  mixed_fraction('42/9') == '4 2/3'
+  mixed_fraction('6/3') == '2'
+  mixed_fraction('4/6') == '2/3'
+  mixed_fraction('4/-6') == '-2/3'
+  mixed_fraction('0/18891') == '0'
+  mixed_fraction('-10/7') == '-1 3/7'
+  mixed_fraction('10/-7') == '-1 3/7'
+  mixed_fraction('-22/-7') == '3 1/7'
+  Test.expect_error("Must raise ZeroDivisionError") do mixed_fraction("0/0") end
+  Test.expect_error("Must raise ZeroDivisionError") do mixed_fraction("3/0") end
+=end
+def mixed_fraction(fraction)
+  nums = fraction.split('/')
+  negative = false
+
+  raise ZeroDivisionError if nums.last == '0'
+
+  if nums.first[0] == '-' && nums.last[0] == '-'
+    nums.each { |num| num.sub!('-', '') } 
+  elsif nums.first[0] == '-' && nums.last[0] != '-' || nums.last[0] == '-' && nums.first[0] != '-'
+    nums.each { |num| num.sub!('-', '') } 
+    negative = true
+  end
+
+  nums = nums.map { |num| num.to_i }
+  whole_num, remainder = nums.first.divmod(nums.last)
+
+  return "#{whole_num.to_s + ' ' if whole_num != 0}" if remainder == 0
+
+  lcd = (nums.last).divmod(remainder)[1]
+  remainder /= lcd
+  nums[-1] = nums.last / lcd
+  
+  whole_num != 0 && negative ? whole_num *= -1 : whole_num
+  remainder != 0 && negative && whole_num == 0 ? remainder *= -1 : remainder
+  
+  "#{whole_num.to_s + ' ' if whole_num != 0}" + ("#{remainder}/#{nums.last}" if remainder != 0)
+end
+
+# 49) Why do people like writing such stupidly long descriptions: https://www.codewars.com/kata/52ae6b6623b443d9090002c8
+=begin
+You will be given a wishlist (array), containing all possible items. Each item is in a hash.
+
+Rules
+  Possible values for size: "small", "medium", "large"
+  Possible values for clatters: "no", "a bit", "yes"
+  Possible values for weight: "light", "medium", "heavy"
+  The return value must be an array of the names of items from your wishlist, e.g. ["Toy Car", "Card Game"]
+  Don't add any item more than once to the result
+  The order of names in the returned array doesn't matter
+  It's possible, that multiple items from your wish list have the same attribute values. If they match the attributes of one of the presents, add all of them.
+
+Example
+wishlist = [
+    {:name => "mini puzzle", :size => "small", :clatters => "yes", :weight => "light"},
+    {:name => "toy car", :size => "medium", :clatters => "a bit", :weight => "medium"},
+    {:name => "card game", :size => "small", :clatters => "no", :weight => "light"}
+]
+
+presents = [
+    {:size => "medium", :clatters => "a bit", :weight => "medium"},
+    {:size => "small", :clatters => "yes", :weight => "light"}
+]
+
+guess_gifts(wishlist, presents) == ['toy car', 'mini puzzle']
+=end
+def guess_gifts(wishlist, presents)
+  valids = []
+  wishlist.each do |present|
+    presents.each do |item|
+      valids << present[:name] if item[:size] == present[:size] && 
+      item[:clatters] == present[:clatters] && 
+      item[:weight] == present[:weight]
+    end
+  end
+  valids.uniq
+end
