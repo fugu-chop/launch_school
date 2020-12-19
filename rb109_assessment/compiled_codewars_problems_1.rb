@@ -396,7 +396,7 @@ def f(input)
   end
 end
 
-# *9) https://www.codewars.com/kata/55953e906851cf2441000032/train/ruby
+# **9) https://www.codewars.com/kata/55953e906851cf2441000032/train/ruby
 =begin
 Problem
   Return a string where:
@@ -454,13 +454,11 @@ def scramble(word)
   chars.map do |char|
     # The solution hinges on this particular line. On the original string, if our sorted string doesn't contain that character (in this use case, it can only be a punctuation character), use the character. Otherwise, use the sorted letter (the scrambled_letters don't have any punctuation).
     letter?(char) ? scrambled_letters.shift : char
-  end
-    .join
+  end.join
 end
 
 def scramble_letters(word)
   return word if word.length <= 2
-  
   word[0] + word[1...-1].chars.sort.join + word[-1]
 end
 
@@ -468,7 +466,7 @@ def letter?(char)
   char.match? /[a-z]/
 end
 
-# *10) https://www.codewars.com/kata/51e056fe544cf36c410000fb/train/ruby
+# **10) https://www.codewars.com/kata/51e056fe544cf36c410000fb/train/ruby
 =begin
 Problem
   Write a function that, given a string of text (possibly with punctuation and line-breaks), returns an array of the top-3 most occurring words, in descending order of the number of occurrences.
@@ -1012,7 +1010,7 @@ def scramble(str1, str2)
   true
 end
 
-# *22) https://www.codewars.com/kata/5a7f58c00025e917f30000f1
+# **22) https://www.codewars.com/kata/5a7f58c00025e917f30000f1
 =begin
 Problem
   Find the longest substring in alphabetical order.
