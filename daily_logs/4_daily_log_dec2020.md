@@ -264,3 +264,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Some more 5 kyu problems. After all the PEDAC practice I've had, I can now solve them, albeit slowly (some are still very mathematical). It's been a distracting day, but I managed to get the practice in. I will say, the quality of the practice was not as high. 
+
+##### 19/12/20 (Sat)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - 5 kyu
+    - Difficult compiled CodeWars problems
+
+__*Time spent*__<br/>
+243 minutes
+
+__*Thoughts*__<br/>
+So incredibly frustrating. I worked through some of the previous problems that I had trouble with before. I haven't improved at all. I still can't completely solve them. The conditions I'm working in are incredibly distracting and annoying, but I don't think that would have a strong bearing on my coding ability. I think this is it. I won't pass the written assessment based off this. 
