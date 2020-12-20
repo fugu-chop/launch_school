@@ -276,6 +276,7 @@ Examples
   find_suspects({ tom: [2], bob: [2], julia: [3], meg: [3] }, [2, 3]) == nil
   find_suspects({ meg: [1, 3], tom: [5, 3] }, [1, 3]) == [:tom]
   find_suspects({ meg: [3], tom: [5] }, []) == [:meg, :tom]
+  find_suspects({ julia: nil, meg: [] }, [1, 6]) == nil
 
 Data Structures
   Array (that's our output)
