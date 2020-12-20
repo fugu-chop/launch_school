@@ -17,6 +17,8 @@
 - [16th, Wed](#161220-wed)
 - [17th, Thu](#171220-thu)
 - [18th, Fri](#181220-fri)
+- [19th, Sat](#191220-sat)
+- [20th, Sun](#201220-sun)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -277,3 +279,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 So incredibly frustrating. I worked through some of the previous problems that I had trouble with before. I haven't improved at all. I still can't completely solve them. The conditions I'm working in are incredibly distracting and annoying, but I don't think that would have a strong bearing on my coding ability. I think this is it. I won't pass the written assessment based off this. 
+
+##### 20/12/20 (Sun)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Difficult compiled CodeWars problems
+
+__*Time spent*__<br/>
+240 minutes
+
+__*Thoughts*__<br/>
+I tried doing the difficult compiled CodeWars problems again. Thankfully, I was able to solve all of them, only some were a bit hairy and required quite a length of time to solve. I am still unsure of how I will perform on the day, especially given the added pressure. 
