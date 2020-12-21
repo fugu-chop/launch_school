@@ -19,6 +19,7 @@
 - [18th, Fri](#181220-fri)
 - [19th, Sat](#191220-sat)
 - [20th, Sun](#201220-sun)
+- [21st, Mon](#211220-mon)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -291,3 +292,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I tried doing the difficult compiled CodeWars problems again. Thankfully, I was able to solve all of them, only some were a bit hairy and required quite a length of time to solve. I am still unsure of how I will perform on the day, especially given the added pressure. 
+
+##### 21/12/20 (Mon)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - 4 kyus
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+4 kyus are pretty challenging. I solved 2 and got pretty close with 2 others. Feels like decent preparation for the interview. Tomorrow, I think I'll try polishing off the sample problems I got from study sessions and the Watch Others Code videos. Then doomsday. 
