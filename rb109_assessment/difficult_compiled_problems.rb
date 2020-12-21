@@ -183,3 +183,259 @@ def solve(num, times)
   
   num
 end
+
+# Launch School Small Problems (Medium 1, Rotation Part 3)
+=begin
+Problem
+  Write a method that takes an integer as argument, and returns the maximum rotation of that argument. 
+
+  Input
+    Integer object
+
+  Output
+    Integer object with the same digits, in different places
+
+  Rules
+    Note that you do not have to handle multiple 0s.
+    Leading zeroes get dropped
+    Take the first digit, put it at the end of the number
+    Hold the new first digit constant, put the new first digit to the end
+    Repeat utnil you can't hold a digit constant any more
+
+Examples
+  max_rotation(735291) == 321579
+  max_rotation(3) == 3
+  max_rotation(35) == 53
+  max_rotation(105) == 15 # the leading zero gets dropped
+  max_rotation(8_703_529_146) == 7_321_609_845
+
+Data Structures
+  Array
+
+Algorithm
+  Initialise a variable, first_chars = []
+  Break up our input integer into an array of digits (remember to reverse) - digit_arr
+  Create a loop
+    Shift the first element, to the end of the digits_arr
+    first_char = shift the first element of first_digit_hold
+    Append to first_chars
+    Repeat the process until first_chars length is equalt to digits_arr
+  Return first_chars, joined, converted to integer
+=end
+def max_rotation(input)
+  first_chars = []
+  digit_arr = input.digits.reverse
+  orig_length = digit_arr.length
+  while first_chars.length < orig_length
+    first = digit_arr.shift
+    digit_arr << first
+    first_chars << digit_arr.shift
+  end
+  first_chars.join.to_i
+end
+
+# Launch School Small Problems (Medium 1, Now I Know My ABCs)
+=begin
+Problem
+Write a method that returns true if the word passed in as an argument can be spelled from this set of blocks, false otherwise.
+B:O   X:K   D:Q   C:P   N:A
+G:T   R:E   F:S   J:W   H:U
+V:I   L:Y   Z:M
+
+  Input
+    String object
+
+  Output
+    Boolean
+
+  Rules
+    The block of words is not case sensitive
+      A block can only be used once to spell a word - e.g. if you 'use up' "B", the method will not return true if that word 'O'
+
+Examples
+  block_word?('BATCH') == true
+  block_word?('BUTCH') == false
+  block_word?('jest') == true
+
+Data Structures
+  Array
+  Hash
+
+Algo
+  Break up our input into an array of characters (str_arr)
+  We put our text block, into a hash (permitted_blocks)
+  We iterate through str_arr
+    On each iteration, we check if the letter is among the keys of permitted_blocks
+      If so, delete that key-value pair from permitted blocks
+      If not, return false
+    end
+  return true otherwise
+=end
+def block_word?(input)
+  permitted_blocks = { 'B' => 'O', 'X' => 'K', 'D' => 'Q', 'C' => 'P', 
+    'N' => 'A', 'G' => 'T', 'R' => 'E', 'F' => 'S', 'J' => 'W', 'H' => 'U',
+    'V' => 'I', 'L' => 'Y', 'Z' => 'M' }
+  str_arr = input.chars
+  str_arr.each do |letter|
+    if permitted_blocks.keys.include?(letter.upcase) 
+      permitted_blocks.delete(letter.upcase)
+    elsif permitted_blocks.values.include?(letter.upcase)
+      permitted_blocks.delete(permitted_blocks.select { |_, value| value == letter.upcase }.keys.first)
+    else
+      return false
+    end
+  end
+  true
+end
+
+# Launch School Small Problems (Medium 1, Matching Parentheses)
+=begin
+Problem
+  Write a method that takes a string as argument, and returns true if all parentheses in the string are properly balanced, false otherwise. 
+
+  Input
+    String object
+
+  Output
+    Boolean
+
+  Rules
+    To be properly balanced, parentheses must occur in matching '(' and ')' pairs.
+    Note that balanced pairs must each start with a (, not a ).
+    If the number of parentheses is not even, false
+    If number of left parentheses != number of right parentheses, false
+
+Examples
+  balanced?('What (is) this?') == true
+  balanced?('What is) this?') == false
+  balanced?('What (is this?') == false
+  balanced?('((What) (is this))?') == true
+  balanced?('((What)) (is this))?') == false
+  balanced?('Hey!') == true
+  balanced?(')Hey!(') == false
+  balanced?('What ((is))) up(') == false
+
+Data Structures
+  Array
+
+Algo
+  Break up our string into an array of characters (str_arr)
+  we initialise an empty array to the variable (parens)
+  We iterate through str_arr
+    If there is a left parentheses, append to parens
+    If there is a right parentheses, pop parens
+  Test if parens is empty (will return a boolean)
+=end
+def balanced?(input)
+  return false if input.count('(') != input.count(')')
+  parens = []
+  input.each_char do |letter|
+    parens << '(' if letter == '('
+    parens.pop if letter == ')'
+  end
+  parens.empty?
+end
+
+# Launch School Small Problems (Medium 2, Next Featured Number Higher than a Given Value)
+=begin
+Problem
+A featured number (something unique to this exercise) is an odd number that is a multiple of 7, and whose digits occur exactly once each. 
+So, for example, 49 is a featured number, but 98 is not (it is not odd), 97 is not (it is not a multiple of 7), and 133 is not (the digit 3 appears twice).
+
+Write a method that takes a single integer as an argument, and returns the next featured number that is greater than the argument. 
+Return an error message if there is no next featured number.
+
+  Input
+    Integer object
+
+  Output
+    Integer object, or a string if there is no featured number
+
+  Rules
+    A featured number is odd, a multiple of 7 and only has distinct digits
+
+Examples
+  featured(12) == 21
+  featured(20) == 21
+  featured(21) == 35
+  featured(997) == 1029
+  featured(1029) == 1043
+  featured(999_999) == 1_023_547
+  featured(999_999_987) == 1_023_456_987
+  featured(9_999_999_999) # -> There is no possible number that fulfills those requirements
+
+Data Structures
+  Array?
+
+Algo
+  Given an integer object, which will start our range
+  Loop this
+    We add one to the start range
+      Test if this number is
+        Odd
+        Divisible by 7
+        Digits are uniq (num.digits.uniq.length == num.digits.length)
+        =end
+  Break loop if we hit 999999988 without returning a number
+  Print a string "There is no possible number that fulfills those requirements"
+=end
+def featured(input)
+  start_range = input + 1
+  loop do 
+    break if start_range >= 9_999_999_999
+    return start_range if start_range.odd? && 
+      start_range % 7 == 0 && 
+      start_range.digits.uniq.length == start_range.digits.length
+    start_range += 1
+    
+  end
+  "There is no possible number that fulfills those requirements"
+end
+
+# Study Group Problem
+=begin
+Problem 
+  You have to create a function that takes a positive integer number and returns the next bigger number formed by the same digits.
+
+Examples
+  next_bigger(12) == 21
+  next_bigger(513) == 531
+  next_bigger(2017) == 2071
+  next_bigger(2071) == 2107
+  next_bigger(1990) == 9019
+  next_bigger(414) == 441
+  next_bigger(144) == 414
+  next_bigger(9) == -1
+  next_bigger(111) == -1
+  next_bigger(531) == -1
+=end
+
+# Watch Others Code, Part 1
+=begin
+Problem
+Given an array of strings only made of lowercase letters, return an array of all characters that show up in all strings within the given array (including duplicates).
+
+  Input
+    An array of string objects
+
+  Output
+    An array of single length string objects
+
+  Rules
+    We have to count letters that appear multiple times in each string (i.e. duplicates)
+
+Examples
+  common_chars(['bella', 'label', 'roller']) == ['e', 'l', 'l']
+  common_chars(['cool', 'lock', 'cook']) == ['c', 'o'] 
+  common_chars(['hello', 'goodbye', 'booya', 'random']) == ['o'] 
+  common_chars(['aabbaaaa', 'ccdddddd', 'eeffee', 'ggrrrrrr', 'yyyzzz']) == [] 
+
+Data Structures
+
+Algorithm
+  
+
+=end
+def common_chars(input)
+
+end

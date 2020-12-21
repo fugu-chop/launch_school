@@ -288,3 +288,116 @@ def dbl_linear(n)
     end
     u[-1]
 end
+
+# 6) https://www.codewars.com/kata/5426d7a2c2c7784365000783/train/ruby
+=begin
+Problem
+Write a function which makes a list of strings representing all of the ways you can balance n pairs of parentheses
+
+  Input
+    An integer object (representing the number of parentheses pairs)
+
+  Output
+    An array of string objects, containing '()'
+
+  Rules
+    Our input might be 0 - return a array with an empty string
+    For a pair of parentheses to be balanced, 
+      The parenthesis pair must start with a '('
+      A parenthesis pair must be closed (not necessarily sequentially)
+
+Examples
+  balanced_parens(0) == [""]
+  balanced_parens(1) == ["()"]
+  balanced_parens(2) == ["()()","(())"]
+  balanced_parens(3) == ["()()()","(())()","()(())","(()())","((()))"
+
+Data Structures
+  Array
+
+Algorithm
+  We probably want two methods
+    1. Generate all the possible combinations
+      we get an input integer (n)
+      We create an array where we input a left parenthesis and right parenthesis (n) times (string_arr)
+      we take the combination of our string arrays, using permutations.to_a (combos)
+      Return combos
+
+    2. Filter out anything that's not balanced
+      We get an array of all the different combos (input_arr)
+      We iterate through input_arr
+        We need to check if it's balanced
+          If the string starts with ')' or ends with '(', exclude it
+          Otherwise, create an empty array (paren_tester)
+          Iterate through the subarr (select)
+            If the parenthesis is '(', append to paren_tester
+            if the parenthesis is ')', pop paren_tester IF the last character is '('
+            We should end up with an empty paren_tester if it's balanced
+=end
+def combos(n)
+  combo_arr = []
+  n.times do |_|
+    combo_arr << '(' << ')'
+  end
+  combo_arr.permutation.to_a.uniq
+end
+
+def tester(combinations)
+  combinations.select do |combo|
+    paren_tester = []
+    combo.each do |paren|
+      paren_tester << paren if paren == '('
+      paren_tester.pop if paren == ')' && paren_tester.last == '('
+    end
+    paren_tester.empty?
+  end
+end
+
+def balanced_parens(n)
+  tester(combos(n)).map do |combo|
+    combo.join
+  end
+end
+
+# 7) https://www.codewars.com/kata/52f677797c461daaf7000740/train/ruby
+=begin
+Problem
+Given an array X of positive integers, its elements are to be transformed by running the following operation on them as many times as required. When no more transformations are possible, return its sum
+
+  Input
+    An array of integers
+
+  Output
+    An integer object
+
+  Rules
+    We deem 'no more transformations as possible' when all three elements are the same
+    If an element is larger than the next largest element, replace the largest element with the subtraction of largest - next largest element 
+
+Examples
+  solution([1, 21, 55]) == 3
+  solution([3, 13, 23, 7, 83]) == 5
+  solution([4, 16, 24]) == 12
+  solution([30, 12]) == 12
+  solution([60, 12, 96, 48, 60, 24, 72, 36, 72, 72, 48]) == 132
+  solution([71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71]) == 923
+  solution([11, 22]) == 22
+  solution([9]) == 9
+
+Data Structures
+  Array
+
+Algo
+  We're given an input array
+  Check if all elements are the same (uniq array length == 1)
+    If so, reduce the numbers
+  Otherwise
+    Find the max number in the array (need to keep track of index as well)
+    Subtract the second max in the array
+    Replace maxnumber index with the subtracted version
+    Repeat until uniq length of the input array == 1
+    Reduce
+=end
+def solution(n)
+  n.reduce(:gcd) * n.size
+end
