@@ -20,6 +20,7 @@
 - [19th, Sat](#191220-sat)
 - [20th, Sun](#201220-sun)
 - [21st, Mon](#211220-mon)
+- [22nd, Tue](#221220-tue)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -300,7 +301,20 @@ __*Concepts covered*__<br/>
     - 4 kyus
 
 __*Time spent*__<br/>
-120 minutes
+180 minutes
 
 __*Thoughts*__<br/>
-4 kyus are pretty challenging. I solved 2 and got pretty close with 2 others. Feels like decent preparation for the interview. Tomorrow, I think I'll try polishing off the sample problems I got from study sessions and the Watch Others Code videos. Then doomsday. 
+4 kyus are pretty challenging. I solved 2 and got pretty close with 2 others. Feels like decent preparation for the interview. Tomorrow, I think I'll try polishing off the sample problems I got from study sessions and the Watch Others Code videos. Then doomsday. Post update: I ended up spending another hour churning through some 4 kyus with little success. Probably a little too hard for me right now (and not necessary to pass). 
+
+##### 22/12/20 (Tue)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Watch Others Code problems
+    - Launch School Medium problems
+
+__*Time spent*__<br/>
+110 minutes
+
+__*Thoughts*__<br/>
+I'm practicing the PEDAC method more deliberately, and working through some problems. Some of them can be tricky, but I feel like because I am taking my time reading through the test cases and re-reading the problem, it actually saves time. So far, so good I guess. 

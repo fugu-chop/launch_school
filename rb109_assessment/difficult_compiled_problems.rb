@@ -490,12 +490,9 @@ def bubble_sort!(array)
       if array[start_idx] > array[end_idx]
         array[start_idx], array[end_idx] = array[end_idx], array[start_idx]
         num_swaps += 1
-        start_idx += 1
-        end_idx += 1
-      else
-        start_idx += 1
-        end_idx += 1
       end
+      start_idx += 1
+      end_idx += 1
       break if end_idx > array.length - 1
     end
     start_idx = 0
