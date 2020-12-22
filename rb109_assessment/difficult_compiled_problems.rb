@@ -856,39 +856,163 @@ end
 
 # Watch Others Code, Part 4
 =begin
-Given 2 strings, your job is to find out if there is a substring that appears in both strings. You will return true if you find a substring that appears in both strings, or false if you do not. We only care about substrings that are longer than one letter.
+Problem
+  Given 2 strings, your job is to find out if there is a substring that appears in both strings. You will return true if you find a substring that appears in both strings, or false if you do not. We only care about substrings that are longer than one letter.
 
-substring_test('Something', 'Fun') == false
-substring_test('Something', 'Home') == true
-substring_test('Something', '') == false
-substring_test('', 'Something') == false
-substring_test('BANANA', 'banana') == true
-substring_test('test', '111t') == false
-substring_test('', '') == false
-substring_test('1234567', '541265') == true
-substring_test('supercalifragilisticexpialidocious', SoundOfItIsAtrociou') == true
+  Input
+    Two string objects
+
+  Output
+    Boolean
+
+  Rules
+    Either or both string object could be empty (return false if this is the case)
+    Substrings are case insensitive
+    Substring order does not matter
+
+Examples
+  substring_test('Something', 'Fun') == false
+  substring_test('Something', 'Home') == true
+  substring_test('Something', '') == false
+  substring_test('', 'Something') == false
+  substring_test('BANANA', 'banana') == true
+  substring_test('test', '111t') == false
+  substring_test('', '') == false
+  substring_test('1234567', '541265') == true
+  substring_test('supercalifragilisticexpialidocious', 'SoundOfItIsAtrociou') == true
+
+Data Structures
+  Arrays
+
+Algorithm
+  Given two string input objects (str1 and str2)
+  return false if str1 or str2 is empty
+  Downcase both
+  Break both str1 and str2 into array of characters (str1_arr, str2_arr)
+  Iterate through the longer string array
+    If the letter occurs in str2_arr, delete that letter from str2_arr
+      str2_arr.delete_at(str2_arr.index(letter))
+  Check if str2 is empty?
+    If it is, return true
+    Otherwise, return false
 =end
+def substring_test(str1, str2)
+  common_chars = []
+  return false if str1.empty? || str2.empty?
+  str1_arr, str2_arr = str1.downcase.chars, str2.downcase.chars
+  str1_arr.each do |letter|
+    if str2_arr.include?(letter)
+      common_chars << letter
+      str2_arr.delete_at(str2_arr.index(letter)) 
+    end
+  end
+  common_chars.length > 2
+end
 
 # Watch Others Code, Part 4
 =begin
-Write function scramble(str1, str2) that returns true if a portion of str1 characters can be rearranged to match str2 , otherwise return false. Only lowercase alphabetic characters will be used (no punctuation or digits).
+Problem
+  Write a method scramble(str1, str2) that returns true if a portion of str1 characters can be rearranged to match str2, otherwise return false. Only lowercase alphabetic characters will be used (no punctuation or digits).
 
-scramble('javaass', 'jjss') == false
-scramble('rkqodlw', 'world') == true
-scramble('cedewaraaossoqqyt', 'codewars') == true
-scramble('katas', 'steak') == false
-scramble('scriptjava', 'javascript') == true
-scramble('scriptingjava', 'javascript') == true
+  Input
+    Two string objects
+
+  Output
+    Boolean
+
+  Rules
+    Only lowercase alphabetic characters will be used (no punctuation or digits).
+    See if str2 characters occur in str1
+    Order of strings does not matter
+
+Examples
+  scramble('javaass', 'jjss') == false
+  scramble('rkqodlw', 'world') == true
+  scramble('cedewaraaossoqqyt', 'codewars') == true
+  scramble('katas', 'steak') == false
+  scramble('scriptjava', 'javascript') == true
+  scramble('scriptingjav', 'javascript') == false
+
+Data Structures
+  Arrays
+
+Algorithm
+  Break up str1 and str2 into arrays of characters (str1_arr, str2_arr)
+  Initialise an empty array (common_chars)
+  We want to iterate through str2_arr, character by character (each)
+    If str1_arr includes a given character, 
+      Append that letter to common_chars
+      delete that character from str1_arr
+  Join common_chars, test for equality with str2
 =end
+def scramble(str1, str2)
+  str1, str2 = 'cedewaraaossoqqyt', 'codewars'
+  common_chars = []
+  str1_arr, str2_arr = str1.chars, str2.chars
+  str2_arr.each do |letter|
+    if str1_arr.include?(letter)
+      common_chars << letter
+      str1_arr.delete_at(str1_arr.index(letter))
+    end
+  end
+  common_chars.sort == str2_arr.sort
+end
 
 # Watch Others Code, Part 5
 =begin
-Find the length of the longest substring in the given string, that is the same in reverse. If the length of the input string is 0, return 0.
+Problem
+  Find the length of the longest substring in the given string, that is the same in reverse. If the length of the input string is 0, return 0.
 
-longest_palindrome('a') == 1
-longest_palindrome('aa') == 2
-longest_palindrome('aab') == 2
-longest_palindrome('baa') == 2
-longest_palindrome('baabcd') == 4
-longest_palindrome('baablkj12345432133d') == 9
+  Input
+    String object (but could be empty)
+
+  Output
+    Integer object
+
+  Rules
+    If the length of the input string is 0, return 0.
+    There is no minimum substring length (other than 0)
+    Returning the longest palindrome
+
+Examples
+  longest_palindrome('a') == 1
+  longest_palindrome('aa') == 2
+  longest_palindrome('aab') == 2
+  longest_palindrome('baa') == 2
+  longest_palindrome('baabcd') == 4
+  longest_palindrome('baablkj12345432133d') == 9
+
+Data Structures
+  String
+
+Algorithm
+  Given an input string (input)
+  REturn 0 if input is empty
+  Initialise an array (longest_sub) with 1 in it
+  Iterate through the characters of input
+    Initialise a variable called start_idx and end_idx (both 0)
+    Start from input[0..0]
+    Check if this indexed selection is equal to it's reverse
+      If yes, append the length of this indexed selection to longest_sub (array) if it's larger than the largest item in longest_sub 
+    Increment end_idx until you finish looping through the string (i.e. end_idx reaches the end of the string)
+    Once this has finished, increment start_idx, and reassign end_idx to start_idx
+    Break this loop once start_idx reaches the end of the string
 =end
+def longest_palindrome(input)
+  return 0 if input.empty?
+  longest_sub = [1]
+  start_idx = end_idx = 0
+  loop do
+    break if start_idx > input.length - 1
+    loop do 
+      break if end_idx > input.length - 1 
+      if input[start_idx..end_idx] == input[start_idx..end_idx].reverse
+        longest_sub << input[start_idx..end_idx].length if input[start_idx..end_idx].length > longest_sub.max
+      end
+      end_idx += 1
+    end
+    start_idx += 1
+    end_idx = start_idx
+  end
+  longest_sub.max
+end
