@@ -504,10 +504,20 @@ def bubble_sort!(array)
   array
 end
 
-# Study Group Problem
+# Study Group Problem 1
 =begin
 Problem 
   You have to create a function that takes a positive integer number and returns the next bigger number formed by the same digits.
+
+  Input
+    Integer object
+
+  Output
+    Integer object
+
+  Rules
+    We have to return the next largest number (not the max!)
+    We return -1 if no larger number can be returned
 
 Examples
   next_bigger(12) == 21
@@ -520,12 +530,179 @@ Examples
   next_bigger(9) == -1
   next_bigger(111) == -1
   next_bigger(531) == -1
+
+Data Structures
+  Array
+
+Algorithm
+  Increment our number, until the digits match the digits of the input
+  Find the max number possible of our input
+    If the input matches the max, return -1
 =end
+def next_bigger(input)
+  max_num = input.digits.reverse.sort.reverse.join.to_i
+  return -1 if input == max_num
+  loop do 
+    input += 1
+    break input if input.digits.sort == max_num.digits.sort
+  end
+end
+
+# Study Group Problem 2
+=begin
+Problem 
+  Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
+
+  Input
+    An array object of integer objects as elements
+    Integer object
+
+  Output
+    Integer object
+
+  Rules
+    If there is no contiguous subarray where sum >= s, return 0
+    A contiguous subarray means the numbers need to be next to each other (i.e. preserve array order)
+    The integer object is the target we're aiming to sum up to (or over)
+
+Examples
+  minSubLength([2,3,1,2,4,3], 7) == 3
+  minSubLength([1, 10, 5, 2, 7], 9) == 1
+  minSubLength([1, 11, 100, 1, 0, 200, 3, 2, 1, 250], 280) == 4
+  minSubLength([1, 2, 4], 8) == 0
+
+Data Structures
+  Array
+
+Algorithm
+  Create an empty array called lengths
+  Iterate through our given array
+  Start at index 0 (start_idx)
+  Take a range of elements, using an end index (end_idx)
+  Check if summing that range of elements is >= s
+    If so, append the length of that subarray to lengths
+  Otherwise, continue iterating end_idx
+  If that still doesn't find a relevant contiguous subarray, 
+    increment start_idx
+    Reassign end_idx to start_idx
+    Repeat the above
+  Break when we reach start_idx = array.length - 1
+  Return 0 if lengths is empty, otherwise return the min of lengths
+=end
+def minSubLength(array, target)
+  lengths = []
+  start_idx = 0
+  end_idx = 0
+  loop do 
+    loop do 
+      lengths << array[start_idx..end_idx].length if array[start_idx..end_idx].reduce(:+) >= target
+      end_idx += 1
+      break if end_idx == array.length - 1
+    end
+    start_idx += 1
+    end_idx = start_idx
+    break if start_idx == array.length - 1
+  end
+  lengths.empty? ? 0 : lengths.min
+end
+
+# Study Group Problem 3
+=begin
+Problem
+  Write a method that takes a string argument and returns a new string that contains the value of the original string with all consecutive duplicate characters collapsed into a single character.
+
+  Input
+    String object (could be empty)
+
+  Output
+    String object (could be empty)
+
+  Rules
+
+Examples
+  collapse('bbbbbbbbb') == 'b'
+  collapse('wwooonndeerrfull woorrlldd') == 'wonderful world'
+  collapse('222xyzxyzyx') == '2xyzxyzyx'
+  collapse('Q') == 'Q'
+  collapse('AAbbCC') == 'AbC'
+  collapse('') == ''
+
+Data Structure
+  Array 
+
+Algorithm
+  Initialise empty array (reduced_letters)
+  Break up string input into array of characters (arr_char)
+  Iterate through arr_char
+    If the character passed to the block is equal to the last element of reduced_letters
+      Next
+    Otherwise
+      Append the character to reduced_letters
+  Join the characters in reduced_letters and return
+=end
+def collapse(input)
+  reduced_letters = []
+  arr_char = input.chars
+  arr_char.each do |letter|
+    reduced_letters << letter if reduced_letters.last != letter
+  end
+  reduced_letters.join
+end
 
 # Watch Others Code, Part 1
 =begin
 Problem
-Given an array of strings only made of lowercase letters, return an array of all characters that show up in all strings within the given array (including duplicates).
+  Given a non-empty string, check if it can be constructed with a substring of it and appending multiple copies of that substring together. You may assume that the string contains lowercase English letters only.
+
+  Input
+    String object
+
+  Output
+    Boolean
+
+  Rules
+    String is lowercase English letters only
+    Input string is not empty
+    Our substring can be a single character
+
+Examples
+  repeated_substring_pattern('abab') == true
+  repeated_substring_pattern('aaa') == true
+  repeated_substring_pattern('aba') == false
+  repeated_substring_pattern('aabaaba') == false
+  repeated_substring_pattern('abaababaab') == true
+  repeated_substring_pattern('abcabcabc') == true
+
+Data Structures
+  Array
+
+Algorithm
+  Break up input into an array of letters (arr_char)
+  Take a n-sized chunk of arr_char
+  Look at the length of our string (input_length)
+  Calculate the 'multiplier' variable (input_length / n)
+  Check if multiplier * chunk (joined together) == string
+    return true if it does
+  Otherwise, increment n
+    Repeat
+  Break if n > input_length / 2
+=end
+def repeated_substring_pattern(input)
+  end_idx = 0
+  input_length = input.length
+  arr_char = input.chars
+  loop do 
+    multiplier = input.length / arr_char[0..end_idx].length
+    return true if arr_char[0..end_idx].join * multiplier == input
+    end_idx += 1
+    return false if end_idx == input.length - 1
+  end
+end
+
+# Watch Others Code, Part 1
+=begin
+Problem
+  Given an array of strings only made of lowercase letters, return an array of all characters that show up in all strings within the given array (including duplicates).
 
   Input
     An array of string objects
@@ -543,11 +720,175 @@ Examples
   common_chars(['aabbaaaa', 'ccdddddd', 'eeffee', 'ggrrrrrr', 'yyyzzz']) == [] 
 
 Data Structures
+  Array
 
 Algorithm
-  
-
+  Initialise an empty array (common)
+  Duplicate our array (arr_dup)
+  We want to remove the first element of our array (compare)
+  Break up compare into an array of characters
+  Iterate through these characters
+    Check if that character is contained within all the other elements in arr_dup
+    If yes
+      Append that letter to common
+      Delete that letter from each word in arr_dup
+  Return common
 =end
 def common_chars(input)
-
+  common = []
+  arr_dup = input.map { |word| word.dup }
+  compare = arr_dup.shift
+  compare.chars.each do |letter|
+    if arr_dup.all? { |word| word.include?(letter) }
+      common << letter
+      arr_dup.each { |word| word.sub!(letter, '') }
+    end
+  end
+  common
 end
+
+# Watch Others Code, Part 3
+=begin
+Problem
+  Find the maximum sum of a contiguous subsequence in an array of integers. If the entire array consists of negative numbers, return 0. If the entire array is positive, sum all the digits.
+  max_sequence [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+  Should be 6: [4, -1, 2, 1]
+
+  Input
+    Array (could be empty, integer objects, positive or negative)
+  
+  Output
+    Integer object
+
+  Rules
+    If the entire array is negative numbers, return 0
+    If the entire array is positive numbers, we can sum up all the elements
+    Contiguous means we have to preserve the order of our array
+
+Examples
+  max_sequence([]) == 0
+  max_sequence([-2, 1, -3, 4, -1, 2, 1, -5, 4]) == 6
+  max_sequence([11]) == 11
+  max_sequence([-32]) == 0
+  max_sequence([-2, 1, -7, 4, -10, 2, 1, 5, 4]) == 12
+
+Data Structures
+  Array
+
+Algorithm
+  Initialise an empty array called sums
+  Initialise a start_idx (0)
+  Initialise an end_idx (0)
+
+  Check if all elements are negative
+    If they are, return 0
+  We iterate through input array, at input[start_idx..end_idx]
+  We sum the elements, append to sums, if it's larger than the largest item in sums, and if start_idx >= end_idx
+  Increment end_idx - loop through the rest of the array
+  Then, increment start_idx + 1
+  Set end_idx to start_idx
+
+  We return the max of sums
+=end
+def max_sequence(input)
+  sums = []
+  start_idx = end_idx = 0
+
+  return 0 if input.all? { |element| element < 0 }
+
+  loop do 
+    break if start_idx > input.length - 1
+    loop do 
+      break if end_idx > input.length - 1
+      sums << input[start_idx..end_idx].reduce(:+) if start_idx <= end_idx
+      end_idx += 1
+    end
+    start_idx += 1
+    end_idx = start_idx
+  end
+
+  sums.max
+end
+
+# Watch Others Code, Part 3
+=begin
+Problem
+  Write a method to find the largest common prefix amongst an array of strings. If there is no common prefix, return an empty string. All given inputs are in lowercase letters a-z.
+
+  Input
+    An array of string objects which are all lowercase, a-z
+  
+  Output
+    A string object
+
+  Rules
+    If the first letter of each item is not the same, return empty string
+
+Examples
+  common_prefix(['flower', 'flow', 'flight']) == 'fl'
+  common_prefix(['dog, 'racecar', 'car']) == ''
+  common_prefix(['interspecies', 'interstellar', 'interstate']) == 'inters'
+  common_prefix(['throne', 'dungeon']) == ''
+
+Data Structures
+  Array
+
+Algorithm
+  Initialise an empty array (common_letters)
+  Duplicate our input array (arr_dup)
+  Remove the first element of our arr_dup (comparer)
+  Iterate through letters of comparer, with the index
+    if the letter is contained in each of the other words in the array at the same index
+      Append that letter to common_letters
+  Check if common_letters is empty
+      If yes, return empty string
+      Otherwise, return joined array
+=end
+def common_prefix(input)
+  common_letters = []
+  arr_dup = input.map { |word| word.dup }
+  comparer = arr_dup.shift
+  comparer.chars.each_with_index do |letter, idx|
+    common_letters << letter if arr_dup.all? { |word| word[idx] == letter }
+  end
+  common_letters.empty? ? '' : common_letters.join
+end
+
+# Watch Others Code, Part 4
+=begin
+Given 2 strings, your job is to find out if there is a substring that appears in both strings. You will return true if you find a substring that appears in both strings, or false if you do not. We only care about substrings that are longer than one letter.
+
+substring_test('Something', 'Fun') == false
+substring_test('Something', 'Home') == true
+substring_test('Something', '') == false
+substring_test('', 'Something') == false
+substring_test('BANANA', 'banana') == true
+substring_test('test', '111t') == false
+substring_test('', '') == false
+substring_test('1234567', '541265') == true
+substring_test('supercalifragilisticexpialidocious', SoundOfItIsAtrociou') == true
+=end
+
+# Watch Others Code, Part 4
+=begin
+Write function scramble(str1, str2) that returns true if a portion of str1 characters can be rearranged to match str2 , otherwise return false. Only lowercase alphabetic characters will be used (no punctuation or digits).
+
+scramble('javaass', 'jjss') == false
+scramble('rkqodlw', 'world') == true
+scramble('cedewaraaossoqqyt', 'codewars') == true
+scramble('katas', 'steak') == false
+scramble('scriptjava', 'javascript') == true
+scramble('scriptingjava', 'javascript') == true
+=end
+
+# Watch Others Code, Part 5
+=begin
+Find the length of the longest substring in the given string, that is the same in reverse. If the length of the input string is 0, return 0.
+
+longest_palindrome('a') == 1
+longest_palindrome('aa') == 2
+longest_palindrome('aab') == 2
+longest_palindrome('baa') == 2
+longest_palindrome('baabcd') == 4
+longest_palindrome('baablkj12345432133d') == 9
+=end

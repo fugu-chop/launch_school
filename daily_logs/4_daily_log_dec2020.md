@@ -314,7 +314,7 @@ __*Concepts covered*__<br/>
     - Launch School Medium problems
 
 __*Time spent*__<br/>
-110 minutes
+180 minutes
 
 __*Thoughts*__<br/>
 I'm practicing the PEDAC method more deliberately, and working through some problems. Some of them can be tricky, but I feel like because I am taking my time reading through the test cases and re-reading the problem, it actually saves time. So far, so good I guess. 
