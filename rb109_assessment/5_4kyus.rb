@@ -401,3 +401,45 @@ Algo
 def solution(n)
   n.reduce(:gcd) * n.size
 end
+
+# https://www.codewars.com/kata/58ad317d1541651a740000c5
+=begin
+Problem
+You are given a string s. Every letter in s appears once. Consider all strings formed by rearranging the letters in s. After ordering these strings in dictionary order, return the middle term. If the sequence has a even length n, define its middle term to be the (n/2)th term.
+
+  Input
+    String object
+
+  Output
+    String object
+
+  Rules
+    We need to generate all permutations of the string s
+    We need to order these permutations by dictionary (alphabetical)
+    Return the 'middle' permutation (n/2) if the number of permutations is even
+      Otherwise return n/2 + 1 if the number of permutations is odd
+
+Example
+  middle_permutation("abc") == "bac"
+  middle_permutation("abcd") == "bdca"
+  middle_permutation("abcdx") == "cbxda"
+  middle_permutation("abcdxg") == "cxgdba"
+  middle_permutation("abcdxgz") == "dczxgba"
+
+Data Structures
+  Array
+
+Algorithm
+  Input string object s
+  Break up s into array of characters (s_chars)
+  Generate all permutations of s_char (perms)
+  sort perms by alphabetical order
+  Check if length of perms is odd
+    If odd, return perms[perms.length / 2]
+    If even, return perms[perms.length / 2 - 1]
+=end
+def middle_permutation(s)
+  s_chars = s.chars
+  perms = s_chars.permutation.to_a.sort
+  perms.length.odd? ? perms[perms.length / 2].join : perms[perms.length / 2 - 1].join
+end

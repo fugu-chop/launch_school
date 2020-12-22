@@ -392,6 +392,121 @@ def featured(input)
   "There is no possible number that fulfills those requirements"
 end
 
+# Launch School Small Problems (Medium 2, Next Featured Number Higher than a Given Value)
+=begin
+Problem
+  Write a method that computes the difference between the square of the sum of the first n positive integers and the sum of the squares of the first n positive integers.
+
+  Input
+    Positive integer object
+
+  Output
+    Positive integer object
+
+  Rules
+    We could get zero as an output
+    Calculate the sum of the numbers up to the input, square it (a)
+    Calculate the square of each of the numbers up to input integer, adding them up (b)
+    Subtract b from a
+
+Examples
+  sum_square_difference(3) == 22
+    # -> (1 + 2 + 3)**2 - (1**2 + 2**2 + 3**2)
+  sum_square_difference(10) == 2640
+  sum_square_difference(1) == 0
+  sum_square_difference(100) == 25164150
+
+Data Structures
+  Array
+
+Algo
+  Create a range of numbers from 1 up to the input number (num_range)
+  (a) Reduce all of the numbers in num_range, and square it (sum_square)
+  (b) Square all of the numbers in num_range and add them together (digits_squared)
+  Subtract b from a (return this value)
+=end
+def sum_square_difference(input)
+  num_range = 1.upto(input).to_a
+  sum_square = num_range.reduce(0, &:+) ** 2
+  digits_squared = num_range.map do |digit|
+    digit ** 2
+  end.reduce(0, &:+)
+  sum_square - digits_squared
+end
+
+# Launch School Small Problems (Medium 2, Bubble Sort)
+=begin
+Problem 
+Write a method that takes an Array as an argument, and sorts that Array using the bubble sort algorithm.
+
+  Input
+    Array of objects
+
+  Output
+    Array of objects (input object mutated)
+
+  Rules
+    You will mutate the Array passed as an argument. 
+    You may assume that the Array contains at least 2 elements.
+    We know the sort is finished, when nothing gets swapped in the array
+
+Examples
+  array = [5, 3]
+  bubble_sort!(array)
+  array == [3, 5]
+
+  array = [6, 2, 7, 1, 4]
+  bubble_sort!(array)
+  array == [1, 2, 4, 6, 7]
+
+  array = %w(Sue Pete Alice Tyler Rachel Kim Bonnie)
+  bubble_sort!(array)
+  array == %w(Alice Bonnie Kim Pete Rachel Sue Tyler)
+
+Data Structures
+  Array
+
+Algo
+  Receive array object as input
+  num_swaps = 0
+  Iterate through this input array in pairs
+    If the first object is larger than the next object
+      Swap the two elements in place
+      Increment num_swaps
+    Otherwise
+      Next
+  Repeat this process (loop)
+    Reset num_swaps
+    Break this loop if num_swaps = 0 after the entire iteration is done
+  Return the array object
+=end
+def bubble_sort!(array)
+  num_swaps = 0
+  start_idx = 0
+  end_idx = 1
+
+  loop do
+    loop do 
+      if array[start_idx] > array[end_idx]
+        array[start_idx], array[end_idx] = array[end_idx], array[start_idx]
+        num_swaps += 1
+        start_idx += 1
+        end_idx += 1
+      else
+        start_idx += 1
+        end_idx += 1
+      end
+      break if end_idx > array.length - 1
+    end
+    start_idx = 0
+    end_idx = 1
+    break if num_swaps == 0
+    num_swaps = 0
+  end
+
+  array
+end
+
 # Study Group Problem
 =begin
 Problem 
