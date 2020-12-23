@@ -946,7 +946,6 @@ Algorithm
   Join common_chars, test for equality with str2
 =end
 def scramble(str1, str2)
-  str1, str2 = 'cedewaraaossoqqyt', 'codewars'
   common_chars = []
   str1_arr, str2_arr = str1.chars, str2.chars
   str2_arr.each do |letter|

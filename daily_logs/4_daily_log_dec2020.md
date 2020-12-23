@@ -21,6 +21,7 @@
 - [20th, Sun](#201220-sun)
 - [21st, Mon](#211220-mon)
 - [22nd, Tue](#221220-tue)
+- [23rd, Wed](#231220-wed)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -318,3 +319,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I'm practicing the PEDAC method more deliberately, and working through some problems. Some of them can be tricky, but I feel like because I am taking my time reading through the test cases and re-reading the problem, it actually saves time. So far, so good I guess. 
+
+##### 23/12/20 (Wed)
+__*Concepts covered*__<br/>
+- RB109 Interview assessment
+  - Practice Problems
+    - Watch Others Code problems
+- RB109 Assessment
+
+__*Time spent*__<br/>
+80 minutes
+
+__*Thoughts*__<br/>
+I spent the morning polishing off some smaller problems, which I was able to solve fine. The actual interview went relatively smoothly (no overly obscure mathematical principles). It took about 25 minutes all up. I'll get my feedback in the next 24 hours. 

@@ -1445,3 +1445,23 @@ def title_case(title, minor_words = '')
     minor_words.downcase.split.include?(a) ? a : a.capitalize
   end.join(' ')
 end
+
+# 61) Write a function that receives two strings and returns n, where n is equal to the number of characters we should shift the first string forward to match the second. 
+=begin
+  shifted_diff("eecoff","coffee") == 4
+  shifted_diff("Moose","moose") == -1
+  shifted_diff("isn't","'tisn") == 2
+  shifted_diff("Esham", "Esham") == 0
+  shifted_diff("dog", "god") == -1
+=end
+def shifted_diff(str1, str2)
+  rotation_counter = 0
+  str1_arr = str1.chars
+  loop do 
+    return -1 if rotation_counter > str2.length
+    return rotation_counter if str1_arr.join == str2
+    last_el = str1_arr.pop
+    str1_arr = str1_arr.insert(0, last_el)
+    rotation_counter += 1
+  end
+end
