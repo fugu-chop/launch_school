@@ -22,6 +22,7 @@
 - [21st, Mon](#211220-mon)
 - [22nd, Tue](#221220-tue)
 - [23rd, Wed](#231220-wed)
+- [24th, Thu](#241220-thu)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -332,3 +333,21 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I spent the morning polishing off some smaller problems, which I was able to solve fine. The actual interview went relatively smoothly (no overly obscure mathematical principles). It took about 25 minutes all up. I'll get my feedback in the next 24 hours. 
+
+##### 24/12/20 (Thu)
+__*Concepts covered*__<br/>
+- RB101 Revision
+  - Pass by Reference v Value
+- RB120 Lesson 1: OO Readings
+  - The Object Model
+    - Classes, Objects, Modules
+  - Classes and Objects
+    - Initialising objects (constructors)
+    - Instance variables
+    - Instance methods
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+Object oriented programming is a completely different way of structuring code to what I was used to in RB101, where we would just define a whole bunch of methods to do different things. I suppose it's more intuitive to group functionality according to entities, and keep code nice and confined to reduce bugs and dependencies. It feels weird to be covering completely new content, and it's a lot to digest so far.
