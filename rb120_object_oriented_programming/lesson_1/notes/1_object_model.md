@@ -14,26 +14,26 @@ They needed a way to section off areas of code that performed certain procedures
 
 ### Key Concepts
 #### Encapsulation 
-__Encapsulation__ is hiding pieces of functionality and making it unavailable to the rest of the code base. It is a form of data protection, so that data cannot be manipulated or changed without obvious intention. 
+*Encapsulation* is hiding pieces of functionality and making it unavailable to the rest of the code base. It is a form of data protection, so that data cannot be manipulated or changed without obvious intention. 
 
 It is what defines the boundaries in your application and allows your code to achieve new levels of complexity. Ruby, like many other OO languages, accomplishes this task by creating objects, and exposing interfaces (i.e., methods) to interact with those objects.
 
 Another benefit of creating objects is that they allow the programmer to think on a new level of abstraction. Objects are represented as real-world nouns and can be given methods that describe the behavior the programmer is trying to represent.
 
 #### Polymorphism
-__Polymorphism__ is the ability for different types of data to respond to a common interface. For instance, if we have a method that expects argument objects that have a `move` method, we can pass it any type of argument, provided it has a compatible `move` method. 
+*Polymorphism* is the ability for different types of data to respond to a common interface. For instance, if we have a method that expects argument objects that have a `move` method, we can pass it any type of argument, provided it has a compatible `move` method. 
 
 The object might represent a human, a cat, a jellyfish, or, conceivably, even a car or train. That is, it lets objects of different types respond to the same method invocation. OOP gives us flexibility in using pre-written code for new purposes.
 
 #### Inheritance
-__Inheritance__ is used in Ruby where a class inherits the behaviors of another class, referred to as the *superclass*. This gives Ruby programmers the power to define basic classes with large reusability and smaller __subclasses__ for more fine-grained, detailed behaviors.
+*Inheritance* is used in Ruby where a class inherits the behaviors of another class, referred to as the *superclass*. This gives Ruby programmers the power to define basic classes with large reusability and smaller __subclasses__ for more fine-grained, detailed behaviors.
 
 Another way to apply polymorphic structure to Ruby programs is to use a `Module`. Modules are similar to classes in that they contain shared behavior. However, you __cannot create an object with a module__. A module must be mixed in with a class using the `include` method invocation. This is called a `mixin`. After mixing in a module, the behaviors declared in that module are available to the class and its objects.
 
 ### What is an object?
 Objects are created from classes. Think of classes as molds and objects as the things you produce out of those molds. Individual objects will contain different information from other objects, yet they are instances of the same class. 
 
-Anything that can be said to have a value is an object: that includes numbers, strings, arrays, and even classes and modules. However, there are a few things that are not objects: methods and blocks are two that stand out.
+Anything that can be said to have a value is an object: that includes numbers, strings, arrays, and even classes and modules. However, there are a few things that are __not__ objects: *methods* and *blocks* are two that stand out.
 
 Here's an example of two objects of the `String` class:
 ```
@@ -127,6 +127,6 @@ Object
 Kernel
 BasicObject
 ```
-The `Speak` module is placed right in between our custom classes (i.e., `GoodDog` and `HumanBeing`) and the Object class that comes with Ruby. In __Inheritance__ you'll see how the method lookup chain works when working with both mixins and class inheritance.
+The `Speak` module is placed right in between our custom classes (i.e., `GoodDog` and `HumanBeing`) and the Object class that comes with Ruby. 
 
 This means that since the `speak` method is not defined in the `GoodDog` class, the next place it looks is the `Speak` module. This continues in an ordered, linear fashion, until the method is either found, or there are no more places to look.
