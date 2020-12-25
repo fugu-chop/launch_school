@@ -22,7 +22,7 @@ Even though they're two different objects, both are still objects (or instances)
 In summary, instance *variables* keep track of __state__, and instance *methods* expose __behavior__ for objects. 
 
 ### Initialising a new object
-In our code below, we've created an `initialize` method, which gets called every time you create a new object. Calling the `new` class method eventually leads us to the `initialize` instance method. 
+In our code below, we've created the `initialize` method, which gets called every time you create a new object. Calling the `new` class method eventually leads us to the `initialize` instance method. 
 ```
 class GoodDog
   def initialize
@@ -33,7 +33,9 @@ end
 sparky = GoodDog.new
 => "This object was initialized!"
 ```
-In the above example, instantiating a new `GoodDog` object triggered the `initialize` method and resulted in the string being outputted. We refer to the `initialize` method as a __constructor__, because it gets triggered whenever we create a *new* object.
+In the above example, instantiating a new `GoodDog` object triggered the `initialize` method and resulted in the string being outputted. We refer to the `initialize` method as a __constructor__, because it gets triggered whenever we create a *new* object. 
+
+In Ruby, the `initialize` is treated as a special method (i.e. it is specifically reserved as a __constructor__), which allows it to be called when a new object is created (contrast it with all other methods you define within a class, which aren't automatically called).
 
 ### Instance Variables
 ```
@@ -51,9 +53,9 @@ sparky = GoodDog.new("Sparky")
 ```
 The string "Sparky" is being passed from the `new` method through to the `initialize` method, and is assigned to the local variable `name`. Within the constructor (i.e., the `initialize` method), we then set the instance variable `@name` to `name`, which results in assigning the string "Sparky" to the `@name` instance variable.
 
-We can see that instance variables are responsible for keeping track of information about the state of an object. In the above line of code, the name of the sparky object is the string "Sparky". This state for the object is tracked in the instance variable, `@name`
+We can see that instance variables are responsible for *keeping track of information about the state* of an object. In the above line of code, the name of the `sparky` object is the string "Sparky". This state for the object is tracked in the instance variable, `@name`.
 
-If we created another `GoodDog` object, for example, with `fido = GoodDog.new('Fido')`, then the `@name` instance variable for the `fido` object would contain the string "Fido". Every object's state is unique, and instance variables are how we keep track.
+If we created another `GoodDog` object, for example, with `fido = GoodDog.new('Fido')`, then the `@name` instance variable for the `fido` object would contain the string "Fido". Every object's state is _unique_, and instance variables are how we keep track.
 
 ### Instance Methods
 Instance methods are how we attach functionality to our objects. 
@@ -69,10 +71,9 @@ class GoodDog
 end
 
 sparky = GoodDog.new("Sparky")
-puts sparky.speak
-=> "Arf!"
+sparky.speak
 ```
-When you run this program, nothing happens. This is because the speak method returned the string "Arf!", but we now need to print it out, using the `puts` method.
+When you run this program, nothing happens. This is because the `speak` method returned the string "Arf!", but we now need to print it out, using the `puts` method.
 ```
 fido = GoodDog.new("Fido")
 puts fido.speak
@@ -88,7 +89,7 @@ end
 ```
 
 ### Accessor Methods
-What if we wanted to print out only sparky's name? We could try the code below:
+What if we wanted to print out only `sparky`'s name? We could try the code below:
 ```
 puts sparky.name
 NoMethodError: undefined method `name' for #<GoodDog:0x007f91821239d0 @name="Sparky">
@@ -116,7 +117,7 @@ puts sparky.get_name
 => "Sparky says arf!"
 => "Sparky"
 ```
-We now have a __getter__ method. But what if we wanted to change sparky's name? That's when we reach for a __setter__ method. It looks a lot like a __getter__ method but with one small difference.
+We now have a __getter__ method. But what if we wanted to change `sparky`'s name? That's when we reach for a __setter__ method. It looks a lot like a __getter__ method but with one small difference.
 ```
 class GoodDog
   def initialize(name)
@@ -174,7 +175,6 @@ class GoodDog
 end
 
 sparky = GoodDog.new("Sparky")
-puts sparky.speak
 puts sparky.name
 => "Sparky"
 
@@ -211,13 +211,13 @@ The `attr_accessor` method takes a *symbol as an argument*, which it uses to cre
 
 But what if we only want the getter method without the setter method? Then we would want to use the `attr_reader` method. It works the same way but only allows you to __retrieve__ the instance variable. 
 
-If you only want the setter method, you can use the `attr_writer` method. All of the `attr_*` methods take a _Symbol as parameters_. If there are more states you're tracking, you can use this syntax:
+If you only want the setter method, you can use the `attr_writer` method. All of the `attr_*` methods take a _symbol as parameters_. If there are more states you're tracking, you can use this syntax:
 ```
 attr_accessor :name, :height, :weight
 ```
 
 #### Examples of Accessor methods
-With getter and setter methods, we have a way to expose and change an object's state. We can also use these methods from within the class as well. In the previous section, the speak method referenced the `@name` instance variable, like below:
+With getter and setter methods, we have a way to expose and change an object's state. We can also use these methods from within the class as well. In the previous section, the `speak` method referenced the `@name` instance variable, like below:
 ```
 def speak
   "#{@name} says arf!"
@@ -229,9 +229,9 @@ def speak
   "#{name} says arf!"
 end
 ```
-By removing the `@` symbol, we're now calling the instance *method*, rather than the instance *variable*. Why do this? Why not just reference the `@name` instance variable, like we did before? Technically, you could just reference the instance variable, but it's generally a good idea to call the getter method instead. 
+By removing the `@` symbol, we're now calling the instance *method* (and using it's return value), rather than the instance *variable*. Why do this? Why not just reference the `@name` instance variable, like we did before? Technically, you could just reference the instance variable, but it's generally a good idea to call the getter method instead. 
 
-If we didn't call the getter method, we'd have to find each individual occurrence of the `@name` instance variable and change it if we wanted to edit our code. It's much easier to just reference a getter method, and make the change in one place.
+If we didn't call the getter method, we'd have to create individual occurrences of the `@name` instance variable throughout the class and change all those individual instances if we wanted to edit our code. It's much easier to just reference a getter method, and make the change in that one method.
 
 Suppose we added two more states to track to the GoodDog class called "height" and "weight":
 ```
@@ -287,7 +287,7 @@ puts sparky.info
 ```
 
 ### Calling methods with self
-Just like when we replaced accessing the instance variable directly with getter methods, we'd also like to do the same with our setter methods. Let's change the implementation of the change_info method to this:
+Just like when we replaced accessing the instance variable directly with getter methods, we'd also like to do the same with our setter methods. Let's change the implementation of the `change_info` method to this:
 ```
 def change_info(n, h, w)
   name = n
