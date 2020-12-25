@@ -23,6 +23,7 @@
 - [22nd, Tue](#221220-tue)
 - [23rd, Wed](#231220-wed)
 - [24th, Thu](#241220-thu)
+- [25th, Fri](#251220-fri)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -341,7 +342,7 @@ __*Concepts covered*__<br/>
 - RB120 Lesson 1: OO Readings
   - The Object Model
     - Classes, Objects, Modules
-  - Classes and Objects
+  - Classes and Objects I
     - Initialising objects (constructors)
     - Instance variables
     - Instance methods
@@ -351,3 +352,20 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Object oriented programming is a completely different way of structuring code to what I was used to in RB101, where we would just define a whole bunch of methods to do different things. I suppose it's more intuitive to group functionality according to entities, and keep code nice and confined to reduce bugs and dependencies. It feels weird to be covering completely new content, and it's a lot to digest so far.
+
+##### 25/12/20 (Fri)
+__*Concepts covered*__<br/>
+- RB120 Lesson 1: OO Readings
+  - The Object Model Revision
+  - Classes and Objects I (Revision)
+  - Classes and Objects II
+    - Class variables & methods
+    - `self` and scope
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+Merry Christmas. Spent some time revising what I'd learned yesterday. There was a lot of very new and unfamiliar stuff to cover. It was definitely helpful, and will prevent those instances where I move forward too quickly, only to discover too late that my foundational knowledge is incomplete, and I get super confused.
+
+I find the `self` keyword(?) confusing, especially all the discussion around it's scope. I will re-read this tomorrow. 
