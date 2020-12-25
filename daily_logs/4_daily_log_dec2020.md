@@ -27,7 +27,7 @@
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Watch others code videos
     - Codewars (6 kyu)
@@ -44,7 +44,7 @@ I need to get better with simultaneous loops. Intuitively, I can grasp the conce
 
 ##### 02/12/20 (Wed)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Watch others code videos
     - Codewars (6 kyu)
@@ -57,7 +57,7 @@ Polished off some more 6 kyu problems. Not too bad, though a lack of useful test
 
 ##### 03/12/20 (Thu)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Codewars (6 & 5 kyu)
 
@@ -71,7 +71,7 @@ There are still some times where I revert to testing out code willy-nilly, but I
 
 ##### 04/12/20 (Fri)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Codewars (5 kyu)
 
@@ -83,7 +83,7 @@ __*Thoughts*__<br/>
 
 ##### 05/12/20 (Sat)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Reading RB109 preparation articles
   - Practice Problems
     - Codewars (5 kyu)
@@ -96,7 +96,7 @@ Ran into a very hairy problem that required playing around with indexes and numb
 
 ##### 06/12/20 (Sun)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Codewars (5 kyu)
 
@@ -108,7 +108,7 @@ Doing regex problems without regex is very annoying. It basically relies on real
 
 ##### 07/12/20 (Mon)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Codewars (5 kyu)
 
@@ -122,7 +122,7 @@ I'm starting to encounter more mathematical problems. They're basically impossib
 
 ##### 08/12/20 (Tue)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Codewars (5 kyu)
 
@@ -136,7 +136,7 @@ It took me absolutely ages to figure out a relatively simple problem. I just cou
 
 ##### 09/12/20 (Wed)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Revision of existing solutions
     - Codewars (5 kyu)
@@ -151,7 +151,7 @@ The 5 kyu problems continue to get more mathematical. It's a genuine struggle to
 
 ##### 10/12/20 (Thu)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Codewars (5 kyu)
   - Study Session
@@ -170,7 +170,7 @@ I'm going to start recording myself doing problems from the compiled Launch Scho
 
 ##### 11/12/20 (Fri)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Compiled Codewars problems
   - Revision
@@ -183,7 +183,7 @@ Some decent practice with fully documenting the PEDAC processes. I'll start voic
 
 ##### 12/12/20 (Sat)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Compiled Codewars problems
   - Revision
@@ -198,7 +198,7 @@ I did more of the compiled Codewars problems. It's a bit hit and miss. Sometimes
 
 ##### 13/12/20 (Sun)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Compiled Codewars problems
 
@@ -210,7 +210,7 @@ The PEDAC method is helping, but I'm still finding I jump through the diagnosis 
 
 ##### 14/12/20 (Mon)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Compiled Codewars problems
 
@@ -222,7 +222,7 @@ I am making progress on reading the test cases more closely, but sometimes the k
 
 ##### 15/12/20 (Tue)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Compiled Codewars problems
 
@@ -238,7 +238,7 @@ Frustratingly, I don't feel as though I am improving a lot. Progress is grinding
 
 ##### 16/12/20 (Wed)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Compiled Codewars problems
 
@@ -250,7 +250,7 @@ The problems for today weren't too bad. I didn't really struggle with any of the
 
 ##### 17/12/20 (Thu)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Compiled Codewars problems
 
@@ -262,7 +262,7 @@ The joys of debugging. I still have some practice to do to make sure I keep talk
 
 ##### 18/12/20 (Fri)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - 5 kyu
 
@@ -274,7 +274,7 @@ Some more 5 kyu problems. After all the PEDAC practice I've had, I can now solve
 
 ##### 19/12/20 (Sat)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - 5 kyu
     - Difficult compiled CodeWars problems
@@ -287,7 +287,7 @@ So incredibly frustrating. I worked through some of the previous problems that I
 
 ##### 20/12/20 (Sun)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Difficult compiled CodeWars problems
 
@@ -299,7 +299,7 @@ I tried doing the difficult compiled CodeWars problems again. Thankfully, I was 
 
 ##### 21/12/20 (Mon)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - 4 kyus
 
@@ -311,7 +311,7 @@ __*Thoughts*__<br/>
 
 ##### 22/12/20 (Tue)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Watch Others Code problems
     - Launch School Medium problems
@@ -324,16 +324,16 @@ I'm practicing the PEDAC method more deliberately, and working through some prob
 
 ##### 23/12/20 (Wed)
 __*Concepts covered*__<br/>
-- RB109 Interview assessment
+- RB109 Interview preparation
   - Practice Problems
     - Watch Others Code problems
-- RB109 Assessment
+- RB109 Interview Assessment
 
 __*Time spent*__<br/>
 80 minutes
 
 __*Thoughts*__<br/>
-I spent the morning polishing off some smaller problems, which I was able to solve fine. The actual interview went relatively smoothly (no overly obscure mathematical principles). It took about 25 minutes all up. I'll get my feedback in the next 24 hours. 
+I spent the morning polishing off some smaller problems, which I was able to solve fine. The actual interview went relatively smoothly (no overly obscure mathematical principles). It took about 25 minutes all up. Apparently I nailed the assessment, maxing out both the technical and non-technical grades. I guess I thought it would be more difficult than it was. 
 
 ##### 24/12/20 (Thu)
 __*Concepts covered*__<br/>
