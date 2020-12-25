@@ -229,9 +229,7 @@ def speak
   "#{name} says arf!"
 end
 ```
-By removing the `@` symbol, we're now calling the instance *method* (and using it's return value), rather than the instance *variable*. Why do this? Why not just reference the `@name` instance variable, like we did before? Technically, you could just reference the instance variable, but it's generally a good idea to call the getter method instead. 
-
-If we didn't call the getter method, we'd have to create individual occurrences of the `@name` instance variable throughout the class and change all those individual instances if we wanted to edit our code. It's much easier to just reference a getter method, and make the change in that one method.
+By removing the `@` symbol, we're now calling the instance *method* (and using it's return value), rather than the instance *variable*. Why do this? Why not just reference the `@name` instance variable, like we did before? Technically, you could just reference the instance variable, but it's generally a good idea to call the getter method instead. It's much easier to just reference a getter method, and make the change in that one method.
 
 Suppose we added two more states to track to the GoodDog class called "height" and "weight":
 ```

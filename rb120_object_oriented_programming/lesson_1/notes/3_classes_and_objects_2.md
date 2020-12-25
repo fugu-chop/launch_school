@@ -122,6 +122,7 @@ Here, the `to_s` method is automatically called on the `arr` array object, as we
 "#{sparky}"
 => "This dog's name is Sparky and it is 28 in dog years."
 ```
+In summary, the `to_s` method is called automatically on the object when we use it with `puts` or when used with string interpolation. This fact may seem trivial at the moment, but knowing when `to_s` is called will help us understand how to read and write better OO code.
 
 #### The `p` Method
 There's another method called `p` that's very similar to `puts`, except it __doesn't__ call `to_s` on its argument; it calls another built-in Ruby instance method called `inspect`. The `inspect` method is very helpful for debugging purposes, so we don't want to override it.
@@ -132,7 +133,7 @@ p sparky
 This output implies that `p sparky` is equivalent to `puts sparky.inspect`.
 
 ### More about `self`
-`self` can refer to different things depending on where it is used. For example, so far we've seen two clear use cases for self:
+`self` can refer to different things depending on where it is used. For example, so far we've seen two clear use cases for `self`:
   1. Use `self` when calling setter methods from within the class. In our earlier example we showed that `self` was necessary in order for our `change_info` method to work properly. We had to use `self` to allow Ruby to disambiguate between initializing a local variable and calling a setter method.
   2. Use `self` for class method definitions.
 
@@ -197,9 +198,9 @@ irb :001 > GoodDog
 ```
 You can see that using `self` __inside a class but outside an instance method__ refers to the *class itself*. Therefore, a method definition prefixed with `self` is the __same as defining the method on the class__. That is, `def self.a_method` is equivalent to `def GoodDog.a_method`. That's why it's a class method; it's actually being defined __on the class__.
 
-To be clear, from within a class...
-  1. `self`, __inside__ of an instance method, references the instance (object) that called the method - the calling object. Therefore, `self.weight=` is the same as `sparky.weight=`, in our example.
-  2. `self`, __outside__ of an instance method, references the class and can be used to define class methods. Therefore if we were to define a `name` class method, `def self.name=(n)` is the same as `def GoodDog.name=(n)`.
+From __within__ a class:
+  1. `self`, __inside__ of an instance method, references the __instance (object)__ that called the method - the calling object. Therefore, `self.weight=` inside the class is the same as calling `sparky.weight=`, in our example.
+  2. `self`, __outside__ of an instance method, references the __class__ and can be used to define class methods. Therefore if we were to define a `name` class method, `def self.name=(n)` is the same as `def GoodDog.name=(n)`.
 
 Thus, we can see that `self` is a way of being explicit about what our program is referencing and what our intentions are as far as behavior. `self` changes *depending on the scope it is used in*, so pay attention to see if you're inside an instance method or not. 
 
