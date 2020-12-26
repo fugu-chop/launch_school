@@ -11,7 +11,7 @@
 - [Accidental Method Overriding](#accidental-method-overriding)
 
 ### Class Inheritance
-Inheritance is when a class *inherits behavior from another class*. The class that is inheriting behavior is called the __subclass__ and the class it inherits from is called the __superclass__.
+Inheritance is when a class *inherits behavior from another class*. The class that is inheriting behavior is called the __subclass__ and the class it inherits from is called the __superclass__. Objects __do not inherit from their class__, rather the class acts as a mold or template for objects of that class and determines the attributes and behaviors of those objects.
 
 We use inheritance as a way to extract common behaviors from classes that share that behavior, and move it to a superclass. This lets us keep logic in one place. 
 
@@ -387,7 +387,9 @@ def public_disclosure
   "#{self.name} in human years is #{human_years}"
 end
 ```
-In older versions or Ruby, we could not use `self.human_years`, because the `human_years` method is private. Remember that `self.human_years` is equivalent to `sparky.human_years`, which was __not allowed__ for private methods. Therefore, we had just use `human_years`. As of Ruby 2.7, it is now legal to call private methods with a literal `self` as the caller.
+We cannot use `self.human_years`, because the `human_years` method is private. Remember that `self.human_years` is equivalent to `sparky.human_years`, is __not allowed__ for private methods. Therefore, we had just use `human_years`. 
+
+As of Ruby 2.7, it is now legal to call private methods with a literal `self` as the caller.
 
 Public and private methods are most common, but in some less common situations, we'll want an in-between approach. We can use the `protected` keyword to create protected methods. The easiest way to understand protected methods is to follow these two rules:
 - from inside the class, protected methods are accessible just like public methods.
@@ -427,7 +429,7 @@ end
 Parent.superclass
 => Object
 ```
-Through the magic of inheritance, a subclass can override a superclass’s method.
+Through the magic of inheritance, a subclass can override a superclass’s method. Method overriding is one way in which Ruby implements polymorphism.
 ```
 class Child < Parent
   def say_hi
