@@ -24,6 +24,7 @@
 - [23rd, Wed](#231220-wed)
 - [24th, Thu](#241220-thu)
 - [25th, Fri](#251220-fri)
+- [26th, Sat](#261220-sat)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -369,3 +370,21 @@ __*Thoughts*__<br/>
 Merry Christmas. Spent some time revising what I'd learned yesterday. There was a lot of very new and unfamiliar stuff to cover. It was definitely helpful, and will prevent those instances where I move forward too quickly, only to discover too late that my foundational knowledge is incomplete, and I get super confused.
 
 I find the `self` keyword(?) confusing, especially all the discussion around it's scope. I will re-read this tomorrow. 
+
+##### 26/12/20 (Sat)
+__*Concepts covered*__<br/>
+- RB120 Lesson 1: OO Readings
+  - Classes and Objects I (Revision)
+  - Classes and Objects II (Revision)
+  - Inheritance
+    - Class Inheritance
+    - `super` keyword
+    - Modules
+    - Private, Protected & Public
+- RB120 Lesson 1 Quiz
+
+__*Time spent*__<br/>
+240 minutes
+
+__*Thoughts*__<br/>
+More tricky material. All the nuances of modules and inheritance are hard to keep track of, especially since you can group classes and methods into modules. The rules for Private and Protected are also a little fuzzy currently. This will probably only become more familiar through practice and revision. 
