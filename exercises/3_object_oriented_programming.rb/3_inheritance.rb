@@ -226,3 +226,80 @@ puts truck1.tow
 
 car1 = Car.new(2006)
 puts car1.year
+
+# 7) Using the following code, determine the lookup path used when invoking cat1.color. Only list the classes that were checked by Ruby when searching for the #color method.
+=begin
+class Animal
+  attr_reader :color
+
+  def initialize(color)
+    @color = color
+  end
+end
+
+class Cat < Animal
+end
+
+class Bird < Animal
+end
+
+cat1 = Cat.new('Black')
+cat1.color
+=end
+puts "The method lookup path is the Cat class, then the Animal Class. The method lookup stops when the necessary methods are found."
+
+# 8) Using the following code, determine the lookup path used when invoking cat1.color. Only list the classes and modules that Ruby will check when searching for the #color method.
+=begin
+class Animal
+end
+
+class Cat < Animal
+end
+
+class Bird < Animal
+end
+
+cat1 = Cat.new('Black')
+cat1.color
+=end
+puts "The method lookup path is the Cat class, then the Animal Class, then Object, Kernel module and BasicObject classes (which doesn't inherit from another class). The method lookup stops when the necessary methods are found, but here, the color method is never found, so a NoMethodError is returned."
+
+# 9) Using the following code, determine the lookup path used when invoking bird1.color. Only list the classes or modules that were checked by Ruby when searching for the #color method.
+=begin
+module Flyable
+  def fly
+    "I'm flying!"
+  end
+end
+
+class Animal
+  attr_reader :color
+
+  def initialize(color)
+    @color = color
+  end
+end
+
+class Cat < Animal
+end
+
+class Bird < Animal
+  include Flyable
+end
+
+bird1 = Bird.new('Red')
+bird1.color
+=end
+puts "The method lookup path for the color method invocation is the Cat class, then the Flyable module, then the Animal Class. The method lookup stops at the Animal class as this is where the method can be found."
+
+# 10) Create a module named Transportation that contains three classes: Vehicle, Truck, and Car. Truck and Car should both inherit from Vehicle.
+module Transportation
+  class Vehicle
+  end
+
+  class Truck < Vehicle
+  end
+
+  class Car < Vehicle
+  end
+end

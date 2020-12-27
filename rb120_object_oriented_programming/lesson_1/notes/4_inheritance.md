@@ -441,7 +441,7 @@ abc2 = Abc.new(8)
 puts abc1.add(abc2)
 => 13
 ```
-This code works because `get_val` is protected -- it lets the `abc1` instance access the `get_val` method in the `abc2` instance. Had `get_val` been declared as `private`, then this code would fail because an object (`abc1` here) __can't access a private method from any other object__ -- they can only access `self.get_val`, not `other.get_val`. 
+This code works because `get_val` is protected -- it lets the `abc1` instance access the `get_val` method in the `abc2` instance. Had `get_val` been declared as `private`, then this code would fail because an object (`abc1` here) __can't access a private method from any other object__ -- they can only access `self.get_val`, not `other.get_val`. When a method is private, only the *class* - __not__ *instances* of the class - can access it. 
 
 Had `get_val` been declared as public, then this code would work, but anyone could call `abc1.get_val`, which may not be desired. Anyone can access public methods. A private method can only be accessed by the object that is calling it. A protected method can be __called by any instance of the class__ -- either `self` or some other object of the same type.
 
