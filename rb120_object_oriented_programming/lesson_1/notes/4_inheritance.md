@@ -11,7 +11,7 @@
 - [Accidental Method Overriding](#accidental-method-overriding)
 
 ### Class Inheritance
-Inheritance is when a class *inherits behavior from another class*. The class that is inheriting behavior is called the __subclass__ and the class it inherits from is called the __superclass__. Objects __do not inherit from their class__, rather the class acts as a mold or template for objects of that class and determines the attributes and behaviors of those objects.
+Inheritance is when a class *inherits behavior from another __class__*. The class that is inheriting behavior is called the __subclass__ and the class it inherits from is called the __superclass__. Objects __do not inherit__ from their class, rather the class acts as a mold or template for objects of that class and determines the attributes and behaviors of those objects (__classes__ inherit from other classes).
 
 We use inheritance as a way to extract common behaviors from classes that share that behavior, and move it to a superclass. This lets us keep logic in one place. 
 
@@ -215,9 +215,9 @@ Now you know the two primary ways that Ruby implements inheritance.
 - The other form is sometimes called __interface inheritance__: this is where __mixin modules__ come into play. The class doesn't inherit from another type, but instead inherits the interface provided by the mixin module. In this case, the result type is not a specialized type with respect to the module.
 
 You may wonder when to use class inheritance vs mixins. Here are a couple of things to consider when evaluating these choices.
-- You can only subclass (class inheritance) from one class, whereas you can mix in as many modules (interface inheritance) as you'd like.
+- You can only subclass (class inheritance) from __one__ class, whereas you can mix in as many modules (interface inheritance) as you'd like.
 - If there's an "is-a" relationship, class inheritance is usually the correct choice. If there's a "has-a" relationship, interface inheritance is generally a better choice. For example, a dog "is an" animal and it "has an" ability to swim.
-- You cannot instantiate modules (i.e., no object can be created from a module). Modules are used only for namespacing and grouping common methods together.
+- You __cannot instantiate modules__ (i.e., no object can be created from a module). Modules are used only for namespacing and grouping common methods together.
 
 As you get better at OO design, you'll start to develop a feel for when to use class inheritance versus mixing in modules.
 
@@ -302,7 +302,7 @@ BasicObject
 ```
 There are several interesting things about the above output. 
 - First, this tells us that the order in which we include modules is important. Ruby actually __looks at the last module we included first__. This means that in the rare occurrence that the modules we mix in contain a method with the same name, the __last module included will be consulted first__. 
-- The second interesting thing is that the module included in the superclass made it on to the method lookup path. That means that all `GoodDog` objects will have access to not only Animal methods, but __also methods defined in the `Walkable` module__, as well as all other modules mixed in to any of its superclasses.
+- The second interesting thing is that the module included in the superclass made it on to the method lookup path. That means that all `GoodDog` objects will have access to not only `Animal` methods, but __also methods defined in the `Walkable` module__, as well as _all other modules mixed in to any of its superclasses_.
 
 Sometimes when you're working on a large project, it can be confusing where all these methods are coming from. By understanding the method lookup path, we can have a better idea of where and how all available methods are organized.
 
@@ -351,7 +351,7 @@ value = Mammal::some_out_of_place_method(4)
 ```
 
 ### Private, Protected & Public
-__Access Control__ is a concept that exists in a number of programming languages, including Ruby. It is generally implemented through the use of access modifiers. The purpose of access modifiers is to allow or restrict access to a particular thing. In Ruby, the things that we are concerned with restricting access to are the methods defined in a class. In a Ruby context, therefore, you'll commonly see this concept referred to as __Method Access Control__.
+__Access Control__ is a concept that exists in a number of programming languages, including Ruby. It is generally implemented through the use of access modifiers. The purpose of access modifiers is to allow or restrict access to a particular thing. In Ruby, the things that we are concerned with restricting access to are the *methods defined in a class*. In a Ruby context, therefore, you'll commonly see this concept referred to as __Method Access Control__.
 
 The way that Method Access Control is implemented in Ruby is through the use of the `public`, `private`, and `protected` access modifiers. Right now, all the methods in our `GoodDog` class are public methods. A public method is a method that is *available to anyone who knows either the class name or the object's name*. These methods are readily available for the rest of the program to use and comprise the class's interface (that's how other classes and objects will interact with this class and its objects).
 
@@ -387,7 +387,7 @@ def public_disclosure
   "#{self.name} in human years is #{human_years}"
 end
 ```
-We cannot use `self.human_years`, because the `human_years` method is private. Remember that `self.human_years` is equivalent to `sparky.human_years`, is __not allowed__ for private methods. Therefore, we had just use `human_years`. 
+We cannot use `self.human_years`, because the `human_years` method is private. Remember that `self.human_years` is equivalent to `sparky.human_years`, is __not allowed__ for private methods (as using `self.` as a prefix would enable access to that method outside of the class when instantiated through an object). Therefore, we had just use `human_years` instance method, which inside the class, the `public_disclosure` instance method is able to see (and use the returned value).
 
 As of Ruby 2.7, it is now legal to call private methods with a literal `self` as the caller.
 
@@ -418,7 +418,7 @@ fido.a_protected_method
 Protected methods are not used often in practice and that knowledge isn’t transferrable to other languages.
 
 ### Accidental Method Overriding
-It’s important to remember that every class you create inherently subclasses from class Object. The Object class is built into Ruby and comes with many critical methods. This means that methods defined in the `Object` class are available in all classes.
+It’s important to remember that every class you create inherently subclasses from class `Object`. The `Object` class is built into Ruby and comes with many critical methods. This means that methods defined in the `Object` class are available in all classes.
 ```
 class Parent
   def say_hi

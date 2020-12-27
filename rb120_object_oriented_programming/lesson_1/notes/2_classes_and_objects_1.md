@@ -94,7 +94,7 @@ What if we wanted to print out only `sparky`'s name? We could try the code below
 puts sparky.name
 NoMethodError: undefined method `name' for #<GoodDog:0x007f91821239d0 @name="Sparky">
 ```
-A `NoMethodError` means that we called a method that doesn't exist or is unavailable to the object. If we want to access the object's name, which is stored in the `@name` instance variable, we have to *create a method that will return the name*. We can call it `get_name`, and its only job is to return the value in the `@name` instance variable.
+A `NoMethodError` means that we called a method that doesn't exist or is unavailable to the object. If we want to access the object's name, which is __stored in the `@name` instance variable__, we have to *create a method that will return the name*. We can call it `get_name`, and its only job is to return the value in the `@name` instance variable.
 ```
 class GoodDog
   def initialize(name)
@@ -184,7 +184,7 @@ puts sparky.name
 ```
 Writing those getter and setter methods took up a lot of room in our program for such a simple feature. And if we had other states we wanted to track, like height or weight, the class would be even longer. 
 
-Because these methods are so commonplace, Ruby has a built-in way to automatically create these getter and setter methods for us, using the `attr_accessor` method. 
+Because these methods are so commonplace, Ruby has a built-in way to automatically create these getter and setter methods for us, using the `attr_accessor` method. Remember, that these represent __instance methods that write to/read from an instance variable__.
 ```
 class GoodDog
   attr_accessor :name
@@ -223,13 +223,13 @@ def speak
   "#{@name} says arf!"
 end
 ```
-Instead of referencing the instance variable directly, we want to use the `name` getter method that we created earlier, and that is given to us now by `attr_accessor`.
+Instead of referencing the instance variable directly, we want to use the `name` getter method that we created earlier, and that is given to us now by `attr_accessor`. Remember, `attr_accessor` __creates instance methods that reference instance variables__ - our change from the instance variable to the instance method is effectively the same thing, just a different method of getting the instance variable.
 ```
 def speak
   "#{name} says arf!"
 end
 ```
-By removing the `@` symbol, we're now calling the instance *method* (and using it's return value), rather than the instance *variable*. Why do this? Why not just reference the `@name` instance variable, like we did before? Technically, you could just reference the instance variable, but it's generally a good idea to call the getter method instead. It's much easier to just reference a getter method, and make the change in that one method.
+By removing the `@` symbol, we're now calling the instance *method* (and using it's return value), rather than the instance *variable*. Why not just reference the `@name` instance variable, like we did before? Technically, you could just reference the instance variable, but it's generally a good idea to call the getter method instead. It's much easier to just reference a getter method, and make the change in that one method.
 
 Suppose we added two more states to track to the GoodDog class called "height" and "weight":
 ```
@@ -311,7 +311,7 @@ def change_info(n, h, w)
   self.weight = w
 end
 ```
-This tells Ruby that we're calling a setter method, not creating a local variable. To be consistent, we could also adopt this syntax for the getter methods as well, though it is not required.
+This tells Ruby that we're __calling a setter method__, not creating a local variable. To be consistent, we could also adopt this syntax for the getter methods as well, though it is not required.
 ```
 def info
   "#{self.name} weighs #{self.weight} and is #{self.height} tall."
@@ -332,3 +332,4 @@ class GoodDog
   end
 end
 ```
+For now, when we see `self.x` within an instance method, we can assume that `self` is referring to calling another instance method provided by an `attr_*` method.

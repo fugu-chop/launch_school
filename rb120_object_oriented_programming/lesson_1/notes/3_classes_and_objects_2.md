@@ -8,7 +8,7 @@
 - [More about self](#more-about-self)
 
 ### Class Methods
-Thus far, all the methods we've created are instance methods. That is, they are methods that *pertain to an instance or object of the class*. There are also __class level__ methods, called class methods. Class methods are methods we can call __directly on the class itself__, without having to instantiate any objects. 
+Thus far, all the methods we've created are instance methods. That is, they are methods that *pertain to an instance or object of the class*. There are also __class level__ methods, called class methods. Class methods are methods we can call __directly on the class itself__, without having to instantiate any objects. Class methods __cannot__ be called by *objects instantiated from them*.
 
 When defining a class method, we prepend the method name with the reserved word `self.`, like this:
 ```
