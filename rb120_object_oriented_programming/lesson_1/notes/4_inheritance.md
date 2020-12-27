@@ -391,6 +391,7 @@ We cannot use `self.human_years`, because the `human_years` method is private. R
 
 As of Ruby 2.7, it is now legal to call private methods with a literal `self` as the caller.
 
+#### Protected
 Public and private methods are most common, but in some less common situations, we'll want an in-between approach. We can use the `protected` keyword to create protected methods. The easiest way to understand protected methods is to follow these two rules:
 - from inside the class, protected methods are accessible just like public methods.
 - from outside the class, protected methods act just like private methods.
@@ -417,6 +418,33 @@ fido.a_protected_method
 ```
 Protected methods are not used often in practice and that knowledge isn’t transferrable to other languages.
 
+A protected method allows __other instances of the same class to invoke the method__:
+```
+class Abc
+  def initialize(val)
+    @val = val
+  end  
+  
+  def add(other)
+    self.get_val + other.get_val
+  end  
+  
+  protected
+  
+  def get_val
+    @val
+  end
+end
+
+abc1 = Abc.new(5)
+abc2 = Abc.new(8)
+puts abc1.add(abc2)
+=> 13
+```
+This code works because `get_val` is protected -- it lets the `abc1` instance access the `get_val` method in the `abc2` instance. Had `get_val` been declared as `private`, then this code would fail because an object (`abc1` here) __can't access a private method from any other object__ -- they can only access `self.get_val`, not `other.get_val`. 
+
+Had `get_val` been declared as public, then this code would work, but anyone could call `abc1.get_val`, which may not be desired. Anyone can access public methods. A private method can only be accessed by the object that is calling it. A protected method can be __called by any instance of the class__ -- either `self` or some other object of the same type.
+
 ### Accidental Method Overriding
 It’s important to remember that every class you create inherently subclasses from class `Object`. The `Object` class is built into Ruby and comes with many critical methods. This means that methods defined in the `Object` class are available in all classes.
 ```
@@ -441,7 +469,7 @@ child = Child.new
 child.say_hi
 => "Hi from Child."
 ```
-This means that, if you accidentally override a method that was originally defined in the `Object` class, it can have far-reaching effects on your code. For example, `send` is an instance method that all classes inherit from `Object`. If you defined a new `send` instance method in your class, __all objects of your class will call your custom send method__, instead of the one in class Object, which is probably the one they mean to call. `Object` send serves as a way to call a method by passing it a symbol or a string which represents the method you want to call. The next couple of arguments will represent the method's arguments, if any.
+This means that, if you accidentally override a method that was originally defined in the `Object` class, it can have far-reaching effects on your code. For example, `send` is an instance method that all classes inherit from `Object`. If you defined a new `send` instance method in your class, __all objects of your class will call your custom send method__, instead of the one in class `Object`, which is probably the one they mean to call. `Object` send serves as a way to call a method by passing it a symbol or a string which represents the method you want to call. The next couple of arguments will represent the method's arguments, if any.
 ```
 son = Child.new
 son.send :say_hi
