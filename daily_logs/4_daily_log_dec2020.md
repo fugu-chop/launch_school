@@ -25,6 +25,7 @@
 - [24th, Thu](#241220-thu)
 - [25th, Fri](#251220-fri)
 - [26th, Sat](#261220-sat)
+- [27th, Sun](#271220-sun)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -388,3 +389,24 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 More tricky material. All the nuances of modules and inheritance are hard to keep track of, especially since you can group classes and methods into modules. The rules for Private and Protected are also a little fuzzy currently. This will probably only become more familiar through practice and revision. 
+
+##### 27/12/20 (Sun)
+__*Concepts covered*__<br/>
+- RB120 Lesson 1: OO Readings
+  - Classes and Objects I (Revision)
+  - Classes and Objects II (Revision)
+  - Inheritance (Revision)
+  - Quiz Review
+- RB120 Lesson 2 - OOP
+  - Classes and Objects
+  - Inheritance
+- Object Oriented Programming Exercises
+  - Classes and Objects I
+  - Classes and Objects II
+  - Inheritance
+
+__*Time spent*__<br/>
+240 minutes
+
+__*Thoughts*__<br/>
+I managed to clear up some confusion between `protected` and `private` methods - protected methods allows access by instances of the same class. Exercises so far haven't been too bad, but I continually get tripped up by using the `self` prefix when I haven't set up setter methods. In those cases, I'm better off using an instance variable.  
