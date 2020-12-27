@@ -79,7 +79,7 @@ That means when we wrote the code `sparky.speak`, Ruby first looked at the `spar
 Inheritance can be a great way to remove duplication in your code base. There is an acronym that you'll see often in the Ruby community, "DRY". This stands for *"Don't Repeat Yourself"*. It means that if you find yourself writing the same logic over and over again in your programs, there are ways to extract that logic to one place for reuse.
 
 ### `super`
-Ruby provides us with the `super` *keyword* to call methods *earlier* in the method lookup path. When you call `super` from within a method, it searches the method lookup path for a method with the same name, then invokes it.
+Ruby provides us with the `super` *keyword* to call methods *earlier* in the method lookup path. When you call `super` from within a method, it searches the method lookup path for a method with the same name, then invokes it. `super` is a good way of overriding an existing method in the superclass, but still incorporating some of the functionality within that superclass. 
 ```
 class Animal
   def speak
