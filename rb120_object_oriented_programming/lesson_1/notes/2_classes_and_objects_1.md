@@ -57,6 +57,8 @@ We can see that instance variables are responsible for *keeping track of informa
 
 If we created another `GoodDog` object, for example, with `fido = GoodDog.new('Fido')`, then the `@name` instance variable for the `fido` object would contain the string "Fido". Every object's state is _unique_, and instance variables are how we keep track.
 
+Another useful mental model is that classes don't define instance variables, they _define attributes_. Instance variables do not exist prior to an object being created and a value being assigned to them.
+
 ### Instance Methods
 Instance methods are how we attach functionality to our objects. 
 ```

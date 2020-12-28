@@ -131,7 +131,13 @@ end
 We can see that there is no inheritance in this example, but we still have polymorphism. Each class must define a `prepare_wedding` method and implement it in its own way. If we must add another preparer, we can create another class and just implement `prepare_wedding` to perform the appropriate actions.
 
 ### Encapsulation
-Encapsulation lets us hide the internal representation of an object from the outside and only expose the methods and properties that users of the object need. We can use *method access control* to expose these properties and methods through the public (or external) interface of a class: its public methods.
+Encapsulation lets us hide the internal representation of an object from the outside and only expose the methods and properties that users of the object need. We can use *method access control* to expose these properties and methods through the public (or external) interface of a class: its public methods. 
+
+An example of encapsulation can be found in the contrast between:
+- *Local* variables, which can be freely accessed and reassigned.
+- *Instance* variables, which can have read or write access restricted. 
+
+Here's an example of method access control:
 ```
 class Dog
   attr_reader :nickname
