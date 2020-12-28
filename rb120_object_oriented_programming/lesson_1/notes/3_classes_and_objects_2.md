@@ -135,6 +135,7 @@ This output implies that `p sparky` is equivalent to `puts sparky.inspect`.
 ### More about `self`
 `self` can refer to different things depending on where it is used. For example, so far we've seen two clear use cases for `self`:
   1. Use `self` when calling setter methods from within the class. In our earlier example we showed that `self` was necessary in order for our `change_info` method to work properly. We had to use `self` to allow Ruby to disambiguate between initializing a local variable and calling a setter method.
+    - Note that the `initialize` method is not counted as a setter method by itself - we need to use an instance variable for `initialize`, unless we have defined the setter method already using `attr_*`.
   2. Use `self` for class method definitions.
 
 Let's work through an example:
@@ -143,6 +144,7 @@ class GoodDog
   attr_accessor :name, :height, :weight
 
   def initialize(n, h, w)
+    # We can only use self here because we defined setter methods through attr_accessor
     self.name   = n
     self.height = h
     self.weight = w
