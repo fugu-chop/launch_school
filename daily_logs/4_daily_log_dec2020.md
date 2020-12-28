@@ -410,3 +410,20 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I managed to clear up some confusion between `protected` and `private` methods - protected methods allows access by instances of the same class. Exercises so far haven't been too bad, but I continually get tripped up by using the `self` prefix when I haven't set up setter methods. In those cases, I'm better off using an instance variable.  
+
+##### 28/12/20 (Mon)
+__*Concepts covered*__<br/>
+- RB120 Lesson 2 - OOP
+  - Polymorphism and encapsulation
+    - Duck typing
+- Object Oriented Programming Exercises
+  - Inheritance
+  - Accessor methods
+- Reading
+  - [Towards a Conceptual Model of Object Oriented Programming](https://medium.com/launch-school/towards-a-conceptual-model-of-object-oriented-programming-118eb971659f)
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+When I was reading through the duck typing section, there was an interesting use of `self` as the argument for a method. I'm not sure what this does as we haven't covered it in the course notes just yet.
