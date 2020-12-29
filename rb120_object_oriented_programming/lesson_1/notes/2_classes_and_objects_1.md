@@ -335,3 +335,11 @@ class GoodDog
 end
 ```
 For now, when we see `self.x` within an instance method, we can assume that `self` is referring to calling another instance method provided by an `attr_*` method.
+
+It's generally safer to use an explicit `self.` caller when you have a setter method unless you have a good reason to use the instance variable directly. We say that calling the setter method, if available, is safer since using the instance variable _bypasses any checks or operations performed by the setter_:
+```
+def mileage=(miles)
+  @mileage = miles.to_i
+end
+```
+Here, when you use the setter method elsewhere in your class, you're guaranteed that it will try to apply `#to_i` to the value. If you don't use the setter, you may set the `mileage` to a string value.
