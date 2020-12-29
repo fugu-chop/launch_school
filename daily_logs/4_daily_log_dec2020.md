@@ -26,6 +26,8 @@
 - [25th, Fri](#251220-fri)
 - [26th, Sat](#261220-sat)
 - [27th, Sun](#271220-sun)
+- [28th, Mon](#281220-mon)
+- [29th, Tue](#291220-tue)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -427,3 +429,24 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 When I was reading through the duck typing section, there was an interesting use of `self` as the argument for a method. I'm not sure what this does as we haven't covered it in the course notes just yet.
+
+##### 29/12/20 (Tue)
+__*Concepts covered*__<br/>
+- RB120 Lesson 2 - OOP
+  - Collaborator objects
+  - Modules
+- Object Oriented Programming Exercises
+  - Easy 1
+- Reading
+  - [Towards a Conceptual Model of Object Oriented Programming](https://medium.com/launch-school/towards-a-conceptual-model-of-object-oriented-programming-118eb971659f)
+  - [Collaborator objects article](https://medium.com/launch-school/no-object-is-an-island-707e59ffedb4)
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+The articles were interesting to read. The first one, while quite useful in consolidating a lot of concepts, seemed excessively rooted in philosophical concepts which appeared to be crowbarred in to show the author's superior intellect/background. Useful, but annoying to read. 
+
+The second article, on collaborator objects, was a lot more specific and had a clear message, which helped me clear up some misconceptions.
+
+The Easy 1 OOP exercises are ok so far. The additional exploration challenges are reasonably challenging in respect of understanding and explaining concepts.
