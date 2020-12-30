@@ -28,6 +28,7 @@
 - [27th, Sun](#271220-sun)
 - [28th, Mon](#281220-mon)
 - [29th, Tue](#291220-tue)
+- [30th, Wed](#301220-wed)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -450,3 +451,17 @@ The articles were interesting to read. The first one, while quite useful in cons
 The second article, on collaborator objects, was a lot more specific and had a clear message, which helped me clear up some misconceptions.
 
 The Easy 1 OOP exercises are ok so far. The additional exploration challenges are reasonably challenging in respect of understanding and explaining concepts.
+
+##### 30/12/20 (Wed)
+__*Concepts covered*__<br/>
+- Object Oriented Programming Exercises
+  - Easy 1
+  - Easy 2
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Just working through the Easy 1 and 2 exercises. Nothing too stressful so far - most of the problems can be solved reasonably easily. I did have trouble with Exercise 7 - the tricky part was solution design; i.e. which objects should have access to what information in order to do what they're supposed to. 
+
+Another key challenge I have is to remember that `attr_` methods actually create getter and setter methods that return a value (i.e. an instance variable) that can be accessed just by calling that method (i.e. symbol) name. 
