@@ -35,10 +35,10 @@ sparky = GoodDog.new
 ```
 In the above example, instantiating a new `GoodDog` object triggered the `initialize` method and resulted in the string being outputted. We refer to the `initialize` method as a __constructor__, because it gets triggered whenever we create a *new* object. 
 
-In Ruby, the `initialize` is treated as a special method (i.e. it is specifically reserved as a __constructor__), which allows it to be called when a new object is created (contrast it with all other methods you define within a class, which aren't automatically called).
+In Ruby, the `initialize` is treated as a special method (i.e. it is specifically reserved as a __constructor__), which allows it to be called when a new object is created (contrast it with all other methods you define within a class, which aren't automatically called). The purpose of the constructor is to __initiate the state__ of an object. Constructors __do not return__ any values.  
 
 ### Instance Variables
-The instance variables are kind of __class attributes__ and they become properties of objects __once objects are created__ using the class. Every object's attributes are assigned *individually* and share *no value with other objects*.
+The instance variables are kind of __class attributes__ and they become properties of objects __once objects are created__ using the class. Every object's attributes (instance variables) are assigned *individually* and share *no value with other objects*.
 ```
 class GoodDog
   def initialize(name)

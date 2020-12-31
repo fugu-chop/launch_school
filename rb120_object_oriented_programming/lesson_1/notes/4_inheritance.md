@@ -351,11 +351,19 @@ value = Mammal::some_out_of_place_method(4)
 ```
 
 ### Private, Protected & Public
-__Access Control__ is a concept that exists in a number of programming languages, including Ruby. It is generally implemented through the use of access modifiers. The purpose of access modifiers is to allow or restrict access to a particular thing. In Ruby, the things that we are concerned with restricting access to are the *methods defined in a class*. In a Ruby context, therefore, you'll commonly see this concept referred to as __Method Access Control__.
+__Access Control__ is a concept that exists in a number of programming languages, including Ruby. It is generally implemented through the use of access modifiers. The purpose of access modifiers is to allow or restrict access to a particular thing. 
 
-The way that Method Access Control is implemented in Ruby is through the use of the `public`, `private`, and `protected` access modifiers. Right now, all the methods in our `GoodDog` class are public methods. A public method is a method that is *available to anyone who knows either the class name or the object's name*. These methods are readily available for the rest of the program to use and comprise the class's interface (that's how other classes and objects will interact with this class and its objects).
+In Ruby, the things that we are concerned with restricting access to are the *methods defined in a class*. In a Ruby context, therefore, you'll commonly see this concept referred to as __Method Access Control__.
 
-Sometimes you'll have methods that are doing work in the class but don't need to be available to the rest of the program. These methods can be defined as `private`. How do we define private methods? We use the `private` method call in our program and anything below it is private (unless another method, like `protected`, is called after it to negate it).
+The way that Method Access Control is implemented in Ruby is through the use of the `public`, `private`, and `protected` access modifiers. Ruby __does not__ apply any access control over _instance and class variables_.
+
+#### Public Methods
+Right now, all the methods in our `GoodDog` class are public methods. A public method is a method that is *available to anyone who knows either the class name or the object's name*. These methods are readily available for the rest of the program to use and comprise the class's interface (that's how other classes and objects will interact with this class and its objects). By default, instance methods are public. 
+
+#### Private Methods
+Sometimes you'll have methods that are doing work in the class but don't need to be available to the rest of the program. These methods can be defined as `private`. 
+
+How do we define private methods? We use the `private` method call in our program and anything below it is private (unless another method, like `protected`, is called after it to negate it). The exception is the `initialize` method, which is __always__ private.
 
 In our `GoodDog` class we have one operation that takes place that we could move into a `private` method. When we initialize an object, we calculate the dog's age in Dog years. Let's refactor this logic into a method and make it private so nothing outside of the class can use it. 
 ```
@@ -380,21 +388,23 @@ sparky = GoodDog.new("Sparky", 4)
 sparky.human_years
 => NoMethodError: private method `human_years' called for #<GoodDog:0x007f8f431441f8 @name="Sparky", @age=4>
 ```
-We have made the `human_years` method private by placing it under the `private` keyword. What is it good for, then, if we can't call it? `private` methods are only *accessible from other methods in the class*. For example, given the above code, the following would be allowed:
+We have made the `human_years` method private by placing it under the `private` keyword. What is it good for, then, if we can't call it? `private` methods are *only accessible from other methods in the class*. For example, given the above code, the following would be allowed:
 ```
 # Assume this method definition is above the "private" keyword
 def public_disclosure
   "#{self.name} in human years is #{human_years}"
 end
 ```
-We cannot use `self.human_years`, because the `human_years` method is private. Remember that `self.human_years` is equivalent to `sparky.human_years` (since it's used in an instance method within the class, `self.` refers to the calling object), is __not allowed__ for private methods (if it were allowed, it would be equivalent to allowing the private method to be called outside of instance methods in the class). 
+We cannot use `self.human_years`, because the `human_years` method is private. Remember that `self.human_years` is equivalent to `sparky.human_years` (since it's used in an instance method within the class, `self.` refers to the calling object). This would be equivalent to allowing the private method to be called outside of instance methods in the class (i.e. directly on the object instantiated). 
 
-Therefore, we had just use `human_years` instance method, which inside the class, the `public_disclosure` instance method is able to see (and use the returned value).
+Therefore, we had to use the `human_years` instance method, which inside the class, the `public_disclosure` instance method is able to see (and use the returned value).
 
 As of Ruby 2.7, it is now legal to call private methods with a literal `self` as the caller.
 
 #### Protected
-Public and private methods are most common, but in some less common situations, we'll want an in-between approach. We can use the `protected` keyword to create protected methods. The easiest way to understand protected methods is to follow these two rules:
+Public and private methods are most common, but in some less common situations, we'll want an in-between approach. We can use the `protected` keyword to create protected methods. 
+
+A protected method can be invoked only by *objects of the defining class and its subclasses*. The easiest way to understand protected methods is to follow these two rules:
 - from inside the class, protected methods are accessible just like public methods.
 - from outside the class, protected methods act just like private methods.
 ```
@@ -443,9 +453,9 @@ abc2 = Abc.new(8)
 puts abc1.add(abc2)
 => 13
 ```
-This code works because `get_val` is protected -- it lets the `abc1` instance access the `get_val` method in the `abc2` instance. Had `get_val` been declared as `private`, then this code would fail because an object (`abc1` here) __can't access a private method from any other object__ -- they can only access `self.get_val`, not `other.get_val`. When a method is private, only the *class* - __not__ *instances* of the class - can access it. 
+This code works because `get_val` is protected -- it lets the `abc1` instance access the `get_val` method in the `abc2` instance. Had `get_val` been declared as `private`, then this code would fail because an object (`abc1` here) __can't access a private method from any other object__ - they can only access `self.get_val`, not `other.get_val`. When a method is private, only the *class* - __not__ *instances* of the class - can access it. 
 
-Had `get_val` been declared as public, then this code would work, but anyone could call `abc1.get_val`, which may not be desired. A private method can only be accessed by the object that is calling it. A protected method can be __called by any instance of the class__ -- either `self` or some other object of the same type.
+Had `get_val` been declared as public, then this code would work, but anyone could call `abc1.get_val`, which may not be desired. A protected method can be __called by any instance of the class__ - either `self` or some other object of the same type.
 
 ### Accidental Method Overriding
 It’s important to remember that every class you create inherently subclasses from class `Object`. The `Object` class is built into Ruby and comes with many critical methods. This means that methods defined in the `Object` class are available in all classes.

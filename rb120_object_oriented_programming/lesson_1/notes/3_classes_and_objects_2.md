@@ -25,7 +25,7 @@ GoodDog.what_am_i
 Class methods are where we put functionality that does not pertain to _individual_ objects. Objects contain state, and if we have a method that __does not need to deal with states__, then we can just use a class method.
 
 ### Class Variables
-Just as instance variables capture information related to specific instances of classes (i.e., objects), we can create variables for an entire class that are appropriately named *class variables*. Class variables are created using two `@` symbols like so: `@@`.
+Just as instance variables capture information related to specific instances of classes (i.e., objects), we can create variables for an entire class (i.e. they are shared between all instances of a class) that are appropriately named *class variables*. Class variables are created using two `@` symbols like so: `@@`.
 ```
 class GoodDog
   @@number_of_dogs = 0
@@ -53,7 +53,9 @@ We have a class variable called `@@number_of_dogs`, which we initialize to 0. Th
 This also demonstrates that we can access class variables from _within an instance method_ (`initialize` is an instance method). Finally, we just return the value of the class variable in the class method `self.total_number_of_dogs`. This is an example of using a class variable and a class method to keep track of a class level detail that pertains only to the class, and not to individual objects.
 
 ### Constants
-When creating classes there may also be certain variables that you never want to change. You can do this by creating what are called __constants__. You define a constant by using an uppercase letter at the beginning of the variable name. While technically constants just need to begin with a capital letter, most Rubyists will make the entire variable uppercase.
+When creating classes there may also be certain variables that you never want to change. You can do this by creating what are called __constants__. You define a constant by using an uppercase letter at the beginning of the variable name. If you want to access a constant outside of the class then you would have to use `classname::constant`.
+
+While technically constants just need to begin with a capital letter, most Rubyists will make the entire variable uppercase.
 ```
 class GoodDog
   DOG_YEARS = 7
