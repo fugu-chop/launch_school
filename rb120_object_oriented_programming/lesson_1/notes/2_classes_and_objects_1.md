@@ -38,6 +38,7 @@ In the above example, instantiating a new `GoodDog` object triggered the `initia
 In Ruby, the `initialize` is treated as a special method (i.e. it is specifically reserved as a __constructor__), which allows it to be called when a new object is created (contrast it with all other methods you define within a class, which aren't automatically called).
 
 ### Instance Variables
+The instance variables are kind of __class attributes__ and they become properties of objects __once objects are created__ using the class. Every object's attributes are assigned *individually* and share *no value with other objects*.
 ```
 class GoodDog
   def initialize(name)
@@ -56,6 +57,8 @@ The string "Sparky" is being passed from the `new` method through to the `initia
 We can see that instance variables are responsible for *keeping track of information about the state* of an object. In the above line of code, the name of the `sparky` object is the string "Sparky". This state for the object is tracked in the instance variable, `@name`.
 
 If we created another `GoodDog` object, for example, with `fido = GoodDog.new('Fido')`, then the `@name` instance variable for the `fido` object would contain the string "Fido". Every object's state is _unique_, and instance variables are how we keep track.
+
+Once initialised, instance variables are available to instance methods *throughout the class* - this is how instance methods are able to return values without needing to take them as arguments (see below example of string interpolation with the `fido` object).
 
 Another useful mental model is that classes don't define instance variables, they _define attributes_. Instance variables do not exist prior to an object being created and a value being assigned to them.
 
@@ -89,7 +92,6 @@ def speak
   "#{@name} says arf!"
 end
 ```
-
 ### Accessor Methods
 What if we wanted to print out only `sparky`'s name? We could try the code below:
 ```
@@ -154,6 +156,8 @@ The first thing you should notice about the setter method `set_name=` is that Ru
 To use the `set_name=` method normally, we would expect to do this: `sparky.set_name=("Spartacus")`, where the entire "set_name=" is the method name, and the string "Spartacus" is the argument being passed in to the method. 
 
 Ruby recognizes that this is a setter method and allows us to use the more natural assignment syntax: `sparky.set_name = "Spartacus"`. When you see this code, just realize there's a method called `set_name=` working behind the scenes, and we're just seeing some Ruby *syntactical sugar*.
+
+Accessor methods allow us to interact with instance variables __outside of the class__ (i.e. after the object has been created).
 
 #### Naming convention
 Finally, as a convention, Rubyists typically want to name those getter and setter methods using the same name as the instance variable they are exposing and setting.

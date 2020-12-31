@@ -387,7 +387,9 @@ def public_disclosure
   "#{self.name} in human years is #{human_years}"
 end
 ```
-We cannot use `self.human_years`, because the `human_years` method is private. Remember that `self.human_years` is equivalent to `sparky.human_years`, is __not allowed__ for private methods (as using `self.` as a prefix would enable access to that method outside of the class when instantiated through an object). Therefore, we had just use `human_years` instance method, which inside the class, the `public_disclosure` instance method is able to see (and use the returned value).
+We cannot use `self.human_years`, because the `human_years` method is private. Remember that `self.human_years` is equivalent to `sparky.human_years` (since it's used in an instance method within the class, `self.` refers to the calling object), is __not allowed__ for private methods (if it were allowed, it would be equivalent to allowing the private method to be called outside of instance methods in the class). 
+
+Therefore, we had just use `human_years` instance method, which inside the class, the `public_disclosure` instance method is able to see (and use the returned value).
 
 As of Ruby 2.7, it is now legal to call private methods with a literal `self` as the caller.
 
@@ -443,7 +445,7 @@ puts abc1.add(abc2)
 ```
 This code works because `get_val` is protected -- it lets the `abc1` instance access the `get_val` method in the `abc2` instance. Had `get_val` been declared as `private`, then this code would fail because an object (`abc1` here) __can't access a private method from any other object__ -- they can only access `self.get_val`, not `other.get_val`. When a method is private, only the *class* - __not__ *instances* of the class - can access it. 
 
-Had `get_val` been declared as public, then this code would work, but anyone could call `abc1.get_val`, which may not be desired. Anyone can access public methods. A private method can only be accessed by the object that is calling it. A protected method can be __called by any instance of the class__ -- either `self` or some other object of the same type.
+Had `get_val` been declared as public, then this code would work, but anyone could call `abc1.get_val`, which may not be desired. A private method can only be accessed by the object that is calling it. A protected method can be __called by any instance of the class__ -- either `self` or some other object of the same type.
 
 ### Accidental Method Overriding
 It’s important to remember that every class you create inherently subclasses from class `Object`. The `Object` class is built into Ruby and comes with many critical methods. This means that methods defined in the `Object` class are available in all classes.

@@ -21,9 +21,9 @@ It is what defines the boundaries in your application and allows your code to ac
 Another benefit of creating objects is that they allow the programmer to think on a new level of abstraction. Objects are represented as real-world nouns and can be given methods that describe the behavior the programmer is trying to represent.
 
 #### Polymorphism
-*Polymorphism* is the ability for different types of data to respond to a common interface. For instance, if we have a method that expects argument objects that have a `move` method, we can pass it any type of argument, provided it has a compatible `move` method. 
+*Polymorphism* is the ability for different types of data (different objects) to respond to a common interface (common methods). For instance, if we have a method that expects argument objects that have a `move` method, we can pass it any type of argument (i.e. any type of object as an argument), provided it has a compatible `move` method (common interface). 
 
-The object might represent a human, a cat, a jellyfish, or, conceivably, even a car or train. That is, it lets objects of different types respond to the same method invocation. OOP gives us flexibility in using pre-written code for new purposes.
+The object might represent a human, a cat, a jellyfish, or, conceivably, even a car or train. That is, it lets *objects of different types (could be the same or different classes) respond to the same method invocation* - i.e. we have many different objects, but all of them can `move`. OOP gives us flexibility in using pre-written code for new purposes.
 
 Another way to apply polymorphic structure to Ruby programs is to use a `Module`. Modules are similar to classes in that they contain shared behavior. However, you __cannot create an object with a module__. A module must be mixed in with a class using the `include` method invocation. This is called a `mixin`. After mixing in a module, the behaviors declared in that module are available to the class and its objects.
 

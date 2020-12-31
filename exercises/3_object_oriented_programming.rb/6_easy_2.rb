@@ -301,50 +301,255 @@ class Shelter
   end
 end
 
-# 7b) Suppose the shelter has a number of not-yet-adopted pets, and wants to manage them through this same system. Thus, you should be able to add the following output to the example output shown above:
+# 8) What is wrong with the following code? What fix(es) would you make?
 =begin
-The Animal Shelter has the following unadopted pets:
-a dog named Asta
-a dog named Laddie
-a cat named Fluffy
-a cat named Kat
-a cat named Ben
-a parakeet named Chatterbox
-a parakeet named Bluebell
+class Expander
+  def initialize(string)
+    @string = string
+  end
 
-P Hanson has 3 adopted pets.
-B Holmes has 4 adopted pets.
-The Animal shelter has 7 unadopted pets.
+  def to_s
+    self.expand(3)
+  end
+
+  private
+
+  def expand(n)
+    @string * n
+  end
+end
+
+expander = Expander.new('xyz')
+puts expander
 =end
 
-# What is our solution design?
-# I think we can use the existing adopt method, but with the 'Animal Shelter' as an owner
-# When a pet is adopted, we remove it from the animal shelter owner
-# We need a method to display the pets that are owned by the animal shelter (but requires a different message to the print_adoptions method).
-class Shelter
-  def initialize
-    @owners = {}
+class Expander
+  def initialize(string)
+    @string = string
   end
 
-  def adopt(owner, pet)
-    owner.add_pet(pet)
-    @owners[owner.name] ||= owner
-    # Remove pet from shelter owner
+  def to_s
+    # Prior to Ruby 2.7, private methods could never be called with an explicit caller, even when that caller is self. 
+    expand(3)
   end
 
-  # Untested
-  def print_unadopted_pets
-    @owners['The Animal Shelter'].each_pair do |name, owner|
-      puts "#{name} has the following unadopted pets:"
-      owner.print_pets
-    end
+  private
+
+  def expand(n)
+    @string * n
+  end
+end
+
+expander = Expander.new('xyz')
+puts expander
+
+# 9) You have the following classes. You need to modify the code so that this works. You are only allowed to write one new method to do this.
+=begin
+class Person
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
   end
 
-  def print_adoptions
-    @owners.each_pair do |name, owner|
-      puts "#{name} has adopted the following pets:"
-      owner.print_pets
-      puts
-    end
+  private
+
+  def gait
+    "strolls"
+  end
+end
+
+class Cat
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+
+  private
+
+  def gait
+    "saunters"
+  end
+end
+
+class Cheetah
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+
+  private
+
+  def gait
+    "runs"
+  end
+end
+
+mike = Person.new("Mike")
+mike.walk
+# => "Mike strolls forward"
+
+kitty = Cat.new("Kitty")
+kitty.walk
+# => "Kitty saunters forward"
+
+flash = Cheetah.new("Flash")
+flash.walk
+# => "Flash runs forward"
+=end
+module Walkable
+  def walk
+    "#{name} #{gait} forward"
+  end
+end
+
+class Person
+  attr_reader :name
+
+  include Walkable
+
+  def initialize(name)
+    @name = name
+  end
+
+  private
+
+  def gait
+    "strolls"
+  end
+end
+
+class Cat
+  attr_reader :name
+
+  include Walkable
+
+  def initialize(name)
+    @name = name
+  end
+
+  private
+
+  def gait
+    "saunters"
+  end
+end
+
+class Cheetah
+  attr_reader :name
+
+  include Walkable
+
+  def initialize(name)
+    @name = name
+  end
+
+  private
+
+  def gait
+    "runs"
+  end
+end
+
+# 10) We need a new class Noble that shows the title and name when walk is called. We must have access to both name and title because they are needed for other purposes that we aren't showing here.
+=begin
+byron = Noble.new("Byron", "Lord")
+p byron.walk
+=> "Lord Byron struts forward"
+
+byron.name
+=> "Byron"
+byron.title
+=> "Lord"
+=end
+module Walkable
+  def walk
+    # When you perform interpolation on some value in a string, ruby automatically calls #to_s for you. So, #{self} in the string is actually #{self.to_s} in disguise. 
+    # self, within an instance method, refers to the object it's called on (so, the object initialised from a class)
+    # We have also defined the to_s method in all of our other classes, so when printed via puts, it will display the name, instead of the object.
+    "#{self} #{gait} forward"
+  end
+end
+
+class Person
+  attr_reader :name
+
+  include Walkable
+
+  def initialize(name)
+    @name = name
+  end
+
+  def to_s
+    name
+  end
+
+  private
+
+  def gait
+    "strolls"
+  end
+end
+
+class Cat
+  attr_reader :name
+
+  include Walkable
+
+  def initialize(name)
+    @name = name
+  end
+
+  def to_s
+    name
+  end
+
+  private
+
+  def gait
+    "saunters"
+  end
+end
+
+class Cheetah
+  attr_reader :name
+
+  include Walkable
+
+  def initialize(name)
+    @name = name
+  end
+
+  def to_s
+    name
+  end
+
+  private
+
+  def gait
+    "runs"
+  end
+end
+
+class Noble
+  attr_reader :name, :title
+
+  include Walkable
+
+  def initialize(name, title)
+    @title = title
+    @name = name
+  end
+
+  def to_s
+    "#{title} #{name}"
+  end
+
+  private
+
+  def gait
+    "struts"
   end
 end
