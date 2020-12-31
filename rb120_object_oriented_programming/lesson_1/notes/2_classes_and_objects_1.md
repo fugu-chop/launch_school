@@ -190,7 +190,8 @@ puts sparky.name
 ```
 Writing those getter and setter methods took up a lot of room in our program for such a simple feature. And if we had other states we wanted to track, like height or weight, the class would be even longer. 
 
-Because these methods are so commonplace, Ruby has a built-in way to automatically create these getter and setter methods for us, using the `attr_accessor` method. Remember, that these represent __instance methods that write to/read from an instance variable__.
+#### Attribute accessors
+Because these methods are so commonplace, Ruby has a built-in way to automatically create these getter and setter methods for us, using the `attr_accessor` method. Remember, that these represent __instance methods that create instance variables__ and enable us to __read and/or write__ those instance variables.
 ```
 class GoodDog
   attr_accessor :name

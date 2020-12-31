@@ -355,7 +355,7 @@ __Access Control__ is a concept that exists in a number of programming languages
 
 In Ruby, the things that we are concerned with restricting access to are the *methods defined in a class*. In a Ruby context, therefore, you'll commonly see this concept referred to as __Method Access Control__.
 
-The way that Method Access Control is implemented in Ruby is through the use of the `public`, `private`, and `protected` access modifiers. Ruby __does not__ apply any access control over _instance and class variables_.
+The way that Method Access Control is implemented in Ruby is through the use of the `public`, `private`, and `protected` access modifiers. Ruby __does not__ apply any access control over _instance and class variables_ - these are all 'private' and cannot be accessed outside of the class.
 
 #### Public Methods
 Right now, all the methods in our `GoodDog` class are public methods. A public method is a method that is *available to anyone who knows either the class name or the object's name*. These methods are readily available for the rest of the program to use and comprise the class's interface (that's how other classes and objects will interact with this class and its objects). By default, instance methods are public. 

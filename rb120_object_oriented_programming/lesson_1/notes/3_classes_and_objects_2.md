@@ -8,7 +8,9 @@
 - [More about self](#more-about-self)
 
 ### Class Methods
-Thus far, all the methods we've created are instance methods. That is, they are methods that *pertain to an instance or object of the class*. There are also __class level__ methods, called class methods. Class methods are methods we can call __directly on the class itself__, without having to instantiate any objects. Class methods __cannot__ be called by *objects instantiated from them*.
+Thus far, all the methods we've created are instance methods. That is, they are methods that *pertain to an instance or object of the class*. There are also __class level__ methods, called class methods. 
+
+Class methods are methods we can call __directly on the class itself__, without having to instantiate any objects. Class methods __cannot__ be called by *objects instantiated from them*, and __cannot access instance variables__.
 
 When defining a class method, we prepend the method name with the reserved word `self.`, like this:
 ```
@@ -50,7 +52,7 @@ puts GoodDog.total_number_of_dogs
 ```
 We have a class variable called `@@number_of_dogs`, which we initialize to 0. Then in our constructor (the `initialize` method), we increment that number by 1. Remember that `initialize` gets called __every time we instantiate a new object__ via the `new` method. 
 
-This also demonstrates that we can access class variables from _within an instance method_ (`initialize` is an instance method). Finally, we just return the value of the class variable in the class method `self.total_number_of_dogs`. This is an example of using a class variable and a class method to keep track of a class level detail that pertains only to the class, and not to individual objects.
+This also demonstrates that we can _access class variables from within an instance method_ (`initialize` is an instance method). Finally, we just return the value of the class variable in the class method `self.total_number_of_dogs`. This is an example of using a class variable and a class method to keep track of a class level detail that pertains only to the class, and not to individual objects.
 
 ### Constants
 When creating classes there may also be certain variables that you never want to change. You can do this by creating what are called __constants__. You define a constant by using an uppercase letter at the beginning of the variable name. If you want to access a constant outside of the class then you would have to use `classname::constant`.
