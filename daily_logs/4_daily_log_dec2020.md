@@ -29,6 +29,7 @@
 - [28th, Mon](#281220-mon)
 - [29th, Tue](#291220-tue)
 - [30th, Wed](#301220-wed)
+- [31st, Thu](#311220-thu)
 
 ##### 01/12/20 (Tue)
 __*Concepts covered*__<br/>
@@ -465,3 +466,18 @@ __*Thoughts*__<br/>
 Just working through the Easy 1 and 2 exercises. Nothing too stressful so far - most of the problems can be solved reasonably easily. I did have trouble with Exercise 7 - the tricky part was solution design; i.e. which objects should have access to what information in order to do what they're supposed to. 
 
 Another key challenge I have is to remember that `attr_` methods actually create getter and setter methods that return a value (i.e. an instance variable) that can be accessed just by calling that method (i.e. symbol) name. 
+
+##### 31/12/20 (Thu)
+__*Concepts covered*__<br/>
+- Lesson 1 OOP Revision
+  - Tutorialspoint
+  - Zetcode
+  - Collaborator objects
+- Object Oriented Programming Exercises
+  - Easy 2
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Spent today just revising concepts. I feel like I wasn't fully mastering the principles behind the Easy 2 OOP exercises. The use of `to_s` to extend additional instance method functionality was pretty cool. 
