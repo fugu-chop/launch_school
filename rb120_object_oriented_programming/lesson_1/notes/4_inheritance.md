@@ -11,7 +11,7 @@
 - [Accidental Method Overriding](#accidental-method-overriding)
 
 ### Class Inheritance
-Inheritance is when a class *inherits behavior from another __class__*. The class that is inheriting behavior is called the __subclass__ and the class it inherits from is called the __superclass__. Objects __do not inherit__ from their class, rather the class acts as a mold or template for objects of that class and determines the attributes and behaviors of those objects (__classes__ inherit from other classes).
+Inheritance is when a class *inherits behavior from another __class__*. The class that is inheriting behavior is called the __subclass__ and the class it inherits from is called the __superclass__. Objects __do not inherit__ from their class, rather the class acts as a mold or template for objects of that class and determines the attributes and behaviors of those objects (classes inherit from *other classes*).
 
 We use inheritance as a way to extract common behaviors from classes that share that behavior, and move it to a superclass. This lets us keep logic in one place. 
 
@@ -212,7 +212,7 @@ A common naming convention for Ruby is to use the "able" suffix on whatever verb
 ### Inheritance v Modules
 Now you know the two primary ways that Ruby implements inheritance. 
 - __Class inheritance__ is the traditional way to think about inheritance: one type inherits the behaviors of another type. The result is a new type that specializes the type of the superclass. 
-- The other form is sometimes called __interface inheritance__: this is where __mixin modules__ come into play. The class doesn't inherit from another type, but instead inherits the interface provided by the mixin module. In this case, the result type is not a specialized type with respect to the module.
+- The other form is sometimes called __interface inheritance__: this is where __mixin modules__ come into play. The class doesn't inherit from another type, but instead inherits the interface (i.e. __methods__) provided by the mixin module. In this case, the result type is not a specialized type with respect to the module.
 
 You may wonder when to use class inheritance vs mixins. Here are a couple of things to consider when evaluating these choices.
 - You can only subclass (class inheritance) from __one__ class, whereas you can mix in as many modules (interface inheritance) as you'd like.
@@ -309,8 +309,7 @@ Sometimes when you're working on a large project, it can be confusing where all 
 ### More modules
 The first use case we'll discuss is using modules for __namespacing__. In this context, __namespacing__ means *organizing similar classes under a module*. In other words, we'll use modules to group related classes. 
 - It becomes easy for us to recognize related classes in our code. 
-- The second advantage is it reduces the likelihood of our classes colliding with other similarly named classes in our codebase. 
-
+- The second advantage is it reduces the likelihood of our classes colliding with other similarly named classes in our codebase.
 ```
 module Mammal
   class Dog
@@ -326,7 +325,20 @@ module Mammal
   end
 end
 ```
-We call classes in a module by appending the class name to the module name with two colons(`::`)
+Namespacing allows us to avoid conflicts in methods that have the same name (but belong to different classes).
+```
+module Circle
+  PI = 3.141592653589793
+end
+
+# No conflicts occur, even though the methods have the same name.
+Math::PI
+=> 3.141592653589793
+
+Circle::PI
+=> 3.141592653589793
+```
+We call classes in a module by appending the class name to the module name with two colons(`::`), also known as the __scope resolution operator__.
 ```
 buddy = Mammal::Dog.new
 kitty = Mammal::Cat.new

@@ -25,8 +25,25 @@ Another benefit of creating objects is that they allow the programmer to think o
 
 The object might represent a human, a cat, a jellyfish, or, conceivably, even a car or train. That is, it lets *objects of different types (could be the same or different classes) respond to the same method invocation* - i.e. we have many different objects, but all of them can `move`. OOP gives us flexibility in using pre-written code for new purposes.
 
-Another way to apply polymorphic structure to Ruby programs is to use a `Module`. Modules are similar to classes in that they contain shared behavior. However, you __cannot create an object with a module__. A module must be mixed in with a class using the `include` method invocation. This is called a `mixin`. After mixing in a module, the behaviors declared in that module are available to the class and its objects.
+Another way to apply polymorphic structure to Ruby programs is to use a `Module`. Modules are similar to classes in that they contain shared behavior. However, you __cannot create an object with a module__. 
 
+A module must be mixed in with a class using the `include` method invocation. This is called a `mixin` (i.e. a module that has been used to mix in functionality into a class is a `mixin`). After mixing in a module, the behaviors declared in that module are available to the class and its objects.
+
+Whereas `include` mixes a module’s methods in at the *instance level* (allowing instances of a particular class to use the methods), the `extend` keyword mixes a module’s methods at the _class level_. This means that __class itself__ can use the methods, as opposed to instances of the class.
+```
+module ThePresent
+  def now
+    puts "It's #{Time.new.hour > 12 ? Time.new.hour - 12 : Time.new.hour}:#{Time.new.min} #{Time.new.hour > 12 ? 'PM' : 'AM'} (GMT)."
+  end
+end
+
+class TheHereAnd
+  extend ThePresent
+end
+
+TheHereAnd.now
+=> It's 10:24 AM (GMT).
+```
 #### Inheritance
 *Inheritance* is used in Ruby where a class inherits the behaviors of another class, referred to as the *superclass*. This gives Ruby programmers the power to define basic classes with large reusability and smaller __subclasses__ for more fine-grained, detailed behaviors.
 
