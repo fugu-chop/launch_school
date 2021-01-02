@@ -10,12 +10,14 @@
 ### What is collaboration?
 Collaboration is a way of modeling relationships between different objects. A collaborative relationship is a relationship of *association* — not of inheritance. 
 
-Collaboration is a *has-a* relationship rather than a *is-a* relationship - for example, a library has books, so there is an __associative__ relationship between objects of class `Library` and objects of class `Book` (contrast this with _inheritance_ - e.g. a dictionary is a book).
+Collaboration is a *has-a* relationship rather than a *is-a* relationship - for example, a library __has__ books, so there is an __associative__ relationship between objects of class `Library` and objects of class `Book` (contrast this with _inheritance_ - e.g. a dictionary __is a__ book).
 
 ### What is a collaborator object?
-Objects that are stored as _state within another object_ are also called __collaborator objects__. By assigning a collaborator object to an instance variable in another class’ constructor method definition, you are _associating the two objects with one another_.
+Objects that are stored as _state within another object_ (i.e. as instance variables) are called __collaborator objects__. For example, when assigning a collaborator object to an instance variable in another class' constructor method definition, you are _associating the two objects with one another_.
 
 We call such objects collaborators because they work in conjunction (or in collaboration) with the class they are associated with. 
+
+One way to spot them in code is when an *object is assigned to an instance variable of another object inside a class definition*.
 
 Here's an example of a string object acting as a collaborator object for the instance variable `@name`. Collaborator objects are not limited to just strings though, they can be basically anything (essentially, any object that you could assign to the instance variable `@name`, like arrays or hashes).
 ```
@@ -29,10 +31,12 @@ class Person
   end
 end
 
-joe = Person.new("Joe")
+joe = Person.new("Bob")
 joe.name
-=> "Joe"
+=> "Bob"
 ```
+The `Person` object `joe` has a name — a String object with value “Bob” — as part of its state. So, the string object "Bob" assigned to the instance variable `@name` is a __collaborator object__ of `joe`.
+
 Here's another example of arrays and hashes as collaborator objects:
 ```
 class Person
@@ -125,9 +129,41 @@ end
 Because the `@pets` variable is referencing an array, we cannot simply call the `jump` method on the array. We need to iterate through the array, and call the `jump` method on each of the objects in the array.
 
 ### When does collaboration occur?
-Here, the collaborator object does not become part of the primary object’s state _until the setter or instance method is invoked elsewhere_, outside of the class definition. Another helpful mental model is: the *collaborative relationship exists in the design (or intention) of our code*.
+Sometimes, the class definition may just define a setter or other instance method, but the collaborator object does not become part of the primary object’s state _until the setter or instance method is invoked elsewhere_, outside of the class definition.
+```
+class Library
+  def initialize
+    @books = []
+  end  
+  
+  def add_book(book)
+    @books << book
+  end
+end
 
-Collaboration occurs when one object is added to the state of another object (i.e., when a method is invoked on an object). In our example above, collaboration occurs when we define the `BullDog` class, and add it to the `@pets` instance variable.
+class Book
+  def initialize(title)
+    @title = title
+  end
+end
+
+my_library = Library.new
+p my_library    
+# => #<Library:0x00000000c76050 @books=[]>
+
+book_1 = Book.new('The Grapes of Wrath')
+my_library.add_book(book_1)
+
+p my_library
+=> #<Library:0x00000001cedff0 @books=[#<Book:0x00000001cede10 @title="The Grapes of Wrath">]>
+```
+In this example, you can see that the `Book` object `book_1` is not added to the state of `my_library` until the `Library#add_book` method is invoked on `my_library`. 
+
+Note: You can also see from this example that `book_1` has a title; `@title` is a _String object collaborator_ of objects of the `Book` class, which is made explicit in the `Book#initialize` method.
+
+Another helpful mental model is: the *collaborative relationship exists in the design (or intention) of our code*.
+
+Collaboration occurs when one object is __added to the state of another object__ (i.e., when a method is invoked on an object). In our previous example above, collaboration occurs when we define the `BullDog` class, and add it to the `@pets` instance variable.
 
 ### Other notes
 When we work with collaborator objects, they are usually custom objects (e.g. defined by the programmer and not inherited from the Ruby core library); `@pet` is an example of a custom object. 

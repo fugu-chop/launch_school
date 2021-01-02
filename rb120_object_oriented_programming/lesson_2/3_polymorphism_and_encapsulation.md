@@ -45,11 +45,9 @@ end
 Looking at this example, we can see that every object in the array is a different animal, but the client code can treat them all as a generic animal, i.e., an object that can eat. Thus, the public interface lets us work with all of these types in the same way even though the implementations can be dramatically different. That is polymorphism in action.
 
 #### Polymorphism through duck-typing
-We can also implement polymorphism through __duck typing__. Duck typing in Ruby doesn't concern itself with the class of an object; instead, it concerns itself with __what methods are available__ on the object. If an object "quacks" like a duck, then we can treat it like a duck.
+We can also implement polymorphism through __duck typing__. Duck typing in Ruby doesn't concern itself with the class of an object; instead, it concerns itself with __what methods are available__ on the object. If an object "quacks" like a duck, then we can treat it like a duck. In other words, we are interested in *what the object can do*, rather than with what the object __is__.
 
 Here's an example of attempting to apply polymorphism **without** duck typing. __Don't use this approach__. The problem with this approach is that the `prepare` method has *too many dependencies*. It relies on *specific classes and their names*. It also needs to know which method it should call on each of the objects, as well as the argument that those methods require. 
-
-If you change anything within those classes that impacts `Wedding#prepare`, you need to refactor the method. For instance, if we need to add another wedding preparer, we must add another case statement. Before long, the method will become long and messy.
 ```
 class Wedding
   attr_reader :guests, :flowers, :songs
@@ -86,6 +84,8 @@ class Musician
   end
 end
 ```
+If you change anything within those classes that impacts `Wedding#prepare`, you need to refactor the method. For instance, if we need to add another wedding preparer, we must add another case statement. Before long, the method will become long and messy.
+
 We can clean up the code using duck-typing:
 ```
 class Wedding
@@ -93,6 +93,7 @@ class Wedding
 
   def prepare(preparers)
     preparers.each do |preparer|
+      # self refers to an object instantiated from the Wedding class - per our rules about self when used in an instance method
       preparer.prepare_wedding(self)
     end
   end
@@ -129,6 +130,8 @@ class Musician
 end
 ```
 We can see that there is no inheritance in this example, but we still have polymorphism. Each class must define a `prepare_wedding` method and implement it in its own way. If we must add another preparer, we can create another class and just implement `prepare_wedding` to perform the appropriate actions.
+
+Essentially, for an object instantiated from the `Wedding` class, once we pass in some `preparers` to the `prepare` method, Ruby will try apply the `prepare_wedding` method to each of the objects passed into `preparers`, __hoping__ that that object has an applicable method. 
 
 ### Encapsulation
 Encapsulation lets us hide the internal representation of an object from the outside and only expose the methods and properties that users of the object need. We can use *method access control* to expose these properties and methods through the public (or external) interface of a class: its public methods. 
@@ -173,4 +176,4 @@ Note that the setter method for `nickname` is private: it is not available outsi
 
 You might have noticed that even though the setter method for `nickname` is private we are still calling it with `self` prepended on line 9, `self.nickname = n`. This is an exception in Ruby. You need to use `self` when calling private setter methods as if you didn't use `self` Ruby would think you are creating a local variable.
 
-On a final note, always keep in mind that the class should have as few public methods as possible. It lets us simplify using that class and protect data from undesired changes from the outer world.
+On a final note, always keep in mind that the class should have _as few public methods as possible_. It lets us simplify using that class and protect data from undesired changes from the outer world.
