@@ -1,4 +1,4 @@
-# October 2020
+# October 2020 (Total minutes: 4,872)
 - [1st, Thu](#011020-thu)
 - [2nd, Fri](#021020-fri)
 - [3rd, Sat](#031020-sat)

@@ -1,4 +1,4 @@
-# September 2020
+# September 2020 (Total minutes: 3,321)
 - [10th, Thu](#100920-thu)
 - [11th, Fri](#110920-fri)
 - [12th, Sat](#120920-sat)

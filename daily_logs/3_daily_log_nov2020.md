@@ -1,4 +1,4 @@
-# November 2020
+# November 2020 (Total minutes: 4,717)
 - [1st, Sun](#011120-sun)
 - [2nd, Mon](#021120-mon)
 - [3rd, Tue](#031120-tue)

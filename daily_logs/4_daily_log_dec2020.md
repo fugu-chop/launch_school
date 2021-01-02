@@ -1,4 +1,4 @@
-# December 2020
+# December 2020 (Total minutes: 4,809)
 - [1st, Tue](#011220-tue)
 - [2nd, Wed](#021220-wed)
 - [3rd, Thu](#031220-thu)
