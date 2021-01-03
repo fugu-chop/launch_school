@@ -1,6 +1,7 @@
-# January 2021 (Total minutes: 240)
+# January 2021 (Total minutes: 456)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
+- [3rd, Sun](#030121-sun)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -35,3 +36,17 @@ I've decided to cut down my weekend revision to 6 hours over the two days. 8 hou
 Today was full of life stuff that prevented me from properly studying. I basically drove about 70% of the day.
 
 I had some confusion around some usage of `self` within duck-typing, but I was confusing classes with objects instantiated from objects. Duck-typing almost seems like a trial and error way of creating polymorphism.
+
+##### 03/01/21 (Sun)
+__*Concepts covered*__<br/>
+- Lesson 2
+  - OO Rock Paper Scissors Design
+  - OO Rock Paper Scissors basic implementation
+  - CRC cards
+  - RPS bonus features
+
+__*Time spent*__<br/>
+216 minutes
+
+__*Thoughts*__<br/>
+The Object Oriented way of thinking is still a little unusual to me - extracting things to classes and objects isn't second nature and will require further practice, especially when thinking about how logic should operate and what values objects and methods should return and how objects should interact with each other.
