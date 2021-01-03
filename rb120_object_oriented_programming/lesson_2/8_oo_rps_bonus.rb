@@ -24,6 +24,16 @@ class Human < Player
     self.name = player_name
   end
 
+  def class_choice(choice)
+    case choice
+    when 'Rock' then Rock.new
+    when 'Paper' then Paper.new
+    when 'Lizard' then Lizard.new
+    when 'Scissors' then Scissors.new
+    when 'Spock' then Spock.new
+    end
+  end
+
   def choose
     choice = nil
     loop do
@@ -32,77 +42,87 @@ class Human < Player
       break if Move::VALUES.include?(choice)
       puts "That's not a valid move - please try again."
     end
-    self.move = Move.new(choice)
+    self.move = class_choice(choice)
   end
 end
 
 class Computer < Player
   def set_name
-    self.name = ['Sonny', 'R2D2', 'T-800', 'Baymax', 'Chappie'].sample
+    self.name = ['Bender', 'R2D2', 'T-800', 'Optmius Prime', 'Sonny'].sample
   end
 
   def choose
-    self.move = Move.new(Move::VALUES.sample)
+    choice = Move::VALUES.sample
+    self.move = case choice
+                when 'Rock' then Rock.new
+                when 'Paper' then Paper.new
+                when 'Lizard' then Lizard.new
+                when 'Scissors' then Scissors.new
+                when 'Spock' then Spock.new
+                end
   end
 end
 
 class Move
+  attr_reader :win_condition, :value, :loss_condition
+
   VALUES = %w(Rock Paper Lizard Scissors Spock)
-  VERBS = {
-    'Rock' => {'Scissors' => 'crushes',
-               'Lizard' => 'crushes'},
-    'Scissors' => {'Paper' => 'cuts',
-               'Lizard' => 'decapitates'},
-    'Paper' => {'Rock' => 'covers',
-               'Spock' => 'disproves'},
-    'Lizard' => {'Paper' => 'eats',
-               'Spock' => 'poisons'},
-    'Spock' => {'Scissors' => 'smashes',
-               'Rock' => 'vapourises'}                                           
-  }
-
-  def initialize(value)
-    @value = value
-  end
-
-  def scissors?
-    @value == 'Scissors'
-  end
-
-  def spock?
-    @value == 'Spock'
-  end
-
-  def lizard?
-    @value == 'Lizard'
-  end
-
-  def paper?
-    @value == 'Paper'
-  end
-
-  def rock?
-    @value == 'Rock'
-  end
 
   def >(other_move)
-    (rock? && (other_move.scissors? || other_move.lizard?)) ||
-      (paper? && (other_move.rock? || other_move.spock?)) ||
-      (scissors? && (other_move.paper? || other_move.lizard?)) ||
-      (spock? && (other_move.rock? || other_move.scissors?)) ||
-      (lizard? && (other_move.paper? || other_move.spock?))
+    win_condition.keys.include?(other_move.value)
   end
 
   def <(other_move)
-    (rock? && (other_move.paper? || other_move.spock?)) ||
-      (paper? && (other_move.scissors? || other_move.lizard?)) ||
-      (scissors? && (other_move.rock? || other_move.spock?)) ||
-      (lizard? && (other_move.rock? || other_move.scissors?)) ||
-      (spock? && (other_move.lizard? || other_move.paper?))
+    other_move.win_condition.keys.include?(@value)
   end
 
   def to_s
     @value
+  end
+end
+
+class Rock < Move
+  def initialize
+    @value = 'Rock'
+    @win_condition = { 'Scissors' => 'crushes',
+                       'Lizard' => 'crushes' }
+    @loss_condition = %w(Paper Spock)
+  end
+end
+
+class Paper < Move
+  def initialize
+    @value = 'Paper'
+    @win_condition = { 'Rock' => 'covers',
+                       'Spock' => 'disproves' }
+    @loss_condition = %w(Scissors Lizard)
+  end
+end
+
+class Scissors < Move
+  def initialize
+    @value = 'Scissors'
+    @win_condition = { 'Paper' => 'cuts',
+                       'Lizard' => 'decapitates' }
+    @loss_condition = %w(Rock Spock)
+  end
+end
+
+class Spock < Move
+  def initialize
+    @value = 'Spock'
+    @win_condition = { 'Scissors' => 'smashes',
+                       'Rock' => 'vapourises' }
+    @loss_condition = %w(Paper Lizard)
+  end
+end
+
+class Lizard < Move
+  def initialize
+    @value = 'Lizard'
+    @win_condition = { 'Paper' => 'eats',
+                       'Spock' => 'poisons' }
+    @loss_condition = %w(Rock Scissors)
   end
 end
 
@@ -130,31 +150,43 @@ class RPSGame
     puts
   end
 
+  def human_win?
+    human.move > computer.move
+  end
+
+  def computer_win?
+    computer.move > human.move
+  end
+
+  def display_verb?
+    human_win? || computer_win?
+  end
+
   def display_verb
-    display = false
-    if human.move > computer.move
-      winning_move, losing_move = human.move, computer.move
-      display = true
-    elsif human.move < computer.move
-      winning_move, losing_move = computer.move, human.move
-      display = true
+    if human_win?
+      winning_move = human.move
+      losing_move = computer.move
+    elsif computer_win?
+      winning_move = computer.move
+      losing_move = human.move
     end
 
-    puts "#{winning_move.to_s} #{Move::VERBS[winning_move.to_s][losing_move.to_s]} #{losing_move.to_s}!" if display
+    win_verb = winning_move.win_condition[losing_move.to_s]
+    puts "#{winning_move} #{win_verb} #{losing_move}!" if display_verb?
   end
 
   def round_winner_check
-    if human.move > computer.move
+    if human_win?
       human.score += 1
-    elsif human.move < computer.move
+    elsif computer_win?
       computer.score += 1
     end
   end
 
   def display_winner
-    if human.move > computer.move
+    if human_win?
       puts "#{human.name} wins!"
-    elsif human.move < computer.move
+    elsif computer_win?
       puts "#{computer.name} wins!"
     else
       puts "It's a tie!"
@@ -173,7 +205,7 @@ class RPSGame
   def display_game_winner
     puts "#{game_winner} wins with #{WINNING_SCORE} total wins!" if game_winner
     puts "Scores will be reset."
-    puts 
+    puts
   end
 
   def score_reset
@@ -206,9 +238,7 @@ class RPSGame
       human.choose
       computer.choose
       display_moves
-
       display_verb
-
       display_winner
       round_winner_check
       display_scores
