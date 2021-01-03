@@ -3,7 +3,7 @@
 ## Table of Contents
 - [Approach to Object Oriented Programming](#approach-to-object-oriented-programming)
 - [Textual Description](#textual-description)
-- [Extracting Nouns](#extracting-nouns)
+- [Extracting Nouns to Classes](#extracting-nouns-to-classes)
 - [Organising Verbs with Nouns](#organising-verbs-with-nouns)
 - [Orchestration Engine](#orchestration-engine)
 
@@ -18,6 +18,10 @@ Notice that in OO, we don't think about the game flow logic at all. It's all abo
 
 After we come up with the initial class definitions, the final step is to orchestrate the flow of the program using objects instantiated from the classes.
 
+When it comes to object oriented design, we're always juggling a tradeoff between more _flexible_ code and _indirection_. Put another way, the more flexible your code, the more indirection you'll introduce by way of more classes. 
+
+There's likely an optimal tradeoff on that spectrum for your application somewhere, but that place likely changes as your application matures. This is the source of never-ending debate and discussion in the software development field, but it really comes down to that tradeoff. This is where the "art" of programming comes in.
+
 ### Textual Description
 ```
 Rock, Paper, Scissors is a two-player game where each player chooses one of three possible moves: rock, paper, or scissors. The chosen moves will then be compared to see who wins, according to the following rules:
@@ -27,7 +31,7 @@ Rock, Paper, Scissors is a two-player game where each player chooses one of thre
 
 If the players chose the same move, then it's a tie.
 ```
-### Extracting Nouns
+### Extracting Nouns to Classes
 In a way, Rock, Paper, Scissors is a difficult game to code in OO style, because there aren't many obvious _nouns_. 
 
 The problem domain is easier to model and extract to classes when there are real world nouns that match the problem description. However, in RPS, the nouns are more subtle. 
@@ -38,7 +42,7 @@ Verbs: choose, compare
 Note that we decided to ignore "rock", "paper" or "scissors", since they are all variations on a move -- almost like different states of a move. Therefore, we capture the major noun: move.
 
 ### Organising Verbs with Nouns
-Here's a list of the nouns and their verbs.
+Here's a list of the nouns and their verbs. This is the step where we create methods (verbs) for nouns (classes).
 ```
 Player
  - choose
