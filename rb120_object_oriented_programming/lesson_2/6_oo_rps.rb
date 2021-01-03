@@ -65,23 +65,15 @@ class Move
   end
 
   def >(other_move)
-    if rock?
-      other_move.scissors?
-    elsif paper?
-      other_move.rock?
-    elsif scissors?
-      other_move.paper?
-    end
+    (rock? && other_move.scissors?) ||
+      (paper? && other_move.rock?) ||
+      (scissors? && other_move.paper?)
   end
 
   def <(other_move)
-    if rock?
-      other_move.paper?
-    elsif paper?
-      other_move.scissors?
-    elsif scissors?
-      other_move.rock?
-    end
+    (rock? && other_move.paper?) ||
+      (paper? && other_move.scissors?) ||
+      (scissors? && other_move.rock?)
   end
 
   def to_s
@@ -105,10 +97,12 @@ class RPSGame
     "Thanks for playing Rock Paper Scissors!"
   end
 
-  def display_winner
+  def display_moves
     puts "#{human.name} chose #{human.move}."
     puts "#{computer.name} chose #{computer.move}."
+  end
 
+  def display_winner
     if human.move > computer.move
       puts "#{human.name} wins!"
     elsif human.move < computer.move
@@ -131,14 +125,15 @@ class RPSGame
   end
 
   def play
-    display_welcome_message
+    puts display_welcome_message
     loop do
       human.choose
       computer.choose
+      display_moves
       display_winner
       break unless play_again?
     end
-    display_goodbye_message
+    puts display_goodbye_message
   end
 end
 
