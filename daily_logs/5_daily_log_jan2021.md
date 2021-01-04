@@ -1,7 +1,8 @@
-# January 2021 (Total minutes: 456)
+# January 2021 (Total minutes: 655)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
+- [4th, Mon](#040121-mon)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -50,3 +51,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The Object Oriented way of thinking is still a little unusual to me - extracting things to classes and objects isn't second nature and will require further practice, especially when thinking about how logic should operate and what values objects and methods should return and how objects should interact with each other.
+
+##### 04/01/21 (Mon)
+__*Concepts covered*__<br/>
+- Lesson 2
+  - RPS bonus features
+
+__*Time spent*__<br/>
+199 minutes
+
+__*Thoughts*__<br/>
+Rubocop is a handy aid. Refactoring code is pretty fun and challenging. I managed to make it through coding all additional features without any additional Rubocop alerts(?).
