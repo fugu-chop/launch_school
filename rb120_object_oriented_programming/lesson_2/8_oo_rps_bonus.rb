@@ -1,4 +1,12 @@
+module Clearable
+  def clear_screen
+    system 'clear'
+  end
+end
+
 class Player
+  include Clearable
+
   attr_reader :move, :name
   attr_accessor :score
 
@@ -7,7 +15,7 @@ class Player
     @score = 0
   end
 
-  protected
+  private
 
   attr_writer :move, :name
 end
@@ -19,12 +27,14 @@ class Human < Player
       puts "Please enter your name."
       player_name = gets.chomp
       break unless player_name.empty?
-      puts "Please enter a name."
+      puts "No name detected. Please enter a name."
+      puts
     end
     self.name = player_name
+    puts
   end
 
-  def class_choice(choice)
+  def player_class_choice(choice)
     case choice
     when 'Rock' then Rock.new
     when 'Paper' then Paper.new
@@ -37,18 +47,20 @@ class Human < Player
   def choose
     choice = nil
     loop do
+      clear_screen
       puts "Please select a move: Rock, Paper, Lizard, Spock or Scissors."
       choice = gets.chomp.capitalize
       break if Move::VALUES.include?(choice)
       puts "That's not a valid move - please try again."
+      puts
     end
-    self.move = class_choice(choice)
+    self.move = player_class_choice(choice)
   end
 end
 
 class Computer < Player
   def set_name
-    self.name = ['Bender', 'R2D2', 'T-800', 'Optmius Prime', 'Sonny'].sample
+    self.name = ['Bender', 'R2D2', 'T-800', 'Optimus Prime', 'Sonny'].sample
   end
 
   def choose
@@ -127,24 +139,48 @@ class Lizard < Move
 end
 
 class RPSGame
+  include Clearable
+
   WINNING_SCORE = 3
   attr_accessor :human, :computer
 
   def initialize
+    clear_screen
+    display_welcome_message
+    display_rules
     @human = Human.new
     @computer = Computer.new
   end
 
   def display_welcome_message
     puts
-    "Welcome to Rock Paper Scissors Lizard Spock!"
+    puts <<~MSG
+    Welcome to Rock Paper Scissors Lizard Spock! 
+    Rock, Paper, Scissors, Spock, Lizard is an interesting wrinkle on the traditional Rock Paper Scissors game.
+    MSG
+    puts
+  end
+
+  def display_rules
+    puts <<~MSG
+    Here's the win conditions:
+    > Rock crushes Scissors and Lizard
+    > Paper covers Rock and disproves Spock
+    > Scissors cuts Paper and decapitates Lizard
+    > Lizard poisons Spock and eats Paper
+    > Spock vapourises Rock and smashes Scissors
+
+    The player will make their selection, followed by the computer. The first to reach #{RPSGame::WINNING_SCORE} wins, wins the game!
+    MSG
+    puts
   end
 
   def display_goodbye_message
-    "Thanks for playing Rock Paper Scissors Lizard Spock!"
+    puts "Thanks for playing Rock Paper Scissors Lizard Spock!"
   end
 
   def display_moves
+    puts
     puts "#{human.name} chose #{human.move}."
     puts "#{computer.name} chose #{computer.move}."
     puts
@@ -171,11 +207,11 @@ class RPSGame
       losing_move = human.move
     end
 
-    win_verb = winning_move.win_condition[losing_move.to_s]
+    win_verb = winning_move.win_condition[losing_move.to_s] if display_verb?
     puts "#{winning_move} #{win_verb} #{losing_move}!" if display_verb?
   end
 
-  def round_winner_check
+  def score_incrementer
     if human_win?
       human.score += 1
     elsif computer_win?
@@ -192,6 +228,10 @@ class RPSGame
       puts "It's a tie!"
     end
     puts
+  end
+
+  def game_winner?
+    human.score == WINNING_SCORE || computer.score == WINNING_SCORE
   end
 
   def game_winner
@@ -224,29 +264,34 @@ class RPSGame
     loop do
       puts "Would you like to play again?"
       answer = gets.chomp
-      break if ['Y', 'N'].include?(answer.upcase)
-      puts "That's not a valid answer - please answer y or n!"
+      break if ['Y', 'N', 'YES', 'NO'].include?(answer.upcase)
+      puts "That's not a valid answer - please answer [y]es or [n]o!"
     end
     puts
 
-    answer.upcase == 'Y'
+    ['Y', 'YES'].include?(answer.upcase)
+  end
+
+  def game_loop
+    human.choose
+    computer.choose
+    display_moves
+    display_verb
+    display_winner
+    score_incrementer
+    display_scores
   end
 
   def play
-    puts display_welcome_message
     loop do
-      human.choose
-      computer.choose
-      display_moves
-      display_verb
-      display_winner
-      round_winner_check
-      display_scores
-      display_game_winner if game_winner
-      score_reset if game_winner
+      game_loop
+      if game_winner?
+        display_game_winner
+        score_reset
+      end
       break unless play_again?
     end
-    puts display_goodbye_message
+    display_goodbye_message
   end
 end
 
