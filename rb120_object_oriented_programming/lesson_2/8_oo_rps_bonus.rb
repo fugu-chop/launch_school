@@ -248,6 +248,19 @@ class RPSGame
     clear_screen
   end
 
+  def play
+    loop do
+      game_loop
+      display_game_end_state if game_winner?
+      display_history if display_history?
+      break unless play_again?
+      clear_screen
+    end
+    display_goodbye_message
+  end
+
+  private 
+
   def clear_screen
     system 'clear'
   end
@@ -338,17 +351,6 @@ class RPSGame
     display_winner
     score_incrementer
     display_scores
-  end
-
-  def play
-    loop do
-      game_loop
-      display_game_end_state if game_winner?
-      display_history if display_history?
-      break unless play_again?
-      clear_screen
-    end
-    display_goodbye_message
   end
 end
 
