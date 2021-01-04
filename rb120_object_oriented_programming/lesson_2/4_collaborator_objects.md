@@ -10,14 +10,29 @@
 ### What is collaboration?
 Collaboration is a way of modeling relationships between different objects. A collaborative relationship is a relationship of *association* — not of inheritance. 
 
-Collaboration is a *has-a* relationship rather than a *is-a* relationship - for example, a library __has__ books, so there is an __associative__ relationship between objects of class `Library` and objects of class `Book` (contrast this with _inheritance_ - e.g. a dictionary __is a__ book).
+Collaboration is a direct *has-a* relationship rather than a *is-a* relationship - for example, a library __has__ books, so there is an __associative__ relationship between objects of class `Library` and objects of class `Book` (contrast this with _inheritance_ - e.g. a dictionary __is a__ book).
 
 ### What is a collaborator object?
 Objects that are stored as _state within another object_ (i.e. as instance variables) are called __collaborator objects__. For example, when assigning a collaborator object to an instance variable in another class' constructor method definition, you are _associating the two objects with one another_.
 
 We call such objects collaborators because they work in conjunction (or in collaboration) with the class they are associated with. 
 
-One way to spot them in code is when an *object is assigned to an instance variable of another object inside a class definition*.
+A collaborator object exists when an __*object is assigned to an instance variable of another object inside a class definition*__. 
+
+Consider this:
+```
+class Parent
+  def initialize
+    @child = Child.new
+  end
+end
+
+class Child < Parent
+end
+```
+When you create an __object inside a class__ (the `@child` object inside the `Parent` class here), you're creating a collaborator object. This is __not__ inheritance, and it doesn't use inheritance.
+
+Note that in the above example, we're trying to create a `Child` object as an instance variable inside the a `Parent` object, but `Child` is a subclass of `Parent` - that means a `Child` __is a__ `Parent` (inheritance). when we define `@child = Child.new` inside `Parent#initialize`, the `Child` needs a new `Parent` object (which, in turn needs a new `Child`, which needs a new `Parent`, and so on indefinitely).
 
 Here's an example of a string object acting as a collaborator object for the instance variable `@name`. Collaborator objects are not limited to just strings though, they can be basically anything (essentially, any object that you could assign to the instance variable `@name`, like arrays or hashes).
 ```

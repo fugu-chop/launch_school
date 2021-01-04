@@ -60,7 +60,24 @@ If we created another `GoodDog` object, for example, with `fido = GoodDog.new('F
 
 Once initialised, instance variables are available to instance methods *throughout the class* - this is how instance methods are able to return values without needing to take them as arguments (see below example of string interpolation with the `fido` object).
 
-Another useful mental model is that classes don't define instance variables, they _define attributes_. Instance variables do not exist prior to an object being created and a value being assigned to them.
+Another useful mental model is that classes don't define instance variables, they _define attributes_. 
+
+Instance variables __do not exist prior to an object being created and a value being assigned to them__.  Consider the following code:
+```
+class Student
+  attr_accessor :grade
+
+  def initialize(name, grade=nil)
+    @name = name
+  end
+end
+
+ade = Student.new('Adewale')
+ade # => #<Student:0x00000002a88ef8 @name="Adewale">
+```
+Although we have a `grade` accessor method within our `Student` class, the `@grade` instance variable is __never initialized__ within our code (since it's not initialized as an instance variable within the `initialize` method) and so __can't be considered part of state__ of the `Student` object represented by `ade`. 
+
+Calling `ade.grade` would return `nil` because `@grade` is an uninitialized instance variable and not because we have set its value to `nil` (the `initialize` method ignores the `grade` parameter).
 
 ### Instance Methods
 Instance methods are how we attach functionality to our objects. 
