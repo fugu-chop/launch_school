@@ -17,23 +17,6 @@ Objects that are stored as _state within another object_ (i.e. as instance varia
 
 We call such objects collaborators because they work in conjunction (or in collaboration) with the class they are associated with. 
 
-A collaborator object exists when an __*object is assigned to an instance variable of another object inside a class definition*__. 
-
-Consider this:
-```
-class Parent
-  def initialize
-    @child = Child.new
-  end
-end
-
-class Child < Parent
-end
-```
-When you create an __object inside a class__ (the `@child` object inside the `Parent` class here), you're creating a collaborator object. This is __not__ inheritance, and it doesn't use inheritance.
-
-Note that in the above example, we're trying to create a `Child` object as an instance variable inside the a `Parent` object, but `Child` is a subclass of `Parent` - that means a `Child` __is a__ `Parent` (inheritance). when we define `@child = Child.new` inside `Parent#initialize`, the `Child` needs a new `Parent` object (which, in turn needs a new `Child`, which needs a new `Parent`, and so on indefinitely).
-
 Here's an example of a string object acting as a collaborator object for the instance variable `@name`. Collaborator objects are not limited to just strings though, they can be basically anything (essentially, any object that you could assign to the instance variable `@name`, like arrays or hashes).
 ```
 class Person
@@ -176,12 +159,31 @@ In this example, you can see that the `Book` object `book_1` is not added to the
 
 Note: You can also see from this example that `book_1` has a title; `@title` is a _String object collaborator_ of objects of the `Book` class, which is made explicit in the `Book#initialize` method.
 
-Another helpful mental model is: the *collaborative relationship exists in the design (or intention) of our code*.
+The `@books` object is technically an `Array`. However, the array is just a way to organize and store the `Book` objects that will fill it, providing us with a number of `Array` methods with which to interact with our collection of books. *It is the relationship between `Library` and `Books` that is meaningful in terms of the design of our program*, not the relationship between Library and Array.
 
 Collaboration occurs when one object is __added to the state of another object__ (i.e., when a method is invoked on an object). In our previous example above, collaboration occurs when we define the `BullDog` class, and add it to the `@pets` instance variable.
 
+Another helpful mental model is: the *collaborative relationship exists in the design (or intention) of our code*.
+
+Consider this:
+```
+class Parent
+  def initialize
+    @child = Child.new
+  end
+end
+
+class Child < Parent
+end
+```
+When you create an __object inside a class__ (the `@child` object inside the `Parent` class here), you're creating a collaborator object. This is __not__ inheritance, and it doesn't use inheritance.
+
+Note that in the above example, we're trying to create a `Child` object as an instance variable inside the a `Parent` object, but `Child` is a subclass of `Parent` - that means a `Child` __is a__ `Parent` (through inheritance, the *object instantiated from the subclass also creates an instance of the parent class*). 
+
+When we define `@child = Child.new` inside `Parent#initialize`, the `Child` *needs a new `Parent` object* (which, in turn needs a new `Child`, which needs a new `Parent`, and so on indefinitely).
+
 ### Other notes
-When we work with collaborator objects, they are usually custom objects (e.g. defined by the programmer and not inherited from the Ruby core library); `@pet` is an example of a custom object. 
+When we work with collaborator objects, they are usually custom objects (e.g. defined by the programmer and not inherited from the Ruby core library); `@pet` is an example of a custom object in our example above.
 
 Yet, collaborator objects __aren't strictly custom objects__. Even the string object stored in `@name` within `bob` in the code above is _technically a collaborator object_.
 
