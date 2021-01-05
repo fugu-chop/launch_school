@@ -40,17 +40,17 @@ class Human < Player
   def choose
     choice = nil
     loop do
-      puts "Please select a move: [R]ock, [P]aper, [L]izard, [Sp]ock, [Sc]issors."
+      puts "Please select from: [R]ock, [P]aper, [L]izard, [Sp]ock, [Sc]issors."
       choice = gets.chomp.capitalize
-      break if Move::VALUES.include?(choice) || Move::ABBREVIATIONS.include?(choice)
+      break if valid_choice?(choice)
       puts "That's not a valid move - please try again."
       puts
     end
 
-    choice = abbreviation_reference[choice] if Move::ABBREVIATIONS.include?(choice)
+    choice = abbreviation_reference[choice] if !Move::VALUES.include?(choice)
     self.move = move_choice(choice)
   end
-  
+
   private
 
   def abbreviation_reference
@@ -59,6 +59,10 @@ class Human < Player
                                 'Sc' => 'Scissors',
                                 'Sp' => 'Spock',
                                 'L' => 'Lizard' }
+  end
+
+  def valid_choice?(choice)
+    Move::VALUES.include?(choice) || Move::ABBREVIATIONS.include?(choice)
   end
 end
 
@@ -120,7 +124,7 @@ class Sonny < Computer
     super()
     @name = 'Sonny'
     @moveset = %w(Rock Paper Lizard Lizard Lizard Scissors Spock)
-  end  
+  end
 end
 
 class Move
