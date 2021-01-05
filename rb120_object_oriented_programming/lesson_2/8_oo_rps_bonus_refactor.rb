@@ -64,24 +64,12 @@ end
 
 class Computer < Player
   def set_name
-    self.name = ['Bender', 'R2D2', 'T-800', 'Optimus Prime', 'Sonny'].sample
+    self.name = @name
   end
 
   def choose
-    computer_move = persona.moveset.sample
+    computer_move = moveset.sample
     self.move = move_choice(computer_move)
-  end
-
-  private
-
-  def persona
-    case name
-    when 'Bender' then Bender.new
-    when 'R2D2' then R2D2.new
-    when 'T-800' then T800.new
-    when 'Optimus Prime' then OptimusPrime.new
-    when 'Sonny' then Sonny.new
-    end
   end
 end
 
@@ -89,6 +77,8 @@ class Bender < Computer
   attr_reader :moveset
 
   def initialize
+    super()
+    @name = 'Bender'
     @moveset = ['Rock']
   end
 end
@@ -97,6 +87,8 @@ class R2D2 < Computer
   attr_reader :moveset
 
   def initialize
+    super()
+    @name = 'R2D2'
     @moveset = %w(Rock Paper Scissors)
   end
 end
@@ -105,6 +97,8 @@ class T800 < Computer
   attr_reader :moveset
 
   def initialize
+    super()
+    @name = 'T-800'
     @moveset = %w(Spock Lizard Paper Spock)
   end
 end
@@ -113,6 +107,8 @@ class OptimusPrime < Computer
   attr_reader :moveset
 
   def initialize
+    super()
+    @name = 'Optimus Prime'
     @moveset = %w(Rock Scissors Lizard Paper Spock)
   end
 end
@@ -121,6 +117,8 @@ class Sonny < Computer
   attr_reader :moveset
 
   def initialize
+    super()
+    @name = 'Sonny'
     @moveset = %w(Rock Paper Lizard Lizard Lizard Scissors Spock)
   end  
 end
@@ -198,7 +196,7 @@ class RPSGame
     clear_screen
     display_welcome_message
     display_rules
-    @computer = Computer.new
+    @computer = computer_sampler
     display_opponent
     @human = Human.new
     clear_screen
@@ -385,6 +383,10 @@ class RPSGame
     puts
 
     ['Y', 'YES'].include?(answer.upcase)
+  end
+
+  def computer_sampler
+    [Bender.new, T800.new, OptimusPrime.new, Sonny.new, R2D2.new].sample
   end
 
   def game_loop
