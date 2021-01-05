@@ -3,6 +3,7 @@
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
 - [4th, Mon](#040121-mon)
+- [5th, Tue](#050121-tue)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -62,3 +63,20 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Rubocop is a handy aid. Refactoring code is pretty fun and challenging. I managed to make it through coding all additional features without any additional Rubocop alerts(?).
+
+##### 05/01/21 (Tue)
+__*Concepts covered*__<br/>
+- Lesson 2
+  - Quiz
+  - Collaboration discussion reading
+- Lesson 3
+  - Equivalence
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Collaborator objects came up in the quiz, and my definition is still fuzzy. I think the key points to take away are:
+1. A collaborative relationship exists when there is a direct __has-a__ relationship between the two objects (or, an __association__). Where the relationship is indirect (i.e. there is another class between the two objects), it's unlikely to have a collaborative relationship. 
+2. Inheritance operates on an __is-a__ basis. This means that objects instantiated from subclasses __also create an instance of their parent classes__.
+3. Since instance variables are only considered part of state when they are initialised, the collaborative relationship exists in *intention*, but not in actuality until that instance variable is initialised (e.g. through an `initialize` method, or through calling a method that assigns an object to an instance variable).
