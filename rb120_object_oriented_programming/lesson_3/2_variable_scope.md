@@ -4,6 +4,7 @@
 - [Instance Variable Scope](#instance-variable-scope)
 - [Class Variable Scope](#class-variable-scope)
 - [Constant Variable Scope](#constant-variable-scope)
+- [Lexical Scope](#lexical-scope)
 
 ### Instance variable scope
 Instance variables are variables that start with `@` and are _scoped at the object level_. They are used to track individual object state, and __do not cross over between objects__. 
@@ -121,6 +122,7 @@ Within one class, the rules for accessing constants is pretty easy: it's __avail
 
 Where constant resolution gets really tricky is when inheritance is involved, and that's when we need to remember that unlike other variables, constants have lexical scope.
 
+### Lexical Scope
 _Lexical scope_ means that the scope of the object remains limited to where it's defined in the code.
 ```
 class Car

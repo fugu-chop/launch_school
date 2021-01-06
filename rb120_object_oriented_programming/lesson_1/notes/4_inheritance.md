@@ -400,7 +400,7 @@ sparky = GoodDog.new("Sparky", 4)
 sparky.human_years
 => NoMethodError: private method `human_years' called for #<GoodDog:0x007f8f431441f8 @name="Sparky", @age=4>
 ```
-We have made the `human_years` method private by placing it under the `private` keyword. What is it good for, then, if we can't call it? `private` methods are *only accessible from other methods in the class*. For example, given the above code, the following would be allowed:
+We have made the `human_years` method private by placing it under the `private` keyword. What is it good for, then, if we can't call it? `private` methods are *only accessible from other methods in the class* (i.e. only within the class definition, and not from objects instantiated from the class). For example, given the above code, the following would be allowed:
 ```
 # Assume this method definition is above the "private" keyword
 def public_disclosure
