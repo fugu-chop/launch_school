@@ -5,9 +5,10 @@
 - [The == method](#the-==-method)
 - [object_id](#object_id)
 - [===](#===)
+- [The eql? method](#the-eql?-method)
 
 ### Introduction
-The `==` method compares the two variables' _values_ whereas the `equal?` method determines whether the two variables point to the _same object_. 
+For most objects, the `==` method compares the two variables' _values_ whereas the `equal?` method determines whether the two variables point to the _same object_. 
 ```
 str1 = "something"
 str2 = "something"
@@ -24,13 +25,13 @@ str1.equal? str1_copy   # => true
 str2.equal? str1_copy   # => false
 ```
 ### The `==` method
-`==` is not an operator in Ruby, like the `=` assignment operator. Instead, it's actually an __instance method__ available on _all objects_. 
+`==` is not an operator in Ruby, like the `=` assignment operator is. Instead, it's actually an __instance method__ available on _all objects_. 
 
 Ruby gives the `==` method a special syntax to make it look like a normal operator. For example, instead of calling the method as `str1.==(str2)`, we can use the more natural syntax `str1 == str2`. Both options are functionally equivalent. 
 
 Since it's an instance method, the answer to "how does == know what value to use for comparison" is: it's _determined by the class_.
 
-The original `==` method is defined in the `BasicObject` class, which is the _parent class for all classes_ in Ruby. This implies __every object in Ruby__ has a `==` method. However, each class should define the `==` method to specify the value to compare.
+The original `==` method is defined in the `BasicObject` class, which is the _parent class for all classes_ in Ruby. This implies __every object in Ruby__ has a `==` method. However, each class should define the `==` method to specify the value to compare, since the default implementation is to compare whether the two __objects__ are the same, which is a much more strict definition.
 ```
 class Person
   attr_accessor :name
@@ -112,6 +113,8 @@ If two symbols or two integers have the _same value_, they are also the _same ob
 ### `===`
 There are two more concepts related to equality. The first is the `===` method. Just like `==,` it looks like a built-in Ruby operator when you use it, but it's in fact an _instance method_. The more confusing part about this method is that it's used implicitly by the `case` statement.
 
+The `===` operator is generally used to determine if an object __belongs to a set__. For example, an _instance of a class belongs to the class_, a number in a range belongs to that range, etc.
+
 A good example of seeing `===` in action is when we have ranges in a `when` clause.
 ```
 num = 25
@@ -128,3 +131,15 @@ end
 Behind the scenes, the `case` statement is using the `===` method to compare each `when` clause with `num`. In this example, the `when` clauses contain only ranges, so `Range#===` is used for each clause. 
 
 Typically, you do not have to define your own `===` behavior, as you likely wouldn't use your custom classes in a `case` statement. It's sometimes useful to remember that `===` is used for comparison in `case` statements, though.
+
+Consider the following code:
+```
+String === "hello" # => true
+String === 15      # => false
+```
+On line 1, `true` is returned because "hello" is an instance of `String`, even though "hello" doesn't equal `String`. Similarly, `false` is returned on line 2 because `15` is an integer, which doesn't equal `String` and isn't an instance of the `String` class.
+
+Sidenote: the `===` operator in JavaScript is very __different from its function in Ruby__. Do not get the two confused.
+
+### The `eql?` method
+The `eql?` method determines if two objects contain the _same value __and__ if they're of the same class_. This method is used most often by Hash to determine equality among its members. It's not used very often.
