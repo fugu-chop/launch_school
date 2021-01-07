@@ -1,10 +1,11 @@
-# January 2021 (Total minutes: 899)
+# January 2021 (Total minutes: 1029)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
 - [4th, Mon](#040121-mon)
 - [5th, Tue](#050121-tue)
 - [6th, Wed](#060121-wed)
+- [7th, Thu](#070121-thu)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -95,3 +96,20 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Refactoring code is a good way to refresh concepts, as well as revisit design choices. It's quite fun. Lexical scope was introduced as a concept, which is a little bit confusing - a variable retains it's value based on where it was defined, which creates confusion during inheritance. 
+
+##### 07/01/21 (Thu)
+__*Concepts covered*__<br/>
+- Lesson 3
+  - Variable Scope revision
+  - Inheritance and Variable Scope
+    - Revision
+  - Fake Operators
+  - Exceptions
+
+__*Time spent*__<br/>
+130 minutes
+
+__*Thoughts*__<br/>
+Not much to comment on here. Churning through material. Handling exceptions seems like a pretty useful thing to be able to do, but I need to remember to never rescue the `Exception` class, such that we can ensure our program actually does what we want it to do.
+
+Revising lexical scope for constants is instructive. It acts so differently from class and instance variables, and throws a real spanner in code when trying to inherit, or mix in modules into a class. Definitely something to watch out for. 
