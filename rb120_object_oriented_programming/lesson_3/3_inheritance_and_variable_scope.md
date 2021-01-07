@@ -124,8 +124,40 @@ Car.wheels                                  # => 2  Not what we expected!
 ```
 For this reason, _avoid using class variables when working with inheritance_. Some Rubyists would go as far as recommending avoiding class variables altogether.
 
+Take this as a further example:
+```
+class Shape
+  @@sides = nil
+
+  def self.sides
+    @@sides
+  end
+
+  def sides
+    @@sides
+  end
+end
+
+class Triangle < Shape
+  def initialize
+    @@sides = 3
+  end
+end
+
+class Quadrilateral < Shape
+  def initialize
+    @@sides = 4
+  end
+end
+```
+`Triangle.sides` returns a value of `nil` when called __before instantiating__ a `Triangle` or Quadrilateral object. It returns `4` when called directly after instantiating a `Quadrilateral` object.
+
+`Triangle.new.sides` always returns a value of `3` since upon initialising a `Triangle` object, the `initialize` method overwrites anything else `@@sides` might have been set to, ensuring that the return value is `3`.
+
+Otherwise, `Triangle.sides` can sometimes return a value of `4`, as if we instantiate a `Quadrilateral` object without instantiating a `Triangle` object, that object will overwrite the class variable `@@sides`, which the `Triangle` class would be referencing. 
+
 ### Constants
-Constants can be accessed from instance or class methods when defined within a class. However, they _cannot_ be referenced if defined in a __different__ class, unless we use the *namespace resolution operator*, `::`.
+Constants can be accessed from instance or class methods when defined within a class. However, they _cannot_ be referenced if defined in a __different__ class, unless we use the *namespace resolution operator*, `::`. The namespace resolution operator enables us to look in a different scope (i.e. outside of the immediate class scope where the constant is referenced).
 ```
 class Dog
   LEGS = 4
@@ -198,3 +230,34 @@ module Maintenance
 end
 ```
 The reason `Car::WHEELS` works is because we're telling Ruby to look for `WHEELS` in the `Car` class, which can access `Vehicle::WHEELS` through inheritance.
+
+See this example:
+```
+module Describable
+  def describe_shape
+    "I am a #{self.class} and have #{SIDES} sides."
+  end
+end
+
+class Shape
+  include Describable
+
+  def self.sides
+    SIDES
+  end
+end
+
+class Quadrilateral < Shape
+  SIDES = 4
+end
+
+class Square < Quadrilateral; end
+
+Square.sides # => 4
+Square.new.sides # => 4
+Square.new.describe_shape # => "I am a Square and have 4 sides."
+```
+In order to achieve the desired outputs, we need to:
+- Add `def sides; SIDES; end` to the `Quadrilateral` class, as there is no `#sides` instance method,  `Square.new.sides` would return a `NoMethodError` without it. 
+- Change the method body of `#describe_shape` method to `"I am a #{self.class} and have #{self.class::SIDES} sides."`, as without `self.class`, Ruby will look to the module to define `SIDES` (i.e. will return `NameError: uninitialized constant Describable::SIDES`)
+- Change the method body of `Shape::sides` method to `self::SIDES`, as `SIDES` is not defined in `Shape`, it is defined in `Quadrilateral`. By using `self::`, it will start at the current class (`Square`) and go up the inheritance chain (the `self::` operator enables access to the `Shape` superclass through inheritance).

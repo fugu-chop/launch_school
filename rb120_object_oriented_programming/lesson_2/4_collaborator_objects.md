@@ -178,7 +178,7 @@ end
 ```
 When you create an __object inside a class__ (the `@child` object inside the `Parent` class here), you're creating a collaborator object. This is __not__ inheritance, and it doesn't use inheritance.
 
-Note that in the above example, we're trying to create a `Child` object as an instance variable inside the a `Parent` object, but `Child` is a subclass of `Parent` - that means a `Child` __is a__ `Parent` (through inheritance, the *object instantiated from the subclass also creates an instance of the parent class*). 
+Note that in the above example, we're trying to create a `Child` object as an instance variable inside the a `Parent` object, but `Child` is a subclass of `Parent` - that means a `Child` __is a__ `Parent` (inheritance). 
 
 When we define `@child = Child.new` inside `Parent#initialize`, the `Child` *needs a new `Parent` object* (which, in turn needs a new `Child`, which needs a new `Parent`, and so on indefinitely).
 

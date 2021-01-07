@@ -128,7 +128,7 @@ else
   puts "not in range"
 end
 ```
-Behind the scenes, the `case` statement is using the `===` method to compare each `when` clause with `num`. In this example, the `when` clauses contain only ranges, so `Range#===` is used for each clause. 
+Behind the scenes, the `case` statement is using the `===` method to compare each `when` clause with `num`. In this example, the `when` clauses contain only ranges, so `Range#===` is used for each clause. If the `when` clause simply had a number, the `case` statement would use `Integer#===`.
 
 Typically, you do not have to define your own `===` behavior, as you likely wouldn't use your custom classes in a `case` statement. It's sometimes useful to remember that `===` is used for comparison in `case` statements, though.
 
@@ -142,4 +142,4 @@ On line 1, `true` is returned because "hello" is an instance of `String`, even t
 Sidenote: the `===` operator in JavaScript is very __different from its function in Ruby__. Do not get the two confused.
 
 ### The `eql?` method
-The `eql?` method determines if two objects contain the _same value __and__ if they're of the same class_. This method is used most often by Hash to determine equality among its members. It's not used very often.
+The `eql?` method (as defined by the `Object` class) determines if two objects are the __same object and same value__. However, most other classes overwrite this implementation (e.g. `String#eql?` tests for whether the two objects contain the same __value__ and __not__ the same object. It's not used very often (primarily for `Hash` objects).
