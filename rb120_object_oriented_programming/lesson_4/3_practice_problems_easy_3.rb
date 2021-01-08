@@ -119,3 +119,37 @@ Television.manufacturer
 Television.model
 =end
 puts "The tv.manufacturer would return a NoMethodError, as there is no 'manufacturer' instance method (there is only a class method). The tv.model method wouldn't likely return an exception due to the instance method being defined within the Television class. Similarly, the Television.model method call would also return a NoMethodError, as there is no class model method. The Television.manufacturer method call wouldn't likely return an exception due to a class method being defined in the Television class."
+
+# 6) If we have a class such as the one below, in the make_one_year_older method we have used self. What is another way we could write this method so we don't have to use the self prefix?
+=begin
+class Cat
+  attr_accessor :type, :age
+
+  def initialize(type)
+    @type = type
+    @age  = 0
+  end
+
+  def make_one_year_older
+    self.age += 1
+  end
+end
+=end
+puts "In this code, there is a setter method defined for the @age instance variable. This means that instead of referencing the setter method, we could use the instance variable @age, instead."
+
+# 7) What is used in this class but doesn't add any value?
+=begin
+class Light
+  attr_accessor :brightness, :color
+
+  def initialize(brightness, color)
+    @brightness = brightness
+    @color = color
+  end
+
+  def self.information
+    return "I want to turn on the light with a brightness level of super high and a color of green"
+  end
+end
+=end
+puts "Here, the return keyword is not required, as by default, Ruby will return the last evaluated line of code in a method without the return keyword."

@@ -79,7 +79,7 @@ That means when we wrote the code `sparky.speak`, Ruby first looked at the `spar
 Inheritance can be a great way to remove duplication in your code base. There is an acronym that you'll see often in the Ruby community, "DRY". This stands for *"Don't Repeat Yourself"*. It means that if you find yourself writing the same logic over and over again in your programs, there are ways to extract that logic to one place for reuse.
 
 ### `super`
-Ruby provides us with the `super` *keyword* to call methods *earlier* in the method lookup path. When you call `super` from within a method, it searches the method lookup path for a method with the same name, then invokes it. `super` is a good way of overriding an existing method in the superclass, but still incorporating some of the functionality within that superclass. 
+Ruby provides us with the `super` *keyword* to call methods *earlier* in the method lookup path. When you call `super` from within a method, it searches the method lookup path for a method with the same name, then invokes it. `super` is a good way of overriding an existing method in the superclass, but still incorporating some of the functionality within that superclass. `super` is __not__ limited to the `initialize` method.
 ```
 class Animal
   def speak
@@ -158,6 +158,15 @@ bear = Bear.new("black")
 ```
 If you forget to use the parentheses here, Ruby will raise an `ArgumentError` exception since the number of arguments is incorrect.
 
+We can also use `super()` to pass in default values as arguments.
+```
+class Motorboat < Seacraft
+  def initialize(km_traveled_per_liter, liters_of_fuel_capacity)
+    # In the Seacraft class, the initialize method takes two additional arguments in addition to those provided on initialisation here, which we are autofilling
+    super(1, 1, km_traveled_per_liter, liters_of_fuel_capacity)
+  end
+end
+```
 ### Mixing in modules
 Another way to DRY up your code in Ruby is to use __modules__. 
 
