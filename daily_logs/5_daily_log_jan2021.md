@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 1029)
+# January 2021 (Total minutes: 1149)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -6,6 +6,7 @@
 - [5th, Tue](#050121-tue)
 - [6th, Wed](#060121-wed)
 - [7th, Thu](#070121-thu)
+- [8th, Fri](#080121-fri)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -113,3 +114,22 @@ __*Thoughts*__<br/>
 Not much to comment on here. Churning through material. Handling exceptions seems like a pretty useful thing to be able to do, but I need to remember to never rescue the `Exception` class, such that we can ensure our program actually does what we want it to do.
 
 Revising lexical scope for constants is instructive. It acts so differently from class and instance variables, and throws a real spanner in code when trying to inherit, or mix in modules into a class. Definitely something to watch out for. 
+
+##### 08/01/21 (Fri)
+__*Concepts covered*__<br/>
+- Lesson 3
+  - Quiz
+  - Quiz Review
+  - Inheritance and Variable Scope Revision
+- Lesson 4
+  - Practice Problems: Easy 1
+  - Practice Problems: Easy 2
+  - Practice Problems: Easy 3
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Something I'm still not 100% comfortable in is defining functionality within superclasses that doesn't work until you create an instance of the subclass - e.g. defining a method in the superclass to require an argument that doesn't get input until an instance method of the subclass is called. It's just very weird to me, coming from a functional programming perspective. 
+
+My level of understanding of OOP principles feels pretty solid so far, based on the Easy problems.
