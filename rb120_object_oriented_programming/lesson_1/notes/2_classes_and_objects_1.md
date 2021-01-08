@@ -38,7 +38,7 @@ In the above example, instantiating a new `GoodDog` object triggered the `initia
 In Ruby, the `initialize` is treated as a special method (i.e. it is specifically reserved as a __constructor__), which allows it to be called when a new object is created (contrast it with all other methods you define within a class, which aren't automatically called). The purpose of the constructor is to __initiate the state__ of an object. Constructors __do not return__ any values.  
 
 ### Instance Variables
-The instance variables are kind of __class attributes__ and they become properties of objects __once objects are created__ using the class. Every object's attributes (instance variables) are assigned *individually* and share *no value with other objects*.
+The instance variables are kind of __class attributes__ and they become properties of objects __once objects are created__ using the class. Every object's attributes (instance variables) are assigned *individually* and share *no value with other objects*. 
 ```
 class GoodDog
   def initialize(name)
@@ -79,6 +79,7 @@ Although we have a `grade` accessor method within our `Student` class, the `@gra
 
 Calling `ade.grade` would return `nil` because `@grade` is an uninitialized instance variable and not because we have set its value to `nil` (the `initialize` method ignores the `grade` parameter).
 
+We can also access the instance variables of an object by calling `.instance_variables` on the object, or a specific instance variable using `.instance_variable_get("instance_var")`.
 ### Instance Methods
 Instance methods are how we attach functionality to our objects. 
 ```
