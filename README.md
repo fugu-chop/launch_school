@@ -22,4 +22,6 @@ I'll also time myself for how long I spend (more as a way to keep myself from st
 ## Schedule
 ~~I will attempt to put in 2 hours per weekday, and 8 hours total over the weekend. Commitments, commitments.~~ 
 
-__EDIT:__ For the first 4 months of this, 8 hours over the weekend was feasible with lockdown. However, with lockdown over, life circumstances have changed and I honestly can't really put in that much time over the weekend and still reset and feel refreshed for the week. I still aim to get 18 hours of study over a week - with the remaining two hours done over probably 2 weekdays. 
+__EDIT:__ For the first 4 months of this, 8 hours over the weekend was feasible with lockdown. However, with lockdown over, life circumstances have changed and I honestly can't really put in that much time over the weekend and still reset and feel refreshed for the week. ~~I still aim to get 18 hours of study over a week - with the remaining two hours done over probably 2 weekdays.~~
+
+That didn't work so well. There's really not enough hours on a weekday for this to be feasible. I'll stick with 16 hours a week. 
