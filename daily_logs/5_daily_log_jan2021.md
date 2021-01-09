@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 1149)
+# January 2021 (Total minutes: 1,340)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -133,3 +133,20 @@ __*Thoughts*__<br/>
 Something I'm still not 100% comfortable in is defining functionality within superclasses that doesn't work until you create an instance of the subclass - e.g. defining a method in the superclass to require an argument that doesn't get input until an instance method of the subclass is called. It's just very weird to me, coming from a functional programming perspective. 
 
 My level of understanding of OOP principles feels pretty solid so far, based on the Easy problems.
+
+##### 09/01/21 (Sat)
+__*Concepts covered*__<br/>
+- Lesson 4
+  - Practice Problems: Easy 3
+  - Practice Problems: Medium 1
+  - Practice Problems: Hard 1
+- Lesson 5
+  - Tictactoe
+
+__*Time spent*__<br/>
+191 minutes
+
+__*Thoughts*__<br/>
+So far, the Medium problems are a little more engaging, requiring me to think one layer deeper about OOP principles. The Hard problems uncovered some gaps in understanding (e.g. `super` is applicable across all instance methods, not just `initialize`, creating custom functionality on a getter method instead of relying on `attr_reader` and that `self.method_name` is still applicable syntax where that method is defined in a mixed in module and calling those instance methods in another method), which is positive. 
+
+The introduction in Lesson 5 warned us that some of the design elements would seem difficult. This is very much the case for me - if left alone, I don't think I could design an OO skeleton structure that would work (especially choices in respect of where objects and methods should live). I think that once given the skeleton, and an idea of where methods should live, I am able to implement a solution.
