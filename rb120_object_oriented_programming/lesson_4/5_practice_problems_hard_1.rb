@@ -89,9 +89,9 @@ class WheeledVehicle
 
   def initialize(tire_array, km_traveled_per_liter, liters_of_fuel_capacity)
     @tires = tire_array
-    # We can also use self.fuel_*, since we defined setter methods within the Moveable module
-    @fuel_efficiency = km_traveled_per_liter
-    @fuel_capacity = liters_of_fuel_capacity
+    # We can also use @fuel_*, but since we defined the setter methods in the Moveable module, we should use them
+    self.fuel_efficiency = km_traveled_per_liter
+    self.fuel_capacity = liters_of_fuel_capacity
   end
 
   def tire_pressure(tire_index)
@@ -125,8 +125,8 @@ class Catamaran
   def initialize(num_propellers, num_hulls, km_traveled_per_liter, liters_of_fuel_capacity)
     @propeller_count = num_propellers
     @hull_count = num_hulls
-    @km_traveled_per_liter = km_traveled_per_liter
-    @liters_of_fuel_capacity = liters_of_fuel_capacity
+    self.km_traveled_per_liter = km_traveled_per_liter
+    self.liters_of_fuel_capacity = liters_of_fuel_capacity
   end
 end
 
@@ -139,8 +139,8 @@ class SeaVessel
   def initialize(num_propellers, num_hulls, km_traveled_per_liter, liters_of_fuel_capacity)
     @propeller_count = num_propellers
     @hull_count = num_hulls
-    @km_traveled_per_liter = km_traveled_per_liter
-    @liters_of_fuel_capacity = liters_of_fuel_capacity
+    self.km_traveled_per_liter = km_traveled_per_liter
+    self.liters_of_fuel_capacity = liters_of_fuel_capacity
   end
 end
 
@@ -163,8 +163,8 @@ class SeaVessel
   def initialize(num_propellers, num_hulls, km_traveled_per_liter, liters_of_fuel_capacity)
     @propeller_count = num_propellers
     @hull_count = num_hulls
-    @km_traveled_per_liter = km_traveled_per_liter
-    @liters_of_fuel_capacity = liters_of_fuel_capacity
+    self.km_traveled_per_liter = km_traveled_per_liter
+    self.liters_of_fuel_capacity = liters_of_fuel_capacity
   end
 
   def range
