@@ -18,7 +18,7 @@ They needed a way to section off areas of code that performed certain procedures
 
 It is what defines the boundaries in your application and allows your code to achieve new levels of complexity. Ruby, like many other OO languages, accomplishes this task by creating objects, and exposing interfaces (i.e., methods) to interact with those objects.
 
-Another benefit of creating objects is that they allow the programmer to think on a new level of abstraction. Objects are represented as real-world nouns and can be given methods that describe the behavior the programmer is trying to represent.
+Another benefit of creating objects is that they allow the programmer to think on a new level of abstraction (also known as indirection), which allows us to think at a *higher level* instead of implementation details upfront. Objects are represented as real-world nouns and can be given methods that describe the behavior the programmer is trying to represent.
 
 #### Polymorphism
 *Polymorphism* is the ability for different types of data (different objects) to respond to a common interface (common methods). For instance, if we have a method that expects argument objects that have a `move` method, we can pass it any type of argument (i.e. any type of object as an argument), provided it has a compatible `move` method (common interface). 

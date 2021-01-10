@@ -188,3 +188,7 @@ When we work with collaborator objects, they are usually custom objects (e.g. de
 Yet, collaborator objects __aren't strictly custom objects__. Even the string object stored in `@name` within `bob` in the code above is _technically a collaborator object_.
 
 Collaborator objects play an important role in object oriented design, since they also represent the _connections between various actors_ in your program. When working on an object oriented program be sure to consider what collaborators your classes will have and if those associations make sense, both from a technical standpoint and in terms of modeling the problem your program aims to solve.
+
+As we have more classes, we start to build a "dependency graph" of our classes. In OOP, we __don't want the dependency graph to look like a spider web__. Put another way, classes should collaborate with _some, not all_ other classes. If __all__ classes are collaborating with each other, the OO design should be reconsidered (i.e. there are too many dependencies).
+
+Tightly coupled dependencies are easier to understand, but offer less flexibility. Loosely coupled dependencies are more difficult to understand, but offer more long term flexibility. Which path is "right" depends on your application. 

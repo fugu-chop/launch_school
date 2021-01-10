@@ -1,8 +1,6 @@
-require 'pry'
-
 class Board
-  WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + 
-                  [[1, 4, 7], [2, 5, 8], [3, 6, 9]] + 
+  WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] +
+                  [[1, 4, 7], [2, 5, 8], [3, 6, 9]] +
                   [[1, 5, 9], [3, 5, 7]]
 
   attr_reader :squares
@@ -40,6 +38,8 @@ class Board
     (1..9).each { |integer| @squares[integer] = Square.new }
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def draw
     puts "     |     |"
     puts "  #{@squares[1]}  |  #{@squares[2]}  |  #{@squares[3]}  "
@@ -53,6 +53,8 @@ class Board
     puts "  #{@squares[7]}  |  #{@squares[8]}  |  #{@squares[9]}  "
     puts "     |     |"
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def []=(num, marker)
     @squares[num].marker = marker
@@ -69,7 +71,7 @@ end
 
 class Square
   INITIAL_MARKER = " "
-  
+
   attr_accessor :marker
 
   def initialize(marker = INITIAL_MARKER)
@@ -113,18 +115,18 @@ class TTTGame
   def play
     clear
     display_welcome_message
+    loop do
+      display_board
       loop do
-        display_board
-        loop do
-          current_player_moves
-          break if board.someone_won? || board.full?
-          clear_screen_and_display_board if human_turn?
-        end
-        display_result
-        break unless play_again?
-        reset
-        display_play_again_message
+        current_player_moves
+        break if board.someone_won? || board.full?
+        clear_screen_and_display_board if human_turn?
       end
+      display_result
+      break unless play_again?
+      reset
+      display_play_again_message
+    end
     display_goodbye_message
   end
 
@@ -175,7 +177,7 @@ class TTTGame
   end
 
   def display_board
-    puts "You're marking #{human.marker}'s, the computer is marking #{computer.marker}'s."
+    puts "You're #{human.marker}, the computer is #{computer.marker}."
     puts
     board.draw
     puts
@@ -189,10 +191,10 @@ class TTTGame
   def display_result
     clear_screen_and_display_board
     case board.winning_marker
-    when HUMAN_MARKER 
+    when HUMAN_MARKER
       puts "You won!"
     when COMPUTER_MARKER
-      puts "The computer won!" 
+      puts "The computer won!"
     else
       puts "It's a tie!"
     end
