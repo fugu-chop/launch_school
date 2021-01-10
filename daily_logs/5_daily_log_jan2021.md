@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 1,340)
+# January 2021 (Total minutes: 1,528)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -7,6 +7,8 @@
 - [6th, Wed](#060121-wed)
 - [7th, Thu](#070121-thu)
 - [8th, Fri](#080121-fri)
+- [9th, Sat](#090121-sat)
+- [10th, Sun](#100121-sun)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -150,3 +152,19 @@ __*Thoughts*__<br/>
 So far, the Medium problems are a little more engaging, requiring me to think one layer deeper about OOP principles. The Hard problems uncovered some gaps in understanding (e.g. `super` is applicable across all instance methods, not just `initialize`, creating custom functionality on a getter method instead of relying on `attr_reader` and that `self.method_name` is still applicable syntax where that method is defined in a mixed in module and calling those instance methods in another method), which is positive. 
 
 The introduction in Lesson 5 warned us that some of the design elements would seem difficult. This is very much the case for me - if left alone, I don't think I could design an OO skeleton structure that would work (especially choices in respect of where objects and methods should live). I think that once given the skeleton, and an idea of where methods should live, I am able to implement a solution.
+
+##### 10/01/21 (Sun)
+__*Concepts covered*__<br/>
+- Lesson 5
+  - Tictactoe
+  - Tictactoe Improvements
+  - Tictactoe Discussion
+  - Tictactoe Rubocop Fixes
+
+__*Time spent*__<br/>
+188 minutes
+
+__*Thoughts*__<br/>
+I struggled a bit with the Tictactoe improvements. I think I was relying on the given instructions in the walkthrough too much, so that my mind wasn't in the OO space. I found that when trying to solve problems, I was still reverting to the functional mindset, creating local variables instead of initialising instance variables. 
+
+The idea of encapsulation and dependencies is interesting from a design perspective. What objects should collaborate, and what should be inherited? What interfaces are we interested in? Where should they live?
