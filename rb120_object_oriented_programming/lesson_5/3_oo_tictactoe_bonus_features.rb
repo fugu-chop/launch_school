@@ -1,3 +1,5 @@
+require 'pry'
+
 class Board
   WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] +
                   [[1, 4, 7], [2, 5, 8], [3, 6, 9]] +
@@ -60,12 +62,28 @@ class Board
     @squares[num].marker = marker
   end
 
+  def computer_defense
+    WINNING_LINES.each do |line|
+      combo = @squares.values_at(*line)
+      if player_imminent_win?(combo)
+        return @squares.select do |key, value|
+          line.include?(key) && value.marker != TTTGame::HUMAN_MARKER
+        end.keys.first
+      end
+    end
+    unmarked_keys.sample
+  end
+
   private
 
   def three_identical_markers?(squares)
     markers = squares.select(&:marked?).collect(&:marker)
     return false if markers.size != 3
     markers.uniq.size == 1
+  end
+
+  def player_imminent_win?(combo)
+    combo.collect(&:marker).count(TTTGame::HUMAN_MARKER) == 2
   end
 end
 
@@ -92,10 +110,12 @@ class Square
 end
 
 class Player
+  attr_accessor :score
   attr_reader :marker
 
   def initialize(marker)
     @marker = marker
+    @score = 0
   end
 end
 
@@ -103,6 +123,7 @@ class TTTGame
   HUMAN_MARKER = 'X'
   COMPUTER_MARKER = 'O'
   FIRST_TO_MOVE = HUMAN_MARKER
+  WIN_TOTAL = 3
   attr_reader :board, :human, :computer
 
   def initialize
@@ -110,6 +131,8 @@ class TTTGame
     @human = Player.new(HUMAN_MARKER)
     @computer = Player.new(COMPUTER_MARKER)
     @current_turn = FIRST_TO_MOVE
+    @join_general_delimiter = ", "
+    @join_last_delimiter = " or "
   end
 
   def play
@@ -134,9 +157,15 @@ class TTTGame
     puts "Thanks for playing Tictactoe!"
   end
 
+  def joinor
+    arr = board.unmarked_keys
+    arr[0...-1].join(@join_general_delimiter) +
+      @join_last_delimiter + arr[-1].to_s
+  end
+
   def human_moves
     square = nil
-    puts "Please select a square: #{board.unmarked_keys.join(', ')}."
+    puts "Please select a square: #{joinor}."
     loop do
       square = gets.chomp.to_i
       break if board.unmarked_keys.include?(square)
@@ -148,7 +177,8 @@ class TTTGame
   end
 
   def computer_moves
-    board[board.unmarked_keys.sample] = computer.marker
+    # board[board.unmarked_keys.sample] = computer.marker
+    board[board.computer_defense] = computer.marker
   end
 
   def human_turn?
@@ -163,11 +193,18 @@ class TTTGame
     end
   end
 
+  def display_round_end
+    display_result
+    increment_score
+    display_score
+  end
+
   def main_game
     loop do
       display_board
       player_move
-      display_result
+      display_round_end
+      display_game_end
       break unless play_again?
       reset
       display_play_again_message
@@ -209,9 +246,57 @@ class TTTGame
     puts
   end
 
+  def increment_score
+    case board.winning_marker
+    when HUMAN_MARKER
+      human.score += 1
+    when COMPUTER_MARKER
+      computer.score += 1
+    end
+  end
+
+  def overall_winner?
+    human.score == WIN_TOTAL || computer.score == WIN_TOTAL
+  end
+
+  def overall_winner
+    return unless overall_winner?
+    human.score > computer.score ? "player" : "computer"
+  end
+
+  def display_overall_winner
+    return unless overall_winner?
+    puts "The #{overall_winner} wins the game with #{WIN_TOTAL} total wins!"
+  end
+
+  def display_score
+    puts "Total wins:
+    Player: #{human.score}
+    Computer: #{computer.score}"
+    puts
+  end
+
+  def display_score_reset
+    return unless overall_winner?
+    puts "Scores will be reset!"
+    puts
+  end
+
+  def display_game_end
+    display_overall_winner
+    display_score_reset
+  end
+
+  def reset_scores
+    return unless overall_winner?
+    human.score = 0
+    computer.score = 0
+  end
+
   def reset
     board.reset
     @current_turn = FIRST_TO_MOVE
+    reset_scores
     clear
   end
 
