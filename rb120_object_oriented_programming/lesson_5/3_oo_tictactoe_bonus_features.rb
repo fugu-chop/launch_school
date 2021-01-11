@@ -62,7 +62,12 @@ class Board
     @squares[num].marker = marker
   end
 
-  # This looks basically like a duplicate?
+  # While these are duplicate methods, we need them to run independently
+  # If we put player and computer win conditions together,
+  # we run in to the edge case where
+  # the order of iterating through WINNING_LINES begins to matter
+  # since a player_imminent_win might be assessed earlier
+  # than a computer_imminent win.
   def computer_defense
     WINNING_LINES.each do |line|
       combo = @squares.values_at(*line)
@@ -96,11 +101,13 @@ class Board
   end
 
   def player_imminent_win?(combo)
-    combo.collect(&:marker).count(TTTGame::HUMAN_MARKER) == 2
+    combo.collect(&:marker).count(TTTGame::HUMAN_MARKER) == 2 &&
+      combo.collect(&:marker).count(Square::INITIAL_MARKER) == 1
   end
 
   def computer_imminent_win?(combo)
-    combo.collect(&:marker).count(TTTGame::COMPUTER_MARKER) == 2
+    combo.collect(&:marker).count(TTTGame::COMPUTER_MARKER) == 2 &&
+      combo.collect(&:marker).count(Square::INITIAL_MARKER) == 1
   end
 end
 
@@ -139,22 +146,24 @@ end
 class TTTGame
   HUMAN_MARKER = 'X'
   COMPUTER_MARKER = 'O'
-  FIRST_TO_MOVE = HUMAN_MARKER
+  FIRST_MOVER = 'choose'
   WIN_TOTAL = 3
+
   attr_reader :board, :human, :computer
 
   def initialize
+    clear
+    display_welcome_message
     @board = Board.new
     @human = Player.new(HUMAN_MARKER)
     @computer = Player.new(COMPUTER_MARKER)
-    @current_turn = FIRST_TO_MOVE
+    @current_turn = who_moves_first
     @join_general_delimiter = ", "
     @join_last_delimiter = " or "
   end
 
   def play
     clear
-    display_welcome_message
     main_game
     display_goodbye_message
   end
@@ -202,6 +211,8 @@ class TTTGame
       board.computer_offense
     elsif board.computer_defense
       board.computer_defense
+    elsif board.unmarked_keys.include?(5)
+      5
     else
       board.unmarked_keys.sample
     end
@@ -325,7 +336,9 @@ class TTTGame
 
   def reset
     board.reset
-    @current_turn = FIRST_TO_MOVE
+    # I've decided to give the player to choose on subsequent rounds
+    # even if the constant is set to player/computer
+    @current_turn = choose_first_to_move
     reset_scores
     clear
   end
@@ -333,6 +346,28 @@ class TTTGame
   def display_play_again_message
     puts "Starting another round!"
     puts
+  end
+
+  def who_moves_first
+    case FIRST_MOVER.downcase
+    when 'computer' then COMPUTER_MARKER
+    when 'player' then HUMAN_MARKER
+    else
+      choose_first_to_move
+    end
+  end
+
+  def choose_first_to_move
+    answer = nil
+    loop do
+      puts "Who should go first? Please answer [p]layer or [c]omputer."
+      answer = gets.chomp.downcase
+      break if ['p', 'c', 'computer', 'player'].include?(answer)
+      puts "That's not a valid answer - please try again!"
+      puts
+    end
+
+    ['p', 'player'].include?(answer) ? HUMAN_MARKER : COMPUTER_MARKER
   end
 
   def play_again?
