@@ -62,16 +62,29 @@ class Board
     @squares[num].marker = marker
   end
 
+  # This looks basically like a duplicate?
   def computer_defense
     WINNING_LINES.each do |line|
       combo = @squares.values_at(*line)
       if player_imminent_win?(combo)
         return @squares.select do |key, value|
-          line.include?(key) && value.marker != TTTGame::HUMAN_MARKER
+          line.include?(key) && value.marker == Square::INITIAL_MARKER
         end.keys.first
       end
     end
-    unmarked_keys.sample
+    nil
+  end
+
+  def computer_offense
+    WINNING_LINES.each do |line|
+      combo = @squares.values_at(*line)
+      if computer_imminent_win?(combo)
+        return @squares.select do |key, value|
+          line.include?(key) && value.marker == Square::INITIAL_MARKER
+        end.keys.first
+      end
+    end
+    nil
   end
 
   private
@@ -84,6 +97,10 @@ class Board
 
   def player_imminent_win?(combo)
     combo.collect(&:marker).count(TTTGame::HUMAN_MARKER) == 2
+  end
+
+  def computer_imminent_win?(combo)
+    combo.collect(&:marker).count(TTTGame::COMPUTER_MARKER) == 2
   end
 end
 
@@ -159,8 +176,12 @@ class TTTGame
 
   def joinor
     arr = board.unmarked_keys
-    arr[0...-1].join(@join_general_delimiter) +
-      @join_last_delimiter + arr[-1].to_s
+    if arr.length > 1
+      arr[0...-1].join(@join_general_delimiter) +
+        @join_last_delimiter + arr[-1].to_s
+    else
+      arr[-1]
+    end
   end
 
   def human_moves
@@ -176,9 +197,18 @@ class TTTGame
     board[square] = human.marker
   end
 
+  def computer_selection
+    if board.computer_offense
+      board.computer_offense
+    elsif board.computer_defense
+      board.computer_defense
+    else
+      board.unmarked_keys.sample
+    end
+  end
+
   def computer_moves
-    # board[board.unmarked_keys.sample] = computer.marker
-    board[board.computer_defense] = computer.marker
+    board[computer_selection] = computer.marker
   end
 
   def human_turn?
