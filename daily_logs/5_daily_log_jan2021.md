@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 1,528)
+# January 2021 (Total minutes: 1,664)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -9,6 +9,7 @@
 - [8th, Fri](#080121-fri)
 - [9th, Sat](#090121-sat)
 - [10th, Sun](#100121-sun)
+- [11th, Mon](#110121-mon)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -168,3 +169,15 @@ __*Thoughts*__<br/>
 I struggled a bit with the Tictactoe improvements. I think I was relying on the given instructions in the walkthrough too much, so that my mind wasn't in the OO space. I found that when trying to solve problems, I was still reverting to the functional mindset, creating local variables instead of initialising instance variables. 
 
 The idea of encapsulation and dependencies is interesting from a design perspective. What objects should collaborate, and what should be inherited? What interfaces are we interested in? Where should they live?
+
+##### 11/01/21 (Mon)
+__*Concepts covered*__<br/>
+- Lesson 5
+  - Tictactoe Rubocop Fixes
+  - Tictactoe Bonus Features
+
+__*Time spent*__<br/>
+136 minutes
+
+__*Thoughts*__<br/>
+Spent most of today working through adding additional features into Tictactoe. With the current implementation, I'm not entirely sure the methods belong where they are currently. I guess when I get the code review, I can get some feedback.
