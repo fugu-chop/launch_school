@@ -25,7 +25,7 @@ class Board
   end
 
   def count_marker(squares)
-    squares.collect(&:marker).count_by(TTTGame::HUMAN_MARKER)
+    squares.collect(&:marker).count_by(human.marker)
   end
 
   def winning_marker
@@ -68,10 +68,10 @@ class Board
   # the order of iterating through WINNING_LINES begins to matter
   # since a player_imminent_win might be assessed earlier
   # than a computer_imminent win.
-  def computer_defense
+  def computer_defense(human_marker)
     WINNING_LINES.each do |line|
       combo = @squares.values_at(*line)
-      if player_imminent_win?(combo)
+      if player_imminent_win?(combo, human_marker)
         return @squares.select do |key, value|
           line.include?(key) && value.marker == Square::INITIAL_MARKER
         end.keys.first
@@ -80,10 +80,10 @@ class Board
     nil
   end
 
-  def computer_offense
+  def computer_offense(computer_marker)
     WINNING_LINES.each do |line|
       combo = @squares.values_at(*line)
-      if computer_imminent_win?(combo)
+      if computer_imminent_win?(combo, computer_marker)
         return @squares.select do |key, value|
           line.include?(key) && value.marker == Square::INITIAL_MARKER
         end.keys.first
@@ -100,13 +100,13 @@ class Board
     markers.uniq.size == 1
   end
 
-  def player_imminent_win?(combo)
-    combo.collect(&:marker).count(TTTGame::HUMAN_MARKER) == 2 &&
+  def player_imminent_win?(combo, human_marker)
+    combo.collect(&:marker).count(human_marker) == 2 &&
       combo.collect(&:marker).count(Square::INITIAL_MARKER) == 1
   end
 
-  def computer_imminent_win?(combo)
-    combo.collect(&:marker).count(TTTGame::COMPUTER_MARKER) == 2 &&
+  def computer_imminent_win?(combo, computer_marker)
+    combo.collect(&:marker).count(computer_marker) == 2 &&
       combo.collect(&:marker).count(Square::INITIAL_MARKER) == 1
   end
 end
@@ -134,17 +134,42 @@ class Square
 end
 
 class Player
-  attr_accessor :score
-  attr_reader :marker
+  attr_accessor :score, :marker
 
-  def initialize(marker)
-    @marker = marker
+  def initialize
     @score = 0
   end
 end
 
+class Computer < Player
+  def initialize(marker)
+    super()
+    @marker = marker
+  end
+end
+
+class Human < Player
+  def initialize
+    super()
+    choose_marker
+  end
+
+  private
+
+  def choose_marker
+    answer = nil
+    loop do
+      puts "Please choose a marker - you can select any alphanumeric character."
+      answer = gets.chomp
+      break if !answer.empty?
+      puts "That appears to be an empty input. Please try again!"
+      puts
+    end
+    @marker = answer
+  end
+end
+
 class TTTGame
-  HUMAN_MARKER = 'X'
   COMPUTER_MARKER = 'O'
   FIRST_MOVER = 'choose'
   WIN_TOTAL = 3
@@ -155,11 +180,9 @@ class TTTGame
     clear
     display_welcome_message
     @board = Board.new
-    @human = Player.new(HUMAN_MARKER)
-    @computer = Player.new(COMPUTER_MARKER)
+    @human = Human.new
+    @computer = Computer.new(COMPUTER_MARKER)
     @current_turn = who_moves_first
-    @join_general_delimiter = ", "
-    @join_last_delimiter = " or "
   end
 
   def play
@@ -183,11 +206,13 @@ class TTTGame
     puts "Thanks for playing Tictactoe!"
   end
 
-  def joinor
+  def joinor(general_delimiter = ', ', last_delimiter = ' or ')
     arr = board.unmarked_keys
-    if arr.length > 1
-      arr[0...-1].join(@join_general_delimiter) +
-        @join_last_delimiter + arr[-1].to_s
+    if arr.length > 2
+      arr[0...-1].join(general_delimiter) +
+        last_delimiter + arr[-1].to_s
+    elsif arr.length == 2
+      arr.join(last_delimiter)
     else
       arr[-1]
     end
@@ -206,11 +231,12 @@ class TTTGame
     board[square] = human.marker
   end
 
-  def computer_selection
-    if board.computer_offense
-      board.computer_offense
-    elsif board.computer_defense
-      board.computer_defense
+  def computer_selection(human_marker = human.marker,
+                         computer_marker = computer.marker)
+    if board.computer_offense(computer_marker)
+      board.computer_offense(computer_marker)
+    elsif board.computer_defense(human_marker)
+      board.computer_defense(human_marker)
     elsif board.unmarked_keys.include?(5)
       5
     else
@@ -223,7 +249,7 @@ class TTTGame
   end
 
   def human_turn?
-    @current_turn == HUMAN_MARKER
+    @current_turn == human.marker
   end
 
   def player_move
@@ -255,15 +281,15 @@ class TTTGame
   def current_player_moves
     if human_turn?
       human_moves
-      @current_turn = COMPUTER_MARKER
+      @current_turn = computer.marker
     else
       computer_moves
-      @current_turn = HUMAN_MARKER
+      @current_turn = human.marker
     end
   end
 
   def display_board
-    puts "You're #{human.marker}, the computer is #{computer.marker}."
+    puts "You're marking #{human.marker}, the computer is #{computer.marker}."
     puts
     board.draw
     puts
@@ -277,9 +303,9 @@ class TTTGame
   def display_result
     clear_screen_and_display_board
     case board.winning_marker
-    when HUMAN_MARKER
+    when human.marker
       puts "You won!"
-    when COMPUTER_MARKER
+    when computer.marker
       puts "The computer won!"
     else
       puts "It's a tie!"
@@ -289,9 +315,9 @@ class TTTGame
 
   def increment_score
     case board.winning_marker
-    when HUMAN_MARKER
+    when human.marker
       human.score += 1
-    when COMPUTER_MARKER
+    when computer.marker
       computer.score += 1
     end
   end
@@ -350,8 +376,8 @@ class TTTGame
 
   def who_moves_first
     case FIRST_MOVER.downcase
-    when 'computer' then COMPUTER_MARKER
-    when 'player' then HUMAN_MARKER
+    when 'computer' then computer.marker
+    when 'player' then human.marker
     else
       choose_first_to_move
     end
@@ -367,7 +393,7 @@ class TTTGame
       puts
     end
 
-    ['p', 'player'].include?(answer) ? HUMAN_MARKER : COMPUTER_MARKER
+    ['p', 'player'].include?(answer) ? human.marker : computer.marker
   end
 
   def play_again?
