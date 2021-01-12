@@ -10,6 +10,7 @@
 - [9th, Sat](#090121-sat)
 - [10th, Sun](#100121-sun)
 - [11th, Mon](#110121-mon)
+- [12th, Tue](#120121-tue)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -181,3 +182,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Spent most of today working through adding additional features into Tictactoe. With the current implementation, I'm not entirely sure the methods belong where they are currently. I guess when I get the code review, I can get some feedback.
+
+##### 12/01/21 (Tue)
+__*Concepts covered*__<br/>
+- Lesson 5
+  - Tictactoe Bonus Features
+
+__*Time spent*__<br/>
+134 minutes
+
+__*Thoughts*__<br/>
+Refactoring code can be somewhat challenging in the OO context, since it might involve creating new classes and shuffling methods around into different classes. It's fun to think about design like this!
