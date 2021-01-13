@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 1,664)
+# January 2021 (Total minutes: 1,944)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -11,6 +11,7 @@
 - [10th, Sun](#100121-sun)
 - [11th, Mon](#110121-mon)
 - [12th, Tue](#120121-tue)
+- [13th, Wed](#130121-wed)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -193,3 +194,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Refactoring code can be somewhat challenging in the OO context, since it might involve creating new classes and shuffling methods around into different classes. It's fun to think about design like this!
+
+##### 12/01/21 (Wed)
+__*Concepts covered*__<br/>
+- Lesson 5
+  - Tictactoe Bonus Features
+  - Study session
+
+__*Time spent*__<br/>
+146 minutes
+
+__*Thoughts*__<br/>
+The study session was very helpful. Being able to discuss concepts in a group environment where people are asking questions is good at uncovering knowledge blind spots. Highly recommended. 
