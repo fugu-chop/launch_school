@@ -15,7 +15,7 @@ Collaboration is a direct *has-a* relationship rather than a *is-a* relationship
 ### What is a collaborator object?
 Objects that are stored as _state within another object_ (i.e. as instance variables) are called __collaborator objects__. For example, when assigning a collaborator object to an instance variable in another class' constructor method definition, you are _associating the two objects with one another_.
 
-We call such objects collaborators because they work in conjunction (or in collaboration) with the class they are associated with. 
+We call such objects collaborators because they work in conjunction (or in collaboration) with the class they are associated with. We can think of collaborator objects as _lower levels of abstraction_ of the owner object whose class incorporates them.
 
 Here's an example of a string object acting as a collaborator object for the instance variable `@name`. Collaborator objects are not limited to just strings though, they can be basically anything (essentially, any object that you could assign to the instance variable `@name`, like arrays or hashes).
 ```

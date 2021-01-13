@@ -18,10 +18,12 @@ They needed a way to section off areas of code that performed certain procedures
 
 It is what defines the boundaries in your application and allows your code to achieve new levels of complexity. Ruby, like many other OO languages, accomplishes this task by creating objects, and exposing interfaces (i.e., methods) to interact with those objects.
 
-Another benefit of creating objects is that they allow the programmer to think on a new level of abstraction (also known as indirection), which allows us to think at a *higher level* instead of implementation details upfront. Objects are represented as real-world nouns and can be given methods that describe the behavior the programmer is trying to represent.
+Through the use of _class objects_, we can create _instance variables_ and _instance methods_ that are encapsulated and thus only accessed by either the object’s class or the object itself, but nothing else. Through the use of _method access control_, we can even further encapsulate these so that even the object itself does not have access to them.
+
+Another benefit of creating objects is that they allow the programmer to think on a new level of abstraction (also known as *indirection*), which allows us to think at a *higher level* instead of implementation details upfront. Objects are represented as real-world nouns and can be given methods that describe the behavior the programmer is trying to represent.
 
 #### Polymorphism
-*Polymorphism* is the ability for different types of data (different objects) to respond to a common interface (common methods). For instance, if we have a method that expects argument objects that have a `move` method, we can pass it any type of argument (i.e. any type of object as an argument), provided it has a compatible `move` method (common interface). 
+*Polymorphism* is the ability for different types of data (_different objects_) to respond to a common interface (_common methods_). For instance, if we have a method that expects argument objects that have a `move` method, we can pass it any type of argument (i.e. any type of object as an argument), provided it has a compatible `move` method (common interface). 
 
 The object might represent a human, a cat, a jellyfish, or, conceivably, even a car or train. That is, it lets *objects of different types (could be the same or different classes) respond to the same method invocation* - i.e. we have many different objects, but all of them can `move`. OOP gives us flexibility in using pre-written code for new purposes.
 
@@ -29,20 +31,31 @@ Another way to apply polymorphic structure to Ruby programs is to use a `Module`
 
 A module must be mixed in with a class using the `include` method invocation. This is called a `mixin` (i.e. a module that has been used to mix in functionality into a class is a `mixin`). After mixing in a module, the behaviors declared in that module are available to the class and its objects.
 
-Whereas `include` mixes a module’s methods in at the *instance level* (allowing instances of a particular class to use the methods), the `extend` keyword mixes a module’s methods at the _class level_. This means that __class itself__ can use the methods, as opposed to instances of the class.
+The third way of achieving polymorphism is through using __duck typing__. 
+
+In our below example, none of the classes or objects created are related to each other. However, each of the objects have a `speak` method, which is why we can loop through each object and run the same method.
 ```
-module ThePresent
-  def now
-    puts "It's #{Time.new.hour > 12 ? Time.new.hour - 12 : Time.new.hour}:#{Time.new.min} #{Time.new.hour > 12 ? 'PM' : 'AM'} (GMT)."
+class Dog
+  def speak
+    p "Bark"
   end
 end
 
-class TheHereAnd
-  extend ThePresent
+class Cat
+  def speak
+    p "Meow"
+  end
 end
 
-TheHereAnd.now
-=> It's 10:24 AM (GMT).
+class Fish
+  def speak
+    p "Gulp"
+  end
+end
+
+[Dog.new, Cat.new, Fish.new].each do |animal|
+  animal.speak
+end
 ```
 #### Inheritance
 *Inheritance* is used in Ruby where a class inherits the behaviors of another class, referred to as the *superclass*. This gives Ruby programmers the power to define basic classes with large reusability and smaller __subclasses__ for more fine-grained, detailed behaviors.

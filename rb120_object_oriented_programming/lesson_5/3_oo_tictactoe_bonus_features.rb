@@ -229,6 +229,7 @@ class TTTGame
     display_opponent
     @human = Human.new
     @current_turn = who_moves_first
+    @first_turn = @current_turn
   end
 
   def play
@@ -392,7 +393,7 @@ class TTTGame
 
   def reset
     board.reset
-    @current_turn = who_moves_first
+    @current_turn = @first_turn
     reset_scores
     clear
   end
@@ -407,7 +408,6 @@ class TTTGame
     when 'computer' then computer.marker
     when 'player' then human.marker
     else
-      # perhaps have this execute conditinally in the initialize method?
       choose_first_to_move
     end
   end
@@ -423,7 +423,6 @@ class TTTGame
       puts
     end
 
-    # if this method is executed, we want to write to write this to @current_turn
     ['p', 'player'].include?(answer) ? human.marker : computer.marker
   end
 

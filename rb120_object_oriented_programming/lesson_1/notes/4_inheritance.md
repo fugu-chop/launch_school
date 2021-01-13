@@ -174,7 +174,9 @@ Extracting common methods to a superclass, like we did in the previous section, 
 
 ![Subclass Diagram](https://d2aw5xe2jldque.cloudfront.net/books/ruby/images/animal_hierarchy.jpg)
 
-The above diagram shows what pure class based inheritance looks like. Remember the goal of this is to put the *right behavior (i.e., methods) in the right class so we don't need to repeat code in multiple classes*. We can imagine that all `Fish` objects are related to animals that live in the water, so perhaps a `swim` method should be in the `Fish` class. We can also imagine that all `Mammal` objects will have warm blood, so we can create a method called `warm_blooded?` in the `Mammal` class and have it return `true`. Therefore, the `Cat` and `Dog` objects will have access to the `warm_blooded?` method which is automatically inherited from `Mammal` by the `Cat` and `Dog` classes, but they won't have access to the methods in the `Fish` class.
+The above diagram shows what pure class based inheritance looks like. Remember the goal of this is to put the *right behavior (i.e., methods) in the right class so we don't need to repeat code in multiple classes*. We can imagine that all `Fish` objects are related to animals that live in the water, so perhaps a `swim` method should be in the `Fish` class. 
+
+We can also imagine that all `Mammal` objects will have warm blood, so we can create a method called `warm_blooded?` in the `Mammal` class and have it return `true`. Therefore, the `Cat` and `Dog` objects will have access to the `warm_blooded?` method which is automatically inherited from `Mammal` by the `Cat` and `Dog` classes, but they won't have access to the methods in the `Fish` class.
 
 This type of hierarchical modeling works, to some extent, but there are always exceptions. For example, we put the `swim` method in the `Fish` class, but some mammals can swim as well. We don't want to move the `swim` method into `Animal` because not all animals swim, and we don't want to create another `swim` method in Dog because that violates the DRY principle. For concerns such as these, we'd like to *group them into a module* and then __mix in that module__ to the classes that require those behaviors.
 ```
@@ -185,10 +187,13 @@ module Swimmable
 end
 
 class Animal
+  def exist
+    "I exist!"              # All subclasses have access to this through class inheritance
+  end
 end
 
 class Fish < Animal
-  include Swimmable         # mixing in Swimmable module
+  include Swimmable         # mixing in Swimmable module (Interface inheritance)
 end
 
 class Mammal < Animal
@@ -218,6 +223,21 @@ paws.swim
 ```
 A common naming convention for Ruby is to use the "able" suffix on whatever verb describes the behavior that the module is modeling. You can see this convention with our `Swimmable` module. Likewise, we could name a module that describes "walking" as `Walkable`. Not all modules are named in this manner, however, it is quite common.
 
+Where `include` mixes a module’s methods in at the *instance level* (allowing instances of a particular class to use the methods), the `extend` keyword mixes a module’s methods at the _class level_. This means that __class itself__ can use the methods, as opposed to instances of the class.
+```
+module ThePresent
+  def now
+    puts "It's #{Time.new.hour > 12 ? Time.new.hour - 12 : Time.new.hour}:#{Time.new.min} #{Time.new.hour > 12 ? 'PM' : 'AM'} (GMT)."
+  end
+end
+
+class TheHereAnd
+  extend ThePresent
+end
+
+TheHereAnd.now
+=> It's 10:24 AM (GMT).
+```
 ### Inheritance v Modules
 Now you know the two primary ways that Ruby implements inheritance. 
 - __Class inheritance__ is the traditional way to think about inheritance: one type inherits the behaviors of another type. The result is a new type that specializes the type of the superclass. 
@@ -313,7 +333,9 @@ There are several interesting things about the above output.
 - First, this tells us that the order in which we include modules is important. Ruby actually __looks at the last module we included first__. This means that in the rare occurrence that the modules we mix in contain a method with the same name, the __last module included will be consulted first__. 
 - The second interesting thing is that the module included in the superclass made it on to the method lookup path. That means that all `GoodDog` objects will have access to not only `Animal` methods, but __also methods defined in the `Walkable` module__, as well as _all other modules mixed in to any of its superclasses_.
 
-Sometimes when you're working on a large project, it can be confusing where all these methods are coming from. By understanding the method lookup path, we can have a better idea of where and how all available methods are organized.
+Here's a chart of how the various classes fit together:
+
+[Class Hierarchy Chart](#https://vahid.blog/post/2020-11-04-encapsulation-polymorphism-and-abstraction-in-ruby/class_hierarchy.png)
 
 ### More modules
 The first use case we'll discuss is using modules for __namespacing__. In this context, __namespacing__ means *organizing similar classes under a module*. In other words, we'll use modules to group related classes. 

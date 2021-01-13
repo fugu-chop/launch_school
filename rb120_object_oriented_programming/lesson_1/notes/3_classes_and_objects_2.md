@@ -126,6 +126,21 @@ Here, the `to_s` method is automatically called on the `arr` array object, as we
 "#{sparky}"
 => "This dog's name is Sparky and it is 28 in dog years."
 ```
+
+Another example:
+```
+class Human  
+  def what_species_am_I
+    puts "I am a #{self}"
+  end
+
+  def to_s
+    "#{self.class}"
+  end
+end
+```
+Ordinarily, the `what_species_am_I` method would return `I am a #<Human:0x00007fd4ad0f6ae8>` - i.e. a reference to the __object__. However, as string interpolation automatically calls the `to_s` method, it replaces the `self` with `self.class` instead.
+
 In summary, the `to_s` method is called automatically on the object when we use it with `puts` or when used with string interpolation. This fact may seem trivial at the moment, but knowing when `to_s` is called will help us understand how to read and write better OO code.
 
 #### The `p` Method
@@ -209,5 +224,3 @@ From __within__ a class:
   2. `self`, __outside__ of an instance method, references the __class__ and can be used to define class methods. Therefore if we were to define a `name` class method, `def self.name=(n)` is the same as `def GoodDog.name=(n)`.
 
 Thus, we can see that `self` is a way of being explicit about what our program is referencing and what our intentions are as far as behavior. `self` changes *depending on the scope it is used in*, so pay attention to see if you're inside an instance method or not. 
-
-`self` is a tricky concept to grasp in the beginning, but the more often you see its use, the more you will understand object oriented programming. If the explanations don't quite make sense, just memorize those two rules above for now.

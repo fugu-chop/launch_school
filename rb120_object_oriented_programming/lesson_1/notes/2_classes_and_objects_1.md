@@ -336,7 +336,7 @@ def change_info(n, h, w)
   self.weight = w
 end
 ```
-This tells Ruby that we're __calling a setter method__, not creating a local variable. To be consistent, we could also adopt this syntax for the getter methods as well, though it is not required.
+This tells Ruby that we're __calling a setter method__, not creating a local variable. To be consistent, we could also adopt this syntax for the getter methods as well, though it is not required. In fact, it appears to be generally accepted convention that getter methods do not have `self` prepended to them.
 ```
 def info
   "#{self.name} weighs #{self.weight} and is #{self.height} tall."
