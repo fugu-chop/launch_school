@@ -15,6 +15,13 @@ Inheritance is when a class *inherits behavior from another __class__*. The clas
 
 We use inheritance as a way to extract common behaviors from classes that share that behavior, and move it to a superclass. This lets us keep logic in one place. 
 
+Ruby comes with multiple built-in classes, including `String`, `Integer`, `Hash`, and `Array`. Each class is itself an object (or instance of) the `Class` class, which we can think of as the primordial class.
+
+Calling the class method `superclass` on any class will return that class’s superclass. 
+```
+puts Integer.superclass 
+=> Numeric
+```
 Here, we're extracting the `speak` method to a superclass `Animal`, and we use inheritance to make that behavior available to `GoodDog` and `Cat` classes.
 
 ```
@@ -223,6 +230,11 @@ paws.swim
 ```
 A common naming convention for Ruby is to use the "able" suffix on whatever verb describes the behavior that the module is modeling. You can see this convention with our `Swimmable` module. Likewise, we could name a module that describes "walking" as `Walkable`. Not all modules are named in this manner, however, it is quite common.
 
+In order to figure out all the modules a class includes, the class method `included_modules` is useful. This class method travels up the method lookup path, and returns all the modules __it encounters along the way__, as an array.
+```
+Hash.included_modules
+=> [Enumerable, Kernel]
+```
 Where `include` mixes a module’s methods in at the *instance level* (allowing instances of a particular class to use the methods), the `extend` keyword mixes a module’s methods at the _class level_. This means that __class itself__ can use the methods, as opposed to instances of the class.
 ```
 module ThePresent
@@ -291,7 +303,7 @@ Object
 Kernel
 BasicObject
 ```
-This means that when we call a method of any `Animal` object, first Ruby looks in the `Animal` class, then the `Walkable` module, then the `Object` class, then the `Kernel` module, and finally the `BasicObject` class.
+This means that when we call a method of any `Animal` object, first Ruby looks in the `Animal` class, then the `Walkable` module, then the `Object` class, then the `Kernel` module, and finally the `BasicObject` class. Note that the `BasicObject` superclass is `nil`.
 ```
 fido = Animal.new
 fido.speak
