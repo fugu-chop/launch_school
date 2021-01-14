@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 1,944)
+# January 2021 (Total minutes: 2,082)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -12,6 +12,7 @@
 - [11th, Mon](#110121-mon)
 - [12th, Tue](#120121-tue)
 - [13th, Wed](#130121-wed)
+- [14th, Thu](#140121-thu)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -195,7 +196,7 @@ __*Time spent*__<br/>
 __*Thoughts*__<br/>
 Refactoring code can be somewhat challenging in the OO context, since it might involve creating new classes and shuffling methods around into different classes. It's fun to think about design like this!
 
-##### 12/01/21 (Wed)
+##### 13/01/21 (Wed)
 __*Concepts covered*__<br/>
 - Lesson 5
   - Tictactoe Bonus Features
@@ -206,3 +207,33 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The study session was very helpful. Being able to discuss concepts in a group environment where people are asking questions is good at uncovering knowledge blind spots. Highly recommended. 
+
+##### 14/01/21 (Thu)
+__*Concepts covered*__<br/>
+- Lesson 5
+  - Tictactoe Bonus Features
+  - Revision
+    - Encapsulation
+    - Polymorphism
+    - Inheritance
+    - Self
+  - Reading
+    - [Encapsulation, Polymorphism and Abstraction](#https://vahid.blog/post/2020-11-04-encapsulation-polymorphism-and-abstraction-in-ruby/)
+    - [Static v Dynamic Typing](#https://hackernoon.com/i-finally-understand-static-vs-dynamic-typing-and-you-will-too-ad0c2bd0acc7)
+  - Twenty-One
+
+__*Time spent*__<br/>
+138 minutes
+
+__*Thoughts*__<br/>
+I finally finished off the Tictactoe bonus features. That one took a long time, it feels like. I'm still not 100% the design choices I made were optimal (though what is optimal?), as I introduced more dependencies between classes in order to have more conceptually neat classes.
+
+The article on Encapsulation, Polymorphism and Abstraction was an eye-opener. It covered the concepts I was previously aware of, but really joined them together in a fashion I haven't tried to compile yet. It also led me to an interesting article about language typing, which I've continually seen pop up in material, but never really looked into with real detail. 
+
+As far as I can tell, there are two important dimensions for a language when determining typing:
+- Static v Dynamic
+  - Static: Type of objects checked before running the script (i.e. before run-time/execution)
+  - Dynamic: Types checked during execution (so certain `TypeErrors` may never be picked up if their code never executes - e.g. within an `else` clause).
+- Compiled v Interpreted
+  - Compiled: Code translated before run-time
+  - Interpreted: Code translated during execution
