@@ -57,7 +57,7 @@ class Board
   # rubocop:enable Metrics/MethodLength
 
   def []=(num, marker)
-    @squares[num].marker = marker
+    squares[num].marker = marker
   end
 
   private
@@ -170,13 +170,14 @@ class Human < Player
     square = nil
     puts "Please select a square: #{joinor}."
     loop do
-      square = gets.chomp.to_i
-      break if board.unmarked_keys.include?(square)
+      square = gets.chomp
+      break if board.unmarked_keys.include?(square.to_i) &&
+               square == square.to_i.to_s
       puts
       puts "Sorry, that's not a valid choice. Please try again!"
     end
 
-    board[square] = marker
+    board[square.to_i] = marker
   end
 
   private
@@ -206,19 +207,17 @@ class Human < Player
     loop do
       puts "Please enter your name!"
       answer = gets.chomp
-      break if !answer.empty?
-      puts "Empty input detected. Please try again"
+      break if !answer.split.empty?
+      puts "Empty input detected. Please try again!"
       puts
     end
-    self.name = answer
+    self.name = answer.split.join
   end
 end
 
 class TTTGame
-  FIRST_MOVER = 'choose'
+  FIRST_MOVER = 'player'
   WIN_TOTAL = 3
-
-  attr_reader :board, :human, :computer
 
   def initialize
     clear
@@ -239,6 +238,8 @@ class TTTGame
   end
 
   private
+
+  attr_reader :board, :human, :computer
 
   def clear
     system 'clear'

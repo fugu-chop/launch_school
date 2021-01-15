@@ -1,3 +1,11 @@
+=begin
+To Do:
+clear screen after each player hit occurs (I think dealer is fine to have a log)
+Organise into private methods
+Rubocop errors
+=end
+require 'io/console'
+
 class Deck
   attr_accessor :shoe
 
@@ -26,19 +34,19 @@ class Player
   end
 
   def busted?
-    calculate_total > 21
+    calculate_total > Twentyone::BLACKJACK
   end
 
   def blackjack?
-    calculate_total == 21
+    calculate_total == Twentyone::BLACKJACK
   end
 
   def calculate_total
     total = hand.reduce(0) do |sum, card|
-      sum += Deck::CARD_VALUES[card]
+      sum + Deck::CARD_VALUES[card]
     end
 
-    if hand.include?('Ace') && total > 21
+    if hand.include?('Ace') && total > Twentyone::BLACKJACK
       hand.count('Ace').times do |_|
         total -= 10
       end
@@ -124,13 +132,39 @@ end
 
 class Twentyone
   GAME_WIN = 3
-
-  attr_accessor :deck, :human, :dealer
+  BLACKJACK = 21
 
   def initialize
     @human = Human.new
     @dealer = Dealer.new
     @deck = Deck.new
+  end
+
+  def start
+    clear_screen
+    display_welcome
+    display_rules
+    enter_to_continue
+    loop do
+      game_loop
+      break unless play_again?
+      clear_screen
+    end
+    display_goodbye
+  end
+
+  private
+
+  attr_accessor :deck, :human, :dealer
+
+  def clear_screen
+    system 'clear'
+  end
+
+  def enter_to_continue
+    puts "Please press any key to continue..."
+    STDIN.getch
+    clear_screen
   end
 
   def display_welcome
@@ -140,12 +174,14 @@ class Twentyone
 
   def display_rules
     puts <<~MSG
-    The goal of this game is to draw cards totalling 21.
-    The value of a card is it's numerical value. King, Queen and Jack cards are worth 10.
-    Aces are worth either 1 or 11, depending on which value gets you closest to a score of 21.
-    If any player's score exceeds 21, they bust and lose the game.
-    The Dealer will hit until they reach a score of 17 or higher.
+    The goal of this game is to draw cards totalling #{BLACKJACK}.
+    The value of a card is it's numerical value. King, Queen and Jack cards are worth 10. 
+    Aces are worth either 1 or 11, depending on which value gets you closest to a score of #{BLACKJACK}.
+    
+    If any player's score exceeds #{BLACKJACK}, they bust and lose the game.
+    The Dealer will hit until they reach a score of 17 or higher. 
     In the event of a tie, the dealer wins.
+    
     The first player to win #{GAME_WIN} rounds, wins the game!
     MSG
     puts
@@ -161,6 +197,9 @@ class Twentyone
   end
 
   def display_result
+    if human.calculate_total == dealer.calculate_total
+      puts "It's a tie! Remember that the dealer wins ties."
+    end
     puts "The #{calculate_winner} wins this round!"
     puts
   end
@@ -180,10 +219,9 @@ class Twentyone
   def dealer_hit_sequence(deck)
     dealer.choose_action(deck.shoe)
     dealer.display_hit
-    dealer.display_hand if !dealer.busted?
+    dealer.display_hand
   end
 
-  # ABC is too high
   def player_turn
     loop do
       break human.display_blackjack if human.blackjack?
@@ -191,25 +229,25 @@ class Twentyone
       human.display_hand
       break human.display_busted if human.busted?
     end
-    human.display_hand unless human.blackjack?
+    human.display_hand unless human.blackjack? || human.busted?
   end
 
-  # I think a lot of the display methods here can be generalised to the Twentyone class
-  # ABC is too high
   def dealer_turn
+    clear_screen
+    human.display_hand
     dealer.display_hand
     loop do
       dealer_hit_sequence(deck) if dealer.hit?
       break dealer.display_busted if dealer.busted?
       break dealer.display_blackjack if dealer.blackjack?
-      break dealer.display_stay unless dealer.blackjack?
+      break dealer.display_stay unless dealer.blackjack? || dealer.hit?
     end
   end
 
   def play_again?
     answer = nil
     loop do
-      puts "Would you like to play again?"
+      puts "Would you like to play again? [y]es/[n]o"
       answer = gets.chomp.downcase
       break if ['y', 'yes', 'n', 'no'].include?(answer)
       puts "That's not a valid answer - please try again!"
@@ -235,6 +273,31 @@ class Twentyone
     puts
   end
 
+  def grand_winner?
+    human.score == GAME_WIN || dealer.score == GAME_WIN
+  end
+
+  def calculate_grand_winner
+    return unless grand_winner?
+    if human.score > dealer.score
+      "Player"
+    else
+      "Dealer"
+    end
+  end
+
+  def display_grand_winner
+    puts "The #{calculate_grand_winner} wins the game with #{GAME_WIN} wins!"
+    puts "Scores will be reset."
+    puts
+  end
+
+  def score_reset
+    [human, dealer].each do |participant|
+      participant.score = 0
+    end
+  end
+
   def display_goodbye
     puts "Thanks for playing Twenty One! We hope to see you again soon."
   end
@@ -247,17 +310,9 @@ class Twentyone
     display_result
     increment_score
     display_scores
+    display_grand_winner if grand_winner?
+    score_reset if grand_winner?
     reset_hands
-  end
-
-  def start
-    display_welcome
-    display_rules
-    loop do
-      game_loop
-      break unless play_again?
-    end
-    display_goodbye
   end
 end
 
