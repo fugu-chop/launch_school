@@ -1,26 +1,3 @@
-=begin
-Nouns: card, player, dealer, participant, deck, game, total
-Verbs: deal, hit, stay, busts
-
-Player
-- hit
-- stay
-- busted?
-- total
-Dealer
-- hit
-- stay
-- busted?
-- total
-- deal (should this be here, or in Deck?)
-Participant
-Deck
-- deal (should this be here, or in Dealer?)
-Card
-Game
-- start
-=end
-
 class Deck
   attr_accessor :shoe
 
@@ -57,9 +34,17 @@ class Player
   end
 
   def calculate_total
-    @hand.reduce(0) do |sum, card|
+    total = hand.reduce(0) do |sum, card|
       sum += Deck::CARD_VALUES[card]
     end
+
+    if hand.include?('Ace') && total > 21
+      hand.count('Ace').times do |_|
+        total -= 10
+      end
+    end
+
+    total
   end
 end
 
@@ -84,6 +69,16 @@ class Human < Player
   def choose_action(deck)
     hit? ? hit(deck) : false
   end
+
+  def display_busted
+    puts "You've busted! Your total is #{calculate_total}!"
+    puts
+  end
+
+  def display_blackjack
+    puts "You've drawn to Twenty One! You win!"
+    puts
+  end
 end
 
 class Dealer < Player
@@ -97,7 +92,6 @@ class Dealer < Player
 
   def display_first_hand
     puts "The dealer's hand is #{hand.first} and another card."
-    puts
   end
 
   def display_hand
@@ -123,12 +117,14 @@ class Dealer < Player
   end
 
   def display_blackjack
-    puts "Blackjack! The dealer wins with #{calculate_total}!"
+    puts "Twenty-one! The dealer wins!"
     puts
   end
 end
 
 class Twentyone
+  GAME_WIN = 3
+
   attr_accessor :deck, :human, :dealer
 
   def initialize
@@ -149,8 +145,23 @@ class Twentyone
     Aces are worth either 1 or 11, depending on which value gets you closest to a score of 21.
     If any player's score exceeds 21, they bust and lose the game.
     The Dealer will hit until they reach a score of 17 or higher.
-    No splitting or doubling down.
+    In the event of a tie, the dealer wins.
+    The first player to win #{GAME_WIN} rounds, wins the game!
     MSG
+    puts
+  end
+
+  def calculate_winner
+    if (human.calculate_total > dealer.calculate_total && !human.blackjack? &&
+       !human.busted?) || dealer.busted? || human.blackjack?
+      "Player"
+    else
+      "Dealer"
+    end
+  end
+
+  def display_result
+    puts "The #{calculate_winner} wins this round!"
     puts
   end
 
@@ -172,45 +183,81 @@ class Twentyone
     dealer.display_hand if !dealer.busted?
   end
 
+  # ABC is too high
   def player_turn
     loop do
+      break human.display_blackjack if human.blackjack?
       break if human.choose_action(deck.shoe) == false
       human.display_hand
-      # Add in logic here for break, bust, stay?
-      break if human.calculate_total >= 21
+      break human.display_busted if human.busted?
     end
-    human.display_hand
+    human.display_hand unless human.blackjack?
   end
 
   # I think a lot of the display methods here can be generalised to the Twentyone class
+  # ABC is too high
   def dealer_turn
     dealer.display_hand
     loop do
-      if dealer.hit?
-        dealer_hit_sequence(deck)
-        # Can we generalise the break statements here?
-      elsif dealer.busted?
-        dealer.display_busted
-        break
-      elsif dealer.blackjack?
-        dealer.display_blackjack
-        break
-      else
-        dealer.display_stay
-        break
-      end
+      dealer_hit_sequence(deck) if dealer.hit?
+      break dealer.display_busted if dealer.busted?
+      break dealer.display_blackjack if dealer.blackjack?
+      break dealer.display_stay unless dealer.blackjack?
     end
+  end
+
+  def play_again?
+    answer = nil
+    loop do
+      puts "Would you like to play again?"
+      answer = gets.chomp.downcase
+      break if ['y', 'yes', 'n', 'no'].include?(answer)
+      puts "That's not a valid answer - please try again!"
+      puts
+    end
+    ['y', 'yes'].include?(answer)
+  end
+
+  def reset_hands
+    @deck = Deck.new
+    [human, dealer].each do |participant|
+      participant.hand = []
+    end
+  end
+
+  def increment_score
+    calculate_winner == 'Player' ? human.score += 1 : dealer.score += 1
+  end
+
+  def display_scores
+    puts "The player has won #{human.score} rounds."
+    puts "The dealer has won #{dealer.score} rounds."
+    puts
+  end
+
+  def display_goodbye
+    puts "Thanks for playing Twenty One! We hope to see you again soon."
+  end
+
+  def game_loop
+    deal_initial_hands
+    display_initial_hands
+    player_turn
+    dealer_turn unless human.busted? || human.blackjack?
+    display_result
+    increment_score
+    display_scores
+    reset_hands
   end
 
   def start
     display_welcome
     display_rules
-    deal_initial_hands
-    display_initial_hands
-    player_turn
-    dealer_turn
-    # show_result
-    # play_again?
+    loop do
+      game_loop
+      break unless play_again?
+    end
+    display_goodbye
   end
 end
 
