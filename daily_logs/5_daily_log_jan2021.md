@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 2,082)
+# January 2021 (Total minutes: 2,205)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -13,6 +13,7 @@
 - [12th, Tue](#120121-tue)
 - [13th, Wed](#130121-wed)
 - [14th, Thu](#140121-thu)
+- [15th, Fri](#150121-fri)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -237,3 +238,14 @@ As far as I can tell, there are two important dimensions for a language when det
 - Compiled v Interpreted
   - Compiled: Code translated before run-time
   - Interpreted: Code translated during execution
+
+##### 15/01/21 (Fri)
+__*Concepts covered*__<br/>
+- Lesson 5
+  - Twenty-One
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+Continuing to work through the Twenty-One project. It's fun! Incrementally building blocks on your program and seeing it evolve in features is very rewarding. 
