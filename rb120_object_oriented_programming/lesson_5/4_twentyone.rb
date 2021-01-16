@@ -1,7 +1,5 @@
 =begin
 To Do:
-clear screen after each player hit occurs (I think dealer is fine to have a log)
-Organise into private methods
 Rubocop errors
 =end
 require 'io/console'
@@ -79,7 +77,7 @@ class Human < Player
   end
 
   def display_busted
-    puts "You've busted! Your total is #{calculate_total}!"
+    puts "You've busted!"
     puts
   end
 
@@ -100,6 +98,7 @@ class Dealer < Player
 
   def display_first_hand
     puts "The dealer's hand is #{hand.first} and another card."
+    puts
   end
 
   def display_hand
@@ -120,7 +119,7 @@ class Dealer < Player
   end
 
   def display_busted
-    puts "The dealer busts with a total of #{calculate_total}!"
+    puts "The dealer busts!"
     puts
   end
 
@@ -198,7 +197,7 @@ class Twentyone
 
   def display_result
     if human.calculate_total == dealer.calculate_total
-      puts "It's a tie! Remember that the dealer wins ties."
+      puts "Hand values are tied. Remember that the dealer wins ties."
     end
     puts "The #{calculate_winner} wins this round!"
     puts
@@ -224,12 +223,15 @@ class Twentyone
 
   def player_turn
     loop do
+      clear_screen
+      dealer.display_first_hand
+      human.display_hand
       break human.display_blackjack if human.blackjack?
       break if human.choose_action(deck.shoe) == false
-      human.display_hand
+      sleep(0.5)
       break human.display_busted if human.busted?
     end
-    human.display_hand unless human.blackjack? || human.busted?
+    human.display_hand unless human.blackjack? 
   end
 
   def dealer_turn
@@ -237,6 +239,7 @@ class Twentyone
     human.display_hand
     dealer.display_hand
     loop do
+      sleep(1)
       dealer_hit_sequence(deck) if dealer.hit?
       break dealer.display_busted if dealer.busted?
       break dealer.display_blackjack if dealer.blackjack?
@@ -302,17 +305,26 @@ class Twentyone
     puts "Thanks for playing Twenty One! We hope to see you again soon."
   end
 
-  def game_loop
-    deal_initial_hands
-    display_initial_hands
-    player_turn
-    dealer_turn unless human.busted? || human.blackjack?
+  def reset_state
+    score_reset if grand_winner?
+    reset_hands
+  end
+
+  def round_end_actions
     display_result
     increment_score
     display_scores
     display_grand_winner if grand_winner?
-    score_reset if grand_winner?
-    reset_hands
+  end
+
+  def game_loop
+    deal_initial_hands
+    display_initial_hands
+    player_turn
+    sleep(0.5)
+    dealer_turn unless human.busted? || human.blackjack?
+    round_end_actions
+    reset_state
   end
 end
 
