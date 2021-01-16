@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 2,205)
+# January 2021 (Total minutes: 2,333)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -14,6 +14,7 @@
 - [13th, Wed](#130121-wed)
 - [14th, Thu](#140121-thu)
 - [15th, Fri](#150121-fri)
+- [16th, Sat](#160121-sat)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -249,3 +250,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Continuing to work through the Twenty-One project. It's fun! Incrementally building blocks on your program and seeing it evolve in features is very rewarding. 
+
+##### 16/01/21 (Sat)
+__*Concepts covered*__<br/>
+- Lesson 5
+  - Tictactoe Refactor
+  - Twenty-One
+
+__*Time spent*__<br/>
+128 minutes
+
+__*Thoughts*__<br/>
+More coding. I managed to add in some nice UI features. The challenging part is to clean up these ABC errors from Rubocop. These will likely involve some heavy refactoring. 
