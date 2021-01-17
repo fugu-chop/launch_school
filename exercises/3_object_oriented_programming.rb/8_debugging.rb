@@ -684,7 +684,7 @@ end
 
 puts [Length.new(1, :mi), Length.new(1, :nmi), Length.new(1, :km)].sort
 
-puts "This fails because the .sort method is taken from the Array class, which does not know how to sort objects. The .sort method uses the spaceship operator, which is what we need to define in our Length class."
+puts "This fails because the .sort method is taken from the Array class, which does not know how to sort objects. The .sort method uses the spaceship operator to compare individual elements within the array, which is what we need to define in our Length class, so that we can compare the individual instances of the Length class with each other."
 
 # 7) We created a simple BankAccount class with overdraft protection, that does not allow a withdrawal greater than the amount of the current balance. We wrote some example code to test our program. However, we are surprised by what we see when we test its behavior. Why are we seeing this unexpected output? Make changes to the code so that we see the appropriate behavior.
 =begin
@@ -954,3 +954,326 @@ Recall that if we intended to invoke the tasks= setter method, we would need to 
 At this point, the getter method tasks is shadowed by the local variable that was just initialized on the left side of the assignment operator (this is initialized before the getter method is called). You can see this shadowing at work also in the private display method, where tasks in the method body refers to the method parameter, not the getter method - i.e. it will attempt to call .each on whatever object is referenced by the tasks method parameter and not the tasks instance variable returned by the tasks getter method.
 
 As a result, both references to tasks in display_high_priority_tasks are interpreted as a local variable. This means that we initialize a local variable, and on the same line reference it via tasks.select, before it has been assigned a value. Invoking the select method on nil caused the error we see."
+
+# 9) Can you decipher and fix the error that the following code produces?
+=begin
+class Mail
+  def to_s
+    "#{self.class}"
+  end
+end
+
+class Email < Mail
+  attr_accessor :subject, :body
+
+  def initialize(subject, body)
+    @subject = subject
+    @body = body
+  end
+end
+
+class Postcard < Mail
+  attr_reader :text
+
+  def initialize(text)
+    @text = text
+  end
+end
+
+module Mailing
+  def receive(mail, sender)
+    mailbox << mail unless reject?(sender)
+  end
+
+  # Change if there are sources you want to block.
+  def reject?(sender)
+    false
+  end
+
+  def send(destination, mail)
+    "Sending #{mail} from #{name} to: #{destination}"
+    # Omitting the actual sending.
+  end
+end
+
+class CommunicationsProvider
+  attr_reader :name, :account_number
+
+  def initialize(name, account_number=nil)
+    @name = name
+    @account_number = account_number
+  end
+end
+
+class EmailService < CommunicationsProvider
+  include Mailing
+
+  attr_accessor :email_address, :mailbox
+
+  def initialize(name, account_number, email_address)
+    super(name, account_number)
+    @email_address = email_address
+    @mailbox = []
+  end
+
+  def empty_inbox
+    self.mailbox = []
+  end
+end
+
+class TelephoneService < CommunicationsProvider
+  def initialize(name, account_number, phone_number)
+    super(name, account_number)
+    @phone_number = phone_number
+  end
+end
+
+class PostalService < CommunicationsProvider
+  attr_accessor :street_address, :mailbox
+
+  def initialize(name, street_address)
+    super(name)
+    @street_address = street_address
+    @mailbox = []
+  end
+
+  def change_address(new_address)
+    self.street_address = new_address
+  end
+end
+
+rafaels_email_account = EmailService.new('Rafael', 111, 'Rafael@example.com')
+johns_phone_service   = TelephoneService.new('John', 122, '555-232-1121')
+johns_postal_service  = PostalService.new('John', '47 Sunshine Ave.')
+ellens_postal_service = PostalService.new('Ellen', '860 Blackbird Ln.')
+
+puts johns_postal_service.send(ellens_postal_service.street_address, Postcard.new('Greetings from Silicon Valley!'))
+# => undefined method `860 Blackbird Ln.' for #<PostalService:0x00005571b4aaebe8> (NoMethodError)
+=end
+
+class Mail
+  def to_s
+    "#{self.class}"
+  end
+end
+
+class Email < Mail
+  attr_accessor :subject, :body
+
+  def initialize(subject, body)
+    @subject = subject
+    @body = body
+  end
+end
+
+class Postcard < Mail
+  attr_reader :text
+
+  def initialize(text)
+    @text = text
+  end
+end
+
+module Mailing
+  def receive(mail, sender)
+    mailbox << mail unless reject?(sender)
+  end
+
+  # Change if there are sources you want to block.
+  def reject?(sender)
+    false
+  end
+
+  def send(destination, mail)
+    "Sending #{mail} from #{name} to: #{destination}"
+    # Omitting the actual sending.
+  end
+end
+
+class CommunicationsProvider
+  attr_reader :name, :account_number
+
+  def initialize(name, account_number=nil)
+    @name = name
+    @account_number = account_number
+  end
+end
+
+class EmailService < CommunicationsProvider
+  include Mailing
+
+  attr_accessor :email_address, :mailbox
+
+  def initialize(name, account_number, email_address)
+    super(name, account_number)
+    @email_address = email_address
+    @mailbox = []
+  end
+
+  def empty_inbox
+    self.mailbox = []
+  end
+end
+
+class TelephoneService < CommunicationsProvider
+  def initialize(name, account_number, phone_number)
+    super(name, account_number)
+    @phone_number = phone_number
+  end
+end
+
+class PostalService < CommunicationsProvider
+  include Mailing
+
+  attr_accessor :street_address, :mailbox
+
+  def initialize(name, street_address)
+    super(name)
+    @street_address = street_address
+    @mailbox = []
+  end
+
+  def change_address(new_address)
+    self.street_address = new_address
+  end
+end
+
+rafaels_email_account = EmailService.new('Rafael', 111, 'Rafael@example.com')
+johns_phone_service   = TelephoneService.new('John', 122, '555-232-1121')
+johns_postal_service  = PostalService.new('John', '47 Sunshine Ave.')
+ellens_postal_service = PostalService.new('Ellen', '860 Blackbird Ln.')
+
+puts johns_postal_service.send(ellens_postal_service.street_address, Postcard.new('Greetings from Silicon Valley!'))
+
+# 10) In order to test the case when authentication fails, we can simply set API_KEY to any string other than the correct key. Now, when using a wrong API key, we want our mock search engine to raise an AuthenticationError, and we want the find_out method to catch this error and print its error message API key is not valid. Is this what you expect to happen given the code? And why do we always get the following output instead?
+=begin
+Sushi rocks!
+Rain rocks!
+Bug hunting rocks!
+
+class AuthenticationError < Exception; end
+
+# A mock search engine
+# that returns a random number instead of an actual count.
+class SearchEngine
+  def self.count(query, api_key)
+    unless valid?(api_key)
+      raise AuthenticationError, 'API key is not valid.'
+    end
+
+    rand(200_000)
+  end
+
+  private
+
+  def self.valid?(key)
+    key == 'LS1A'
+  end
+end
+
+module DoesItRock
+  API_KEY = 'LS1A'
+
+  class NoScore; end
+
+  class Score
+    def self.for_term(term)
+      positive = SearchEngine.count(%{"#{term} rocks"}, API_KEY).to_f
+      negative = SearchEngine.count(%{"#{term} is not fun"}, API_KEY).to_f
+
+      positive / (positive + negative)
+    rescue Exception
+      NoScore
+    end
+  end
+
+  def self.find_out(term)
+    score = Score.for_term(term)
+
+    case score
+    when NoScore
+      "No idea about #{term}..."
+    when 0...0.5
+      "#{term} is not fun."
+    when 0.5
+      "#{term} seems to be ok..."
+    else
+      "#{term} rocks!"
+    end
+  rescue Exception => e
+    e.message
+  end
+end
+
+puts DoesItRock.find_out('Sushi')       # Sushi seems to be ok...
+puts DoesItRock.find_out('Rain')        # Rain is not fun.
+puts DoesItRock.find_out('Bug hunting') # Bug hunting rocks!
+=end
+class AuthenticationError < StandardError; end
+
+class SearchEngine
+  def self.count(query, api_key)
+    unless valid?(api_key)
+      raise AuthenticationError, 'API key is not valid.'
+    end
+
+    rand(200_000)
+  end
+
+  private
+
+  def self.valid?(key)
+    key == 'LS1A'
+  end
+end
+
+module DoesItRock
+  API_KEY = 'test'
+
+  class NoScore; end
+
+  class Score
+    def self.for_term(term)
+      positive = SearchEngine.count(%{"#{term} rocks"}, API_KEY).to_f
+      negative = SearchEngine.count(%{"#{term} is not fun"}, API_KEY).to_f
+
+      positive / (positive + negative)
+    rescue ZeroDivisionError
+      NoScore.new
+    end
+  end
+
+  def self.find_out(term)
+    score = Score.for_term(term)
+
+    case score
+    when NoScore
+      "No idea about #{term}..."
+    when 0...0.5
+      "#{term} is not fun."
+    when 0.5
+      "#{term} seems to be ok..."
+    else
+      "#{term} rocks!"
+    end
+  rescue StandardError => e
+    e.message
+  end
+end
+
+
+puts DoesItRock.find_out('Sushi')       # Sushi seems to be ok...
+puts DoesItRock.find_out('Rain')        # Rain is not fun.
+puts DoesItRock.find_out('Bug hunting') # Bug hunting rocks!
+
+puts "The AuthenticationError is raised, but the Score::for_term method catches it, so it never reaches the DoesItRock::find_out method.
+
+Exception is the top-most class in Ruby's exception hierarchy and it seems a straightforward choice to rescue or inherit from. But it's too broad. When creating custom exceptions and when rescuing exceptions, it's good practice to always use the subclass StandardError. 
+
+StandardError subsumes all application-level errors. The other descendants of Exception are used for system- or environment-level errors, like memory overflows or program interruptions. These are the kind of errors your application usually does not want to throw - and definitely does not want to rescue, they should be handled by Ruby itself.
+
+When the return value of Score::for_term is NoScore, the case statement in DoesItRock::find_out does not behave as expected.  The value of score will be compared with each value in the when clauses using the === operator. 
+  
+In case of the first when clause, the comparison is NoScore === score, and since the left-hand side is a class, its implementation boils down to checking whether score is_a? NoScore. This yields false when score has the value NoScore, as it is not an instance of the NoScore class. As a result, we end up with the value of the else clause.
+
+In order to fix this, Score::for_term has to return an instance of the NoScore class (i.e. NoScore.new), instead of the name of the class itself."
