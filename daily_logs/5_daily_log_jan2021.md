@@ -15,6 +15,7 @@
 - [14th, Thu](#140121-thu)
 - [15th, Fri](#150121-fri)
 - [16th, Sat](#160121-sat)
+- [17th, Sun](#170121-sun)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -262,3 +263,18 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 More coding. I managed to add in some nice UI features. The challenging part is to clean up these ABC errors from Rubocop. These will likely involve some heavy refactoring. 
+
+##### 17/01/21 (Sun)
+__*Concepts covered*__<br/>
+- Lesson 5
+  - Twenty-One
+- Exercises
+  - Debugging
+
+__*Time spent*__<br/>
+189 minutes
+
+__*Thoughts*__<br/>
+Refactoring some of the longer methods with ABC alerts in Rubocop was challenging. Basically, the cheap way is simply to extract more logic to more methods. I'm not sure I entirely agree with this logic, since it just creates more sprawl for code without necessarily making it easier to read. It feels good to finally finish off this Twenty-One project as it felt it was dragging on a fair bit.
+
+The Debugging exercises are very tricky for me. They brought up a lot of gaps in my knowledge - in particular determining where a particular method comes from in respect of the method lookup chain and writing custom methods for classes. I'll need to revisit these once I've done a proper revision sweep of concepts.
