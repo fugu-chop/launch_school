@@ -1,7 +1,4 @@
-=begin
-To Do:
-Rubocop errors
-=end
+require 'pry'
 require 'io/console'
 
 class Deck
@@ -47,6 +44,7 @@ class Player
     if hand.include?('Ace') && total > Twentyone::BLACKJACK
       hand.count('Ace').times do |_|
         total -= 10
+        break if total <= Twentyone::BLACKJACK
       end
     end
 
@@ -72,17 +70,13 @@ class Human < Player
     ['h', 'hit'].include?(answer)
   end
 
-  def choose_action(deck)
-    hit? ? hit(deck) : false
-  end
-
   def display_busted
     puts "You've busted!"
     puts
   end
 
   def display_blackjack
-    puts "You've drawn to Twenty One! You win!"
+    puts "You've drawn to Twenty One!"
     puts
   end
 end
@@ -124,7 +118,7 @@ class Dealer < Player
   end
 
   def display_blackjack
-    puts "Twenty-one! The dealer wins!"
+    puts "The dealer has drawn to Twenty-one!"
     puts
   end
 end
@@ -189,14 +183,15 @@ class Twentyone
   def calculate_winner
     if (human.calculate_total > dealer.calculate_total && !human.blackjack? &&
        !human.busted?) || dealer.busted? || human.blackjack?
-      "Player"
+      "player"
     else
-      "Dealer"
+      "dealer"
     end
   end
 
   def display_result
-    if human.calculate_total == dealer.calculate_total
+    sleep(1)
+    if human.calculate_total == dealer.calculate_total && !human.blackjack?
       puts "Hand values are tied. Remember that the dealer wins ties."
     end
     puts "The #{calculate_winner} wins this round!"
@@ -209,41 +204,77 @@ class Twentyone
     end
   end
 
-  def display_initial_hands
-    human.display_hand
-    dealer.display_first_hand
-    puts
-  end
-
   def dealer_hit_sequence(deck)
     dealer.choose_action(deck.shoe)
     dealer.display_hit
     dealer.display_hand
   end
 
-  def player_turn
-    loop do
-      clear_screen
-      dealer.display_first_hand
-      human.display_hand
-      break human.display_blackjack if human.blackjack?
-      break if human.choose_action(deck.shoe) == false
-      sleep(0.5)
-      break human.display_busted if human.busted?
-    end
-    human.display_hand unless human.blackjack? 
+  def display_player_hit
+    puts
+    puts "You chose to hit!"
   end
 
-  def dealer_turn
+  def display_player_stay
+    puts
+    puts "You chose to stay!"
+  end
+
+  def display_partial_hands
+    dealer.display_first_hand
+    human.display_hand
+  end
+
+  def display_full_hands
     clear_screen
     human.display_hand
     dealer.display_hand
+  end
+
+  def player_hit_sequence
+    human.hit(deck.shoe)
+    display_player_hit
+  end
+
+  def player_loop
+    loop do
+      clear_screen
+      display_partial_hands
+      break human.display_busted if human.busted?
+      break human.display_blackjack if human.blackjack?
+      break display_player_stay unless human.hit?
+      player_hit_sequence
+      sleep(1)
+    end
+  end
+
+  def player_turn
+    if human.blackjack?
+      human.display_hand
+      return human.display_blackjack
+    end
+
+    player_loop
+  end
+
+  def display_dealer_alt_states
+    dealer.display_busted if dealer.busted?
+    dealer.display_blackjack if dealer.blackjack?
+  end
+
+  def stay?
+    !dealer.hit? && !dealer.blackjack? && !dealer.busted?
+  end
+
+  def dealer_turn
+    sleep(1)
+    display_full_hands
     loop do
       sleep(1)
       dealer_hit_sequence(deck) if dealer.hit?
-      break dealer.display_busted if dealer.busted?
-      break dealer.display_blackjack if dealer.blackjack?
-      break dealer.display_stay unless dealer.blackjack? || dealer.hit?
+      sleep(1)
+      break dealer.display_stay if stay?
+      break display_dealer_alt_states if !dealer.hit?
     end
   end
 
@@ -267,7 +298,7 @@ class Twentyone
   end
 
   def increment_score
-    calculate_winner == 'Player' ? human.score += 1 : dealer.score += 1
+    calculate_winner == 'player' ? human.score += 1 : dealer.score += 1
   end
 
   def display_scores
@@ -283,9 +314,9 @@ class Twentyone
   def calculate_grand_winner
     return unless grand_winner?
     if human.score > dealer.score
-      "Player"
+      "player"
     else
-      "Dealer"
+      "dealer"
     end
   end
 
@@ -319,9 +350,7 @@ class Twentyone
 
   def game_loop
     deal_initial_hands
-    display_initial_hands
     player_turn
-    sleep(0.5)
     dealer_turn unless human.busted? || human.blackjack?
     round_end_actions
     reset_state
