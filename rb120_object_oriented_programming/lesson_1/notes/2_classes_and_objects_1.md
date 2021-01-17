@@ -169,6 +169,8 @@ sparky.set_name = "Spartacus"
 puts sparky.get_name
 => "Spartacus"
 ```
+Note that in Ruby, setter methods always return the _argument that was passed in_, even when you add an explicit return statement, or mutate the argument within the method body.
+
 The first thing you should notice about the setter method `set_name=` is that Ruby gives us a special syntax to use it. 
 
 To use the `set_name=` method normally, we would expect to do this: `sparky.set_name=("Spartacus")`, where the entire "set_name=" is the method name, and the string "Spartacus" is the argument being passed in to the method. 
