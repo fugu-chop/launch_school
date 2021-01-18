@@ -1262,9 +1262,9 @@ module DoesItRock
 end
 
 
-puts DoesItRock.find_out('Sushi')       # Sushi seems to be ok...
-puts DoesItRock.find_out('Rain')        # Rain is not fun.
-puts DoesItRock.find_out('Bug hunting') # Bug hunting rocks!
+puts DoesItRock.find_out('Sushi')
+puts DoesItRock.find_out('Rain')
+puts DoesItRock.find_out('Bug hunting')
 
 puts "The AuthenticationError is raised, but the Score::for_term method catches it, so it never reaches the DoesItRock::find_out method.
 
