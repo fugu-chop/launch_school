@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 2,333)
+# January 2021 (Total minutes: 2,644)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -16,6 +16,7 @@
 - [15th, Fri](#150121-fri)
 - [16th, Sat](#160121-sat)
 - [17th, Sun](#170121-sun)
+- [18th, Mon](#180121-mon)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -278,3 +279,15 @@ __*Thoughts*__<br/>
 Refactoring some of the longer methods with ABC alerts in Rubocop was challenging. Basically, the cheap way is simply to extract more logic to more methods. I'm not sure I entirely agree with this logic, since it just creates more sprawl for code without necessarily making it easier to read. It feels good to finally finish off this Twenty-One project as it felt it was dragging on a fair bit.
 
 The Debugging exercises are very tricky for me. They brought up a lot of gaps in my knowledge - in particular determining where a particular method comes from in respect of the method lookup chain and writing custom methods for classes. I'll need to revisit these once I've done a proper revision sweep of concepts.
+
+##### 18/01/21 (Mon)
+__*Concepts covered*__<br/>
+- Exercises
+  - Debugging
+  - Medium 1
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+The Medium 1 exercises aren't too bad, though there was one particular problem of a circular queue where it was just really hard to wrap my head around what the specific requirements of the problem were, and I struggled to figure out a way to keep track of two states and implement them in the solution. Still, we move onward.
