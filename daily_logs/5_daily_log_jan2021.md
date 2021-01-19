@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 2,644)
+# January 2021 (Total minutes: 2,773)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -17,6 +17,7 @@
 - [16th, Sat](#160121-sat)
 - [17th, Sun](#170121-sun)
 - [18th, Mon](#180121-mon)
+- [19th, Tue](#190121-tue)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -291,3 +292,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The Medium 1 exercises aren't too bad, though there was one particular problem of a circular queue where it was just really hard to wrap my head around what the specific requirements of the problem were, and I struggled to figure out a way to keep track of two states and implement them in the solution. Still, we move onward.
+
+##### 19/01/21 (Tue)
+__*Concepts covered*__<br/>
+- Exercises
+  - Medium 1
+- Revision
+  - Pass by Reference v Value
+
+__*Time spent*__<br/>
+129 minutes
+
+__*Thoughts*__<br/>
+The problems aren't too bad. I just find that in the mornings, my mind is constantly in a fog because I'm exhausted. I'm not sure if this hour of study in the morning is too feasible with my current schedule - I'll need to find a way to sleep more, I think.
