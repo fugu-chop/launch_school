@@ -478,7 +478,9 @@ Here, `number` and `value` reference the same object despite the object being im
 
 The key here is that __pass by reference isn’t limited to mutating methods or mutable objects__. A non-mutating method can use pass by reference as well, so pass by reference can be used with immutable objects. There may be a reference passed, but the reference isn’t a guarantee that the object can be modified.
 
-__Assignment__ is the weird exception to the general 'pass by reference' strategy. The key is to remember that variables and constants aren’t objects, but are *references to objects*. Assignment merely changes __which__ object is bound to a particular variable. For __immutable objects and reassignment__, Ruby passes around __copies of the references__.
+__Assignment__ is the weird exception to the general 'pass by reference' strategy. In a pure "pass by reference" language, assignment should be a mutating operation.
+
+The key is to remember that variables and constants aren’t objects, but are *references to objects*. Assignment merely changes __which__ object is bound to a particular variable. For __immutable objects and reassignment__, Ruby passes around __copies of the references__.
 
 While we can change which object is bound to a variable *inside* of a method, __we can’t change the binding of the original arguments__. We can change the *objects* if the objects are *mutable*, but the __references themselves are immutable__ as far as the method is concerned. 
 

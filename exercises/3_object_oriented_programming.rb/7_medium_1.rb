@@ -392,3 +392,400 @@ class GuessingGame
 end
 
 GuessingGame.new.play
+
+# 7) Update your solution to accept a low and high value when you create a GuessingGame object, and use those values to compute a secret number for the game. You should also change the number of guesses allowed so the user can always win if she uses a good strategy. 
+class GuessingGame
+  attr_accessor :guesses, :answer
+
+  def initialize(lower, upper)
+    @guesses = Math.log2(upper - lower).to_i + 1
+    @correct_answer = (lower..upper).to_a.sample
+    @answer = nil
+    @lower_bound = lower
+    @upper_bound = upper
+  end
+
+  def play
+    loop do
+      user_prompt
+      number_validation
+      return display_loss if guesses == 0
+      break if answer == @correct_answer
+    end
+    display_victory
+  end
+
+  private
+
+  def user_prompt
+    loop do
+      puts "You have #{guesses} guesses remaining."
+      puts "Enter a number between #{@lower_bound} and #{@upper_bound}: "
+      self.answer = gets.chomp.to_f
+      break if (@lower_bound..@upper_bound).include?(self.answer.to_i) && self.answer == self.answer.to_i
+      puts "That's not a valid answer - please enter a whole number between #{@lower_bound} and #{@upper_bound}."
+    end
+    self.answer = self.answer.to_i
+    self.guesses -= 1
+  end
+
+  def number_validation
+    if answer < @correct_answer
+      puts "Your guess is too low."
+    elsif answer > @correct_answer
+      puts "Your guess is too high."
+    else
+      puts "That's correct!"
+    end
+  end
+
+  def display_victory
+    puts "You won!"
+  end
+
+  def display_loss
+    puts "You have no more guesses. You lost!"
+    puts "The correct number was #{@correct_answer}."
+  end
+end
+
+GuessingGame.new(100, 350).play
+
+# 8) Update this class so you can use it to determine the lowest ranking and highest ranking cards in an Array of Card objects. Numeric cards are low cards, ordered from 2 through 10. Jacks are higher than 10s, Queens are higher than Jacks, Kings are higher than Queens, and Aces are higher than Kings. 
+
+# The suit plays no part in the relative ranking of cards. If you have two or more cards of the same rank in your list, your min and max methods should return one of the matching cards; it doesn't matter which one. 
+
+# Besides any methods needed to determine the lowest and highest cards, create a #to_s method that returns a String representation of the card, e.g., "Jack of Diamonds", "4 of Clubs", etc.
+=begin
+cards = [Card.new(2, 'Hearts'),
+         Card.new(10, 'Diamonds'),
+         Card.new('Ace', 'Clubs')]
+puts cards
+puts cards.min == Card.new(2, 'Hearts')
+puts cards.max == Card.new('Ace', 'Clubs')
+
+cards = [Card.new(5, 'Hearts')]
+puts cards.min == Card.new(5, 'Hearts')
+puts cards.max == Card.new(5, 'Hearts')
+
+cards = [Card.new(4, 'Hearts'),
+         Card.new(4, 'Diamonds'),
+         Card.new(10, 'Clubs')]
+puts cards.min.rank == 4
+puts cards.max == Card.new(10, 'Clubs')
+
+cards = [Card.new(7, 'Diamonds'),
+         Card.new('Jack', 'Diamonds'),
+         Card.new('Jack', 'Spades')]
+puts cards.min == Card.new(7, 'Diamonds')
+puts cards.max.rank == 'Jack'
+
+cards = [Card.new(8, 'Diamonds'),
+         Card.new(8, 'Clubs'),
+         Card.new(8, 'Spades')]
+puts cards.min.rank == 8
+puts cards.max.rank == 8
+=end
+class Card
+  NUM_RANKING = (('2'..'10').to_a +
+                %w(Jack Queen King Ace)).zip((2..14).to_a).to_h
+
+  attr_reader :rank, :suit
+
+  def initialize(rank, suit)
+    @rank = rank
+    @suit = suit
+  end
+
+  def ==(other)
+    rank == other.rank &&
+    suit == other.suit
+  end
+  
+  def to_s
+    "#{rank} of #{suit}"
+  end
+
+  protected
+
+  def <=>(other)
+    ranked_value <=> other.ranked_value
+  end
+
+  def ranked_value
+    NUM_RANKING.fetch(rank.to_s)
+  end
+end
+
+# 8b) Update the Card class so that #min and #max pick the card of the appropriate suit if two or more cards of the same rank are present in the Array, where Spades > Hearts > Clubs > Diamonds.
+=begin
+cards = [Card.new(4, 'Hearts'),
+         Card.new(4, 'Diamonds'),
+         Card.new(10, 'Clubs')]
+puts cards.min == Card.new(4, 'Diamonds')
+puts cards.max == Card.new(10, 'Clubs')
+
+cards = [Card.new(8, 'Diamonds'),
+         Card.new(8, 'Clubs'),
+         Card.new(8, 'Spades')]
+puts cards.min == Card.new(8, 'Diamonds')
+puts cards.max == Card.new(8, 'Spades')
+
+=end
+class Card
+  NUM_RANKING = (('2'..'10').to_a +
+                %w(Jack Queen King Ace)).zip((2..14).to_a).to_h
+  SUIT_RANKING = (%w(Diamonds Clubs Hearts Spades).zip((1..4).to_a)).to_h
+
+  attr_reader :rank, :suit
+
+  def initialize(rank, suit)
+    @rank = rank
+    @suit = suit
+  end
+
+  def ==(other)
+    rank == other.rank &&
+    suit == other.suit
+  end
+  
+  def to_s
+    "#{rank} of #{suit}"
+  end
+
+  protected
+
+  def <=>(other)
+    ranked_value <=> other.ranked_value
+  end
+
+  def ranked_value
+    # You can put multiple criteria for the spaceship operator in an array
+    [NUM_RANKING.fetch(rank.to_s), SUIT_RANKING.fetch(suit.to_s)]
+  end
+end
+
+# 9) Using the Card class from the previous exercise, create a Deck class that contains all of the standard 52 playing cards. The Deck class should provide a #draw method to deal one card. The Deck should be shuffled when it is initialized and, if it runs out of cards, it should reset itself by generating a new set of 52 shuffled cards.
+class Deck
+  attr :shoe
+
+  RANKS = ((2..10).to_a + %w(Jack Queen King Ace)).freeze
+  SUITS = %w(Hearts Clubs Diamonds Spades).freeze
+
+  def initialize
+    reset
+  end
+
+  def draw
+    if shoe.size > 0
+      shoe.pop
+    else
+      initialize
+      shoe.pop
+    end
+  end
+
+  private
+
+  def reset
+    # The product multiplies each object of the caller with each object of the argument
+    # Map converts each returned subarray into a format that can be consumed by the Card.new method
+    @shoe = SUITS.product(RANKS).map do |suit, rank|
+      Card.new(rank, suit)
+    end.shuffle
+  end
+end
+
+x = Deck.new
+51.times { |_| x.draw }
+
+# 10) In the previous two exercises, you developed a Card class and a Deck class. You are now going to use those classes to create and evaluate poker hands. Create a class, PokerHand, that takes 5 cards from a Deck of Cards and evaluates those cards as a Poker hand.
+=begin
+hand = PokerHand.new(Deck.new)
+hand.print
+puts hand.evaluate
+
+# Danger danger danger: monkey
+# patching for testing purposes.
+class Array
+  alias_method :draw, :pop
+end
+
+# Test that we can identify each PokerHand type.
+hand = PokerHand.new([
+  Card.new(10,      'Hearts'),
+  Card.new('Ace',   'Hearts'),
+  Card.new('Queen', 'Hearts'),
+  Card.new('King',  'Hearts'),
+  Card.new('Jack',  'Hearts')
+])
+puts hand.evaluate == 'Royal flush'
+
+hand = PokerHand.new([
+  Card.new(8,       'Clubs'),
+  Card.new(9,       'Clubs'),
+  Card.new('Queen', 'Clubs'),
+  Card.new(10,      'Clubs'),
+  Card.new('Jack',  'Clubs')
+])
+puts hand.evaluate == 'Straight flush'
+
+hand = PokerHand.new([
+  Card.new(3, 'Hearts'),
+  Card.new(3, 'Clubs'),
+  Card.new(5, 'Diamonds'),
+  Card.new(3, 'Spades'),
+  Card.new(3, 'Diamonds')
+])
+puts hand.evaluate == 'Four of a kind'
+
+hand = PokerHand.new([
+  Card.new(3, 'Hearts'),
+  Card.new(3, 'Clubs'),
+  Card.new(5, 'Diamonds'),
+  Card.new(3, 'Spades'),
+  Card.new(5, 'Hearts')
+])
+puts hand.evaluate == 'Full house'
+
+hand = PokerHand.new([
+  Card.new(10, 'Hearts'),
+  Card.new('Ace', 'Hearts'),
+  Card.new(2, 'Hearts'),
+  Card.new('King', 'Hearts'),
+  Card.new(3, 'Hearts')
+])
+puts hand.evaluate == 'Flush'
+
+hand = PokerHand.new([
+  Card.new(8,      'Clubs'),
+  Card.new(9,      'Diamonds'),
+  Card.new(10,     'Clubs'),
+  Card.new(7,      'Hearts'),
+  Card.new('Jack', 'Clubs')
+])
+puts hand.evaluate == 'Straight'
+
+hand = PokerHand.new([
+  Card.new('Queen', 'Clubs'),
+  Card.new('King',  'Diamonds'),
+  Card.new(10,      'Clubs'),
+  Card.new('Ace',   'Hearts'),
+  Card.new('Jack',  'Clubs')
+])
+puts hand.evaluate == 'Straight'
+
+hand = PokerHand.new([
+  Card.new(3, 'Hearts'),
+  Card.new(3, 'Clubs'),
+  Card.new(5, 'Diamonds'),
+  Card.new(3, 'Spades'),
+  Card.new(6, 'Diamonds')
+])
+puts hand.evaluate == 'Three of a kind'
+
+hand = PokerHand.new([
+  Card.new(9, 'Hearts'),
+  Card.new(9, 'Clubs'),
+  Card.new(5, 'Diamonds'),
+  Card.new(8, 'Spades'),
+  Card.new(5, 'Hearts')
+])
+puts hand.evaluate == 'Two pair'
+
+hand = PokerHand.new([
+  Card.new(2, 'Hearts'),
+  Card.new(9, 'Clubs'),
+  Card.new(5, 'Diamonds'),
+  Card.new(9, 'Spades'),
+  Card.new(3, 'Diamonds')
+])
+puts hand.evaluate == 'Pair'
+
+hand = PokerHand.new([
+  Card.new(2,      'Hearts'),
+  Card.new('King', 'Clubs'),
+  Card.new(5,      'Diamonds'),
+  Card.new(9,      'Spades'),
+  Card.new(3,      'Diamonds')
+])
+puts hand.evaluate == 'High card'
+=end
+class PokerHand
+  attr_reader :hand
+
+  def initialize(deck)
+    # This doesn't work with test cases that override the general logic, unless you use the Monkey Patch module
+    @hand = []
+    5.times { |_| @hand << deck.draw }
+    @card_count = @hand.each_with_object(Hash.new(0)) do |card, hash|
+      hash[card.rank] += 1
+    end
+  end
+
+  def print
+    "Your hand is " + @hand.map do |card|
+      card.to_s
+    end.join(', ')
+  end
+
+  def evaluate
+    case 
+    when royal_flush?     then 'Royal flush'
+    when straight_flush?  then 'Straight flush'
+    when four_of_a_kind?  then 'Four of a kind'
+    when full_house?      then 'Full house'
+    when flush?           then 'Flush'
+    when straight?        then 'Straight'
+    when three_of_a_kind? then 'Three of a kind'
+    when two_pair?        then 'Two pair'
+    when pair?            then 'Pair'
+    else                       'High card'
+    end
+  end
+
+  private
+
+  def royal_flush?
+    flush? &&
+    @hand.map do |card|
+      card.rank.to_s
+    end.sort == ["10", "Ace", "Jack", "King", "Queen"]
+  end
+
+  def straight_flush?
+    flush? && straight?
+  end
+
+  def four_of_a_kind?
+    @card_count.any? { |_, count| count == 4 }
+  end
+
+  def full_house?
+    @card_count.any? { |_, count| count == 3 } &&
+    @card_count.any? { |_, count| count == 2 }
+  end
+
+  def flush?
+    @hand.map do |card|
+      card.suit
+    end.uniq.size == 1
+  end
+
+  def straight?
+    @card_count.all? { |_, count| count <= 1 } &&
+    Card::NUM_RANKING[@hand.max.rank.to_s] - Card::NUM_RANKING[@hand.min.rank.to_s] == 4
+  end
+
+  def three_of_a_kind?
+    @card_count.any? { |_, count| count == 3 }
+  end
+
+  def two_pair?
+    @card_count.select { |_, value| value == 2 }.size == 2
+  end
+
+  def pair?
+    @card_count.any? { |_, count| count == 2 }
+  end
+end
