@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 2,773)
+# January 2021 (Total minutes: 2,833)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -18,6 +18,7 @@
 - [17th, Sun](#170121-sun)
 - [18th, Mon](#180121-mon)
 - [19th, Tue](#190121-tue)
+- [20th, Wed](#200121-wed)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -305,3 +306,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The problems aren't too bad. I just find that in the mornings, my mind is constantly in a fog because I'm exhausted. I'm not sure if this hour of study in the morning is too feasible with my current schedule - I'll need to find a way to sleep more, I think.
+
+##### 20/01/21 (Wed)
+__*Concepts covered*__<br/>
+- Revision
+  - Pass by Reference v Value
+- RB120 Quiz
+
+__*Time spent*__<br/>
+60 minutes
+
+__*Thoughts*__<br/>
+A light day today. I used the opportunity to sleep in the morning. The quiz actually wasn't too hard in this particular instance. Just a bit of thinking about design choices, understanding the namespace resolution operator and understanding the various steps to expose methods to a class. We begin the RB129 preparation!
