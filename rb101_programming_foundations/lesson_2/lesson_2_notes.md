@@ -482,7 +482,7 @@ __Assignment__ is the weird exception to the general 'pass by reference' strateg
 
 The key is to remember that variables and constants aren’t objects, but are *references to objects*. Assignment merely changes __which__ object is bound to a particular variable. For __immutable objects and reassignment__, Ruby passes around __copies of the references__.
 
-While we can change which object is bound to a variable *inside* of a method, __we can’t change the binding of the original arguments__. We can change the *objects* if the objects are *mutable*, but the __references themselves are immutable__ as far as the method is concerned. 
+While we can change which object is bound to a variable *inside* of a method, __we can’t change the binding of the original arguments__ passed to that method. We can change the *objects* if the objects are *mutable*, but the __references themselves are immutable__ as far as the method is concerned. 
 
 Since pass by value (again, __variable reassignment and immutable objects__) passes copies of arguments into a method, Ruby appears to be making copies of the references, then passing those copies to the method. The method can use the references to modify the referenced object, but since the reference itself is a copy, the original reference cannot be changed.
 
