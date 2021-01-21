@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 2,833)
+# January 2021 (Total minutes: 2,968)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -318,3 +318,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 A light day today. I used the opportunity to sleep in the morning. The quiz actually wasn't too hard in this particular instance. Just a bit of thinking about design choices, understanding the namespace resolution operator and understanding the various steps to expose methods to a class. We begin the RB129 preparation!
+
+##### 21/01/21 (Thu)
+__*Concepts covered*__<br/>
+- Revision
+  - Forum posts
+
+__*Time spent*__<br/>
+135 minutes
+
+__*Thoughts*__<br/>
+The forum is a pretty mixed bag of topics. One point of confusion is whether we should treat the `initialize` method as a constructor. The OO book designates the `initialize` method as a constructor, but a forum post by a TA, argues that a constructor instantiates an object (which would be the `new` method). Not sure what to use here.
+
+I also need to make a note to practice reading OO code - i.e. "be able to read through and have a mental model of how various pieces of the program function and work together". I think I can do this by going through all of the longer applications in this course (including solutions by other students), as well as the examples, to describe what is happening.
