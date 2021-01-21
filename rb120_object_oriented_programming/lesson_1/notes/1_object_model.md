@@ -22,16 +22,20 @@ Through the use of _class objects_, we can create _instance variables_ and _inst
 
 Another benefit of creating objects is that they allow the programmer to think on a new level of abstraction (also known as *indirection*), which allows us to think at a *higher level* instead of implementation details upfront. Objects are represented as real-world nouns and can be given methods that describe the behavior the programmer is trying to represent.
 
+Encapsulation is a kind of abstraction that involves containing all the data and functionality for part of your program within a single construct, and exposing an interface for that construct.
+
+We can regard abstraction as the hiding or disregarding of unnecessary detail (implementation details), focusing on how something works to focus on what it does. 
+
 #### Polymorphism
 *Polymorphism* is the ability for different types of data (_different objects_) to respond to a common interface (_common methods_). For instance, if we have a method that expects argument objects that have a `move` method, we can pass it any type of argument (i.e. any type of object as an argument), provided it has a compatible `move` method (common interface). 
 
-The object might represent a human, a cat, a jellyfish, or, conceivably, even a car or train. That is, it lets *objects of different types (could be the same or different classes) respond to the same method invocation* - i.e. we have many different objects, but all of them can `move`. OOP gives us flexibility in using pre-written code for new purposes.
+The object might represent a human, a cat, a jellyfish, or, conceivably, even a car or train. That is, it lets *objects of different types (could be the same or different classes) respond to the same method invocation* - i.e. we have many different objects, but all of them can `move`. OOP gives us flexibility in using pre-written code for new purposes. This, however, doesn't imply that the `move` method does the same thing for all objects - rather that there simply __is__ a `move` method among all of those objects. 
 
 Another way to apply polymorphic structure to Ruby programs is to use a `Module`. Modules are similar to classes in that they contain shared behavior. However, you __cannot create an object with a module__. 
 
 A module must be mixed in with a class using the `include` method invocation. This is called a `mixin` (i.e. a module that has been used to mix in functionality into a class is a `mixin`). After mixing in a module, the behaviors declared in that module are available to the class and its objects.
 
-The third way of achieving polymorphism is through using __duck typing__. 
+The third way of achieving polymorphism is through using __duck typing__. As an aside, duck-typing is not possible in statically typed languages, because you have to __declare the type of each param/variable/return value__. Preventing duck typing is a big part of static typing (we want to avoid different types being funneled into a method).
 
 In our below example, none of the classes or objects created are related to each other. However, each of the objects have a `speak` method, which is why we can loop through each object and run the same method.
 ```
@@ -63,7 +67,7 @@ end
 ### What is an object?
 Objects are created from classes. Think of classes as molds and objects as the things you produce out of those molds. Individual objects will contain different information from other objects, yet they are instances of the same class. 
 
-Anything that can be said to have a value is an object: that includes numbers, strings, arrays, and even classes and modules. However, there are a few things that are __not__ objects: *methods* and *blocks* are two that stand out.
+Anything that can be said to have a value is an object: that includes numbers, strings, arrays, and even classes (custom classes are just instances of the `class` Class) and modules. However, there are a few things that are __not__ objects: *methods* and *blocks* are two that stand out.
 
 Here's an example of two objects of the `String` class:
 ```
@@ -75,6 +79,7 @@ Here's an example of two objects of the `String` class:
 ```
 We use the `class` instance method to determine what the class is for each object. So far, everything we've been using, from strings to integers, are in fact objects, which are instantiated from a class. 
 
+Objects can be regarded as an encapsulation of it's their own state.
 ### What is a class?
 Ruby defines the attributes and behaviors of its objects in classes. You can think of classes as basic outlines of what an object should be made of and what it should be able to do. 
 
@@ -121,7 +126,7 @@ bob.speak("Hello!")
 Both the `GoodDog` object, which we're calling `sparky`, as well as the `HumanBeing` object, which we're calling `bob`, have access to the `speak` _instance method_. This is possible through "mixing in" the module `Speak`. It's as if we copy-pasted the `speak` method into the `GoodDog` and `HumanBeing` classes.
 
 #### Method Lookups
-When you call a method, how does Ruby know where to look for that method? Ruby has a distinct lookup path that it follows each time a method is called. Let's use our program from above to see what the method lookup path is for our `GoodDog` class. We can use the `ancestors` method on any class to find out the method lookup chain.
+Ruby has a distinct lookup path that it follows each time a method is called. We can use the `ancestors` method on any class to find out the method lookup chain.
 ```
 module Speak
   def speak(sound)
@@ -160,3 +165,5 @@ BasicObject
 The `Speak` module is placed right in between our custom classes (i.e., `GoodDog` and `HumanBeing`) and the Object class that comes with Ruby. 
 
 This means that since the `speak` method is not defined in the `GoodDog` class, the next place it looks is the `Speak` module. This continues in an ordered, linear fashion, until the method is either found, or there are no more places to look.
+
+The method lookup follows the *trail of superclasses* (or ancestors). Instances of a class use the method lookup path to determine which methods are available to it. Instance methods are what instances of a class can use. 

@@ -93,7 +93,7 @@ class Wedding
 
   def prepare(preparers)
     preparers.each do |preparer|
-      # self refers to an object instantiated from the Wedding class - per our rules about self when used in an instance method
+      # self refers to an object instantiated from the Wedding class - per our rules about self when used in an instance method, which is what we would pass to the preparers block parameter - e.g. Chef.prepare_wedding(self)
       preparer.prepare_wedding(self)
     end
   end

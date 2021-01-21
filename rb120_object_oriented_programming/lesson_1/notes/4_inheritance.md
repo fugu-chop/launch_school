@@ -260,8 +260,6 @@ You may wonder when to use class inheritance vs mixins. Here are a couple of thi
 - If there's an "is-a" relationship, class inheritance is usually the correct choice. If there's a "has-a" relationship, interface inheritance is generally a better choice. For example, a dog "is an" animal and it "has an" ability to swim.
 - You __cannot instantiate modules__ (i.e., no object can be created from a module). Modules are used only for namespacing and grouping common methods together.
 
-As you get better at OO design, you'll start to develop a feel for when to use class inheritance versus mixing in modules.
-
 ### Method Lookup Path
 Recall the method lookup path is the order in which classes are inspected when you call a method.
 ```
@@ -348,6 +346,21 @@ There are several interesting things about the above output.
 Here's a chart of how the various classes fit together:
 
 [Class Hierarchy Chart](#https://vahid.blog/post/2020-11-04-encapsulation-polymorphism-and-abstraction-in-ruby/class_hierarchy.png)
+
+As a detailed point - a custom class is an instance of `Class` but it has as its superclass `Object`. This means that the method lookup path (`.ancestors`) for the custom class won't show `Class` and `Module` since it's not its superclass (`.ancestors` only shows the trail of superclasses), but it still inherits all the methods from `Class` and `Module` - a prime example are accessor methods, which come from `Class`.
+```
+class MyCustomClass; end
+
+myObj = MyCustomClass.new
+
+myObj.class.ancestors
+# Note that the ancestors method is available on the class of the object, which comes from `Class`
+# returns [MyCustomClass, Object, Kernel, BasicObject]
+
+MyCustomClass.class.ancestors
+# Note that MyCustomClass is an object - an instance of the `Class` class
+# returns [Class, Module, Object, Kernel, BasicObject]
+```
 
 ### More modules
 The first use case we'll discuss is using modules for __namespacing__. In this context, __namespacing__ means *organizing similar classes under a module*. In other words, we'll use modules to group related classes. 

@@ -10,7 +10,7 @@
 
 ### States and Behaviours
 We use classes to create objects. When defining a class, we typically focus on two things: __states__ and __behaviors__. 
-- *States* track attributes for individual objects. 
+- *States* track attributes for individual objects (e.g. think of the collaborator objects assigned to instance variables). 
 - *Behaviors* are what objects are capable of doing.
 
 Using our `GoodDog` class from earlier, we may want to create two `GoodDog` objects: one named "Fido" and one named "Sparky". They are both `GoodDog` objects, but may contain different information, such as name, weight, and height. 
@@ -19,7 +19,9 @@ We would use _instance variables_ to track this information. This should tell yo
 
 Even though they're two different objects, both are still objects (or instances) of class `GoodDog` and contain identical behaviors. For example, both `GoodDog` objects should be able to `bark`, `run`, `fetch`, and perform other common behaviors of good dogs. We define these behaviors as __instance methods in a class__. Instance methods defined in a class are available to objects (or instances) of that class.
 
-In summary, instance *variables* keep track of __state__, and instance *methods* expose __behavior__ for objects. 
+In summary, instance *variables* keep track of __state__, and instance *methods* expose __behavior__ for objects. State *sets or determines the attributes* of an object. We can think of the _instance variables themselves_ as the __attributes__ (which are shared by __all objects__ of that class) and the *actual objects* referenced by those instance variables as the _state_ (which is specific to each object). 
+
+The __attributes__ of the objects of a class are shared by all objects of the class, and are defined by the instance variables defined by the class. Instance variable values for each individual object keep track of the unique __state__ of each object of a class. 
 
 ### Initialising a new object
 In our code below, we've created the `initialize` method, which gets called every time you create a new object. Calling the `new` class method eventually leads us to the `initialize` instance method. 
@@ -35,7 +37,19 @@ sparky = GoodDog.new
 ```
 In the above example, instantiating a new `GoodDog` object triggered the `initialize` method and resulted in the string being outputted. We refer to the `initialize` method as a __constructor__, because it gets triggered whenever we create a *new* object. 
 
-In Ruby, the `initialize` is treated as a special method (i.e. it is specifically reserved as a __constructor__), which allows it to be called when a new object is created (contrast it with all other methods you define within a class, which aren't automatically called). The purpose of the constructor is to __initiate the state__ of an object. Constructors __do not return__ any values.  
+In Ruby, the `initialize` is treated as a special method (i.e. it is specifically reserved as a __constructor__), which allows it to be called when a new object is created (contrast it with all other methods you define within a class, which aren't automatically called). The purpose of the constructor is to __initiate the state__ of an object. Constructors __do not return__ any values.
+
+If we're being 100% technical, if we think about what a constructor is, it is a function or method that *instantiates* an object, more specifically in the context we're discussing an instance of a particular class. `initialize` does __not__ do this. This is the job of the `new` method.
+
+When `new` is called, it instantiates an object of the class that `new` was called on and __then invokes that object's `initialize` method__. It's more accurate to think of these as two separate steps. 
+
+We can see this in action as we can instantiate an object of a class that __doesn't__ have an `initialize` method defined.
+```
+class MyClass; end
+my_obj = MyClass.new
+# => #<MyClass:0x000000036ae728>
+```
+When we think about the `initialize` method, its job is just this: to __initialize variables__ (although it doesn't have to). This is different from a _constructor_, whose job is to __instantiate objects__. Variables __are not objects__.
 
 ### Instance Variables
 The instance variables are kind of __class attributes__ and they become properties of objects __once objects are created__ using the class. Every object's attributes (instance variables) are assigned *individually* and share *no value with other objects*. 
@@ -62,7 +76,19 @@ Once initialised, instance variables are available to instance methods *througho
 
 Another useful mental model is that classes don't define instance variables, they _define attributes_. 
 
-Instance variables __do not exist prior to an object being created and a value being assigned to them__.  Consider the following code:
+An *instance variable* is named by the class, but each object created from the class __creates its own copy of the instance variable__, and its value contributes to the overall *state* of the object. 
+
+With this definition, note in particular that __the instance variable is actually not part of the class__; therefore, it can't be inherited. The subclass does know about the name, but it's merely using that name as a handle for the value it contains.
+
+Ruby's instance variables are __not inherited__ and have nothing to do with the inheritance mechanism. The reason that they sometimes appear to be inherited is that instance variables are created by the methods that first assign values to them, and those methods are often inherited or chained (i.e. getter and setter methods).
+
+An *attribute* is an instance variable name _and value_. More specifically, an attribute must be accessible __outside the methods defined by the class__; this means you need either a getter or setter method, or both. 
+
+If both are missing, you only have an instance variable and a value (you can think of this as a "private attribute" if you want, but it doesn't really help). An attribute's getter and setter methods will be inherited by a superclass, but, the __instance variable name and value behind the attribute do not participate in inheritance__.
+
+Every object has state. State is the *collection of all instance variables and their values defined for an object*. Since state is part of the *object*, not the class, state is __not inherited__.
+
+Instance variables __do not exist prior to an object being created and a value being assigned to them__ (i.e. no inheritance is possible).  Consider the following code:
 ```
 class Student
   attr_accessor :grade
@@ -80,6 +106,7 @@ Although we have a `grade` accessor method within our `Student` class, the `@gra
 Calling `ade.grade` would return `nil` because `@grade` is an uninitialized instance variable and not because we have set its value to `nil` (the `initialize` method ignores the `grade` parameter).
 
 We can also access the instance variables of an object by calling `.instance_variables` on the object, or a specific instance variable using `.instance_variable_get("instance_var")`.
+
 ### Instance Methods
 Instance methods are how we attach functionality to our objects. 
 ```
@@ -178,6 +205,19 @@ To use the `set_name=` method normally, we would expect to do this: `sparky.set_
 Ruby recognizes that this is a setter method and allows us to use the more natural assignment syntax: `sparky.set_name = "Spartacus"`. When you see this code, just realize there's a method called `set_name=` working behind the scenes, and we're just seeing some Ruby *syntactical sugar*.
 
 Accessor methods allow us to interact with instance variables __outside of the class__ (i.e. after the object has been created).
+
+As to whether we __should__ have getters or setters, consider the following:
+- Should users of my class be able to directly access the state represented by an instance variable? If so, then I have to use a getter. Otherwise, no getters unless I make them private (we can still handle getting state through other instance methods in the class).
+- Should users of my class be able to directly change the state represented by an instance variable? If so, then I have to use a setter. Otherwise, no setters unless I make them private (again, private does not stop other instance methods from changing state).
+
+Also consider: having all your state accessed by an instance variable (i.e. __not__ through a getter/setter method) makes it really easy to see where your state is being set and used. 
+
+In summary: 
+- A subclass inherits the methods of the superclass.
+- Instance variables and their values are not inheritable.
+- Attribute getters and setters are methods, so they are inheritable.
+- Attribute names and their values are just instance variables and values, so they are not inheritable.
+- State is __tied directly to individual objects__, so is not inheritable.
 
 #### Naming convention
 Finally, as a convention, Rubyists typically want to name those getter and setter methods using the same name as the instance variable they are exposing and setting.
