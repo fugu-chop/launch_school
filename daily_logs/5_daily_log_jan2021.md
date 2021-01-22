@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 2,968)
+# January 2021 (Total minutes: 3,092)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -19,6 +19,8 @@
 - [18th, Mon](#180121-mon)
 - [19th, Tue](#190121-tue)
 - [20th, Wed](#200121-wed)
+- [21st, Thu](#210121-thu)
+- [22nd, Fri](#220121-fri)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -331,3 +333,18 @@ __*Thoughts*__<br/>
 The forum is a pretty mixed bag of topics. One point of confusion is whether we should treat the `initialize` method as a constructor. The OO book designates the `initialize` method as a constructor, but a forum post by a TA, argues that a constructor instantiates an object (which would be the `new` method). Not sure what to use here.
 
 I also need to make a note to practice reading OO code - i.e. "be able to read through and have a mental model of how various pieces of the program function and work together". I think I can do this by going through all of the longer applications in this course (including solutions by other students), as well as the examples, to describe what is happening.
+
+##### 22/01/21 (Fri)
+__*Concepts covered*__<br/>
+- Revision
+  - Forum posts
+  - The `||=` operator
+  - The object model
+
+__*Time spent*__<br/>
+124 minutes
+
+__*Thoughts*__<br/>
+I read an interesting forum post on singleton methods, the premise of which is that custom classes are really objects instantiated from the `Class` class. Therefore, class methods defined in a custom class are really just instance methods of the custom class object.
+
+It then went onto an exploration about whether these class methods are duplicated or reused when inherited. Long story short, they are reused, and not duplicated. Class methods belong to a specific instance of that custom class (again, which is itself an object). These are called singleton methods. There's more detail, but it doesn't really seem too relevant to what I'm studying now (and I don't see how practically, this is a useful detail).
