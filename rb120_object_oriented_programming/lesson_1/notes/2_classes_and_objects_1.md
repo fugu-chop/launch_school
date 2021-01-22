@@ -35,13 +35,13 @@ end
 sparky = GoodDog.new
 => "This object was initialized!"
 ```
-In the above example, instantiating a new `GoodDog` object triggered the `initialize` method and resulted in the string being outputted. We refer to the `initialize` method as a __constructor__, because it gets triggered whenever we create a *new* object. 
+In the above example, instantiating a new `GoodDog` object triggered the `initialize` method and resulted in the string being outputted. We refer to the `initialize` method as a __constructor__, because it gets triggered whenever we create a *new* object. The `initialize` method is a method that automatically/internally gets called when a new instance of the class is created using `Class::new`.
+
+Technically it's possible to instantiate an object without `initialize` being invoked (e.g. by calling `allocate` instead of `new`), though this is beyond the scope of the course.
 
 In Ruby, the `initialize` is treated as a special method (i.e. it is specifically reserved as a __constructor__), which allows it to be called when a new object is created (contrast it with all other methods you define within a class, which aren't automatically called). The purpose of the constructor is to __initiate the state__ of an object. Constructors __do not return__ any values.
 
 If we're being 100% technical, if we think about what a constructor is, it is a function or method that *instantiates* an object, more specifically in the context we're discussing an instance of a particular class. `initialize` does __not__ do this. This is the job of the `new` method.
-
-When `new` is called, it instantiates an object of the class that `new` was called on and __then invokes that object's `initialize` method__. It's more accurate to think of these as two separate steps. 
 
 We can see this in action as we can instantiate an object of a class that __doesn't__ have an `initialize` method defined.
 ```
@@ -49,7 +49,7 @@ class MyClass; end
 my_obj = MyClass.new
 # => #<MyClass:0x000000036ae728>
 ```
-When we think about the `initialize` method, its job is just this: to __initialize variables__ (although it doesn't have to). This is different from a _constructor_, whose job is to __instantiate objects__. Variables __are not objects__.
+When we think about the `initialize` method, its job is just this: to __initialize variables__ (although it doesn't have to). This is different from a _constructor_, whose job is to __instantiate objects__. Variables __are not objects__ (although they can be assigned to objects), since they are not instantiated from a class.
 
 ### Instance Variables
 The instance variables are kind of __class attributes__ and they become properties of objects __once objects are created__ using the class. Every object's attributes (instance variables) are assigned *individually* and share *no value with other objects*. 

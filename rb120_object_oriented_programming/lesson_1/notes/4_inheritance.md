@@ -301,7 +301,7 @@ Object
 Kernel
 BasicObject
 ```
-This means that when we call a method of any `Animal` object, first Ruby looks in the `Animal` class, then the `Walkable` module, then the `Object` class, then the `Kernel` module, and finally the `BasicObject` class. Note that the `BasicObject` superclass is `nil`.
+This means that when we call a method of any `Animal` object, first Ruby looks in the `Animal` class, then the `Walkable` module, then the `Object` class, then the `Kernel` module, and finally the `BasicObject` class. Note that the `BasicObject` superclass is `nil` (i.e. it doesn't inherit from anything, but the `.superclass` method for `BasicObject` is a special implementation designed to return `nil` instead of an actual superclass).
 ```
 fido = Animal.new
 fido.speak
@@ -347,7 +347,7 @@ Here's a chart of how the various classes fit together:
 
 [Class Hierarchy Chart](#https://vahid.blog/post/2020-11-04-encapsulation-polymorphism-and-abstraction-in-ruby/class_hierarchy.png)
 
-As a detailed point - a custom class is an instance of `Class` but it has as its superclass `Object`. This means that the method lookup path (`.ancestors`) for the custom class won't show `Class` and `Module` since it's not its superclass (`.ancestors` only shows the trail of superclasses), but it still inherits all the methods from `Class` and `Module` - a prime example are accessor methods, which come from `Class`.
+As a detailed point - a custom class is an instance of `Class` but it has as its superclass `Object`. This means that the method lookup path (`.ancestors`) for the custom class won't show `Class` and `Module` since it's not its superclass, but it still inherits all the methods from `Class` and `Module` - a prime example are accessor methods, which come from `Class`.
 ```
 class MyCustomClass; end
 

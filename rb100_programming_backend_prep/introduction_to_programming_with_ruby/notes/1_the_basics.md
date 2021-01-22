@@ -193,6 +193,7 @@ We can test conditions between operands using comparison operators, which return
 - `!=`
 - `&&`: Return true only if both conditions are true
 - `||`: Return true if one or both of the conditions are true (inclusive or).
+- `||=` is a conditional assignment operator. Take the example `a ||= b`. It means if `a` is undefined or falsey, then evaluate `b` and set `a` to the result. Equivalently, if `a` is defined and evaluates to truthy, then `b` is not evaluated, and no assignment takes place. 
 
 ###### Type Conversion
 Ruby provides a list of methods that we can use to convert between types:
