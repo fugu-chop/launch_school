@@ -31,7 +31,7 @@ We can regard abstraction as the hiding or disregarding of unnecessary detail (i
 #### Polymorphism
 *Polymorphism* is the ability for different types of data (_different objects_) to respond to a common interface (a _method_ that has the same name). It lets *objects of different types (could be the same or different classes) respond to the same method invocation* - e.g. we might have many different objects, but all of them have a `move` instance method. This, however, doesn't imply that the `move` method does the same thing for all objects - rather that there simply __is__ a `move` method among all of those objects. Polymorphism gives us flexibility to use the same code for different purposes (see our `each` method call in the example below). 
 
-Another way to apply polymorphic structure to Ruby programs is to use a `Module`. This is known as `interface inheritance` but is also a form of polymorphism. Modules are similar to classes in that they contain shared behavior. However, you __cannot instantiate an object from a module__. 
+Another way to apply polymorphic structure to Ruby programs is to use a `Module`. This is known as _interface inheritance_ but is also a form of polymorphism. Modules are similar to classes in that they contain shared behavior. However, you __cannot instantiate an object from a module__. 
 
 A module must be mixed in with a class using the `include` method invocation. This is called a `mixin` (i.e. a module that has been used to mix in functionality into a class is a `mixin`). After mixing in a module, the behaviors declared in that module are available to the class and its objects.
 
@@ -67,7 +67,7 @@ end
 ### What is an object?
 Objects are created from classes. Think of classes as __molds__ and objects as the things you produce out of those molds. Individual objects will contain different information from other objects, yet they are instances of the same class. Objects instantiated from the same class are distinct and different objects to each other. 
 
-__Anything that can be said to have a value is an object__ - that includes numbers, strings, arrays, and even classes (custom classes are just instances of the `class` Class) and modules. However, there are a few things that are __not__ objects: *methods* and *blocks* are two that stand out.
+__Anything that can be said to have a value is an object__ - that includes numbers, strings, arrays, and even classes (custom classes are just instances of the `class` Class) and modules. However, there are a few things that are __not__ objects: *variables* (which are __pointers__ to objects), *methods* and *blocks* are several that stand out.
 
 Here's an example of two objects of the `String` class:
 ```
@@ -80,7 +80,7 @@ Here's an example of two objects of the `String` class:
 We use the `class` instance method to determine what the class is for each object. So far, everything we've been using, from strings to integers, are in fact objects, which are instantiated from a class. 
 
 ### What is a class?
-Ruby defines the attributes and behaviors of its objects in classes. You can think of classes as basic outlines of what an object should be made of and what it should be able to do. 
+Ruby defines the *attributes and behaviors* of its objects in *classes*. You can think of classes as basic __outlines__ of what an object should be made of and what it should be able to do. 
 
 To define a class, we use syntax similar to defining a method. We replace the `def` with `class` and use the `CamelCase` naming convention to create the name. We then use the reserved word `end` to finish the definition. 
 
@@ -93,7 +93,7 @@ sparky = GoodDog.new
 ```
 We created an __instance__ of our `GoodDog` class and stored it in the variable `sparky`. We now have an __object__. We say that `sparky` is _an object or instance of class `GoodDog`_. This entire workflow of creating a new object or instance from a class is called __instantiation__, so we can also say that we've instantiated an object called `sparky` from the class `GoodDog`. 
 
-The terminology in OOP is something you'll eventually get used to, but the important fact here is that an object is returned by calling the class method `new`.
+The important fact here is that __an object is returned by calling the class method `new`__.
 
 ![Class Instance Diagram](https://d2aw5xe2jldque.cloudfront.net/books/ruby/images/class_instance_diagram.jpg)
 
@@ -165,4 +165,4 @@ The `Speak` module is placed right in between our custom classes (i.e., `GoodDog
 
 This means that since the `speak` method is not defined in the `GoodDog` class, the next place it looks is the `Speak` module. This continues in an ordered, linear fashion, until the method is either found, or there are no more places to look.
 
-The method lookup follows the *trail of superclasses* (or ancestors). Instances of a class use the method lookup path to determine which methods are available to it. Instance methods are what instances of a class can use. 
+The method lookup follows the *trail of superclasses* (or ancestors).

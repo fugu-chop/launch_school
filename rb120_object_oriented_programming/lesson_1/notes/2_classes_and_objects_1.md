@@ -2,6 +2,7 @@
 
 ## Table of Contents
 - [States and Behaviours](#states-and-behaviours)
+- [Attributes versus State](#attributes-versus-state)
 - [Initialising a new object](#initialising-a-new-object)
 - [Instance Variables](#instance-variables)
 - [Instance Methods](#instance-methods)
@@ -10,7 +11,7 @@
 
 ### States and Behaviours
 We use classes to create objects. When defining a class, we typically focus on two things: __states__ and __behaviors__. 
-- *States* track attributes for individual objects (e.g. think of the collaborator objects assigned to instance variables). 
+- *States* track attributes for individual objects (e.g. think of attributes as the collaborator objects assigned to instance variables). 
 - *Behaviors* are what objects are capable of doing.
 
 Using our `GoodDog` class from earlier, we may want to create two `GoodDog` objects: one named `"Fido"` and one named `"Sparky"`. They are both `GoodDog` objects, but may contain different information, such as name, weight, and height. 
@@ -21,7 +22,29 @@ Even though they're two different objects, both `"Fido"` and `"Sparky"` are stil
 
 In summary, instance *variables* keep track of __state__, and instance *methods* expose __behavior__ for objects. State *sets or determines the attributes* of an object. We can think of the _instance variables themselves_ as the __attributes__ (which are shared by __all objects__ of that class) and the *actual objects* referenced by those instance variables as the _state_ (which is specific to each object). 
 
-The __attributes__ of the objects of a class are shared by all objects of the class, and are defined by the instance variables defined by the class. Instance variable values for each individual object keep track of the unique __state__ of each object of a class. 
+The __attributes__ of the objects of a class are shared by all objects of the class, and are defined by the instance variables defined by the class. Instance variable __values__ for each individual object keep track of the unique __state__ of each object of a class and are unique to each individual object. 
+
+### Attributes versus State
+Another useful mental model is that classes don't define instance variables, they _define attributes_ (since attributes are getter/setter methods that can be inherited). Note that the instance name and variable __behind__ the attribute are not inherited - these are defined when an object is instantiated from the class and are unique to each object.
+
+An *instance variable* is named by the class, but each object created from the class __creates its own copy of the instance variable__, and its _value_ contributes to the overall *state* of the object. 
+
+With this definition, note that __the instance variable is actually not part of the class__; therefore, it can't be inherited. The subclass does know about the name, but it's merely using that name as a handle for the value it contains.
+
+Ruby's instance variables are __not inherited__ and have nothing to do with the inheritance mechanism. The reason that they sometimes appear to be inherited is that instance variables are _created by the methods that first assign values to them_, and __those methods are often inherited__ or chained (i.e. getter and setter methods).
+
+An *attribute* is an instance variable __name and value__. More specifically, an attribute __must be accessible outside the methods defined by the class__; this means you need either a getter or setter method, or both. You can't access variables (local or instance) outside of a class, but you can access the attributes by using the getter and/or setter. 
+
+If you don't have a getter or setter method, you only have an instance variable and a value (and __not an attribute__), which still contributes to state. An attribute's getter and setter methods will be inherited by a superclass, but the __instance variable name and value behind the attribute do not participate in inheritance__.
+
+Every object has state. State is the *collection of all instance variables and their values defined for an object*. Since state is part of the *object*, not the class, state is __not inherited__.
+
+In summary: 
+- A subclass inherits the methods of the superclass.
+- Instance variables and their values are not inheritable.
+- Attribute getters and setters are methods, so they are inheritable.
+- Attribute names and their values are just instance variables and values, so they are not inheritable.
+- State is __tied directly to individual objects__, so is not inheritable.
 
 ### Initialising a new object
 In our code below, we've created the `initialize` method, which gets called every time you create a new object. Calling the `new` class method eventually leads us to the `initialize` instance method. 
@@ -43,12 +66,10 @@ class MyClass; end
 my_obj = MyClass.new
 # => #<MyClass:0x000000036ae728>
 ```
-Note - unlike what the OO book says, the `initialize` method is __not__ a constructor. It __does not instantiate a new object__, and is only called __after__ an object is instantiated. This is the job of the `new` method.
-
 When we think about the `initialize` method, its job is just this: to __initialize variables__ (although it doesn't have to). This is different from a _constructor_, whose job is to __instantiate objects__. Variables __are not objects__ (although they can be assigned to objects), since they are not instantiated from a class.
 
 ### Instance Variables
-The instance variables are kind of __class attributes__ and they become properties of objects __once objects are created__ using the class. Every object's attributes (instance variables) are assigned *individually* and share *no value with other objects*. 
+The instance variables are kind of __class attributes__ and they become properties of objects __once objects are created__ using the class. Every object's attributes (__instance variables__) are assigned *individually* and share *no value with other objects*. 
 ```
 class GoodDog
   def initialize(name)
@@ -68,21 +89,7 @@ We can see that instance variables are responsible for *keeping track of informa
 
 If we created another `GoodDog` object, for example, with `fido = GoodDog.new('Fido')`, then the `@name` instance variable for the `fido` object would contain the string "Fido". Every object's state is _unique_, and instance variables are how we keep track.
 
-Once initialised, instance variables are available to instance methods *throughout the class* - this is how instance methods are able to return values without needing to take them as arguments (see below example of string interpolation with the `fido` object).
-
-Another useful mental model is that classes don't define instance variables, they _define attributes_. 
-
-An *instance variable* is named by the class, but each object created from the class __creates its own copy of the instance variable__, and its value contributes to the overall *state* of the object. 
-
-With this definition, note in particular that __the instance variable is actually not part of the class__; therefore, it can't be inherited. The subclass does know about the name, but it's merely using that name as a handle for the value it contains.
-
-Ruby's instance variables are __not inherited__ and have nothing to do with the inheritance mechanism. The reason that they sometimes appear to be inherited is that instance variables are created by the methods that first assign values to them, and those methods are often inherited or chained (i.e. getter and setter methods).
-
-An *attribute* is an instance variable name _and value_. More specifically, an attribute must be accessible __outside the methods defined by the class__; this means you need either a getter or setter method, or both. 
-
-If both are missing, you only have an instance variable and a value (you can think of this as a "private attribute" if you want, but it doesn't really help). An attribute's getter and setter methods will be inherited by a superclass, but, the __instance variable name and value behind the attribute do not participate in inheritance__.
-
-Every object has state. State is the *collection of all instance variables and their values defined for an object*. Since state is part of the *object*, not the class, state is __not inherited__.
+__Once initialised__, instance variables are available to instance methods *throughout the class* - this is how instance methods are able to return values without needing to take them as arguments (see below example of string interpolation with the `fido` object).
 
 Instance variables __do not exist prior to an object being created and a value being assigned to them__ (i.e. no inheritance is possible).  Consider the following code:
 ```
@@ -207,13 +214,6 @@ As to whether we __should__ have getters or setters, consider the following:
 - Should users of my class be able to directly change the state represented by an instance variable? If so, then I have to use a setter. Otherwise, no setters unless I make them private (again, private does not stop other instance methods from changing state).
 
 Also consider: having all your state accessed by an instance variable (i.e. __not__ through a getter/setter method) makes it really easy to see where your state is being set and used. 
-
-In summary: 
-- A subclass inherits the methods of the superclass.
-- Instance variables and their values are not inheritable.
-- Attribute getters and setters are methods, so they are inheritable.
-- Attribute names and their values are just instance variables and values, so they are not inheritable.
-- State is __tied directly to individual objects__, so is not inheritable.
 
 #### Naming convention
 Finally, as a convention, Rubyists typically want to name those getter and setter methods using the same name as the instance variable they are exposing and setting.
