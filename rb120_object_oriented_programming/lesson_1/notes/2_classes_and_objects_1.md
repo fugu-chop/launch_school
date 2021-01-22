@@ -13,11 +13,11 @@ We use classes to create objects. When defining a class, we typically focus on t
 - *States* track attributes for individual objects (e.g. think of the collaborator objects assigned to instance variables). 
 - *Behaviors* are what objects are capable of doing.
 
-Using our `GoodDog` class from earlier, we may want to create two `GoodDog` objects: one named "Fido" and one named "Sparky". They are both `GoodDog` objects, but may contain different information, such as name, weight, and height. 
+Using our `GoodDog` class from earlier, we may want to create two `GoodDog` objects: one named `"Fido"` and one named `"Sparky"`. They are both `GoodDog` objects, but may contain different information, such as name, weight, and height. 
 
 We would use _instance variables_ to track this information. This should tell you that instance variables are scoped at the _object (or instance) level_, and are how objects keep track of their _states_.
 
-Even though they're two different objects, both are still objects (or instances) of class `GoodDog` and contain identical behaviors. For example, both `GoodDog` objects should be able to `bark`, `run`, `fetch`, and perform other common behaviors of good dogs. We define these behaviors as __instance methods in a class__. Instance methods defined in a class are available to objects (or instances) of that class.
+Even though they're two different objects, both `"Fido"` and `"Sparky"` are still objects (or instances) of class `GoodDog` and contain identical behaviors. For example, both `GoodDog` objects should be able to `bark`, `run`, `fetch`, and perform other common behaviors of good dogs. We define these behaviors as __instance methods in a class__. Instance methods defined in a class are available to objects (or instances) of that class.
 
 In summary, instance *variables* keep track of __state__, and instance *methods* expose __behavior__ for objects. State *sets or determines the attributes* of an object. We can think of the _instance variables themselves_ as the __attributes__ (which are shared by __all objects__ of that class) and the *actual objects* referenced by those instance variables as the _state_ (which is specific to each object). 
 
@@ -35,13 +35,7 @@ end
 sparky = GoodDog.new
 => "This object was initialized!"
 ```
-In the above example, instantiating a new `GoodDog` object triggered the `initialize` method and resulted in the string being outputted. We refer to the `initialize` method as a __constructor__, because it gets triggered whenever we create a *new* object. The `initialize` method is a method that automatically/internally gets called when a new instance of the class is created using `Class::new`.
-
-Technically it's possible to instantiate an object without `initialize` being invoked (e.g. by calling `allocate` instead of `new`), though this is beyond the scope of the course.
-
-In Ruby, the `initialize` is treated as a special method (i.e. it is specifically reserved as a __constructor__), which allows it to be called when a new object is created (contrast it with all other methods you define within a class, which aren't automatically called). The purpose of the constructor is to __initiate the state__ of an object. Constructors __do not return__ any values.
-
-If we're being 100% technical, if we think about what a constructor is, it is a function or method that *instantiates* an object, more specifically in the context we're discussing an instance of a particular class. `initialize` does __not__ do this. This is the job of the `new` method.
+In the above example, instantiating a new `GoodDog` object triggered the `initialize` method and resulted in the string being outputted. The `initialize` method is a method that automatically/internally gets called when a new instance of the class is created using `Class::new` (contrast it with all other methods you define within a class, which aren't automatically called). Technically it's possible to instantiate an object without `initialize` being invoked (e.g. by calling `allocate` instead of `new`), though this is beyond the scope of the course.
 
 We can see this in action as we can instantiate an object of a class that __doesn't__ have an `initialize` method defined.
 ```
@@ -49,6 +43,8 @@ class MyClass; end
 my_obj = MyClass.new
 # => #<MyClass:0x000000036ae728>
 ```
+Note - unlike what the OO book says, the `initialize` method is __not__ a constructor. It __does not instantiate a new object__, and is only called __after__ an object is instantiated. This is the job of the `new` method.
+
 When we think about the `initialize` method, its job is just this: to __initialize variables__ (although it doesn't have to). This is different from a _constructor_, whose job is to __instantiate objects__. Variables __are not objects__ (although they can be assigned to objects), since they are not instantiated from a class.
 
 ### Instance Variables

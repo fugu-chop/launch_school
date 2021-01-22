@@ -18,7 +18,9 @@ They needed a way to section off areas of code that performed certain procedures
 
 It is what defines the boundaries in your application and allows your code to achieve new levels of complexity. Ruby, like many other OO languages, accomplishes this task by creating objects, and exposing interfaces (i.e., methods) to interact with those objects.
 
-Through the use of _class objects_, we can create _instance variables_ and _instance methods_ that are encapsulated and thus only accessed by either the object’s class or the object itself, but nothing else. Through the use of _method access control_, we can even further encapsulate these so that even the object itself does not have access to them.
+Through the use of _objects_ instantiated from classes, we can create _instance variables_ and _instance methods_ that are encapsulated within those objects and thus only accessed by either the object’s class or the object itself, but nothing else. Through the use of _method access control_, we can even further encapsulate these so that even the object itself does not have access to them.
+
+Each object _encapsulates its own state_ (as each object has a unique state). The methods (or behavior) are defined in the class and all objects of the class have access to them. Encapsulation works through the use of objects, and _exposing interfaces to interact with those objects_.
 
 Another benefit of creating objects is that they allow the programmer to think on a new level of abstraction (also known as *indirection*), which allows us to think at a *higher level* instead of implementation details upfront. Objects are represented as real-world nouns and can be given methods that describe the behavior the programmer is trying to represent.
 
@@ -27,47 +29,45 @@ Encapsulation is a kind of abstraction that involves containing all the data and
 We can regard abstraction as the hiding or disregarding of unnecessary detail (implementation details), focusing on how something works to focus on what it does. 
 
 #### Polymorphism
-*Polymorphism* is the ability for different types of data (_different objects_) to respond to a common interface (_common methods_). For instance, if we have a method that expects argument objects that have a `move` method, we can pass it any type of argument (i.e. any type of object as an argument), provided it has a compatible `move` method (common interface). 
+*Polymorphism* is the ability for different types of data (_different objects_) to respond to a common interface (a _method_ that has the same name). It lets *objects of different types (could be the same or different classes) respond to the same method invocation* - e.g. we might have many different objects, but all of them have a `move` instance method. This, however, doesn't imply that the `move` method does the same thing for all objects - rather that there simply __is__ a `move` method among all of those objects. Polymorphism gives us flexibility to use the same code for different purposes (see our `each` method call in the example below). 
 
-The object might represent a human, a cat, a jellyfish, or, conceivably, even a car or train. That is, it lets *objects of different types (could be the same or different classes) respond to the same method invocation* - i.e. we have many different objects, but all of them can `move`. OOP gives us flexibility in using pre-written code for new purposes. This, however, doesn't imply that the `move` method does the same thing for all objects - rather that there simply __is__ a `move` method among all of those objects. 
-
-Another way to apply polymorphic structure to Ruby programs is to use a `Module`. Modules are similar to classes in that they contain shared behavior. However, you __cannot create an object with a module__. 
+Another way to apply polymorphic structure to Ruby programs is to use a `Module`. This is known as `interface inheritance` but is also a form of polymorphism. Modules are similar to classes in that they contain shared behavior. However, you __cannot instantiate an object from a module__. 
 
 A module must be mixed in with a class using the `include` method invocation. This is called a `mixin` (i.e. a module that has been used to mix in functionality into a class is a `mixin`). After mixing in a module, the behaviors declared in that module are available to the class and its objects.
 
-The third way of achieving polymorphism is through using __duck typing__. As an aside, duck-typing is not possible in statically typed languages, because you have to __declare the type of each param/variable/return value__. Preventing duck typing is a big part of static typing (we want to avoid different types being funneled into a method).
+The third way of achieving polymorphism is through using __duck typing__. As an aside, duck-typing is not possible in statically typed languages, because you have to __declare the type (i.e. object) of each param/variable/return value__. Preventing duck typing is a big part of static typing (we want to avoid different objects being funneled into a method).
 
-In our below example, none of the classes or objects created are related to each other. However, each of the objects have a `speak` method, which is why we can loop through each object and run the same method.
+In our below example, none of the classes or objects created are related to each other. However, each of the objects have a `speak` method, which is why we can loop through each object and run the same method (despite the method returning completely different objects from different classes). 
 ```
 class Dog
   def speak
-    p "Bark"
+    "Bark"
   end
 end
 
 class Cat
   def speak
-    p "Meow"
+    true
   end
 end
 
 class Fish
   def speak
-    p "Gulp"
+    99
   end
 end
 
 [Dog.new, Cat.new, Fish.new].each do |animal|
-  animal.speak
+  puts animal.speak
 end
 ```
 #### Inheritance
-*Inheritance* is used in Ruby where a class inherits the behaviors of another class, referred to as the *superclass*. This gives Ruby programmers the power to define basic classes with large reusability and smaller __subclasses__ for more fine-grained, detailed behaviors.
+*Inheritance* is used in Ruby where a class inherits the behaviors of another class, referred to as the *superclass*. This gives Ruby programmers the power to define basic classes with large reusability and smaller __subclasses__ for more fine-grained, detailed behaviors (methods).
 
 ### What is an object?
-Objects are created from classes. Think of classes as molds and objects as the things you produce out of those molds. Individual objects will contain different information from other objects, yet they are instances of the same class. 
+Objects are created from classes. Think of classes as __molds__ and objects as the things you produce out of those molds. Individual objects will contain different information from other objects, yet they are instances of the same class. Objects instantiated from the same class are distinct and different objects to each other. 
 
-Anything that can be said to have a value is an object: that includes numbers, strings, arrays, and even classes (custom classes are just instances of the `class` Class) and modules. However, there are a few things that are __not__ objects: *methods* and *blocks* are two that stand out.
+__Anything that can be said to have a value is an object__ - that includes numbers, strings, arrays, and even classes (custom classes are just instances of the `class` Class) and modules. However, there are a few things that are __not__ objects: *methods* and *blocks* are two that stand out.
 
 Here's an example of two objects of the `String` class:
 ```
@@ -79,7 +79,6 @@ Here's an example of two objects of the `String` class:
 ```
 We use the `class` instance method to determine what the class is for each object. So far, everything we've been using, from strings to integers, are in fact objects, which are instantiated from a class. 
 
-Objects can be regarded as an encapsulation of it's their own state.
 ### What is a class?
 Ruby defines the attributes and behaviors of its objects in classes. You can think of classes as basic outlines of what an object should be made of and what it should be able to do. 
 
