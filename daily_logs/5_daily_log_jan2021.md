@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 3,092)
+# January 2021 (Total minutes: 3,273)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -21,6 +21,7 @@
 - [20th, Wed](#200121-wed)
 - [21st, Thu](#210121-thu)
 - [22nd, Fri](#220121-fri)
+- [23rd, Sat](#230121-sat)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -348,3 +349,18 @@ __*Thoughts*__<br/>
 I read an interesting forum post on singleton methods, the premise of which is that custom classes are really objects instantiated from the `Class` class. Therefore, class methods defined in a custom class are really just instance methods of the custom class object.
 
 It then went onto an exploration about whether these class methods are duplicated or reused when inherited. Long story short, they are reused, and not duplicated. Class methods belong to a specific instance of that custom class (again, which is itself an object). These are called singleton methods. There's more detail, but it doesn't really seem too relevant to what I'm studying now (and I don't see how practically, this is a useful detail).
+
+##### 23/01/21 (Sat)
+__*Concepts covered*__<br/>
+- Revision
+  - Classes and objects
+  - Attributes v State
+
+__*Time spent*__<br/>
+181 minutes
+
+__*Thoughts*__<br/>
+The early revision started off on a confusing note. Defining attributes versus state is still a little fuzzy in my mind, but here's what I take away:
+- Distinguishing between attributes and state is useful in respect of inheritance - attribute methods are inheritable, but the attribute names and values (and by extension, state) are __not__ inheritable, since they are tied to objects. 
+- An attribute exists if it captures an instance variable and value, and that value is accessible outside of the class through a getter and/or setter method. If an instance variable exists, but is not accessible outside of the class, then it is __not__ an attribute, but simply contributes to state in an object instantiated from the class.
+- State represents all of the instance variables and values for a particular object. 
