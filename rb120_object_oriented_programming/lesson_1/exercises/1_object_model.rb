@@ -10,8 +10,8 @@ pickle = TerriblePerson.new
 puts "A module is a collection of behaviors that is usable in other classes via mixins. It enables a classes to access specific behaviours defined elsewhere (i.e. extend class functionality based on what's in the module). A module is 'mixed in' to a class using the `include` method invocation."
 
 module Rage
-  def Rage(subject)
-    puts "#{subject}"
+  def rage(subject)
+    puts "I hate #{subject}!"
   end
 end
 
@@ -20,3 +20,4 @@ class TerriblePerson
 end
 
 porkish = TerriblePerson.new
+porkish.rage("beer")

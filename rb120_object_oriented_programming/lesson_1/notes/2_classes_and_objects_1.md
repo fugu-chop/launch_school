@@ -22,12 +22,12 @@ Even though they're two different objects, both `"Fido"` and `"Sparky"` are stil
 
 In summary, instance *variables* keep track of __state__, and instance *methods* expose __behavior__ for objects. State *sets or determines the attributes* of an object. We can think of the _instance variables themselves_ as the __attributes__ (which are shared by __all objects__ of that class) and the *actual objects* referenced by those instance variables as the _state_ (which is specific to each object). 
 
-The __attributes__ of the objects of a class are shared by all objects of the class, and are defined by the instance variables defined by the class. Instance variable __values__ for each individual object keep track of the unique __state__ of each object of a class and are unique to each individual object. 
+The __attributes__ (i.e. remember that these need to be accessible by getter/setter methods) of the objects of a class are shared by all objects of the class, and are defined by the instance variables defined by the class. Instance variable __values__ for each individual object keep track of the unique __state__ of each object of a class and are unique to each individual object. 
 
 ### Attributes versus State
 Another useful mental model is that classes don't define instance variables, they _define attributes_ (since attributes are getter/setter methods that can be inherited). Note that the instance name and variable __behind__ the attribute are not inherited - these are defined when an object is instantiated from the class and are unique to each object.
 
-An *instance variable* is named by the class, but each object created from the class __creates its own copy of the instance variable__, and its _value_ contributes to the overall *state* of the object. 
+An *instance variable* is __named by the class__, but each object created from the class __creates its own copy of the instance variable__, and its _value_ contributes to the overall *state* of the object. 
 
 With this definition, note that __the instance variable is actually not part of the class__; therefore, it can't be inherited. The subclass does know about the name, but it's merely using that name as a handle for the value it contains.
 
@@ -69,7 +69,7 @@ my_obj = MyClass.new
 When we think about the `initialize` method, its job is just this: to __initialize variables__ (although it doesn't have to). This is different from a _constructor_, whose job is to __instantiate objects__. Variables __are not objects__ (although they can be assigned to objects), since they are not instantiated from a class.
 
 ### Instance Variables
-The instance variables are kind of __class attributes__ and they become properties of objects __once objects are created__ using the class. Every object's attributes (__instance variables__) are assigned *individually* and share *no value with other objects*. 
+The `@name` variable below is called an __instance variable__. It is a variable that exists as long as the object instance exists and it is one of the ways we tie data to objects. It does not "die" after the `initialize` method is run. It "lives on", to be referenced, until the object instance is destroyed.
 ```
 class GoodDog
   def initialize(name)
@@ -77,19 +77,19 @@ class GoodDog
   end
 end
 ```
-The `@name` variable looks different because it has the `@` symbol in front of it. This is called an __instance variable__. It is a variable that exists as long as the object instance exists and it is one of the ways we tie data to objects. It does not "die" after the `initialize` method is run. It "lives on", to be referenced, until the object instance is destroyed. 
-
 In the above example, our `initialize` method takes a parameter called `name`. You can pass arguments into the `initialize` method through the `new` method.
 ```
 sparky = GoodDog.new("Sparky")
 ```
-The string "Sparky" is being passed from the `new` method through to the `initialize` method, and is assigned to the local variable `name`. Within the constructor (i.e., the `initialize` method), we then set the instance variable `@name` to `name`, which results in assigning the string "Sparky" to the `@name` instance variable.
+The string `"Sparky"` is being passed from the `new` method through to the `initialize` method, and is assigned to the local variable `name`. Within the `initialize` method, we then set the instance variable `@name` to `name`, which results in assigning the string `"Sparky"` to the `@name` instance variable.
 
-We can see that instance variables are responsible for *keeping track of information about the state* of an object. In the above line of code, the name of the `sparky` object is the string "Sparky". This state for the object is tracked in the instance variable, `@name`.
+We can see that instance variables are responsible for *keeping track of information about the state* of an object. In the above line of code, the name of the `sparky` object is the string `"Sparky"`. This state for the object is tracked in the instance variable, `@name`.
 
-If we created another `GoodDog` object, for example, with `fido = GoodDog.new('Fido')`, then the `@name` instance variable for the `fido` object would contain the string "Fido". Every object's state is _unique_, and instance variables are how we keep track.
+If we created another `GoodDog` object, for example, with `fido = GoodDog.new('Fido')`, then the `@name` instance variable for the `fido` object would contain the string `"Fido"`. Every object's state is _unique_, and instance variables are how we keep track.
 
 __Once initialised__, instance variables are available to instance methods *throughout the class* - this is how instance methods are able to return values without needing to take them as arguments (see below example of string interpolation with the `fido` object).
+
+The instance variables become properties of objects __once objects are created__ using the class. Every object's attributes are assigned *individually* and share *no value with other objects*. 
 
 Instance variables __do not exist prior to an object being created and a value being assigned to them__ (i.e. no inheritance is possible).  Consider the following code:
 ```
@@ -106,7 +106,7 @@ ade # => #<Student:0x00000002a88ef8 @name="Adewale">
 ```
 Although we have a `grade` accessor method within our `Student` class, the `@grade` instance variable is __never initialized__ within our code (since it's not initialized as an instance variable within the `initialize` method) and so __can't be considered part of state__ of the `Student` object represented by `ade`. 
 
-Calling `ade.grade` would return `nil` because `@grade` is an uninitialized instance variable and not because we have set its value to `nil` (the `initialize` method ignores the `grade` parameter).
+Calling `ade.grade` would return `nil` because `@grade` is an uninitialized instance variable and __not__ because we have set its value to `nil` (the `initialize` method ignores the `grade` parameter).
 
 We can also access the instance variables of an object by calling `.instance_variables` on the object, or a specific instance variable using `.instance_variable_get("instance_var")`.
 
@@ -126,7 +126,7 @@ end
 sparky = GoodDog.new("Sparky")
 sparky.speak
 ```
-When you run this program, nothing happens. This is because the `speak` method returned the string "Arf!", but we now need to print it out, using the `puts` method.
+When you run this program, nothing happens. This is because the `speak` method returned the string `"Arf!"`, but we now need to print it out, using the `puts` method.
 ```
 fido = GoodDog.new("Fido")
 puts fido.speak
@@ -203,7 +203,7 @@ Note that in Ruby, setter methods always return the _argument that was passed in
 
 The first thing you should notice about the setter method `set_name=` is that Ruby gives us a special syntax to use it. 
 
-To use the `set_name=` method normally, we would expect to do this: `sparky.set_name=("Spartacus")`, where the entire "set_name=" is the method name, and the string "Spartacus" is the argument being passed in to the method. 
+To use the `set_name=` method normally, we would expect to do this: `sparky.set_name=("Spartacus")`, where the entire `set_name=` is the method name, and the string `"Spartacus"` is the argument being passed in to the method. 
 
 Ruby recognizes that this is a setter method and allows us to use the more natural assignment syntax: `sparky.set_name = "Spartacus"`. When you see this code, just realize there's a method called `set_name=` working behind the scenes, and we're just seeing some Ruby *syntactical sugar*.
 
@@ -247,7 +247,7 @@ puts sparky.name
 Writing those getter and setter methods took up a lot of room in our program for such a simple feature. And if we had other states we wanted to track, like height or weight, the class would be even longer. 
 
 #### Attribute accessors
-Because these methods are so commonplace, Ruby has a built-in way to automatically create these getter and setter methods for us, using the `attr_accessor` method. Remember, that these represent __instance methods that create instance variables__ and enable us to __read and/or write__ those instance variables.
+Because these methods are so commonplace, Ruby has a built-in way to automatically create these getter and setter methods for us, using the `attr_accessor` method. Remember, that these represent __instance methods that retrieve/create instance variables__ and enable us to __read and/or write__ those instance variables.
 ```
 class GoodDog
   attr_accessor :name
@@ -292,7 +292,9 @@ def speak
   "#{name} says arf!"
 end
 ```
-By removing the `@` symbol, we're now calling the instance *method* (and using it's return value), rather than the instance *variable*. Why not just reference the `@name` instance variable, like we did before? Technically, you could just reference the instance variable, but it's generally a good idea to call the getter method instead. It's much easier to just reference a getter method, and make the change in that one method.
+By removing the `@` symbol, we're now calling the instance *method* (and using it's return value), rather than the instance *variable*. Why not just reference the `@name` instance variable, like we did before? 
+
+Technically, you could just reference the instance variable, but it's generally a good idea to call the getter method instead. It's much easier to just reference a getter method, and make the change in that one method, especially if your getter method does something more than just return the instance variable (e.g. unit conversions, or applying formatting/arithmetic).
 
 Suppose we added two more states to track to the GoodDog class called "height" and "weight":
 ```
@@ -362,7 +364,7 @@ sparky.change_info('Spartacus', '24 inches', '45 lbs')
 puts sparky.info
 => "Sparky weighs 10 lbs and is 12 inches tall."
 ```
-The reason our setter methods didn't work is because Ruby thought we were initializing local variables. Recall that to initialize or create new local variables, all we have to do is `x = 1` or `str = "hello world"`. 
+The reason our setter methods didn't work is because Ruby thought we were initializing *local* variables. Recall that to initialize or create new local variables, all we have to do is `x = 1` or `str = "hello world"`. 
 
 It turns out that instead of calling the `name=`, `height=` and `weight=` setter methods, what we did was create three new local variables called `name`, `height` and `weight`. 
 
@@ -395,8 +397,6 @@ class GoodDog
   end
 end
 ```
-For now, when we see `self.x` within an instance method, we can assume that `self` is referring to calling another instance method provided by an `attr_*` method.
-
 It's generally safer to use an explicit `self.` caller when you have a setter method unless you have a good reason to use the instance variable directly. We say that calling the setter method, if available, is safer since using the instance variable _bypasses any checks or operations performed by the setter_:
 ```
 def mileage=(miles)
