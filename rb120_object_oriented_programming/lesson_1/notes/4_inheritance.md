@@ -130,7 +130,7 @@ In this example, we're using `super` with no arguments. However, the `initialize
 
 At this point, `super` will pass the `color` argument in the `initialize` defined in the subclass to that of the `Animal` superclass and invoke it. That explains the presence of `@name="brown"` when the `bruno` instance is created (i.e. the instance `initialize` method is using the argument as the value for __both__ the `name` and `color` instance variables). Finally, the subclass' `initialize` continues to set the `@color` instance variable. 
 
-Note that passing a second argument to `GoodDog.new("brown")` will raise an `ArgumentError`, because the class `initialize` method in the `Animal` superclass is not equipped to take a second argument, and the instance method `initialize` in the `GoodDog` class also is not equipped to take a second argument. 
+Note that passing a second argument to `GoodDog.new("brown")` will raise an `ArgumentError`, because the `initialize` instance method in the `Animal` superclass is not equipped to take a second argument, and the instance method `initialize` in the `GoodDog` class also is not equipped to take a second argument. 
 
 When called with specific arguments, eg. `super(a, b)`, the specified arguments will be sent up the method lookup chain.
 ```
@@ -165,11 +165,12 @@ bear = Bear.new("black")
 ```
 If you forget to use the parentheses here, Ruby will raise an `ArgumentError` exception since the number of arguments is incorrect.
 
-We can also use `super()` to pass in default values as arguments.
+We can also use `super()` to pass in default values as arguments, again, extending the functionality of an instance method in the superclass.
 ```
 class Motorboat < Seacraft
   def initialize(km_traveled_per_liter, liters_of_fuel_capacity)
-    # In the Seacraft class, the initialize method takes two additional arguments in addition to those provided on initialisation here, which we are autofilling
+    # In the Seacraft class, the initialize method takes two additional arguments in addition to those provided on initialisation here
+    # (i.e. the initialize method in the Seacraft class takes 4 total arguments), which we are autofilling.
     super(1, 1, km_traveled_per_liter, liters_of_fuel_capacity)
   end
 end
@@ -228,7 +229,7 @@ neemo.swim
 paws.swim
 => NoMethodError: undefined method `swim' for #<Cat:0x007fc453152308>
 ```
-A common naming convention for Ruby is to use the "able" suffix on whatever verb describes the behavior that the module is modeling. You can see this convention with our `Swimmable` module. Likewise, we could name a module that describes "walking" as `Walkable`. Not all modules are named in this manner, however, it is quite common.
+A common naming convention for Ruby is to use the `able` suffix on whatever verb describes the behavior that the module is modeling. You can see this convention with our `Swimmable` module. Likewise, we could name a module that describes "walking" as `Walkable`. Not all modules are named in this manner, however, it is quite common.
 
 In order to figure out all the modules a class includes, the class method `included_modules` is useful. This class method travels up the method lookup path, and returns all the modules __it encounters along the way__, as an array.
 ```
@@ -258,7 +259,7 @@ Now you know the two primary ways that Ruby implements inheritance.
 You may wonder when to use class inheritance vs mixins. Here are a couple of things to consider when evaluating these choices.
 - You can only subclass (class inheritance) from __one__ class, whereas you can mix in as many modules (interface inheritance) as you'd like.
 - If there's an "is-a" relationship, class inheritance is usually the correct choice. If there's a "has-a" relationship, interface inheritance is generally a better choice. For example, a dog "is an" animal and it "has an" ability to swim.
-- You __cannot instantiate modules__ (i.e., no object can be created from a module). Modules are used only for namespacing and grouping common methods together.
+- You __cannot instantiate objects from modules__. Modules are used only for namespacing and grouping common methods together.
 
 ### Method Lookup Path
 Recall the method lookup path is the order in which classes are inspected when you call a method.
@@ -345,7 +346,7 @@ There are several interesting things about the above output.
 
 Here's a chart of how the various classes fit together:
 
-[Class Hierarchy Chart](#https://vahid.blog/post/2020-11-04-encapsulation-polymorphism-and-abstraction-in-ruby/class_hierarchy.png)
+![Class Hierarchy Chart](https://vahid.blog/post/2020-11-04-encapsulation-polymorphism-and-abstraction-in-ruby/class_hierarchy.png)
 
 As a detailed point - a custom class is an instance of `Class` but it has as its superclass `Object`. This means that the method lookup path (`.ancestors`) for the custom class won't show `Class` and `Module` since it's not its superclass, but it still inherits all the methods from `Class` and `Module` - a prime example are accessor methods, which come from `Class`.
 ```
@@ -537,7 +538,7 @@ end
 Parent.superclass
 => Object
 ```
-Through the magic of inheritance, a subclass can override a superclass’s method. Method overriding is one way in which Ruby implements polymorphism.
+Through the magic of inheritance, a subclass can override a superclass’s method. *Method overriding is one way in which Ruby implements polymorphism*.
 ```
 class Child < Parent
   def say_hi
