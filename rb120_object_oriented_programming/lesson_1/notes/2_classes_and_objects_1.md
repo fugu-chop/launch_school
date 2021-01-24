@@ -37,7 +37,7 @@ An *attribute* is an instance variable __name and value__. More specifically, an
 
 If you don't have a getter or setter method, you only have an instance variable and a value (and __not an attribute__), which still contributes to state. An attribute's getter and setter methods will be inherited by a superclass, but the __instance variable name and value behind the attribute do not participate in inheritance__.
 
-Every object has state. State is the *collection of all instance variables and their values defined for an object*. Since state is part of the *object*, not the class, state is __not inherited__.
+Every object has state. State is the *collection of all initialised instance variables and their values defined for an object*. Since state is part of the *object*, not the class, state is __not inherited__.
 
 In summary: 
 - A subclass inherits the methods of the superclass.
@@ -91,7 +91,7 @@ __Once initialised__, instance variables are available to instance methods *thro
 
 The instance variables become properties of objects __once objects are created__ using the class. Every object's attributes are assigned *individually* and share *no value with other objects*. 
 
-Instance variables __do not exist prior to an object being created and a value being assigned to them__ (i.e. no inheritance is possible).  Consider the following code:
+Instance variables __do not exist prior to an object being created and a value being assigned to them__ (i.e. no inheritance is possible). Consider the following code:
 ```
 class Student
   attr_accessor :grade

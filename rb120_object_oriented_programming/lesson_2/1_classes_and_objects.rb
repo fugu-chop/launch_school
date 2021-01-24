@@ -88,7 +88,7 @@ puts "We need to compare the return values of the name method in each object."
 bob = Person.new("Robert Smith")
 puts "The person's name is: #{bob}"
 =end
-puts "The string interpolation will print out the object (not the return value of the name method). This is because string interpolation automatically calls the .to_s method, which will print out the object's place in memory."
+puts "By default, the string interpolation will print out the name of the class from which the object was instantiated (not the return value of the name method) and an encoding of the object's object_id. This is because string interpolation automatically calls the .to_s method from the Object class, which has not overwritten in the Person class."
 
 # 6) Let's add a to_s method to the class. Now, what does the below output?
 =begin
@@ -103,4 +103,4 @@ end
 bob = Person.new("Robert Smith")
 puts "The person's name is: #{bob}"
 =end
-puts "This will print out the return value of the name method."
+puts "This will print out the return value of the name instance method. String interpolation will call the .to_s method, which now returns the return value of the name instance method when called on the bob object."

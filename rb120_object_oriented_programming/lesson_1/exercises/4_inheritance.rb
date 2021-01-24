@@ -252,7 +252,7 @@ class Student
   end
 
   def better_grade_than?(student_b)
-    grade > student_b.grade
+    puts "Well done!" if grade > student_b.grade
   end
 
   protected
@@ -264,6 +264,7 @@ end
 
 joe = Student.new('Joe', 86)
 bob = Student.new('Bob', 95)
+bob.better_grade_than?(joe)
 
 # 8) Given the following error message: NoMethodError: private method `hi' called for #<Person:0x007ff61dbb79f0>, what is the problem and how would you solve it?
 puts "We are attempting to call a private method outside of the class in which it was defined. We could solve this by moving the hi method above the private reserved word."

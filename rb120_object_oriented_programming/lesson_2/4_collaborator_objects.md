@@ -10,10 +10,10 @@
 ### What is collaboration?
 Collaboration is a way of modeling relationships between different objects. A collaborative relationship is a relationship of *association* — not of inheritance. 
 
-Collaboration is a direct *has-a* relationship rather than a *is-a* relationship - for example, a library __has__ books, so there is an __associative__ relationship between objects of class `Library` and objects of class `Book` (contrast this with _inheritance_ - e.g. a dictionary __is a__ book).
+Collaboration is a direct *has-a* relationship rather than a *is-a* relationship (which we would use inheritance for) - for example, a library __has__ books, so there is an __associative__ relationship between objects of class `Library` and objects of class `Book` (contrast this with _inheritance_ - e.g. a dictionary __is a__ book).
 
 ### What is a collaborator object?
-Objects that are stored as _state within another object_ (i.e. as instance variables) are called __collaborator objects__. For example, when assigning a collaborator object to an instance variable in another class' constructor method definition, you are _associating the two objects with one another_.
+Objects that are stored as _state within another object_ (i.e. objects assigned to instance variables) are called __collaborator objects__. For example, when assigning a collaborator object to an instance variable in another class' `initialize` method definition, you are _associating the two objects with one another_.
 
 We call such objects collaborators because they work in conjunction (or in collaboration) with the class they are associated with. We can think of collaborator objects as _lower levels of abstraction_ of the owner object whose class incorporates them.
 
@@ -33,7 +33,7 @@ joe = Person.new("Bob")
 joe.name
 => "Bob"
 ```
-The `Person` object `joe` has a name — a String object with value “Bob” — as part of its state. So, the string object "Bob" assigned to the instance variable `@name` is a __collaborator object__ of `joe`.
+The `Person` object `joe` has a name — a `String` object with value `“Bob”` — as part of its state. So, the string object `"Bob"` assigned to the instance variable `@name` is a __collaborator object__ of `joe`.
 
 Here's another example of arrays and hashes as collaborator objects:
 ```

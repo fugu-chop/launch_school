@@ -522,7 +522,7 @@ abc2 = Abc.new(8)
 puts abc1.add(abc2)
 => 13
 ```
-This code works because `get_val` is protected -- it lets the `abc1` instance access the `get_val` method in the `abc2` instance. Had `get_val` been declared as `private`, then this code would fail because an object (`abc1` here) __can't access a private method from any other object__ - they can only access `self.get_val`, not `other.get_val`. When a method is private, only the *class* - __not__ *instances* of the class - can access it. 
+This code works because `get_val` is protected -- it lets the `abc1` instance access the `get_val` method in the `abc2` instance. Had `get_val` been declared as `private`, then this code would fail because an object (`abc1` here) __can't access a private method from any other object__ - they can only access `get_val` (prior to Ruby 2.7, we would have to remove the `self.` prefix), not `other.get_val`. When a method is private, only the *class* - __not__ *instances* of the class - can access it. 
 
 Had `get_val` been declared as public, then this code would work, but anyone could call `abc1.get_val`, which may not be desired. A protected method can be __called by any instance of the class__ - either `self` or some other object of the same type.
 
@@ -550,7 +550,9 @@ child = Child.new
 child.say_hi
 => "Hi from Child."
 ```
-This means that, if you accidentally override a method that was originally defined in the `Object` class, it can have far-reaching effects on your code. For example, `send` is an instance method that all classes inherit from `Object`. If you defined a new `send` instance method in your class, __all objects of your class will call your custom send method__, instead of the one in class `Object`, which is probably the one they mean to call. `Object` send serves as a way to call a method by passing it a symbol or a string which represents the method you want to call. The next couple of arguments will represent the method's arguments, if any.
+This means that, if you accidentally override a method that was originally defined in the `Object` class, it can have far-reaching effects on your code. For example, `send` is an instance method that all classes inherit from `Object`. 
+
+If you defined a new `send` instance method in your class, __all objects of your class will call your custom `send` method__, instead of the one in class `Object`, which is probably the one they mean to call. `Object#send` serves as a way to call a method by passing it a symbol or a string which represents the method you want to call. The next couple of arguments will represent the method's arguments, if any.
 ```
 son = Child.new
 son.send :say_hi
@@ -572,7 +574,9 @@ lad = Child.new
 lad.send :say_hi
 => ArgumentError: wrong number of arguments (1 for 0) from (pry):12:in `send'
 ```
-In our example, we're passing `send` one argument even though our overridden `send` method does not take any arguments. Let's take a look at another example by exploring `Object`'s `instance_of?` method. What this handy method does is to return `true` if an object is an instance of a given class and `false` otherwise.
+In our example, we're passing `send` one argument even though our overridden `send` method does not take any arguments. 
+
+Let's take a look at another example by exploring `Object`'s `instance_of?` method. What this handy method does is to return `true` if an object is an instance of a given class and `false` otherwise.
 ```
 c = Child.new
 c.instance_of? Child

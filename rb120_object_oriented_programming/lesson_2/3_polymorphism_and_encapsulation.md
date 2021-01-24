@@ -5,9 +5,9 @@
 - [Encapsulation](#encapsulation)
 
 ### Polymorphism
-*Polymorphism* refers to the ability of objects with __different types to respond in different ways to the same message (or method invocation)__; that is, data of different types can respond to a common interface (i.e. *method*). It's a crucial concept in OO programming that can lead to more maintainable code.
+*Polymorphism* refers to the ability of objects with __different types to respond in different ways to the same message (or method invocation)__; that is, data of different types (i.e. *objects*) can respond to a common interface (i.e. *method*). It's a crucial concept in OO programming that can lead to more maintainable code.
 
-When two or more object types have a *method with the same name*, we can invoke that method with *any* of those objects. When we don't care what type of object is calling the method (e.g. different objects instantiated from different classes), we're using polymorphism. Often, polymorphism involves inheritance from a common superclass. However, inheritance isn't necessary as we'll see in this assignment.
+When two or more object types have a *method with the same name*, we can invoke that method with *any* of those objects. When we don't care what type of object is calling the method (e.g. different objects instantiated from different classes), we're using polymorphism. Often, polymorphism involves inheritance from a common superclass. However, inheritance isn't always necessary.
 
 For example, assume we have a method that expects an argument that has a `move` method. We can pass it any type of argument, provided it has a compatible `move` method. The object might represent a human, a cat, a jellyfish, or, conceivably, even a car or train. That is, it lets objects of different types respond to the same method invocation.
 
@@ -91,9 +91,10 @@ We can clean up the code using duck-typing:
 class Wedding
   attr_reader :guests, :flowers, :songs
 
+  # self refers to an object instantiated from the Wedding class
+  # w = Wedding.new => w.prepare(Chef) => Chef.prepare_wedding(w) via the w.prepare instance method
   def prepare(preparers)
     preparers.each do |preparer|
-      # self refers to an object instantiated from the Wedding class - per our rules about self when used in an instance method, which is what we would pass to the preparers block parameter - e.g. Chef.prepare_wedding(self)
       preparer.prepare_wedding(self)
     end
   end

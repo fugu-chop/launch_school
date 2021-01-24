@@ -200,10 +200,11 @@ The other place we use `self` is when we're defining class methods:
 ```
 class MyAwesomeClass
   def self.this_is_a_class_method
+    self
   end
 end
 ```
-When `self` is prepended to a method definition, it is defining a __class method__. In our `GoodDog` class method example, we defined a class method called `self.total_number_of_dogs`. This method returned the value of the class variable `@@number_of_dogs`. 
+When `self` is prepended to a method definition, it is defining a __class method__. In our `GoodDog` class method example, we defined a class method called `self.total_number_of_dogs`. This method returned the value of the class variable `@@number_of_dogs`. The `self` within the class method also refers to the class itself - unless `self` is within an *instance* method, it will refer to the class.
 ```
 class GoodDog
   # rest of code omitted for brevity
