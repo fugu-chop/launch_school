@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 3,455)
+# January 2021 (Total minutes: 3,582)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -23,6 +23,7 @@
 - [22nd, Fri](#220121-fri)
 - [23rd, Sat](#230121-sat)
 - [24th, Sun](#240121-sun)
+- [25th, Mon](#250121-mon)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -379,3 +380,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I had some confusion around collaborator objects (yet again) - specifically, there was a forum post about some buggy code where it was stated that when an object was instantiated from a subclass, the superclass was also needed. Hence I'm not sure whether there needs to be an instance of the superclass created somewhere...
+
+##### 25/01/21 (Mon)
+__*Concepts covered*__<br/>
+- Revision
+  - OO Code Implementation
+  - Equivalence
+  - Variable Scope (inc. Constants & Lexical scope)
+
+__*Time spent*__<br/>
+127 minutes
+
+__*Thoughts*__<br/>
+An update on yesterday's question. The `new` method is the only way through which an object is instantiated (for our purposes). I misunderstood the explanation for an infinite loop of collaborator object creation, which threw me. It's all good now. 
