@@ -144,7 +144,6 @@ end
 
 class Rock < Move
   def initialize
-    super()
     @value = 'Rock'
     @win_condition = { 'Scissors' => 'crushes',
                        'Lizard' => 'crushes' }
@@ -154,7 +153,6 @@ end
 
 class Paper < Move
   def initialize
-    super()
     @value = 'Paper'
     @win_condition = { 'Rock' => 'covers',
                        'Spock' => 'disproves' }
@@ -164,7 +162,6 @@ end
 
 class Scissors < Move
   def initialize
-    super()
     @value = 'Scissors'
     @win_condition = { 'Paper' => 'cuts',
                        'Lizard' => 'decapitates' }
@@ -174,7 +171,6 @@ end
 
 class Spock < Move
   def initialize
-    super()
     @value = 'Spock'
     @win_condition = { 'Scissors' => 'smashes',
                        'Rock' => 'vapourises' }
@@ -184,7 +180,6 @@ end
 
 class Lizard < Move
   def initialize
-    super()
     @value = 'Lizard'
     @win_condition = { 'Paper' => 'eats',
                        'Spock' => 'poisons' }

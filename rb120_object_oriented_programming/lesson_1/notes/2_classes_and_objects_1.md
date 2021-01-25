@@ -102,7 +102,8 @@ class Student
 end
 
 ade = Student.new('Adewale')
-ade # => #<Student:0x00000002a88ef8 @name="Adewale">
+ade 
+# => #<Student:0x00000002a88ef8 @name="Adewale">
 ```
 Although we have a `grade` accessor method within our `Student` class, the `@grade` instance variable is __never initialized__ within our code (since it's not initialized as an instance variable within the `initialize` method) and so __can't be considered part of state__ of the `Student` object represented by `ade`. 
 

@@ -19,7 +19,11 @@ Notice that in OO, we don't think about the game flow logic at all. It's all abo
 
 After we come up with the initial class definitions, the final step is to orchestrate the flow of the program using objects instantiated from the classes.
 
-When it comes to object oriented design, we're always juggling a tradeoff between more _flexible_ code and _indirection_. Put another way, the more flexible your code, the more indirection you'll introduce by way of more classes. 
+When it comes to object oriented design, we're always juggling a tradeoff between more _flexible_ code and _indirection_. Put another way, the more flexible your code, the more indirection you'll introduce by way of _more classes_ (e.g. through more collaborator objects), such that we have to piece together the actual logic behind the code from more places in our code.
+
+On one hand, we can have all the code in one place, but then we lose flexibility. On the other hand, we can refactor the code for increased flexibility and maintainability. However, the tradeoff is increased indirection, which means that you have to dig deeper throughout our program to fully understand what is happening.
+
+In traditional functional programming, we could abstract/encapsulate logic in methods of the same class. With OO, we can add another layer of __abstraction through classes__. The same process can be done but rather than have the method exist within the same class, the method exists in another class. The added layer of abstraction is that we’re now thinking in terms of *objects that collaborate with each other*.
 
 There's likely an optimal tradeoff on that spectrum for your application somewhere, but that place likely changes as your application matures. This is the source of never-ending debate and discussion in the software development field, but it really comes down to that tradeoff. This is where the "art" of programming comes in.
 
