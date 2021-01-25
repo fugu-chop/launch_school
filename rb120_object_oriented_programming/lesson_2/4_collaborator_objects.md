@@ -180,7 +180,7 @@ When you create an __object inside a class__ (the `@child` object inside the `Pa
 
 Note that in the above example, we're trying to create a `Child` object as an instance variable inside the a `Parent` object, but `Child` is a subclass of `Parent` - that means a `Child` __is a__ `Parent` (inheritance). 
 
-When we define `@child = Child.new` inside `Parent#initialize`, the `Child` *needs a new `Parent` object* (which, in turn needs a new `Child`, which needs a new `Parent`, and so on indefinitely).
+When we define `@child = Child.new` inside `Parent#initialize`, the `initialize` method is inherited from `Parent`, meaning it creates another object from `Child`. As this object is instantiated, it calls the `initialize` method from `Parent` again, continually creating new objects from `Child`. 
 
 ### Other notes
 When we work with collaborator objects, they are usually custom objects (e.g. defined by the programmer and not inherited from the Ruby core library); `@pet` is an example of a custom object in our example above.

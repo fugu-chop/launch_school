@@ -23,7 +23,7 @@ When it comes to object oriented design, we're always juggling a tradeoff betwee
 
 On one hand, we can have all the code in one place, but then we lose flexibility. On the other hand, we can refactor the code for increased flexibility and maintainability. However, the tradeoff is increased indirection, which means that you have to dig deeper throughout our program to fully understand what is happening.
 
-In traditional functional programming, we could abstract/encapsulate logic in methods of the same class. With OO, we can add another layer of __abstraction through classes__. The same process can be done but rather than have the method exist within the same class, the method exists in another class. The added layer of abstraction is that we’re now thinking in terms of *objects that collaborate with each other*.
+In traditional functional programming, we could abstract/encapsulate logic in methods of the same class. With OO, we can add another layer of __abstraction through classes__. The same process can be done but rather than have the method exist within the same class, the method exists in *another class*. The added layer of abstraction is that we’re now thinking in terms of *objects that collaborate with each other*.
 
 There's likely an optimal tradeoff on that spectrum for your application somewhere, but that place likely changes as your application matures. This is the source of never-ending debate and discussion in the software development field, but it really comes down to that tradeoff. This is where the "art" of programming comes in.
 

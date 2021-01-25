@@ -7,7 +7,9 @@
 - [Module and Constant Interaction](#module-and-constant-interaction)
 
 ### Instance Variables
-Instance variables defined in the superclass are accessible in the sub class, so long as the relevant instance variables are initialised. 
+Instance variables defined in the superclass are accessible in the sub class, so long as the relevant instance variables are initialised. Remember that this __is not inheritance__, but only only __access__.
+
+Instance variables are __not defined by the objects's class__ - they are simply __created when a value is assigned to them__. Because instance variables are not defined by a class, they are _unrelated_ to subclassing and the inheritance mechanism.
 ```
 class Animal
   def initialize(name)
@@ -150,9 +152,9 @@ class Quadrilateral < Shape
   end
 end
 ```
-`Triangle.sides` returns a value of `nil` when called __before instantiating__ a `Triangle` or Quadrilateral object. It returns `4` when called directly after instantiating a `Quadrilateral` object.
+`Triangle.sides` returns a value of `nil` when called __before instantiating__ a `Triangle` or `Quadrilateral` object. It returns `4` when called directly after instantiating a `Quadrilateral` object.
 
-`Triangle.new.sides` always returns a value of `3` since upon initialising a `Triangle` object, the `initialize` method overwrites anything else `@@sides` might have been set to, ensuring that the return value is `3`.
+`Triangle.new.sides` always returns a value of `3` since upon initialising a `Triangle` object, the `initialize` method overwrites anything else `@@sides` might have been set to, ensuring that the return value is `3`. If we call `Quadrilateral.sides` at this stage, this will return `3` as well. 
 
 Otherwise, `Triangle.sides` can sometimes return a value of `4`, as if we instantiate a `Quadrilateral` object without instantiating a `Triangle` object, that object will overwrite the class variable `@@sides`, which the `Triangle` class would be referencing. 
 
