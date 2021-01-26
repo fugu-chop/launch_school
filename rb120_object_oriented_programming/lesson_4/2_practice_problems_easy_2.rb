@@ -36,7 +36,7 @@ end
 trip = RoadTrip.new
 trip.predict_the_future
 =end
-puts "This will instantiate an object from the RoadTrip class and assign it to the local variable trip. The predict_the_future method will then output a string object \"You will\", followed by a randomly selected string object from the choices instance method in the RoadTrip class, since this choices method overrides the choices method defined in the Oracle superclass. By default, Ruby will look in the RoadTrip class for the method definition, before it looks higher up in the inheritance chain."
+puts "This will instantiate an object from the RoadTrip class and assign it to the local variable trip. The predict_the_future method (which is inherited from the Oracle class) will then output a string object \"You will\", followed by a randomly selected string object from the choices instance method in the RoadTrip class, since this choices method overrides the choices method defined in the Oracle superclass. By default, Ruby will look in the RoadTrip class for the method definition, before it looks higher up in the inheritance chain."
 
 # 3) How do you find where Ruby will look for a method when that method is called? How can you find an object's ancestors? What is the lookup chain for Orange and HotSauce?
 =begin

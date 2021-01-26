@@ -97,6 +97,13 @@ end
 puts "We would initialise two different local variables, and pass different ages and names to the initialize method when instantiating the object from the AngryCat class. These would be two different objects, with different state."
 
 # 4) Given the class below, if we created a new instance of the class and then called to_s on that instance we would get something like "#<Cat:0x007ff39b356d30>". How could we go about changing the to_s output on this method to look like this: I am a tabby cat? (this is assuming that "tabby" is the type we passed in during initialization).
+=begin
+class Cat
+  def initialize(type)
+    @type = type
+  end
+end
+=end
 puts "We can define a custom to_s method within the Cat class that will return \"I am a #\{type\} cat\". This will override the existing to_s method that exists in the Object class."
 
 # 5) If I have the following class, what would happen if I called the methods like shown below?
