@@ -220,6 +220,6 @@ You can see that using `self` __inside a class but outside an instance method__ 
 
 From __within__ a class:
   1. `self`, __inside__ of an instance method, references the __instance (object)__ that called the method - the calling object. Therefore, `self.weight=` inside the class is the same as calling `sparky.weight=`, in our example.
-  2. `self`, __outside__ of an instance method, references the __class__ and can be used to define class methods. Therefore if we were to define a `name` class method, `def self.name=(n)` is the same as `def GoodDog.name=(n)`.
+  2. `self`, __outside__ of an instance method, references the __class__ and can be used to define class methods (this also includes when `self` is used *within a class method*). Therefore if we were to define a `name` class method, `def self.name=(n)` is the same as `def GoodDog.name=(n)`.
 
 Thus, we can see that `self` is a way of being explicit about what our program is referencing and what our intentions are as far as behavior. `self` changes *depending on the scope it is used in*, so pay attention to see if you're inside an instance method or not. 

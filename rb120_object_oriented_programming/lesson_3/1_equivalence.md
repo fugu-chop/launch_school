@@ -130,6 +130,18 @@ end
 ```
 Behind the scenes, the `case` statement is using the `===` method to compare each `when` clause with `num`. In this example, the `when` clauses contain only ranges, so `Range#===` is used for each clause. If the `when` clause simply had a number, the `case` statement would use `Integer#===`.
 
+Another example:
+```
+number = 42
+
+case number
+when 1          then 'first'
+when 10, 20, 30 then 'second'
+when 40..49     then 'third'
+end
+```
+In our above example, we are using `Range#===` and `Integer#===`, since we are comparing a number to a range on `line 6`, but also comparing integers within a `case` statement on `lines 4-5`.
+
 Typically, you do not have to define your own `===` behavior, as you likely wouldn't use your custom classes in a `case` statement. It's sometimes useful to remember that `===` is used for comparison in `case` statements, though.
 
 Consider the following code:

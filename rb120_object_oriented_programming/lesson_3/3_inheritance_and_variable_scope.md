@@ -7,9 +7,9 @@
 - [Module and Constant Interaction](#module-and-constant-interaction)
 
 ### Instance Variables
-Instance variables defined in the superclass are accessible in the sub class, so long as the relevant instance variables are initialised. Remember that this __is not inheritance__, but only only __access__.
+Instance variables defined in the superclass are accessible in the subclass, so long as the relevant instance variables are initialised through instance methods. Remember that this __is not inheritance__, but only only __access__ (scope), which is resolved by looking *up the inheritance chain*.
 
-Instance variables are __not defined by the objects's class__ - they are simply __created when a value is assigned to them__. Because instance variables are not defined by a class, they are _unrelated_ to subclassing and the inheritance mechanism.
+Instance variables are __not defined by the object's class__ - they are simply __created when a value is assigned to them__. Because instance variables are not defined by a class, they are _unrelated_ to subclassing and the inheritance mechanism.
 ```
 class Animal
   def initialize(name)
@@ -26,9 +26,9 @@ end
 teddy = Dog.new("Teddy")
 puts teddy.dog_name                       # => bark! bark! Teddy bark! bark!
 ```
-When we instantiated `teddy`, we called `Dog.new`. Since the `Dog` class doesn't have an `initialize` instance method, the method lookup path went to the super class, `Animal`, and executed `Animal#initialize`. That's when the `@name` instance variable was initialized, and that's why we can access it from `teddy.dog_name`.
+When we instantiated `teddy`, we called `Dog.new`. Since the `Dog` class doesn't have an `initialize` instance method, the method lookup path went to the superclass, `Animal`, and executed `Animal#initialize` (i.e. `Dog` inherits the `initialize` method from `Animal`). That's when the `@name` instance variable was initialized, and that's why we can access it from `teddy.dog_name`.
 
-This is __not true__ if the methods in which instance variables are defined are overwritten, or never called:
+This is __not true__ if the methods in which instance variables are defined are overwritten, or never called. Again, this is because instance variables themselves __cannot be inherited__; only the methods in which they are defined.
 ```
 class Animal
   def initialize(name)
@@ -47,7 +47,38 @@ end
 teddy = Dog.new("Teddy")
 puts teddy.dog_name                       # => bark! bark! bark! bark!
 ```
-`@name` is `nil`, because it was __never initialised__. The `Animal#initialize` method was never executed. Remember that __uninitialised instance variables__ return `nil`.
+`@name` is `nil`, because it was __never initialised__. The `Animal#initialize` method was never executed (the `name` argument passed to the method is ignored by `initialize`). Remember that __uninitialised instance variables__ return `nil` (calling `.to_s` on `nil` returns a blank string).
+
+Another example:
+```
+module Speedy
+  def run_fast
+    @speed = 70
+  end
+end
+
+class Animal
+  def initialize(name, age)
+    @name = name
+    @age = age
+  end
+end
+
+class Dog < Animal
+  DOG_YEARS = 7
+
+  def initialize(name, age)
+    @dog_age = age * DOG_YEARS
+  end
+end
+
+class Greyhound < Dog
+  include Speedy
+end
+
+grey = Greyhound.new('Grey', 3)
+```
+Here, the only instance variable initialized when `grey` is instantiated is `@dog_age`, since we override the `initialize` method in the `Animal` class. Also, while we have mixed in the `Speedy` module into the `Greyhound` class, we never actually call the `run_fast` method, such that the `@speed` instance variable is never initialised. 
 
 The same behaviour can be observed with mixins:
 ```
@@ -194,7 +225,7 @@ kitty.legs                                  # => 4
 Sidenote: you can use `::` on classes, modules or constants. 
 
 ### Module and Constant Interaction
-Unlike instance methods or instance variables, constants are __not evaluated at runtime__, so their lexical scope - or, where they are used in the code - is very important.
+Unlike instance methods or instance variables, constants are __not evaluated at runtime__, so their lexical scope - or, where they are defined in the code - is very important.
 ```
 module Maintenance
   def change_tires
@@ -261,5 +292,5 @@ Square.new.describe_shape # => "I am a Square and have 4 sides."
 ```
 In order to achieve the desired outputs, we need to:
 - Add `def sides; SIDES; end` to the `Quadrilateral` class, as there is no `#sides` instance method,  `Square.new.sides` would return a `NoMethodError` without it. 
-- Change the method body of `#describe_shape` method to `"I am a #{self.class} and have #{self.class::SIDES} sides."`, as without `self.class`, Ruby will look to the module to define `SIDES` (i.e. will return `NameError: uninitialized constant Describable::SIDES`)
-- Change the method body of `Shape::sides` method to `self::SIDES`, as `SIDES` is not defined in `Shape`, it is defined in `Quadrilateral`. By using `self::`, it will start at the current class (`Square`) and go up the inheritance chain (the `self::` operator enables access to the `Shape` superclass through inheritance).
+- Change the method body of `#describe_shape` method to `"I am a #{self.class} and have #{self.class::SIDES} sides."`, as without `self.class`, Ruby will look to the module to define `SIDES` (i.e. will return `NameError: uninitialized constant Describable::SIDES`), per _lexical scope_ rules for constants.
+- Change the method body of `Shape::sides` method (i.e. class method) to `self::SIDES`, as `SIDES` is not defined in `Shape`, it is defined in `Quadrilateral`. By using `self::`, it will start at the current class (`Square`, as `self` within a class method refers to the class itself) and go up the inheritance chain (the `self::` operator enables access to the `Shape` superclass through inheritance). Again, constants have lexical scope - without `self::SIDES`, despite defining a constant within `Quadrilateral`, Ruby will only look at the `Shape` class to find the definition of `SIDES`, which does not exist. 
