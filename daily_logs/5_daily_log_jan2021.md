@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 3,582)
+# January 2021 (Total minutes: 3,701)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -24,6 +24,7 @@
 - [23rd, Sat](#230121-sat)
 - [24th, Sun](#240121-sun)
 - [25th, Mon](#250121-mon)
+- [26th, Tue](#260121-tue)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -393,3 +394,21 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 An update on yesterday's question. The `new` method is the only way through which an object is instantiated (for our purposes). I misunderstood the explanation for an infinite loop of collaborator object creation, which threw me. It's all good now. 
+
+##### 26/01/21 (Tue)
+__*Concepts covered*__<br/>
+- Revision
+  - Variable Scope (Constants, Namespace Resolution Operator)
+  - Fake Operators
+  - Lesson 3 Quiz
+  - Lesson 4 Practice Problems
+
+__*Time spent*__<br/>
+119 minutes
+
+__*Thoughts*__<br/>
+Today was a public holiday, which should have been easy to complete my study for the day. However, I just felt really low and didn't particularly feel like studying. I didn't do any in the morning, which meant I was cramming all of my study towards the last two hours of the day before I went to bed, which is not particularly enjoyable. I probably won't do this again. 
+
+Again, I'm still a little bit confused about instance variable scope in the context of inheritance. From what I understand, instance variables __cannot be inherited__; they are not defined by classes but are simply created when objects of that class are instantiated. However, even though instance variables can be defined in the superclass, they are actually still available in subclasses, which kind of confused me. 
+
+I still think these concepts can be reconciled - this behaviour is not inheritance, rather that when trying to find a definition for a __instance__ variable, Ruby is able to look up the inheritance chain. 
