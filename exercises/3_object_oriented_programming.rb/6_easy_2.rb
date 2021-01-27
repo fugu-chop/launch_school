@@ -85,25 +85,14 @@ Home 2 is more expensive
 =end
 class House
   attr_reader :price
-
-  def initialize(price)
-    @price = price
-  end
-
-  def price_comparison(other)
-    price > other.price ? "Home 1 is cheaper" : "Home 2 is more expensive"
-  end
-end
-
-# Could also use the comparable module (might get funky for string values and numerical values like postcode)
-class House
-  attr_reader :price
+  # This module gives us access to <, = and > methods
   include Comparable
 
   def initialize(price)
     @price = price
   end
 
+  # Per the documentation, the <, = and > method all rely on the <=> method being implemented within the class
   def <=>(other)
     price <=> other.price
   end

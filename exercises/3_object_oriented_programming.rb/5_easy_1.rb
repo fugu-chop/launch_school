@@ -114,7 +114,7 @@ puts fluffy
 puts fluffy.name
 puts name
 =end
-puts "The issue with this code is that the author has mutated the original name variable when calling the to_s method, which is automatically called when the puts method is invoked. This means whenever a puts method call is made, the original name variable will be mutated. We can fix this by creating a duplicate copy of the name local variable, and moving the upcase from the to_s method to the initialize method."
+puts "The issue with this code is that the author has mutated the original name instance variable when calling the to_s method, which is automatically called when the puts method is invoked. This means whenever a puts method call is made, the original name instance variable will be mutated. We can fix this by creating a duplicate copy of the name local variable, and moving the upcase from the to_s method to the initialize method."
 
 class Pet
   attr_reader :name
@@ -145,9 +145,9 @@ puts fluffy
 puts fluffy.name
 puts name
 =end
-puts "On line 3, there is a reassignment of the local variable name. This is not the same as assigning a new instance variable - this is why the multiple puts calls of fluffy.name do not result in 43 being printed. 
+puts "On line 1, we initialise a local variable 42 and assign the integer object 42 to it. On line 2, we instantiate a new object from the Pet class, passing in the integer object 42 to the method parameter name, and assign it to the fluffy local variable. When this object is created, the initialize method is immediately called, which in our implementation, calls the Object#to_s method on the integer object 42.
 
-The reason why puts fluffy.name only prints out the string 42 is that the .to_s method within the initialize method is still the default .to_s method in the Ruby Core API. I'm not sure why this is - perhaps the instance method is not available to apply to an instance variable? on initialisation of the object? Perhaps because the custom to_s method relies on an instance variable that does not exist yet?"
+The object referenced by the local variable name is not linked in a deeper fashion to the object referenced by fluffy. Once the object has been instantiated from the Pet class, it does not update if the object passed to it on initialisation changes."
 
 # 3) Complete this program so that it produces the expected output:
 =begin
