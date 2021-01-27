@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 3,701)
+# January 2021 (Total minutes: 3,823)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -25,6 +25,7 @@
 - [24th, Sun](#240121-sun)
 - [25th, Mon](#250121-mon)
 - [26th, Tue](#260121-tue)
+- [27th, Wed](#270121-wed)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -411,4 +412,21 @@ Today was a public holiday, which should have been easy to complete my study for
 
 Again, I'm still a little bit confused about instance variable scope in the context of inheritance. From what I understand, instance variables __cannot be inherited__; they are not defined by classes but are simply created when objects of that class are instantiated. However, even though instance variables can be defined in the superclass, they are actually still available in subclasses, which kind of confused me. 
 
-I still think these concepts can be reconciled - this behaviour is not inheritance, rather that when trying to find a definition for a __instance__ variable, Ruby is able to look up the inheritance chain. 
+The proper explanation is that accessing instance variables in subclasses relies on methods being defined (and the instance variable being created) in the superclass - thus these methods are then inherited and accessible to the subclass (hence the instance variables created in the superclass are accessible). 
+
+##### 27/01/21 (Wed)
+__*Concepts covered*__<br/>
+- Revision
+  - Lesson 4 Practice Problems
+  - OOP Exercises
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+I've finally covered off reading through the material for the written test component. After finishing off the last two exercise modules, I can start on the practice problems and start typing out my answers. There's a few things I know I'm still fuzzy on:
+- Method access control
+- super
+- Inheritance
+- Attributes and State
+- Lexical scope
