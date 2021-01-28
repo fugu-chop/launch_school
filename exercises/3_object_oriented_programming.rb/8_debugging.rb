@@ -684,7 +684,7 @@ end
 
 puts [Length.new(1, :mi), Length.new(1, :nmi), Length.new(1, :km)].sort
 
-puts "This fails because the .sort method is taken from the Array class, which does not know how to sort objects. The .sort method uses the spaceship operator to compare individual elements within the array, which is what we need to define in our Length class, so that we can compare the individual instances of the Length class with each other."
+puts "The Array#sort method uses the spaceship operator to compare individual elements within the array, which is what we need to define in our Length class, so that we can compare the individual instances of the Length class with each other. Otherwise, the Array#sort method is not able to compare our custom objects."
 
 # 7) We created a simple BankAccount class with overdraft protection, that does not allow a withdrawal greater than the amount of the current balance. We wrote some example code to test our program. However, we are surprised by what we see when we test its behavior. Why are we seeing this unexpected output? Make changes to the code so that we see the appropriate behavior.
 =begin
@@ -754,6 +754,7 @@ class BankAccount
 
   def deposit(amount)
     if amount > 0
+      # We define our setter method below
       self.balance += amount
       "$#{amount} deposited. Total balance is $#{balance}."
     else
@@ -771,6 +772,7 @@ class BankAccount
   end
 
   def balance=(new_balance)
+    # Use an instance variable, otherwise we refer to the setter itself (infinite loop) if we use self here.
     @balance = new_balance
   end
 
@@ -904,11 +906,11 @@ class TaskManager
   end
 
   def display_high_priority_tasks
-    self.tasks = tasks.select do |task|
+    high_priority_tasks = tasks.select do |task|
       task.priority == :high
     end
 
-    display(tasks)
+    display(high_priority_tasks)
   end
 
   private
@@ -949,7 +951,7 @@ valentinas_tasks.display_high_priority_tasks
 
 puts "In the display_high_priority_tasks method, Ruby first has to disambiguate the tasks name on the left-hand side of the assignment operator. It could in principle be either local variable assignment, or an invocation of the setter method. In this case, Ruby interprets it as local variable assignment. 
 
-Recall that if we intended to invoke the tasks= setter method, we would need to use self to disambiguate from local variable assignment (self.tasks=). Next, Ruby must disambiguate the reference to tasks on the right-hand side of the assignment operator, seen in the code tasks.select. 
+Next, Ruby must disambiguate the reference to tasks on the right-hand side of the assignment operator, seen in the code tasks.select. 
 
 At this point, the getter method tasks is shadowed by the local variable that was just initialized on the left side of the assignment operator (this is initialized before the getter method is called). You can see this shadowing at work also in the private display method, where tasks in the method body refers to the method parameter, not the getter method - i.e. it will attempt to call .each on whatever object is referenced by the tasks method parameter and not the tasks instance variable returned by the tasks getter method.
 
@@ -1050,7 +1052,6 @@ ellens_postal_service = PostalService.new('Ellen', '860 Blackbird Ln.')
 puts johns_postal_service.send(ellens_postal_service.street_address, Postcard.new('Greetings from Silicon Valley!'))
 # => undefined method `860 Blackbird Ln.' for #<PostalService:0x00005571b4aaebe8> (NoMethodError)
 =end
-
 class Mail
   def to_s
     "#{self.class}"
@@ -1084,7 +1085,7 @@ module Mailing
     false
   end
 
-  def send(destination, mail)
+  def send_mail(destination, mail)
     "Sending #{mail} from #{name} to: #{destination}"
     # Omitting the actual sending.
   end
@@ -1143,7 +1144,7 @@ johns_phone_service   = TelephoneService.new('John', 122, '555-232-1121')
 johns_postal_service  = PostalService.new('John', '47 Sunshine Ave.')
 ellens_postal_service = PostalService.new('Ellen', '860 Blackbird Ln.')
 
-puts johns_postal_service.send(ellens_postal_service.street_address, Postcard.new('Greetings from Silicon Valley!'))
+puts johns_postal_service.send_mail(ellens_postal_service.street_address, Postcard.new('Greetings from Silicon Valley!'))
 
 # 10) In order to test the case when authentication fails, we can simply set API_KEY to any string other than the correct key. Now, when using a wrong API key, we want our mock search engine to raise an AuthenticationError, and we want the find_out method to catch this error and print its error message API key is not valid. Is this what you expect to happen given the code? And why do we always get the following output instead?
 =begin
@@ -1209,7 +1210,8 @@ puts DoesItRock.find_out('Sushi')       # Sushi seems to be ok...
 puts DoesItRock.find_out('Rain')        # Rain is not fun.
 puts DoesItRock.find_out('Bug hunting') # Bug hunting rocks!
 =end
-class AuthenticationError < StandardError; end
+class AuthenticationError < StandardError
+end
 
 class SearchEngine
   def self.count(query, api_key)
@@ -1230,7 +1232,8 @@ end
 module DoesItRock
   API_KEY = 'test'
 
-  class NoScore; end
+  class NoScore
+  end
 
   class Score
     def self.for_term(term)
@@ -1261,7 +1264,6 @@ module DoesItRock
   end
 end
 
-
 puts DoesItRock.find_out('Sushi')
 puts DoesItRock.find_out('Rain')
 puts DoesItRock.find_out('Bug hunting')
@@ -1272,7 +1274,7 @@ Exception is the top-most class in Ruby's exception hierarchy and it seems a str
 
 StandardError subsumes all application-level errors. The other descendants of Exception are used for system- or environment-level errors, like memory overflows or program interruptions. These are the kind of errors your application usually does not want to throw - and definitely does not want to rescue, they should be handled by Ruby itself.
 
-When the return value of Score::for_term is NoScore, the case statement in DoesItRock::find_out does not behave as expected.  The value of score will be compared with each value in the when clauses using the === operator. 
+When the return value of Score::for_term is NoScore, the case statement in DoesItRock::find_out does not behave as expected. The value of score will be compared with each value in the when clauses using the === operator. 
   
 In case of the first when clause, the comparison is NoScore === score, and since the left-hand side is a class, its implementation boils down to checking whether score is_a? NoScore. This yields false when score has the value NoScore, as it is not an instance of the NoScore class. As a result, we end up with the value of the else clause.
 

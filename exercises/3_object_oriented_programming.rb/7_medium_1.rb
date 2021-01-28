@@ -575,6 +575,7 @@ end
 
 # 9) Using the Card class from the previous exercise, create a Deck class that contains all of the standard 52 playing cards. The Deck class should provide a #draw method to deal one card. The Deck should be shuffled when it is initialized and, if it runs out of cards, it should reset itself by generating a new set of 52 shuffled cards.
 class Deck
+  # attr is the same as attr_reader
   attr :shoe
 
   RANKS = ((2..10).to_a + %w(Jack Queen King Ace)).freeze
