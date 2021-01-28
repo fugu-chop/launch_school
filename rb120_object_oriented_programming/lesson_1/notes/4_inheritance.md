@@ -418,7 +418,6 @@ Defining methods this way within a module means we can call them directly from t
 value = Mammal.some_out_of_place_method(4)
 value = Mammal::some_out_of_place_method(4)
 ```
-
 ### Private, Protected & Public
 __Access Control__ is a concept that exists in a number of programming languages, including Ruby. It is generally implemented through the use of access modifiers. The purpose of access modifiers is to allow or restrict access to a particular thing. 
 

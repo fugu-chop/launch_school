@@ -212,9 +212,9 @@ Ruby recognizes that this is a setter method and allows us to use the more natur
 
 Accessor methods allow us to interact with instance variables __outside of the class__ (i.e. after the object has been created).
 
-As to whether we __should__ have getters or setters, consider the following:
-- Should users of my class be able to directly access the state represented by an instance variable? If so, then I have to use a getter. Otherwise, no getters unless I make them private (we can still handle getting state through other instance methods in the class).
-- Should users of my class be able to directly change the state represented by an instance variable? If so, then I have to use a setter. Otherwise, no setters unless I make them private (again, private does not stop other instance methods from changing state).
+As to whether we __should__ have getters or setters (or work directly with the instance variable), consider the following:
+- Should users of my class be able to directly access the state represented by an instance variable? If so, then I have to use a getter. Otherwise, no getters (use an instance variable) unless I make them private (we can still handle getting state through other instance methods in the class).
+- Should users of my class be able to directly change the state represented by an instance variable? If so, then I have to use a setter. Otherwise, no setters (use an instance variable) unless I make them private (again, private does not stop other instance methods from changing state).
 
 Also consider: having all your state accessed by an instance variable (i.e. __not__ through a getter/setter method) makes it really easy to see where your state is being set and used. 
 

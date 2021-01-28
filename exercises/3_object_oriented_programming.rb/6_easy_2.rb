@@ -263,7 +263,7 @@ class Owner
   end
 
   def print_pets
-    # We modified the to_s method in the Pets class to ensure we would be printing a useful string instead of an object when we add a pet from the Pets class to the array in the Owner class.
+    # Remember that calling puts on an array will print each element on a separate line. In our case, each element is an object of the Pets class. We modified the to_s method in the Pets class to ensure we would be printing a useful string instead of a class name and an encoded object_id.
     puts pets
   end
 end

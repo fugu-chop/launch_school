@@ -18,6 +18,7 @@ end
 =end
 class Machine
   def start
+    # We remove self. for compatibility with versions of Ruby <2.7
     flip_switch(:on)
   end
 
@@ -110,29 +111,28 @@ rescue IndexError
 end
 =end
 class FixedArray
-  attr_reader :arr
-
   def initialize(elements)
     @arr = Array.new(elements)
   end
 
   def [](idx)
-    arr.fetch(idx)
+    @arr.fetch(idx)
   end
 
   def []=(idx, new_element)
     # Use the method defined above to access IndexError via .fetch
+    # Remember also this is just syntactical sugar for @arr.[](idx)
     self[idx]
-    arr[idx] = new_element
+    @arr[idx] = new_element
   end
 
   def to_a
-    # We clone to prevent mutation of the underlying instance
-    arr.clone
+    # We clone to prevent mutation of the underlying array
+    @arr.clone
   end
 
   def to_s
-    to_a.to_s
+    @to_a.to_s
   end
 end
 
@@ -339,7 +339,7 @@ Your guess is too low.
 You have no more guesses. You lost!
 =end
 class GuessingGame
-  attr_accessor :guesses, :answer
+
 
   def initialize
     @guesses = 7
@@ -356,6 +356,10 @@ class GuessingGame
     end
     display_victory
   end
+
+  protected
+
+  attr_accessor :guesses, :answer
 
   private
 
@@ -395,8 +399,6 @@ GuessingGame.new.play
 
 # 7) Update your solution to accept a low and high value when you create a GuessingGame object, and use those values to compute a secret number for the game. You should also change the number of guesses allowed so the user can always win if she uses a good strategy. 
 class GuessingGame
-  attr_accessor :guesses, :answer
-
   def initialize(lower, upper)
     @guesses = Math.log2(upper - lower).to_i + 1
     @correct_answer = (lower..upper).to_a.sample
@@ -414,6 +416,10 @@ class GuessingGame
     end
     display_victory
   end
+
+  protected
+
+  attr_accessor :guesses, :answer
 
   private
 
@@ -508,6 +514,8 @@ class Card
 
   protected
 
+  # The min and max methods rely on the spaceship operator being available within the class
+  # We use protected since we want to compare different instances of the same Card class
   def <=>(other)
     ranked_value <=> other.ranked_value
   end
@@ -588,7 +596,7 @@ class Deck
   private
 
   def reset
-    # The product multiplies each object of the caller with each object of the argument
+    # The product method multiplies each object of the caller with each object of the argument
     # Map converts each returned subarray into a format that can be consumed by the Card.new method
     @shoe = SUITS.product(RANKS).map do |suit, rank|
       Card.new(rank, suit)
