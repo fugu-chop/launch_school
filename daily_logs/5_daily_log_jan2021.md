@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 3,823)
+# January 2021 (Total minutes: 3,947)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -425,8 +425,21 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I've finally covered off reading through the material for the written test component. After finishing off the last two exercise modules, I can start on the practice problems and start typing out my answers. There's a few things I know I'm still fuzzy on:
-- Method access control
-- super
-- Inheritance
-- Attributes and State
-- Lexical scope
+  - Core definitions
+  - Method access control
+  - Instance methods
+  - super
+  - Inheritance
+  - Attributes and State
+  - Lexical scope
+
+##### 28/01/21 (Thu)
+__*Concepts covered*__<br/>
+- Revision
+  - OOP Exercises
+
+__*Time spent*__<br/>
+124 minutes
+
+__*Thoughts*__<br/>
+I didn't get to do the second round of revisions of unclear topics. Some of the exercises were pretty hairy - especially some of the edge cases around method access control, exception handling and variable shadowing when there are two instances of the same local variable in a method. 
