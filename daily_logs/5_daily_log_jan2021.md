@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 3,947)
+# January 2021 (Total minutes: 4,073)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -26,6 +26,8 @@
 - [25th, Mon](#250121-mon)
 - [26th, Tue](#260121-tue)
 - [27th, Wed](#270121-wed)
+- [28th, Thu](#280121-thu)
+- [29th, Fri](#280121-fri)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -443,3 +445,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I didn't get to do the second round of revisions of unclear topics. Some of the exercises were pretty hairy - especially some of the edge cases around method access control, exception handling and variable shadowing when there are two instances of the same local variable in a method. 
+
+##### 29/01/21 (Fri)
+__*Concepts covered*__<br/>
+- Revision
+  - Writing answers for practice problems
+
+__*Time spent*__<br/>
+126 minutes
+
+__*Thoughts*__<br/>
+I finally managed to make a start on the written problems. It's a little bit more challenging than RB109, since we're explaining concepts more heavily than just code snippets. It's a lot more open ended with room for error. So far, it's slow going, as I'm trying to create comprehensive answers without bloating the size of the answer. It's also hard to know what level of detail is appropriate, so I'm relying on some publicly available answers to help steer my answers. 
