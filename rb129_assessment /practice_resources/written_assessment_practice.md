@@ -29,23 +29,41 @@ It's generally a good idea to:
 - Use setter methods, rather than work directly with instance variables, as working directly with instance variables bypasses any logic or guards we might apply within a setter method
 
 *5) What is encapsulation? How does encapsulation relate to the public interface of a class?*
-__Encapsulation__: Encapsulation is the hiding of functionality within code, making it unavailable to the rest of the code base. It is a form of data protection, such that data cannot be changed or manipulated without obvious intent. Encapsulation allows us to contain functionality to certain parts of code (in our case, this is mostly objects and classes), which can reduce the amount of dependencies, since one changing one part of the program is less likely to affect all other parts. 
+__Encapsulation__: Encapsulation is the hiding of functionality within code, making it unavailable to the rest of the code base. It is a form of data protection, such that data cannot be changed or manipulated without obvious intent. Encapsulation allows us to contain functionality to certain parts of code (through objects and classes), which can reduce the amount of dependencies, since we generally make changes to code specified within classes (rather than throughout the code). 
 
-We can achieve encapsulation by instantiating objects from classes. Within those objects, we have instance variables and instance methods that are encapsulated within the object, and can only be accessed by that object's class or the object itself, meaning that the effect of changes to the code are more likely to be contained to specific classes and objects, improving our ability to debug and reducing dependencies.
+Encapsulation can be achieved by instantiating objects from classes. Within those objects, we have instance variables (created on instantiation of objects when assigned a value) and instance methods (defined in the class) that are encapsulated within the object, and can only be accessed by that object's class or the object itself. This improves our ability to debug when we make changes to code and reduce the number of dependencies on/from other parts of the code base.
 
-In our example below, any changes we make to `Dog` is contained entirely to that class, reducing the likelihood that code involving any other objects that collaborate with objects instantiated from the `Dog` class will break if we change `Dog`. The `@name` instance variable is encapsulated within the `ted` object - there is no ability defined within the code to change or access that instance variable. 
+In our example below, any changes we make to `Dog` (or objects instantiated from `Dog`) is made specifically to that class, meaning any errors we get in relation `Dog` or objects instantiated from `Dog` can likely be resolved in a single location in our code, even though there is a collaborative relationship between `peter` and `ted`.
+
+The `@pet_name` instance variable is also encapsulated within the `ted` object - there is no ability defined within the code to change or access that instance variable. Similarly, `ted` does not have access to the `Human#speak` method, since that method is defined and encapsulated in the `Human` class.
 ```
-class Dog
-  def initialize(name)
+class Human
+  def initialize(name, pet)
     @name = name
+    @pet = pet
+  end
+
+  def speak
+    "Hello from #{@name}!"
+  end
+end
+
+class Dog
+  def initialize(pet_name)
+    @pet_name = pet_name
+  end
+
+  def bark
+    "Woof!"
   end
 end
 
 ted = Dog.new('Ted')
+peter = Human.new('James', ted)
 ```
 We can also achieve encapsulation through *method access control*, which allows to to control which interfaces (i.e. instance methods) can interact with the object, such that even the object itself might not have access to certain instance methods. Public interfaces allow methods to be called *directly on the object itself*, whereas private interfaces can only be called *within* the class (i.e. they are not callable directly on the object itself, rather only through other methods within the class). 
 
-In the below example, we are encapsulating various instance methods within the `Hello` class, such that only objects instantiated from the `Hello` class have access to these instance methods. We are also using *method access control* via the `private` keyword to ensure that even objects instantiated from the `Hello` class cannot call the `private_method` directly. 
+In the below example, we are defining various instance methods within the `Hello` class, such that only objects instantiated from the `Hello` class have access to these instance methods. We are also using *method access control* via the `private` keyword to ensure that even objects instantiated from the `Hello` class cannot call the `private_method` directly. 
 ```
 class Hello
   def public_method
@@ -67,6 +85,36 @@ Hello.new.private_method
 ```
 
 *6) What is an object?*
-Within Ruby, anything that can said to have a value can be regarded as an object (this excludes constructs like variables, methods and blocks). In general, objects are instances of classes that have been initialised using the `Class#new` method. Objects encapsulate *state*, which are the series of instance variables and their values which define them as different from other objects instantiated from the same class. 
+Within Ruby, anything that can said to have a value can be regarded as an object (this excludes constructs like variables, methods and blocks). In general, objects are instances of classes that have been initialised using the `Class#new` method. Objects encapsulate *state*, which are the set of instance variables and their values which distinguish them from other objects instantiated from the same class. 
 
 *7) How do you initialise a new object/create a new instance of a class? What is instantiation?*
+Instantiation is creating an object (or an *instance*) from a predefined class. We can instantiate an object by calling the `Class.new` method on a class, passing in any arguments that are required per the `initialize` method that is automatically called when a new object is instantiated. 
+
+We can see this in the example below. We have a predefined `Dog` class (denoted by the `class`...`end` keyword pair), from which we instantiate a new object by calling `Dog.new('Teddy')` and assign it to the local variable `teddy`. After calling the `Class#new` method, this creates an instance of the `Dog` class and automatically calls the `initialize` method, which accepts an argument (a string object `"Teddy"`) and assigns it to the instance variable `@name`, denoted by the `@` symbol.
+```
+class Dog
+  def initialize(name)
+    @name = name
+  end
+end
+
+teddy = Dog.new('Teddy')
+```
+*8) What is an instance variable, and how is it related to an object?*
+An instance variable is a variable scoped at an object level. It is denoted by a `@` symbol in front of it. They are *named* by the class, but are not created by the class - they are created when an object is instantiated from a class and a value is assigned to it (an instance variable that does not have a value assigned to it is _not_ part of that object's state). When instance variables are initialised and assigned an object, they become part of an object's state. As instance variables are part of the state the object carries, they cannot be inherited. 
+
+In our below example, the `initialize` method in our `Dog` class can take a `fur` argument when an object is instantiated. However, because we have not initialised an instance variable for `fur`, it does not become part of `ted`'s state, even though we have created a getter method. If we attempt to call `ted.fur`, we will get `nil` - uninitialized isntance variables return `nil`. 
+```
+class Dog
+  attr_reader :fur
+
+  def initialize(name, fur)
+    @name = name
+  end
+end
+
+ted = Dog.new('Teddy', 'Bushy')
+```
+*9) What is an instance method, and how is it related to an object?*
+
+*10) What is the scoping rule for isntance variables?*

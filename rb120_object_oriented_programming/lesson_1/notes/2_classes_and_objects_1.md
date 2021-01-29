@@ -31,7 +31,7 @@ An *instance variable* is __named by the class__, but each object created from t
 
 All Ruby objects have a set of instance variables. These are __not defined by the object's class__ - they are simply __created when a value is assigned to them__ (i.e. on object instantiation). Because instance variables are not defined by a class, they are _unrelated_ to subclassing and the inheritance mechanism.
 
-With this definition, note that __the instance variable is actually not part of the class__; therefore, it can't be inherited. The subclass does know about the name, but it's merely using that name as a handle for the value it contains.
+With this definition, note that __the instance variable is actually not part of the class__; therefore, it can't be inherited. The subclass does know about the name (we can say they are *named* by the class), but it's merely using that name as a handle for the value it contains.
 
 Ruby's instance variables are __not inherited__ and have nothing to do with the inheritance mechanism. The reason that they sometimes appear to be inherited is that instance variables are _created by the methods that first assign values to them_, and __those methods are often inherited__ or chained (i.e. getter and setter methods).
 
