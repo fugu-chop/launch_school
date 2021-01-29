@@ -97,13 +97,15 @@ class Dog
 end
 
 teddy = Dog.new
-teddy.swim                                  # => nil
+teddy.swim                                  
+# => nil
 ```
 Since we didn't call the `Swim#enable_swimming` method, the `@can_swim` instance variable was __never initialised__. Assuming the same module and class from above, we need to do the following:
 ```
 teddy = Dog.new
 teddy.enable_swimming
-teddy.swim                                  # => swimming!
+teddy.swim                                  
+# => swimming!
 ```
 ### Class Variables
 Class variables are accessible to sub-classes.
