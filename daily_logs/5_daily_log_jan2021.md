@@ -1,4 +1,4 @@
-# January 2021 (Total minutes: 4,073)
+# January 2021 (Total minutes: 4,363)
 - [1st, Fri](#010121-fri)
 - [2nd, Sat](#020121-sat)
 - [3rd, Sun](#030121-sun)
@@ -27,7 +27,9 @@
 - [26th, Tue](#260121-tue)
 - [27th, Wed](#270121-wed)
 - [28th, Thu](#280121-thu)
-- [29th, Fri](#280121-fri)
+- [29th, Fri](#290121-fri)
+- [30th, Sat](#300121-sat)
+- [31st, Sun](#310121-sun)
 
 ##### 01/01/21 (Fri)
 __*Concepts covered*__<br/>
@@ -456,3 +458,25 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I finally managed to make a start on the written problems. It's a little bit more challenging than RB109, since we're explaining concepts more heavily than just code snippets. It's a lot more open ended with room for error. So far, it's slow going, as I'm trying to create comprehensive answers without bloating the size of the answer. It's also hard to know what level of detail is appropriate, so I'm relying on some publicly available answers to help steer my answers. 
+
+##### 30/01/21 (Sat)
+__*Concepts covered*__<br/>
+- Revision
+  - Writing answers for practice problems
+
+__*Time spent*__<br/>
+93 minutes
+
+__*Thoughts*__<br/>
+Didn't manage to get much done today. Had a social gathering which limited my time. I'm finding that I'm able to describe more discrete concepts quite well, but I think it's the chunkier concepts of encapsulation, polymorphism and inheritance that are a bit fluffy, or hard to succinctly define. 
+
+##### 31/01/21 (Sun)
+__*Concepts covered*__<br/>
+- Revision
+  - Writing answers for practice problems
+
+__*Time spent*__<br/>
+197 minutes
+
+__*Thoughts*__<br/>
+More writing out answers to questions. It's kind of tedious and I need regular breaks to get through this kind of stuff. Programming is much less enjoyable when you're not actually writing or designing program structures. It's particularly slow because I'm still at the stage where I'm revising notes, writing an answer, then revising the answer, making sure I haven't missed any important concepts. I just have to keep moving forward. 
