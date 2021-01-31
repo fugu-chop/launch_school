@@ -3,8 +3,7 @@
 ## Table of Contents
 - [OOP & Reading Code](#OOP-&-Reading-Code)
 - [Classes, objects, encapsulation, working with collaborator objects, method access control](#Classes-objects-encapsulation-working-with-collaborator-objects-method-access-control)
-
-
+- [Polymorphism, inheritance, method lookup path, duck-typing](#Polymorphism-inheritance-method-lookup-path-duck-typing)
 ### OOP & Reading Code
 *1) What is OOP and why is it important?*
 OOP (Object Oriented Programming) is a programming paradigm that is designed to handle large scale, complex programs by breaking up code into a series of smaller parts that interact with each other, rather than code that is built on a chain of dependencies. By using OOP, it allows code that has fewer dependencies and is easier to maintain, making it less likely that a small change to a part of the code will not break the entire program. 
@@ -30,7 +29,7 @@ It's generally a good idea to:
 
 ### Classes, objects, encapsulation, working with collaborator objects, method access control
 *5) What is encapsulation? How does encapsulation relate to the public interface of a class?*
-__Encapsulation__: Encapsulation is the hiding of functionality within code, making it unavailable to the rest of the code base. It is a form of data protection, such that data cannot be changed or manipulated without obvious intent. Encapsulation allows us to contain functionality to certain parts of code (through objects and classes), which can reduce the amount of dependencies, since we generally make changes to code specified within classes (rather than throughout the code). 
+__Encapsulation__: Encapsulation is the hiding of functionality within code, making it unavailable to the rest of the code base. It is a form of data protection, such that data cannot be changed or manipulated without obvious intent. 
 
 Encapsulation can be achieved by instantiating objects from classes. Within those objects, we have instance variables (created on instantiation of objects when assigned a value) and instance methods (defined in the class) that are encapsulated within the object, and can only be accessed by that object's class or the object itself. This improves our ability to debug when we make changes to code and reduce the number of dependencies on/from other parts of the code base.
 
@@ -260,3 +259,222 @@ end
 
 ted = Dog.new("Teddy")
 ```
+*18) Why should a class have as few public methods as possible?*
+It is typically good practice to expose as few public methods as possible on a class, in line with the principle of encapsulation. Public methods can enable direct interfacing with the state of our objects from outside of the class, which may result in unintended changes that alter the functionality or break our programs. Removing unnecessary avenues of altering state will reduce the potential for unexpected changes in the state of our objects, while also prevent data that shouldn't be seen or altered in our program from access. 
+
+*19) What is the private method call used for?*
+The `private` method call prevents instance methods from being accessed outside of the class where they are defined. They are useful to prevent access or changes to the state of objects unnecessarily. Private methods *can* be accessed from within the class definition, so public methods (which are accessible outside of the class definition) are able to access the return values of private methods. 
+
+In our example below, calling `private_method` on our `d` object results in a `NoMethodError` as private methods cannot be be accessed outside of the class definition. Contrast this with calling `public_method`, which is able to access `private_method` as it is part of the class definition, and thus is able to print out `"Hello!"` and return `nil`, per the `private_method`. 
+```
+class Dog
+  def public_method
+    private_method
+  end
+
+  private
+
+  def private_method
+    puts "Hello!"
+  end
+end
+
+d = Dog.new
+
+d.public_method
+# => Hello!
+
+d.private_method
+# NoMethodError (private method `private_method' called for #<Dog:0x00007fae2c90d7d8>)
+```
+
+*20) What is the protected method used for?*
+The `protected` method call is useful when we want our objects to be able to interact with other instances of the same class and subclasses, but otherwise prevent access/modification to an object's state from outside of the class definition. It serves as a "middle-ground" between private and public methods. 
+
+In our example below, we are unable to call the protected `name` instance method on the `joe` object instantiated from the `Dog` class, as it is inaccessible outside of the class definition. However, we are able to access the `name` instance method of other instances of the `Dog` class in our `play` instance method. 
+```
+class Dog
+  def initialize(name)
+    @name = name
+  end
+
+  def play(other_dog)
+    "#{@name} plays with #{other_dog.name}"
+  end
+
+  protected
+
+  def name
+    @name
+  end
+end
+
+joe = Dog.new("Joe")
+tim = Dog.new("Tim")
+
+joe.name
+# NoMethodError (protected method `name' called for #<Dog:0x00007fcb6c8254f8>)
+joe.play(tim)
+# => "Joe plays with Tim"
+```
+
+*21) What are two rules of protected methods?*
+The two rules of protected methods are:
+1. Within the class definition, protected methods are accessible like public methods
+2. Outside of the class definition, protected methods act like private methods
+
+*22) Classes also have behaviors not for objects (class methods). How do you define a class method?*
+A class method can be defined by prepending the `self.` keyword to a method definition within a class. When the `self` keyword is invoked outside of an instance method, it refers to the class, such that we are defining a method on the class. 
+
+In our example below, we define the `get_species` method on the `Dog` class through use of the `self` keyword. We can then call the `get_species` directly on the `Dog` class (it is actually inaccessible to instances of objects created from `Dog`). The `get_species` class method returns `self`. When `self` is used outside of an instance method, it refers to the class. Here, since we are defining a class method instead of an instance method, the `get_species` method call returns the class, `Dog`. 
+```
+class Dog
+  def self.get_species
+    self
+  end
+end
+
+Dog.get_species
+```
+
+### Polymorphism, inheritance, method lookup path, duck-typing
+*23) What is polymorphism? Explain two different ways to implement polymorphism. ​How does polymorphism work in relation to the public interface?*
+Polymorphism is a concept in object oriented programming that refers to the ability of different types (or different objects) to respond to a common interface (e.g. an instance method). Polymorphism is a way to model logical hierarchies through inheritance, reduce the amount of code written in our program (i.e. implementing DRY code) as well as sharing common behaviours between classes that don't fit neatly into these logical hierarchies through mixing in modules. 
+
+Where encapsulation reduces the interactivity of different parts of the program in order to protect itself, polymorphism is about expanding the abilities of the encapsulated parts of the program to interact with the different parts of itself.
+
+We can implement polymorphism in a number of ways - class inheritance, interface inheritance and duck-typing. 
+
+In our example below, we observe polymorphism through class inheritance and interface inheritance. The `Cat`, `Turtle` and `Dog` classes subclass the `Pet` class, meaning they inherit the `initialize` method defined within `Pet` - this explains why we need to provide an argument to the `Class#new` method when instantiating an object from `Cat`, `Turtle` or `Dog`. While `ted`, `charlie` and `oscar` are all distinct objects, they all have the `initialize` method defined in the `Pet` superclass (class inheritance).
+
+We also observe _interface_ inheritance through use of mixing in modules. In our example, we have defined the module `Swimmable` and mixed this into the `Turtle` and `Dog` classes. Again, while objects instantiated from the `Turtle` and `Dog` class are distinct from each other, these objects will have access to the `swim` method. 
+```
+module Swimmable
+  def swim
+    "I can swim!"
+  end
+end
+
+class Pet
+  def initialize(name)
+    @name = name
+  end
+end
+
+class Turtle < Pet
+  include Swimmable
+end
+
+class Dog < Pet
+  include Swimmable
+end
+
+class Cat < Pet
+end
+
+ted = Dog.new("Ted")
+ted.swim
+# "I can swim!"
+
+charlie = Turtle.new("Charlie")
+charlie.swim
+# "I can swim!"
+
+oscar = Cat.new("Oscar")
+oscar.swim
+# NoMethodError (undefined method `swim' for #<Cat:0x00007ff2ec11a3c8 @name="Oscar">)
+```
+
+*24) What is duck-typing? How does it relate to polymorphism and what problem does it solve?*
+Duck typing is a concept that implements polymorphism. It is achieved by implementing an instance method of the same name across numerous unrelated classes. It is an example of polymorphism since objects instantiated from unrelated classes (i.e. different types) are all able to respond to a commonly named method invocation (though this does not imply that the method will have the exact same functionality across the different classes). 
+
+Duck typing is helpful in that we do not have to write complex, dependency-ridden logic in order to call a commonly named method to different objects. We can simply define the method (and it's associated functionality) within each class, which improves the extensibility of the code. Per our example below, we have implemented a `speak` method across all of our unrelated classes. Thus, we are able to call the `speak` method across the `cat`, `dog` and `turtle` objects through the `AnimalParty#introductions` instance method, instead of having to write a complex `case` statement in the `AnimalParty` class (which we will need to update every time we want to define a new class with a `speak` instance method). 
+```
+class Cat
+  def speak
+    "I am a cat!"
+  end
+end
+
+class Dog
+  def speak
+    "I am a dog!"
+  end
+end
+
+class Turtle
+  def speak
+    "I am a turtle!"
+  end
+end
+
+class AnimalParty
+  def introductions(attendees)
+    attendees.each { |attendee| puts attendee.speak }
+  end
+end
+
+cat = Cat.new
+dog = Dog.new
+turtle = Turtle.new
+
+AnimalParty.new.introductions([cat, dog, turtle])
+# I am a cat
+# I am a dog
+# I am a turtle
+# => [#<Cat:0x00007ff3ee873b30>, #<Dog:0x00007ff3ee88e728>, #<Turtle:0x00007ff3ee894768>]
+```
+*25) What is inheritance?*
+Inheritance is a mechanism in object oriented programming that allows classes to inherit behaviours (or instance methods) from other classes, as well as set up a template of the different instance variables (i.e. state) that an object instantiated from these classes should have (though state only exists once the object is actually instantiated from a class and values assigned to those instance variables). It is a way of modelling logical hierarchies between different classes and reducing the amount of code we have to write for multiple objects to have the same functionality. In Ruby, classes are only able to inherit from a single class.
+
+In our example below, we define a class `Pet` and an instance method `speak` within `Pet`. The `Dog` class, which inherits from the `Pet` class, as denoted by the `<` operator, is able to access the `speak` method through class inheritance, and the `harry` object, when instantiated from the `Dog` class, expects to have a `@name` instance variable when initialised, since the `initialize` method in the `Pet` class stipulates that objects instantiated from it should have this instance variable. 
+```
+class Pet
+  def initialize(name)
+    @name = name
+  end
+
+  def speak
+    "Hello! I am a pet"
+  end
+end
+
+class Dog < Pet
+end
+
+harry = Dog.new("Harry")
+harry.speak
+# "Hello! I am a pet"
+```
+
+*26) What is the difference between a superclass and a subclass?*
+A subclass inherits it's instance methods and state 'template' (state is not inherited, since it is unique to the object and only exists once the object is instantiated, and values assigned to instance variables) from a superclass. In Ruby, a subclass can only inherit from a single superclass. 
+
+*27) When is it good to use inheritance?*
+Inheritance is useful when we want various classes to share the same behaviours (i.e. instance methods) and state templates, since these can be defined in the superclass and inherited by the subclass without having to rewrite code. Inheritance does give us the flexibility to override methods if we do want our objects to respond to the same method name, but have a slightly different implementation.
+
+In our example below, the `Dog` subclass inherits the `speak` method from the `Pet` superclass through class inheritance. However, we override the `speak` method to return a different string object. 
+```
+class Pet
+  def initialize(name)
+    @name = name
+  end
+
+  def speak
+    "Hello! I am a pet"
+  end
+end
+
+class Dog < Pet
+  def speak
+    "Hello! I am a dog!"
+  end
+end
+
+harry = Dog.new("Harry")
+harry.speak
+# "Hello! I am a dog"
+```
+*28) Give an example of using the super method, both with and without an argument.*
+*29) Give an example of overriding: when would you use it?*
+*30) In inheritance, when would it be good to override a method?*
