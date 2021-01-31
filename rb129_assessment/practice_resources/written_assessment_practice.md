@@ -4,6 +4,8 @@
 - [OOP & Reading Code](#OOP-&-Reading-Code)
 - [Classes, objects, encapsulation, working with collaborator objects, method access control](#Classes-objects-encapsulation-working-with-collaborator-objects-method-access-control)
 - [Polymorphism, inheritance, method lookup path, duck-typing](#Polymorphism-inheritance-method-lookup-path-duck-typing)
+- [Getters and Setters](#getters-and-setters)
+
 ### OOP & Reading Code
 *1) What is OOP and why is it important?*
 OOP (Object Oriented Programming) is a programming paradigm that is designed to handle large scale, complex programs by breaking up code into a series of smaller parts that interact with each other, rather than code that is built on a chain of dependencies. By using OOP, it allows code that has fewer dependencies and is easier to maintain, making it less likely that a small change to a part of the code will not break the entire program. 
@@ -666,4 +668,115 @@ obj2.class_var
 
 obj1.class_var
 # => 10
+```
+*24) Is it possible to reference a constant defined in a different class? How are constants used in inheritance? What is lexical scope?*
+In Ruby, constants are not evaluated at runtime. When dealing with constants, this means that the scope of the object remains limited to where it's defined in the code.
+
+When Ruby is attempting to find the value referenced by a constant, Ruby will look in the immediate module or class where the constant is referenced in the program, and if it fails to find a definition in the immediate class, it will look up the inheritance hierarchy (modules cannot inherit from other modules).
+
+In our example below, we demonstrate the concept of constants having lexical scope. In our `Vehicle` class, we define the `WHEELS` constant to point to an integer object, `4`. We reassign this `WHEELS` constant in our `Motorcycle` class, which inherits from the `Vehicle` class.
+
+We also define a getter method to access the `WHEELS` constant, `wheels`. After calling the `wheels` method on an object instantiated from the `Motorcycle` class, we see that the value of `bike.wheels` is still `4`. 
+
+This is because constants have lexical scope - when `bike.wheels` was called, Ruby had to look up the method lookup chain to access a `wheels` method. Ruby was able to find it in the `Vehicle` class, where the `WHEELS` constant was also defined, and this is where Ruby took the value of the constant `WHEELS` from.
+
+We could fix this by changing the return value of the `wheels` method to `self.class::WHEELS`. This syntax makes use of the namespace resolution operator (`::`), which is a way to point Ruby to look at a specific class when resolving the object referenced by a constant. We also use `self.class`, as `self` within an instance method refers to the calling object. We subsequently call the `Class#class` method on this, since the namespace resolution requires a class to look within to find the constant definition.
+```
+class Vehicle
+  WHEELS = 4
+
+  def wheels
+    WHEELS
+  end
+end
+
+class Motorcycle < Vehicle
+  WHEELS = 2
+end
+
+car = Vehicle.new
+car.wheels 
+# => 4
+
+bike = Motorcycle.new
+bike.wheels
+# => 4
+```
+### Getters and Setters
+*25) What is an accessor method?*
+An accessor method, is an instance method defined within a class that allows instance variables to be both accessed (has the functionality of a getter method) and overwritten (functionality of a setter method). 
+
+Accessor methods can be subject to method access control, such that only methods defined within the class can access/overwrite instance variables (in the case of a `private` accessor method), made `public` (such that all of the program can access/overwrite instance variables), or made `protected`, such that only methods defined within the class or other instances of the same class can access/overwrite instance variables.
+
+Ruby has an `attr_accessor` method from the `Module` class that creates both a getter and setter method.
+
+*26) What is a getter method?*
+A getter method is an instance method we define in a class that allows us to read an instance variable by returning the value of the instance variable. Ruby has a shorthand `Module#attr_reader` method that allows us to quickly create a getter method inside a class definition.
+
+An important aside is that while getter methods are intended to read instance variables (they do not provide an explicit ability to reassign values assigned to instance variables), they can be prone to destructive methods.
+
+In our example below, we have defined a getter method for the instance variable `@name` via the `attr_reader` method. However, we call a destructive method on the return value of the `Dog#name` method, resulting in mutation of the return value of `Dog#name`. 
+```
+class Dog
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+end
+
+ted = Dog.new("Ted")
+ted.name
+# => "Ted"
+
+ted.name.upcase!
+ted.name
+# => "TED"
+```
+We could prevent this by defining a custom getter method that duplicates the original `@name` instance variable.
+```
+class Dog
+  def initialize(name)
+    @name = name
+  end
+
+  def name
+    @name.dup
+  end
+end
+
+ted = Dog.new("Ted")
+ted.name
+# => "Ted"
+
+ted.name.upcase!
+ted.name
+# => "Ted"
+```
+*27) What is a setter method? What does it return?*
+A setter method is an instance method we define within a class definition that enables us to reassign the value of an instance variable. Ruby has a shorthand `Module#attr_writer` method that allows us to quickly create a setter method.
+
+An important point is that a setter method will return the argument that is passed to it. This may have unintended consequences if our code implementation relies on the setter method applying some form of transformation to the instance variable - this will not be reflected in the return value of the setter method and in this case, we should rely on the return value of the getter method after the instance variable value has been reassigned by the setter method.
+```
+class Dog
+  attr_writer :name
+
+  def initialize(name)
+    @name = name
+  end
+
+  def name
+    @name.dup
+  end
+end
+
+ted = Dog.new("Ted")
+ted.name
+# => "Ted"
+
+ted.name = "Frank"
+# "Frank"
+
+ted.name
+# => "Frank"
 ```
