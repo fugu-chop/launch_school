@@ -345,7 +345,7 @@ Where encapsulation reduces the interactivity of different parts of the program 
 
 We can implement polymorphism in a number of ways - class inheritance, interface inheritance and duck-typing. 
 
-In our example below, we observe polymorphism through class inheritance and interface inheritance. The `Cat`, `Turtle` and `Dog` classes subclass the `Pet` class, meaning they inherit the `initialize` method defined within `Pet` - this explains why we need to provide an argument to the `Class#new` method when instantiating an object from `Cat`, `Turtle` or `Dog`. While `ted`, `charlie` and `oscar` are all distinct objects, they all have the `initialize` method defined in the `Pet` superclass (class inheritance).
+In our example below, we observe polymorphism through class inheritance and interface inheritance. The `Cat`, `Turtle` and `Dog` classes subclass the `Pet` class, meaning they inherit the `initialize` method defined within `Pet` (denoted by the `<` symbol) - this explains why we need to provide an argument to the `Class#new` method when instantiating an object from `Cat`, `Turtle` or `Dog`. While `ted`, `charlie` and `oscar` are all distinct objects, they all have the `initialize` method defined in the `Pet` superclass (class inheritance).
 
 We also observe _interface_ inheritance through use of mixing in modules. In our example, we have defined the module `Swimmable` and mixed this into the `Turtle` and `Dog` classes. Again, while objects instantiated from the `Turtle` and `Dog` class are distinct from each other, these objects will have access to the `swim` method. 
 ```
@@ -425,9 +425,9 @@ AnimalParty.new.introductions([cat, dog, turtle])
 # => [#<Cat:0x00007ff3ee873b30>, #<Dog:0x00007ff3ee88e728>, #<Turtle:0x00007ff3ee894768>]
 ```
 *25) What is inheritance?*
-Inheritance is a mechanism in object oriented programming that allows classes to inherit behaviours (or instance methods) from other classes, as well as set up a template of the different instance variables (i.e. state) that an object instantiated from these classes should have (though state only exists once the object is actually instantiated from a class and values assigned to those instance variables). It is a way of modelling logical hierarchies between different classes and reducing the amount of code we have to write for multiple objects to have the same functionality. In Ruby, classes are only able to inherit from a single class.
+Inheritance is a mechanism in object oriented programming that allows classes to inherit behaviours (or instance methods) from other classes. This behaviour inheritance can also initialise any instance variables (i.e. state) that an object instantiated from these classes should have (though state only exists once the object is actually instantiated from a class and values assigned to those instance variables). It is a way of modelling logical hierarchies between different classes and reducing the amount of code we have to write for multiple objects to have the same functionality. In Ruby, classes are only able to inherit from a single class.
 
-In our example below, we define a class `Pet` and an instance method `speak` within `Pet`. The `Dog` class, which inherits from the `Pet` class, as denoted by the `<` operator, is able to access the `speak` method through class inheritance, and the `harry` object, when instantiated from the `Dog` class, expects to have a `@name` instance variable when initialised, since the `initialize` method in the `Pet` class stipulates that objects instantiated from it should have this instance variable. 
+In our example below, we define a class `Pet` and an instance method `speak` within `Pet`. The `Dog` class, which inherits from the `Pet` class, as denoted by the `<` symbol, is able to access the `speak` method through class inheritance, and the `harry` object, when instantiated from the `Dog` class, expects to have a `@name` instance variable when initialised, since the `initialize` method in the `Pet` class stipulates that objects instantiated from it should have this instance variable. 
 ```
 class Pet
   def initialize(name)
@@ -448,12 +448,14 @@ harry.speak
 ```
 
 *26) What is the difference between a superclass and a subclass?*
-A subclass inherits it's instance methods and state 'template' (state is not inherited, since it is unique to the object and only exists once the object is instantiated, and values assigned to instance variables) from a superclass. In Ruby, a subclass can only inherit from a single superclass. 
+A subclass inherits it's instance methods (state is not inherited, since it is unique to the object and only exists once the object is instantiated, and values assigned to instance variables) from a superclass. In Ruby, a subclass can only inherit from a single superclass. 
 
 *27) When is it good to use inheritance?*
-Inheritance is useful when we want various classes to share the same behaviours (i.e. instance methods) and state templates, since these can be defined in the superclass and inherited by the subclass without having to rewrite code. Inheritance does give us the flexibility to override methods if we do want our objects to respond to the same method name, but have a slightly different implementation.
+Inheritance is useful when we want various classes to share the same behaviours (i.e. instance methods), since these can be defined in the superclass and inherited by the subclass without having to rewrite code. Inheritance does give us the flexibility to override methods if we do want our objects to respond to the same method name, but have a slightly different implementation.
 
-In our example below, the `Dog` subclass inherits the `speak` method from the `Pet` superclass through class inheritance. However, we override the `speak` method to return a different string object. 
+In our example below, the `Dog` subclass inherits the `speak` method from the `Pet` superclass through class inheritance (denoted by the `<` symbol). When `Dog.new('Harry')` is invoked, Ruby will look within the `Dog` class for the `initialize` method and when it doesn't find it, Ruby will move up the inheritance hierarchy (to the `Pet` class), where it will find the `initialize` method and it will be invoked. While the `initialize` method still belongs to the superclass, `initialize` is still being called from the `Dog` class, so the instance variable created will still be part of the `Dog` class object's state.
+
+However, we override the `speak` method to return a different string object. 
 ```
 class Pet
   def initialize(name)
@@ -476,5 +478,192 @@ harry.speak
 # "Hello! I am a dog"
 ```
 *28) Give an example of using the super method, both with and without an argument.*
+The `super` method, when called inside another instance method, allows a method to look up a similarly named method earlier in the method lookup chain and invoke it. It can be useful to add additional functionality to existing instance methods of the same name that have been inherited from a superclass.
+
+In our below example, both the `Pet` and `Dog` (which inherits from the `Dog` class, as denoted by the `<` symbol) class have an `initialize` method. After initialising a `Dog` object, we call the `super` method in the `Dog#initialize` method with the `name` and `age` arguments to call the `Pet#initialize` method, which passes the arguments provided to `Dog.new` to `Pet#initialize`. In `Dog#initialize`, we extend the functionality of `Pet#initialize` to initialise another instance variable, `@owner` and assign to the object passed to the `owner` parameter. 
+
+We also have a `speak` method in the `Pet` and `Dog` class. For the `Dog#speak` instance method, we invoke `super` with parenthesis (no arguments), which will invoke the `Pet#speak` method, take the return value of `"Hello!"` and append an additional string object to it. Invoking `super()` is necessary when the method being invoked earlier in the method lookup chain does not take any arguments. 
+```
+class Pet
+  def initialize(name, age)
+    @name = name
+    @age = age
+  end
+
+  def speak
+    "Hello!"
+  end
+end
+
+class Dog < Pet
+  def initialize(name, age, owner)
+    super(name, age)
+    @owner = owner
+  end
+
+  def speak
+    super() + " I am #{@name} and I am #{@owner}'s pet."
+  end
+end
+
+ted = Dog.new("Ted", 4, "Bobby")
+```
 *29) Give an example of overriding: when would you use it?*
-*30) In inheritance, when would it be good to override a method?*
+Method overriding occurs when we have a method defined in a superclass which is inherited by a subclass, but then define another method of the same name in the subclass that can have different functionality compared with the method in the superclass. It is useful when we want to extend (through use of the `super` method) or change the functionality of an instance method. 
+
+In our example below, the `Dog` subclass inherits a `speak` method from the `Pet` superclass (denoted by the `<` symbol), which returns the string object `"Hello!"`. However, we override `Pet#speak` in `Dog` by defining `Dog#speak` and change it's functionality to return the string object `"I am a dog!"`
+```
+class Pet
+  def speak
+    "Hello!"
+  end
+end
+
+class Dog < Pet
+  def speak
+    "I am a dog!"
+  end
+end
+```
+*30) What is a module? What is a mixin? When would a module be useful? What is namespacing?*
+A module is a series of methods that can be mixed into a class, such that objects instantiated from that class also gain access to methods from that module. This is achieved by using the `include ModuleName` keyword in a class definition. Note that we cannot instantiate objects from modules - we can only mix in the module methods into a class, and instantiate an object directly from that class.
+
+It is useful in that classes can only inherit from a single superclass, whereas classes can mix in methods from any number of modules, so modules are useful from the perspective of being able to introduce common methods into unrelated classes that do not share a common hierarchical inheritance chain. Modules are also useful for organising various classes, also known as namespacing. This helps the reader makes it easier to recognise the purpose of the contained classes and also prevent avoid conflicts in methods that have the same name (but belong to different classes).
+
+In the example below, we define two unrelated classes, `Human` and `Dog`. We then mix in the `Walkable` module, allowing us to access the module method `walk` in both `Human` and `Dog` classes, even though these classes are unrelated to each other.
+```
+module Walkable
+  def walk
+    "I am walking!"
+  end
+end
+
+class Human
+  include Walkable
+end
+
+class Dog
+  include Walkable
+end
+
+fred = Human.new
+fred.walk
+
+teddy = Dog.new
+teddy.walk
+```
+In the following example, we use modules as convenient way of organising related classes together (namespacing). We can then access these classes and call their associated instance methods by using the namespace resolution operator `::`.
+```
+module Mammal
+  class Dog
+    def bark
+      "Woof!"
+    end
+  end
+
+  class Cat
+    def meow
+      "Meow!"
+    end
+  end
+end
+
+Mammal::Dog.new.bark
+# => "Woof!"
+
+Mammal::Cat.new.meow
+# => "Meow!"
+```
+*31) Why should methods in mixin modules be defined without using `self.` in the definition?*
+When an instance method definition is prefixed by the `self` keyword, it refers to the class. This means that if we define a method within a module with the `self` prefix, we are defining a class method on the module, meaning we can only call that class method directly on the module itself, and not from any objects instantiated from classes where the module is mixed in. 
+
+In our example below, we create the `Identifiable` module, and define the class method `self.identify`. We can then call this method directly from the `Identifiable` module, but an object instantiated from the `Dog` class does not have access to the `self.identify` class method. 
+```
+module Identifiable
+  def self.identify
+    "I am a class method!"
+  end
+end
+
+class Dog
+  include Identifiable
+end
+
+Identifiable.identify
+# => "I am a class method!"
+
+Dog.new.identify
+# NoMethodError (undefined method `identify' for #<Dog:0x00007fc8aa156f38>)
+```
+*32) What is the method lookup path? How is the method lookup path affected by module mixins and class inheritance?*
+The method lookup path is the chain of subclasses and superclasses (including mixed in modules) that Ruby will look within to call methods. It is applicable when an object instantiated from a subclass calls a method that is inherited from a superclass or mixed in through a module, and not explicitly defined within the subclass itself. 
+
+When looking for an instance method along the method lookup path, Ruby will look in the immediate class from which an object was instantiated from, then any modules mixed in, starting from the last module mixed in to the class. If Ruby cannot find the associated method, it will look in the superclass, and any modules mixed into that superclass using the same process, and continue further up the inherited superclasses until it finds a relevant instance method (at which point it will stop looking), or return a `NoMethodError` exception. We can observe this sequence by calling the `Class#ancestors` method on a particular class.
+
+In our example below, when we call `Dog.new.walk`, Ruby will first look in the `Dog` class to see if there is a `walk` instance method. Since this does not exist, it will then look at the `Pet` class definition, then the `Animal` class definition, then the `Swimmable` module, then the `Walkable` module, where it finds the `walk` method definition, at which point it will stop looking further up the method lookup chain, and call the `walk` method. 
+
+We can also verify the full method lookup path (i.e. the path that Ruby would take if it could not find the `walk` method in the `Walkable` module) by calling the `Class#ancestors` method on the `Dog` class.
+```
+module Walkable
+  def walk
+    "I can walk!"
+  end
+end
+
+module Swimmable
+  def swim
+    "I can swim"
+  end
+end
+
+class Animal
+  include Walkable
+  include Swimmable
+
+  def speak
+    "I am an animal!"
+  end
+end
+
+class Pet < Animal
+end
+
+class Dog < Pet
+end
+
+Dog.ancestors
+# => [Dog, Pet, Animal, Swimmable, Walkable, Object, Kernel, BasicObject]
+```
+*33) Are class variables accessible to subclasses? Why is it recommended to avoid the use of class variables when working with inheritance?*
+Class variables are scoped at a class level and defined by the `@@` symbols prefixing a variable name. They are accessible to objects instantiated from the class when there is an appropriate getter or setter method. It is generally not recommended to use class variables, as all objects that are instantiated from the class where the class variable is defined, share that same single class variable, meaning it is very easy to mistakenly change the value associated referenced by the class variable.
+
+In our example below, we define the `SuperClass` class using the `class`...`end` keyword pair, with a getter method also defined. We also initialise the `@@class_var` class variable to the integer object `8` when we define the class. 
+
+We then define a new class, `SubClass1`, which inherits from `SuperClass`. We then reassign the `@@class_var` class variable to the integer object `10`. We instantiate `obj2` from the `SubClass1` class, then call the `class_var` getter method to verify that the `@@class_var` class variable is now reassigned to the integer object `10`.
+
+However, once we call the `class_var` getter method on `obj1`, we see that our value for `@@class_var` in `obj1` is also `10`, since all objects instantiated from `SuperClass` and it's subclasses share the single class variable. If we had any other subclasses that inherited from `SuperClass`, this change would also be observed in those subclasses. In this sense, class variables share state between objects (contrast this with instance variables, which are unique to each object).
+```
+class SuperClass 
+  @@class_var = 8
+
+  # We cannot use attr_ methods as these only work for instance variables
+  def class_var
+    @@class_var
+  end
+end
+
+obj1 = SuperClass.new
+obj1.class_var 
+# => 8
+
+class SubClass1 < SuperClass
+  @@class_var = 10
+end
+
+obj2 = SubClass1.new
+obj2.class_var
+# => 10
+
+obj1.class_var
+# => 10
+```

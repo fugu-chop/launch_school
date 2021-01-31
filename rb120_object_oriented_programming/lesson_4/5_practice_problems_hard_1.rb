@@ -125,12 +125,22 @@ class Catamaran
   def initialize(num_propellers, num_hulls, km_traveled_per_liter, liters_of_fuel_capacity)
     @propeller_count = num_propellers
     @hull_count = num_hulls
-    self.km_traveled_per_liter = km_traveled_per_liter
-    self.liters_of_fuel_capacity = liters_of_fuel_capacity
+    self.fuel_efficiency = km_traveled_per_liter
+    self.fuel_capacity = liters_of_fuel_capacity
   end
 end
 
 # 3) Building on the prior vehicles question, we now must also track a basic motorboat. A motorboat has a single propeller and hull, but otherwise behaves similar to a catamaran. Therefore, creators of Motorboat instances don't need to specify number of hulls or propellers. How would you modify the vehicles code to incorporate a new Motorboat class?
+module Moveable
+  attr_accessor :speed, :heading
+  # While we don't actually have any direct setter functionality for these instance variables, this is only place the solution uses those two attributes is in the Movable module, so you want to have the Movable module to have control over setting them - think of this as encapsulation. 
+  attr_writer :fuel_capacity, :fuel_efficiency
+
+  def range
+    @fuel_capacity * @fuel_efficiency
+  end
+end
+
 class SeaVessel
   include Moveable
 
@@ -139,8 +149,9 @@ class SeaVessel
   def initialize(num_propellers, num_hulls, km_traveled_per_liter, liters_of_fuel_capacity)
     @propeller_count = num_propellers
     @hull_count = num_hulls
-    self.km_traveled_per_liter = km_traveled_per_liter
-    self.liters_of_fuel_capacity = liters_of_fuel_capacity
+    # Defined in the Moveable module
+    self.fuel_efficiency = km_traveled_per_liter
+    self.fuel_capacity = liters_of_fuel_capacity
   end
 end
 
@@ -160,14 +171,14 @@ class SeaVessel
 
   attr_reader :propeller_count, :hull_count
   
-  def initialize(num_propellers, num_hulls, km_traveled_per_liter, liters_of_fuel_capacity)
+  def initialize(num_propellers, num_hulls, km_traveled_per_liter, fuel_capacity)
     @propeller_count = num_propellers
     @hull_count = num_hulls
-    self.km_traveled_per_liter = km_traveled_per_liter
-    self.liters_of_fuel_capacity = liters_of_fuel_capacity
+    self.fuel_efficiency = km_traveled_per_liter
+    self.fuel_capacity = fuel_capacity
   end
 
   def range
-    super + 10
+    super() + 10
   end
 end

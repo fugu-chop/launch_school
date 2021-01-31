@@ -83,6 +83,25 @@ In the `GoodDog` class, we're overriding the `speak` method in the `Animal` clas
 
 That means when we wrote the code `sparky.speak`, Ruby first looked at the `sparky` class, which is `GoodDog`. It found the `speak` method there and used it. When we wrote the code `paws.speak`, Ruby first looked at the `paws` class, which is `Cat`. It __did not__ find a `speak` method there, so it continued to look in `Cat`'s superclass, `Animal`. It found a `speak` method in `Animal`, and used it.
 
+In the below example, the `Dog` class isn't inheriting the `@name` instance variable from the `Pet` class, it is inheriting the `initialize` method and it's the `initialize` method that is creating the `@name` variable. 
+
+When `Dog.new('Harry')` is invoked, Ruby will look within the `Dog` class for the `initialize` method and when it doesn't find it, Ruby will move _up the inheritance hierarchy_ (to the `Pet` class), where it will find the `initialize` method and it will be invoked. While the `initialize` method still belongs to the superclass, __`initialize` is still being called from the `Dog` class, so the instance variable created will still be part of the `Dog` class object's state__.
+```
+class Pet
+  def initialize(name)
+    @name = name
+  end
+  
+  def speak
+    "Hello! I am a pet"
+  end
+end
+
+class Dog < Pet
+end
+
+harry = Dog.new("Harry")
+```
 Inheritance can be a great way to remove duplication in your code base. There is an acronym that you'll see often in the Ruby community, "DRY". This stands for *"Don't Repeat Yourself"*. It means that if you find yourself writing the same logic over and over again in your programs, there are ways to extract that logic to one place for reuse.
 
 ### `super`
@@ -167,10 +186,19 @@ If you forget to use the parentheses here, Ruby will raise an `ArgumentError` ex
 
 We can also use `super()` to pass in default values as arguments, again, extending the functionality of an instance method in the superclass.
 ```
-class Motorboat < Seacraft
+class SeaVessel
+  def initialize(num_propellers, num_hulls, km_traveled_per_liter, liters_of_fuel_capacity)
+    @propeller_count = num_propellers
+    @hull_count = num_hulls
+    @km_traveled_per_liter = km_traveled_per_liter
+    @liters_of_fuel_capacity = liters_of_fuel_capacity
+  end
+end
+
+class Motorboat < SeaVessel
   def initialize(km_traveled_per_liter, liters_of_fuel_capacity)
-    # In the Seacraft class, the initialize method takes two additional arguments in addition to those provided on initialisation here
-    # (i.e. the initialize method in the Seacraft class takes 4 total arguments), which we are autofilling.
+    # In the SeaVessel class, the initialize method takes two additional arguments in addition to those provided on initialisation here
+    # We are calling SeaVessel#initialize and autofilling two of those arguments (We don't have to define them within Motorboat#initialize)
     super(1, 1, km_traveled_per_liter, liters_of_fuel_capacity)
   end
 end
