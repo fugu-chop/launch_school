@@ -124,7 +124,6 @@ Here, the `to_s` method is automatically called on the `arr` array object, as we
 "#{sparky}"
 => "This dog's name is Sparky and it is 28 in dog years."
 ```
-
 Another example:
 ```
 class Human  
@@ -138,6 +137,8 @@ class Human
 end
 ```
 Ordinarily, the `what_species_am_I` method would return `I am a #<Human:0x00007fd4ad0f6ae8>` - i.e. a reference to the __object__. However, as string interpolation automatically calls the `to_s` method, it replaces the `self` with `self.class` instead.
+
+An interesting aside is that if our custom implementation of `to_s` does not return a string, Ruby seems to ignore the class definition of the `to_s` method and reverts to the `Object#to_s` instance method.
 
 In summary, the `to_s` method is called automatically on the object when we use it with `puts` or when used with string interpolation. This fact may seem trivial at the moment, but knowing when `to_s` is called will help us understand how to read and write better OO code.
 

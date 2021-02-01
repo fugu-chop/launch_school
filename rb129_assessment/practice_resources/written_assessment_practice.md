@@ -905,3 +905,104 @@ Bird.new.legs
 Animal.new.legs
 # => 4
 ```
+*33) What is the default to_s method that comes with Ruby, and how do you override this? What are some important attributes of the to_s method?*
+The default `to_s` instance method comes from the `Object` class in Ruby, and by default, print the name of the object's class and an encoding of the object's `object_id`. Often, this is not a particularly useful output, so we are able to use method overriding to replace the default functionality of the `Object#to_s` instance method to custom functionality, by defining a `to_s` method within a class definition.
+
+Two important things to note are that the `Object#to_s` instance method is automatically called by Ruby during a `puts` method call on the argument (i.e. `puts argument.to_s`), as well as during string interpolation. This is demonstrated in our example below - when we call the `puts` method, Ruby automatically calls `to_s` on the `jack` object. Ruby finds a method definition for `to_s` in the `Dog` class definition, and hence calls `Dog#to_s` instead of `Object#to_s`. This is why `"Jack"` is printed, instead of the `Dog` class name and an encoding of the `jack` object's object_id. 
+
+We also observe `to_s` being automatically called in our string interpolation - the code is equivalent to `#{d.to_s}`.
+```
+class Dog
+  def initialize(name)
+    @name = name
+  end
+
+  def to_s
+    "#{@name}"
+  end
+end
+
+jack = Dog.new("Jack")
+puts jack
+# => Jack
+
+"Hello, I am a dog and my name is #{d}!"
+# => "Hello, I am a dog and my name is Jack!"
+```
+*34) From within a class, when an instance method uses self, what does it reference?*
+Within a class definition, when an instance method uses the `self` keyword, it is referring to the calling object. 
+```
+class Dog
+  def display_class
+    "#{self.class}"
+  end
+end
+
+d = Dog.new
+d.display_class
+# => "Dog"
+```
+In our example above, we use the `self` keyword in our `Dog#display_class` instance method. Thus when we call the `display_class` method, `self` is pointing to the object that called the `display_class` method, the `d` object instantiated from `Dog`. We then chain the `Class#class` method onto the `display_class` method, which returns the class of the `d` object.
+
+Prior to Ruby 2.7, we could not use the `self` keyword when calling private methods within the class, as this would be the equivalent of calling the method on the object (i.e. calling the instance method outside of the class), which is prevented through use of the `private` method.
+
+*35) What happens when you use self inside a class but outside of an instance method?*
+When we use the `self` keyword inside a class definition but outside of an instance method, it refers to the class itself. This is useful when defining class methods (i.e. methods that are called directly on the class, and not on objects instantiated from the class).
+
+In our example below, our use of the `self` keyword in the method definition means that we are defining the `species` method directly on the class - i.e. defining a class method. As this is a class method, the `self` keyword within the `self.species` class method also refers to the class itself when called on the class.
+```
+class Dog
+  def self.species
+    self
+  end
+end
+
+Dog.species
+# => Dog
+```
+*36) Why do you need to use self when calling private setter methods?*
+We need to use the `self` keyword when calling private setter methods, as without `self`, Ruby will interpret the setter method as a local variable assignment, which will not change the state of the object when the private setter method is called.
+```
+class Dog
+  def initialize(name, age)
+    @name = name
+    @age = age
+  end
+
+  def change_info(name, age)
+    self.name = name
+    self.age = age
+  end
+
+  private
+  
+  attr_writer :name, :age
+end
+
+ted = Dog.new("Teddy", 4)
+# => #<Dog:0x00007fc1a105ab30 @name="Teddy", @age=4>
+
+ted.change_info("Bob", 3)
+
+ted
+# => #<Dog:0x00007fc1a105ab30 @name="Bob", @age=3>
+```
+*37) Why use self, and how does self change depending on the scope it is used in?*
+The `self` keyword can change the functionality of our code, depending on where it is used. When used within an instance method, it refers to the calling object. When used within a class definition, but outside of an instance method, it refers to the class where the `self` keyword was used.
+```
+class Dog
+  def self.species
+    self
+  end
+
+  def object_info
+    self
+  end
+end
+
+Dog.species
+# => Dog
+
+Dog.new.object_info
+# => => #<Dog:0x00007fd5f595e660>
+```
