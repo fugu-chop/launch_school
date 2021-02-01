@@ -5,6 +5,7 @@
 - [Classes, objects, encapsulation, working with collaborator objects, method access control](#Classes-objects-encapsulation-working-with-collaborator-objects-method-access-control)
 - [Polymorphism, inheritance, method lookup path, duck-typing](#Polymorphism-inheritance-method-lookup-path-duck-typing)
 - [Getters and Setters](#getters-and-setters)
+- [Instance methods, class methods, self](#Instance-methods-class-methods-self)
 
 ### OOP & Reading Code
 *1) What is OOP and why is it important?*
@@ -756,7 +757,7 @@ ted.name
 *27) What is a setter method? What does it return?*
 A setter method is an instance method we define within a class definition that enables us to reassign the value of an instance variable. Ruby has a shorthand `Module#attr_writer` method that allows us to quickly create a setter method.
 
-An important point is that a setter method will return the argument that is passed to it. This may have unintended consequences if our code implementation relies on the setter method applying some form of transformation to the instance variable - this will not be reflected in the return value of the setter method and in this case, we should rely on the return value of the getter method after the instance variable value has been reassigned by the setter method.
+An important point is that a setter method will return the argument that is passed to it. This may have unintended consequences if our code implementation relies on the setter method returning a value after some form of transformation to the object referenced by the instance variable - this will not be reflected in the return value of the setter method and in this case, we should rely on the return value of the getter method called after the instance variable value has been reassigned by the setter method.
 ```
 class Dog
   attr_writer :name
@@ -779,4 +780,128 @@ ted.name = "Frank"
 
 ted.name
 # => "Frank"
+```
+*28) How do you decide whether to reference an instance variable or a getter method?*
+Whether we reference an instance variable or a getter method can depend on whether we need to perform any additional transformation on the object referenced by the instance variable, or want to add validation or guard logic. In these cases, a getter method can enable this (and reduce the amount of times we need to apply the validation/transformation logic in our code), whereas the instance variable is limited to whatever object it is referencing (i.e. without any transformation or validation or guard logic). A getter method can also be useful if we want to make the instance variable accessible outside the class where it is defined (when it is either protected or public), since instance variables cannot be accessed outside of the class definition unless a getter method is provided. 
+
+### Instance methods, class methods, self
+*29) When would you call a method with self?*
+Within a class definition, if we have a setter method and want to utilise this setter method within another instance method definition, we will need to prepend `self` to the setter method name, otherwise Ruby will interpret the setter method as a local variable instead of the setter method. We *could* also prepend `self` to our getter methods, though this is unnecessary (since there is no `=` operator required, Ruby will not assume local variable assignment is happening), and often discouraged by the Ruby community.
+
+Although somewhat contrived, we have an example of using the `self` keyword prepended to the setter method `name`. If we did not prepend `self`, Ruby would interpret the `name` setter method as a local variable. Therefore if we called the `rename` instance method, it would return a local variable `name` assigned to the object provided to the `name` argument, and the instance variable `@name` would be unchanged.
+```
+class Dog
+  def initialize(name)
+    @name = name
+  end
+
+  def rename(name)
+    self.name = name
+  end
+
+  private
+
+  attr_writer :name
+end
+
+d = Dog.new("Ted")
+# => #<Dog:0x00007fe539022738 @name="Ted">
+
+d.rename("Jeff")
+d
+# => #<Dog:0x00007fe539022738 @name="Jeff">
+```
+*30) What are class methods?*
+Class methods are methods defined on the class itself. We can identify these by the `self` keyword prepended to the method definition. In the context of class methods, when `self` is used as a prefix, it refers to the class itself - hence we are literally defining the method on the class itself. Class methods can only be called directly on the class itself - they cannot be called by objects instantiated from the class (attempting to do so will raise a `NoMethodError`), though class methods are inherited in the same fashion as instance methods. 
+
+Class methods cannot access instance variables (as instance variables are only created when objects are instantiated from the class). Class methods can be useful when we need a class level method that does not have anything to do with the state of an object.
+```
+class Dog
+  def self.identify
+    self
+  end
+end
+
+class Puppy < Dog
+end
+
+Dog.identify
+# => Dog
+
+Puppy.identify
+# => Puppy
+
+Dog.new.identify
+# => NoMethodError
+```
+*31) What is the purpose of a class variable?*
+A class variable is a variable defined at a class level and initialised when the class is evaluated by Ruby (distinguish this from an instance level, which only occurs when an object is instantiated from a class). Class variables can be inherited by subclasses and are accessible by both class and instance methods (this  implies they are accessible within objects). They are denoted by `@@` symbols before a variable name. 
+
+Within the Ruby community, the use of class variables is somewhat discouraged due to the fact that they can be inherited, and that all objects instantiated from the class (and subclasses inheriting from the superclass where the class variable is defined) share the same copy of the class variable, meaning it is easy to accidentally reassign the class variable, and have that change reflected across all subclasses and objects instantiated from that class and subclasses. 
+
+In our example below, we define the `Animal` class with a class variable, `@@legs` and assign it to the integer object `4`. Once this class is defined by Ruby, the class variable is created. We call the class method `legs` and the instance method `legs`, which both return the `@@legs` class variable, which still references the integer object `4`.
+
+However, as soon as we define the `Snake` class, which subclasses the `Animal` class, the class variable `@@legs` now points to the integer object `0`. We can observe the fact that this class variable is referencing `0` in the `Animal` superclass, as well as objects instantiated from the `Animal` class - `horse` in our case. 
+```
+class Animal
+  @@legs = 4
+
+  def self.legs
+    @@legs
+  end
+
+  def legs
+    @@legs
+  end
+end
+
+Animal.legs
+# => 4
+
+horse = Animal.new
+horse.legs
+# => 4
+
+class Snake < Animal
+  @@legs = 0
+end
+
+Snake.legs
+# => 0
+
+Snake.new.legs
+# => 0
+
+Animal.legs
+# => 0
+
+horse.legs
+# => 0
+```
+*32) What is a constant variable?*
+A constant variable (or constant for short) is a variable we define at the class level. It is intended that a constant points to an object that should not change through the operation of our program (hence the name, constant). Ruby will allow us to reassign objects referenced by constants, but will raise a warning that the constant has already been defined.
+
+We can identify constants by variable names starting with a capital letter (though by convention we usually use all capital letters when defining a constant). They are created and initialised when the class is defined (i.e. evaluated at runtime) and can be accessed by class or instance methods. Constants are different from instance or class variables, in that we are able to access constants from completely unrelated classes by using the namespace resolution operator `::`. This allows us to reach into other classes to access a constant. 
+
+The other unique aspect of constants when compared with instance or class variables in that constants also have lexical scope, meaning that when attempting to evaluate the value of a constant, Ruby will look to the immediate class or module where the constant is referenced, and if it cannot find the constant definition at that location, Ruby will attempt to look up the inheritance chain for the constant definition.
+
+We can bring the scoping behaviour of constants in line with instance variables by appending `self.class::` to the constant in any method that attempts to reference the constant.
+```
+class Animal
+  LEGS = 4
+
+  def legs
+    self.class::LEGS
+  end
+end
+
+class Bird < Animal
+  LEGS = 2
+end
+
+Bird.new.legs
+# => 2
+
+Animal.new.legs
+# => 4
 ```
