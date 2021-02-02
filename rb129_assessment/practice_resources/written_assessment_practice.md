@@ -842,7 +842,7 @@ Within the Ruby community, the use of class variables is somewhat discouraged du
 
 In our example below, we define the `Animal` class with a class variable, `@@legs` and assign it to the integer object `4`. Once this class is defined by Ruby, the class variable is created. We call the class method `legs` and the instance method `legs`, which both return the `@@legs` class variable, which still references the integer object `4`.
 
-However, as soon as we define the `Snake` class, which subclasses the `Animal` class, the class variable `@@legs` now points to the integer object `0`. We can observe the fact that this class variable is referencing `0` in the `Animal` superclass, as well as objects instantiated from the `Animal` class - `horse` in our case. 
+However, as soon as Ruby evaluates the `Snake` class, which subclasses the `Animal` class, the class variable `@@legs` now points to the integer object `0`, irrespective of whether n object is instantiated from the `Snake` class. We can observe the fact that this class variable is referencing `0` in the `Animal` superclass, as well as objects instantiated from the `Animal` class - `horse` in our case. 
 ```
 class Animal
   @@legs = 4
@@ -905,6 +905,23 @@ Bird.new.legs
 
 Animal.new.legs
 # => 4
+```
+Here is an example of constants being inheritable:
+```
+module Legs
+  def legs
+    "This construct has #{Dog::LEGS} legs!"
+  end
+end
+
+class Mammal
+  LEGS = 4
+
+  include Legs
+end
+
+class Dog < Mammal
+end
 ```
 *33) What is the default to_s method that comes with Ruby, and how do you override this? What are some important attributes of the to_s method?*
 The default `to_s` instance method comes from the `Object` class in Ruby, and by default, print the name of the object's class and an encoding of the object's `object_id`. Often, this is not a particularly useful output, so we are able to use method overriding to replace the default functionality of the `Object#to_s` instance method to custom functionality, by defining a `to_s` method within a class definition.
@@ -1011,9 +1028,9 @@ Dog.new.object_info
 When we call the `p` method on an object, this is the `Kernel#p` instance method. This has the effect of also calling the `Class#inspect` on the same object that is passed as an argument to the `p` method. When we call the `Kernel#puts` method, this also automatically calls the `Object#to_s` instance method on the object passed as an argument to the `puts` method.
 
 *39) What are the scoping rules for class variables? What are the two main behaviors of class variables?*
-Class variables are scoped at the class level and can be inherited. They are denoted by `@@` symbols before the variable name. Class variables exhibit two particular behaviours:
+Class variables are scoped at the class level and can be inherited by subclasses. They are denoted by `@@` symbols before the variable name. Class variables exhibit two particular behaviours:
 1. All objects instantiated from the class, subclasses, and the objects instantiated from those subclasses, all have access to a single copy of the class variable. This means that any change in the class variable, wherever it occurs, is reflected across all of those subclasses and objects. This is why it is very easy to make changes that impact multiple other classes and objects, which is why usage of class variables is generally discouraged. 
-2. Class variables can be accessed via class methods where the class is defined (regardless of where the class variable is initialised), or by instance methods when an object is instantiated from the class where the class variable is defined.
+2. Class variables can be accessed via class methods where the class variable is defined (regardless of where the class variable is initialised), or by instance methods when an object is instantiated from the class where the class variable is defined.
 
 In our example below, we create the `@@legs` class variable in the `Animal` class and assign it to the integer object `4`. We have both a class (`Animal::legs`) and an instance getter method (`Animal#legs`) that can access the `@@legs` class variable.
 
@@ -1111,7 +1128,56 @@ String === Hash
 The `eql?` method returns true if the two objects being compared have the same value and refer to the same objects. It's not commonly used - mostly commonly for comparing the key-value pairs between two `Hash` objects.
 
 *46) What is interesting about the #object_id method and its relation to symbols and integers?*
+The `Object#object_id` instance method, when called on an object, will return an object id of that particular object which represents it's location within memory. Each object that has been instantiated in Ruby has a unique object id. In relation to symbols and integers, objects with the same value instantiated from these classes occupy a single location in memory. Constrast this with objects instantiated from other classes, such as String objects, which despite having the same value, will occupy different locations in memory (and thus have different object ids).
 
+In our example below, we have instantiated two different instance variables to reference the `Integer` object with a value of `4`. When we call the `Object#object_id` instance method, we find that the two `4` objects occupy the same space in memory and thus have the same object id, despite being referenced in two different instance variables. This means that the two integer objects `4` are the same object. Contrast this with our instance variables referencing the string object `"Harry"`. Despite the string objects having the same value, they occupy two different spaces in memeory and hence have two different object ids. This indicates that these are two different objects. 
+```
+class Dog
+  attr_reader :dog_age_start, :dog_age_finish, :dog_name_start, :dog_name_finish
+
+  def initialize
+    @dog_age_start = 4
+    @dog_age_finish = 4
+    @dog_name_start = "Harry"
+    @dog_name_finish = "Harry"
+  end
+end
+
+Dog.new.dog_age_start.object_id
+# => 9
+Dog.new.dog_age_finish.object_id
+# => 9
+Dog.new.dog_name_start.object_id
+# => 70221944311620
+Dog.new.dog_name_finish.object_id
+# => 70221965054880
+```
 *47) When do shift methods make the most sense?*
+The shift method is generally best used with collections, or Array objects, in particular. This is because the `Array` class implements these shift methods, and no other classes really implement a similar method (e.g. `Hash` objects don't have this method and the `String` class uses the `+` method to concatenate strings). In general, the implementation of custom methods should be similar to the implementation already built into classes already defined by the Core API in Ruby. 
 
 *48) Explain how the element reference getter and element assignment setter methods work, and their corresponding syntactical sugar*
+The element reference getter and element assignment setter methods are observed in the `Array` class in the Ruby Core API. In the standard implementation, they allow us to reference array elements by index and mutate arrays by reassigning elements by index, respectively. There is a significant degree of syntactical sugar which makes these methods look like operators. We are able to define our own implementation in our own classes (though it is generally recommended that their syntax and functionality be similar to the equivalent methods in the `Array` class). 
+
+In our example below, there is a custom element reference getter method and element assignment setter method defined, which strips back the syntactical sugar in the instand method definition. Calling these methods however, still makes use of the syntactical sugar provided in equivalent instance methods defined in the `Array` class. 
+```
+class Owner
+  def initialize
+    @pets = ["Teddy", "Charlie", "Bob"]
+  end
+
+  def [](idx)
+    @pets[idx]
+  end
+
+  def []=(idx, pet)
+    @pets[idx] = pet
+  end
+end
+
+ted = Owner.new
+ted[1]
+# => "Charlie"
+ted[2] = "Jamie"
+ted[2]
+# => "Jamie
+```
