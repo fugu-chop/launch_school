@@ -86,7 +86,7 @@ The former is calling `Integer#==` while the latter is calling `Float#==`. Thank
 When you define a `==` method, you also get the `!=` for free.
 
 ### `object_id`
-Every object has a method called `object_id`, which returns a numerical value that uniquely identifies the object. We can use this method to determine whether *two variables are pointing to the same objec*t. We could do this with `equal?` as well.
+Every object has a method called `object_id`, which returns a numerical value that uniquely identifies the object. We can use this method to determine whether *two variables are pointing to the same object*. We could do this with `equal?` as well.
 ```
 str1 = "something"
 str2 = "something"
@@ -130,6 +130,20 @@ end
 ```
 Behind the scenes, the `case` statement is using the `===` method to compare each `when` clause with `num`. In this example, the `when` clauses contain only ranges, so `Range#===` is used for each clause. If the `when` clause simply had a number, the `case` statement would use `Integer#===`.
 
+Visualised another way:
+```
+num = 25
+
+if (1..50) === num
+  puts "small number"
+elsif (51..100) === num
+  puts "large number"
+else
+  puts "not in range"
+end
+```
+In the above example, on each conditional, we are evaluating whether `num` belongs in the set.
+
 Another example:
 ```
 number = 42
@@ -154,4 +168,4 @@ On line 1, `true` is returned because "hello" is an instance of `String`, even t
 Sidenote: the `===` operator in JavaScript is very __different from its function in Ruby__. Do not get the two confused.
 
 ### The `eql?` method
-The `eql?` method (as defined by the `Object` class) determines if two objects are the __same object and same value__. However, most other classes overwrite this implementation (e.g. `String#eql?` tests for whether the two objects contain the same __value__ and __not__ the same object. It's not used very often (primarily for `Hash` objects).
+The `eql?` method (as defined by the `Object` class) determines if two objects are the __same object and same value__. However, most other classes overwrite this implementation (e.g. `String#eql?` tests for whether the two objects contain the same __value__ and __not__ the same object. It's not used very often (primarily for comparing key-value pairs between `Hash` objects).

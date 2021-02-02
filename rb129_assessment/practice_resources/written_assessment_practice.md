@@ -6,6 +6,7 @@
 - [Polymorphism, inheritance, method lookup path, duck-typing](#Polymorphism-inheritance-method-lookup-path-duck-typing)
 - [Getters and Setters](#getters-and-setters)
 - [Instance methods, class methods, self](#Instance-methods-class-methods-self)
+- [Fake operators and equality](#fake-operators-and-equality)
 
 ### OOP & Reading Code
 *1) What is OOP and why is it important?*
@@ -1066,3 +1067,51 @@ Bird.new.legs
 Subclassing (or inheritance), does not really exist in the context of instance variables, as instance variables do not exist until an object is instantiated from a class and a value assigned to them. Thus, instance variables are not inherited. We can say, however, that instance methods are inherited, which when called, can initialise instance variables.
 
 As each object is instantiated from a class, it's instance variables are created, and are generally unique to it (i.e. contributing to that object's state), such that each object is also unique (unless when we instantiate multiple object from a class, the instance variables and the objects they reference are the exact same objects, such that the objects themselves will be the same). 
+
+### Fake operators and equality
+*41) What is a fake operator?*
+A fake operator is an instance method defined within a class that appears to be an operator, but can have different implementations based on where/how it is defined across different classes. The reason why these methods appear to be operators is due to Ruby's syntactical sugar, which makes the syntax of calling these methods look like operators. Examples include `==`, `+`, `[]`, which are all methods disguised as operators due to syntactical sugar. 
+
+*42) How does equivalence work in Ruby?*
+Equivalence in Ruby can have different meanings, depending on what instance method we use. The `BasicObject#==` method treats objects as equivalent if they are the same object occupying the same physical space in memory. However, various classes such as `Hash`, `String` and `Array` implement their own versions of the `==` method, such that many of these methods treat objects as equal if they have the same value, but not necessarily the same object (i.e. they do not have the same `object_id`). 
+
+The notable exceptions are the `Integer` and `Symbol` classes, which test for object equivalence (rather than value equivalence). This is more of a memory optimisation choice since `Symbol` and `Integer` objects can't be mutated (however the `Integer#==` instance method has a slight wrinkle in it's implementation, as it allows comparison between `Float` and `Integer` objects, and vice versa for `Float#==` instance method).
+
+Ruby also has an `Object#equal?` method, which treats objects as equal if they occupy the same space in memory (i.e. have the same `object_id`). Most other classes typically do not provide their own implementation of this instance method as this method is a common way to test whether two objects occupy the same space in memory (i.e. are the same object).
+
+*43) How do you determine if two variables actually point to the same object?*
+We can call `Object#object_id` on that variable. This will return the object id of the object referenced by that variable. Since the object id is unique to every object in Ruby, if the object id of the object is the same for both variables, then this indicates that the two variables are pointing at the same object. Alternatively, we could use the `Object#equal?` method. 
+
+*44) What is the === method?*
+The `===` method compares objects, returning `true` if the argument passed into the instance method belongs to the set on which the method is invoked. It is most frequently observed in `case` statements.
+
+In our below example, we are comparing the integer object `25` to various ranges using the `Range#===` instance method - e.g. `(1..50).===25`
+```
+case 25
+when 1..50
+  puts "1 to 50"
+when 51..100
+  puts "51 to 100"
+else
+  puts ">100"
+end
+```
+In our example below, we use `String#===` to compare whether `"Hello"` belongs to the set `String` (i.e. whether `"Hello"` is an object instantiated from the `String` class). 
+```
+String === "Hello"
+# => true
+
+"Hello" === String
+# => false
+
+String === Hash
+# => false
+```
+*45) What is the eql? method?*
+The `eql?` method returns true if the two objects being compared have the same value and refer to the same objects. It's not commonly used - mostly commonly for comparing the key-value pairs between two `Hash` objects.
+
+*46) What is interesting about the #object_id method and its relation to symbols and integers?*
+
+*47) When do shift methods make the most sense?*
+
+*48) Explain how the element reference getter and element assignment setter methods work, and their corresponding syntactical sugar*
