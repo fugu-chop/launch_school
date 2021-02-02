@@ -1006,3 +1006,63 @@ Dog.species
 Dog.new.object_info
 # => => #<Dog:0x00007fd5f595e660>
 ```
+*38) What happens when you call the p method on an object? And the puts method?*
+When we call the `p` method on an object, this is the `Kernel#p` instance method. This has the effect of also calling the `Class#inspect` on the same object that is passed as an argument to the `p` method. When we call the `Kernel#puts` method, this also automatically calls the `Object#to_s` instance method on the object passed as an argument to the `puts` method.
+
+*39) What are the scoping rules for class variables? What are the two main behaviors of class variables?*
+Class variables are scoped at the class level and can be inherited. They are denoted by `@@` symbols before the variable name. Class variables exhibit two particular behaviours:
+1. All objects instantiated from the class, subclasses, and the objects instantiated from those subclasses, all have access to a single copy of the class variable. This means that any change in the class variable, wherever it occurs, is reflected across all of those subclasses and objects. This is why it is very easy to make changes that impact multiple other classes and objects, which is why usage of class variables is generally discouraged. 
+2. Class variables can be accessed via class methods where the class is defined (regardless of where the class variable is initialised), or by instance methods when an object is instantiated from the class where the class variable is defined.
+
+In our example below, we create the `@@legs` class variable in the `Animal` class and assign it to the integer object `4`. We have both a class (`Animal::legs`) and an instance getter method (`Animal#legs`) that can access the `@@legs` class variable.
+
+When we call `Animal::legs` or the `Animal#legs` on an instance of `Animal`, both methods return the integer object `4`, as expected. However, once we define the `Bird` class, we notice that calling `Animal.legs` now returns the integer object `2`. This is because objects instantiated from `Bird` and `Animal`, and the `Bird` and `Animal` classes all share a single copy of the `@@legs` class variable, which means that reassignment of `@@legs` in the `Bird` class also affected the class variable in `Animal`.
+```
+class Animal
+  @@legs = 4
+
+  def self.legs
+    @@legs
+  end
+
+  def legs
+    @@legs
+  end
+end
+
+Animal.legs
+# => 4
+
+class Bird < Animal
+  @@legs = 2
+end
+
+Animal.legs
+# => 2
+```
+*40) What are the scoping rules for constant variables?*
+Constant variables (or constants) are defined at the class level and have lexical scope. This means that when evaluating the object referenced by a constant, Ruby will look in the immediate class or module where that constant is referenced. If Ruby cannot find the definition in that class or module, it will look up the inheritance chain until it finds the definition (or raise a `NameError` if it cannot). However, we are also able to access constants in other, unrelated classes by using the namespace resolution operator `::`.
+
+In our following example, we observe lexical scope in action. We define a constant `LEGS` in our `Animal` class, as well as a getter method `Animal#legs` for this constant. We then define a `Bird` class, which inherits from the `Animal` class, but also assigns the integer object `2` to the `LEGS` constant. When we call `Bird#legs`, the instance method returns `4`, since when attempting to reference the value of `LEGS`, Ruby will look to where the constant is referenced (i.e. in the `Animal` class), and attempt to find the object referenced by the constant in that location, which is `4`. 
+
+We could change this method to return `2` by changing our `Animal#legs` to reference `self.class::LEGS`, as the namespace resolution operator allows us to reference a specific class where Ruby should look to find the value referenced by the constant. 
+```
+class Animal
+  LEGS = 4
+
+  def legs
+    LEGS
+  end
+end
+
+class Bird < Animal
+  LEGS = 2
+end
+
+Bird.new.legs
+# => 4
+```
+*41) How does sub-classing affect instance variables?*
+Subclassing (or inheritance), does not really exist in the context of instance variables, as instance variables do not exist until an object is instantiated from a class and a value assigned to them. Thus, instance variables are not inherited. We can say, however, that instance methods are inherited, which when called, can initialise instance variables.
+
+As each object is instantiated from a class, it's instance variables are created, and are generally unique to it (i.e. contributing to that object's state), such that each object is also unique (unless when we instantiate multiple object from a class, the instance variables and the objects they reference are the exact same objects, such that the objects themselves will be the same). 
