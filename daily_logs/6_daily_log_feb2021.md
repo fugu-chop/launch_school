@@ -1,6 +1,7 @@
-# February 2021 (Total minutes: 128)
+# February 2021 (Total minutes: 378)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
+- [3rd, Wed](#030221-wed)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -23,3 +24,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 A lot of today's revision was focused on method overriding and operators, which I knew would be a relatively weak area for me. I'll need to make some time to review my answers for these questions, as they can get quite detailed. 
+
+##### 03/02/21 (Wed)
+__*Concepts covered*__<br/>
+- Revision
+  - Writing answers for practice problems
+  - Answer reviews
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+I've finished the set of written sample problems. I'm now reviewing these answers, and when I'm happy with the level of detail, will start to practice covering off the relevant points (and typing these out quickly!).
