@@ -10,12 +10,12 @@
 
 ### OOP & Reading Code
 *1) What is OOP and why is it important?*
-OOP (Object Oriented Programming) is a programming paradigm that is designed to handle large scale, complex programs by breaking up code into a series of smaller parts that interact with each other, rather than code that is built on a chain of dependencies. By using OOP, it allows code that has fewer dependencies and is easier to maintain, making it less likely that a small change to a part of the code will not break the entire program. 
+OOP (Object Oriented Programming) is a programming paradigm that is designed to handle large scale, complex programs by breaking up code into a series of smaller parts that interact with each other, rather than code that is built on a chain of dependencies. By using OOP, we enable code that has fewer dependencies and is easier to maintain, making it less likely that a small change to a part of the code will not break the entire program. 
 
 OOP achieves this through a number of ways, including:
-- encapsulation (hiding functionality of code into objects and classes to reduce dependencies and improve data protection); 
+- encapsulation (abstracting away code into objects and classes to reduce dependencies of one part of the code on structural details of another, such that a class should contain common methods it needs to function without having to rely on a number of other classes, as well as improve data protection); 
 - polymorphism (allowing different objects to interact with a common interface to improve flexibility of pre-written code); and
-- inheritance (allowing classes to inherit behaviours from other classes, reducing the amount of repeated code)
+- inheritance (allowing classes to inherit behaviours and class/constant variables from other classes, reducing the amount of repeated code)
 
 *2) What is a spike?*
 A spike is exploratory code designed to explore a problem domain and build an idea of how a program should be designed. The goal of a spike is to quickly validate hypotheses and not code quality. 
@@ -25,26 +25,28 @@ When writing a program, if we find we are consistently using the same noun in ou
 
 *4) What are some rules/guidelines when writing programs in OOP?*
 It's generally a good idea to:
-- Expose as few public interfaces as possible in order to achieve strong data protection within our objects
-- Have classes that interact with a few other classes through collaboration, rather than having all classes collaborate with all other classes (which introduces too many dependencies, something that OO tries to avoid in the first place)
+- Expose as few public interfaces as possible in order to achieve strong data protection within our objects and reduce the chance of inadvertantly changing the state of objects.
+- Have classes that interact with a few other classes through collaboration, rather than having all classes collaborate with all other classes (which introduces too many dependencies, something that OO tries to avoid in the first place).
 - Not to include the class name in instance methods, which reduces human readability of code
 - Avoid long method invocation chains, as these are both difficult to read, and introduce dependencies on methods earlier in the chain returning expected results. 
-- Use setter methods, rather than work directly with instance variables, as working directly with instance variables bypasses any logic or guards we might apply within a setter method
+- Use setter methods, rather than work directly with instance variables, as working directly with instance variables bypasses any logic or guards we might apply within a setter method.
 
 ### Classes, objects, encapsulation, working with collaborator objects, method access control
 *5) What is encapsulation? How does encapsulation relate to the public interface of a class?*
 __Encapsulation__: Encapsulation is the hiding of functionality within code, making it unavailable to the rest of the code base. It is a form of data protection, such that data cannot be changed or manipulated without obvious intent. 
 
-Encapsulation can be achieved by instantiating objects from classes. Within those objects, we have instance variables (created on instantiation of objects when assigned a value) and instance methods (defined in the class) that are encapsulated within the object, and can only be accessed by that object's class or the object itself. This improves our ability to debug when we make changes to code and reduce the number of dependencies on/from other parts of the code base.
+Encapsulation can be achieved by instantiating objects from classes. Within those objects, we have instance variables (created on instantiation of objects when assigned a value) and instance methods (defined in the class) that are encapsulated within the object, and can only be accessed by that object's class or the object itself. This improves our ability to debug when we make changes to code and reduce the number of dependencies on/from other parts of the code base by encapsulating methods that are relevant to a class as a logical entity (i.e. instead of calling methods from various classes or modules, which would introduce additional dependencies).
 
-In our example below, any changes we make to `Dog` (or objects instantiated from `Dog`) is made specifically to that class, meaning any errors we get in relation `Dog` or objects instantiated from `Dog` can likely be resolved in a single location in our code, even though there is a collaborative relationship between `peter` and `ted`.
+In our example below, any changes we make to `Dog` (or objects instantiated from `Dog`) is made specifically to that class, meaning any errors we get in relation `Dog` or objects instantiated from `Dog` can likely be resolved in a single location in our code. 
 
-The `@pet_name` instance variable is also encapsulated within the `ted` object - there is no ability defined within the code to change or access that instance variable. Similarly, `ted` does not have access to the `Human#speak` method, since that method is defined and encapsulated in the `Human` class.
+We have a collaborative relationship specified between the `Human` class and the `Dog` class through the `@pet` instance variable. 
+
+The `@pet` instance variable is encapsulated within the created `peter` object - there is no ability defined within the code to change or access that instance variable. Similarly, the object instantiated from the `Dog` class does not have access to the `Human#speak` method, since that method is defined and encapsulated in the `Human` class. Each classes' methods are encapsulated within their respective class definitions (and not reliant on methods defined in other classes or modules to achieve functionality).
 ```
 class Human
   def initialize(name, pet)
     @name = name
-    @pet = pet
+    @pet = Dog.new('Ted')
   end
 
   def speak
@@ -62,12 +64,12 @@ class Dog
   end
 end
 
-ted = Dog.new('Ted')
-peter = Human.new('James', ted)
+peter = Human.new('James', 'Teddy')
+# => #<Human:0x00007fa1f120e500 @name="James", @pet=#<Dog:0x00007fa1f120e4b0 @pet_name="Teddy">>
 ```
-We can also achieve encapsulation through *method access control*, which allows to to control which interfaces (i.e. instance methods) can interact with the object, such that even the object itself might not have access to certain instance methods. Public interfaces allow methods to be called *directly on the object itself*, whereas private interfaces can only be called *within* the class (i.e. they are not callable directly on the object itself, rather only through other methods within the class). 
+We can also achieve encapsulation through *method access control*, which allows to to control which interfaces (i.e. instance methods) can interact with the object, such that even the object itself might not have access to certain instance methods. Public interfaces are methods that can be called *directly on the object itself*, whereas private interfaces can only be called *within* the class (i.e. they are not callable directly on the object itself, rather only through other methods within the class). 
 
-In the below example, we are defining various instance methods within the `Hello` class, such that only objects instantiated from the `Hello` class have access to these instance methods. We are also using *method access control* via the `private` keyword to ensure that even objects instantiated from the `Hello` class cannot call the `private_method` directly. 
+In the below example, we are defining various instance methods within the `Hello` class, such that objects instantiated from the `Hello` class have access to the `public_method` instance method. We are also using *method access control* via the `private` keyword to ensure that even objects instantiated from the `Hello` class cannot call the `private_method` directly. 
 ```
 class Hello
   def public_method
@@ -89,10 +91,10 @@ Hello.new.private_method
 ```
 
 *6) What is an object?*
-Within Ruby, anything that can said to have a value can be regarded as an object (this excludes constructs like variables, methods and blocks). In general, objects are instances of classes that have been initialised using the `Class#new` method. Objects encapsulate *state*, which are the set of instance variables and their values which distinguish them from other objects instantiated from the same class. 
+Within Ruby, anything that can said to have a value can be regarded as an object (this excludes constructs like variables, methods and blocks). Objects are instances of classes that have been instantiated using the `Class#new` or `Class#allocate` method. Once instantiated, objects can encapsulate *state*, which are the set of instance variables and their associated values which distinguish them from other objects instantiated from the same class. 
 
 *7) How do you initialise a new object/create a new instance of a class? What is instantiation?*
-Instantiation is creating an object (or an *instance*) from a predefined class. We can instantiate an object by calling the `Class.new` method on a class, passing in any arguments that are required per the `initialize` method that is automatically called when a new object is instantiated. 
+Instantiation is creating an object (or an *instance*) from a predefined class. We can instantiate an object by calling the `Class#new` method on a class, passing in any arguments that are required per the `initialize` method that is automatically called when a new object is instantiated (which creates instance variables and assigns references to values to them).
 
 We can see this in the example below. We have a predefined `Dog` class (denoted by the `class`...`end` keyword pair), from which we instantiate a new object by calling `Dog.new('Teddy')` and assign it to the local variable `teddy`. After calling the `Class#new` method, this creates an instance of the `Dog` class and automatically calls the `initialize` method, which accepts an argument (a string object `"Teddy"`) and assigns it to the instance variable `@name`, denoted by the `@` symbol.
 ```
@@ -105,9 +107,11 @@ end
 teddy = Dog.new('Teddy')
 ```
 *8) What is an instance variable, and how is it related to an object?*
-An instance variable is a variable scoped at an object level (meaning it is accessible to all instance methods, even though it's defined outside any given instance method). It is denoted by a `@` symbol in front of it. They are *named* by the class, but are not created by the class - they are created when an object is instantiated from a class and a value is assigned to it (an instance variable that does not have a value assigned to it is _not_ part of that object's state). When instance variables are initialised and assigned an object, they become part of an object's state. As instance variables are part of the state the object carries, they cannot be inherited. 
+An instance variable is a variable scoped at an object level (meaning it is accessible to all instance methods, even though it's defined outside any given instance method). It is denoted by a `@` symbol in front of it's name. They are *named* by the class, but are not created by the class - they are created when an object is instantiated from a class and a value is assigned to it (an instance variable that does not have a value assigned to it is _not_ part of that object's state). 
 
-In our below example, the `initialize` method in our `Dog` class can take a `fur` argument when an object is instantiated. However, because we have not initialised an instance variable for `fur`, it does not become part of `ted`'s state, even though we have created a getter method. If we attempt to call `ted.fur`, we will get `nil` - uninitialized instance variables return `nil`. 
+When instance variables are initialised and assigned an object, they become part of an object's state. As instance variables are part of the state the object carries, they cannot be inherited (since they do not exist until an object is instantiated from a class)
+
+In our below example, the `initialize` method in our `Dog` class can take a `fur` argument when an object is instantiated. However, because we have not initialised an instance variable for `fur`, it does not become part of `ted`'s state, even though we have created a getter method (the `initialize` method simply ignores the reference to the object passed as the `fur` argument). If we attempt to call `ted.fur`, we will get `nil` - uninitialized instance variables return `nil` (contrast this with uninitialised local variables, which return a `NameError`). 
 ```
 class Dog
   attr_reader :fur
@@ -120,7 +124,7 @@ end
 ted = Dog.new('Teddy', 'Bushy')
 ```
 *9) What is an instance method, and how is it related to an object?*
-An instance method is a method defined by a class that adds functionality to objects when those objects are instantiated from that class, depending on the method access control over those instance methods (by default, instance methods are public). Instance methods can be inherited, and all instances of a class will have access to the same set of instance methods.
+An instance method is a method defined by a class that can add functionality to objects when those objects are instantiated from that class. Depending on the method access control over those instance methods (by default, instance methods are public), these methods can be called on instances of the object (`private` and `protected` instance methods cannot be directly called on the object). Instance methods can be inherited (along with any associated method access control), and all instances of a class will have access to the same set of instance methods.
 
 In our example below, we have defined a `bark` instance method in the `Dog` class (denoted by the `def`...`end` keyword pairs). We then instantiate two objects from `Dog`, `bob` and `ted`. While they are two different objects, as they are instantiated from the same class, they both have access to the public instance method `bark`. 
 ```
@@ -142,7 +146,7 @@ puts bob.bark
 *10) What is the scoping rule for instance variables?*
 Instance variables are scoped at the object level. This means that when an object is instantiated from the class (and the instance variables created and assigned values), the instance methods defined by that class will have access to those instance variables, even though those instance variables are defined outside of the instance methods. 
 
-In this example, we can see that the `say_name` method has access to the `@name` instance variable, despite `@name` being defined outside of that method and the `say_name` not taking any arguments.
+In this example, we can see that the `say_name` method has access to the `@name` instance variable, despite `@name` being defined outside of that method and the `say_name` instance method not taking any arguments.
 ```
 class Dog
   def initialize(name)
@@ -162,9 +166,11 @@ ted.say_name
 We can call the `Object#instance_variables` method on an object to return an array of instance variables cast as symbols. 
 
 *12)What is a class? What is the relationship between a class and an object? How is defining a class different from defining a method?*
-A class can be thought of as a template from which objects can be instantiated. A class can contains various methods (either defined within the class, inherited from superclasses or mixed in from modules), which can be thought of as behaviours that the object will have, or ways to interact with the object. A class also names instance variables, but does not define them (this occurs upon instantiation of an object from the class). By naming these instance variables within the class definition, the class determines what data the object should have (but again, these instance variables are not created until the object is instantiated from the class). 
+A class can be thought of as a template from which objects can be instantiated. A class can encapsulate various methods (either defined within the class, inherited from superclasses or mixed in from modules), which can be thought of as behaviours that either the class or object will have. 
 
-We can define a class by using the `class`...`end` keyword pair. We define instance methods using the regular `def`...`end` reserved words within the class definition. We can also name instance variables - in our example, we have named the `@name` instance variable to be defined on instantiation through the `initialize` method, which expects an argument when a new object is created from `Dog`. 
+A class also names instance variables, but does not create them (creation of instance variables occurs upon instantiation of an object from the class). By naming these instance variables within the class definition, the class determines what data the object should have (but again, these instance variables are not created until the object is instantiated from the class). 
+
+We can define a class by using the `class`...`end` keyword pair. We define instance methods using the regular `def`...`end` reserved words within the class definition. We can also name instance variables - in our example, we have named the `@name` instance variable to be defined on instantiation through the `initialize` method, which expects an argument when a new object is created from `Dog` that will be assigned to the `@name` instance variable. 
 ```
 class Dog
   def initialize(name)
@@ -177,9 +183,9 @@ class Dog
 end
 ```
 *13) When defining a class, we usually focus on state and behaviors. What is the difference between these two concepts?*
-When speaking to *behaviours* of a class, we are usually referring to the instance methods that are defined within the class. These instance methods are the way in which we can attach functionality to objects instantiated from that class. Since instance methods are defined with the class, they can be inherited. Objects can share behaviours (as they are defined on the class), but do not share state (which is defined at the object level). 
+When speaking to *behaviours* of a class, we are usually referring to the instance methods that are defined within the class. These instance methods are a way in which we can attach functionality to objects instantiated from that class. Since instance methods are defined with the class, they can be inherited. Objects can share behaviours (as they are defined on the class), but do not share state (which is defined at the object level). 
 
-*State* refers to the instance variables and their values that are unique to each object. Instance variables are typically *named* by the class (e.g. the class can allow for instance variables to be created on instantiation of an object), but are __not defined__ by the class - these instance variables are only defined when an object is instantiated from a class and a value assigned to them. As such, instance variables (and by extension, state) cannot be inherited as they are not defined within the class. 
+*State* refers to the instance variables and their values that are unique to each object. Instance variables are typically *named* by the class (e.g. the `initialize` instance method can be inherited, which allows for instance variables to be created on instantiation of an object), but are __not defined__ by the class - these instance variables are only defined when an object is instantiated from a class and a value assigned to them. As such, instance variables (and by extension, state) cannot be inherited as they are not defined within the class. 
 
 In this example, when we instantiate the `ted` object from the `Dog` class, we pass the `"Teddy"` and `4` objects respectively to the `initialize` method as arguments, where they are assigned to the `@name` and `@age` instance variables respectively. These instance variables represent the object's state, while the behaviour of the `ted` object is defined in the `Dog` class - specifically the instance method `bark`.
 ```
@@ -199,20 +205,32 @@ ted.bark
 # => Woof!
 ```
 *14) How do objects encapsulate state?*
-State is the set of instance variables and their values that are associated with a given object. State is 'encapsulated' by objects, as by default, the series of instance variables that comprise state cannot be accessed unless there are appropriate getter/setter methods; so there is a degree of data protection typically associated with encapsulation. Also, state is unique to each object - it cannot be shared between objects (nor are there dependencies between objects for state) from the same class like instance methods can, so there is a degree of separation that is characteristic of encapsulation.
+State is the set of instance variables and their values that are associated with a given object after it has been instantiated from a class. State is 'encapsulated' by objects, as by default, the series of instance variables that comprise state cannot be accessed unless there are appropriate getter/setter methods; so there is a degree of data protection typically associated with encapsulation. It is important to note that instance variables that are not initialised do not become part of state. State is unique to each object - it cannot be shared between objects from the same class like instance methods can, so there is a degree of separation for state that is characteristic of encapsulation.
 
-In our example below, when we instantiate the `ted` object from the `Dog` class, the `initialize` method is called, which we pass the string `"Teddy"` as an argument. This is assigned to the instance variable `@name` and becomes part of the `ted` object's state. This state is unique to `ted` and will be different to other objects instanted from `Dog`. As we have not defined any getter or setter methods, the `@name` instance variable is inaccessible, and is protected from any access or changes. 
+In our example below, when we instantiate the `ted` object from the `Dog` class, the `initialize` method is called, which we pass the string `"Teddy"` and `"Bushy"` as arguments. `"Teddy"` is assigned to the instance variable `@name` and becomes part of the `ted` object's state. This state is unique to `ted` and will be different to other objects instanted from `Dog`. However, while we pass in a reference to the string object `"Bushy"` as as argument, since we did not create a `@fur` instance variable on instantiation of the object, it is not part of `ted`'s state, even though we defined a getter method. 
+
+As we have not defined any getter or setter methods for `@name`, the `@name` instance variable is inaccessible, and is protected from any access or changes. 
 ```
 class Dog
-  def initialize(name)
+  attr_reader :fur
+
+  def initialize(name, fur)
     @name = name
   end
 end
 
-ted = Dog.new("Teddy")
+ted = Dog.new("Teddy", "Bushy")
+
+ted = Dog.new("Teddy", "Bushy")
+# #<Dog:0x00007ffebf8a8840 @name="Teddy">
+
+ted.fur
+# nil
 ```
 *15) What is the difference between classes and objects?*
-Classes act as templates for objects. Classes define the behaviours (instance methods) that objects will have once they are instantiated from classes (which could be through inheritance, mixed in modules, or simply defined in the class), and shape the state of the object (when the object is created, the `initialize` method creates instance variables and assigns objects passed as arguments to it as values for those instance variables, which taken together, comprise state). Objects can share behaviours from the same class, but are still distinct objects (as they have unique state, unless when the objects are instantiated, the arguments passed in are the exact same object).
+Classes act as templates from which objects are instantiated. Classes define the behaviours (instance methods) that objects will have access to once they are instantiated from classes (which could be through inheritance, mixed in modules, or simply defined in the class), and shape the state of the object (when the object is created, the `initialize` method creates instance variables pointing to object references passed as arguments to it). The collective set of instance variables, which taken together, comprise state. Objects can share behaviours from the same class, but are still distinct objects (as they have unique state, even if the arguments passed in reference the same object).
+
+In our example below, although we have passed the same string object to the `Dog.new` method, we still see that the two objects instantiated from `Dog` are different objects. 
 ```
 class Dog
   def initialize(name)
@@ -224,17 +242,11 @@ name = "Teddy"
 name1 = name
 
 a = Dog.new(name)
-# => #<Dog:0x00007f9374a40c90 @name="Teddy">
+# => #<Dog:0x00007fed968fd4d8 @name="Teddy">
 
-# b is a different object, since "Teddy".object_id != name.object_id
-b = Dog.new("Teddy")
-# => #<Dog:0x00007f9374a482d8 @name="Teddy">
-
-# c is the same object as a, since name1.object_id == name.object_id (i.e. same object)
-c = Dog.new(name1)
-# => #<Dog:0x00007f9374a40c90 @name="Teddy">
+b = Dog.new(name1)
+# => #<Dog:0x00007fed959a5dc8 @name="Teddy">
 ```
-
 *16) How can we expose information about the state of the object using instance methods?*
 State comprises of the instance variables and their assigned values of an object. By default, without instance methods, instance variables are inaccessible outside the object. However, we can access state by defining getter and setter instance methods in the class to access those instance variables. 
 ```
@@ -291,7 +303,6 @@ d.public_method
 d.private_method
 # NoMethodError (private method `private_method' called for #<Dog:0x00007fae2c90d7d8>)
 ```
-
 *20) What is the protected method used for?*
 The `protected` method call is useful when we want our objects to be able to interact with other instances of the same class and subclasses, but otherwise prevent access/modification to an object's state from outside of the class definition. It serves as a "middle-ground" between private and public methods. 
 
@@ -321,7 +332,6 @@ joe.name
 joe.play(tim)
 # => "Joe plays with Tim"
 ```
-
 *21) What are two rules of protected methods?*
 The two rules of protected methods are:
 1. Within the class definition, protected methods are accessible like public methods
@@ -340,7 +350,6 @@ end
 
 Dog.get_species
 ```
-
 ### Polymorphism, inheritance, method lookup path, duck-typing
 *23) What is polymorphism? Explain two different ways to implement polymorphism. ​How does polymorphism work in relation to the public interface?*
 Polymorphism is a concept in object oriented programming that refers to the ability of different types (or different objects) to respond to a common interface (e.g. an instance method). Polymorphism is a way to model logical hierarchies through inheritance, reduce the amount of code written in our program (i.e. implementing DRY code) as well as sharing common behaviours between classes that don't fit neatly into these logical hierarchies through mixing in modules. 
@@ -639,7 +648,7 @@ Dog.ancestors
 # => [Dog, Pet, Animal, Swimmable, Walkable, Object, Kernel, BasicObject]
 ```
 *33) Are class variables accessible to subclasses? Why is it recommended to avoid the use of class variables when working with inheritance?*
-Class variables are scoped at a class level and defined by the `@@` symbols prefixing a variable name. They are accessible to objects instantiated from the class when there is an appropriate getter or setter method. It is generally not recommended to use class variables, as all objects that are instantiated from the class where the class variable is defined, share that same single class variable, meaning it is very easy to mistakenly change the value associated referenced by the class variable.
+Class variables are scoped at a class level and defined by the `@@` symbols prefixing a variable name. They are accessible to objects instantiated from the class when there is an appropriate getter or setter method. It is generally not recommended to use class variables, as all objects that are instantiated from the class where the class variable is defined, share that same single class variable, meaning it is very easy to mistakenly change the value referenced by the class variable.
 
 In our example below, we define the `SuperClass` class using the `class`...`end` keyword pair, with a getter method also defined. We also initialise the `@@class_var` class variable to the integer object `8` when we define the class. 
 
@@ -1083,8 +1092,23 @@ Bird.new.legs
 *41) How does sub-classing affect instance variables?*
 Subclassing (or inheritance), does not really exist in the context of instance variables, as instance variables do not exist until an object is instantiated from a class and a value assigned to them. Thus, instance variables are not inherited. We can say, however, that instance methods are inherited, which when called, can initialise instance variables.
 
-As each object is instantiated from a class, it's instance variables are created, and are generally unique to it (i.e. contributing to that object's state), such that each object is also unique (unless when we instantiate multiple object from a class, the instance variables and the objects they reference are the exact same objects, such that the objects themselves will be the same). 
+As each object is instantiated from a class, it's instance variables are created, and are generally unique to it (i.e. contributing to that object's state), such that each object is also unique, regardless of whether the objects passed as arguments are the same object.
+```
+class Dog
+  def initialize(name)
+    @name = name
+  end
+end
 
+name = "Teddy"
+name1 = name
+
+a = Dog.new(name)
+# => #<Dog:0x00007fed968fd4d8 @name="Teddy">
+
+b = Dog.new(name1)
+# => #<Dog:0x00007fed959a5dc8 @name="Teddy">
+```
 ### Fake operators and equality
 *41) What is a fake operator?*
 A fake operator is an instance method defined within a class that appears to be an operator, but can have different implementations based on where/how it is defined across different classes. The reason why these methods appear to be operators is due to Ruby's syntactical sugar, which makes the syntax of calling these methods look like operators. Examples include `==`, `+`, `[]`, which are all methods disguised as operators due to syntactical sugar. 
