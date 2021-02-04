@@ -248,7 +248,7 @@ b = Dog.new(name1)
 # => #<Dog:0x00007fed959a5dc8 @name="Teddy">
 ```
 *16) How can we expose information about the state of the object using instance methods?*
-State comprises of the instance variables and their assigned values of an object. By default, without instance methods, instance variables are inaccessible outside the object. However, we can access state by defining getter and setter instance methods in the class to access those instance variables. 
+The state of an object comprises of the instance variables and their assigned values. By default, without instance methods, instance variables are inaccessible outside the object. However, we can access state by defining getter and setter instance methods in the class to access those instance variables. 
 ```
 class Dog
   attr_reader :name
@@ -263,9 +263,9 @@ ted.name
 # => "Teddy"
 ```
 *17) What is a collaborator object, and what is the purpose of using collaborator objects in OOP?*
-Collaborator objects are objects that are assigned to instance variables when objects are instantiated from a class. Functionally, they could be any object, whether they are custom objects we define, or objects pre-defined by the Core API in Ruby (e.g. Integer, String, Array objects). Collaborator objects allow us to model associative relationships ("has-a") between objects and define how those objects should interact with other objects. The collaborative relationship exists when the collaborator object is added to the state of the object (through assigning it as a value to an instance variable).
+Collaborator objects are objects that are assigned to instance variables when objects are instantiated from a class and the `initialize` method is called. Functionally, they could be any object, whether they are custom objects we define, or objects pre-defined by the Core API in Ruby (e.g. objects instantiated from the Integer, String, Array classes). Collaborator objects allow us to model associative relationships ("has-a") between objects and define how those objects should interact with other objects. The collaborative relationship exists when the collaborator object is added to the state of the object (through assigning it as a value to an instance variable).
 
-In our example, when we instantiate the `ted` object from the `Dog` class with the `Class#new` method, the `initialize` method is called, which we pass the string object `"Teddy"`. As this object is instantiated, the string object `"Teddy"` becomes part of `ted`'s state (i.e. `"Teddy"` is assigned to the `@name` instance variable). At this point, the associative relationship exists (the `ted` object "has a" name) and `"Teddy"` is a collaborator object with the `ted` object.
+In our example, when we instantiate the `ted` object from the `Dog` class with the `Class#new` method, the `initialize` method is called, which we pass the string object `"Teddy"`. As this object is instantiated, the string object `"Teddy"` becomes part of `ted`'s state (i.e. `"Teddy"` is assigned to the `@name` instance variable). At this point, the associative relationship exists (the `ted` object "has a" name) and the string `"Teddy"` is a collaborator object with the `ted` object.
 ```
 class Dog
   def initialize(name)
@@ -278,8 +278,22 @@ ted = Dog.new("Teddy")
 *18) Why should a class have as few public methods as possible?*
 It is typically good practice to expose as few public methods as possible on a class, in line with the principle of encapsulation. Public methods can enable direct interfacing with the state of our objects from outside of the class, which may result in unintended changes that alter the functionality or break our programs. Removing unnecessary avenues of altering state will reduce the potential for unexpected changes in the state of our objects, while also prevent data that shouldn't be seen or altered in our program from access. 
 
+In our example below, we have defined a getter method through the `attr_reader` method, which in theory, only allows access to the `@name` instance variable outside of the `ted` object once it's instantiated. However, we are able to call the `String#reverse!` method, which mutates the string object assigned to `@name`, despite us not explicitly defining a setter method to alter the value of the `@name` instance variable. Thus is it best practice to avoid using public methods where possible. 
+```
+class Dog
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+end
+
+ted = Dog.new("Ted")
+ted.name.reverse!
+ted.name
+```
 *19) What is the private method call used for?*
-The `private` method call prevents instance methods from being accessed outside of the class where they are defined. They are useful to prevent access or changes to the state of objects unnecessarily. Private methods *can* be accessed from within the class definition, so public methods (which are accessible outside of the class definition) are able to access the return values of private methods. 
+The `private` method call prevents instance methods from being accessed outside of the class where they are defined. They are useful to prevent access or changes to the state of objects unnecessarily, achieving encapsulation. Private methods *can* be accessed from within the class definition, so public methods (which are accessible outside of the class definition) are able to access the return values of private methods. 
 
 In our example below, calling `private_method` on our `d` object results in a `NoMethodError` as private methods cannot be be accessed outside of the class definition. Contrast this with calling `public_method`, which is able to access `private_method` as it is part of the class definition, and thus is able to print out `"Hello!"` and return `nil`, per the `private_method`. 
 ```
@@ -304,7 +318,7 @@ d.private_method
 # NoMethodError (private method `private_method' called for #<Dog:0x00007fae2c90d7d8>)
 ```
 *20) What is the protected method used for?*
-The `protected` method call is useful when we want our objects to be able to interact with other instances of the same class and subclasses, but otherwise prevent access/modification to an object's state from outside of the class definition. It serves as a "middle-ground" between private and public methods. 
+The `protected` method call is a form of method access control for instance methods defined within a class. It is useful when we want our objects to be able to interact with other instances of the same class and subclasses, but otherwise prevent direct access/modification to an object's state from outside of the class definition. It serves as a "middle-ground" between private and public methods. 
 
 In our example below, we are unable to call the protected `name` instance method on the `joe` object instantiated from the `Dog` class, as it is inaccessible outside of the class definition. However, we are able to access the `name` instance method of other instances of the `Dog` class in our `play` instance method. 
 ```
@@ -324,8 +338,11 @@ class Dog
   end
 end
 
+class Greyhound < Dog
+end
+
 joe = Dog.new("Joe")
-tim = Dog.new("Tim")
+tim = Greyhound.new("Tim")
 
 joe.name
 # NoMethodError (protected method `name' called for #<Dog:0x00007fcb6c8254f8>)
@@ -338,7 +355,7 @@ The two rules of protected methods are:
 2. Outside of the class definition, protected methods act like private methods
 
 *22) Classes also have behaviors not for objects (class methods). How do you define a class method?*
-A class method can be defined by prepending the `self.` keyword to a method definition within a class. When the `self` keyword is invoked outside of an instance method, it refers to the class, such that we are defining a method on the class. 
+A class method can be defined by prepending the `self.` keyword to a method definition within a class. When the `self` keyword is invoked outside of an instance method, it refers to the class, such that we are defining a method on the class. Class methods can only be called on a class (or subclasses) and not on instances of that class.
 
 In our example below, we define the `get_species` method on the `Dog` class through use of the `self` keyword. We can then call the `get_species` directly on the `Dog` class (it is actually inaccessible to instances of objects created from `Dog`). The `get_species` class method returns `self`. When `self` is used outside of an instance method, it refers to the class. Here, since we are defining a class method instead of an instance method, the `get_species` method call returns the class, `Dog`. 
 ```
@@ -349,18 +366,19 @@ class Dog
 end
 
 Dog.get_species
+# => Dog
 ```
 ### Polymorphism, inheritance, method lookup path, duck-typing
 *23) What is polymorphism? Explain two different ways to implement polymorphism. ​How does polymorphism work in relation to the public interface?*
 Polymorphism is a concept in object oriented programming that refers to the ability of different types (or different objects) to respond to a common interface (e.g. an instance method). Polymorphism is a way to model logical hierarchies through inheritance, reduce the amount of code written in our program (i.e. implementing DRY code) as well as sharing common behaviours between classes that don't fit neatly into these logical hierarchies through mixing in modules. 
 
-Where encapsulation reduces the interactivity of different parts of the program in order to protect itself, polymorphism is about expanding the abilities of the encapsulated parts of the program to interact with the different parts of itself.
+While encapsulation reduces the interactivity of different parts of the program in order to protect unnecessary changes to object state, polymorphism is about expanding the abilities of the encapsulated parts of the program to interact with the different parts of itself.
 
-We can implement polymorphism in a number of ways - class inheritance, interface inheritance and duck-typing. 
+We can implement polymorphism in a number of ways - class inheritance (inheriting methods), interface inheritance (through mixing in modules) and duck-typing. 
 
 In our example below, we observe polymorphism through class inheritance and interface inheritance. The `Cat`, `Turtle` and `Dog` classes subclass the `Pet` class, meaning they inherit the `initialize` method defined within `Pet` (denoted by the `<` symbol) - this explains why we need to provide an argument to the `Class#new` method when instantiating an object from `Cat`, `Turtle` or `Dog`. While `ted`, `charlie` and `oscar` are all distinct objects, they all have the `initialize` method defined in the `Pet` superclass (class inheritance).
 
-We also observe _interface_ inheritance through use of mixing in modules. In our example, we have defined the module `Swimmable` and mixed this into the `Turtle` and `Dog` classes. Again, while objects instantiated from the `Turtle` and `Dog` class are distinct from each other, these objects will have access to the `swim` method. 
+We also observe _interface_ inheritance through use of mixing in modules. In our example, we have defined the module `Swimmable` and mixed this into the `Turtle` and `Dog` classes. Again, while objects instantiated from the `Turtle` and `Dog` class are distinct from each other, these objects will have access to the `swim` method. We can also observe duck-typing at work, by iterating through our objects and calling the commonly named `name` method.
 ```
 module Swimmable
   def swim
@@ -376,13 +394,24 @@ end
 
 class Turtle < Pet
   include Swimmable
+
+  def name
+    puts "My name is Turtle!"
+  end
 end
 
 class Dog < Pet
   include Swimmable
+
+  def name
+    puts "My name is Dog!"
+  end
 end
 
 class Cat < Pet
+  def name
+    puts "My name is Cat!"
+  end
 end
 
 ted = Dog.new("Ted")
@@ -396,12 +425,16 @@ charlie.swim
 oscar = Cat.new("Oscar")
 oscar.swim
 # NoMethodError (undefined method `swim' for #<Cat:0x00007ff2ec11a3c8 @name="Oscar">)
+
+[ted, charlie, oscar].each { |object| puts object.name }
+# => My name is Dog!
+# => My name is Turtle!
+# => My name is Cat!
 ```
-
 *24) What is duck-typing? How does it relate to polymorphism and what problem does it solve?*
-Duck typing is a concept that implements polymorphism. It is achieved by implementing an instance method of the same name across numerous unrelated classes. It is an example of polymorphism since objects instantiated from unrelated classes (i.e. different types) are all able to respond to a commonly named method invocation (though this does not imply that the method will have the exact same functionality across the different classes). 
+Duck-typing is a concept that demonstrates polymorphism. It can be achieved by implementing an instance method of the same name across numerous unrelated classes - objects instantiated from unrelated classes (i.e. different types) are all able to respond to a single method invocation (though this does not imply that the method will have the exact same functionality across the different classes). 
 
-Duck typing is helpful in that we do not have to write complex, dependency-ridden logic in order to call a commonly named method to different objects. We can simply define the method (and it's associated functionality) within each class, which improves the extensibility of the code. Per our example below, we have implemented a `speak` method across all of our unrelated classes. Thus, we are able to call the `speak` method across the `cat`, `dog` and `turtle` objects through the `AnimalParty#introductions` instance method, instead of having to write a complex `case` statement in the `AnimalParty` class (which we will need to update every time we want to define a new class with a `speak` instance method). 
+Duck typing is helpful in that we do not have to write complex, dependency-ridden logic in order to call a commonly named method on different objects. We can simply define the method (and it's associated functionality) within each class, which improves the extensibility of the code. Per our example below, we have implemented a `speak` method across all of our unrelated classes. Thus, we are able to call the `speak` method across the `cat`, `dog` and `turtle` objects through the `AnimalParty#introductions` instance method (even though these classes are unrelated to each other), instead of having to write a complex `case` statement in the `AnimalParty` class (which we will need to update every time we want to define a new class with a `speak` instance method). 
 ```
 class Cat
   def speak
@@ -438,9 +471,9 @@ AnimalParty.new.introductions([cat, dog, turtle])
 # => [#<Cat:0x00007ff3ee873b30>, #<Dog:0x00007ff3ee88e728>, #<Turtle:0x00007ff3ee894768>]
 ```
 *25) What is inheritance?*
-Inheritance is a mechanism in object oriented programming that allows classes to inherit behaviours (or instance methods) from other classes. This behaviour inheritance can also initialise any instance variables (i.e. state) that an object instantiated from these classes should have (though state only exists once the object is actually instantiated from a class and values assigned to those instance variables). It is a way of modelling logical hierarchies between different classes and reducing the amount of code we have to write for multiple objects to have the same functionality. In Ruby, classes are only able to inherit from a single class.
+Inheritance is a mechanism in object oriented programming that allows classes to inherit behaviours (or instance methods) from other classes. Note that objects (and their state) cannot be inherited - only classes can inherit from other classes (objects are instantiated from classes, and once they are instantiated, create instance variables and thus have state). It is a way of modelling logical hierarchies between different classes and reducing the amount of code we have to write for multiple objects to have the same functionality. In Ruby, classes are only able to inherit from a single class.
 
-In our example below, we define a class `Pet` and an instance method `speak` within `Pet`. The `Dog` class, which inherits from the `Pet` class, as denoted by the `<` symbol, is able to access the `speak` method through class inheritance, and the `harry` object, when instantiated from the `Dog` class, expects to have a `@name` instance variable when initialised, since the `initialize` method in the `Pet` class stipulates that objects instantiated from it should have this instance variable. 
+In our example below, we define a class `Pet` and an instance method `speak` within `Pet`. The `Dog` class, which inherits from the `Pet` class, as denoted by the `<` symbol, is able to access the `speak` method through class inheritance, and the `harry` object, when instantiated from the `Dog` class, expects to have a `@name` instance variable when initialised, since the `initialize` method inherited from the `Pet` class stipulates that objects instantiated from it should have this instance variable defined when instantiated. 
 ```
 class Pet
   def initialize(name)
@@ -461,14 +494,14 @@ harry.speak
 ```
 
 *26) What is the difference between a superclass and a subclass?*
-A subclass inherits it's instance methods (state is not inherited, since it is unique to the object and only exists once the object is instantiated, and values assigned to instance variables) from a superclass. In Ruby, a subclass can only inherit from a single superclass. 
+A subclass inherits it's instance methods (state is not inherited, since it is unique to the object and only exists once the object is instantiated) from a superclass. In Ruby, a subclass can only inherit from a single superclass. 
 
 *27) When is it good to use inheritance?*
-Inheritance is useful when we want various classes to share the same behaviours (i.e. instance methods), since these can be defined in the superclass and inherited by the subclass without having to rewrite code. Inheritance does give us the flexibility to override methods if we do want our objects to respond to the same method name, but have a slightly different implementation.
+Inheritance is useful when we want various classes to share the same behaviours (i.e. instance methods), since these can be defined in the superclass and inherited by the subclass without having to rewrite code. It is a useful way to model logical hierarchies between classes (i.e. where a class has a "is-a" relationship with another class). Inheritance does give us the flexibility to override methods if we do want our objects to respond to the same method name, but have a slightly different implementation.
 
 In our example below, the `Dog` subclass inherits the `speak` method from the `Pet` superclass through class inheritance (denoted by the `<` symbol). When `Dog.new('Harry')` is invoked, Ruby will look within the `Dog` class for the `initialize` method and when it doesn't find it, Ruby will move up the inheritance hierarchy (to the `Pet` class), where it will find the `initialize` method and it will be invoked. While the `initialize` method still belongs to the superclass, `initialize` is still being called from the `Dog` class, so the instance variable created will still be part of the `Dog` class object's state.
 
-However, we override the `speak` method to return a different string object. 
+However, we override the `Pet#speak` method in the `Dog` class to return a different string object. 
 ```
 class Pet
   def initialize(name)
@@ -491,11 +524,14 @@ harry.speak
 # "Hello! I am a dog"
 ```
 *28) Give an example of using the super method, both with and without an argument.*
-The `super` method, when called inside another instance method, allows a method to look up a similarly named method earlier in the method lookup chain and invoke it. It can be useful to add additional functionality to existing instance methods of the same name that have been inherited from a superclass.
+The `super` method, when called inside another instance method, allows a method to look up a similarly named method earlier in the method lookup chain and invoke it. It can be useful to add additional functionality to existing instance methods of the same name that have been inherited from a superclass. The functionality of `super` can change, whether or not it is defined to accept arguments.
+- When `super` is called without parentheses, it will forward any arguments provided in the instance method which it is called to the equivalently named method in the superclass. This may cause problems if there the argument provided in the subclass instance method is different to what is expected in the superclass method.
+- When `super` is called with parentheses, but not with any arguments, it will invoke the instance method in the superclass, ignoring any arguments passed to the subclass instance method. This is often the safest way to call an instance method from the superclass if that instance method doesn't take any arguments. 
+- When `super` is passed arguments, it will pass those arguments to the equivalently named instance method in the superclass, in the order in which they are provided. 
 
 In our below example, both the `Pet` and `Dog` (which inherits from the `Dog` class, as denoted by the `<` symbol) class have an `initialize` method. After initialising a `Dog` object, we call the `super` method in the `Dog#initialize` method with the `name` and `age` arguments to call the `Pet#initialize` method, which passes the arguments provided to `Dog.new` to `Pet#initialize`. In `Dog#initialize`, we extend the functionality of `Pet#initialize` to initialise another instance variable, `@owner` and assign to the object passed to the `owner` parameter. 
 
-We also have a `speak` method in the `Pet` and `Dog` class. For the `Dog#speak` instance method, we invoke `super` with parenthesis (no arguments), which will invoke the `Pet#speak` method, take the return value of `"Hello!"` and append an additional string object to it. Invoking `super()` is necessary when the method being invoked earlier in the method lookup chain does not take any arguments. 
+We also have a `speak` method in the `Pet` and `Dog` class. For the `Dog#speak` instance method, we invoke `super` with parenthesis (no arguments), which will invoke the `Pet#speak` method, take the return value of `"Hello!"` and append an additional string object to it. Invoking `super()` is often the safest way to incorporate functionality from the superclass instance method when that method does not take any arguments. 
 ```
 class Pet
   def initialize(name, age)
@@ -522,7 +558,7 @@ end
 ted = Dog.new("Ted", 4, "Bobby")
 ```
 *29) Give an example of overriding: when would you use it?*
-Method overriding occurs when we have a method defined in a superclass which is inherited by a subclass, but then define another method of the same name in the subclass that can have different functionality compared with the method in the superclass. It is useful when we want to extend (through use of the `super` method) or change the functionality of an instance method. 
+Method overriding occurs when we have a method defined in a superclass which is inherited by a subclass, but then define another method of the same name in the subclass that has different functionality compared with the method in the superclass. It is useful when we want to extend (through use of the `super` method) or change the functionality of an instance method inherited from a superclass (or mixed in via module). 
 
 In our example below, the `Dog` subclass inherits a `speak` method from the `Pet` superclass (denoted by the `<` symbol), which returns the string object `"Hello!"`. However, we override `Pet#speak` in `Dog` by defining `Dog#speak` and change it's functionality to return the string object `"I am a dog!"`
 ```
@@ -541,7 +577,7 @@ end
 *30) What is a module? What is a mixin? When would a module be useful? What is namespacing?*
 A module is a series of methods that can be mixed into a class, such that objects instantiated from that class also gain access to methods from that module. This is achieved by using the `include ModuleName` keyword in a class definition. Note that we cannot instantiate objects from modules - we can only mix in the module methods into a class, and instantiate an object directly from that class.
 
-It is useful in that classes can only inherit from a single superclass, whereas classes can mix in methods from any number of modules, so modules are useful from the perspective of being able to introduce common methods into unrelated classes that do not share a common hierarchical inheritance chain. Modules are also useful for organising various classes, also known as namespacing. This helps the reader makes it easier to recognise the purpose of the contained classes and also prevent avoid conflicts in methods that have the same name (but belong to different classes).
+Modules are useful in that classes can only inherit from a single superclass, whereas classes can mix in methods from any number of modules, so modules are useful from the perspective of being able to introduce common methods into unrelated classes that do not share a common hierarchical inheritance chain. Modules are also useful for organising various classes, also known as namespacing. This helps the reader makes it easier to recognise the purpose of the contained classes and also prevent avoid conflicts in methods that have the same name (but belong to different classes) by using the namespace resolution operator `::`.
 
 In the example below, we define two unrelated classes, `Human` and `Dog`. We then mix in the `Walkable` module, allowing us to access the module method `walk` in both `Human` and `Dog` classes, even though these classes are unrelated to each other.
 ```
@@ -569,26 +605,26 @@ In the following example, we use modules as convenient way of organising related
 ```
 module Mammal
   class Dog
-    def bark
+    def speak
       "Woof!"
     end
   end
 
   class Cat
-    def meow
+    def speak
       "Meow!"
     end
   end
 end
 
-Mammal::Dog.new.bark
+Mammal::Dog.new.speak
 # => "Woof!"
 
-Mammal::Cat.new.meow
+Mammal::Cat.new.speak
 # => "Meow!"
 ```
 *31) Why should methods in mixin modules be defined without using `self.` in the definition?*
-When an instance method definition is prefixed by the `self` keyword, it refers to the class. This means that if we define a method within a module with the `self` prefix, we are defining a class method on the module, meaning we can only call that class method directly on the module itself, and not from any objects instantiated from classes where the module is mixed in. 
+When an instance method definition is prefixed by the `self` keyword, it refers to the class. This means that if we define a method within a module with the `self` prefix, we are defining a class method on the module, meaning we can only call that class method directly on the module itself, and not from the class, or any objects instantiated from classes where the module is mixed in. 
 
 In our example below, we create the `Identifiable` module, and define the class method `self.identify`. We can then call this method directly from the `Identifiable` module, but an object instantiated from the `Dog` class does not have access to the `self.identify` class method. 
 ```
@@ -607,11 +643,14 @@ Identifiable.identify
 
 Dog.new.identify
 # NoMethodError (undefined method `identify' for #<Dog:0x00007fc8aa156f38>)
+
+Dog.identify
+# NoMethodError (undefined method `identify' for Dog:Class)
 ```
 *32) What is the method lookup path? How is the method lookup path affected by module mixins and class inheritance?*
-The method lookup path is the chain of subclasses and superclasses (including mixed in modules) that Ruby will look within to call methods. It is applicable when an object instantiated from a subclass calls a method that is inherited from a superclass or mixed in through a module, and not explicitly defined within the subclass itself. 
+The method lookup path is the chain of subclasses and superclasses (including mixed in modules) that Ruby will look through to call methods. It is applicable when an object instantiated from a subclass calls a method that is inherited from a superclass or mixed in through a module, and not explicitly defined within the subclass itself. 
 
-When looking for an instance method along the method lookup path, Ruby will look in the immediate class from which an object was instantiated from, then any modules mixed in, starting from the last module mixed in to the class. If Ruby cannot find the associated method, it will look in the superclass, and any modules mixed into that superclass using the same process, and continue further up the inherited superclasses until it finds a relevant instance method (at which point it will stop looking), or return a `NoMethodError` exception. We can observe this sequence by calling the `Class#ancestors` method on a particular class.
+When looking for an instance method along the method lookup path, Ruby will look in the immediate class from which an object was instantiated from, then any modules mixed in, starting from last to first module mixed into the class. If Ruby cannot find the associated method in the class or mixed in modules, it will look in the superclass, and any modules mixed into that superclass using the same process, and continue further up the inherited superclasses until it finds a relevant instance method (at which point it will stop looking), or return a `NoMethodError` exception. We can observe this sequence by calling the `Class#ancestors` method on a particular class.
 
 In our example below, when we call `Dog.new.walk`, Ruby will first look in the `Dog` class to see if there is a `walk` instance method. Since this does not exist, it will then look at the `Pet` class definition, then the `Animal` class definition, then the `Swimmable` module, then the `Walkable` module, where it finds the `walk` method definition, at which point it will stop looking further up the method lookup chain, and call the `walk` method. 
 
@@ -648,13 +687,13 @@ Dog.ancestors
 # => [Dog, Pet, Animal, Swimmable, Walkable, Object, Kernel, BasicObject]
 ```
 *33) Are class variables accessible to subclasses? Why is it recommended to avoid the use of class variables when working with inheritance?*
-Class variables are scoped at a class level and defined by the `@@` symbols prefixing a variable name. They are accessible to objects instantiated from the class when there is an appropriate getter or setter method. It is generally not recommended to use class variables, as all objects that are instantiated from the class where the class variable is defined, share that same single class variable, meaning it is very easy to mistakenly change the value referenced by the class variable.
+Class variables are scoped at a class level and defined by the `@@` symbols prefixing a variable name. They are accessible to objects instantiated from the class when there is an appropriate getter or setter method. It is generally not recommended to use class variables, as all objects that are instantiated from the class where the class variable is defined (as well as from any subclasses), share that same single class variable, meaning it is very easy to mistakenly change the value referenced by the class variable.
 
-In our example below, we define the `SuperClass` class using the `class`...`end` keyword pair, with a getter method also defined. We also initialise the `@@class_var` class variable to the integer object `8` when we define the class. 
+In our example below, we define the `SuperClass` class using the `class`...`end` keyword pair, with a getter method `class_var` also defined. We also initialise the `@@class_var` class variable to reference the integer object `8` when we define the class. 
 
 We then define a new class, `SubClass1`, which inherits from `SuperClass`. We then reassign the `@@class_var` class variable to the integer object `10`. We instantiate `obj2` from the `SubClass1` class, then call the `class_var` getter method to verify that the `@@class_var` class variable is now reassigned to the integer object `10`.
 
-However, once we call the `class_var` getter method on `obj1`, we see that our value for `@@class_var` in `obj1` is also `10`, since all objects instantiated from `SuperClass` and it's subclasses share the single class variable. If we had any other subclasses that inherited from `SuperClass`, this change would also be observed in those subclasses. In this sense, class variables share state between objects (contrast this with instance variables, which are unique to each object).
+However, once we call the `class_var` getter method on `obj1`, we see that our value for `@@class_var` in `obj1` is also `10`, since all objects instantiated from `SuperClass` and it's subclasses share the single class variable. If we had any other subclasses that inherited from `SuperClass`, this change would also be observed in those subclasses. In this sense, class variables can share state between objects (contrast this with instance variables, which are unique to each object).
 ```
 class SuperClass 
   @@class_var = 8
@@ -681,17 +720,17 @@ obj1.class_var
 # => 10
 ```
 *24) Is it possible to reference a constant defined in a different class? How are constants used in inheritance? What is lexical scope?*
-In Ruby, constants are not evaluated at runtime. When dealing with constants, this means that the scope of the object remains limited to where it's defined in the code.
+In Ruby, constants are not evaluated at runtime and have lexical scope. When dealing with constants, this means that the scope of the object remains limited to where it's defined in the code, unless prefixed with a specific class and the namespace resolution operator `::`.
 
-When Ruby is attempting to find the value referenced by a constant, Ruby will look in the immediate module or class where the constant is referenced in the program, and if it fails to find a definition in the immediate class, it will look up the inheritance hierarchy (modules cannot inherit from other modules).
+When Ruby is attempting to find the value referenced by a constant, Ruby will look in the immediate module or class where the constant is referenced in the program, and if it fails to find a definition in the immediate class, it will look up the inheritance hierarchy (modules cannot inherit from other modules), as constants can be inherited.
 
 In our example below, we demonstrate the concept of constants having lexical scope. In our `Vehicle` class, we define the `WHEELS` constant to point to an integer object, `4`. We reassign this `WHEELS` constant in our `Motorcycle` class, which inherits from the `Vehicle` class.
 
 We also define a getter method to access the `WHEELS` constant, `wheels`. After calling the `wheels` method on an object instantiated from the `Motorcycle` class, we see that the value of `bike.wheels` is still `4`. 
 
-This is because constants have lexical scope - when `bike.wheels` was called, Ruby had to look up the method lookup chain to access a `wheels` method. Ruby was able to find it in the `Vehicle` class, where the `WHEELS` constant was also defined, and this is where Ruby took the value of the constant `WHEELS` from.
+This is because constants have lexical scope - when `bike.wheels` was called, Ruby had to look up the method lookup chain to access a `wheels` method. Ruby was able to find this method in the `Vehicle` class, where the `WHEELS` constant was also defined, and this is where Ruby took the value of the constant `WHEELS` from.
 
-We could fix this by changing the return value of the `wheels` method to `self.class::WHEELS`. This syntax makes use of the namespace resolution operator (`::`), which is a way to point Ruby to look at a specific class when resolving the object referenced by a constant. We also use `self.class`, as `self` within an instance method refers to the calling object. We subsequently call the `Class#class` method on this, since the namespace resolution requires a class to look within to find the constant definition.
+We could fix this by changing the return value of the `wheels` method to `self.class::WHEELS`. This syntax makes use of the namespace resolution operator (`::`), which is a way to point Ruby to look at a specific class when resolving the the scope of a constant. We also use `self.class`, as `self` within an instance method refers to the calling object. We subsequently call the `Class#class` method on this, since the namespace resolution requires a class to look within to find the constant definition.
 ```
 class Vehicle
   WHEELS = 4
@@ -717,12 +756,12 @@ bike.wheels
 *25) What is an accessor method?*
 An accessor method, is an instance method defined within a class that allows instance variables to be both accessed (has the functionality of a getter method) and overwritten (functionality of a setter method). 
 
-Accessor methods can be subject to method access control, such that only methods defined within the class can access/overwrite instance variables (in the case of a `private` accessor method), made `public` (such that all of the program can access/overwrite instance variables), or made `protected`, such that only methods defined within the class or other instances of the same class can access/overwrite instance variables.
+Accessor methods can be subject to method access control, such that only methods defined within the class can access/overwrite instance variables (in the case of a `private` accessor method), made `public` (such that all of the program can access/overwrite instance variables - this is the default level of method access control), or made `protected`, such that only methods defined within the class or subclass or other instances of the same class or subclass can access/overwrite instance variables.
 
 Ruby has an `attr_accessor` method from the `Module` class that creates both a getter and setter method.
 
 *26) What is a getter method?*
-A getter method is an instance method we define in a class that allows us to read an instance variable by returning the value of the instance variable. Ruby has a shorthand `Module#attr_reader` method that allows us to quickly create a getter method inside a class definition.
+A getter method is an instance method we define in a class that allows us to return the value of an instance variable by calling this method on an object instantiated from a class. Ruby has a shorthand `Module#attr_reader` method that allows us to quickly create a getter method inside a class definition. Getter methods, like other instance methods, can be be subject to method access control. 
 
 An important aside is that while getter methods are intended to read instance variables (they do not provide an explicit ability to reassign values assigned to instance variables), they can be prone to destructive methods.
 
