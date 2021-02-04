@@ -807,10 +807,10 @@ ted.name
 A setter method is an instance method we define within a class definition that enables us to reassign the value of an instance variable. Ruby has a shorthand `Module#attr_writer` method that allows us to quickly create a setter method.
 
 An important point is that a setter method will return the argument that is passed to it. This may have unintended consequences if our code implementation relies on the setter method returning a value after some form of transformation to the object referenced by the instance variable - this will not be reflected in the return value of the setter method and in this case, we should rely on the return value of the getter method called after the instance variable value has been reassigned by the setter method.
+
+In our example below, our `name=` setter method calls the `String#capitalize` method on the string object passed as an argument - however, the return value of the setter method is the string object passed as an argument, not the `@name` instance variable after being reassigned to the transformed string object.
 ```
 class Dog
-  attr_writer :name
-
   def initialize(name)
     @name = name
   end
@@ -818,52 +818,80 @@ class Dog
   def name
     @name.dup
   end
+
+  def name=(name)
+    @name = name.downcase.capitalize
+  end
 end
 
 ted = Dog.new("Ted")
 ted.name
 # => "Ted"
 
-ted.name = "Frank"
-# "Frank"
+ted.name = "frANk"
+# => "frANk"
 
 ted.name
 # => "Frank"
 ```
 *28) How do you decide whether to reference an instance variable or a getter method?*
-Whether we reference an instance variable or a getter method can depend on whether we need to perform any additional transformation on the object referenced by the instance variable, or want to add validation or guard logic. In these cases, a getter method can enable this (and reduce the amount of times we need to apply the validation/transformation logic in our code), whereas the instance variable is limited to whatever object it is referencing (i.e. without any transformation or validation or guard logic). A getter method can also be useful if we want to make the instance variable accessible outside the class where it is defined (when it is either protected or public), since instance variables cannot be accessed outside of the class definition unless a getter method is provided. 
+Whether we reference an instance variable or a getter method can depend on whether we need to perform any additional transformation on the object referenced by the instance variable before it is returned, or want to add validation or guard logic. 
 
-### Instance methods, class methods, self
-*29) When would you call a method with self?*
-Within a class definition, if we have a setter method and want to utilise this setter method within another instance method definition, we will need to prepend `self` to the setter method name, otherwise Ruby will interpret the setter method as a local variable instead of the setter method. We *could* also prepend `self` to our getter methods, though this is unnecessary (since there is no `=` operator required, Ruby will not assume local variable assignment is happening), and often discouraged by the Ruby community.
+In these cases, a getter method can enable this (and reduce the amount of times we need to apply the validation/transformation logic in our code), whereas the instance variable is limited to whatever object it is referencing (i.e. without any transformation or validation or guard logic). 
 
-Although somewhat contrived, we have an example of using the `self` keyword prepended to the setter method `name`. If we did not prepend `self`, Ruby would interpret the `name` setter method as a local variable. Therefore if we called the `rename` instance method, it would return a local variable `name` assigned to the object provided to the `name` argument, and the instance variable `@name` would be unchanged.
+A getter method can also be useful if we want to make the instance variable accessible outside the class where it is defined (when it is either protected or public), since instance variables cannot be accessed outside of the class definition unless a getter method is provided.
+
+In our `initialize` method, we don't perform any validations or transformations on the argument passed to the `name` parameter. However, in our `name` getter method, we perform additional transformation by applying some string methods and using string interpolation to append `"Lord "` to our transformed string variable. We could thus use the return value of this `name` getter method in other parts of our program, instead of having to apply the same set of transformations every time the instance variable `@name` is referenced in our program.
 ```
 class Dog
   def initialize(name)
     @name = name
   end
 
-  def rename(name)
-    self.name = name
+  def name
+    "Lord #{@name.downcase.capitalize}"
+  end
+end
+
+teddy = Dog.new("Teddy")
+teddy.name
+# => "Lord Teddy"
+```
+### Instance methods, class methods, self
+*29) When would you call a method with self?*
+Within a class definition, if we have a setter method defined and want to utilise this setter method within another instance method definition, we will need to prepend `self` to the setter method name, otherwise Ruby will interpret the setter method call as a local variable initialisation and assignment instead. We *could* also prepend `self` to our getter methods, though this is unnecessary (since there is no `=` operator used, Ruby will not assume local variable assignment is happening), and this is a practice often discouraged by the Ruby community.
+
+We have an example of using the `self` keyword prepended to the setter methods `name` and `age`. If we did not prepend `self`, Ruby would interpret the `name` and `age` setter method calls as a local variable initialisation and assignment to the arguments provided to the `remodel` instance method. Therefore if we called the `remodel` instance method without appending `self` to `age =` and `make =`, it would return local variable `name` and `age` assigned to the objects passeed by reference to the `name` and `age` parameters respectively, and the instance variables `@name` and `@age` would be unchanged.
+```
+class Car
+  def initialize(make, age)
+    @make = make
+    @age = age
+  end
+
+  def remodel(make, age)
+    self.make = make
+    self.age = age
   end
 
   private
 
-  attr_writer :name
+  attr_writer :make, :age
 end
 
-d = Dog.new("Ted")
-# => #<Dog:0x00007fe539022738 @name="Ted">
+toyota = Car.new("Toyota", 14)
+# => #<Car:0x00007fe539022738 @make="Toyota" @age=14>
 
-d.rename("Jeff")
-d
-# => #<Dog:0x00007fe539022738 @name="Jeff">
+toyota.remodel("Lexus", 2)
+toyota
+# => #<Car:0x00007fe539022738 @make="Lexus" @age=2>
 ```
 *30) What are class methods?*
-Class methods are methods defined on the class itself. We can identify these by the `self` keyword prepended to the method definition. In the context of class methods, when `self` is used as a prefix, it refers to the class itself - hence we are literally defining the method on the class itself. Class methods can only be called directly on the class itself - they cannot be called by objects instantiated from the class (attempting to do so will raise a `NoMethodError`), though class methods are inherited in the same fashion as instance methods. 
+Class methods are methods defined on the class itself. We can identify these by the `self` keyword prepended to a method definition. In the context of class methods, when `self` is used as a prefix, it refers to the class itself - hence we are literally defining a method on the class itself. Class methods can only be called directly on the class itself - they cannot be called by objects instantiated from the class (attempting to do so will raise a `NoMethodError`), though class methods are inherited in the same fashion as instance methods. 
 
-Class methods cannot access instance variables (as instance variables are only created when objects are instantiated from the class). Class methods can be useful when we need a class level method that does not have anything to do with the state of an object.
+Class methods cannot access instance variables (as instance variables are only created when objects are instantiated from the class). Class methods can be useful when we need a method that does not have anything to do with the state of objects.
+
+In our example below, we define a class method `identify` by using the `self` keyword prepended to the method name. Within the class method, `Dog::identify` will return the class, since `self` used outside of an instance method will return the class.
 ```
 class Dog
   def self.identify
@@ -884,13 +912,13 @@ Dog.new.identify
 # => NoMethodError
 ```
 *31) What is the purpose of a class variable?*
-A class variable is a variable defined at a class level and initialised when the class is evaluated by Ruby (distinguish this from an instance level, which only occurs when an object is instantiated from a class). Class variables can be inherited by subclasses and are accessible by both class and instance methods (this  implies they are accessible within objects). They are denoted by `@@` symbols before a variable name. 
+A class variable is a variable defined at a class level and initialised when the class is evaluated by Ruby (distinguish this from an instance variable, which only occurs when an object is instantiated from a class). Class variables can be inherited by subclasses and are accessible by both class and instance methods (this  implies they are accessible within objects). They are denoted by `@@` symbols before a variable name. 
 
-Within the Ruby community, the use of class variables is somewhat discouraged due to the fact that they can be inherited, and that all objects instantiated from the class (and subclasses inheriting from the superclass where the class variable is defined) share the same copy of the class variable, meaning it is easy to accidentally reassign the class variable, and have that change reflected across all subclasses and objects instantiated from that class and subclasses. 
+Within the Ruby community, the use of class variables is somewhat discouraged due to the fact that they can be inherited, and that all objects instantiated from the class (and subclasses inheriting from the superclass where the class variable is defined) share the same copy of the class variable, meaning it is easy to accidentally reassign the class variable, and have that change reflected across all subclasses and objects instantiated from that class and subclasses. Nonetheless, if we want to keep track of a class level detail that is unrelated to the state of objects instantiated from that class, class variables are an option.
 
 In our example below, we define the `Animal` class with a class variable, `@@legs` and assign it to the integer object `4`. Once this class is defined by Ruby, the class variable is created. We call the class method `legs` and the instance method `legs`, which both return the `@@legs` class variable, which still references the integer object `4`.
 
-However, as soon as Ruby evaluates the `Snake` class, which subclasses the `Animal` class, the class variable `@@legs` now points to the integer object `0`, irrespective of whether n object is instantiated from the `Snake` class. We can observe the fact that this class variable is referencing `0` in the `Animal` superclass, as well as objects instantiated from the `Animal` class - `horse` in our case. 
+However, as soon as Ruby evaluates the `Snake` class, which subclasses the `Animal` class, the class variable `@@legs` now points to the integer object `0`, irrespective of whether an object is instantiated from the `Snake` class. We can observe the fact that this class variable is referencing `0` in the `Animal` superclass, as well as objects instantiated from the `Animal` class - `horse` in our case. 
 ```
 class Animal
   @@legs = 4
@@ -930,9 +958,9 @@ horse.legs
 *32) What is a constant variable?*
 A constant variable (or constant for short) is a variable we define at the class level. It is intended that a constant points to an object that should not change through the operation of our program (hence the name, constant). Ruby will allow us to reassign objects referenced by constants, but will raise a warning that the constant has already been defined.
 
-We can identify constants by variable names starting with a capital letter (though by convention we usually use all capital letters when defining a constant). They are created and initialised when the class is defined (i.e. evaluated at runtime) and can be accessed by class or instance methods. Constants are different from instance or class variables, in that we are able to access constants from completely unrelated classes by using the namespace resolution operator `::`. This allows us to reach into other classes to access a constant. 
+We can identify constants by variable names starting with a capital letter (though by convention we usually use all capital letters when defining a constant). They are created and initialised when the class is evaluated by Ruby and can be accessed by class or instance methods. Constants are different from instance or class variables, in that we are able to access constants from completely unrelated classes by using the namespace resolution operator `::`. This allows us to reach into other classes to access a constant. 
 
-The other unique aspect of constants when compared with instance or class variables in that constants also have lexical scope, meaning that when attempting to evaluate the value of a constant, Ruby will look to the immediate class or module where the constant is referenced, and if it cannot find the constant definition at that location, Ruby will attempt to look up the inheritance chain for the constant definition.
+The other unique aspect of constants when compared with instance or class variables are that constants also have lexical scope, meaning that when attempting to evaluate the value of a constant, Ruby will look to the immediate class or module where the constant is referenced, and if it cannot find the constant definition at that location, Ruby will attempt to look up the inheritance chain for the constant definition (or return a `NameError` if Ruby cannot find a constant definition in the hierarchy chain).
 
 We can bring the scoping behaviour of constants in line with instance variables by appending `self.class::` to the constant in any method that attempts to reference the constant.
 ```
@@ -972,11 +1000,11 @@ class Dog < Mammal
 end
 ```
 *33) What is the default to_s method that comes with Ruby, and how do you override this? What are some important attributes of the to_s method?*
-The default `to_s` instance method comes from the `Object` class in Ruby, and by default, print the name of the object's class and an encoding of the object's `object_id`. Often, this is not a particularly useful output, so we are able to use method overriding to replace the default functionality of the `Object#to_s` instance method to custom functionality, by defining a `to_s` method within a class definition.
+The default `to_s` instance method comes from the `Object` class in Ruby, and by default, will print the name of the object's class and an encoding of the object's `object_id`. Often, this is not a particularly useful output, so we are able to use method overriding to replace the default functionality of the `Object#to_s` instance method to custom functionality, by defining a `to_s` method within a class definition.
 
-Two important things to note are that the `Object#to_s` instance method is automatically called by Ruby during a `puts` method call on the argument (i.e. `puts argument.to_s`), as well as during string interpolation. This is demonstrated in our example below - when we call the `puts` method, Ruby automatically calls `to_s` on the `jack` object. Ruby finds a method definition for `to_s` in the `Dog` class definition, and hence calls `Dog#to_s` instead of `Object#to_s`. This is why `"Jack"` is printed, instead of the `Dog` class name and an encoding of the `jack` object's object_id. 
+Two important things to note are that the `Object#to_s` instance method is automatically called by Ruby during a `puts` method call on the argument (i.e. `puts argument.to_s`), as well as during string interpolation (i.e. "I am an #{`argument.to_s`}"). This is demonstrated in our example below - when we call the `puts` method, Ruby automatically calls `to_s` on the `jack` object. Ruby finds a method definition for `to_s` in the `Dog` class definition, and hence calls `Dog#to_s` instead of `Object#to_s`. This is why `"Jack"` is printed, instead of the `Dog` class name and an encoding of the `jack` object's object_id. 
 
-We also observe `to_s` being automatically called in our string interpolation - the code is equivalent to `#{d.to_s}`.
+We also observe `to_s` being automatically called in our string interpolation - the code is equivalent to `#{jack.to_s}`.
 ```
 class Dog
   def initialize(name)
@@ -992,7 +1020,7 @@ jack = Dog.new("Jack")
 puts jack
 # => Jack
 
-"Hello, I am a dog and my name is #{d}!"
+"Hello, I am a dog and my name is #{jack}!"
 # => "Hello, I am a dog and my name is Jack!"
 ```
 *34) From within a class, when an instance method uses self, what does it reference?*
@@ -1008,12 +1036,12 @@ d = Dog.new
 d.display_class
 # => "Dog"
 ```
-In our example above, we use the `self` keyword in our `Dog#display_class` instance method. Thus when we call the `display_class` method, `self` is pointing to the object that called the `display_class` method, the `d` object instantiated from `Dog`. We then chain the `Class#class` method onto the `display_class` method, which returns the class of the `d` object.
+In our example above, we use the `self` keyword in our `Dog#display_class` instance method. Thus when we call the `display_class` method, `self` is pointing to the object that called the `display_class` method, the object instantiated from `Dog`. We then chain the `Class#class` method onto the `display_class` method, which returns the class of the `d` object.
 
 Prior to Ruby 2.7, we could not use the `self` keyword when calling private methods within the class, as this would be the equivalent of calling the method on the object (i.e. calling the instance method outside of the class), which is prevented through use of the `private` method.
 
 *35) What happens when you use self inside a class but outside of an instance method?*
-When we use the `self` keyword inside a class definition but outside of an instance method, it refers to the class itself. This is useful when defining class methods (i.e. methods that are called directly on the class, and not on objects instantiated from the class).
+When we use the `self` keyword inside a class definition but outside of an instance method, it refers to the class itself. This is useful when defining class methods (i.e. methods that are called directly on the class, and not on objects instantiated from the class) - we append `self` to a method name in a method definition to define a class method instead of an instance method.
 
 In our example below, our use of the `self` keyword in the method definition means that we are defining the `species` method directly on the class - i.e. defining a class method. As this is a class method, the `self` keyword within the `self.species` class method also refers to the class itself when called on the class.
 ```
@@ -1027,7 +1055,7 @@ Dog.species
 # => Dog
 ```
 *36) Why do you need to use self when calling private setter methods?*
-We need to use the `self` keyword when calling private setter methods, as without `self`, Ruby will interpret the setter method as a local variable assignment, which will not change the state of the object when the private setter method is called.
+We need to use the `self` keyword when calling private setter methods, as without `self`, Ruby will interpret the setter method call as a local variable assignment, which will not change the state of the object when the instance method calling the setter method is called.
 ```
 class Dog
   def initialize(name, age)
@@ -1073,16 +1101,16 @@ Dog.new.object_info
 # => => #<Dog:0x00007fd5f595e660>
 ```
 *38) What happens when you call the p method on an object? And the puts method?*
-When we call the `p` method on an object, this is the `Kernel#p` instance method. This has the effect of also calling the `Class#inspect` on the same object that is passed as an argument to the `p` method. When we call the `Kernel#puts` method, this also automatically calls the `Object#to_s` instance method on the object passed as an argument to the `puts` method.
+When we call the `p` method on an object, this is the `Kernel#p` instance method. This has the effect of also calling the `Class#inspect` on the same object that is passed as an argument to the `p` method (i.e. `p object.inspect`). When we call the `Kernel#puts` method, this also automatically calls the `Object#to_s` instance method on the object passed as an argument to the `puts` method (i.e. `puts object.to_s`).
 
 *39) What are the scoping rules for class variables? What are the two main behaviors of class variables?*
 Class variables are scoped at the class level and can be inherited by subclasses. They are denoted by `@@` symbols before the variable name. Class variables exhibit two particular behaviours:
-1. All objects instantiated from the class, subclasses, and the objects instantiated from those subclasses, all have access to a single copy of the class variable. This means that any change in the class variable, wherever it occurs, is reflected across all of those subclasses and objects. This is why it is very easy to make changes that impact multiple other classes and objects, which is why usage of class variables is generally discouraged. 
-2. Class variables can be accessed via class methods where the class variable is defined (regardless of where the class variable is initialised), or by instance methods when an object is instantiated from the class where the class variable is defined.
+1. All objects instantiated from the class, subclasses, and the objects instantiated from those classes or subclasses, all have access to a single copy of the class variable. This means that any change in the class variable, wherever it occurs, is reflected across all of those classes, subclasses and objects. This is why it is very easy to make unintended changes that impact multiple other classes and objects, which is why usage of class variables is generally discouraged. 
+2. Class variables can be accessed via class methods (regardless of where the class variable is initialised), or by instance methods when an object is instantiated from the class where the class variable is defined.
 
-In our example below, we create the `@@legs` class variable in the `Animal` class and assign it to the integer object `4`. We have both a class (`Animal::legs`) and an instance getter method (`Animal#legs`) that can access the `@@legs` class variable.
+In our example below, we initialise the `@@legs` class variable in the `Animal` class and assign it to the integer object `4`. We have both a class (`Animal::legs`) and an instance getter method (`Animal#legs`) that can access the `@@legs` class variable.
 
-When we call `Animal::legs` or the `Animal#legs` on an instance of `Animal`, both methods return the integer object `4`, as expected. However, once we define the `Bird` class, we notice that calling `Animal.legs` now returns the integer object `2`. This is because objects instantiated from `Bird` and `Animal`, and the `Bird` and `Animal` classes all share a single copy of the `@@legs` class variable, which means that reassignment of `@@legs` in the `Bird` class also affected the class variable in `Animal`.
+When we call `Animal::legs` or the `Animal#legs` on an instance of `Animal`, both methods return the integer object `4`, as expected. However, once we define the `Bird` class, we notice that calling `Animal.legs` now returns the integer object `2`. This is because objects instantiated from `Bird` and `Animal`, and the `Bird` and `Animal` classes all share a single copy of the `@@legs` class variable, which means that reassignment of `@@legs` in the `Bird` class also affected the class variable in `Animal`, as well as any objects instantiated from the `Bird` or `Animal` class.
 ```
 class Animal
   @@legs = 4

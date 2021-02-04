@@ -281,7 +281,6 @@ If you only want the setter method, you can use the `attr_writer` method. All of
 ```
 attr_accessor :name, :height, :weight
 ```
-
 #### Examples of Accessor methods
 With getter and setter methods, we have a way to expose and change an object's state. We can also use these methods from within the class as well. In the previous section, the `speak` method referenced the `@name` instance variable, like below:
 ```
@@ -351,7 +350,6 @@ sparky.change_info('Spartacus', '24 inches', '45 lbs')
 puts sparky.info
 => "Spartacus weighs 45 lbs and is 24 inches tall."
 ```
-
 ### Calling methods with self
 Just like when we replaced accessing the instance variable directly with getter methods, we'd also like to do the same with our setter methods. Let's change the implementation of the `change_info` method to this:
 ```
