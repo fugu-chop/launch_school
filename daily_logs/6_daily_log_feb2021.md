@@ -36,3 +36,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I've finished the set of written sample problems. I'm now reviewing these answers, and when I'm happy with the level of detail, will start to practice covering off the relevant points (and typing these out quickly!).
+
+##### 04/02/21 (Thu)
+__*Concepts covered*__<br/>
+- Revision
+  - RB129 Study Group
+  - Answer reviews
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I'm not sure if it was because I was half-asleep, but I really struggled to describe protected methods in the study session. All the other questions were ok, I think. Definitely need to revise protected methods, as well as the `super` keyword. The `private`, `protected` and `super` keywords are all methods. 
