@@ -1159,7 +1159,7 @@ Bird.new.legs
 *41) How does sub-classing affect instance variables?*
 Subclassing (or inheritance), does not really exist in the context of instance variables, as instance variables do not exist until an object is instantiated from a class and a value assigned to them. Thus, instance variables are not inherited. We can say, however, that instance methods are inherited, which when called, can initialise instance variables.
 
-As each object is instantiated from a class, it's instance variables are created, and are generally unique to it (i.e. contributing to that object's state), such that each object is also unique, regardless of whether the objects passed as arguments are the same object.
+As each object is instantiated from a class, it's instance variables are created and values assigned to them, contributing to that object's state. Each object is unique, regardless of whether the objects passed as arguments are the same object.
 ```
 class Dog
   def initialize(name)
@@ -1178,18 +1178,24 @@ b = Dog.new(name1)
 ```
 ### Fake operators and equality
 *41) What is a fake operator?*
-A fake operator is an instance method defined within a class that appears to be an operator, but can have different implementations based on where/how it is defined across different classes. The reason why these methods appear to be operators is due to Ruby's syntactical sugar, which makes the syntax of calling these methods look like operators. Examples include `==`, `+`, `[]`, which are all methods disguised as operators due to syntactical sugar. 
+A fake operator is an instance method defined within a class that appears to be an operator, but can have different implementations based on where/how it is defined across different classes. The reason why these methods appear to be operators is due to Ruby's syntactical sugar, which makes the syntax of calling these methods look like operators. Examples include `==`, `+`, `[]`, which are all methods disguised as operators due to Ruby's syntactical sugar. 
 
 *42) How does equivalence work in Ruby?*
-Equivalence in Ruby can have different meanings, depending on what instance method we use. The `BasicObject#==` method treats objects as equivalent if they are the same object occupying the same physical space in memory. However, various classes such as `Hash`, `String` and `Array` implement their own versions of the `==` method, such that many of these methods treat objects as equal if they have the same value, but not necessarily the same object (i.e. they do not have the same `object_id`). 
+Equivalence in Ruby can have different meanings, depending on what implementation our instance methods use. The `BasicObject#==` method treats objects as equivalent if they are the same object (i.e. occupying the same physical space in memory). However, various classes such as `Hash`, `String` and `Array` implement their own versions of the `==` method, such that many of these methods treat objects as equal if they have the same value, but not necessarily the same object (i.e. they do not have the same `object_id`). 
 
-The notable exceptions are the `Integer` and `Symbol` classes, which test for object equivalence (rather than value equivalence). This is more of a memory optimisation choice since `Symbol` and `Integer` objects can't be mutated (however the `Integer#==` instance method has a slight wrinkle in it's implementation, as it allows comparison between `Float` and `Integer` objects, and vice versa for `Float#==` instance method).
+The notable exceptions are the `Integer` and `Symbol` classes, where integer and symbol objects that have the same value also have the same object_id. This is more of a memory optimisation choice since `Symbol` and `Integer` objects can't be mutated (however the `Integer#==` instance method has a slight wrinkle in it's implementation, as it allows comparison between `Float` and `Integer` objects, and vice versa for `Float#==` instance method).
 
 Ruby also has an `Object#equal?` method, which treats objects as equal if they occupy the same space in memory (i.e. have the same `object_id`). Most other classes typically do not provide their own implementation of this instance method as this method is a common way to test whether two objects occupy the same space in memory (i.e. are the same object).
 
 *43) How do you determine if two variables actually point to the same object?*
 We can call `Object#object_id` on that variable. This will return the object id of the object referenced by that variable. Since the object id is unique to every object in Ruby, if the object id of the object is the same for both variables, then this indicates that the two variables are pointing at the same object. Alternatively, we could use the `Object#equal?` method. 
+```
+"Hello".object_id == "Hello".object_id
+# => false
 
+"Hello".equal?("Hello")
+# => false
+```
 *44) What is the === method?*
 The `===` method compares objects, returning `true` if the argument passed into the instance method belongs to the set on which the method is invoked. It is most frequently observed in `case` statements.
 
@@ -1218,10 +1224,18 @@ String === Hash
 *45) What is the eql? method?*
 The `eql?` method returns true if the two objects being compared have the same value and refer to the same objects. It's not commonly used - mostly commonly for comparing the key-value pairs between two `Hash` objects.
 
-*46) What is interesting about the #object_id method and its relation to symbols and integers?*
-The `Object#object_id` instance method, when called on an object, will return an object id of that particular object which represents it's location within memory. Each object that has been instantiated in Ruby has a unique object id. In relation to symbols and integers, objects with the same value instantiated from these classes occupy a single location in memory. Constrast this with objects instantiated from other classes, such as String objects, which despite having the same value, will occupy different locations in memory (and thus have different object ids).
+In our example below, we have defined two hashes `a` and `b`. The `Hash#eql?` method compares whether the key-value pairs have the same values. 
+```
+a = { a: "Test", b: "Test1" }
+b = { a: "Test", b: "Test1" }
 
-In our example below, we have instantiated two different instance variables to reference the `Integer` object with a value of `4`. When we call the `Object#object_id` instance method, we find that the two `4` objects occupy the same space in memory and thus have the same object id, despite being referenced in two different instance variables. This means that the two integer objects `4` are the same object. Contrast this with our instance variables referencing the string object `"Harry"`. Despite the string objects having the same value, they occupy two different spaces in memeory and hence have two different object ids. This indicates that these are two different objects. 
+a.eql?(b)
+# => true
+```
+*46) What is interesting about the #object_id method and its relation to symbols and integers?*
+The `Object#object_id` instance method, when called on an object, will return an object id of that particular object which represents it's location within memory. Each object that has been instantiated in Ruby has a unique object_id. In relation to symbols and integers, objects with the same value instantiated from these classes occupy a single location in memory (and thus have the same object_id). Constrast this with objects instantiated from other classes, such as String objects, which despite having the same value, will occupy different locations in memory (and thus have different object ids).
+
+In our example below, we have instantiated two different instance variables to reference the `Integer` object with a value of `4`. When we call the `Object#object_id` instance method, we find that the two `4` objects occupy the same space in memory and thus have the same object id, despite being referenced in two different instance variables. This means that the two integer objects `4` are the same object. Contrast this with our instance variables referencing the string object `"Harry"`. Despite the string objects having the same value, they occupy two different spaces in memory and hence have two different object ids. This indicates that these are two different objects. 
 ```
 class Dog
   attr_reader :dog_age_start, :dog_age_finish, :dog_name_start, :dog_name_finish
@@ -1244,12 +1258,28 @@ Dog.new.dog_name_finish.object_id
 # => 70221965054880
 ```
 *47) When do shift methods make the most sense?*
-The shift method is generally best used with collections, or Array objects, in particular. This is because the `Array` class implements these shift methods, and no other classes really implement a similar method (e.g. `Hash` objects don't have this method and the `String` class uses the `+` method to concatenate strings). In general, the implementation of custom methods should be similar to the implementation already built into classes already defined by the Core API in Ruby. 
+The shift method is generally best used with collections, or Array objects, in particular. This is because the `Array` class already has an implementation of these shift methods (e.g. `Hash` objects don't have this method and while the `String` class also has an implementation, there is also an equivalent `+` instance method defined to concatenate strings). In general, the implementation of custom methods should be similar to the implementation pattern already built into classes already defined by the Core API in Ruby.
 
+In our below example, when instantiating an object from the `Library` class, the `initialize` method is called, which initialises an instance variable `@books`, which points to an empty array. We then define a custom `<<` method, which uses the `Array#<<` method to allow us to insert objects into that empty array. If we did not define this `<<` method, we would not be able to interface with the `@books` instance method (which would return a `NoMethodError`), unless we had a getter method for the `@books` instance variable, at which point calling the `<<` method would call `Array#<<`.
+```
+class Library
+  def initialize
+    @books = []
+  end
+
+  def <<(book)
+    @books << book
+  end
+end
+
+lib = Library.new
+lib << "Grapes of Wrath"
+# => ["Grapes of Wrath"]
+```
 *48) Explain how the element reference getter and element assignment setter methods work, and their corresponding syntactical sugar*
 The element reference getter and element assignment setter methods are observed in the `Array` class in the Ruby Core API. In the standard implementation, they allow us to reference array elements by index and mutate arrays by reassigning elements by index, respectively. There is a significant degree of syntactical sugar which makes these methods look like operators. We are able to define our own implementation in our own classes (though it is generally recommended that their syntax and functionality be similar to the equivalent methods in the `Array` class). 
 
-In our example below, there is a custom element reference getter method and element assignment setter method defined, which strips back the syntactical sugar in the instand method definition. Calling these methods however, still makes use of the syntactical sugar provided in equivalent instance methods defined in the `Array` class. 
+In our example below, there is a custom element reference getter method and element assignment setter method defined, which strips back the syntactical sugar in the instance method definition and utilises the element reference getter and element assignment setter methods already defined in the `Array` class to interface with the array referenced by the `@pets` instance variable. Calling these methods however, still makes use of the syntactical sugar provided in equivalent instance methods defined in the `Array` class. 
 ```
 class Owner
   def initialize
