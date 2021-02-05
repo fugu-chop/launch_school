@@ -1,7 +1,9 @@
-# February 2021 (Total minutes: 378)
+# February 2021 (Total minutes: 618)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
+- [4th, Thu](#040221-thu)
+- [5th, Fri](#050221-fri)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -48,3 +50,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I'm not sure if it was because I was half-asleep, but I really struggled to describe protected methods in the study session. All the other questions were ok, I think. Definitely need to revise protected methods, as well as the `super` keyword. The `private`, `protected` and `super` keywords are all methods. 
+
+##### 05/02/21 (Fri)
+__*Concepts covered*__<br/>
+- Revision
+  - Answer reviews
+  - Writing answers practice
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+The grind continues. I'm definitely burning out a little bit on Launch School. However, now I feel as though I am slightly improving on the quality of definitions, I just have to make sure I have a fully fleshed out definition - covering all the little points that I might miss. I'll need to continue to practice, and I feel like I'm getting ever so slightly faster. 
