@@ -226,7 +226,7 @@ ted1.name
 ted2.name 
 # => "Ted"
 ```
-#### How do objects encapsulate state?
+#### *How do objects encapsulate state?
 State is unique to each object (i.e. objects do not share state). This means that objects, despite being instantiated from the same class, do not affect the state of other objects when their individual state is changed (e.g. through setter methods). As such, the state of each object is encapsulated (or protected from changes to other objects).
 
 In our example below, we define a `Dog` class on `lines 1-7` using the `class` and `end` reserved words. We instantiate two `Dog` objects on `lines 10-11`, passing the same string object `"Ted"` referenced by the local variable `name`. We then utilise the setter method defined through the `Dog#attr_accessor` to change the state of the object referenced by `bob`. However, this change does not affect the state of the `ted` object, since state is unique to each object (i.e. state is not shared between objects instantiated from the same class) and encapsulated within that object.
@@ -247,7 +247,7 @@ bob.name = "Bob"
 ted.name
 # => "Ted"
 ```
-#### What is a collaborator object, and what is the purpose of using collaborator objects in OOP?
+#### *What is a collaborator object, and what is the purpose of using collaborator objects in OOP?
 A collaborator object is any object (whether an object instantiated from a custom class, or a class predefined within the Ruby Core API) that we assign to an instance variable when an object is instantiated from a class. 
 
 In general, collaborator objects allow us to model relationships between objects instantiated from classes that don't necessarily fit within a logical hierarchy - a collaborative relationship between objects can be thought of as a "has-a" or associative relationship, while relationships between classes through inheritance can be thought of as "is-a" relationship.
@@ -337,12 +337,176 @@ tim.age
 tim.can_i_drive
 # => "I am able to drive"
 ```
-#### What is the protected method used for?
+#### *What is the protected method used for?
+The `protected` method in Ruby is a form of method access control that limits the ability to call instance methods defined within a class. *It acts as a 'middle-ground' between private and public instance methods.*
+- Within a class, protected methods act like public methods - they can be called anywhere within the class definition.
+- Outside of a class, protected methods act somewhat like private classes - they cannot be called directly on objects, but can be called on other instances of the same class. 
 
+In our example below, we define the `Dog` class on `lines 1-15` using the `class` and `end` reserved words. Within this class definition, we call the `protected` method on `line 10`, after which we define the `name` instance method (`lines 12-14`). This means that objects instantiated directly from the `Dog` class cannot call the `name` instance method (this returns a `NoMethodError`, per `line 20`).
+
+However, we also define a public instance method `play_with`, which is able to access the `play_with` instance method (since instance methods are able to access protected methods defined in the `Dog` class). Once we instantiate two `Dog` objects and assign them to local variables `ted` and `sparky` on `lines 17-18`, we are able to call the `play_with` instance method on the `ted` object, passing in the `sparky` object as an argument. Since the `name` instance method is protected, Ruby is able to access the `name` instance method in the `sparky` object through the public `play_with` instance method, as the object referenced by the local variable `sparky` is instantiated from the same `Dog` class as the `ted` object. 
+```
+class Dog
+  def initialize(name)
+    @name = name
+  end
+
+  def play_with(other_dog)
+    "#{@name} plays with #{other_dog.name}"
+  end
+
+  protected
+
+  def name
+    @name
+  end
+end
+
+ted = Dog.new("Ted")
+sparky = Dog.new("Sparky")
+
+ted.name
+# NoMethodError (protected method `name' called for #<Dog:0x00007fee87961bf8 @name="Ted">)
+
+ted.play_with(sparky)
+# => "Ted plays with Sparky"
+```
 #### Classes also have behaviors not for objects (class methods). How do you define a class method?
+A class method is a method that is defined directly on the class. This means that we can only call a class method on the class, and not on objects instantiated from that class. We define a class method by appending a `self.` prefix to the method name in a method definition. *This is because the self keyword, when used outside of an instance method, refers to the class itself. This means we are defining a method directly on the class.*
 
-#### What is polymorphism?
+In our example below, we define a `Dog` class using the `class` and `end` reserved words on `lines 1-5`. Within the `Dog` class, we define a class method on `lines 2-4`, as per the `self.` prefix on the `species` method name, which returns `self` *- since `self` here is used outside of an instance method, this will return the class*. This means that we can call the `Dog::species` class method directly on the `Dog` class (per `line 7`), but not on objects instantiated from the `Dog` class (which raises a `NoMethodError`, per `line 9`).
+```
+class Dog
+  def self.species
+    self
+  end
+end
 
+Dog.species
+# => Dog
+
+Dog.new.species
+# NoMethodError (undefined method `species' for #<Dog:0x00007fc9210adb78>)
+```
+#### *What is polymorphism?
+Polymorphism refers to the ability of different objects to respond to a common interface. It is a principle within Object Oriented Programming that allows us to reduce the amount of code that we write *and a way to extend the functionality of objects through inheritance (class inheritance of methods), or apply common behaviours to classes instantiated from different, unrelated classes that might otherwise not fit into a logical inheritance-based hierarchy (through mix-in modules, also known as interface inheritance). Duck-typing is another form of polymorphism, where unrelated class each have their own implementation of a particular instance method.*
+
+Polymorphism serves as a counterpart to the concept of encapsulation - encapsulation limits the functionality of objects by encapsulating instance methods within classes and applying method access control to those instance methods, while polymorphism extends the functionality of objects instantiated from different classes by ensuring those objects all have an ability to call a commonly named instance method (though this does not necessarily imply the instance method will have the same functionality across those different classes) through inheritance, mixing in modules, or duck-typing.
+
+In our example below, we have a superclass `Animal`, which both the `Dog` and `Fish` classes inherit from. We defined a public `speak` instance method in the `Animal`, which allows objects instantiated from `Animal` and it's subclasses to call the `speak` method (which we can observe on `lines 22 and 24`).
+
+We also have a `Walkable` module defined on `lines 1-3` that create a method that can be mixed in to our classes with the use of the `include` keyword. We mix in the `Walkable` module in the `Dog` class, on `line 14`, which enables objects instantiated from `Dog` to call the public instance method `walk` (which we observe on `line 26`).
+```
+module Walkable
+  def walk
+    "I can walk!"
+  end
+end
+
+class Animal
+  def speak
+    "Hello!"
+  end
+end
+
+class Dog < Animal
+  include Walkable
+end
+
+class Fish < Animal
+end
+
+Fish.new.speak
+# => "Hello!"
+Dog.new.speak
+# => "Hello!"
+Dog.walk
+# => "I can walk!"
+```
 #### What is inheritance?
 
+#### What is duck-typing?
+Duck-typing is a form of polymorphism, where unrelated classes all define an instance method of the same name, though this does not imply that each instance method will behave in the same way or return the same value. It is a way to ensure that different objects are able to respond to a common method call.
+
+In our example below, we have two unrelated classes, `Cat` and `Dog`. Within each class definition, there is a public `speak` instance method that returns a string object. We also have a `Party` class that has a public `introductions` instance method that calls a `speak` instance method on each object passed to it as an argument (The public `introductions` instance method does not verify whether a `speak` method exists prior to execution - it simply expecting each of those objects to actually have a public `speak` instance method). 
+
+Thus when we instantiate a `Party` object and call the public instance method `introductions`, we can pass in objects instantiated from the `Cat` and `Dog` classes, which the `introductions` instance method calls a public `speak` method on.
+```
+class Cat
+  def speak
+    "Meow!"
+  end
+end
+
+class Dog
+  def speak
+    "Woof!"
+  end
+end
+
+class Party
+  def introductions(participants)
+    participants.each do { |participant| puts participant.speak }
+  end
+end
+
+Party.new.introductions([Cat.new, Dog.new])
+# Meow!
+# Woof!
+# => [#<Cat:0x00007fdc3894bb48>, #<Dog:0x00007fdc3894bb20>]
+```
 #### What is the super method?
+The `super` method is a method we can invoke within an instance method to call a method of the same name higher in the inheritance hierarchy. It is useful when we want to utilise functionality from an instance method in the superclass but extend it's functionality in a subclass. Depending on whether it is called with arguments (or even parentheses), it's functionality can change.
+- When called without arguments or parentheses (i.e. `super`), the `super` method will pass any arguments provided in the subclass instance method to the superclass instance method and call the superclass instance method of the same name. This can pose problems when there are a different number of accepted arguments in the superclass instance method to the subclass method. 
+- When called with parentheses but no arguments (i.e. `super()`), the `super` method will disregard any arguments provided to the subclass instance method and call the superclass instance method. This is often the safest way to call a superclass instance method that does not take any arguments. 
+- When called with parentheses and arguments (i.e. `super(arg1, arg2)`), the `super` method will pass the specified arguments to the superclass method and call it with those arguments. This is a common way to extend functionality of the superclass instance method to the subclass instance method. 
+
+In our below example, we have two classes, `Animal` and `Dog`. `Dog` subclasses `Animal`, and inherits the public instance method `speak`. Within the `Dog` class, we extend the functionality of the public `speak` instance method, by using the `super()` method call, which calls the `Animal#speak` method and returns the string object `"I can speak!"`, which is appended to the string `"My name is #{@name} and "`. When we instantiate a `Dog` object and call the `Dog#speak` instance method, this returns `"My name is Timmy and I can speak!"`.
+```
+class Animal
+  def speak
+    "I can speak!"
+  end
+end
+
+class Dog < Animal
+  def initialize(name)
+    @name = name
+  end
+
+  def speak
+    "My name is #{@name} and " + super()
+  end
+end
+
+Animal.new.speak
+# => "I can speak!"
+Dog.new("Timmy").speak
+# => "My name is Timmy and I can speak!"
+```
+#### Why can't we use the `self` prefix on private methods?
+Prior to Ruby 2.7, we were not able to use the `self.` prefix on private instance methods. This is because in the context of instance methods, `self.` refers to the calling object. When we instantiate an object from a class, this is equivalent to calling the method directly on the object, which is prohibited by the `private` method in the class definition. As of Ruby 2.7, calling private methods with a `self.` prefix is permitted.
+
+In our example below, we define the `Dog` class. Within the `Dog` class, we have define an instance method `name` underneath the `private` method, which makes this a private instance method. We also have a public instance method `identify`, which calls the private `name` instance method, but appends the `self.` keyword to the method call. As such, after we instantiate an object from the `Dog` class, the `identify` method is effectively calling the `name` method on the object itself, which is prohibited by the `private` method. 
+
+We could fix this `NoMethodError` by removing the `self.` prefix on `self.name` within the `identify` instance method, since private methods can still be accessed within a class definition. It's also generally accepted practice to not include `self.` on getter methods, because it's not necessary to call those getter methods, and to avoid compatibility issues with older versions of Ruby. 
+```
+class Dog
+  def initialize(name)
+    @name = name
+  end
+
+  def identify
+    "I am a dog and my name is #{self.name}!"
+  end
+
+  private
+
+  def name
+    @name
+  end
+end
+
+Dog.new("Tim").identify
+# => NoMethodError (private method `name' called for #<Dog:0x00007f82c81274b8 @name="Tim">)
+```
