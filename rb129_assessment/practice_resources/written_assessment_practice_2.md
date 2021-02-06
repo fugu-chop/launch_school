@@ -177,7 +177,9 @@ ted.instance_variables
 # => [:@name]
 ```
 #### What is a class? What is the relationship between a class and an object? How is defining a class different from defining a method?
-A class can be regarded as a template from which objects are created (objects require classes in order to be created). A class definition (denoted by the `class` and `end` reserved words) defines the behaviours that an object instantiated from that class will have. Depending on whether a class has an `initialize` method defined, it can also determine what state an object __can__ have (though state only __actually__ exists once the object is instantiated and instance variables are initialised and have values assigned to them). As such, classes can inherit behaviours from other classes, but do not inherit state (again, state is unique and exists once objects are instantiated and instance variables initialised and values assigned to them).
+A class can be regarded as a template from which objects are created (objects require classes in order to be created). A class definition (denoted by the `class` and `end` reserved words) defines the behaviours that an object instantiated from that class will have. 
+
+Depending on whether a class has an `initialize` method defined, it can also determine what state an object __can__ have (though state only __actually__ exists once the object is instantiated and instance variables are initialised and have values assigned to them). As such, classes can inherit behaviours from other classes, but do not inherit state (again, state is unique and exists once objects are instantiated and instance variables initialised and values assigned to them).
 
 In our example below, we define the `Animal` class on `lines 1-5` using the `class` and `end` reserved words. We also define the `Dog` class on `line 7-8` using the same syntax. We use the `<` symbol to denote that `Dog` inherits from `Animal`. The implication of this is that `Dog` inherits the same behaviours (i.e. the `initialize` instance method) as those defined in the `Animal` class. As such, when we instantiate a `Dog` object on `line 10`, the `Dog` class has access to the `initialize` method defined in `Animal` and requires an argument to be passed to the method parameter `name` on instantiation (since the `initialize` method is called immediately after the object is instantiated).
 ```
@@ -245,3 +247,102 @@ bob.name = "Bob"
 ted.name
 # => "Ted"
 ```
+#### What is a collaborator object, and what is the purpose of using collaborator objects in OOP?
+A collaborator object is any object (whether an object instantiated from a custom class, or a class predefined within the Ruby Core API) that we assign to an instance variable when an object is instantiated from a class. 
+
+In general, collaborator objects allow us to model relationships between objects instantiated from classes that don't necessarily fit within a logical hierarchy - a collaborative relationship between objects can be thought of as a "has-a" or associative relationship, while relationships between classes through inheritance can be thought of as "is-a" relationship.
+
+In our example below, we have two different classes that are not related through inheritance. In our particular implementation, we want to associate a `Dog` object with an `Owner` object, since a `Dog` object "has-an" owner (inheritance would not make sense here, since that would imply that a `Dog` object "is-a" `Owner` object). 
+
+As such, we instantiate a `Dog` object on `line 14`, passing in a string object `"Teddy"` as an argument, which after instantiation, will be passed to the `initialize` method that is automatically called. This will initialise the `@name` instance variable and assign the string object to it (thus creating the state of the `Dog` object assigned to local variable `ted`). This is also an example of a collaborative relationship, since we are assigning a string object to the `@name` instance variable (a `Dog` object "has-a" name).
+
+We then instantiate an `Owner` object, passing in the `"Frank"` string object, and local variable referencing the `Dog` object as arguments, assigning it to the local variable `frank`. After the `Owner` object is instantiated, the `@pet` instance variable is initialised, and the `Dog` object is assigned as a value (this occurs with the `@name` instance variable). At this point, a collaborative relationship exists between the objects referenced by the `ted` and `frank` local variable, allowing the two objects a degree of interaction with each other (e.g. if we had a setter method and changed the string object referenced by the `@name` instance variable, this would be reflected in the object referenced by `frank`).
+```
+class Owner
+  def initialize(name, pet)
+    @name = name
+    @pet = pet
+  end
+end
+
+class Dog
+  def initialize(name)
+    @name = name
+  end
+end
+
+ted = Dog.new("Teddy")
+frank = Owner.new("Frank", ted)
+```
+#### Why should a class have as few public methods as possible?
+By default, instance method definitions within a class are public. This enables these methods to be called outside of the object, which can influence the state of an object. In keeping with the principle of encapsulation, it is generally a good idea to limit behaviours (instance methods) of objects to protect the data encapsulated within, since can allow the user to unintentionally change the state of an object from almost anywhere in the program.
+
+In our example below, we define a getter `name` method through the `attr_reader` method in our `Dog` class definition. As this is a public method, a user can access the value referenced by the `@name` instance variable on the `ted` object by calling the `name` getter method from anywhere in our program. 
+
+We can then call the `String#reverse!` method on the return value of the `Dog#name` instance method, which mutates the return value to `"yddeT"`. Thus despite only having a public getter method, we have destructively changed the state of the `ted` object, which can significantly alter or break the functionality of our program. As such, it is recommended we don't have public methods unless necessary.
+```
+class Dog
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+end
+
+ted = Dog.new("Teddy")
+ted.name
+# => "Teddy"
+
+ted.name.reverse!
+# => "yddeT"
+
+ted.name
+# => "yddeT"
+```
+#### What is the private method call used for?
+The `private` method call is a way that we can implement method access control within our classes and achieve encapsulation. If we define instance methods underneath the `private` method, this prevents those instance methods from being called outside of the class definition (i.e. they cannot be called directly on objects instantiated from that class) - only instance methods in the class definition will have access to those private methods. Attempting to call a private instance method on an object will return a `NoMethodError`.
+
+In our example below, we define a `Human` class with the `class` and `end` reserved words on `lines 1-19`. When we attempt to instantiate an object from the `Human` class using the `Class::new` method, the `initialize` method defined in the `Human` class is automatically called, which accepts the objects `"Tim"` and `25` we passed as arguments to the `new` method. This initialises the `@name` and `@age` instance variables and assigns them to the `"Tim"` and `25` objects. 
+
+In our class definition, we also defined a private `age` method on `lines 16-18`, denoted by the definition of the instance method beneath the `private` method on `line 14`. This prevents the `age` instance method from being directly called on objects instantiated from the `Human` class, returning a `NoMethodError` per `line 22`. 
+
+However, the `can_i_drive` instance method (defined on `lines 7-12`) is able to access the `age` method, as private methods are accessible from within the class definition, meaning other instance methods in the `Human` class are able to access the private `age` method. This is how we are able to implement a public method that references the return value of the private `age` method, while preventing direct access to the `@age` instance variable from outside the class. 
+```
+class Human
+  def initialize(name, age)
+    @name = name
+    @age = age
+  end
+
+  def can_i_drive
+    if age > 18 
+      "I am able to drive"
+    else 
+      "I am unable to drive"
+    end
+  end
+
+  private
+
+  def age
+    @age
+  end
+end
+
+tim = Human.new("Tim", 25)
+
+tim.age
+# NoMethodError (private method `age' called for #<Human:0x00007f842a9645a0 @name="Tim", @age=25>)
+
+tim.can_i_drive
+# => "I am able to drive"
+```
+#### What is the protected method used for?
+
+#### Classes also have behaviors not for objects (class methods). How do you define a class method?
+
+#### What is polymorphism?
+
+#### What is inheritance?
+
+#### What is the super method?
