@@ -1,9 +1,10 @@
-# February 2021 (Total minutes: 618)
+# February 2021 (Total minutes: 800)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
 - [4th, Thu](#040221-thu)
 - [5th, Fri](#050221-fri)
+- [6th, Sat](#060221-sat)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -62,3 +63,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The grind continues. I'm definitely burning out a little bit on Launch School. However, now I feel as though I am slightly improving on the quality of definitions, I just have to make sure I have a fully fleshed out definition - covering all the little points that I might miss. I'll need to continue to practice, and I feel like I'm getting ever so slightly faster. 
+
+##### 06/02/21 (Sat)
+__*Concepts covered*__<br/>
+- Revision
+  - Writing answers practice
+
+__*Time spent*__<br/>
+182 minutes
+
+__*Thoughts*__<br/>
+More revision today. I didn't feel too bad about writing out my answers. They could be shorter, but I can type fairly quickly, and recall most of the important points to write down. I'm getting closer to the written assessment, I feel. I also made a breakthrough in understanding what it means for the state of objects to be unique - it's not necessarily the values assigned to instance variables that need to be unique; it's more that the objects **don't share state between other instances of the same class**.
