@@ -788,19 +788,150 @@ Person.new("Jessica", "F").name
 # => "Ms. J"
 ```
 #### What is the self keyword? How do we use it?
+The `self` keyword has different properties depending on the context in which we use it. 
+- If used within an instance method, it refers to the calling object itself. 
+  - This means in versions of Ruby prior to 2.7, we cannot use the `self` keyword to call *private getter methods*, as this is the equivalent of calling the instance method on the object itself, which is prevented by the `private` method.
+  - The `self` keyword is necessary to call *setter methods within other instance methods*, otherwise Ruby will interpret the setter method call as a local variable assignment.
+  - We can use the `self` keyword for getter methods, however this is unnecessary to call the method and also often discouraged by the larger Ruby community.
+- Used outside of an instance method, it refers to the class. This is how we can define class methods - i.e. by appending `self` to the method definition name, we are defining a method on the class itself.
 
+In our example below, we use the `self` keyword prepended to the name method definition on `line 2`, meaning this is defining a class method. Use of the `self` keyword inside of this method (`line 3`) also refers to the class (`Human`), since we are using the `self` keyword outside of an instance method. 
+
+On `line 17`, we have the private `attr_accessor` method, which creates a private getter and setter method for the instance variable `@name` which is initialised when an object is instantiated from the `Human` class. On `line 12`, when defining the `rename` instance setter method, we need to use the `self` prefix on the `name` method call - otherwise Ruby will interpret this as initialising a local variable called `name` and assign the object passed as an argument to the `rename` method to the `name` local variable.
+```
+class Human
+  def self.species
+    self
+  end
+
+  def initialize(name)
+    @name = name
+  end
+
+  def rename(new_name)
+    self.name = new_name
+  end
+
+  def display_name
+    name.dup
+  end
+
+  private
+
+  attr_accessor :name
+end
+
+x = Human.new("X")
+x.rename("Jarvis")
+x.display_name
+# => "Jarvis"
+```
 #### What are class methods?
+Class methods are methods defined at a class level. They are defined by appending the `self` keyword to a method definition within a class, and cannot be called instances of the class, only on the class itself. They are inheritable, *and are generally most useful when we want to return something that does not have anything to do with the state of objects instantiated from the class (since they are inaccessible to objects, and do not have access to state, since state is only created once an object is instantiated from a class, and values assigned to instance variables within the object)*.
+```
+class Human
+  def self.identity
+    self
+  end
+end
 
+class Bob < Human
+end
+
+Human.identity
+# => Human
+
+Bob.identity
+# => Bob
+
+Human.new.species
+# => NoMethodError (undefined method `species' for #<Human:0x00007fdc3a125d40>)
+```
 #### What is the default `to_s` method in Ruby? How/why would you override this?
+The default `to_s` method comes from the `Object` class. When applied to an object, it will return the name of the class and an encoding of it's object_id. This is often not particularly readable for human users or useful in the context for a program, so we can override the `Object#to_s` method in our programs by defining a custom `to_s` method in our classes. This takes advantage of the method lookup path - when attempting to call a method, Ruby will look to the class from which an object is instantiated for a method definition - this allows us to override the `Object#to_s` implementation, as if Ruby finds a custom `to_s` method in our class definition, it will stop looking and call that method before it reaches `Object#to_s`.
 
+*An additional point to note is that the `to_s` method is automatically called when calling the `puts` method, as well as during string interpolation, regardless of whether we implement a custom instance method in our class.* We can see this in our example below on `line 13` and `line 16` respectively.
+```
+class Human
+  def initialize(name)
+    @name = name
+  end
+
+  def to_s
+    @name.capitalize
+  end
+end
+
+darren = Human.new("Darren")
+
+puts darren
+# => "Darren"
+
+"I have a friend called #{darren}!"
+# => "I have a friend called Darren!"
+```
 #### What is a fake operator?
+A fake operator is an instance method that has the appearance of an operator, due to the syntactical sugar that Ruby provides. The functionality of a fake operator depends on the method definition of it's class - e.g. the `+` method in Ruby has different functionality for `Integer` objects compared to `String` objects.
 
 #### How does equivalence work in Ruby?
+Equivalence can take different forms in Ruby, depending on the implementation of the method that we use to compare objects. 
+
+The `BasicObject#==` method will return true if two objects occupy the same space in memory (i.e. are the same object and have the same object_id). This is different to the other implementations of `==` among other classes that override the `BasicObject#==` method - e.g. `String#==` will return true if two objects being compared have the same value, but not necessarily the same object. The `Array#==` method compares two arrays on an element by element basis, returning true if the two arrays have the same values in the same positions. The `Integer#==` method allows comparison between `Float` and `Integer` objects to see if they have an equivalent value.
+
+Meanwhile, the `BasicObject#equal?` method compares two objects, returning true if they both have the same object_id (i.e. occupy the same space in memory and are therefore the same object). This method typically doesn't get overridden, as this is a common way to compare if objects are the same.
 
 #### What is the `===` method?
+The `===` method will compare whether the object passed as an argument is part of the set on which the `===` method is called. It is most frequently used in `case` statements (e.g. when evaluating whether an integer is part of a range using `Range#===`)
 
-#### What is the `equal?` method?
+```
+String === 'hello'
+# => true
 
+(45...100) === 78
+# => true
+
+# Returns true as the argument passed to the === method is part of the set that calls ===
+'hello' === 'hello'
+# => true
+
+'hellow' === 'hello'
+# => false
+```
 #### What is the `eql?` method?
+The `Object#eql?` method *compares whether two objects are the same object* (i.e. occupy the same space in memory). It's not frequently used - the `Hash` class has it's own implementation which compares whether two hashes have the same key-value pairs, where values are compared on a value basis (i.e. whether the objects assigned to keys have the same value, not whether they are the same object).
+```
+a = { a: "Dog", b: "Cat" }
+b = { a: "Dog", b: "Cat" }
 
-#### Explain element reference getter and element assignment setter methods
+a.eql? b
+# => true
+```
+#### Explain element reference getter and element assignment setter methods?
+Element reference getter (i.e. `Array#[]`) and element assignment setter methods (i.e. `Array#[]=`) are instance methods of the `Array` class. They are often mistaken for operators given the heavy level of syntactical sugar that Ruby allows when calling these methods. The getter method returns an object from the array on which it is called based on the index number provided as an argument. The setter method allows us to mutate an array by reassigning the value of an object in the array on which the method is called at the index position provided as an argument. 
+
+If we have array collaborator objects in our custom classes, we can use implementations of the element reference and element assignment instance methods from the array class so that the custom class is also able to use these methods.
+
+In our below example, we have an array collaborator object assigned to the `@exhibits` instance variable. *In order to interface with this array on the object (i.e. without allowing direct access to the `@exhibits` instance variable through a getter and setter method)*, we need to implement our own element reference getter methods (per `lines 6-8`) and element assignment setter method (`lines 10-12`).
+```
+class Zoo
+  def initialize
+    @exhibits = ["Cats", "Dogs", "Birds"]
+  end
+
+  def [](position)
+    @exhibits[position]
+  end
+
+  def []=(position, animal)
+    @exhibits[position] = animal
+  end
+end
+
+zoo = Zoo.new
+zoo[2]
+# => "Birds"
+
+zoo[0] = "Lizards"
+zoo[0]
+# => "Lizards"
+```

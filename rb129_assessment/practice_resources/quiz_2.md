@@ -1,7 +1,6 @@
 # From Quiz 2 #
 
-* Running the following code will _not_ produce the output shown on the last
-  line. Why not? What would you need to change?
+* Running the following code will _not_ produce the output shown on the last line. Why not? What would you need to change?
     ```ruby
     class Student
       attr_accessor :grade
@@ -15,13 +14,11 @@
     ade # => #<Student:0x00000002a88ef8 @grade=nil, @name="Adewale">
     ```
  
-* What is a collaborator object? Give an example in code as part of your
-  explanation.
+* What is a collaborator object? Give an example in code as part of your explanation.
 
 * What are the differences between classes and modules? (give at least 3)
 
-* When would you want to use class inheritance vs. a mixin? Give an example in
-  code.
+* When would you want to use class inheritance vs. a mixin? Give an example in code.
 
 * You're designing a Recipe Book application.
     - You've identified some classes that you need:

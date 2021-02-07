@@ -2,18 +2,15 @@
 
 https://launchschool.com/quizzes/cc988e0b
 
-* Explain why Object Oriented Programming was created. Give at least three
-  examples of problems OO solves.
+* Explain why Object Oriented Programming was created. Give at least three examples of problems OO solves.
 * Describe the relationship between an object and its class
 * Describe how modules are different from classes
 * Why is encapsulation used in writing programs? What benefits does it give?
 * How does inheritance help make code more flexible and reusable?
 * What does inheritance mean in the context of a Ruby class definition?
-* Describe the different ways that polymorphism can be achieved in a Ruby
-  program?
+* Describe the different ways that polymorphism can be achieved in a Ruby program?
 * What is polymorphism?
-* Describe the inheritance structure in the code below. Be sure to include the
-  super-class of each class.
+* Describe the inheritance structure in the code below. Be sure to include the super-class of each class.
     ```ruby
     class Thing
     end
@@ -24,9 +21,8 @@ https://launchschool.com/quizzes/cc988e0b
     class SomethingElse < AnotherThing
     end
     ```
-* What will the method lookup path be for the as a result of the call to the
-  `fly` method on line 25? Explain how you know this.
-    ```ruby
+* What will the method lookup path be for the as a result of the call to the `fly` method on line 25? Explain how you know this.
+    ```
     module Flight
       def fly; end
     end
@@ -96,8 +92,7 @@ https://launchschool.com/quizzes/cc988e0b
     mike.full_name # => 'Michael Garcia'
     ```
 * In the following code, why does `change_grade` not produce the desired result?
-  Change the method so that it will produce the desired result. Why does your
-  solution work?
+  Change the method so that it will produce the desired result. Why does your solution work?
     ```ruby
     class Student
       attr_accessor :name, :grade
