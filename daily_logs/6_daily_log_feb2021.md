@@ -1,10 +1,11 @@
-# February 2021 (Total minutes: 800)
+# February 2021 (Total minutes: 974)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
 - [4th, Thu](#040221-thu)
 - [5th, Fri](#050221-fri)
 - [6th, Sat](#060221-sat)
+- [7th, Sun](#070221-sun)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -74,3 +75,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 More revision today. I didn't feel too bad about writing out my answers. They could be shorter, but I can type fairly quickly, and recall most of the important points to write down. I'm getting closer to the written assessment, I feel. I also made a breakthrough in understanding what it means for the state of objects to be unique - it's not necessarily the values assigned to instance variables that need to be unique; it's more that the objects **don't share state between other instances of the same class**.
+
+##### 07/02/21 (Sun)
+__*Concepts covered*__<br/>
+- Revision
+  - Writing answers practice
+
+__*Time spent*__<br/>
+174 minutes
+
+__*Thoughts*__<br/>
+Finished off the second round of written answers practice. I feel decent about them, although I still have a few edge case points of information that I need to include in my answers. I think I will definitely need the pre-written code snippets I have for the actual test though - I feel like it's too time consuming to write these alongside detailed explanations of principles.
