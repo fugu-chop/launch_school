@@ -18,6 +18,7 @@
     The `initialize` method is responsible for initialising instance variables and assigning them values after the object is instantiated - however in our implementation, we don't define `@grade` - the argument `grade = nil` is simply ignored by the `initialize` method.
 
 * What is a collaborator object? Give an example in code as part of your explanation.
+
   A collaborator object is anything that is assigned to an instance variable when an object is instantiated and instance variables initialised. It is part of an object's state and useful for modelling associative relationships between objects (i.e. "has-a" relationships).
 
   In our example below, we instantiate a `ted` object from the `Dog` class, passing in the string object "Ted" as an argument. When the object is instantiated, the `initialize` method is called, which initialises the `@name` instance variable and assigns the "Ted" string to `@name`. At this point, the string object "Ted" is a collaborator object (`ted` "has a" name), since it is assigned to the `@name` instance variable and is thus now part of `ted`'s state. 
@@ -36,6 +37,7 @@
   - Modules can be used for namespacing (organising classes), while classes are their own entity.
 
 * When would you want to use class inheritance vs. a mixin? Give an example in code.
+
   We may want to use class inheritance when there is a logical hierarchical relationship between two classes, and we want the subclass to inherit the methods available in the superclass. We want to use a mixin when we have classes that don't fit into a logical hierarchical relationship (i.e. are unrelated by class hierarchy).
   ```ruby
   module Flyable
@@ -77,8 +79,41 @@
     - Starter recipes, main course recipes, and dessert recipes are all recipe types and share some
     characteristics but not others.
     - Recipes have one or more ingredients.
-    - You decide that the application also needs a Conversion module that contains some temperature
-        and measurement conversion methods required by Recipe and Ingredient objects. 
+    - You decide that the application also needs a Conversion module that contains some temperature and measurement conversion methods required by Recipe and Ingredient objects. 
     - Describe the relationships between the classes you've identified (are they sub/super classes?, 
       are they modules?, are they collaborators?)
+      
+      The `Recipe` class should likely be a collaborator object with the `RecipeBook` class, since this appears to be an associative relationship (i.e. a `RecipeBook` should have a `Recipe`, rather than "is a" recipe). The `StarterRecipe`, `MainCourseRecipe` and `DessertRecipe` should all inherit from the `Recipe` class, since these appear to have a logical hierarchy (they are all more granular expressions of a `Recipe`). `Ingredient` is likely a collaborator object of `StarterRecipe`, `MainCourseRecipe` and `DessertRecipe`, since it would appear that all of these classes "have" `Ingredients`, and that ingredients would vary according to the type of recipe.
+
     - Write a skeleton of the class structure in code.
+    ```ruby
+    module Conversion
+    end
+
+    class RecipeBook
+      def initialize(recipes)
+        @recipes = [recipes]
+      end
+    end
+
+    class Recipe
+      include Conversion
+
+      def initialize(ingredients)
+        @ingredients = [ingredients]
+      end
+    end
+
+    class StarterRecipe < Recipe
+    end
+    
+    class MainCourseRecipe < Recipe
+    end
+    
+    class DessertRecipe < Recipe
+    end
+
+    class Ingredient
+      include Conversion
+    end
+    ```

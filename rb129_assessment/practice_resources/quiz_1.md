@@ -3,21 +3,23 @@
 https://launchschool.com/quizzes/cc988e0b
 
 * Explain why Object Oriented Programming was created. Give at least three examples of problems OO solves.
-  - OOP is a programming paradigm created in response to the increase in complexity of programs, mainly through the use of classes and objects. OOP uses a series of design principles that make maintaining these programs more manageable. These principles include:
+  
+  OOP is a programming paradigm created in response to the increase in complexity of programs, mainly through the use of classes and objects. OOP uses a series of design principles that make maintaining these programs more manageable. These principles include:
     - *Encapsulation*, or the hiding of functionality behind different classes. This allows us to clearly define responsibilities within our code, allowing programmers to break up functionality into distinct parts and define the interactions between these parts/objects, rather than having a mess of dependencies. Encapsulation also serves as a data protection mechanism (through method access control), whereby data within objects can only be changed with obvious intent. 
     - *Polymorphism* refers to the ability of different objects to respond to a common interface (i.e. methods that share a common name). Polymorphism allows us to reduce the amount of repeated code (e.g. through methods inherited via class inheritance, or mixed in via modules through interface inheritance), but also extent the functionality of existing code (e.g. through use of the `super` method and duck-typing).
 
-* Describe the relationship between an object and its class
+* Describe the relationship between an object and its class.
   - Classes serve as a template for objects. They define what instance methods can be called on objects instantiated from that class. While instance methods are shared between objects instantiated from the same class, state is unique to each object (i.e. state is not shared between different objects instantiated from the same class). 
   - State (which is the set of instance variables and their assigned values encapsulated within an object) cannot be inherited and only exists when the object is initialised, and the values actually assigned to the instance variables. 
 
-* Describe how modules are different from classes
+* Describe how modules are different from classes.
   - Modules are different from state in that:
     - We cannot instantiate objects from modules - we can only mix in modules to existing classes. 
     - There is no limit to the amount of modules that can be mixed into a class; however, a class can only inherit from a single other class. 
     - Modules enable objects instantiated from classes that do not fit into a logical hierarchy of class inheritance to gain access to a shared set of methods. Instance methods can only be shared between superclasses and subclasses that have a direct chain of class hierarchy.
 
 * Why is encapsulation used in writing programs? What benefits does it give?
+
   *Encapsulation* is the hiding of functionality of code behind classes and method access control. It serves as a data protection mechanism such that the data encapsulated within an object cannot be changed without obvious intent. 
   
   We can achieve encapsulation by defining classes and methods within those classes (including method access control) that limit the functionality of objects instantiated from those classes to specific roles in the program, allowing us to create boundaries between different parts of our code and control how those parts interact with other objects in our program. In this way, we define specific interactions within our code (rather than relying on massive dependencies), allowing easier debugging and maintenance of code.
@@ -25,12 +27,15 @@ https://launchschool.com/quizzes/cc988e0b
   *Encapsulation also allows us to think about higher levels of abstraction, since objects often take the form of nouns, and their interactions with other objects as verbs, allowing us to more easily design a program without having to worry about specific implementation details upfront.*
 
 * How does inheritance help make code more flexible and reusable?
+
   *Inheritance* is a concept that allows us to model logical hierarchical relationships. It makes code more resuable, as objects instantiated from a class that inherits from a superclass automatically has access to the same methods in the superclass. This removes the need to define a specific implementation for a method in each class through class inheritance (though classes can only inherit from a single superclass). We can also reuse existing code but extend or change part of it's functionality by using the `super` method within an instance method definition in the subclass.
 
 * What does inheritance mean in the context of a Ruby class definition?
+
   Class inheritance means that a subclass has access to the methods that are defined in the superclass. This can reduce the amount of duplicate code (since we don't have to explicitly define the same method in the subclass), but also extend the functionality of existing code in the superclass (we can define a similarly named method in the subclass, and extend the functionality using the `super` method).
 
 * Describe the different ways that polymorphism can be achieved in a Ruby program?
+
   Polymorphism can be achieved through:
     
   - *Class inheritance*; subclasses are able to inherit methods from their subclasses. Objects instantiated from the same class all share the same methods (even if those methods have different implementations, like in the case of method overriding). Since objects instantiated from the same class are unique (even if the components of their state reference the exact same objects), this fulfils the definition of polymorphism. Note that in Ruby, a class can only directly inherit from a single class.
@@ -38,6 +43,7 @@ https://launchschool.com/quizzes/cc988e0b
   - *Interface inheritance*. The name of this concept is misleading - it's not related to inheritance, but rather refers to mixing in modules to classes, allowing the class and objects of that class to access those methods defined within the module. A class may have as many modules mixed in as it needs; however objects cannot be instantiated from modules.
 
 * What is polymorphism?
+
   Polymorphism is the ability of objects of different types to respond to a commonly named method. 
   
   One form of polymorphism is class inheritance. Classes that inherit from a superclass have access to the instance methods defined in that superclass. This means that objects instantiated from different subclasses all have access to the same set of instance methods. Objects instantiated from these subclasses will be different objects, but will still have access to a commonly named method
