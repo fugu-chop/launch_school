@@ -22,7 +22,7 @@ https://launchschool.com/quizzes/cc988e0b
     end
     ```
 * What will the method lookup path be for the as a result of the call to the `fly` method on line 25? Explain how you know this.
-    ```
+    ```ruby
     module Flight
       def fly; end
     end
