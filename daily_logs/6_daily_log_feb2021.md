@@ -1,4 +1,4 @@
-# February 2021 (Total minutes: 974)
+ # February 2021 (Total minutes: 1,222)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -6,6 +6,8 @@
 - [5th, Fri](#050221-fri)
 - [6th, Sat](#060221-sat)
 - [7th, Sun](#070221-sun)
+- [8th, Mon](#080221-mon)
+- [9th, Tue](#090221-tue)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -86,3 +88,27 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Finished off the second round of written answers practice. I feel decent about them, although I still have a few edge case points of information that I need to include in my answers. I think I will definitely need the pre-written code snippets I have for the actual test though - I feel like it's too time consuming to write these alongside detailed explanations of principles.
+
+##### 08/02/21 (Mon)
+__*Concepts covered*__<br/>
+- Revision
+  - Answer revision
+  - Writing answers
+
+__*Time spent*__<br/>
+131 minutes
+
+__*Thoughts*__<br/>
+Revising answers is pretty handy in picking up the specific points I missed around the first time. I want to take a break from writing these same answers out on a computer over and over again though. Tomorrow I will start on the quiz files, just for a change of pace. I'll then start revising the written 'concept' answers by writing them out physically. I find that I'm just not retaining all the different answers - it's almost like when I remember a new answer, an old answer leaves my memory. It's a little frustrating. 
+
+##### 09/02/21 (Tue)
+__*Concepts covered*__<br/>
+- Revision
+  - Quizzes
+  - Quiz 1, 2 answers
+
+__*Time spent*__<br/>
+117 minutes
+
+__*Thoughts*__<br/>
+This was a nice change of pace. I honestly completely forgot to revise the RB120 quizzes, so it's nice to cover that off while also having a new set of questions that I could practice writing definitions for.
