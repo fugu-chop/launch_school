@@ -393,7 +393,7 @@ Dog.new.species
 # NoMethodError (undefined method `species' for #<Dog:0x00007fc9210adb78>)
 ```
 #### *What is polymorphism?
-Polymorphism refers to the ability of different objects to respond to a common interface. It is a principle within Object Oriented Programming that allows us to reduce the amount of code that we write *and a way to extend the functionality of objects through inheritance (class inheritance of methods), or apply common behaviours to classes instantiated from different, unrelated classes that might otherwise not fit into a logical inheritance-based hierarchy (through mixing in modules, also known as interface inheritance). Duck-typing is another form of polymorphism, where unrelated class each have their own implementation of a particular instance method defined within their respective classes.*
+Polymorphism refers to the ability of different objects to respond to a common interface. It is a principle within Object Oriented Programming that allows us to reduce the amount of code that we write *and a way to extend the functionality of objects through inheritance (class inheritance of methods), or apply common behaviours to classes instantiated from different, unrelated classes that might otherwise not fit into a logical inheritance-based hierarchy (through mixing in modules, also known as interface inheritance). Duck-typing is another form of polymorphism, where unrelated class each have their own implementation of a particular instance method defined within their respective classes. A further example is method overriding.*
 
 Polymorphism serves as a counterpart to the concept of encapsulation - encapsulation limits the functionality of objects by encapsulating methods within classes and applying method access control to those methods, while polymorphism extends the functionality of objects instantiated from different classes by allowing those objects to call a commonly named instance method (though this does not necessarily imply the instance method will have the same functionality across those different classes) through inheritance, mixing in modules, or duck-typing.
 
@@ -555,7 +555,7 @@ Dog.new("Tim").rename("Bobby")
 # => "Bobby"
 ```
 #### What is method overriding?
-Method overriding refers to the ability of classes to have a custom implementation of an instance or class method that is either inherited from a superclass or mixed in through a module, by redefining a method of the same name in the subclass. 
+Method overriding refers to the ability of classes to have a custom implementation of an instance or class method that is either inherited from a superclass or mixed in through a module, by redefining a method of the same name in the subclass. Method overriding is a form of polymorphism.
 
 *Method overriding takes advantage of class and instance method scoping rules - via the method lookup path, Ruby will first look to the immediate class from which an object is instantiated when a method is called, meaning that if we define a method within a subclass and superclass, when instantiating an object from the subclass, Ruby will look to call a method from the subclass first, and only look to the mixed-in modules or superclass if it cannot find the method explicitly defined in the subclass from which the object was instantiated.*
 

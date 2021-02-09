@@ -13,12 +13,57 @@
     ade = Student.new('Adewale')
     ade # => #<Student:0x00000002a88ef8 @grade=nil, @name="Adewale">
     ```
- 
-* What is a collaborator object? Give an example in code as part of your explanation.
+    The above code will not output the displayed output, as the `@grade` instance variable is never initialised when the `ade` object is instantiated from the `Student` class. As such, the `@grade` instance variable never becomes part of `ade`'s state. 
+    
+    The `initialize` method is responsible for initialising instance variables and assigning them values after the object is instantiated - however in our implementation, we don't define `@grade` - the argument `grade = nil` is simply ignored by the `initialize` method.
 
+* What is a collaborator object? Give an example in code as part of your explanation.
+  A collaborator object is anything that is assigned to an instance variable when an object is instantiated and instance variables initialised. It is part of an object's state and useful for modelling associative relationships between objects (i.e. "has-a" relationships).
+
+  In our example below, we instantiate a `ted` object from the `Dog` class, passing in the string object "Ted" as an argument. When the object is instantiated, the `initialize` method is called, which initialises the `@name` instance variable and assigns the "Ted" string to `@name`. At this point, the string object "Ted" is a collaborator object (`ted` "has a" name), since it is assigned to the `@name` instance variable and is thus now part of `ted`'s state. 
+  ```ruby
+  class Dog
+    def initialize(name)
+      @name = name
+    end
+  end
+
+  ted = Pet.new("Ted")
+  ```
 * What are the differences between classes and modules? (give at least 3)
+  - Classes can only directly inherit from a single class. Modules can be mixed into any number of classes
+  - Objects cannot be instantiated from modules, while any number of objects can be instantiated from a class
+  - Modules can be used for namespacing (organising classes), while classes are their own entity.
 
 * When would you want to use class inheritance vs. a mixin? Give an example in code.
+  We may want to use class inheritance when there is a logical hierarchical relationship between two classes, and we want the subclass to inherit the methods available in the superclass. We want to use a mixin when we have classes that don't fit into a logical hierarchical relationship (i.e. are unrelated by class hierarchy).
+  ```ruby
+  module Flyable
+    def fly
+      puts "I can fly!"
+    end
+  end
+
+  class Animal
+    def speak
+      puts "I am a #{self.class}!"
+    end
+  end
+
+  class Dog < Animal
+  end
+
+  class Bird < Animal
+    include Flyable
+  end
+
+  class Plane
+    include Flyable
+  end
+  ```
+  In our example below, the `Bird` class is a subclass of `Animal` (i.e. a `Bird` is an `Animal`), and so it makes sense that we want `Bird` to inherit the instance method defined in the `Animal` class. 
+
+  The `Plane` class isn't related to the `Animal` class in a hierarchical fashion (a `Plane` isn't an `Animal`), and it doesn't make sense to define a `fly` instance method (since other classes that subclass `Animal` don't necessarily have the ability to `fly`, like the `Dog` class). As such, in order for objects instantiated from both the `Plane` and `Bird` class to have a `fly` method, we need to mix in the `Flyable` module to both `Bird` and `Plane` classes. This preserves the hierarchical relationship of `Dog` and `Bird` classes subclassing from `Animal`, while only allowing entities (i.e. objects from the `Bird` and `Plane` class) that can fly to do so.
 
 * You're designing a Recipe Book application.
     - You've identified some classes that you need:
