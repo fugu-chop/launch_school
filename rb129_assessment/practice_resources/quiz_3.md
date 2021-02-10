@@ -108,7 +108,8 @@
   ```ruby
   module Describable
     def describe_shape
-      "I am a #{self.class} and have #{SIDES} sides."
+      # Reference self.class::
+      "I am a #{self.class} and have #{self.class::SIDES} sides."
     end
   end
 
@@ -116,7 +117,13 @@
     include Describable
 
     def self.sides
-      SIDES
+      # Change to reference class
+      self::SIDES
+    end
+
+    # Create instance method
+    def sides
+      self.class::SIDES
     end
   end
 
@@ -130,6 +137,15 @@
   Square.new.sides # => 4
   Square.new.describe_shape # => "I am a Square and have 4 sides."
   ```
+  We need change the `Shape::sides` method to use the namespace resolution operator `::`. This is because constants have lexical scope. In our particular implementation, the `sides` class method is defined in the `Shape` class. When attempting to call the `sides` class method on the `Square` class, Ruby looks up the inheritance hierarchy chain to find a class method definition for `sides`. Since there is an inheritance chain from `Square` -> `Quadrilateral` -> `Shape`, Ruby finds a class method definition of `sides` in the `Shape` class. This class method attempts to return the `SIDES` constant. However, because constants have lexical scope, Ruby will attempt to evaluate the `SIDES` constant in the same class in which the `sides` class method was defined (`Shape`). As this constant definition does not exist in `Shape`, Ruby will return a `NameError`. We fix this by adding `self::` to the `SIDES` constant. As `self` is used outside of an instance method (as `self.sides` is a class method), it refers to the class. We can then use the namespace resolution operator to reference the class on which the `sides` class method is called, ensuring this method will reference the class from which this class method is called.
+
+  We also need to add an instance method `sides` to `Shape`, as we only have a class method `sides` defined in the `Shape` class, which cannot be called directly on objects instantiated from `Shape`. As such, we need to create a public instance method that also returns the value of the constant. We run into the same issues as described above with constant lexical scope - we need to have `self.class::SIDES` so that:
+    - `self` refers to the calling object
+    - `class` chained onto the calling object references the class of the calling object
+    - `::` allows us to reference the `SIDES` constant in a particular class (in our class, the class of the calling object).
+
+  Our `Describable` module also needs to reference `self.class::SIDES` instead of just `SIDES`. Again, constants have lexical scope, meaning that if we attempt to call the `describe_shape` method on an object instantiated from a class with the `Describable` module mixed in, this will return a `NameError`, as when calling the `describe_shape` method, when attempting to evaluate `SIDES`, Ruby will attempt to find the object referenced by the `SIDES` constant in the `Describable` module (i.e. where `describe _shape` is defined), which does not exist.
+
 * Explain what variables are instantiated when the new `Greyhound` object is instantiated, and why.
   ```ruby
   module Speedy
@@ -159,3 +175,6 @@
 
   grey = Greyhound.new('Grey', 3)
   ```
+  When a `Greyhound` object is instantiated, Ruby will attempt to call an `initialize` method. Since `Greyhound` subclasses `Dog`, Ruby is able to find a definition in the `Dog` class (overriding the `Animal#initialize` method, which would have initialised two different instance variables) and stops looking any further up the inheritance hierarchy chain. The `Dog#initialize` method is called, which initialises instance variables and assigns values to them. In the `Greyhound` class implementation of `initialize`, the `@dog_age` instance variable is initialised. The `name` argument provided to the `initialize` method is ignored - no instance variable is initialised and assigned to the object referenced by the `name` argument. Thus it does not contribute to `grey`'s state. 
+
+  While we also mix in the `Speedy` module, we never call the `run_fast` method in our code. Thus the `@speed` instance variable is never initialised or assigned a value. It thus does not contribute to the state of `grey`. 
