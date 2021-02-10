@@ -1,4 +1,4 @@
- # February 2021 (Total minutes: 1,222)
+ # February 2021 (Total minutes: 1,342)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -8,6 +8,7 @@
 - [7th, Sun](#070221-sun)
 - [8th, Mon](#080221-mon)
 - [9th, Tue](#090221-tue)
+- [10th, Wed](#100221-wed)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -112,3 +113,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 This was a nice change of pace. I honestly completely forgot to revise the RB120 quizzes, so it's nice to cover that off while also having a new set of questions that I could practice writing definitions for.
+
+##### 10/02/21 (Wed)
+__*Concepts covered*__<br/>
+- Revision
+  - Quizzes
+  - Quiz 2, 3 answers
+  - More revision
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+The slog continues. I continue to practice the conceptual answers, as I feel I can already explain code relatively well (and identify issues within code).
