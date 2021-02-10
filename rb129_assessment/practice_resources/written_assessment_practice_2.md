@@ -85,7 +85,7 @@ ted = Dog.new("Ted")
 ted.name
 # => "Ted"
 ```
-#### What is instantiation versus a constructor method?
+#### What is the `initialize` method versus a constructor method?
 A constructor method is a method that instantiates an object from a class. In Ruby, this could be `Class#new` or `Class#allocate`. We should be precise and distinguish this from the `initialize` method, which is called __after__ an object is instantiated from a class using the `Class#new` instance method. While `initialize` does get invoked immediately after object instantiation, the `initialize` method itself does not instantiate the object.
 
 Per our example, we do not need an `initialize` method in order to instantiate an object from the `Dog` class on `line 4`. Hence it should not be regarded as a constructor method. 
