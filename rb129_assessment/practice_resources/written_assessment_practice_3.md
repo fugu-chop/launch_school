@@ -66,36 +66,72 @@ Inheritance is the ability to model classes in a hierarchical fashion (i.e. "is-
 In Ruby, classes can only inherit from a single superclass (though many classes can inherit from a single superclass). We define a hierarchical relationship (i.e. indicating our intention for a class to inherit from another) by using the `<` symbol, followed by the name of the superclass in our class definition.
 
 #### What is duck-typing?
+Duck typing is a form of polymorphism where unrelated classes each have their own implementation of a method that has the same name. It means that different object instantiated from those classes can each call a particular method (though this does not imply that the implementation of that method will be the same across all classes), extending the functionality of our program without having to define hierarchical relationships between those classes. 
 
 #### What is the super method?
+The `super` method is a method that, when embedded in another method, calls an equivalently named method higher in the hierarchical chain, forwarding any arguments passed to it to the method defined in the superclass. It allows us to use functionality defined in a superclass, but extend or modify that functionality in subclasses. It's behaviour changes according to whether the `super` method is called with arguments or not. 
+- When called without arguments or parentheses, `super` will forward all arguments provided to it to the method in the superclass
+- When called without arguments (but providing parentheses), `super()` will call the method in the superclass *without any arguments at all*. This is often the safest way to call a method in the superclass that doesn't accept any arguments. 
+- When called with arguments, `super(arg1, arg2)` will forward any arguments to the method defined in the superclass.
 
 #### Why can't we use the `self` prefix on private getter methods?
+Prior to Ruby 2.7, we are not able to use the `self` prefix on private instance methods, since in the context of private instance methods, `self` refers to the calling object. This effectively means that we would be calling the private instance method directly on the object, which the `private` method prevents. This can usually be remedied by not using the `self` keyword, since private methods are accessable to all other methods within the class definition, so we can define a public method that calls the private instance method (without `self`). Ruby 2.7 and older versions support using `self` as a prefix for private instance getter methods. 
 
 #### What is method overriding?
+Method overriding is a form of polymorphism, where we have a method in a class that either inherits from a superclass or a method mixed in from a module, but define a different implementation of that method (using the same method name) in that subclass, such that the functionality is changed. This allows us to make an object's behaviours more flexible.
 
 #### What is a module? When would we use a module? (classes and methods, or just methods?)
+A module is a series of classes and methods that can be mixed into another class to give that class additional functionality it does not have through class inheritance. When mixing in modules, it's useful in that it provides common functionality to classes that may not fit into a logical hierarchy (i.e. an inheritance, "is-a" relationship), but is also useful for namespacing, whereby we can organise classes and prevent naming conflicts when attempting to call methods of the same name from different classes. 
 
-#### Why should methods in mixin modules be defined without using `self.` in the definition?
+Key differences between modules and classes is that in Ruby, a class can mix in any number of modules, but a class can only inherit from a single class. Also, a class can instantiate any number of objects, but objects cannot be instantiated from a module.
+
+#### Why should methods in mixin modules be defined without using `self.` in the name?
+Methods in modules should avoid using `self` in their definition. When used outside of instance methods, `self` refers to the class. When we mix this method into a class and call the method directly on the class, Ruby will interpret `self` as the class which mixes in the module. Since the method comes from the mixed in module and not the class, Ruby will not be able to find the method definition and raise a `NoMethodError`. 
 
 #### What is the method lookup path?
+The method lookup path is the sequence of classes and modules that Ruby will attempt to find a method definition in. Through inheritance or modules, we do not necessarily need to have an explicit definition that can be called on an object in each class. When we call a method, Ruby will attempt to find the method definition in the most immediate class (i.e. for an instance method, this is the class from which an object was defined on, or for class methods, the class on which the method was called). 
+
+If Ruby fails to find a definition in the most immediate class, it will look to any modules mixed in, starting from the last module that was mixed in. If a method definition is still not found, Ruby will repeat this process in the superclass and so on, until the method is found, or it reaches the `BasicObject` class and cannot find the method, at which point a `NoMethodError` will be raised.
 
 #### What are class variables? Why is it not recommended to use them?
+Class variables are variables defined at a class level, and are identified through the `@@` symbols before the variable name. They are accessible throughout the class, to both class and instance methods. They can be problematic because from the class where the class variable is defined, all subclasses and objects instantiated from that class or subclasses have access to a single copy of that variable, making it very easy to inadvertently change the value assigned to the class variable, at which point all subclasses, objects instantiated from that class or subclass will reflect the new value referenced by that class variable.
 
 #### What are constants? What do we need to be careful of when dealing with constants?
+Constants (or constant variables) are variables that ideally, should not have their value changed throughout the operation of the program (it is possible to reassign the value of a constant, though Ruby will raise a warning). They can be identified through variables starting with a capital letter (though it is common to define a constant in all capital letters). *Constants are unique to class or instance variables, as we can point to the constants defined in unrelated classes (i.e. classes that do not inherit from each other) using the namespace resolution operator `::`.*
+
+Constants are scoped to a class, and are accessible to class and instance methods. They can be inherited, but also do have lexical scope. This means that when attempting to evaluate a constant through a class or instance method, Ruby will look to the immediate class where the method is defined for a constant value. This means that if we have constants defined in a subclass and superclass, the value of the constant returned will depend on where the method is defined.
 
 #### What is a getter/setter/accessor method? What do each of these return?
+A getter method is an instance method defined in a class that returns the value of an instance variable. We can quickly create getter methods in Ruby using the `attr_reader` method, followed by the relevant instance variable cast as a symbol. 
+
+A setter method is an instance method defined in a class that allows modification of an instance variable. It returns the input that was provided as an argument to the method. `attr_writer` is a method defined in Ruby that allows us to quickly create setter methods.
+
+Accessor methods create both setter and getter methods. We can create an accessor method using the `attr_accessor` method in Ruby, followed by the relevant instance variable name cast as a symbol.
+
 
 #### When should we use getter/setter methods?
+We should use getter or setter methods if we want objects to directly interface with instance variables encapsulated within our objects, or want to perform some transformation on top of the raw value referenced by the instance variable.
 
 #### What is the self keyword? How do we use it?
+The `self` keyword can modify the behaviour of methods defined within classes and can return different objects, depending on how it is used.
+- When used outside of an instance method definition, it refers to the class in which `self` is used. This is how we can define class methods (appending `self` to a method name in the method definition).
+- When used inside of an instance method definition, `self` refers to the calling object itself. This can cause issues if we fail to use `self` on setter methods (Ruby will interpret setter method calls without `self` as local variable assignments), or use `self` methods on private getter methods prior to Ruby 2.7.
 
 #### What are class methods?
+Class methods are methods that are defined at a class level. We can identify them through method names that have `self` prepended to them in the method definition. They can only be called directly on the class (and not on objects instantiated from that class). They are useful when we want to track data unrelated to the state of objects instantiated from that class.
 
 #### What is the default `to_s` method in Ruby? How/why would you override this?
+The `Object#to_s` method is the default implementation of `to_s` in Ruby. When called on an object, it returns a *string representation* of the object's class name and an encoding of the object's object id. It is automatically called when a `puts` method is called, or when using string interpolation. 
+
+In the context of most programs, this default output is not particularly useful - in most cases, we will want to override the `Object#to_s` method with a custom implementation. We can do this by explicitly defining a `to_s` instance method within a class that returns a more meaningful output (perhaps returning the object referenced by an instance variable).
 
 #### What is a fake operator?
+A fake operator is a method that looks like an operator in Ruby due to syntactical sugar. Where the functionality of operators do not change from class to class, fake operators are methods, meaning that each class can have it's own implementation of a particular method. Examples of fake operators include `+`, `[]`, `<=`.
 
 #### How does equivalence work in Ruby?
+Equivalence can have different meanings in Ruby, depending on the context or method used. One definition of equivalence is that objects are equivalent if their values are the same, meaning the objects themselves do not have to be the same object. We see this definition commonly in Ruby's CoreAPI classes (e.g. `String#==`, `Array#==`). 
+
+Another definition of equivalence is whether two objects occupy the same space in memory - we see this implementation in `BasicObject#==` (the default implementation of the `==` method) and the `equal?` method.
 
 #### What is the `===` method?
 
