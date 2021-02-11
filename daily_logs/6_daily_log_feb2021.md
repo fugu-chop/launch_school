@@ -1,4 +1,4 @@
- # February 2021 (Total minutes: 1,342)
+ # February 2021 (Total minutes: 1,464)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -9,6 +9,7 @@
 - [8th, Mon](#080221-mon)
 - [9th, Tue](#090221-tue)
 - [10th, Wed](#100221-wed)
+- [11th, Thu](#110221-thu)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -126,3 +127,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The slog continues. I continue to practice the conceptual answers, as I feel I can already explain code relatively well (and identify issues within code).
+
+##### 11/02/21 (Thu)
+__*Concepts covered*__<br/>
+- Revision
+  - Writing answers
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+Again, I found some haziness with how `super` works when called with differing number of arguments between subclasses and superclass. More revision necessary, but I think I feel good about doing the written test this weekend.
