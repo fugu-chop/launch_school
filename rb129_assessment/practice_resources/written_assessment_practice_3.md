@@ -1,7 +1,11 @@
 #### *What is OOP and why is it important?
-OOP is a programming paradigm that was developed in response to programs of increasing complexity. It allowed programmers to break up their code in objects and classes to encapsulate functionality, thus defining the boundaries of different components of programs and how they interacted with each other. This allowed the breaking apart of a large blob of dependencies into a number of smaller, well defined interactions between different part of the code. 
+OOP is a programming paradigm that was developed in response to programs of increasing complexity. 
 
-OOP also espouses flexible reuse of code through inheritance and polymorphism, reducing the need for duplication. These concepts meant that complex programs could still be maintained and understood by programmers.
+Large, complex programs can be difficult to maintain due to dependencies throughout the program. OOP lets programmers write programs in which there are classes that handle particular roles in the program (encapsulating behaviours within classes), which allow programmers to define clear boundaries between different parts of the programs and how these parts interact, thus reducing dependencies and facilitating maintenance.
+
+Coding in a non-OO way often means writing code that is useful solely within a single context. Defining basic classes and leveraging concepts like polymorphism to introduce more detailed behaviors provides a greater level of reusability through inheritance and mixing in modules, as well as flexibility though concepts like method overriding, duck-typing.
+
+Complex coding problems are often difficult to break down and solve in a clear and systematic way. Using OOP to model classes appropriate to the problem, using real-world nouns to represent objects and using verbs to define the interactions between objects, lets programmers think at a higher level of abstraction that helps them break down and solve problems.
 
 #### *What is encapsulation? How does encapsulation relate to the public interface of a class?
 Encapsulation is the hiding of functionality within our program from other parts of the code base. It is a form of data protection, such that data cannot be changed within our classes or objects without obvious intent.
@@ -99,7 +103,7 @@ Class variables are variables defined at a class level, and are identified throu
 #### What are constants? What do we need to be careful of when dealing with constants?
 Constants (or constant variables) are variables that ideally, should not have their value changed throughout the operation of the program (it is possible to reassign the value of a constant, though Ruby will raise a warning). They can be identified through variables starting with a capital letter (though it is common to define a constant in all capital letters). *Constants are unique to class or instance variables, as we can point to the constants defined in unrelated classes (i.e. classes that do not inherit from each other) using the namespace resolution operator `::`.*
 
-Constants are scoped to a class, and are accessible to class and instance methods. They can be inherited, but also do have lexical scope. This means that when attempting to evaluate a constant through a class or instance method, Ruby will look to the immediate class where the method is defined for a constant value. This means that if we have constants defined in a subclass and superclass, the value of the constant returned will depend on where the method is defined.
+Constants are accessible to class and instance methods. They can be inherited, but also do have lexical scope. This means that when attempting to evaluate a constant through a class or instance method, Ruby will look to the immediate class where the method is defined for a constant value. This means that if we have constants defined in a subclass and superclass, the value of the constant returned will depend on where the method is defined.
 
 #### What is a getter/setter/accessor method? What do each of these return?
 A getter method is an instance method defined in a class that returns the value of an instance variable. We can quickly create getter methods in Ruby using the `attr_reader` method, followed by the relevant instance variable cast as a symbol. 
@@ -134,7 +138,21 @@ Equivalence can have different meanings in Ruby, depending on the context or met
 Another definition of equivalence is whether two objects occupy the same space in memory - we see this implementation in `BasicObject#==` (the default implementation of the `==` method) and the `equal?` method.
 
 #### What is the `===` method?
+The `===` method in Ruby compares whether the object passed as an argument to this method belongs to the set on which the method is called. It isn't a frequently used method - mostly through `case` statements.
 
+In our example below, we use the `Range#===` method to evaluate whether the integer object `42` is within the set provided in each of our `when` statements - e.g. `(40...50).==(42)`
+```ruby
+number = 42
+
+case number
+when 40...50 then '40 to 50'
+when 50...100 then '> 50'
+else 
+  '< 50'
+end
+```
 #### What is the `eql?` method?
+The default implementation of the `eql?` method, per `Object#eql?`, returns `true` if the two objects being compared have the same value and reference the same space in memory. However, most methods will define their own implementation of this method, such that `eql?` will return true if the values of the two objects being compared are the same. This is most frequently used through the `Hash` implementation, which returns true if two hashes have the same key-value pairs, where the hash values are compared by value (and not whether they are occupy the same space in memory).
 
 #### Explain element reference getter and element assignment setter methods?
+Element reference getter and elements assignment setter methods look like operators in Ruby, but are actually methods with heavy syntactical sugar applied. The element reference getter method allows us to return an object within a collection based on it's index position in that collection. The element assignment setter method mutates the collection, by reassigning the object in a particular index position with another. 
