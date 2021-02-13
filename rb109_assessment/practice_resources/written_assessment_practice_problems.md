@@ -1,5 +1,5 @@
 *1) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = ​‘Hello’ 
 b = a
 a = '​Goodbye​'
@@ -9,7 +9,7 @@ On `line 1`, the local variable `a` is initialised and assigned to the string ob
 When executed, `a` will return the string object `'Goodbye'`, while `b` will return the string object `'Hello'`.  This is because variables are pointers to objects, and are not themselves, values. On `line 2`, the local variable `b` is referencing the string object `'Goodbye'`, not the local variable `a`. 
 
 *2) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = ​4
 loop ​do 
   a = ​5
@@ -29,7 +29,7 @@ After each of the `a` and `b` variables are assigned a reference to an integer o
 On `line 8`, we call the `puts` method, passing in the local variable `a` as an argument, which will output the integer `5` and return `nil`. On `line 9`, we call the `puts` method, passing in the local variable `b` as an argument, which will raise a `NameError` exception. 
 
 *3) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = ​4 
 b = ​2
 
@@ -49,7 +49,7 @@ Within the block scope, the local variable `c` is initialised and assigned to th
 The local variable `a` (which is a reference to the integer object `3`) is passed as an argument to the `puts` method on `line 10`, which will output the integer object `3` and return `nil`, while `puts` method call on `line 11` will output the integer object `2` (as referenced by the local variable `b`) and return `nil`, since the local variable `b` was not reassigned to a different object within the loop. 
 
 *4) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def​ ​example​(str)
   i = ​3
   loop ​do
@@ -72,7 +72,7 @@ The `i -= 1` line makes use of syntactical sugar (equivalent to `i = i - 1`), wh
 The code on `line 10` will print `'Hello'` three times, and return `nil`. The reason `nil` is returned is that Ruby has an implicit return on the last line of code within a method (and there is no explicit `return` in the block). This is the `break if i == 0` expression, which returns `nil`. 
 
 *5) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def​ ​greetings​(str) 
   puts str
   puts ​"Goodbye"
@@ -88,7 +88,7 @@ On `line 2`, when the `greetings` method is invoked, the `str` local variable is
 The end result of calling the `greetings` method with the string object `'Hello'` as an argument on `line 7` is that both `'Hello'` and `'Goodbye'` are output, and `nil` is returned. `nil` is returned because without an explicit `return` reserved word, the last line of the expression evaluated in a method will be returned implicitly. `puts` always returns `nil`. 
 
 *6) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 arr = [​1​, ​2​, ​3​, ​4​] 
 
 counter = ​0
@@ -116,7 +116,7 @@ On `line 8`, we reassign the local variable `counter` to the value of the intege
 On `line 10`, we pass the `sum` variable (which references the integer object `10`) as an argument to the string object `"Your total is #{sum}"` via string interpolation. This string object is then passed to the `puts` method, which will output `"Your total is 10"` and return `nil`, since `puts` always returns `nil`. 
 
 *7) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = ​'Bob'
 5​.times ​do​ |x| 
   a = ​'Bill'
@@ -131,7 +131,7 @@ On `line 3`, the local variable `a` initialised in the outer scope is reassigned
 On `line 6`, we call the `p` method and pass the local variable `a` as an argument. This will output and return the string object `'Bill'`. This is because local variables initialised outside of a block are accessible within the block, allowing the reassignment of local variable `a` within the block. 
 
 *8) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 animal = ​"dog"
 loop ​do​ |_| 
   animal = ​"cat" 
@@ -151,7 +151,7 @@ On `line 5`, we break out of the loop using the `break` reserved word.
 On `line 8`, we call the `puts` method and pass the local variable `animal` as an argument, which outputs `'dog'` and returns `nil` (`puts` always returns `nil`). On `line 9`, as we attempt to pass the `var` local variable as an argument to the `puts` method, Ruby will raise a `NameError` exception, as variables initialised within a block scope cannot be accessed outside of that block. 
 
 *9) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = ​4
 b = ​2
 
@@ -176,7 +176,7 @@ On `line 9`, we pass in the local variable `a` to the `puts` method, which will 
 On `line 10`, we pass in the local variable `b` to the `puts` method, which will output a string object `'2'` and return `nil` (since `puts` always returns `nil`). 
 
 *10) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 n = ​10 
 
 1​.times ​do​ |n|
@@ -194,7 +194,7 @@ The `times` method executes once, since the number of times the method will exec
 Finally, on `line 7`, we pass the local variable `n` as an argument to the `puts` method, which will output the string object `'10'` (no reassignment occurs in the block scope due to variable shadowing) and return `nil` (the `puts` method always returns `nil`). 
 
 *11) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 animal = ​"dog"
 
 loop ​do​ |animal| 
@@ -211,7 +211,7 @@ Variable shadowing stops the inner scope from accessing local variables initiali
 On `line 8`, we pass the local variable `animal` (which still references the string object `'dog'`) to the `puts` method, which will output the string object `'dog'` and return `nil` (since `puts` always returns `nil`). 
 
 *12) What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a` and `b`?*
-```
+```ruby
 a = ​"hi there"
 b = a
 a = ​"not here"
@@ -221,7 +221,7 @@ On `line 1`, we initialise a local variable `a` and assign a string object `'hi 
 On `line 3`, we reassign the local variable `a` to reference a different string object (`'not here'`). The local variable `b` will return `'hi there'`, as variables are references to objects. 
 
 *13) What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a` and `b`?*
-```
+```ruby
 a = ​"hi there" 
 b = a
 a << ​", Bob"
@@ -231,7 +231,7 @@ On `line 1`, we initialise a local variable `a`, and assign the string object `'
 On `line 3`, we use the shovel operator to append the string object `', Bob'` to the string object that local variable `a` was pointing to (`'hi there'`). The shovel operator is destructive (mutating the original string object, rather than creating a new one), and so local variable `a` will return `'hi there, Bob'`. Local variable `b` will also return `'hi there, Bob'`, since the shovel operator is a destructive method, and does not result in reassignment of the local variable `a` to a different object. 
 
 *14) What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a`,`b` and `c`? What happens if the last line was `c = a.uniq!`?*
-```
+```ruby
 a = [​1​, ​2​, ​3​, ​3​]
 b = a
 c = a.uniq
@@ -243,7 +243,7 @@ On `line 3`, the local variable `c` is initialised, and assigned to the return v
 If the last line was `c = a.uniq!`, then local variables `a`, `b` and `c` would all return `[1, 2, 3]`. This is because `uniq!` is a destructive method, mutating the original array object, rather than creating a new object. This means that `a`, `b` and `c` are all pointing towards the same object. 
 
 *15) What does the following code return? What does it output? Why? What concept does it demonstrate? What is `a`? What if we called `map!` instead of `map`?*
-```
+```ruby
 def​ ​test​(b)
   b.map { |letter| ​"I like the letter: ​#{letter}​"​ }
 end
@@ -264,7 +264,7 @@ As there is no explicit `return` in this method definition, Ruby will return the
 If we had used the `map!` instead of `map`, `test(a)` and `a` would both return `['I like the letter: a', 'I like the letter: b', 'I like the letter: c']`. This is because `map!` is a mutating method. Instead of creating a new array object, `map!` will reassign the elements within the original `['a', 'b', 'c']` array to the values returned by the block. 
 
 *16) What does the following code return? What does it output? Why? What concept does it demonstrate? What are `a` and `b`? Why?*
-```
+```ruby
 a = ​5.2 
 b = ​7.3
 
@@ -279,7 +279,7 @@ On `line 6`, we reassign the local variable `b` to the value of the float object
 After this code executes, local variable `a` will return the float object `7.3`, while local variable `b` will return the float object `8.4`. Local variable `a` is not the same as local variable `b`, as reassignment is not destructive (float objects are also immutable). So when we reassign the local variable `b`, a new float object is being referenced. 
 
 *17) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def​ ​test​(str) 
   str += ​'!' 
   str.downcase!
@@ -299,7 +299,7 @@ On `line 3`, the `downcase!` method is invoked on the local variable `str`, whic
 On `line 9`, we call the `puts` method and pass the `test_str` local variable as an argument. This will output `'Written Assessment'` and return `nil` (`puts` always returns `nil`). The reason why `test_str` was not mutated is that while variables are pointers to objects, there was a variable reassignment on `line 2`, such that the destructive method on `line 3` was called on a different string object to the string object that `test_str` is referencing. 
 
 *18) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def​ ​plus​(x, y) 
   x = x + y
 end
@@ -319,7 +319,7 @@ As there is no explicit return statement in the method, the last line evaluated 
 On `line 8`, we pass the local variable `a` as an argument to the `puts` method call, which will output `3` and return `nil` (`puts` always returns `nil`). On `line 9`, we pass the local variable `b` to the `puts` method call, which will output `5` and return `nil`. 
 
 *19) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def​ ​increment​(x) 
   x << ​'b'
 end
@@ -338,7 +338,7 @@ This method will return the string object `'ab'`, as the shovel operator permane
 On `line 8`, we pass the local variable `y` as an argument to the `puts` method call, which outputs `'ab'` and returns `nil` (`puts` always returns `nil`). 
 
 *20) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def​ ​change_name​(name)
   name = ​'bob'​
 end
@@ -356,7 +356,7 @@ On `line 7`, we pass the `name` local variable as an argument to the `puts` meth
 Also, method definitions have their own scope, and cannot directly access local variables initialised outside of the method definition scope (this is also why this particular code is __not__ an example of variable shadowing).  
 
 *21) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def​ ​cap​(str) 
   str.capitalize!
 end
@@ -372,7 +372,7 @@ On `line 1-3`, we define a method, `cap`, which takes a single `str` parameter. 
 When we pass the local variable `name` as an argument to the `puts` method on `line 7`, this will output `'Jim'` and return `nil`. The string object that the local variable `name` was referencing was mutated as a result of calling the `capitalize!` method on the `'jim'` string object. 
 
 *22) What is `arr`? Why? What concept does it demonstrate?*
-```
+```ruby
 a = [​1​, ​3​] 
 b = [​2​]
 arr = [a, b] 
@@ -388,7 +388,7 @@ On `line 3`, we initialise the local variable `arr`, and assign it to an array o
 On `line 6`, we are reassigning the element at index `1` of the array object local variable `a` is referencing, to the integer object `5`. This is known as indexed assignment and while the object at `a[1]` is reassigned, indexed assignment has the effect of mutating the *original* array object referenced by the local variable `a`. As such, on `line 7`, `arr` will return `[[1, 5], [2]]`.
 
 *23) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 arr1 = [​"a"​, ​"b"​, ​"c"​] 
 arr2 = arr1.dup 
 
@@ -410,7 +410,7 @@ On `line 8`, we call the `puts` method, passing the local variable `arr1` as an 
 On `line 9`, we call the `puts` method, passing the local variable `arr2` as an argument. This will output `'A', 'B', 'C'` on separate lines and return `nil`. This is due to the `map!` method being destructive, replacing each element of the original array referenced by `arr2` with the return value of the block. 
 
 *24) What values do `s` and `t` have? Why?*
-```
+```ruby
 def​ ​fix​(value) 
   value.upcase! 
   value.concat(​'!'​) 
@@ -429,7 +429,7 @@ As there is no explicit `return` in this method definition, when this method is 
 After the `fix` method call, the local variable `s` is pointing to same string object as when the variable was initialised, however, it has been mutated to `'HELLO!'`, while the local variable `t` is also pointing to that same string object (since variables are pointers to objects), with a value of `'HELLO!'`, due to the destructive method calls within the `fix` method. 
 
 *25) What values do `s` and `t` have? Why?*
-```
+```ruby
 def​ ​fix​(value)
   value = value.upcase 
   value.concat(​'!'​)
@@ -447,7 +447,7 @@ On `line 3`, we mutate this `value` object by calling the destructive `.concat` 
 `s` will return `'hello'`, and `t` will return `'HELLO!'`. `s` is not mutated since on `line 2` , we initialised the local variable `value` to reference a __new__ string object, since `.upcase` is not a destructive method and returns a new string object. 
 
 *26) What values do `s` and `t` have? Why?*
-```
+```ruby
 def​ ​fix​(value)
   value << ​'xyz'
   value = value.upcase 
@@ -466,7 +466,7 @@ On `line 3`, we reassign the local variable `value` to the return value of calli
 As such, `s` will return `'helloxyz`, and `t` will return `'HELLOXYZ!'`. This is because the shovel operator mutated the string object referenced by `s` when it was passed as an argument to `fix`, but the `value` local variable was reassigned within the `fix` method to a new string object, since `.upcase` is not a mutating method. This means that the `upcase` and `concat` methods were called on a different string object that `s` was referencing. 
 
 *27) What values do `s` and `t` have? Why?*
-```
+```ruby
 def​ ​fix​(value)
   value = value.upcase! 
   value.concat(​'!'​)
@@ -484,7 +484,7 @@ On `line 3`, the `concat` method is called on the string object referenced by th
 After calling `fix(s)` on `line 7`, `s` will return `'HELLO!'`, and `t` will also return `'HELLO!'`, as they are referencing the same string object (variables are pointers to objects) since `lines 2-3` of the `fix` method did not create a new string object, but mutated the original string object. 
 
 *28) What values do `s` and `t` have? Why?*
-```
+```ruby
 def​ ​fix​(value) 
   value[​1​] = ​'x' 
   value
@@ -502,7 +502,7 @@ Since there is no explicit `return` in this method, the last expression evaluate
 The return value of `fix(s)` is `'axc'`, which is assigned to the local variable `t`. After calling `fix(s)`, the local variable `s` now returns `'axc'`, as does the local variable `t`, since they are now referencing the same string object (variables being pointers to objects) due to the mutating effects of the indexed assignment on `line 2`. 
 
 *29) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 num = ​3
 num = ​2​ * num
 ```
@@ -511,7 +511,7 @@ On `line 1`, we initialise the local variable `num`, and assign it to the intege
 `num` will return the integer object `6`. It should be noted that integer objects are immutable - `line 2` was a variable reassignment. The `num` variable will reference different objects on `line 1` versus `line 2`. We can verify this by calling the `object_id` method on the `num` variable after the variable initialisation on `line 1`, which will return a different `object_id` to calling the `object_id` method on `num` after `line 2`. 
 
 *30) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = ​%w(abc) 
 a[​1​] = ​'-'
 p a
@@ -521,7 +521,7 @@ On `line 1`, we initialise the local variable `a` and assign it to an array obje
 Therefore, when we pass the local variable `a` as an argument to the `p` method call, this will output and return `['abc', '-']`.
 
 *31) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def​ ​add_name​(arr, name) 
   arr = arr + [name]
 end
@@ -539,7 +539,7 @@ As this is is the last evaluated expression of the `add_name` method, and there 
 On `line 7`, we call the `puts` method, passing in the local variable `name` as an argument. This will print `'bob', 'kim'` on new lines, and return `nil` (`puts` always returns `nil`). The array object referenced by `names` is not mutated, since `line 2` is variable reassignment, and no mutating methods are called. 
 
 *32) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def​ ​add_name​(arr, name) 
   arr = arr << name
 end
@@ -559,7 +559,7 @@ As `line 2` is the last expression evaluated in this method, and there is no exp
 Finally, we call the `puts` method on `line 7`, passing in the `names` local variable as an argument. This will output `'bob', 'kim', 'jim'` on separate lines, and return `nil` (since `puts` always returns `nil`). The array object referenced by `names` was mutated by the shovel operator on `line 2`, and hence a new array object was __not__ created. 
 
 *33) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 array = [​1​, ​2​, ​3​, ​4​, ​5​]
 
 array.select ​do​ |num| 
@@ -577,7 +577,7 @@ In this example on `line 2`, we call the `.odd?` method on each array element pa
 Within the block, the `puts` method call will output `1`, `3`, `5` as an array, each on a new line. Since the `select` method return a new array based on truthiness, a new empty array will be returned, as when the block evaluates to false, it is not passed to the `puts` method as an argument, and when block evaluates to true, `puts` always returns `nil` (which is __not__ truthy). 
 
 *34) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 arr = [​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​] 
 arr.select { |n| n.odd? }
 ```
@@ -587,7 +587,7 @@ On `line 2`, we call the `select` method on the array object referenced by `arr`
 On each iteration, each element of the array object is passed to the block parameter `n`. The `.odd?` method is then called on value of the local block variable `n`, which evaluates whether the element passed to it is odd (returns `true` if odd). In this example, this will return a new array object `[1, 3, 5, 7, 9]`, since those are the integer elements for which the block will evaluate as `true`. 
 
 *35) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 arr = [​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]
 
 new_array = arr.select ​do​ |n| 
@@ -607,7 +607,7 @@ The `select` method only evaluates the truthiness of the return value of the blo
 Therefore, each element will be evaluated by the block as true, since all integers are truthy. The `select` method returns a new array of elements where those elements are truthy. Therefore, when we pass the local variable `new_array` as an argument to the `p` method call, this will output and return `[​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]`.
 
 *36) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 arr = [​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]
 
 new_array = arr.select ​do​ |n| 
@@ -629,7 +629,7 @@ On `line 5`, the local block variable `n` is passed to the `puts` method as an a
 Since none of the values returned by the block are truthy, the `select` method will return an empty array and this is assigned to the local variable `new_array`. When we pass the local variable `new_array` as an argument to the `p` method call on `line 8`, this will both output and return an empty array. 
 
 *37) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 words = ​%w(jump trip laugh run talk)
 
 new_array = words.map ​do​ |word| 
@@ -651,7 +651,7 @@ In our case, this will return a new array `[false, true, false, false, true]`, s
 When we pass the `new_array` variable as an argument to the `p` method call on `line 7`, this will output and return `[false, true, false, false, true]`.
 
 *38) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 arr = [​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​] 
 arr.each { |n| puts n }
 ```
@@ -664,7 +664,7 @@ The `each` method iterates through each element of the array object, passing eac
 The local block variable `n` is then passed to the `puts` method call as an argument, which outputs each element of the array object, converted to a string object on a separate line, and returns `nil` (since there is no explicit `return`, the method will return the last evaluated expression in the method, which is the `puts` method call, which always returns `nil`).
 
 *39) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 arr = [​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]
 
 incremented = arr.map ​do​ |n| 
@@ -684,7 +684,7 @@ As there is no explicit `return` in the block, the last evaluated expression is 
 On `line 7`, we call the `p` method and pass the local variable `incremented` as an argument. This will output and return `[​​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​, 11]`.
 
 *40) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 arr = [​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]
 
 new_array = arr.map ​do​ |n| 
@@ -706,7 +706,7 @@ After all the elements are iterated through, the `map` method will return a new 
 On `line 7`, we call the `p` method and pass the local variable `new_array` as an argument, which will output and return `[false, true, true, true, true, true, true, true, true, true]`.
 
 *41) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 arr = [​1​, ​2​, ​3​, ​4​, ​5​, ​6​, ​7​, ​8​, ​9​, ​10​]
 
 new_array = arr.map ​do​ |n| 
@@ -731,7 +731,7 @@ After each element of the array has been iterated through by the `map` method, i
 We then call the `p` method on `line 8`, passing the local variable `new_array` as an argument. This outputs and returns `[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]`.
 
 *42) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = ​"hello"
 [​1​, ​2​, ​3​].map { |num| a }
 ```
@@ -742,7 +742,7 @@ The `map` method iterates through each element of the array object on which it's
 The `map` method returns a new array object, containing the returned value of the block for each element of the array. In our case, this is a new array object `['hello', 'hello', 'hello']`. 
 
 *43) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 [​1​, ​2​, ​3​].any? ​do​ |num| 
   num > ​2
 end
@@ -754,7 +754,7 @@ On `line 2`, we assign the local block variable `num` to an array element passed
 The `any?` method will return `true` if none of returned values of the block return `false`, which does not occur in our example. 
 
 *44) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 { ​a:​ ​"ant"​, ​b:​ ​"bear"​, ​c:​ ​"cat"​ }.any? ​do​ |key, value| 
   value.size > ​4
 end
@@ -768,7 +768,7 @@ We then call the `Integer#>` method on the returned integer object from the `.si
 The code will return `false`, since none of the string object values in the hash have more than `4` characters (the block will never return `true`). 
 
 *45) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 [​1​, ​2​, ​3​].all? ​do​ |num| 
   num > ​2
 end
@@ -780,7 +780,7 @@ The `all?` method iterates through each element of the array object, passing it 
 The `all?` method will return `true` if all of the return values of the block evaluate to `true`. Not all array elements are greater than `2`, so the `all?` method call will return `false`.
 
 *46) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 { ​a:​ ​"ant"​, ​b:​ ​"bear"​, ​c:​ ​"cat"​ }.all? ​do​ |key, value| 
   value.length >= ​3
 end
@@ -794,7 +794,7 @@ We then call the `.length` method on the string object, which returns an integer
 The `all?` method will return `true` only if all of the returned values of the block evaluate to `true`. In our case, the `all?` method call will return `true`, since all of the lengths of the hash object values are greater than or equal to `3`. 
 
 *47) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 [​1​, ​2​, ​3​].each_with_index ​do​ |num, index| 
   puts ​"The index of ​#{num}​ is ​#{index}​."
 end
@@ -810,7 +810,7 @@ On `line 2`, we call the `puts` method, passing in a string object as an argumen
 The `puts` method returns `nil` on each iteration. However, the `each_with_index` method does not do anything with the returned value of the block and returns the original array object on which it was called. 
 
 *48) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 { ​a:​ ​"ant"​, ​b:​ ​"bear"​, ​c:​ ​"cat"​ }.each_with_object([]) ​do​ |pair, array| 
   array << pair.last
 end
@@ -824,7 +824,7 @@ We then call the `last` method on this array object, returning the last item in 
 In our case, the `each_with_object` method returns a new array object populated by the returned values of the block `['ant', 'bear', 'cat']`. 
 
 *49) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 { ​a:​ ​"ant"​, ​b:​ ​"bear"​, ​c:​ ​"cat"​ }.each_with_object({}) ​do​ |(key, value), hash|
   hash[value] = key
 end
@@ -840,7 +840,7 @@ We then populate the empty hash object with a new key value pair on each iterati
 In our example, the `each_with_object` returns the initial hash object, which is now mutated to `{"ant"=>:a, "bear"=>:b, "cat"=>:c}`. 
 
 *50) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 odd, even = [​1​, ​2​, ​3​].partition ​do​ |num| 
   num.odd?
 end
@@ -859,7 +859,7 @@ In our case, the `partition` method call will return an array, with two nested s
 On `line 5`, we call the `p` method, passing in the local variable `odd` as an argument. This will output and return `[1, 3]`. On `line 6`, we call the `p` method, passing in the local variable `even` as an argument. This will output and return `[2]`.
 
 *51) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = ​"Hello"
 if​ a
   puts ​"Hello is truthy"
@@ -872,7 +872,7 @@ On `line 1`, we initialise the local variable `a` and assign the string object `
 In Ruby, everything except for `false` and `nil` is truthy (evaluates to `true` in a conditional). Therefore, the `puts` method is called on `line 3`, with the string `'Hello is truthy'` passed in as an argument. This will print `'Hello is truthy'` and return `nil` (since the `puts` method always returns `nil`). 
 
 *52) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def​ ​test
   puts ​"written assessment"
 end
@@ -892,7 +892,7 @@ On `line 7`, the `if` conditional evalutes whether the local variable `var` retu
 Instead, the `puts` method on `line 10` is called, with the string object `'interview'` passed as an argument. This will output `'interview'` and return `nil` (`puts` always returns `nil`, and this `puts` statement is the last evaluated expression, since there is no explicit `return` in the `if` conditional). 
 
 *53) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 [1, 2, 3].select do |num|
   num > 5
   'hi'
@@ -905,7 +905,7 @@ On `line 2`, the local block variable `num` is assigned an element of the array 
 In this case, the `select` method will return `[1, 2, 3]`, since everything in Ruby is truthy except for `false` and `nil`. The string object `'hi'` is truthy.
 
 *54) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 ['ant', 'bat', 'caterpillar'].count do |str|
   str.length < 4
 end
@@ -919,7 +919,7 @@ In our case, the `count` method iterates through the array, passing each element
 For this code, two elements in the array object have a string length of less than 4, so the `count` method will return `2`. 
 
 *55) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 [1, 2, 3].reject do |num|
   puts num
 end
@@ -933,7 +933,7 @@ On `line 2`, we assign the local variable `num` to the integer objects that are 
 In Ruby, everything is truthy, except for `nil` and `false`. Since the `puts` method always returns `nil`, this is evaluated as false by the `reject` method. The result of the `reject` method call is to print string objects `'1', '2', '3'`, each on a new line, and return a new array object `[1, 2, 3]`. 
 
 *56) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 ['ant', 'bear', 'cat'].each_with_object({}) do |value, hash|
   hash[value[0]] = value
 end
@@ -949,7 +949,7 @@ This is achieved through the `String#[]` method call on each string object passe
 Once all elements of the array object `['ant', 'bear', 'cat']` are iterated through, the `each_with_object` method will return the hash object that was originally passed to it as an argument. The mutated hash is now `{ "a"=>"ant", "b"=>"bear", "c"=>"cat" }`.
 
 *57) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 hash = { a: 'ant', b: 'bear' }
 hash.shift
 ```
@@ -958,13 +958,13 @@ On `line 1`, we initialise the local variable `hash` and assign it to the hash o
 `Line 2` would return `[:a, "ant"]`. 
 
 *58) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 ['ant', 'bear', 'caterpillar'].pop.size
 ```
 On `line 1`, we call the `pop` method on the array object `['ant', 'bear', 'caterpillar']`. The `pop` method destructively removes the last element of an array and returns it. In this case, the `pop` method would return the string object `'caterpillar'`. The `size` method is then called on the return value of the `pop` method. When called on a string object, the `size` method returns the number of characters in the string object. In this case, the method will return `11`.
 
 *59) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 [1, 2, 3].any? do |num|
   puts num
   num.odd?
@@ -979,7 +979,7 @@ On `line 3`, the `odd?` method is called on the array element referenced by the 
 The `any?` method returns `true` if any of the elements of the array object it is called on, are evaluated as `true` by the block. In this case, the first and third element of the array object are odd integers, and so the `any?` method call would return `true`. 
 
 *60) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 { a: 'ant', b: 'bear' }.map do |key, value|
   if value.size > 3
     value
@@ -997,7 +997,7 @@ We also have a conditional `if` statement on `line 2`, which will evaluate wheth
 The `map` value will return a new array object that contains the return value of the block. In our example, this will return `[nil, 'bear']`. The first `nil` element is returned as when none of the conditions in an `if` statement evaluates as `true`, or nothing is returned, the `if` statement itself returns `nil`. This occurs when we pass the string object `'ant'` to the block. 
 
 *61) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 [1, 2, 3].map do |num|
   if num > 1
     puts num
@@ -1015,7 +1015,7 @@ This returned boolean is then evaluated by the `if` statement on `line 2`. If th
 The `map` method is non-destructive, and will return a new array object, with values based on the return value of the block for each element in the original array on which the `map` method was called. In our case, the `map` method call will output `2` and `3` as string objects, and return a new array object `[1, nil, nil]`, as the `2` and `3` integer objects in the original array are greater than `1`, and will be passed to the `puts` method, which will return `nil`. The `map` method does not care about truthiness - only the return value of the block. 
 
 *62) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = 7
 
 def my_value(b)
@@ -1032,7 +1032,7 @@ On `line 3-5`, we define the `my_value` method, which takes a parameter `b`. On 
 On `line 8`, we call the `puts` method, passing in the local variable `a` as an argument. This will output `7` and return `nil` (the `puts` method always returns `nil`). 
 
 *63) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = 7
 
 def my_value(a)
@@ -1049,7 +1049,7 @@ On `line 4`, we reassign the local method variable `a` to the return value of ca
 On `line 8`, we call the `puts` method, passing the local variable `a` as an argument. This will output the integer object `7`, and return `nil`. The reason why `puts` does not output `17` is because local variables initialised outside of a method definition are not accessible inside that method, even if we pass in the object being referenced by that variable as an argument to the method. Since we initialised a local variable `a` on `line 1`, this is the object being referenced by the local variable `a`. 
 
 *64) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = 7
 
 def my_value(b)
@@ -1066,7 +1066,7 @@ On `line 1`, we initialise a local variable `a` and assign it to the integer obj
 On `line 8`, we call the `puts` method, passing in the local variable `a` as an argument. This will output `7`, and return `nil` (`puts` always returns `nil`). The reason why `a` was not reassigned is because local variables initialised within a method definition are not accessible outside of that method definition. Hence the local variable initialised outside of `my_value` is not affected by calling the `my_value` method. 
 
 *65) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = "Xyzzy"
 
 def my_value(b)
@@ -1085,7 +1085,7 @@ On `line 5`, indexed assignment occurs on the string object passed as an argumen
 On `line 8`, we call the `puts` method, passing in the local variable `a` as an argument. This outputs `"Xy-zy"` and returns `nil` (`puts` always returns `nil`). As discussed above, indexed assignment is mutating, and so the value of the string object is different to what we initialised the local variable `a` to on `line 1`. 
 
 *66) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = "Xyzzy"
 
 def my_value(b)
@@ -1104,7 +1104,7 @@ On `line 4`, we reassign the local variable `b` to the string object `'yzzyX'`. 
 On `line 8`, we call the `puts` method, passing in the local variable `a` as an argument. This will output the string object `"Xyzzy"` and return `nil` (since the `puts` method always returns `nil`). 
 
 *67) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = 7
 
 def my_value(b)
@@ -1121,7 +1121,7 @@ On `line 1`, we initialise the local variable `a` and assign it to the integer o
 On `line 8`, we call the `puts` method, passing in the local variable `a` as an argument. This will output `7` and return `nil` (`puts` always returns `nil`). The local variable `a` has not been reassigned, nor has the object being referenced been mutated by the `my_value` method, since that method never has access to the variable, or the integer object it's referencing. 
 
 *68) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = 7
 array = [1, 2, 3]
 
@@ -1142,7 +1142,7 @@ On `line 5`, the block reassigns the local variable `a` initialised outside of t
 On `line 8`, we call the `puts` method and pass the local variable `a` to it as an argument. This will print a string object `'3'` and return `nil`, since the `puts` method always returns `nil`. 
 
 *69) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 array = [1, 2, 3]
 
 array.each do |element|
@@ -1160,7 +1160,7 @@ On `line 4`, the local variable `a` is initialised and assigned to the object re
 On `line 7`, we call the `puts` method and pass the local variable `a` to it as an argument. However, since the local variable `a` was initialised in the block, it is not accessible outside of the block. This means attempting to call `puts` will result in a `NameError` exception being raised. 
 
 *70) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = 7
 array = [1, 2, 3]
 
@@ -1181,7 +1181,7 @@ On `line 8`, we call the `puts` method, passing in the local variable `a` as an 
 This code snippet demonstrates the concept of variable shadowing. Variable shadowing prevents the block scope from accessing local variables initialised outside of the block where the block parameter has the same name as the local variable. This prevents the local variable `a` from being reassigned on `line 5`.
 
 *71) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 a = 7
 array = [1, 2, 3]
 
@@ -1205,7 +1205,7 @@ However, since method definitions create their own scope and do not have access 
 On `line 11`, we call the `puts` method, passing the local variable `a` as an argument. This will output a string (`'7'`) and return `nil`. 
 
 *72) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def meal
   return 'Breakfast'
 end
@@ -1217,7 +1217,7 @@ On `line 5`, we call the `puts` method, and pass the return value of calling the
 Therefore, the `puts` method call will output a string object `'Breakfast'` and return `nil` (`puts` always returns `nil`). 
 
 *73) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def meal
   'Evening'
 end
@@ -1229,7 +1229,7 @@ On `line 4`, we call the `puts` method, passing the return value of the `meal` m
 Thus, when we call the `puts` method on `line 4`, we pass a string object `'Evening'` as an argument, which will output the string object `'Evening'` and return `nil` (`puts` always returns `nil`).
 
 *74) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def meal
   return 'Breakfast'
   'Dinner'
@@ -1242,7 +1242,7 @@ On `line 5`, we call the `puts` method, passing in the return value of the `meal
 When this is passed to the `puts` method as an argument, this prints the string object `'Breakfast'` and returns `nil` (since `puts` method calls always return `nil`).
 
 *75) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def meal
   puts 'Dinner'
   return 'Breakfast'
@@ -1259,7 +1259,7 @@ On `line 3`, an explicit `return` reserved word is used, which will stop further
 Therefore, the `puts` method call on `line 6` will output `'Dinner'` and `'Breakfast'` on different lines and return `nil`. 
 
 *76) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def meal
   'Dinner'
   puts 'Dinner'
@@ -1276,7 +1276,7 @@ On `line 3`, we call the `puts` method, passing the string object `'Dinner'` as 
 Therefore, on `line 6`, the `p` method will output a string object `'Dinner'` and `nil` on separate lines, and return `nil`.
 
 *77) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def meal
   return 'Breakfast'
   'Dinner'
@@ -1292,7 +1292,7 @@ On `line 1-5`, we define the `meal` method. As there is an explicit `return` in 
 As such, on `line 7`, the `puts` method will output `'Breakfast'` and return `nil` (the `puts` method always returns `nil`).
 
 *78) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def count_sheep
   5.times do |sheep|
     puts sheep
@@ -1310,7 +1310,7 @@ On `line 3`, the `puts` method is called, with the local variable `sheep` passed
 Thus, passing the `count_sheep` method to the `puts` method call on `line 7` will output a string representation of the objects `0` to `5` (since `puts` will also output the return value of the method alongside any side effects) and return `nil`. 
 
 *79) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def count_sheep
   5.times do |sheep|
     puts sheep
@@ -1331,7 +1331,7 @@ However, on `line 5`, the integer object `10` is returned. Since there is no exp
 On `line 8`, we are passing the integer object `10` as as argument to the `puts` method when we call it. This will output the string objects `'0', '1', '2', '3', '4' ,'10'` and return `nil` (`puts` always returns `nil`), since the side effects (outputing string objects `'0', '1', '2', '3', '4'`) of calling the method are still displayed by `puts`. 
 
 *80) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def count_sheep
   5.times do |sheep|
     puts sheep
@@ -1345,7 +1345,7 @@ p count_sheep
 ```
 
 *81) What does the following code return? What does it output? Why? What concept does it demonstrate?*
-```
+```ruby
 def tricky_number
   if true
     number = 1

@@ -34,12 +34,12 @@ One useful function is to change the scope level in our code.
 We can then use the `ls` method to give context about methods available in that scope, on that object. 
 
 We can also use the `show-source method_name -d` method to give us a snapshot of the documentation on an available method. 
-```
+```ruby
 arr = [1, 2, 3]
 cd arr
 
 pry(#<Array>): 1> first
-=> 1
+# => 1
 ```
 We can press `q` to exit out of the documentation.
 
@@ -57,7 +57,7 @@ The splat (`*`) operator has a few functions.
 
 *Catch-all* <br/>
 When calling a method, we can use the splat operator to act as a 'catch-all' variable for *multiple values*.
-```
+```ruby
 def go(x, *args)
   puts args.inspect
 end
@@ -65,13 +65,13 @@ end
 go("a", "b", "c")
 
 ['b', 'c']
-=> nil
+# => nil
 ```
 In our above example, `'a'` is passed to the `go` method as an argument, via the `x` parameter, as it is the first value passed. The `*args` parameter will capture the rest of any values we pass in to `go`.
 
 *Using an array to pass multiple arguments* <br/>
 They let you pass an array into a function expecting multiple arguments. The first item in the array becomes the first argument, the second item becomes the second argument and so on.
-```
+```ruby
 def go(x, y)
   puts x.inspect
   puts y.inspect
@@ -80,8 +80,8 @@ end
 point = [12, 10]
 go(*point)
 
-12
-10
-=> nil
+# 12
+# 10
+# => nil
 ```
 The splat operator here is effectively acting as a wildcard - it is effectively creating a variable to hold each element in the array. It allows us to *destructure* an array - it is basically the same as calling `.flatten(1)` on an array, meaning it will only unnest __one__ level (won't unnest subarrays, etc).

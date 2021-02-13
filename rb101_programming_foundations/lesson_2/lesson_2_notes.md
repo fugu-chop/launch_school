@@ -24,7 +24,7 @@ When we write Ruby code that's not in a class, we are working within an object c
 
 ### Truthiness
 In Ruby, booleans are represented by the `true` and `false` objects. Like everything else in Ruby, boolean objects also have real classes behind them, and you can call methods on `true` and `false`.
-```
+```ruby
 true.class          # => TrueClass
 true.nil?           # => false
 true.to_s           # => "true"
@@ -36,7 +36,7 @@ false.to_s          # => "false"
 false.methods       # => list of methods you can call on the false object
 ```
 You can use the two boolean objects in conditionals.
-```
+```ruby
 if true
   puts 'hi'
 else
@@ -44,11 +44,11 @@ else
 end
 
 hi
-=> nil
+# => nil
 ```
 ###### Expressions & conditionals
 In real code, you won't use the `true` or `false `objects directly in a conditional. Instead, you'll likely be evaluating some expression or method call in a conditional. Whatever the expression, it should evaluate to a `true` or `false` object.
-```
+```ruby
 num = 5
 
 if (num < 10)
@@ -58,10 +58,10 @@ else
 end
 
 small number
-=> nil
+# => nil
 ```
 You can substitute the code expression with a method call too. When using method calls as a conditional expression in this way, you'll generally want the method to *return a boolean* rather than relying on the truthiness or falsyness of a non-boolean return value.
-```
+```ruby
 # This will output "it's true!" if some_method_call returns a truthy value.
 puts "it's true!" if some_method_call
 ```
@@ -198,7 +198,7 @@ An operator that has higher precedence than another is said to __bind__ more tig
 
 ###### Evaluation order
 Consider this code and the output it displays:
-```
+```ruby
 def value(n)
   puts n
   n
@@ -206,10 +206,10 @@ end
 
 puts value(3) + value(5) * value(7)
 
-3
-5
-7
-38
+# 3
+# 5
+# 7
+# 38
 ```
 From the first 3 lines of output, you might conclude that Ruby is evaluating the expression left-to-right. However, the final result says otherwise - you can only get that result if `value(5) * value(7)` gets evaluated first. 
 
@@ -218,13 +218,13 @@ The issue here is that operators like `+` and `*` need values that they can work
 In an arithmetic expression, Ruby first goes through an expression *left-to-right* and evaluates everything it can __without calling any operators__. Thus, here it evaluates `value(3)`, `value(5)`, and `value(7)` first, in that order. Only when it has those values does it deal with precedence and re-evaluate the result.
 
 The ternary operator (`?:`) and the short-circuit operators `&&` and `||` are a common source of unexpected behavior where precedence is concerned.
-```
+```ruby
 3 ? 1 / 0 : 1 + 2  # raises error ZeroDivisionError
 5 && 1 / 0         # raises error ZeroDivisionError
 nil || 1 / 0       # raises error ZeroDivisionError
 ```
 What happens, though, if we modify things so that 1 / 0 isn't needed?
-```
+```ruby
 nil ? 1 / 0 : 1 + 2  # 3
 nil && 1 / 0         # nil
 5 || 1 / 0           # 5
@@ -233,7 +233,7 @@ In all 3 cases, `1 / 0` never gets executed, even though operator precedence wou
 
 ###### Weird edge cases
 Ruby has some weirdly specific edge cases when it comes to precedence. Compare the following - a `.map` method called on an array. 
-```
+```ruby
 array = [1, 2, 3]
 
 array.map { |num| num + 1 }     # => [2, 3, 4]
@@ -262,7 +262,7 @@ Basically, because of the low precedence of the `do...end` block, `p` sees two a
 A `{ }` block, on the other hand, has higher priority which means that it binds *more tightly* to `array.map`. Therefore, when we use `{}`, `array.map` is called with the block, then the return value of `array.map` gets passed to `p`.
 
 The code below is equivalent to the code above, but this time we use parentheses to visualize the order.
-```
+```ruby
 array = [1, 2, 3]
 
 p(array.map) do |num|
@@ -274,20 +274,20 @@ p(array.map { |num| num + 1 })      # [2, 3, 4]
 ```
 ###### The `tap` method
 There is an Object instance method, `tap`. It passes the calling object into a block, then returns that __calling__ object itself. It allows you do something with an object inside of a block, and *always have that block return the object itself*.
-```
+```ruby
 array = [1, 2, 3]
 
 mapped_array = array.map { |num| num + 1 }
 mapped_array.tap { |value| p value }              # => [2, 3, 4]
 ```
 `array.map { |num| num + 1 }` returns `[2, 3, 4]`, which then gets used to call `tap`. `tap` takes the calling object and passed it to the block argument, then returns that same object. Typically, you will do something like print the object inside that block.
-```
+```ruby
 mapped_and_tapped = mapped_array.tap { |value| p 'hello' }   # ‘hello’
 
 mapped_and_tapped                                            # => [2, 3, 4]
 ```
 One use case for this method is to __debug intermediate objects__ in method chains. The transformation performed and the resulting object at every step is now visible to us by just using `tap`.
-```
+```ruby
 (1..10).tap { |x| p x }.to_a.tap { |x| p x }.select {|x| x.even? }.tap { |x| p x }.map {|x| x*x }.tap { |x| p x }
 
 # Broken up, we can see that calling the .tap method lets us see what that step of the chain returns
@@ -302,7 +302,7 @@ Otherwise, we would have to add the `pry` debugger above the expression and exec
 Constants are said to have *lexical scope*, which will have more meaningful consequences when we get to object oriented programming. For now, just remember that constants have different scoping rules from local variables.
 
 The scoping rules for constants is __not__ the same as local variables. In procedural style programming, constants behave like *globals*.
-```
+```ruby
 USERNAME = 'Batman'
 
 def authenticate
@@ -312,7 +312,7 @@ end
 authenticate    # => Logging in Batman
 ```
 The rules for local variables apply in the same way to constants when dealing with method invocations with a block. 
-```
+```ruby
 FAVORITE_COLOR = 'taupe'
 
 1.times do
@@ -320,7 +320,7 @@ FAVORITE_COLOR = 'taupe'
 end
 ```
 We can access constants, even when they are initialised in an inner scope. 
-```
+```ruby
 loop do
   MY_TEAM = "Phoenix Suns"
   break
@@ -330,7 +330,7 @@ puts MY_TEAM    # => Phoenix Suns
 ```
 ### More on variable scope
 __Method definition__ is when, within our code, we define a Ruby method using the `def` keyword.
-```
+```ruby
 def greeting
   puts "Hello"
 end
@@ -347,7 +347,7 @@ Method invocation followed by `{}` or `do..end` is the way in which we *define a
 In the same way that a local variable can be passed as an argument to a method at invocation, *when a method is called with a block it acts as an argument to that method*.
 
 The way that an argument is used, whether it is a method parameter or a block, depends on how the method is defined.
-```
+```ruby
 # Block tacked on to the end of the greetings method is not executed
 def greetings
   puts "Goodbye"
@@ -359,7 +359,7 @@ greetings do
   puts word
 end
 
-Goodbye
+# Goodbye
 
 # Block on the end of the greetings method is executed
 def greetings
@@ -373,15 +373,15 @@ greetings do
   puts word
 end
 
-Hello
-Goodbye
+# Hello
+# Goodbye
 ```
 The `yield` keyword is what controls the interaction with the block, in this case it executes the block once. Since the block has access to the local variable word, `Hello` is output when the block is executed. Don't focus here on what `yield` is or how it works.
 
 The important take-away for now is that blocks and methods can interact with each other; the level of that interaction is set by the method definition and then used at method invocation.
 
 When invoking a method with a block, we aren't just limited to executing code within the block; depending on the method definition, the method can use the *return value of the block* to perform some other action.
-```
+```ruby
 a = "hello"
 [1, 2, 3].map { |num| a } 
 
@@ -410,7 +410,7 @@ In Ruby, when an object is passed to a *method call as an argument*, the __param
 With pass by value, a copy of an object is created, and it is that copy that gets passed around. Since it is merely a copy, it is impossible to change the original object; any attempt to change the object just changes the copy and leaves the original object unchanged. 
 
 When you "*pass (an object) by value (as an argument to a method)*", the method only has __a copy of the original object__. Operations performed on the object within the method have __no effect on the original object__ outside of the method.
-```
+```ruby
 def change_name(name)
   name = 'bob'
 end
@@ -419,7 +419,7 @@ name = 'jim'
 change_name(name)
 puts name           
 
-jim
+# jim
 ```
 The code example above has two different local variables named `name`. There is one scoped *within* the method, and there is one in the *main scope*. 
 
@@ -429,7 +429,7 @@ This is __not__ variable shadowing, because the main scope variable is __not acc
 With pass by reference, a *reference to an object is passed around*. This establishes an *alias between the argument and the original object*, just like we saw when we set `a = b`. Both the argument and object refer to the __same location in memory__. With pass by reference, if you modify the argument’s state, you also modify the original object.
 
 If Ruby was pure "pass by value", that means there should be no way for operations within a method to cause changes to the original object.
-```
+```ruby
 def cap(str)
   str.capitalize!
 end
@@ -438,31 +438,31 @@ name = "jim"
 cap(name)
 puts name
 
-Jim
+# Jim
 ```
 This implies that Ruby is "pass by reference", because operations within the method __affected the original object__ when we passed the `name` variable into the `cap` method.
 
 Another example: 
-```
+```ruby
 array1 = %w(Moe Larry Curly Shemp Harpo Chico Groucho Zeppo)
 array2 = []
 array1.each { |value| array2 << value }
 array1.each { |value| value.upcase! if value.start_with?('C', 'S') }
 puts array2
 
-Moe
-Larry
-CURLY
-SHEMP
-Harpo
-CHICO
-Groucho
-Zeppo
+# Moe
+# Larry
+# CURLY
+# SHEMP
+# Harpo
+# CHICO
+# Groucho
+# Zeppo
 ```
 The first `#each` loop simply copies a bunch of references from `array1` to `array2`. When that first loop completes, both arrays not only contain the same values, they contain __the same String objects__. If you modify one of those Strings, that modification will show up in both Arrays.
 
 ###### Reconciling the two
-```
+```ruby
 def print_id(number)
   puts "In method object id = #{number.object_id}"
 end
@@ -471,8 +471,8 @@ value = 33
 puts "Outside method object id = #{value.object_id}"
 print_id(value)
 
-Outside method object id = 67
-In method object id = 67
+# Outside method object id = 67
+# In method object id = 67
 ```
 Here, `number` and `value` reference the same object despite the object being immutable. We can also see that `value` was not copied. Thus, Ruby is not using pass by value. It appears to be using *pass by reference*.
 
@@ -496,18 +496,18 @@ As a side note, blocks are an argument, but __blocks are immutable__, so every m
 In Ruby, numbers and boolean values are immutable. Objects of some complex classes, such as `nil` (the only member of the `NilClass` class) and `Range` objects (e.g., `1..10`) are immutable. Any class can establish itself as immutable by simply __not providing any methods that alter its state__.
 
 Once we create an immutable object, we cannot change it. We can only perform variable reassignment.
-```
+```ruby
 number = 3
-=> 3
+# => 3
 
 number
-=> 3
+# => 3
 
 number = 2 * number
-=> 6
+# => 6
 
 number
-=> 6
+# => 6
 ```
 As we saw above, this is reassignment which, as we learned, doesn’t change the object. Instead, it binds a new object to the variable. In this case, we create a new `Integer` with a value of `6` and assign it to `number`. 
 
@@ -516,28 +516,28 @@ There are, in fact, __no methods available that let you alter the value of any i
 This disconnects the original object from the variable, which makes it available for garbage collection unless another reference to the object exists elsewhere.
 
 A method is said to be *non-mutating with respect to an argument* or its calling object if it __does not modify it__. Most methods you will encounter do not mutate their arguments or caller. Some do mutate their *caller*, but few methods in the Core API or Standard Library mutate the *arguments* - most of these methods reassign their arguments to *different address spaces* and are thus non-mutating.
-```
+```ruby
 test = 'hello'
 test.object_id
-=> 70209269130840
+# => 70209269130840
 
 test[4]
-=> 'o'
+# => 'o'
 
 test[4].object_id
-=> 70209269164880
+# => 70209269164880
 
 test.sub!('o', 'y')
-=> "helly"
+# => "helly"
 
 test.object_id
-=> 70209269130840
+# => 70209269130840
 
 test[4]
-=> 'y'
+# => 'y'
 
 test[4].object_id
-=> 70209298117720
+# => 70209298117720
 ```
 All methods are non-mutating with respect to immutable objects. A method simply can’t modify an immutable object. Thus, *any method that operates on numbers and boolean values is guaranteed to be non-mutating with respect to that value* - the returned variable or value will exist in a different address space.
 
@@ -555,7 +555,7 @@ Note that setter methods for *class instance variables and indexed assignment* a
 Many, but not all, methods that mutate their caller use `!` as the last character of their name. However, this is not guaranteed to be the case. For instance, `String#concat` is a mutating method, but it does not include a `!`.
 
 ###### Element assignment is mutating
-```
+```ruby
 str[3] = 'x'
 array[5] = Person.new
 hash[:age] = 25
@@ -563,27 +563,27 @@ hash[:age] = 25
 This looks exactly like assignment, which is non-mutating, but is, in fact, mutating. `#[]` modifies the *original* object (the String, Array, or Hash). It __doesn’t change the binding__ of each variable.
 
 Consider this example:
-```
+```ruby
 a = [3, 5, 8]
-[3, 5, 8]
+# [3, 5, 8]
 
 a.object_id
-70240541515340
+# 70240541515340
 
 a[1].object_id
-11
+# 11
 
 a[1] = 9
-9
+# 9
 
 a[1].object_id
-19
+# 19
 
 a
-[3, 9, 8]
+# [3, 9, 8]
 
 a.object_id
-70240541515340
+# 70240541515340
 ```
 We have mutated the Array `a` by assigning a new value to `a[1]`, but have not created a new Array. This assignment changes `a[1]` so that it __references the new object__ `9` (i.e. we are modifying `a`, but not  `a[1]`, which is not modified, but reassigned). 
 
@@ -604,7 +604,7 @@ Setters are very similar to indexed assignment; they are methods that are define
 With indexed assignment, the elements of a collection (or the characters of a String) are replaced; with setters, __the state of the object is modified__, usually by modifying an instance variable.
 
 Setter invocation looks like this:
-```
+```ruby
 person.name = 'Bill'
 person.age = 23
 ```
@@ -632,7 +632,7 @@ Don't mutate the caller during iteration (i.e. add or subtract elements). It's o
 
 ###### Don't variable shadow
 It prevents our blocks from accessing variables from outside the block scope, and is confusing to read. 
-```
+```ruby
 name = 'johnson'
 
 ['kim', 'joe', 'sam'].each do |name|
@@ -640,13 +640,13 @@ name = 'johnson'
   puts "#{name} #{name}"
 end
 
-kim kim
-joe joe
-sam sam
+# kim kim
+# joe joe
+# sam sam
 ```
 ###### Don't use assignments in conditionals
 It's not clear whether we intend to assign a value to a variable (`=`), or test for equality (`==`). If you absolutely have to use assignment, wrap it in parentheses. 
-```
+```ruby
 # bad
 if some_variable = get_a_value_from_somewhere
   puts some_variable
@@ -667,13 +667,13 @@ end
 ```
 ###### Use underscores for unused variables
 Suppose you have an array of names, and you want to print out a string for every name in the array, but you __don't care about the actual names__. In those situations, use an *underscore* to signify that we don't care about this particular parameter.
-```
+```ruby
 names = ['kim', 'joe', 'sam']
 
 names.each { |_| puts "got a name!" }
 ```
 Or, if you have an unused parameter when there are multiple parameters:
-```
+```ruby
 names = ['kim', 'joe', 'sam']
 
 names.each_with_index do|_, idx|
