@@ -421,14 +421,84 @@ The `super` method is a way we can call methods of the same name defined in a su
 - Calling `super()` with parentheses but without arguments will call the superclass/module method without any arguments. This is often the safest way to avoid `ArgumentErrors` when the superclass/module method does not take any arguments.
 - Calling `super(arg1, arg2)` will forward `arg1` and `arg2` to the superclass/module method, and then call that method.
 
+In our example below, we define an `initialize` and `speak` method in the `Animal` class. The `Dog` class subclasses the `Animal` class (denoted by the `<` operator followed by the `Animal` class name). This means that the `Dog` class has access to the instance methods defined in the `Animal` class. Within `Dog`, there is method overriding across the `initialize` and `speak` method. 
+
+In the `initialize` method, the `Dog` implementation uses the `super(name)` method, meaning when an object is instantiated from the `Dog` class, the `Dog#initialize` method will call the `Animal#initialize` method, passing the `name` argument to the `Animal#initialize` method. The `Dog# initialize` method takes a second argument, `age`, which we also pass an object on `line 22`, extending the state encapsulated within the object.
+
+In the `Dog#speak` method, we make use of `super()`, which when invoked, will call the `Animal#speak` method without any arguments. The `Dog#speak` method then appends an additional string object with string interpolation, extending the functionality of `Animal#speak`.
+```ruby
+class Animal
+  def initialize(name)
+    @name = name
+  end
+
+  def speak
+    "Hello!"
+  end
+end
+
+class Dog < Animal
+  def initialize(name, age)
+    super(name)
+    @age = age
+  end
+
+  def speak
+    super() + " My name is #{@name} and I am a #{@age} year old #{self.class}!"
+  end
+end
+
+teddy = Dog.new("Teddy", 4)
+teddy.speak
+# => "Hello! My name is Teddy and I am a 4 year old Dog!"
+```
 #### Why can't we use the `self` prefix on private getter methods? *
 Prior to Ruby 2.7, we were unable to use the `self` prefix on private getter method when referencing those methods in other instance methods. This is because `self`, when used in the context of an instance method definition, refers to the calling object. 
 
 Thus when a private method is called in another instance method using `self`, this would be the equivalent of calling the private getter method directly on the object iself, which is prohibited by the `private` method. As of Ruby 2.7 and beyond, it is now possible to use the `self` keyword as a caller for a private getter method, but it appears to be generally accepted practice to simply not use `self` for private getter methods (one likely factor is to ensure pre-2.7 Ruby compatibility).
 
+In our below example, we have defined a private getter method `name`. In the `identify` instance method, we call the `name` instance method through the string interpolation. However, since we have prefixed the method call with `self`, when inside an instance method (the `identify` method), the `self` actually refers to the calling object, `ted`. Since private methods cannot be directly called on objects, this raises a `NoMethodError`. We could remedy this by removing `self` from the `name` method call.
+```ruby
+class Dog
+  def initialize(name)
+    @name = name
+  end
+
+  def identify
+    "Hello! My name is #{self.name}!"
+  end
+
+  private
+
+  def name
+    @name
+  end
+end
+
+ted = Dog.new("Ted")
+ted.identify
+# NoMethodError (private method `name' called for #<Dog:0x00007fddd80ab348 @name="Ted">)
+```
 #### What is method overriding? *
 Method overriding is a way of implementing polymorphism in code. When a class has access to a method through inheritance or a mixed in module, the class can implement it's own version of that particular method by explicitly defining a method of the same name, but have different functionality (thus overriding the original functionality). This allows us to extend the flexibility of code.
 
+In our example below, we define a class `Animal` with an instance method `speak`. Since the `Dog` class subclasses `Animal`, it would ordinarily have access to the `Animal#speak` method as well. However, we have overridden the `Animal#speak` method with a custom implementation within the `Dog` class, which will be called instead of `Animal#speak`. This is because when an instance of `Dog` calls the `speak` method, the method lookup path starts with the immediate class from which the object was instantiated.
+```ruby
+class Animal
+  def speak
+    "Hello!"
+  end
+end
+
+class Dog < Animal
+  def speak
+    "Woof!"
+  end
+end
+
+Dog.new.speak
+# => "Woof!"
+```
 #### What is a module? When would we use a module? (classes and methods, or just methods?)
 A module can be a grouping of methods that can be mixed into classes, allowing those classes to access the methods defined in the module. Modules are a way that we can implement polymorphism into our code, since any number of modules can be mixed into any class (there is no requirement that classes be related to each other), though objects cannot be instantiated from modules. 
 
@@ -439,32 +509,202 @@ Methods in mixin modules should not be defined using `self`. Typically, when `se
 
 In the case of a module, `self` will refer to the module name. Thus even if we mix in a module to a class, attempting to call the method on the class which has the module mixed in will return a `NoMethodError`, since the method will look for the definition in the class which has the module mixed in (where it does not exist). Thus the only way to call the method would be to reference the module specifically, using the namespace resolution operator `::`.
 
+In our example below, we define a `Walkable` module, with a method prepended with a `self` keyword, thus creating the equivalent of a 'class' method. However, when `self` is appended to a method definition, it refers to the class. In the below example, this refers to the module itself (`Walkable`) This means that even if we mix `Walkable` into other classes, the classes where `Walkable` is mixed in will never be able to call `walk`, since the class on which the method is defined is the `Walkable` module. We would only be able to call `walk` using the namespace resolution operator on the `Walkable` module.
+```ruby
+module Walkable
+  def self.walk
+    "I can walk!"
+  end
+end
+
+class Person
+  include Walkable
+end
+
+Person.walk
+# NoMethodError (undefined method `walk' for Person:Class)
+
+ted = Person.new
+ted.walk
+# NoMethodError (undefined method `walk' for #<Person:0x00007fddd7145138>)
+
+Walkable::walk
+# => I can walk!"
+```
 #### What is the method lookup path? *
 The method lookup path is the chain of classes and modules Ruby will look through in order to find a method definition. When caling a method, Ruby will first search the class from which the object was instantiated when looking for a definition (or the class itself, in the case of a class method).
 
 If Ruby does not find a method definition, it will then search any mixed in modules (starting from the last mixed in module), then repeat the process in the superclass (if applicable), and again until reaching the `BasicObject` class (the highest point in the method lookup path). A `NoMethodError` will be raised if the method definition cannot be found. Otherwise, Ruby will stop looking along the method lookup path at the first instance when it identifies a method definition for the method called.
 
+In our below example, we define an `Animal` class on `lines 1-5` and `Dog` class which inherits from `Animal` on `lines 7-12`. We instantiate a `Dog` object on `line 14`, calling the `Dog#speak` method. Ruby will first attempt to look in the `Dog` class for a `speak` method definition, which it does find. However, the `Dog#speak` method calls another method, `sound`. 
+
+Ruby will again attempt to look in the `Dog` class for a `sound` instance method. However, there is no explicit definition of `sound` in the `Dog` class, so Ruby will travel up the method lookup chain to the `Animal` class, which superclasses `Dog`. Here, a instance method definition is found, which will be called in the `Dog#speak` method.
+```ruby
+class Animal
+  def sound
+    "Hello!"
+  end
+end
+
+class Dog < Animal
+  def speak
+    sound
+  end
+end
+
+Dog.new.speak
+# => "Hello!"
+```
 #### What are class variables? Why is it not recommended to use them? *
 A class variable is a variable scoped at the class level. It can be identified by the `@@` symbols preceding the variable name and is initialised when the class is evaluated by Ruby. Class variables are accessible to both class and instance methods, regardless of where a class variable is defined. 
 
 They can be useful when tracking data that is not linked to the state of objects, but can prove problematic for the fact that all instances of the class where the class variable was defined (and subclasses of that class, and objects instantiated from those subclasses) share a single copy of that class variable, meaning that any change to the class variable across any of those classes or objects will mean that change will be reflected across all of the subclasses and objects instantiated from the class and subclasses.
 
+In our example below, we define a `@@legs` class variable (denoted by the `@@` symbols prior to the variable name) and assign it to the Integer object `4` in the `Animal` class. We also define class and instance methods to return the value of `@@legs`.
+
+As we call `Dog#legs` (instance method) and `Dog::legs` (class method), these return the integer object `4`, as expected. However, once we define a `Bird` class (which subclasses `Animal`) and reassign the `@@legs` class variable to reference the integer object `2`, this change is now reflected in the `Dog` class, as well as all objects instantiated from the `Dog` class. This is why it is not generally recommended to use class variables.
+```ruby
+class Animal
+  @@legs = 4
+
+  def self.legs
+    @@legs
+  end
+
+  def legs
+    @@legs
+  end
+end
+
+class Dog < Animal
+end
+
+Dog.new.legs
+# => 4
+
+Dog.legs
+# => 4
+
+class Bird < Animal
+  @@legs = 2
+end
+
+Dog.legs
+# => 2
+
+Dog.new.legs 
+# => 2
+```
 #### What are constants? What do we need to be careful of when dealing with constants? *
 Constants are variables that should not have their value reassigned throughout the course of the program's operation (Ruby does allow reassignment of values, but will raise a warning). They can be identified by a variable name with a capital letter (though convention usually dictates that the entire variable name is in capital letters). Constants are accessible to both class and instance methods, and have lexical scope. Constants are also unique in that they can be referenced from other, unrelated classes by using the namespace resolution operator `::`.
 
 This means that when Ruby encounters a method that requires evaluation of the constant, Ruby will look at the class or module where that method was defined for the definition of the constant, which can prove problematic if a constant is defined in a different class to where the method is defined.
 
-#### What is a getter/setter/accessor method? What do each of these return? *
+In our example below, we define the `LEGS` constant and assign it to the integer object `4` in the `Animal` class. We also define an instance method, `legs`, which returns the value of the constant. We define a second class, `Bird` which subclasses `Animal`. 
+
+When we instantiate an object from the `Bird` class (assigned to the local variable `oscar`), we are able to call the `legs` method, as `Bird` has access to the instance methods defined in `Animal` due to class inheritance. The `legs` method references the `LEGS` constant.
+
+However, because constants have lexical scope, when attempting to evaluate `LEGS`, Ruby will look to the class where the `legs` instance method references `LEGS` - i.e. in the `Animal` class. This is why `oscar.legs` returns `4`, despite `Bird` reassigning the `LEGS` constant to another integer object. We could rectify this by appending `self.class::` to the return value of the `legs` instance method, as:
+- As this is an instance method, `self` refers to the calling object (`oscar`, in our case). We can then chain the `.class` method onto this, to refer to the `Bird` class. 
+- We use the namespace resolution operator `::` to point the `LEGS` constant to a particular class from which reference a value.
+```ruby
+class Animal
+  LEGS = 4
+
+  def legs
+    LEGS
+  end
+end
+
+class Bird < Animal
+  LEGS = 2
+end
+
+oscar = Bird.new
+oscar.legs
+# => 4
+```
+#### What is a getter/setter/accessor method? What do each of these return?
 A getter instance method is a method normally that returns an instance variable. We can use the `attr_reader` method in Ruby to quickly create a getter method. A setter instance method is a method that allows us to change the value assigned to an instance variable. It will return the value that was provided as an argument to the method. 
 
 #### When should we use getter/setter methods? *
 We should use a getter or setter method only if we want other parts of our program to have direct access to/ability to change instance variables within an object. We might also want to format the instance variable or change the presentation of that instance variable for other parts of the program to consume through a custom getter or setter method.
 
+In our below example, we define a `Spy` class on `lines 1-9`. When we instantiate an object from the `Spy` class on `line 11`, we pass a string object `"Tim"` to the `new` method. As the object is instantiated, the `initialize` method is called, and the string object `"Tim"` is forwarded to the `initialize` method, at which point the `@name` instance variable is initialised and the string object assigned to it. 
+
+As spies typically don't want to give out their name, we don't want to simply rely on the `attr_reader` to generate an instance getter method, as this would simply return the value referenced by the `@name` instance variable, without obfuscation. Instead, we define our own custom getter method on `lines 6-8` to return a hidden version of the value referenced by the `@name` instance variable.
+```ruby
+class Spy
+  def initialize(name)
+    @name = name
+  end
+
+  def name
+    "Codename: #{@name[0]}"
+  end
+end
+
+t = Spy.new("Tim")
+t.name
+# => "Codename: T"
+```
 #### What is the self keyword? How do we use it? *
 The `self` keyword can change the way a method behaves, and it's meaning can change depending on the context which it is used. 
 - When used outside of an instance method definition, it refers to the class where it is used. This means that we can define methods on a class (i.e. class methods) by appending `self` to a method definition.
 - When used inside of an instance method definition, it refers to the calling object. This may have method access control implications if we attempt to append `self` to a private getter method (since we cannot call private methods directly on objects) on versions of Ruby prior to 2.7. There is no issue with using `self` on private *setter* methods, however (in fact we need to use `self` on private setter methods - otherwise Ruby will interpret the setter method call as a local variable assignment.)
 
+In our below example, we show a number of different usages of `self`. 
+
+On `lines 2-4`, we append the `self` keyword to a method definition. In this context, `self` is used outside of an instance method, and thus refers to the class. This has the effect of defining a class method, which can only be called on the `Robot` class, per `line 37`. 
+
+On `lines 18-19`, we show a different usage of `self`. In this case, we append `self` to a instance method name. This is necessary as these are setter methods - without the `self` reference, Ruby will interpret `lines 18-19` as being local variable assignments, which would not reassign the `@name` and `@age` instance variables, leaving `ted`'s state unchanged. In this case, `self` refers to the calling object, `ted`.
+
+In versions of Ruby prior to 2.7, we could not typically append `self` to private methods, since private methods prevent objects from directly calling private instance methods - this is what we observe on `line 31`, which raises a `NoMethodError`, since calling `self.name` is the equivalent to calling the private `name` method directly on the `ted` object. However, setter methods are an exception to this (to avoid issues of Ruby misinterpreting setter method calls as being local variable assignments) - this is how the `Robot#remake` method is able to change the state of the `ted` object.
+```ruby
+class Robot
+  def self.species
+    self
+  end
+
+  def identify
+    "My name is #{name} and I am a #{age} year old robot."
+  end
+
+  def initialize(name, age)
+    @name = name
+    @age = age
+  end
+
+  def remake(name, age)
+    self.name = name
+    self.age = age
+  end
+
+  def my_name
+    self.name
+  end
+
+  private
+
+  attr_accessor :name, :age
+end
+
+ted = Robot.new("Ted", 4)
+
+ted.my_name
+# NoMethodError (private method `name' called for #<Robot:0x00007febd182e7f8 @name="Ted", @age=4>)
+
+ted.identify
+# => My name is Ted and I am a 4 year old robot.
+
+Robot.species
+# => Robot
+
+ted.remake("Bob", 2)
+
+ted.identify
+# => My name is Bob and I am a 2 year old robot.
+```
 #### What is the default `to_s` method in Ruby? How/why would you override this? *
 The default `Object#to_s` method, when called on an object, will return a string representation of the class name and an encoding of the object id. The `to_s` method is also automatically called on the argument provided to the `puts` method call, as well as during string interpolation.
 
@@ -472,6 +712,22 @@ This output is not particularly useful for human consumption, so we often make u
 
 We could achieve this by defining a public `to_s` instance method within a class, which would enable the human readable implementation to be called on the object directly.
 
+In our example below, we define a custom `to_s` method on `lines 6-8` that override the `Object#to_s` method. This is why when we pass the object referenced by `davy` as an argument to the `puts` method call, the `@name` instance variable is returned, instead of the `Person` class name and an encoding of `davy`'s object id (since the `to_s` method is called automatically on the object passed by reference as an argument to the `puts` method).
+```ruby
+class Person
+  def initialize(name)
+    @name = name
+  end
+
+  def to_s
+    @name
+  end
+end
+
+davy = Person.new("Davy")
+puts davy
+# => "Davy"
+```
 #### What is a fake operator?
 A fake operator is a method that looks like an operator due to the syntactical sugar in Ruby. Examples include `+`, `<`, `[]`. Because these are methods and not operators, their functionality can be changed through method overriding. 
 
@@ -507,9 +763,56 @@ The `Object#eql?` method returns true if two objects have the same value and occ
 
 While not a commonly used method, the `Hash` implementation is probably the most frequently used, which returns true if the the key-value pairs of the two hash objects being compared have the same values.
 
+In our example below, we use the `String#eql?` method on `line 1`, which evaluates whether two string objects have the same value. On `line 9`, since we have not defined a custom `eql?` method within our `Dog` class, attempting to use the `eql?` method will call the `Object#eql?` method, which evaluates whether the two objects occupy the same space in memory. Since `ted` and `james` are different objects, this returns `false`. 
+
+On `line 14`, we use the `Hash#eql?` method to evaluate whether the `a` and `b` hashes have the same key-value pairs. They do, so `true` is returned.
+```ruby
+'hello'.eql? 'hello'
+# => true
+
+class Dog
+end
+
+ted = Dog.new
+james = Dog.new
+ted.eql? james
+# => false
+
+a = { a: 10, b: 11 }
+b = { a: 10, b: 11 }
+a.eql? b
+# => true
+```
 #### Explain element reference getter and element assignment setter methods? *
 Element reference getter methods and setter methods appear to be operators, but are actually methods due to the heavy level of syntactical sugar applied. The element reference getter method returns an object in a collection, based on the index position provided as an argument. 
 
 The element assignment setter method mutates the collection by reassigning the object at the index position provided as an argument, *returning the object that was passed in as an argument*.
 
-As such, when we instantiate objects from custom classes, we are able to define our own implementation of these. However, since the Core API in Ruby already establishes a usage pattern (through the `Array` class)
+As such, when we instantiate objects from custom classes, we are able to define our own implementation of these. However, since the Core API in Ruby already establishes a usage pattern (through the `Array` class), we should endeavour to follow those patterns to avoid confusion for people reading our code.
+
+In our below example, we instantiate an object from the `Library` class. We also define custom getter (`lines 6-8`) and setter (`lines 10-12`) methods, so that we can use the `Array#[]` and `Array#[]=` element getter and setter methods to interface directly with the `@books` instance variable within the `local_lib` object.
+```ruby
+class Library
+  def initialize
+    @books = ['Redwall']
+  end
+
+  def [](position)
+    @books[position]
+  end
+
+  def []=(position, object)
+    @books[position] = object
+  end
+end
+
+local_lib = Library.new
+local_lib[0]
+# => "Redwall"
+
+local_lib[1] = "Peter Rabbit"
+# => "Peter Rabbit"
+
+local_lib[1]
+# => "Peter Rabbit"
+```
