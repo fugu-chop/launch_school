@@ -14,13 +14,13 @@
 You'll often have a piece of code that needs to be executed many times in a program. Instead of writing that piece of code over and over, there's a feature in most programming languages called a procedure, which allows you to extract the common code to one place. 
 
 In Ruby, we call it a __method__. Before we can use a method, we must first define it with the reserved word `def`. After the `def` we give our method a name. At the end of our method definition, we use the reserved word `end` to denote its completion. 
-```
+```ruby
 def say(words)
   puts words
 end
 
 say("hello")
-=> "hello"
+# => "hello"
 ```
 We *call (or invoke)* the method by typing its name and passing in arguments.  
 
@@ -43,7 +43,7 @@ When we pass those words into the method definition, they're assigned to the *lo
 
 ###### Describing what's happening
 Take this example:
-```
+```ruby
 def example(str)
   i = 3
   loop do
@@ -71,19 +71,19 @@ Finally, this code __outputs__ the string `hello` 3 times and __returns__ `nil`.
 
 ###### Default parameters
 Sometimes, we just want to make sure our program runs, even if a necessary parameter isn't given to the method. We can use default parameters for this purpose:
-```
+```ruby
 def say(words="Hello")
   puts words
 end
 
 say()
-=> Hello!
+# => Hello!
 ```
 ### Method Definition and Local Variable Scope
 A method definition __creates its own scope__ outside the regular flow of execution. Method parameters (assigned as local variables within the method definition) are scoped at the *method definition level*, and are __not__ available *outside* of the method definition.
 
 This is why local variables *within* a method definition cannot be referenced from outside of the method definition. It's also the reason why local variables within a method definition cannot access data outside of the method definition (unless the data is passed in as an argument).
-```
+```ruby
 a = 5
 
 def some_method
@@ -91,12 +91,12 @@ def some_method
 end
 
 puts a
-=> 5
+# => 5
 ```
 `a` is still 5, because method definitions create their own scope that's entirely outside of the execution flow.
 
 Make sure you don't mix up *method invocation with a block* and *method definition* when you're working with local variable scope issues. They have different behaviors when it comes to local variable scope.
-```
+```ruby
 # Method definition
 def print_num(num)
   puts num
@@ -116,21 +116,21 @@ There are two ways to call methods that we will discuss.
 When calling a method, the *argument* can be altered permanently. We call this *mutating the caller*. 
 
 Integers are immutable, and so cannot be mutated by methods.
-```
+```ruby
 def some_method(number)
   number = 7 # this is implicitly returned by the method, regardless of what we put in as a number
 end
 
 some_method(4)
-=> 7
+# => 7
 
 a = 5
 some_method(a)
 puts a
-=> 5
+# => 5
 ```
 `number` is scoped at the method definition level and `a`'s value is unchanged. Therefore, we proved that method definitions *cannot modify arguments passed in to them permanently*. The exception is when we perform some action on the argument that mutates the *caller*, we can in fact permanently alter variables __outside the method definition's scope__.
-```
+```ruby
 a = [1, 2, 3]
 
 # Example of a method definition that modifies its argument permanently
@@ -139,18 +139,18 @@ def mutate(array)
 end
 
 p "Before mutate method: #{a}"
-=> "Before mutate method: [1, 2, 3]"
+# => "Before mutate method: [1, 2, 3]"
 
 mutate(a)
-=> 3
+# => 3
 
 p "After mutate method: #{a}"
-=> "After mutate method: [1, 2]"
+# => "After mutate method: [1, 2]"
 ```
 We have permanently modified the local variable `a` by passing it to the `mutate` method, even though `a` is outside the method definition's scope. This is because the `pop` method mutates the caller (the array).
 
 A note on terminology:
-```
+```ruby
 # This is an example of mutating the caller
 "Winner".sub!('r', 'y')
 
@@ -168,7 +168,7 @@ As a sidenote, we used `p` to print the string. This is different to `puts`, sin
 
 ### Puts versus return
 Ruby methods __always__ return the evaluated result of the __last line__ of the expression unless an explicit `return` comes before it (which will stop further execution of the method). The `return` reserved word is not required in order to return something from a method.
-```
+```ruby
 a = [1, 2, 3]
 
 # Example of a method definition that modifies its argument permanently
@@ -177,28 +177,28 @@ def mutate(array)
 end
 
 mutate(a)
-=> 3
+# => 3
 ```
 Note how the `mutate` function prints a `3` to the console, even though we didn't specify a print command anywhere in the method. 
 
 Look at this example:
-```
+```ruby
 def add_three(number)
   return number + 3
   number + 4
 end
 
 add_three(4)
-=> 7
+# => 7
 ```
 Here, the explicit `return` stops the method from evaluating subsequent code. 
-```
+```ruby
 def just_assignment(number)
   foo = number + 3
 end
 
 just_assignment(3)
-=> 6
+# => 6
 ```
 We didn't specify a `return` keyword, or a print command, but Ruby still returned the variable. 
 
@@ -220,30 +220,30 @@ Other good practices include:
 
 ### Chaining methods
 Because we know for certain that every method call returns something, we can chain methods together, which gives us the ability to write extremely expressive and succinct code.
-```
+```ruby
 def add_one(n)
   n + 1
 end
 
 add_one(1).times { puts "this should print something 2 times" }
 
-this should print something 2 times
-this should print something 2 times
-=> 2
+# this should print something 2 times
+# this should print something 2 times
+# => 2
 ```
 Our ability to chain methods depends entirely on the method's ability to return a value. 
-```
+```ruby
 def add_three(n)
   puts n + 3
 end
 
 add_three(1).times { puts "This won't work" }
-=> NoMethodError (undefined method `times' for nil:NilClass)
+# => NoMethodError (undefined method `times' for nil:NilClass)
 ```
 This returned an error, because `puts` returns `nil` (and we aren't explicitly returning another value). Therefore, the `.times` method has nothing to run against.
 
 We could fix our above method like so:
-```
+```ruby
 def add_three(n)
   new_value = n + 3
   puts new_value
@@ -255,11 +255,11 @@ This should now print 4 times
 This should now print 4 times
 This should now print 4 times
 This should now print 4 times
-=> 4
+# => 4
 ```
 ### Method calls as arguments
 Ruby allows us to pass a method call as an argument to other methods. 
-```
+```ruby
 def add(a, b)
   a + b
 end
@@ -273,7 +273,7 @@ def multiply(num1, num2)
 end
 
 multiply(add(1, 2), subtract(4,2))
-=> 6
+# => 6
 ```
 ### The Call Stack
 The call stack helps Ruby keep track of __what__ method is executing as well as __where__ execution should resume when it returns. 
@@ -283,7 +283,7 @@ To do that, it works like a stack of books: if you have a stack of books, you ca
 Note that blocks, procs, and lambdas also use the call stack; in fact, they all use the same call stack as Ruby uses for methods. 
 
 Take the following example:
-```
+```ruby
 def first
   puts "first method"
 end

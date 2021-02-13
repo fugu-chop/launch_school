@@ -15,156 +15,156 @@ An object is data that has state (i.e. a value) and has associated behaviours.
 We assign variables using the `=` symbol. We have to be careful as to what we're assigning to a variable. Only expressions that __return a value__ can be usefully stored in a variable. 
 
 Take this example:
-```
+```ruby
 my_var = puts "a"
 my_var1 = "a"
 
 my_var
-=> nil
+# => nil
 
 my_var1
-=> "a"
+# => "a"
 ```
 Since `puts` does not return anything, we are assigning `nil` to `my_var`. However, since `"a"` returns itself as a value, `my_var` stores the `"a"` value. 
 
 The point about variables being stored in memory is pertinent - they are not linked in some deeper fashion when other variables change. Take the following example:
-```
+```ruby
 a = 4
 b = a
 a = 7
 puts b
-=> 4
+# => 4
 ```
 We can say that variables act as *pointers to address space* in memory. This address space represents the __object__ that the variable is referencing. 
 
 Every object in Ruby has a unique `object_id`, and that `object_id` can be retrieved simply by calling `#object_id` on the object in question. Even literals, such as numbers, booleans, `nil`, and Strings have `object_ids`.
-```
+```ruby
 5.object_id
-=> 11
+# => 11
 
 true.object_id
-=> 20
+# => 20
 
 nil.object_id
-=> 8
+# => 8
 
 "abc".object_id
-=> 70101471581080
+# => 70101471581080
 ```
 It's also important to keep in mind that *different memory space can hold the same value*, but are still different places in memory. 
-```
+```ruby
 a = "hello"
 b = "hello"
 
 a.object_id
-=> 70294044607760
+# => 70294044607760
 
 # Despite holding the same 'value', b has a different memory space
 b.object_id
-=> 70294044643900
+# => 70294044643900
 ```
 The exceptions are __integers, booleans and symbols__, which occupy the same physical space in memory (they are the same objects), even if assigned to different variables:
-```
+```ruby
 a = 5
 b = 5
 c = 5
 
 a.object_id
-=> 11
+# => 11
 
 b.object_id
-=> 11
+# => 11
 
 c.object_id
-=> 11
+# => 11
 
 a = :dog
 b = :dog
 c = :dog
 
 a.object_id
-=> 1516188
+# => 1516188
 
 b.object_id
-=> 1516188
+# => 1516188
 
 c.object_id
-=> 1516188
+# => 1516188
 
 a = true
 b = true
 
 a.object_id
-=> 20
+# => 20
 
 b.object_id
-=> 20
+# => 20
 ```
 Let's see what happens when we reassign a variable to another variable. 
-```
+```ruby
 greeting = 'Hello'
 
 whazzup = greeting
-=> "Hello"
+# => "Hello"
 
 greeting
-=> "Hello"
+# => "Hello"
 
 whazzup
-=> "Hello"
+# => "Hello"
 
 greeting.object_id
-=> 70101471431160
+# => 70101471431160
 
 whazzup.object_id
-=> 70101471431160
+# => 70101471431160
 ```
 This demonstrates that both `greeting` and `whazzup` not only reference a `String` with the same value, but are, in fact, references to the same String; `greeting` and `whazzup` are *aliases for each other*, since in the variable assignment, the specific object `greeting` is referencing, has been assigned to `whazzup`.
 
 We can show this by using one of the two variables to change the object. 
-```
+```ruby
 greeting.upcase!
-=> "HELLO"
+# => "HELLO"
 
 greeting
-=> "HELLO"
+# => "HELLO"
 
 whazzup
-=> "HELLO"
+# => "HELLO"
 
 whazzup.concat('!')
-=> "HELLO!"
+# => "HELLO!"
 
 greeting
-=> "HELLO!"
+# => "HELLO!"
 
 whazzup
-=> "HELLO!"
+# => "HELLO!"
 
 greeting.object_id
-=> 70101471431160
+# => 70101471431160
 
 whazzup.object_id
-=> 70101471431160
+# => 70101471431160
 ```
 Since both variables are associated with the same object, using either variable to alter the object is reflected in the other variable. We can also see that the `object_id` does not change.
 
 ###### Reassignment
-```
+```ruby
 greeting = 'Dude!'
-=> "Dude!"
+# => "Dude!"
 
 puts greeting
-=> "Dude!"
+# => "Dude!"
 
 puts whazzup
-=> "HELLO!"
+# => "HELLO!"
 
 greeting.object_id
-=> 70101479528400
+# => 70101479528400
 
 whazzup.object_id
-=> 70101471431160
+# => 70101471431160
 ```
 Here, we see that `greeting` and `whazzup` no longer refer to the same object; they have different values and different `object_ids`. This is because the two variables are initially pointing at the same *address space*, and not each other as 'variables'. If we reassign either of the two variables, the `object_ids` will be different, since they no longer point at the same object. 
 
@@ -172,23 +172,22 @@ What this shows is that reassignment to a variable doesn’t change the object r
 
 ### Getting user input
 We can use `gets` to obtain user input. We chain the `.chomp` method to remove the newline (`\n`) that gets added to `gets`. Note that `gets` __always gives us a string__.
-```
+```ruby
 name = gets 
 "Bob"
 puts name
-=> "Bob\n"
+# => "Bob\n"
 
 name = gets.chomp
 "Bob"
 puts name
-=> "Bob"
+# => "Bob"
 ```
 We can use `eval` to evaluate string equations, and return an integer. 
 ```
 eval "2 + 2"
-=> 4
+# => 4
 ```
-
 ### Scope
 A variable's scope determines *where* in a program a variable is available for use. A variable's scope is defined by *where the variable is initialized or created*. 
 
@@ -196,7 +195,7 @@ A variable's scope determines *where* in a program a variable is available for u
 In Ruby, variable scope is defined by a __block__. A block is a *piece of code following a method invocation*, usually delimited by either curly braces `{}` or `do end`. Be aware that __not all__ `do/end` pairs imply a block.
 
 __Inner scope can access variables initialized in an outer scope, but not vice versa for blocks.__
-```
+```ruby
 a = 5             # variable is initialized in the outer scope
 
 1.times do        # method invocation with a block
@@ -204,12 +203,12 @@ a = 5             # variable is initialized in the outer scope
 end
 
 puts a
-=> 3
+# => 3
 ```
 `a` is available to the inner scope created by `1.times do ... end`, which allowed the code to re-assign the value of `a`.
 
 Contrast that with:
-```
+```ruby
 a = 5
 
 1.times do        # method invocation with a block
@@ -220,13 +219,13 @@ end
 puts a
 puts b
 
-=> 3
-=> NameError (undefined local variable or method `b' for main:Object)
+# => 3
+# => NameError (undefined local variable or method `b' for main:Object)
 ```
 This is because the variable `b` is not available outside of the method invocation with a block where it is initialized. When we call `puts b` it is not available within that outer scope.
 
 The key distinguishing factor for deciding whether code delimited by `{ }` or `do end` is considered a block (and thereby __creates a new scope for variables__), is seeing if the `{ }` or `do end` *immediately follows a method invocation*.
-```
+```ruby
 arr = [1, 2, 3]
 
 arr.each do |element|
@@ -234,12 +233,12 @@ arr.each do |element|
 end
 
 puts a
-=> NameError (undefined local variable or method `a` for main:Object)
+# => NameError (undefined local variable or method `a` for main:Object)
 ```
 Here, we get a `NameError`, as we have a method invocation (`.each`) with a block (`do end`), which creates it's own scope. This means that variables (`a`) defined within the block are not accessible outside of it. 
 
 Contrast with this example:
-```
+```ruby
 arr = [1, 2, 3]
 
 for i in arr do
@@ -247,12 +246,12 @@ for i in arr do
 end
 
 puts a
-=> 5
+# => 5
 ```
 `a` is accessible here since `for...do end` code __did not create a new inner scope__, since `for` is part of Ruby language and __not a method invocation__. A block (and thereby creates a new scope for variables) only exists if the `{}` or `do/end` __immediately follows__ a __method invocation__. 
 
 When we use `each`, `times`, `loop` and other method invocations, followed by `{ }` or `do end`, that's when a new block is created.
-```
+```ruby
 # Following the while keyword with do/end does not constitute a block
 while true do
   a = 5
@@ -260,7 +259,7 @@ while true do
 end
 ```
 Peer blocks cannot reference variables initialized in other blocks. This means that we could use the same variable name `a` in the block of code that follows the loop method invocation. However, it's __not the same variable as in the first block__.
-```
+```ruby
 2.times do
   a = 'hi'
   puts a      # 'hi' <= this will be printed out twice due to the loop
@@ -274,7 +273,7 @@ end
 puts a        # => NameError: undefined local variable or method `a' for main:Object
 ```
 Nested blocks follow the same rules of inner and outer scoped variables. When dealing with nested blocks, our usage of what's "outer" or "inner" is going to be relative. We'll switch vocabulary and say "first level", "second level", etc.
-```
+```ruby
 a = 1           # first level variable
 
 loop do         # second level
@@ -300,7 +299,7 @@ puts c          # => NameError
 ```
 ### Variable Shadowing
 Variable shadowing occurs when __parameter name__ of the block is the __same__ as the name of the __local variable__ initialised outside of the block. The consequence of variable shadowing is that it *prevents access to variables of the same name* initialized __outside__ of the block.
-```
+```ruby
 a = 4
 b = 2
 
@@ -324,7 +323,7 @@ Ruby variables and constants aren’t objects, but are references to objects. As
 Note that assignment always causes the target to reference a __possibly different object__. None of these operations mutate their operands by themselves.
 
 Contrast the below example:
-```
+```ruby
 def fix(value)
   value = value.upcase!
   value.concat('!')
@@ -361,7 +360,7 @@ Method definitions (i.e. creating new methods) are *self-contained* with respect
 Furthermore, local variables *inside* the method definition are not visible outside the method definition.
 
 In this example, the `a` variable defined outside the `my_value` method is __not visible__ to the `a` defined within the method, and vice versa. `a` is also an integer, which is __immutable__.
-```
+```ruby
 a = 7
 
 def my_value(a)
@@ -372,7 +371,7 @@ my_value(a)
 puts a
 
 7
-=> nil
+# => nil
 ```
 ### Types of Variables
 ###### Constants

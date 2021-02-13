@@ -16,7 +16,7 @@ Flow control is conditional logic that we put in our program to make sure it exe
 Conditionals are how we implement logic in our program. 
 
 They are formed using a combination of `if` statements and comparison and logical operators (`<, >, <=, >=, ==, !=, &&, ||`). They are basic logical structures that are defined with the reserved words `if, else, elsif`, and `end`. 
-```
+```ruby
 puts "Put in a number"
 a = gets.chomp.to_i
 
@@ -48,41 +48,39 @@ A comparison operators _always return a boolean value_. We use `==, >, <, <=, >=
 
 ### Combining expressions
 `&&` is the "and" operator. Expressions to the left and to the right of this operator __both have to be true__ for the entire expression to be evaluated to `true`.
-```
+```ruby
 (4 == 4) && (5 == 5)
-=> true
+# => true
 
 (4 == 5) && (5 == 5)
-=> false
+# => false
 ```
-
 `||` is the "or" operator. __Either__ the expression to the left has to be true, or the expression to the right has to be true for the entire expression to be evaluated to true. If __both__ expressions are true, `||` will return `true`.
-```
+```ruby
 (4 == 4) || (5 == 5)
-=> true
+# => true
 
 (4 == 5) || (5 == 5)
-=> true
+# => true
 
 (4 == 5) || (5 == 6)
-=> false
+# => false
 ```
-
 `!` is the "not" operator. When you add this in front of a boolean expression it will change that boolean value to its *opposite*.
-```
+```ruby
 !(4 == 4)
-=> false
+# => false
 ```
 Note that `!!` is used to convert values to booleans.
-```
+```ruby
 !!nil
-=> false
+# => false
 
 !!"abc"
-=> true
+# => true
 
 !!false
-=> false
+# => false
 ```
 ###### Order of precedence
 Ruby follows an order of precedence when deciding how to evaluate multiple expressions. The following is a list of operations from highest order of precedence (top) to lowest (bottom).
@@ -91,7 +89,7 @@ Ruby follows an order of precedence when deciding how to evaluate multiple expre
 2. `==, !=` - Equality
 3. `&&` - Logical AND
 4. `||` - Logical OR
-```
+```ruby
 if x && y || z
   # do something
 end
@@ -105,17 +103,16 @@ In the above code block, the `x && y` will be evaluated first.
 
 ### Ternary Operator
 The ternary operator is a common Ruby idiom that makes a quick `if/else` statement easy and keeps it all on one line, using the `?` and `:` symbols.
-```
+```ruby
 true ? "this is true" : "this is not true"
-=> "this is true"
+# => "this is true"
 
 false ? "this is true" : "this is not true"
-=> "This is not true"
+# => "This is not true"
 ```
-
 ### Case Statements
 `Case` statements use the reserved words `case, when, else`, and `end`. You create one by first defining a case and then evaluating the value of the case and what operation to complete if that case is true. A `case` statement will __return__ a value from it's evaluation. 
-```
+```ruby
 a = 5
 
 case a
@@ -128,7 +125,7 @@ else
 end
 ```
 If we're aiming for fewer lines of code and we only have one line of code as an output from an evaluation, we can have the output on the same line as the evaluation, if we use a `then` keyword.
-```
+```ruby
 a = 5
 
 case a
@@ -140,7 +137,7 @@ end
 We are able to save our `case` statements to a variable. This can help us reduce the amount of typing `puts`. 
 
 We are also able to save the results of our `if/else` statements, so long as we don't `return` something at each stage of our evaluation. Technically we can use `puts`, but that will result in the evaluation returning `nil` or a blank line. 
-```
+```ruby
 a = 5
 
 answer = case a
@@ -166,7 +163,7 @@ puts alt_answer
 ```
 ### True and False
 In Ruby, __every expression evaluates to `true` when used in flow control (truthy), except for `false` and `nil` (falsy).__
-```
+```ruby
 if a == 5
     "a is 5"
   elsif a == 6 
@@ -174,5 +171,4 @@ if a == 5
   else
     "a is neither 5, nor 6 
   end
-  ```
-  
+```

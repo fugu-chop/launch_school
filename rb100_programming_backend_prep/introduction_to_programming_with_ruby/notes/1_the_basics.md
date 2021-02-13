@@ -17,8 +17,7 @@ Welcome to Ruby! Why are we learning Ruby?
 - [Puts versus Print versus P](#puts-v-print-v-p)
 
 ### Playing with Code
-Execute Ruby code in the terminal via
-`ruby ruby_file.rb` 
+Execute Ruby code in the terminal via `ruby ruby_file.rb`.
 
 We can also enter `irb` in the terminal for a Ruby environment which executes code and can return values. 
 
@@ -39,7 +38,7 @@ Ruby is a very expressive language, which allows it to be written to do many thi
 As an example, in Ruby, parentheses after method invocations are *optional* - e.g. for `puts 'hello'`, the `puts` method call doesn't require parentheses to print a string given to it as an argument. This can make it confusing to determine whether an isolated bit of code is a method call/invocation, or a variable.
 
 If we have two objects named the same thing, we can force Ruby to execute the method by adding parentheses.
-```
+```ruby
 str = 'A string'
 
 def str
@@ -47,7 +46,7 @@ def str
 end
 
 p str()
-=> A method
+# => A method
 ```
 If we comment out the `str` method and try to run `str()`, Ruby will throw a `NoMethodError` message. If we ran the code above without parentheses on the `p str`, Ruby would default to *printing the variable first*.
 
@@ -63,7 +62,7 @@ Our most up-to-date documentation can be found here: https://docs.ruby-lang.org/
 For now, the main part of each page contains descriptions for all methods associated with the class or module you are viewing. They are also listed on the left under the Methods header.
 
 There are two main types of methods: *instance methods*, which you will use most often, and *class methods*. We call *instance* methods on objects of a certain class, while we call *class* methods directly on classes themselves. 
-```
+```ruby
 # Call the class method File::path since we're calling it on the File class.
 puts File.path('bin')
 
@@ -88,7 +87,7 @@ Reading "between the lines", this means the original String is not being modifie
 
 ### Types
 In Ruby, we commonly hear that __everything is an object__. This is because we can call methods on basically everything. In some other languages, Integers and Strings are primitive types, which themselves __cannot__ have methods called on them. Ruby itself *does not have* primitive types. 
-```
+```ruby
 # We can call a method directly on an integer
 2.times { puts 'hello!' }
 
@@ -97,7 +96,7 @@ In Ruby, we commonly hear that __everything is an object__. This is because we c
 ```
 ###### Strings
 __Strings__ are a list of characters in a specific sequence. They are surrounded by single or double quotes. If we want to use the same quote type within another quote type, we have to escape the character with a `\`.
-```
+```ruby
 # Ex. 1: with double quotes
 "The man said, 'Hi there!'"
 
@@ -105,29 +104,29 @@ __Strings__ are a list of characters in a specific sequence. They are surrounded
 'The man said, \'Hi there!\''
 ```
 Double quotes allow *string interpolation*, which lets us paste in variables into a string.
-```
+```ruby
 a = 'ten'
 "My favorite number is #{a}!"
 
-=> "My favorite number is 10!"
+# => "My favorite number is 10!"
 ```
 We can also use `%Q()` to wrap a string in double quotes, or `%q()` to wrap a string in single quotes.
-```
+```ruby
 %Q(I am the best)
-=> "I am the best"
+# => "I am the best"
 ```
 We can replace instances of text with `.gsub()` (including being able to use regex), or mutate an existing string in a variable with `.replace`.
-```
+```ruby
 name = "Dean"
 name.gsub!("Dean", "Garry")
-=> "Garry"
+# => "Garry"
 
 name.replace "Dean"
-=> "Dean"
+# => "Dean"
 ```
 ###### Symbols
 __Symbols__ can be thought of as names. Only one copy of a symbol can exist at any time, and are *immutable*. We normally use them if we don't intend to print the contents of a symbol or change it. 
-```
+```ruby
 # Examples of symbols
 :name
 :a_symbol
@@ -139,7 +138,7 @@ Symbols must be valid Ruby variable names - the first letter after the colon has
 __Numbers__ typically fall under:
 - __integers__: This is a whole number only, with *no decimal point*
 - __floats__: This is a number with a decimal point. 
-```
+```ruby
 # Example of integers
 1, 2, 3, 50, 10, 4345098098
 
@@ -151,24 +150,23 @@ __Numbers__ typically fall under:
 __nil__ represents 'nothing', 'completely empty', or 'not a specific type'. A situation where this may occur is where output is expected but none is returned, like with a `puts` statement. 
 
 The `puts` method prints out a string and returns nothing, so we see `nil` being returned after the string is displayed.
-```
+```ruby
 puts "Hello, World!"
 Hello, World!
-=> nil
+# => nil
 ```
 It is possible to check if something is a nil type by using `.nil?`
-```
+```ruby
 "Hello, World".nil?
-=> false
+# => false
 ```
 Another important property is that `nil` is treated as a `false` boolean value through the idea of falsiness (though `false` != `nil`) and can be used in a conditional statement.
-```
+```ruby
 if nil
   puts "Hello world!"
 end
-=> nil
+# => nil
 ```
-
 ### Operations
 ###### Arithmetic
 We can apply the `+, -, *, /` signs to perform arithmetic on integers, floats, as well as strings (concatenation and duplication). We can't add, subtract or divide strings and integers together, however. 
@@ -180,9 +178,9 @@ We can also use the `%` operator, to give us the remainder of a division operato
 In general though, modulo operations return a __positive__ integer when the __second operand is positive__, and a negative integer when the second operand is negative, though the value can be counter-intuitive. 
 
 A good way to check is to use the `.divmod(x)` method, which returns an *array* containing the quotient and modulus. This is especially useful when the object on which `.divmod(x)` is called is negative, since the quotient multiplied by the divisor may __exceed__ the original integer.
-```
+```ruby
 -13.divmod(4)
-=> [-4, 3]
+# => [-4, 3]
 
 -4 * 4 = -16
 -16 + 3 = -13
@@ -211,35 +209,33 @@ An array is used to organize information into an __ordered__ list. The list can 
 In Ruby, an array is denoted by square brackets `[ ]`. Inside the brackets you can create a list of elements separated by commas.
 
 Each element in an array can be accessed via an *index*. The indexes are numbered starting at zero.
-```
+```ruby
 [1, 2, 3, 4, 5][1]
-=> 2
+# => 2
 ```
-
 ###### Hashes
 Hashes are key-value pairs. They are denoted by `{ }`. 
 
 We can have multiple items in a hash if we separate them with commas, but they will __not necessarily be in any specific order__.
-```
+```ruby
 my_hash = {:dog => 'barks', :cat => 'meows', :pig => 'oinks'}
 my_hash[:dog]
-=> 'barks'
+# => 'barks'
 ```
-
 ### Puts v Return
 When we call the `puts` method, we're telling Ruby to print something to the screen. 
 
 However, `puts` does not `return` what is printed to the screen. Expressions do something, but they *also return* something. The value returned is not necessarily the action that was performed. If we look in irb:
-```
+```ruby
 puts 'stuff'
 stuff
-=> nil
+# => nil
 ```
 The word `stuff` was printed to the console and then a `nil`, which is Ruby's way of saying 'nothing', was returned. See this:
-```
+```ruby
 a = puts "stuff"
 puts a
-=> nil
+# => nil
 ```
 `a` is assigned to the value returned by `puts "stuff"`, which is `nil`. Therefore, `puts a` results in `nil` being printed out. 
 
@@ -249,7 +245,7 @@ puts a
 This is important because if you’re trying to `puts` an array with nil values, `puts` will show __blank lines__. Also note that `puts` returns `nil`.
 
 If we want to `puts` an array, it's a good idea to add the `.inspect` method onto it, to ensure an intact printable version of the array.
-```
+```ruby
 puts 123
 puts 456
 
@@ -276,14 +272,14 @@ puts [1, 2].inspect
 [1, 2]
 ```
 `print` will show something, but __not__ add a new line after whatever is shown. `p` returns `nil`.
-```
+```ruby
 print 123
 print 456
 
 123456
 ```
 `p` is a more *raw* method of displaying something. It doesn't attempt to convert the output to a string, and is useful for debugging, since it both __displays and returns__ whatever object you pass to it. This makes it particularly useful for *displaying arrays and hashes*. 
-```
+```ruby
 puts "Ruby Is Cool"
 Ruby Is Cool
 
