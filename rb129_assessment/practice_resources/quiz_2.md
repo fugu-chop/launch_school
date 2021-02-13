@@ -1,21 +1,23 @@
 # From Quiz 2 #
 
 * Running the following code will _not_ produce the output shown on the last line. Why not? What would you need to change?
-    ```ruby
-    class Student
-      attr_accessor :grade
+  ```ruby
+  class Student
+    attr_accessor :grade
 
-      def initialize(name, grade=nil)
-        @name = name
-      end 
-    end
+    def initialize(name, grade=nil)
+      @name = name
+      #initialise the instance variable here
+      @grade = grade
+    end 
+  end
 
-    ade = Student.new('Adewale')
-    ade # => #<Student:0x00000002a88ef8 @grade=nil, @name="Adewale">
-    ```
-    The above code will not output the displayed output, as the `@grade` instance variable is never initialised when the `ade` object is instantiated from the `Student` class. As such, the `@grade` instance variable never becomes part of `ade`'s state. 
-    
-    The `initialize` method is responsible for initialising instance variables and assigning them values after the object is instantiated - however in our implementation, we don't define `@grade` - the argument `grade = nil` is simply ignored by the `initialize` method.
+  ade = Student.new('Adewale')
+  ade # => #<Student:0x00000002a88ef8 @grade=nil, @name="Adewale">
+  ```
+  The above code will not output the displayed output, as the `@grade` instance variable is never initialised when the `ade` object is instantiated from the `Student` class. As such, the `@grade` instance variable never becomes part of `ade`'s state. 
+  
+  The `initialize` method is responsible for initialising instance variables and assigning them values after the object is instantiated - however in our implementation, we don't define `@grade` - the argument `grade = nil` is simply ignored by the `initialize` method.
 
 * What is a collaborator object? Give an example in code as part of your explanation.
 
@@ -63,7 +65,7 @@
     include Flyable
   end
   ```
-  In our example below, the `Bird` class is a subclass of `Animal` (i.e. a `Bird` is an `Animal`), and so it makes sense that we want `Bird` to inherit the instance method defined in the `Animal` class. 
+  In our example above, the `Bird` class is a subclass of `Animal` (i.e. a `Bird` is an `Animal`), and so it makes sense that we want `Bird` to inherit the instance method defined in the `Animal` class. 
 
   The `Plane` class isn't related to the `Animal` class in a hierarchical fashion (a `Plane` isn't an `Animal`), and it doesn't make sense to define a `fly` instance method (since other classes that subclass `Animal` don't necessarily have the ability to `fly`, like the `Dog` class). As such, in order for objects instantiated from both the `Plane` and `Bird` class to have a `fly` method, we need to mix in the `Flyable` module to both `Bird` and `Plane` classes. This preserves the hierarchical relationship of `Dog` and `Bird` classes subclassing from `Animal`, while only allowing entities (i.e. objects from the `Bird` and `Plane` class) that can fly to do so.
 

@@ -65,8 +65,6 @@
 * What is something to be careful of when using class variables? Show an example in code.
 
   Something to keep in mind when using class variables is that all subclasses, and objects instantiated from those subclass (and the class where the class variable is defined) all share a single copy of the same class variable. This means any changes to a class variable in any one those objects or subclasses will be reflected across all objects and subclasses.
-
-  
   ```ruby
   class Animal
     @@legs = 4

@@ -80,7 +80,7 @@ Inheritance enables us to model classes that fit a hierarchical relationship (i.
 #### What is duck-typing? *
 Duck typing is a form of polymorphism. Duck-typing can be implemented by defining a method of the same name across classes that are not related through inheritance (though this does not imply that the methods should have the same functionality). Through duck-typing, we ensure that objects are flexible enough to respond to a common method call.
 
-#### What is the super method?
+#### What is the super method? *
 The `super` method is a way we can call methods of the same name defined in a superclass or a mixed-in module - it is a way we can implement method overriding and polymorphism into our code. The functionality of the `super` method can differ, depending on whether arguments are provided to it:
 - Calling `super` without any parentheses or arguments will forward all arguments provided to the subclass method to the superclass/module method, and call that method.
 - Calling `super()` with parentheses but without arguments will call the superclass/module method without any arguments. This is often the safest way to avoid `ArgumentErrors` when the superclass/module method does not take any arguments.
@@ -104,7 +104,7 @@ Methods in mixin modules should not be defined using `self`. Typically, when `se
 
 In the case of a module, `self` will refer to the module name. Thus even if we mix in a module to a class, attempting to call the method on the class which has the module mixed in will return a `NoMethodError`, since the method will look for the definition in the class which has the module mixed in (where it does not exist). Thus the only way to call the method would be to reference the module specifically, using the namespace resolution operator `::`.
 
-#### What is the method lookup path?
+#### What is the method lookup path? *
 The method lookup path is the chain of classes and modules Ruby will look through in order to find a method definition. When caling a method, Ruby will first search the class from which the object was instantiated when looking for a definition (or the class itself, in the case of a class method).
 
 If Ruby does not find a method definition, it will then search any mixed in modules (starting from the last mixed in module), then repeat the process in the superclass (if applicable), and again until reaching the `BasicObject` class (the highest point in the method lookup path). A `NoMethodError` will be raised if the method definition cannot be found. Otherwise, Ruby will stop looking along the method lookup path at the first instance when it identifies a method definition for the method called.
@@ -167,3 +167,14 @@ when 42 then 'B'
 else 'N/A'
 end
 ```
+#### What is the `eql?` method? *
+The `Object#eql?` method returns true if two objects have the same value and occupy the same space in memory. Most classes have their own implementation of this, such that it compares whether the values of the two objects are the same (e.g. `String#eql?`). 
+
+While not a commonly used method, the `Hash` implementation is probably the most frequently used, which returns true if the the key-value pairs of the two hash objects being compared have the same values.
+
+#### Explain element reference getter and element assignment setter methods? *
+Element reference getter methods and setter methods appear to be operators, but are actually methods due to the heavy level of syntactical sugar applied. The element reference getter method returns an object in a collection, based on the index position provided as an argument. 
+
+The element assignment setter method mutates the collection by reassigning the object at the index position provided as an argument, *returning the object that was passed in as an argument*.
+
+As such, when we instantiate objects from custom classes, we are able to define our own implementation of these. However, since the Core API in Ruby already establishes a usage pattern (through the `Array` class)

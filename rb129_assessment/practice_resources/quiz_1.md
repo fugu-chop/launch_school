@@ -63,7 +63,6 @@ https://launchschool.com/quizzes/cc988e0b
     class SomethingElse < AnotherThing
     end
     ```
-
     We have a class, `SomethingElse` that subclasses `AnotherThing` (i.e. inherits from), as denoted by the `<` symbol next to the class name during class definition. `AnotherThing` inherits from the `Thing` class. This also means that if `Thing` had any methods defined within the class, `SomethingElse` would also have access to that method, given the direct inheritance chain between the `Thing`, `AnotherThing` and `SomethingElse` classes.
 
 * What will the method lookup path be for the as a result of the call to the `fly` method on line 25? Explain how you know this.
@@ -162,6 +161,7 @@ https://launchschool.com/quizzes/cc988e0b
       end
       
       def change_grade(new_grade)
+        #Change made here with self
         self.grade = new_grade
       end
     end
@@ -190,10 +190,10 @@ https://launchschool.com/quizzes/cc988e0b
 
     i = MeMyselfAndI.new
     ```
-    On `line 2`, `self` references the class, as it is used outside of an instance method definition. This returns `MeMyselfAndI`
+    On `line 2`, `self` references the class, as it is used outside of an instance method definition. This returns `MeMyselfAndI`.
     
-    On `line 4`, the `self` also refers to the class. When appended to a method definition within a class, `self` refers to the class, such that the method is being defined directly on the class (hence we are defining a class method).
+    On `line 4`, the `self` also refers to the class `MeMyselfAndI`. When appended to a method definition within a class, `self` refers to the class, such that the method is being defined directly on the class (hence we are defining a class method).
 
     On `line 5`, the `self` refers to the class, `MeMyselfAndI`, as this is a class method definition (__not__ an instance method definition).
 
-    On `line 9`, `self` refers to the calling object, as `line 8-10` is an instance method definition. This will return the class name (`MeMyselfAndI`) and an encoding of the object id of the `i` object.
+    On `line 9`, `self` refers to the calling object, as `line 8-10` is an instance method definition. This will return a string interpretation of the class name (`MeMyselfAndI`) and an encoding of the object id of the `i` object.
