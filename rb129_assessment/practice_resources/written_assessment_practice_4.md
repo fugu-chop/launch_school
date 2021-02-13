@@ -26,15 +26,100 @@ Instance variables are scoped at an object level, and are accessible to instance
 
 Instance variables, and their assigned values, contribute to the state of an object. State is unique to an object (i.e. state is not shared between different instances of an object) and cannot be inherited. 
 
+In our example below, we define a `Dog` class on `lines 1-7`. Within this class, we define an instance method `initialize` on `lines 4-6`, which is automatically called when an object is instantiated from the `Dog` class. We instantiate an object from `Dog` on `line 9` and assign it to the local variable `ted`, at which point the `initialize` method is automatically called. This will initialise a `@name` instance variable, and assign it the string object `"Ted"` which was passed to the `Dog#new` method when we instantiated the object. At this point, `ted` has state.
+
+We can instantiate another object from `Dog`, `fred` (per `line 10`). Note how when we instantiate a new object from `Dog`, the state within the other object `ted`, is not affected, since state is unique to each object.
+```ruby
+class Dog
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+end
+
+ted = Dog.new("Ted")
+ted.name
+# => "Ted"
+
+fred = Dog.new("Fred")
+ted.name 
+# => "Ted"
+```
 #### What is an instance method? *
 An instance method is a method that is defined within a class. Once an object is instantiated from that class, it will have access to those methods, depending on the level of method access control applied to a method (all objects instantiated from a particular class will have access to the same set of methods). Instance methods can be inherited from superclasses.
 
+In our below example, we define the `Dog` class on `lines 1-5` using the `class` and `end` reserved words. Within this class, we define a public `speak` instance method using the `def` and `end` reserved words. This method returns a string object, `"Woof!"`.
+
+On `line 7-8`, we define another class, `Greyhound`, which subclasses `Dog` (denoted by the `<` symbol, followed by the `Dog` class). This means that `Greyhound` has access to the instance methods defined within the `Dog` class. 
+
+This is shown on `line 11` - after we instantiate an object from the `Greyhound` class using the `new` method, we are able to call the `speak` method directly on the object (as it is a public instance method), even though the `speak` method was not explicitly defined within the `Greyhound` class.
+```ruby
+class Dog
+  def speak
+    "Woof!"
+  end
+end
+
+class Greyhound < Dog
+end
+
+d = Greyhound.new
+d.speak
+# => "Woof!"
+```
 #### What is the scoping rule for instance variables? *
 Instance variables are scoped at an object level. This means that after they are initialised (and have values assigned to them), instance methods are able to access them, regardless of where they are defined. However, instance variables need to be initialised and values assigned to those instance variables in order for them to constitute state.
 
+In our example below, we have a `Dog` class definition. Within this class, we have two public instance methods, `Dog#age` and `Dog#name`. These instance methods are able to access the `@age` and `@name` instance variables respectively, even though these methods were not explicitly passed references to these instance variables as arguments, and the instance variables are initialised and assigned values elsewhere (i.e. the `initialize` method once an object is instantiated from the `Dog` class). 
+
+However, we also have defined a public getter method, `Dog#breed` which is provided by the `attr_reader` method. However, the `@breed` instance variable is never initialised after the object has been created, and as such, returns `nil` when called. The string object `"greyhound"` passed to the `initialize` method is simply ignored. As such, `@breed` is not part of the `ted` object's state.
+```ruby
+class Dog
+  attr_reader :breed
+
+  def initialize(name, age, breed = "greyhound")
+    @name = name
+    @age = age
+  end
+
+  def age
+    "I am #{@age * 7} years old!"
+  end
+
+  def name
+    "My name is #{@name}!"
+  end
+end
+
+ted = Dog.new("Teddy", 3)
+ted.age
+# => "I am 21 years old!"
+
+ted.name
+# => "My name is Teddy!"
+
+ted.breed
+# => nil
+```
 #### How do you see if an object has instance variables? *
 We can call the `Object#instance_variables` method on an object, which will return an array of *initialised* instance variables, cast as symbols. Uninitialised instance variables or instance variables without values assigned to them will not be displayed.
 
+In our example below, we define a `Dog` class on `lines 1-6`, with an `initialize` instance method on `lines 2-5`. When we instantiate an object from the `Dog` class on `line 8`, the `initialize` method is called, and the `"Ted"` string object passed to the `Dog.new` method call is forwarded to the `initialize` method. At this point, the instance variable `@name` is initialised and has a value assigned to it. As such, the `ted.instance_variables` method call returns an array with `:name`. 
+
+The `@age` instance variable __does not__ appear in this array, because while we initialised the `@age` variable in the `initialize` method, we never assigned it a value. Hence, it will not show up in the `ted.instance_variables` method call.
+```ruby
+class Dog
+  def initialize(name)
+    @name = name
+    @age
+  end
+end
+
+ted = Dog.new("Ted")
+ted.instance_variables
+# => [:name]
+```
 #### What is a class? What is the relationship between a class and an object? How is defining a class different from defining a method?
 A class is a template for an object. Objects are instantiated from classes. Objects are defined using the `class` and `end` reserved words. Within a class, we can define the instance methods that an object instantiated from that class has access to (depending on the level of method access control we exert over these instance methods).
 
@@ -50,36 +135,286 @@ Objects encapsulate state as the instance variables (and their assigned values) 
 
 Another interpretation is that state is unique to each object - i.e. the instance variables and their assigned values are unique to each object (they are not shared between instances of the same class). Each object encapsulates it's own state, meaning that changes to the state of one object will not change the state of all other objects instantiated from the same class.
 
+In our example below, we define a `Dog` class on `lines 1-5` using the `class` and `end` reserved words. We instantiate an object from the `Dog` class on `line 7` using the `Dog.new` method. This will automatically call the `initialize` method, which accepts the string object `"Teddy"` we passed to the `Dog.new` method call. 
+
+The `initialize` method then initialises a `@name` instance variable and assigns it to `"Teddy"`. At this point, the `@name` instance variable and it's assigned value becomes part of `ted`'s state, and is encapsulated within that object. As we do not define a getter method for the `@name` instance variable, it is not accessible outside of the object.
+```ruby
+class Dog
+  def initialize(name)
+    @name = name
+  end
+end
+
+ted = Dog.new("Teddy")
+ted.name
+# NoMethodError (undefined method `name' for #<Dog:0x00007fb2159cf8f0 @name="Teddy">)
+```
 #### What is a collaborator object, and what is the purpose of using collaborator objects in OOP? *
 A collaborator object is any object that is assigned to an instance variable after an object is instantiated from a class. They are useful in helping programmers define associative relationships between different classes (e.g. "has-a" relationships), where those classes may not fit within a hierarchical, inheritance style relationship (e.g. "is-a" relationships).
 
 Collaborator objects allow us to achieve encapsulation, as behaviours can be kept specific to the relevant classes, and the interactions between these classes can be defined through collaborative relationships. The collaborative relationship only exists once the instance variables are initialised and values assigned to them.
 
-#### Why should a class have as few public methods as possible? *
-In keeping with the principles of encapsulation, classes should avoid using public methods where possible, as the more public methods accessible to objects, the larger the number of ways that an accidental change to the state of an object is possible. Reducing the number of public methods improves data protection. 
+In our example below, we define a `Dog` and `Owner` class with the `class` and `end` reserved words. These classes have no hierarchical relationship to each other. 
 
+We first instantiate an object from the `Owner` class and assign it to the local variable `jeff`.
+When we instantiate an object from the `Dog` class (assigning it to the `ted` local variable), the `Dog#initialize` method is called. 
+
+At this point, the `@name` instance variable is initialised, and the string object `"Teddy"` that was passed to the `Dog.new` method is assigned to the `@name` instance variable. At this point, the string object `"Teddy"` has become a collaborator object of the `ted` object (since now `ted` "has-a" name). 
+
+The same principle applies for the `@owner` instance variable. However in this case, the object assigned to the `@owner` instance variable is a custom object, which has it's own instance methods (`Owner#identify`), which are encapsulated within the `Owner` class, but are accessible to the `ted` object through a collaborative relationship (since `ted` "has-a" owner).
+```ruby
+class Owner
+  def initialize(name)
+    @name = name
+  end
+
+  def identify
+    "Hello! My name is #{@name}!" 
+  end
+end
+
+class Dog
+  attr_reader :name
+
+  def initialize(name, owner)
+    @name = name
+    @owner = owner
+  end
+
+  def owner
+    @owner.identify + " I am #{name}'s owner!"
+  end
+end
+
+jeff = Owner.new("Jeff")
+ted = Dog.new("Teddy", jeff)
+ted.name
+# => "Teddy"
+
+ted.owner
+# => "Hello! My name is Jeff! I am Teddy's owner!"
+```
+#### Why should a class have as few public methods as possible? *
+In keeping with the principles of encapsulation, classes should avoid using public methods where possible, as the more public methods accessible to objects, the larger the number of ways that an accidental change to the state of an object is possible. Reducing the number of public methods improves data protection.
+
+In our example below, we define a `Dog` class using the `class` and `end` reserved words on `lines 1-7`. Within this method, we have a single public instance method provided through the `attr_reader` method, `Dog#name` (since `initialize` is private by default). This enables us to access the `@name` instance variable directly on an object instantiated from `Dog`. 
+
+We instantiate an object from `Dog` on `line 9`, passing a string object `"Teddy"` to the `Dog.new` method, which is passed to the `initialize` method which is automatically called when an object is instantiated from the `Dog` class. At this point, the instance variable `@name` is initialised and a value assigned to it (thus becoming part of the object's state).
+
+Note that we have not explicitly defined a setter method that would allow us to change the `@name` instance variable. However, because the `@name` instance variable points to a string object `"Teddy"`, that object has access to instance methods of the `String` class, allowing a destructive change to the value assigned to `@name`. 
+
+This destructive change was possible because we created a public instance method. We could have solved this by simply not allowing direct access to the `@name` instance variable, or creating a custom getter method where the method would return a clone of the `@name` instance variable.
+```ruby
+class Dog
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+end
+
+ted = Dog.new("Teddy")
+ted.name
+# => "Teddy"
+
+ted.name.reverse!
+# => "yddeT"
+
+ted.name
+# => "yddeT"
+```
 #### What is the private method call used for? *
 The `private` method is a form of method access control. It ensures that instance methods defined as `private` cannot be called directly on objects instantiated from the class (attempting to do so will result in a `NoMethodError`). Private methods are accessible within the class, however.
 
-#### What is the protected method used for? *
-Protected methods are a form of method access control. They ensure the protected methods cannot be called directly on objects, but only from within the class where the instance method was defined, or by other instances of the same class.
+In our example below, we have defined a `Dog` class using the `class` and `end` reserved words (`lines 1-13`). We have also made use of the `private` method, underneath which we have defined the `attr_reader` method, which creates a getter method that returns the `@name` instance variable. 
 
+Because the `Dog#name` getter method is a `private` method, it cannot be called directly on objects instantiated from `Dog` - this will raise a `NoMethodError` per `line 16`. However, private methods can be referenced within the class - per `line 6-8`, we define a public instance method `Dog#identify`, which calls the `Dog#name` method, even though it is private. 
+
+The `Dog#identify` method can be called directly on objects instantiated from the `Dog` class and are able to reference the return value of the `Dog#name` private method.
+```ruby
+class Dog
+  def initialize
+    @name = "Ben"
+  end
+
+  def identify
+    "Hello! My name is #{name}!"
+  end
+
+  private
+
+  attr_reader :name
+end
+
+ben = Dog.new
+ben.name
+# NoMethodError (private method `name' called for #<Dog:0x00007f94d097d580 @name="Ben">)
+
+ben.identify
+# => "Hello! My name is Ben!"
+```
+#### What is the protected method used for? *
+Protected methods are a form of method access control. They ensure the protected methods cannot be called directly on objects, but only from within the class where the instance method was defined, or by other instances of the same class. They act as a 'middle' ground between public and private methods.
+
+In our below example, we have a `Spy` class. On `line 10`, we use the `protected` method call to ensure that the getter method provided for the `@name` instance variable through the `attr_reader` method is protected. 
+
+This prevents the `Spy#name` instance method from being called directly on objects instantiated from the `Spy` class. However, the protected method is still accessible throughout the class, since the `Spy#meet` method is able to call the protected `name` method. 
+
+Protected methods are also accessible by other instances of the same class - this is how the `Spy#meet` method is able to access the `name` instance method within the `k` object despite being protected.
+```ruby
+class Spy
+  def initialize(name)
+    @name = name
+  end
+
+  def meet(other)
+    "Codename: #{name[0]} meets with Codename: #{other.name[0]}."
+  end
+
+  protected
+
+  attr_reader :name
+end
+
+j = Spy.new("Jessica")
+k = Spy.new("Kevin")
+j.name
+# NoMethodError (protected method `name' called for #<Spy:0x00007fedf38d8180 @name="Jessica">)
+
+j.meet(k)
+# "Codename: J meets with Codename: K."
+```
 #### Classes also have behaviors not for objects (class methods). How do you define a class method? *
 A class method is a method that is only callable directly on a class (they cannot be called on instances of the class). They can be inherited. We define them by appending a `self` to the method name when defining a method within the class. When `self` is used outside of an instance method definition, it refers to the class, so in the case of a class method definition, we are literally defining the method directly on the class.
 
+In our example below, we define a `Dog` class using the `class` and `end` reserved words (`lines 1-5`). We then define a class method on `lines 2-4`; we prepend the `self` keyword to the method name. As we have used `self` outside of an instance method definition, the use of `self` refers to the class - hence we are defining the method directly on the class. 
+
+The `Greyhound` class subclasses the `Dog` class, and so has access to the `identify` class method.
+```ruby
+class Dog
+  def self.identify
+    self
+  end
+end
+
+class Greyhound < Dog
+end
+
+Greyhound.identify
+# => Greyhound
+```
 #### What is polymorphism? *
 Polymorphism describes the ability of different objects to respond to a common interface (i.e. method). It enables code to be flexible and reusable, reducing the amount of repetition that is required in our code. Polymorphism can be implemented through mixing in modules, method overriding, duck-typing and inheritance (to name a few). 
 
 Polymorphism can act as an opposite counterpart to encapsulation - encapsulation is concerned with reducing functionality of objects, while polymorphism extends functionality to reduce repetition and improve flexibility. This is often a tradeoff that must be made in the program design.
 
+In our below example, we define an `Animal` class, which superclasses the `Dog`, `Bird` and `Turtle` class. As such, objects instantiated from each of those subclasses will have access to the `speak` and `move` instance methods defined in the `Animal` class (class inheritance), despite being different objects. However, the `Dog` class has it's own implementation of the `speak` method; an example of method overriding (a type of polymorphism).
+
+Another example of polymorphism in this example is interface inheritance, or mixing in modules to classes to extend those classes' behaviours. We have a `Swimmable` module, which is mixed into the `Dog` and `Turtle` classes. Objects instantiated from these classes will also have access to the `swim` module.
+
+Finally, we also have an example of duck-typing within our code. In the `Party` class, we define the `party` instance method. This takes an argument of iterable objects, each of which is assumed to have a `speak` method (but there is no assumption that the `speak` method will do the same thing across each of these classes).
+```ruby
+module Swimmable
+  def swim
+    "Swimming!"
+  end
+end
+
+class Animal
+  def speak
+    "Hello!"
+  end
+
+  def move
+    "Moving!"
+  end
+end
+
+class Dog < Animal
+  include Swimmable
+
+  def speak
+    "Woof!"
+  end
+end
+
+class Bird < Animal
+end
+
+class Turtle < Animal
+  include Swimmable
+end
+
+class Party
+  def party(friends)
+    friends.each { |friend| puts friend.speak }
+  end
+end
+
+Party.new.party([Dog.new, Bird.new, Turtle.new])
+# Woof
+# Hello!
+# Hello!
+# => [#<Dog:0x00007fd2998561c8>, #<Bird:0x00007fd2998560b0>, #<Turtle:0x00007fd299856088>]
+```
 #### What is inheritance? *
 Inheritance is a mechanism that allows classes to access methods from classes higher in an hierarchical chain. Classes can inherit methods from a single superclass, which gives them access to methods defined in that superclass without having to explicitly define those methods in the subclass.
 
 Inheritance enables us to model classes that fit a hierarchical relationship (i.e. "is-a" relationships between classes) and reduce the amount of repeated code in our program. We can make a class inherit from another class by adding a `<` symbol next to a class definition, followed by the name of the class from which it should inherit methods from.
 
+In our example below, we define a `Dog` class, which inherits from the `Animal` class (we set up the hierarchical inheritance relationship by using the `<` symbol followed by the superclass). This means that objects instantiated from the `Dog` class will also have access to instance methods defined in the `Animal` superclass through the method lookup path. 
+
+When we attempt to call the `speak` method on an instance of `Dog`, Ruby will first attempt to find a method definition in the `Dog` class. Since this does not exist, Ruby will look up the method lookup chain to the superclass `Animal`, where it finds the appropriate definition. Ruby will then call the `speak` method from the `Dog` class, taking the definition from the `Animal` class. This is how the object instantiated from the `Dog` class on `line 10` is able to call the `Animal#speak` method.
+```ruby
+class Animal
+  def speak
+    "Hello!"
+  end
+end
+
+class Dog < Animal
+end
+
+Dog.new.speak
+# => "Hello!"
+```
 #### What is duck-typing? *
 Duck typing is a form of polymorphism. Duck-typing can be implemented by defining a method of the same name across classes that are not related through inheritance (though this does not imply that the methods should have the same functionality). Through duck-typing, we ensure that objects are flexible enough to respond to a common method call.
 
+In our example below, we have three classes, `Kite`, `Bird` and `Plane` which are unrelated to each other, either through collaboration or inheritance. Each of these classes has a public `fly` instance method, which returns a string object.
+
+We also define an `Airshow` class, with the `show_off` instance method designed to take advantage of duck-typing. In this instance method, we pass an array of objects as an argument. Ruby is simply assuming that each object will have a `fly` method, and attempts to call that method on each object, irrespective of what that method actually does or returns.
+```ruby
+class Kite
+  def fly
+    "I drift through the wind"
+  end
+end
+
+class Bird
+  def fly
+    "I glide through the air"
+  end
+end
+
+class Plane
+  def fly
+    "I blast through the sky"
+  end
+end
+
+class Airshow
+  def show_off(attendees)
+    attendees.each { |attendee| puts attendee.fly }
+  end
+end
+
+Airshow.new.show_off([Kite.new, Bird.new, Plane.new])
+# I drift through the wind
+# I glide through the air
+# I blast through the sky
+# => [#<Kite:0x00007f9f2f8e0578>, #<Bird:0x00007f9f2f8e0500>, #<Plane:0x00007f9f2f8e04d8>]
+```
 #### What is the super method? *
 The `super` method is a way we can call methods of the same name defined in a superclass or a mixed-in module - it is a way we can implement method overriding and polymorphism into our code. The functionality of the `super` method can differ, depending on whether arguments are provided to it:
 - Calling `super` without any parentheses or arguments will forward all arguments provided to the subclass method to the superclass/module method, and call that method.
