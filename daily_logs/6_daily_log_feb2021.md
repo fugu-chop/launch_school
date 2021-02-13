@@ -1,4 +1,4 @@
- # February 2021 (Total minutes: 1,587)
+ # February 2021 (Total minutes: 1,768)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -11,6 +11,7 @@
 - [10th, Wed](#100221-wed)
 - [11th, Thu](#110221-thu)
 - [12th, Fri](#120221-fri)
+- [13th, Sat](#130221-sat)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -150,3 +151,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Feeling good. I'm decent at writing the written explanations out now. I just need to practice writing the code examples out, some quiz revision and I should be good to go for the written test. 
+
+##### 13/02/21 (Sat)
+__*Concepts covered*__<br/>
+- Revision
+  - Writing answers
+
+__*Time spent*__<br/>
+181 minutes
+
+__*Thoughts*__<br/>
+That's a wrap for the written assessment preparation. I feel reasonably well prepared for the test. I hope I can manage my time effectively. That's my real concern here at the moment.
