@@ -15,10 +15,10 @@
 An exception is simply an exceptional state in your code. It is not necessarily a bad thing, but it is Ruby’s way of letting you know that your code is behaving unexpectedly. 
 
 If an exception is raised and your code does not handle the exception, your program will crash and Ruby will provide a message telling you what type of error was encountered.
-```
+```ruby
 3 + "z"
 # Program execution stops
-#=> String can't be coerced into Integer (TypeError)
+# => String can't be coerced into Integer (TypeError)
 ```
 Ruby provides a hierarchy of _built-in classes_ to simplify exception handling. In fact, the exception names that you see when your program crashes, such as `TypeError`, are actually class names. 
 
@@ -71,7 +71,7 @@ In order to avoid causing unwanted behaviors yourself, it is important to be int
 
 ### Handling Exceptions
 Using a `begin/rescue` block to handle errors can keep your program from crashing if the exception you have specified is raised. 
-```
+```ruby
 begin
   # put code at risk of failing here
 rescue TypeError, ZeroDivisionError
@@ -83,7 +83,7 @@ The above example will execute the code in the `rescue` clause rather than exiti
 You can see that on line 3 we specified what type of exception to rescue. If no exception type is specified, all `StandardError` exceptions will be rescued and handled. __Remember not to tell Ruby to rescue `Exception` class exceptions__. Doing so will rescue all exceptions down the `Exception` class hierarchy and is very dangerous.
 
 It is possible to include multiple rescue clauses to handle different types of exceptions that may occur.
-```
+```ruby
 begin
   # some code at risk of failing
 rescue TypeError
@@ -94,11 +94,11 @@ end
 ```
 ### Exception Objects and Built-In Methods
 Exception objects are just normal Ruby objects that we can gain useful information from. Ruby provides built-in behaviors for these objects that you may want to use while handling the exception or debugging. 
-```
+```ruby
 rescue TypeError => e
 ```
 The syntax in the above code rescues any `TypeError`, and stores the exception object in `e`. Some useful instance methods that Ruby provides are `Exception#message` and `Exception#backtrace`, which return an error message and a backtrace associated with the exception, respectively. 
-```
+```ruby
 begin
   # code at risk of failing here
 rescue StandardError => e   # storing the exception object in e
@@ -108,7 +108,7 @@ end
 The code above will rescue any type of `StandardError` exception (including all of its descendents) and output the message associated with the exception object. Code like this can be useful when you are debugging and need to narrow down the type or cause of the error. You may always choose to be more specific about which type of exception to handle, but remember to never `rescue` the `Exception` class.
 
 Recall that exception objects are just normal Ruby objects and the different exception types, such as `ArgumentError` and `NoMethodError`, are actually _class names_. Therefore, we can even call `Object#class` on an exception object to return its class name.
-```
+```ruby
 e.class
 #=> TypeError
 ```
@@ -116,7 +116,7 @@ e.class
 You may also choose to include an `ensure` clause in your `begin/rescue` block after the __last__ `rescue` clause. This branch will __always execute__, whether an exception was raised or not. 
 
 A simple example is resource management; the code below demonstrates working with a file. Whether or not an exception was raised when working with the file, this code ensures that it will always be closed.
-```
+```ruby
 file = open(file_name, 'w')
 
 begin
@@ -138,7 +138,7 @@ One important thing to remember about `ensure` is that it is critical that the c
 Using `retry` in your `begin/rescue` block redirects your program back to the `begin` statement. This allows your program to make another attempt to execute the code that raised an exception. You may find retry useful when connecting to a remote server, for example. 
 
 Beware that if your code continually fails, you risk ending up in an infinite loop. In order to avoid this, it’s a good idea to __set a limit on the number of times you want `retry` to execute__. `retry` must be called within the `rescue` block. Using `retry` elsewhere will raise a `SyntaxError`.
-```
+```ruby
 RETRY_LIMIT = 5
 
 begin
@@ -153,18 +153,18 @@ end
 Ruby actually gives you the power to manually raise exceptions yourself by calling `Kernel#raise`. This allows you to choose what type of exception to raise and even set your own error message. 
 
 If you do not specify what type of exception to raise, Ruby will default to `RuntimeError` (a subclass of `StandardError`). There are a few different syntax options you may use when working with `raise`:
-```
+```ruby
 raise TypeError.new("Something went wrong!")
 raise TypeError, "Something went wrong!"
 ```
 In the following example, the exception type will default to a `RuntimeError`, because no type of exception is specified. The error message specified is `"invalid age"`.
-```
+```ruby
 def validate_age(age)
   raise("invalid age") unless (0..105).include?(age)
 end
 ```
 Exceptions you raise manually in your program can be handled in the same manner as exceptions Ruby raises automatically.
-```
+```ruby
 begin
   validate_age(age)
 rescue RuntimeError => e
@@ -175,14 +175,14 @@ Above, we placed the `validate_age` method in a `begin/rescue` block. If an inva
 
 ### Raising Custom Exceptions
 Ruby allows us the flexibility to create our own custom exception classes.
-```
+```ruby
 class ValidateAgeError < StandardError
 end
 ```
 Our custom exception class `ValidateAgeError` is a subclass of an existing exception. This means that `ValidateAgeError` has access to all of the built-in exception object behaviors Ruby provides, including `Exception#message` and `Exception#backtrace`. 
 
 When using a custom exception class, you can be specific about the error your program encountered by giving the class a very descriptive name. Doing so may aid in debugging. 
-```
+```ruby
 def validate_age(age)
   raise ValidateAgeError, "invalid age" unless (0..105).include?(age)
 end

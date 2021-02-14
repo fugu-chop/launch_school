@@ -10,7 +10,7 @@
 Instance variables defined in the superclass are accessible in the subclass, so long as the relevant instance variables are initialised through instance methods. Remember that this __is not inheritance__, but only only __access__ (scope), which is resolved by looking *up the inheritance chain*.
 
 Instance variables are __not defined by the object's class__ - they are simply __created when a value is assigned to them__. Because instance variables are not defined by a class, they are _unrelated_ to subclassing and the inheritance mechanism.
-```
+```ruby
 class Animal
   def initialize(name)
     @name = name
@@ -29,7 +29,7 @@ puts teddy.dog_name                       # => bark! bark! Teddy bark! bark!
 When we instantiated `teddy`, we called `Dog.new`. Since the `Dog` class doesn't have an `initialize` instance method, the method lookup path went to the superclass, `Animal`, and executed `Animal#initialize` (i.e. `Dog` inherits the `initialize` method from `Animal`). That's when the `@name` instance variable was initialized, and that's why we can access it from `teddy.dog_name`.
 
 This is __not true__ if the methods in which instance variables are defined are overwritten, or never called. Again, this is because instance variables themselves __cannot be inherited__; only the methods in which they are defined.
-```
+```ruby
 class Animal
   def initialize(name)
     @name = name
@@ -50,7 +50,7 @@ puts teddy.dog_name                       # => bark! bark! bark! bark!
 `@name` is `nil`, because it was __never initialised__. The `Animal#initialize` method was never executed (the `name` argument passed to the method is ignored by `initialize`). Remember that __uninitialised instance variables__ return `nil` (calling `.to_s` on `nil` returns a blank string).
 
 Another example:
-```
+```ruby
 module Speedy
   def run_fast
     @speed = 70
@@ -81,7 +81,7 @@ grey = Greyhound.new('Grey', 3)
 Here, the only instance variable initialized when `grey` is instantiated is `@dog_age`, since we override the `initialize` method in the `Animal` class. Also, while we have mixed in the `Speedy` module into the `Greyhound` class, we never actually call the `run_fast` method, such that the `@speed` instance variable is never initialised. 
 
 The same behaviour can be observed with mixins:
-```
+```ruby
 module Swim
   def enable_swimming
     @can_swim = true
@@ -101,7 +101,7 @@ teddy.swim
 # => nil
 ```
 Since we didn't call the `Swim#enable_swimming` method, the `@can_swim` instance variable was __never initialised__. Assuming the same module and class from above, we need to do the following:
-```
+```ruby
 teddy = Dog.new
 teddy.enable_swimming
 teddy.swim                                  
@@ -109,7 +109,7 @@ teddy.swim
 ```
 ### Class Variables
 Class variables are accessible to sub-classes.
-```
+```ruby
 class Animal
   @@total_animals = 0
 
@@ -130,7 +130,7 @@ spike.total_animals                           # => 1
 Note that since this class variable is initialized in the `Animal` class, there is no method to explicitly invoke to initialise it. *The class variable is loaded when the class is evaluated by Ruby*.
 
 It can be dangerous when working with class variables within the context of inheritance, because there is __only one copy of the class variable across all sub-classes__.
-```
+```ruby
 class Vehicle
   @@wheels = 4
 
@@ -142,7 +142,7 @@ end
 Vehicle.wheels                              # => 4
 ```
 If we add in a sub-class that *overrides* this class variable:
-```
+```ruby
 class Motorcycle < Vehicle
   @@wheels = 2
 end
@@ -151,7 +151,7 @@ Motorcycle.wheels                           # => 2
 Vehicle.wheels                              # => 2  Yikes!
 ```
 The class variable in the sub-class affected the class variable in the super class. This change **will affect all other sub-classes** of `Vehicle`.
-```
+```ruby
 class Car < Vehicle
 end
 
@@ -160,7 +160,7 @@ Car.wheels                                  # => 2  Not what we expected!
 For this reason, _avoid using class variables when working with inheritance_. Some Rubyists would go as far as recommending avoiding class variables altogether.
 
 Take this as a further example:
-```
+```ruby
 class Shape
   @@sides = nil
 
@@ -193,7 +193,7 @@ Otherwise, `Triangle.sides` can sometimes return a value of `4`, as if we instan
 
 ### Constants
 Constants can be accessed from instance or class methods when defined within a class. However, they _cannot_ be referenced if defined in a __different__ class, unless we use the *namespace resolution operator*, `::`. The namespace resolution operator enables us to look in a different scope (i.e. outside of the immediate class scope where the constant is referenced).
-```
+```ruby
 class Dog
   LEGS = 4
 end
@@ -210,7 +210,7 @@ kitty.legs                                  # => NameError: uninitialized consta
 The error occurs here because Ruby is looking for `LEGS` within the `Cat` class. This is expected, since this is the same behavior as class or instance variables (except, referencing an uninitialised instance variable will return `nil`).
 
 But unlike class or instance variables, we can actually reach into the `Dog` class and reference the `LEGS` constant. In order to do so, we have to tell Ruby where the LEGS constant is using `::`, which is the namespace resolution operator.
-```
+```ruby
 class Dog
   LEGS = 4
 end
@@ -228,7 +228,7 @@ Sidenote: you can use `::` on classes, modules or constants.
 
 ### Module and Constant Interaction
 Unlike instance methods or instance variables, constants are __not evaluated at runtime__, so their lexical scope - or, where they are defined in the code - is very important.
-```
+```ruby
 module Maintenance
   def change_tires
     "Changing #{WHEELS} tires."
@@ -251,7 +251,7 @@ The line `"Changing #{WHEELS} tires."` is in the `Maintenance` module, which is 
 Constant resolution will look at the __lexical scope first__, and then look at the inheritance hierarchy. It can get very tricky when there are nested modules, each setting the same constants to different values. 
 
 We can fix the above code with either of:
-```
+```ruby
 module Maintenance
   def change_tires
     "Changing #{Vehicle::WHEELS} tires."    # this fix works
@@ -267,7 +267,7 @@ end
 The reason `Car::WHEELS` works is because we're telling Ruby to look for `WHEELS` in the `Car` class, which can access `Vehicle::WHEELS` through inheritance.
 
 See this example:
-```
+```ruby
 module Describable
   def describe_shape
     "I am a #{self.class} and have #{SIDES} sides."

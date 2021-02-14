@@ -18,7 +18,7 @@ Objects that are stored as _state within another object_ (i.e. __objects assigne
 We call such objects collaborators because they work in conjunction (or in collaboration) with the class they are associated with. We can think of collaborator objects as _lower levels of abstraction_ of the owner object whose class incorporates them.
 
 Here's an example of a string object acting as a collaborator object for the instance variable `@name`. Collaborator objects are not limited to just strings though, they can be basically anything (essentially, any object that you could assign to the instance variable `@name`, like arrays or hashes).
-```
+```ruby
 class Person
   def initialize(name)
     @name = name
@@ -31,12 +31,12 @@ end
 
 joe = Person.new("Bob")
 joe.name
-=> "Bob"
+# => "Bob"
 ```
 The `Person` object `joe` has a name — a `String` object with value `“Bob”` — as part of its state. So, the string object `"Bob"` assigned to the instance variable `@name` is a __collaborator object__ of `joe`.
 
 Here's another example of arrays and hashes as collaborator objects:
-```
+```ruby
 class Person
   def initialize
     @heroes = ['Superman', 'Spiderman', 'Batman']
@@ -55,13 +55,13 @@ end
 
 joe = Person.new
 joe.cash_on_hand
-=> "$62.00"
-joe.heroes
+# => "$62.00"
 
-=> "Superman, Spiderman, Batman"
+joe.heroes
+# => "Superman, Spiderman, Batman"
 ```
 Here's an example of using an object instantiated from a class as a collaborator object. 
-```
+```ruby
 class Person
   attr_accessor :name, :pet
 
@@ -71,20 +71,19 @@ class Person
 end
 
 bob = Person.new("Robert")
-=> #<Person:0x00007fd2092007a0 @name="Robert">
+# => #<Person:0x00007fd2092007a0 @name="Robert">
 
 bob.pet
-=> nil
+# => nil
 
 bud = Bulldog.new             # assume Bulldog class from previous assignment
-
 bob.pet = bud
 
 bob.pet
-=> <Bulldog:0x007fd8399eb920>
+# => <Bulldog:0x007fd8399eb920>
 
 bob.pet.class
-=> Bulldog
+# => Bulldog
 
 bob.pet.speak
 => "bark!"
@@ -96,7 +95,7 @@ For instance, `bob` has a collaborator object stored in the `@pet` variable. Whe
 
 ### Working with other objects
 Depending on the collaborator object, we may need to modify methods, or how other parts of our program interact with that object.
-```
+```ruby
 class Person
   attr_accessor :name, :pets
 
@@ -115,10 +114,10 @@ bob.pets << kitty
 bob.pets << bud
 
 bob.pets
-=> [#<Cat:0x007fd839999620>, #<Bulldog:0x007fd839994ff8>]
+# => [#<Cat:0x007fd839999620>, #<Bulldog:0x007fd839994ff8>]
 
 bob.pets.jump
-NoMethodError: undefined method `jump' for [#<Cat:0x007fd839999620>, #<Bulldog:0x007fd839994ff8>]:Array
+# NoMethodError: undefined method `jump' for [#<Cat:0x007fd839999620>, #<Bulldog:0x007fd839994ff8>]:Array
 
 bob.pets.each do |pet|
   pet.jump
@@ -128,7 +127,7 @@ Because the `@pets` variable is referencing an array, we cannot simply call the 
 
 ### When does collaboration occur?
 Sometimes, the class definition may just define a setter or other instance method, but the collaborator object does not become part of the primary object’s state _until the setter or instance method is invoked elsewhere_, outside of the class definition.
-```
+```ruby
 class Library
   def initialize
     @books = []
@@ -153,7 +152,7 @@ book_1 = Book.new('The Grapes of Wrath')
 my_library.add_book(book_1)
 
 p my_library
-=> #<Library:0x00000001cedff0 @books=[#<Book:0x00000001cede10 @title="The Grapes of Wrath">]>
+# => #<Library:0x00000001cedff0 @books=[#<Book:0x00000001cede10 @title="The Grapes of Wrath">]>
 ```
 In this example, you can see that the `Book` object `book_1` is not added to the state of `my_library` until the `Library#add_book` method is invoked on `my_library`. 
 
@@ -166,7 +165,7 @@ Collaboration occurs when one object is __added to the state of another object__
 Another helpful mental model is: the *collaborative relationship exists in the design (or intention) of our code*.
 
 Consider this:
-```
+```ruby
 class Parent
   def initialize
     @child = Child.new

@@ -59,7 +59,7 @@ Rule
 Notice that a "Player" can "choose", but "Move" and "Rule" don't have any verbs at all, and we aren't sure where to put "compare". This is an awkward first attempt, but it's all we are comfortable assuming at this point. We'll have to take a stab at defining our classes with this.
 
 Let's code up some classes and methods. While we do this, we can also think about what "states" the objects of these classes should have.
-```
+```ruby
 class Player
   def initialize
     # maybe a "name"? what about a "move"?
@@ -91,7 +91,7 @@ end
 After we're done organizing nouns and verbs into classes, we need an "engine" of some sort to orchestrate the objects. 
 
 This is where the procedural program flow should be. Let's call the "engine" class `RPSGame`. We want an easy interface to kick things off, so perhaps to play the game, we just instantiate an object and call a method called `play`.
-```
+```ruby
 RPSGame.new.play
 
 class RPSGame
@@ -105,7 +105,7 @@ class RPSGame
 end
 ```
 Starting from that skeleton, we can start to think about what objects are required in the `play` method to facilitate the game.
-```
+```ruby
 def play
   display_welcome_message
   human_choose_move
@@ -115,7 +115,7 @@ def play
 end
 ```
 Lines 3 and 4 look similar, and it also looks like there's a redundant "choose_move" part. This ties into our `Player` class, which has a `choose` method. What if "human" and "computer" were both objects of the `Player` class? They'd both immediately have the `Player#choose` method. 
-```
+```ruby
 class RPSGame
   attr_accessor :human, :computer
 
@@ -133,7 +133,6 @@ class RPSGame
   end
 end
 ```
-
 ### General tips
 #### Explore the problem before design
 It can be very difficult to come up with the "right" classes and methods when you first approach a problem. Take time to explore the problem domain with a __spike__ - exploratory code to play around with the problem. Spikes can help validate initial hunches and hypotheses. 
@@ -142,7 +141,7 @@ You don't have to worry about code quality, because the idea of a spike is to th
 
 #### Repetitive nouns in method names is a sign that you're missing a class
 In our Rock, Paper, Scissors game for example, if we find ourselves constantly referring to a "move", it may be a sign that we should encapsulate the logic into a `Move` class (which is what we did). Suppose we had the following code and `move` is a string or integer (ie, not a custom object):
-```
+```ruby
 human.make_move
 computer.make_move
 
@@ -160,7 +159,7 @@ end
 The above code is fabricated, but it's not as far fetched as it seems. The `format_move` helper method formats the move in our output, because we don't have an object that we can tell to "format yourself for output". We also need a `compare_moves` helper method because the moves don't know how to compare themselves with each other. 
 
 All these references to "move" gives us a hint that we should be *encapsulating the move into a custom move object*, so that we can tell the object to "format yourself" or "compare yourself against another". Look at how the code could be possibly improved:
-```
+```ruby
 human.move!
 computer.move!
 
@@ -179,7 +178,7 @@ The logic that used to be in straggling helper methods are now in the appropriat
 
 #### When naming methods, don't include the class name
 A lot of beginners will write methods like this:
-```
+```ruby
 class Player
   def player_info
     # returns player's name, move and other data
@@ -187,7 +186,7 @@ class Player
 end
 ```
 But the `player_info` method is poorly named, because in actual usage, we could end up with code like this:
-```
+```ruby
 player1 = Player.new
 player2 = Player.new
 
@@ -195,7 +194,7 @@ puts player1.player_info
 puts player2.player_info
 ```
 The code would read much more fluently if the method was just named info, so we can use it like this:
-```
+```ruby
 puts player1.info
 puts player2.info
 ```
@@ -203,13 +202,13 @@ It's not always the case, but most of the time, you can leave off the class name
 
 #### Avoid long method invocation chains
 When working with object oriented code, it's tempting to keep calling methods on collaborator objects. Take the following code.
-```
+```ruby
 human.move.display.size
 ```
 This is a 3 chain method invocation, and is very fragile. For example, if `human.move` returns `nil`, then the *entire method invocation chain blows up*, and it's very hard to debug the error. There are many solutions for this type of problem, and many strategies are beyond what we want to talk about right now. 
 
 For now, develop the initial instinct to smell out code that contains long method invocation chains, and *try to think about the possibility of `nil` or other unexpected return values in the middle of the chain*. If you've identified that `human.move` could possibly return `nil`, for example, then you can put in some guard expressions like this:
-```
+```ruby
 move = human.move
 puts move.display.size if move
 ```

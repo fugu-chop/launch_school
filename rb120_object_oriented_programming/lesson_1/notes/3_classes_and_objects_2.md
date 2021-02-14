@@ -11,22 +11,22 @@
 Class methods are methods we can call __directly on the class itself__, without having to instantiate any objects. Class methods __cannot__ be called by *objects instantiated from them*, and __cannot access instance variables__ (since instance variables are only initialised when an object is instantiated from the class).
 
 When defining a class method, we prepend the method name with the reserved word `self.`, like this:
-```
+```ruby
 # Class method definition (rest of code omitted)
 def self.what_am_i
   "I'm a GoodDog class!"
 end
 ```
 When we call the class method, we use the class name `GoodDog` followed by the method name, without even having to instantiate any objects, like this:
-```
+```ruby
 GoodDog.what_am_i
-=> I'm a GoodDog class!
+# => I'm a GoodDog class!
 ```
 Class methods are where we put functionality that does not pertain to _individual_ objects. Objects contain state, and if we have a method that __does not need to deal with states__, then we can just use a class method.
 
 ### Class Variables
 Just as instance variables capture information related to specific instances of classes (i.e., objects), we can create variables for an entire class (i.e. they are shared between all instances of a class) that are appropriately named *class variables*. Class variables are created using two `@` symbols like so: `@@`.
-```
+```ruby
 class GoodDog
   @@number_of_dogs = 0
 
@@ -40,13 +40,13 @@ class GoodDog
 end
 
 puts GoodDog.total_number_of_dogs
-=> 0
+# => 0
 
 dog1 = GoodDog.new
 dog2 = GoodDog.new
 
 puts GoodDog.total_number_of_dogs
-=> 2
+# => 2
 ```
 We have a class variable called `@@number_of_dogs`, which we initialize to 0. Then in  our `initialize` method, we increment that number by 1. Remember that `initialize` gets called __every time we instantiate a new object__ via the `new` method. 
 
@@ -56,7 +56,7 @@ This also demonstrates that we can _access class variables from within an instan
 When creating classes there may also be certain variables that you never want to change. You can do this by creating what are called __constants__. You define a constant by using an uppercase letter at the beginning of the variable name. If you want to access a constant outside of the class then you would have to use `classname::constant`.
 
 While technically constants just need to begin with a capital letter, most Rubyists will make the entire variable uppercase.
-```
+```ruby
 class GoodDog
   DOG_YEARS = 7
 
@@ -70,7 +70,7 @@ end
 
 sparky = GoodDog.new("Sparky", 4)
 puts sparky.age
-=> 28
+# => 28
 ```
 Here we used the constant `DOG_YEARS` to calculate the age in dog years when we created the object, `sparky`. Note that we used the setter methods in the `initialize` method to initialize the `@name` and `@age` instance variables given to us by the `attr_accessor` method. We then used the `age` getter method to retrieve the value from the object.
 
@@ -78,9 +78,9 @@ Here we used the constant `DOG_YEARS` to calculate the age in dog years when we 
 
 ### The `to_s` Method
 The `to_s` instance method comes built in to every class in Ruby (it comes from the `Object` class).
-```
+```ruby
 puts sparky
-=> #<GoodDog:0x007fe542323320>
+# => #<GoodDog:0x007fe542323320>
 ```
 What's happening here is that the `puts` method automatically calls `to_s` on its argument, which in this case is the `sparky` object. In other words `puts sparky` is equivalent to `puts sparky.to_s`. 
 
@@ -89,7 +89,7 @@ The reason we get this particular output lies within the `to_s` method in Ruby. 
 Note: the `puts` method calls `to_s` for any argument that is __not an array__. For an array, it writes on *separate lines* the result of calling `to_s` on each element of the array.
 
 To test this, we can add a custom `to_s` method to our `GoodDog` class, __overriding__ the default `to_s` that comes with Ruby.
-```
+```ruby
 class GoodDog
   DOG_YEARS = 7
 
@@ -106,26 +106,26 @@ class GoodDog
 end
 
 puts sparky
-=> This dog's name is Sparky and is 28 in dog years.
+# => This dog's name is Sparky and is 28 in dog years.
 ```
 Besides being called automatically when using `puts`, another important attribute of the `to_s` method is that it's also automatically called in __string interpolation__. 
-```
+```ruby
 arr = [1, 2, 3]
-=> [1, 2, 3]
+# => [1, 2, 3]
 
 x = 5
-=> 5
+# => 5
 
 "The #{arr} array doesn't include #{x}."
-=> The [1, 2, 3] array doesn't include 5.
+# => The [1, 2, 3] array doesn't include 5.
 ```
 Here, the `to_s` method is automatically called on the `arr` array object, as well as the `x` integer object. We can see this in action on our `sparky` object when using string interpolation.
-```
+```ruby
 "#{sparky}"
-=> "This dog's name is Sparky and it is 28 in dog years."
+# => "This dog's name is Sparky and it is 28 in dog years."
 ```
 Another example:
-```
+```ruby
 class Human  
   def what_species_am_I
     puts "I am a #{self}"
@@ -144,9 +144,9 @@ In summary, the `to_s` method is called automatically on the object when we use 
 
 #### The `p` Method
 There's another method called `p` that's very similar to `puts`, except it __doesn't__ call `to_s` on its argument; it calls another built-in Ruby instance method called `inspect`. The `inspect` method is very helpful for debugging purposes, so we don't want to override it.
-```
+```ruby
 p sparky
-=> #<GoodDog:0x007fe54229b358 @name="Sparky", @age=28>
+# => #<GoodDog:0x007fe54229b358 @name="Sparky", @age=28>
 ```
 This output implies that `p sparky` is equivalent to `puts sparky.inspect`.
 
@@ -157,7 +157,7 @@ This output implies that `p sparky` is equivalent to `puts sparky.inspect`.
   2. Use `self` for class method definitions.
 
 Let's work through an example:
-```
+```ruby
 class GoodDog
   attr_accessor :name, :height, :weight
 
@@ -180,7 +180,7 @@ class GoodDog
 end
 ```
 This is our standard `GoodDog` class, and we're using `self` whenever we call an instance method from within the class. What does `self` really represent here? Let's add one more instance method to help us find out.
-```
+```ruby
 class GoodDog
   # rest of code omitted for brevity
 
@@ -190,15 +190,15 @@ class GoodDog
 end
 ```
 Now we can instantiate a new `GoodDog` object.
-```
+```ruby
 sparky = GoodDog.new('Sparky', '12 inches', '10 lbs')
 p sparky.what_is_self
-=> #<GoodDog:0x007f83ac062b38 @name="Sparky", @height="12 inches", @weight="10 lbs">
+# => #<GoodDog:0x007f83ac062b38 @name="Sparky", @height="12 inches", @weight="10 lbs">
 ```
 From __within__ the class, when an instance method uses `self`, it references the _calling object_. In this case, that's the `sparky` object. Therefore, from __within__ the `change_info` method, calling `self.name=` acts the same as calling `sparky.name=` from __outside__ the class (you __can't__ call `sparky.name=` _inside_ the class, though, since it isn't in scope - the class itself has no concept of what the `sparky` object is).
 
 The other place we use `self` is when we're defining class methods:
-```
+```ruby
 class MyAwesomeClass
   def self.this_is_a_class_method
     self
@@ -206,16 +206,16 @@ class MyAwesomeClass
 end
 ```
 When `self` is prepended to a method definition, it is defining a __class method__. In our `GoodDog` class method example, we defined a class method called `self.total_number_of_dogs`. This method returned the value of the class variable `@@number_of_dogs`. The `self` within the class method also refers to the class itself - unless `self` is within an *instance* method, it will refer to the class.
-```
+```ruby
 class GoodDog
   # rest of code omitted for brevity
   puts self
 end
 ```
 If we run the above code in `irb`, we get:
-```
-irb :001 > GoodDog
-=> GoodDog
+```ruby
+# irb :001 > GoodDog
+# => GoodDog
 ```
 You can see that using `self` __inside a class but outside an instance method__ refers to the *class itself*. Therefore, a method definition prefixed with `self` is the __same as defining the method on the class__. That is, `def self.a_method` is equivalent to `def GoodDog.a_method`. That's why it's a class method; it's actually being defined __on the class__.
 

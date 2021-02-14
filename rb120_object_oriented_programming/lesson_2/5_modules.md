@@ -19,7 +19,7 @@ We'd like to __not__ have the same `swim` method in two different classes, but w
 Some programming languages allow classes to directly inherit from multiple classes, a functionality known as multiple inheritance. Ruby's answer to multiple inheritance is by way of _mixing in behaviors_. A class can only sub-class from one parent, but it can mix in *as many modules as it likes*.
 
 The solution is to create a module, called `Swim`, and mix in that module in the appropriate classes.
-```
+```ruby
 module Swim
   def swim
     "swimming!"

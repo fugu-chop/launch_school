@@ -39,12 +39,14 @@ class Dog
 end
 
 ted = Dog.new("Ted")
-ted.name
-# => "Ted"
+puts ted.name
+# "Ted"
+# => nil
 
 fred = Dog.new("Fred")
-ted.name 
-# => "Ted"
+puts ted.name 
+# "Ted"
+# => nil
 ```
 #### What is an instance method? *
 An instance method is a method that is defined within a class. Once an object is instantiated from that class, it will have access to those methods, depending on the level of method access control applied to a method (all objects instantiated from a particular class will have access to the same set of methods). Instance methods can be inherited from superclasses.
@@ -65,8 +67,9 @@ class Greyhound < Dog
 end
 
 d = Greyhound.new
-d.speak
-# => "Woof!"
+puts d.speak
+# "Woof!"
+# => nil
 ```
 #### What is the scoping rule for instance variables? *
 Instance variables are scoped at an object level. This means that after they are initialised (and have values assigned to them), instance methods are able to access them, regardless of where they are defined. However, instance variables need to be initialised and values assigned to those instance variables in order for them to constitute state.
@@ -93,13 +96,15 @@ class Dog
 end
 
 ted = Dog.new("Teddy", 3)
-ted.age
-# => "I am 21 years old!"
+puts ted.age
+# "I am 21 years old!"
+# => nil
 
-ted.name
-# => "My name is Teddy!"
+puts ted.name
+# "My name is Teddy!"
+# => nil
 
-ted.breed
+puts ted.breed
 # => nil
 ```
 #### How do you see if an object has instance variables? *
@@ -188,11 +193,13 @@ end
 
 jeff = Owner.new("Jeff")
 ted = Dog.new("Teddy", jeff)
-ted.name
-# => "Teddy"
+puts ted.name
+# "Teddy"
+# => nil
 
-ted.owner
-# => "Hello! My name is Jeff! I am Teddy's owner!"
+puts ted.owner
+# "Hello! My name is Jeff! I am Teddy's owner!"
+# => nil
 ```
 #### Why should a class have as few public methods as possible? *
 In keeping with the principles of encapsulation, classes should avoid using public methods where possible, as the more public methods accessible to objects, the larger the number of ways that an accidental change to the state of an object is possible. Reducing the number of public methods improves data protection.
@@ -250,8 +257,9 @@ ben = Dog.new
 ben.name
 # NoMethodError (private method `name' called for #<Dog:0x00007f94d097d580 @name="Ben">)
 
-ben.identify
-# => "Hello! My name is Ben!"
+puts ben.identify
+# "Hello! My name is Ben!"
+# => nil
 ```
 #### What is the protected method used for? *
 Protected methods are a form of method access control. They ensure the protected methods cannot be called directly on objects, but only from within the class where the instance method was defined, or by other instances of the same class. They act as a 'middle' ground between public and private methods.
@@ -278,11 +286,12 @@ end
 
 j = Spy.new("Jessica")
 k = Spy.new("Kevin")
-j.name
+puts j.name
 # NoMethodError (protected method `name' called for #<Spy:0x00007fedf38d8180 @name="Jessica">)
 
-j.meet(k)
+puts j.meet(k)
 # "Codename: J meets with Codename: K."
+# => nil
 ```
 #### Classes also have behaviors not for objects (class methods). How do you define a class method? *
 A class method is a method that is only callable directly on a class (they cannot be called on instances of the class). They can be inherited. We define them by appending a `self` to the method name when defining a method within the class. When `self` is used outside of an instance method definition, it refers to the class, so in the case of a class method definition, we are literally defining the method directly on the class.
@@ -375,8 +384,9 @@ end
 class Dog < Animal
 end
 
-Dog.new.speak
-# => "Hello!"
+puts Dog.new.speak
+# "Hello!"
+# => nil
 ```
 #### What is duck-typing? *
 Duck typing is a form of polymorphism. Duck-typing can be implemented by defining a method of the same name across classes that are not related through inheritance (though this does not imply that the methods should have the same functionality). Through duck-typing, we ensure that objects are flexible enough to respond to a common method call.
@@ -449,8 +459,9 @@ class Dog < Animal
 end
 
 teddy = Dog.new("Teddy", 4)
-teddy.speak
-# => "Hello! My name is Teddy and I am a 4 year old Dog!"
+puts teddy.speak
+# "Hello! My name is Teddy and I am a 4 year old Dog!"
+# => nil
 ```
 #### Why can't we use the `self` prefix on private getter methods? *
 Prior to Ruby 2.7, we were unable to use the `self` prefix on private getter method when referencing those methods in other instance methods. This is because `self`, when used in the context of an instance method definition, refers to the calling object. 
@@ -496,8 +507,9 @@ class Dog < Animal
   end
 end
 
-Dog.new.speak
-# => "Woof!"
+puts Dog.new.speak
+# "Woof!"
+# => nil
 ```
 #### What is a module? When would we use a module? (classes and methods, or just methods?)
 A module can be a grouping of methods that can be mixed into classes, allowing those classes to access the methods defined in the module. Modules are a way that we can implement polymorphism into our code, since any number of modules can be mixed into any class (there is no requirement that classes be related to each other), though objects cannot be instantiated from modules. 
@@ -528,8 +540,9 @@ ted = Person.new
 ted.walk
 # NoMethodError (undefined method `walk' for #<Person:0x00007fddd7145138>)
 
-Walkable::walk
-# => I can walk!"
+puts Walkable::walk
+# I can walk!"
+# => nil
 ```
 #### What is the method lookup path? *
 The method lookup path is the chain of classes and modules Ruby will look through in order to find a method definition. When caling a method, Ruby will first search the class from which the object was instantiated when looking for a definition (or the class itself, in the case of a class method).
@@ -552,8 +565,9 @@ class Dog < Animal
   end
 end
 
-Dog.new.speak
-# => "Hello!"
+puts Dog.new.speak
+# Hello!
+# => nil
 ```
 #### What are class variables? Why is it not recommended to use them? *
 A class variable is a variable scoped at the class level. It can be identified by the `@@` symbols preceding the variable name and is initialised when the class is evaluated by Ruby. Class variables are accessible to both class and instance methods, regardless of where a class variable is defined. 
@@ -645,8 +659,9 @@ class Spy
 end
 
 t = Spy.new("Tim")
-t.name
-# => "Codename: T"
+puts t.name
+# "Codename: T"
+# => nil
 ```
 #### What is the self keyword? How do we use it? *
 The `self` keyword can change the way a method behaves, and it's meaning can change depending on the context which it is used. 
@@ -694,16 +709,18 @@ ted = Robot.new("Ted", 4)
 ted.my_name
 # NoMethodError (private method `name' called for #<Robot:0x00007febd182e7f8 @name="Ted", @age=4>)
 
-ted.identify
-# => My name is Ted and I am a 4 year old robot.
+puts ted.identify
+# My name is Ted and I am a 4 year old robot.
+# => nil
 
 Robot.species
 # => Robot
 
 ted.remake("Bob", 2)
 
-ted.identify
-# => My name is Bob and I am a 2 year old robot.
+puts ted.identify
+# My name is Bob and I am a 2 year old robot.
+# => nil
 ```
 #### What is the default `to_s` method in Ruby? How/why would you override this? *
 The default `Object#to_s` method, when called on an object, will return a string representation of the class name and an encoding of the object id. The `to_s` method is also automatically called on the argument provided to the `puts` method call, as well as during string interpolation.
@@ -726,7 +743,8 @@ end
 
 davy = Person.new("Davy")
 puts davy
-# => "Davy"
+# "Davy"
+# => nil
 ```
 #### What is a fake operator?
 A fake operator is a method that looks like an operator due to the syntactical sugar in Ruby. Examples include `+`, `<`, `[]`. Because these are methods and not operators, their functionality can be changed through method overriding. 

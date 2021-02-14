@@ -14,7 +14,7 @@ For example, assume we have a method that expects an argument that has a `move` 
 There are several ways to implement polymorphism.
 
 #### Polymorphism through inheritance
-```
+```ruby
 class Animal
   def eat
     # generic eat method
@@ -48,7 +48,7 @@ Looking at this example, we can see that every object in the array is a differen
 We can also implement polymorphism through __duck typing__. Duck typing in Ruby doesn't concern itself with the class of an object; instead, it concerns itself with __what methods are available__ on the object. If an object "quacks" like a duck, then we can treat it like a duck. In other words, we are interested in *what the object can do*, rather than with what the object __is__.
 
 Here's an example of attempting to apply polymorphism **without** duck typing. __Don't use this approach__. The problem with this approach is that the `prepare` method has *too many dependencies*. It relies on *specific classes and their names*. It also needs to know which method it should call on each of the objects, as well as the argument that those methods require. 
-```
+```ruby
 class Wedding
   attr_reader :guests, :flowers, :songs
 
@@ -87,7 +87,7 @@ end
 If you change anything within those classes that impacts `Wedding#prepare`, you need to refactor the method. For instance, if we need to add another wedding preparer, we must add another case statement. Before long, the method will become long and messy.
 
 We can clean up the code using duck-typing:
-```
+```ruby
 class Wedding
   attr_reader :guests, :flowers, :songs
 
@@ -142,7 +142,7 @@ An example of encapsulation can be found in the contrast between:
 - *Instance* variables, which can have read or write access restricted. 
 
 Here's an example of method access control:
-```
+```ruby
 class Dog
   attr_reader :nickname
 
@@ -167,7 +167,7 @@ end
 dog = Dog.new("rex")
 dog.change_nickname("barny") # changed nickname to "barny"
 puts dog.greeting 
-=> Barny says Woof Woof!
+# => Barny says Woof Woof!
 ```
 In this example, we can change the nickname of a dog by calling the `change_nickname` method without needing to know how the `Dog` class and this method are implemented.
 

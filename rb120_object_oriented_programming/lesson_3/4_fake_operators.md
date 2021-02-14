@@ -33,7 +33,7 @@ Because they are methods, we can implement them in our classes and take advantag
 
 ### Element getter and setter methods
 These are some pretty extreme examples of syntactical sugar. 
-```
+```ruby
 my_array = %w(first second third fourth)    # ["first", "second", "third", "fourth"]
 
 # element reference
@@ -48,7 +48,7 @@ my_array.[]=(5, "sixth")
 puts my_array.inspect                       # => ["first", "second", "third", "fourth", "fifth", "sixth"]
 ```
 If we want to use the element setter and getter methods in our class, we first have to make sure we're working with a class that represents a collection, following the pattern established by the Core API within Ruby. 
-```
+```ruby
 class Team
   # ... rest of code omitted for brevity
 

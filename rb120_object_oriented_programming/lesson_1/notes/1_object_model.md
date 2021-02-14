@@ -43,7 +43,7 @@ A module must be mixed in with a class using the `include` method invocation. Th
 The third way of achieving polymorphism is through using __duck typing__. As an aside, duck-typing is not possible in statically typed languages, because you have to __declare the type (i.e. object) of each param/variable/return value__. Preventing duck typing is a big part of static typing (we want to avoid different objects being funneled into a method).
 
 In our below example, none of the classes or objects created are related to each other. However, each of the objects have a `speak` method, which is why we can loop through each object and run the same method (despite the method returning completely different objects from different classes). 
-```
+```ruby
 class Dog
   def speak
     "Bark"
@@ -75,12 +75,12 @@ Objects are created from classes. Think of classes as __molds__ and objects as t
 __Anything that can be said to have a value is an object__ - that includes numbers, strings, arrays, and even classes (custom classes are just instances of the `class` Class) and modules. However, there are a few things that are __not__ objects: *variables* (which are __pointers__ to objects), *methods* and *blocks* are several that stand out.
 
 Here's an example of two objects of the `String` class:
-```
+```ruby
 "hello".class
-=> String
+# => String
 
 "world".class
-=> String
+# => String
 ```
 We use the `class` instance method to determine what the class is for each object. So far, everything we've been using, from strings to integers, are in fact objects, which are instantiated from a class. 
 
@@ -90,7 +90,7 @@ Ruby defines the *attributes and behaviors* of its objects in *classes*. You can
 To define a class, we use syntax similar to defining a method. We replace the `def` with `class` and use the `CamelCase` naming convention to create the name. We then use the reserved word `end` to finish the definition. 
 
 Ruby file names should be in `snake_case`, and reflect the class name. In the below example, the file name is `good_dog.rb` and the class name is `GoodDog`.
-```
+```ruby
 class GoodDog
 end
 
@@ -104,7 +104,7 @@ The important fact here is that __an object is returned by calling the class met
 
 ### Modules
 A module is a _collection of behaviors that is usable in other classes_ via __mixins__. A module is "mixed in" to a class using the `include` method invocation. 
-```
+```ruby
 module Speak
   def speak(sound)
     puts sound
@@ -121,17 +121,17 @@ end
 
 sparky = GoodDog.new
 sparky.speak("Arf!") 
-=> Arf!
+# => Arf!
 
 bob = HumanBeing.new
 bob.speak("Hello!")
-=> Hello!
+# => Hello!
 ```
 Both the `GoodDog` object, which we're calling `sparky`, as well as the `HumanBeing` object, which we're calling `bob`, have access to the `speak` _instance method_. This is possible through "mixing in" the module `Speak`. It's as if we copy-pasted the `speak` method into the `GoodDog` and `HumanBeing` classes.
 
 #### Method Lookups
 Ruby has a distinct lookup path that it follows each time a method is called. We can use the `ancestors` method on any class to find out the method lookup chain.
-```
+```ruby
 module Speak
   def speak(sound)
     puts "#{sound}"
@@ -152,19 +152,19 @@ puts ''
 puts "---HumanBeing ancestors---"
 puts HumanBeing.ancestors
 
----GoodDog ancestors---
-GoodDog
-Speak
-Object
-Kernel
-BasicObject
+# ---GoodDog ancestors---
+# GoodDog
+# Speak
+# Object
+# Kernel
+# BasicObject
 
----HumanBeing ancestors---
-HumanBeing
-Speak
-Object
-Kernel
-BasicObject
+# ---HumanBeing ancestors---
+# HumanBeing
+# Speak
+# Object
+# Kernel
+# BasicObject
 ```
 The `Speak` module is placed right in between our custom classes (i.e., `GoodDog` and `HumanBeing`) and the Object class that comes with Ruby. 
 

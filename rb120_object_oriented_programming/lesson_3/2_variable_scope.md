@@ -8,7 +8,7 @@
 
 ### Instance variable scope
 Instance variables are variables that start with `@` and are _scoped at the object level_. They are used to track individual object state, and __do not cross over between objects__. 
-```
+```ruby
 class Person
   def initialize(n)
     @name = n
@@ -18,39 +18,47 @@ end
 bob = Person.new('bob')
 joe = Person.new('joe')
 
-puts bob.inspect              # => #<Person:0x007f9c830e5f70 @name="bob">
-puts joe.inspect              # => #<Person:0x007f9c830e5f20 @name="joe">
+puts bob.inspect
+# => #<Person:0x007f9c830e5f70 @name="bob">
+
+puts joe.inspect
+# => #<Person:0x007f9c830e5f20 @name="joe">
 ```
 Because the scope of instance variables is at the _object level_, this means that the instance variable is accessible in an object's instance methods, even if it's initialized __outside of that instance method__.
-```
+```ruby
 class Person
   def initialize(n)
     @name = n
   end
 
   def get_name
-    @name                     # is the @name instance variable accessible here?
+    # is the @name instance variable accessible here?
+    @name
   end
 end
 
 bob = Person.new('bob')
-bob.get_name                  # => "bob"
+bob.get_name
+# => "bob"
 ```
 If we try to access an instance variable that is not yet initialised anywhere, we will get a `nil` - contrast this with an uninitialised _local_ variable (which would result in a `NameError`).
-```
+```ruby
 class Person
   def get_name
-    @name                     # the @name instance variable is not initialized anywhere
+    # the @name instance variable is not initialized anywhere
+    @name
   end
 end
 
 bob = Person.new
-bob.get_name                  # => nil
+bob.get_name
+# => nil
 ```
 This also occurs if we accidentally put an instance variable at the _class_ level. Don't do this, because instance variables initialised at the class level are an entirely different thing called __class instance variables__.
-```
+```ruby
 class Person
-  @name = "bob"              # class level initialization
+  # class level initialization
+  @name = "bob"
 
   def get_name
     @name
@@ -58,10 +66,11 @@ class Person
 end
 
 bob = Person.new
-bob.get_name                  # => nil
+bob.get_name
+# => nil
 ```
 With a *class instance variable* (__not__ on an instance of that class) you can store something common to that class __without having sub-classes automatically also get them__ (and vice-versa). With *class variables*, you have the convenience of not having to write `self.class` from an instance object, and (when desirable) you also get automatic sharing throughout the class hierarchy.
-```
+```ruby
 # Class Instance Variable
 class Parent
   @things = []
@@ -82,10 +91,14 @@ Child.things  << :doll
 mom = Parent.new
 dad = Parent.new
 
-p Parent.things #=> [:car]
-p Child.things  #=> [:doll]
-p mom.things    #=> [:car]
-p dad.things    #=> [:car]
+p Parent.things
+#=> [:car]
+p Child.things
+#=> [:doll]
+p mom.things
+#=> [:car]
+p dad.things
+#=> [:car]
 
 
 # Class Variable
@@ -105,8 +118,10 @@ end
 Parent.things << :car
 Child.things  << :doll
 
-p Parent.things #=> [:car,:doll]
-p Child.things  #=> [:car,:doll]
+p Parent.things
+#=> [:car,:doll]
+p Child.things
+#=> [:car,:doll]
 
 mom = Parent.new
 dad = Parent.new
@@ -125,7 +140,7 @@ daughter = Child.new
 Class variables start with `@@` and are scoped at the __class level__. They exhibit two main behaviors:
   1. All objects _share 1 copy of the class variable_. This also implies objects can access __class__ variables by way of __instance__ methods.
   2. Class methods can access class variables, regardless of where it's initialized.
-```
+```ruby
 class Person
   @@total_people = 0            # initialized at the class level
 
@@ -159,7 +174,7 @@ Even when we have two different Person objects in `bob` and `joe`, we're effecti
 
 ### Constant Variable Scope
 Constant variables are usually just called __constants__, because you're not supposed to re-assign them to a different value. If you do re-assign a constant, Ruby will warn you (but won't generate an error). Constants begin with a _capital letter and have lexical scope_.
-```
+```ruby
 class Person
   TITLES = ['Mr', 'Mrs', 'Ms', 'Dr']
 
@@ -185,7 +200,7 @@ Where constant resolution gets really tricky is when *inheritance* is involved, 
 
 ### Lexical Scope
 _Lexical scope_ means that the scope of the object remains __limited to where it's defined in the code__.
-```
+```ruby
 class Car
   WHEELS = 4
 
@@ -205,7 +220,7 @@ bullet = Motorcycle.new
 puts bullet.wheels # => 4, when you expect the output to be 2
 ```
 When inheriting the `Car::wheels` method, `Motorcycle` class also seems to inherit the value of the constant. This is because for the `Car::wheels` method, the lexical scope of the `WHEELS` constant remains limited to the Car class, despite the inheritance.
-```
+```ruby
 class Car
   WHEELS = 4
 
@@ -231,7 +246,7 @@ puts bullet.wheels # => 2
 Now that we've _explicitly defined_ the `Motorcycle#wheels` method, we get the expected return value because the `Motorcycle::WHEELS` constant is __in lexical scope__.
 
 We can bring the behaviour of constants in line with how we expect other variables by __explicitly specifying the scope of the constant__ in the instance method, by using `self.class::WHEELS`.
-```
+```ruby
 class Car
   WHEELS = 4
 
