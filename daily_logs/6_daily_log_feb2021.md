@@ -1,4 +1,4 @@
- # February 2021 (Total minutes: 1,768)
+ # February 2021 (Total minutes: 1,971)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -12,6 +12,7 @@
 - [11th, Thu](#110221-thu)
 - [12th, Fri](#120221-fri)
 - [13th, Sat](#130221-sat)
+- [14th, Sun](#140221-sun)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -162,3 +163,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 That's a wrap for the written assessment preparation. I feel reasonably well prepared for the test. I hope I can manage my time effectively. That's my real concern here at the moment.
+
+##### 14/02/21 (Sun)
+__*Concepts covered*__<br/>
+- Revision
+  - Refactor code for formatting and `puts` method calls
+- RB129 Written Assessment
+
+__*Time spent*__<br/>
+203 minutes
+
+__*Thoughts*__<br/>
+Finished off the written test today. There definitely were a few more open ended questions here, as well as some questions which I thought were a bit hard to score out of 5 (they would either be 0 or 1, in my view). Hopefully I do reasonably well. 
