@@ -1,4 +1,4 @@
- # February 2021 (Total minutes: 1,971)
+ # February 2021 (Total minutes: 2,094)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -13,6 +13,7 @@
 - [12th, Fri](#120221-fri)
 - [13th, Sat](#130221-sat)
 - [14th, Sun](#140221-sun)
+- [15th, Mon](#150221-mon)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -175,3 +176,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Finished off the written test today. There definitely were a few more open ended questions here, as well as some questions which I thought were a bit hard to score out of 5 (they would either be 0 or 1, in my view). Hopefully I do reasonably well. 
+
+##### 15/02/21 (Mon)
+__*Concepts covered*__<br/>
+- Revision
+  - Blog post reading
+  - Talking through code examples
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+So I got my written assessment back already. The 100% train continues. Now I'm focused on being able to talk through my written assessment explanations. It's a pretty different skillset and I can tell already I'll need at least a week to talk through this stuff confidently.
