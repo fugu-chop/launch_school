@@ -224,7 +224,7 @@ end
 kitty = Cat.new
 kitty.legs                                  # => 4
 ```
-Sidenote: you can use `::` on classes, modules or constants. 
+Sidenote: you can use `::` on classes, modules or constants (but __not__ class variables or instance variables). 
 
 ### Module and Constant Interaction
 Unlike instance methods or instance variables, constants are __not evaluated at runtime__, so their lexical scope - or, where they are defined in the code - is very important.

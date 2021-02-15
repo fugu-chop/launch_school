@@ -5,6 +5,11 @@ OOP also allows us the flexibility to reuse and extend the functionality of code
 
 OOP also lets us think about the functionality at a higher level of abstraction, allowing programmers to plan and design very complex programs using objects represented as 'nouns', with methods as the 'verbs'.
 
+Benefits of OOP include:
+- Large, complex programs can be difficult to maintain due to dependencies throughout the program. OOP lets programmers write programs in which the different parts of the program interact, thus reducing dependencies and facilitating maintenance.
+- Coding in a non-OO way often means writing code that is useful solely within a single context. Defining basic classes and leveraging concepts like inheritance to introduce more detailed behaviors provides a greater level of reusability and flexibility.
+- Complex coding problems are often difficult to break down and solve in a clear and systematic way. Using OOP to model classes appropriate to the problem, and using real-world nouns to represent objects, lets programmers think at a higher level of abstraction that helps them break down and solve problems.
+
 #### What is encapsulation? How does encapsulation relate to the public interface of a class?
 Encapsulation is the hiding of functionality within our program from the rest of the code base. It is a form of data protection such that the state of an object cannot be changed without deliberate and obvious intent. 
 
@@ -610,7 +615,7 @@ Dog.new.legs
 # => 2
 ```
 #### What are constants? What do we need to be careful of when dealing with constants? *
-Constants are variables that should not have their value reassigned throughout the course of the program's operation (Ruby does allow reassignment of values, but will raise a warning). They can be identified by a variable name with a capital letter (though convention usually dictates that the entire variable name is in capital letters). Constants are accessible to both class and instance methods, and have lexical scope. Constants are also unique in that they can be referenced from other, unrelated classes by using the namespace resolution operator `::`.
+Constants are variables that should not have their value reassigned throughout the course of the program's operation (Ruby does allow reassignment of values, but will raise a warning). They can be identified by a variable name with a capital letter (though convention usually dictates that the entire variable name is in capital letters). Constants are accessible to both class and instance methods, and have lexical scope. Constants are also unique compared with class or instance variables in that they can be referenced from other, unrelated classes by using the namespace resolution operator `::`.
 
 This means that when Ruby encounters a method that requires evaluation of the constant, Ruby will look at the class or module where that method was defined for the definition of the constant, which can prove problematic if a constant is defined in a different class to where the method is defined.
 
