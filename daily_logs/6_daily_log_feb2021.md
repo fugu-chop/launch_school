@@ -1,4 +1,4 @@
- # February 2021 (Total minutes: 2,094)
+ # February 2021 (Total minutes: 2,213)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -14,6 +14,7 @@
 - [13th, Sat](#130221-sat)
 - [14th, Sun](#140221-sun)
 - [15th, Mon](#150221-mon)
+- [16th, Tue](#160221-tue)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -188,3 +189,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 So I got my written assessment back already. The 100% train continues. Now I'm focused on being able to talk through my written assessment explanations. It's a pretty different skillset and I can tell already I'll need at least a week to talk through this stuff confidently.
+
+##### 16/02/21 (Tue)
+__*Concepts covered*__<br/>
+- Revision
+  - Notes revision
+  - Talking through code examples
+
+__*Time spent*__<br/>
+119 minutes
+
+__*Thoughts*__<br/>
+Talking is hard. I get thirsty. It's also very different from writing answers because you don't get to retract statements or rephrase them. I'll continue to talk through my example answers until I'm much more fluid with them.
