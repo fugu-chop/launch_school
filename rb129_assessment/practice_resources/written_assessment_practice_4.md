@@ -160,7 +160,7 @@ ted.name
 # NoMethodError (undefined method `name' for #<Dog:0x00007fb2159cf8f0 @name="Teddy">)
 ```
 #### What is a collaborator object, and what is the purpose of using collaborator objects in OOP? *
-A collaborator object is any object that is assigned to an instance variable after an object is instantiated from a class. They are useful in helping programmers define associative relationships between different classes (e.g. "has-a" relationships), where those classes may not fit within a hierarchical, inheritance style relationship (e.g. "is-a" relationships).
+A collaborator object is any object that is assigned to an instance variable after an object is instantiated from a class. They are useful in helping programmers define associative relationships between different classes (e.g. "has-a" relationships), where those classes may not fit within a hierarchical, inheritance style relationship (e.g. "is-a" relationships). We can think of collaborator objects as lower levels of abstraction of the owner object whose class incorporates them.
 
 Collaborator objects allow us to achieve encapsulation, as behaviours can be kept specific to the relevant classes, and the interactions between these classes can be defined through collaborative relationships. The collaborative relationship only exists once the instance variables are initialised and values assigned to them.
 

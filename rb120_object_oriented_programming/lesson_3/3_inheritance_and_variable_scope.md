@@ -209,7 +209,7 @@ kitty.legs                                  # => NameError: uninitialized consta
 ```
 The error occurs here because Ruby is looking for `LEGS` within the `Cat` class. This is expected, since this is the same behavior as class or instance variables (except, referencing an uninitialised instance variable will return `nil`).
 
-But unlike class or instance variables, we can actually reach into the `Dog` class and reference the `LEGS` constant. In order to do so, we have to tell Ruby where the LEGS constant is using `::`, which is the namespace resolution operator.
+But unlike class or instance variables, we can actually reach into the `Dog` class and reference the `LEGS` constant. In order to do so, we have to tell Ruby where the `LEGS` constant is using `::`, which is the namespace resolution operator.
 ```ruby
 class Dog
   LEGS = 4
@@ -246,9 +246,9 @@ end
 a_car = Car.new
 a_car.change_tires                          # => NameError: uninitialized constant Maintenance::WHEELS
 ```
-The line `"Changing #{WHEELS} tires."` is in the `Maintenance` module, which is where Ruby will look for the `WHEELS` constant. Even though we call the `change_tires` method from the `a_car` object, Ruby is not able to find the constant.
+The line `"Changing #{WHEELS} tires."` is in the `Maintenance` module, which is where Ruby will look for the `WHEELS` constant. Even though we call the `change_tires` method from the `a_car` object, Ruby is not able to find the constant (since the `Maintenance` module itself does not subclass any classes with the `WHEELS` constant defined).
 
-Constant resolution will look at the __lexical scope first__, and then look at the inheritance hierarchy. It can get very tricky when there are nested modules, each setting the same constants to different values. 
+Constant resolution will look at the __lexical scope first__, and __then__ look at the _inheritance hierarchy_. It can get very tricky when there are nested modules, each setting the same constants to different values. 
 
 We can fix the above code with either of:
 ```ruby
