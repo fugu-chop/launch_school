@@ -524,7 +524,7 @@ Modules can also be used for namespacing, or grouping classes and methods togeth
 #### Why should methods in mixin modules be defined without using `self.` in the name? *
 Methods in mixin modules should not be defined using `self`. Typically, when `self` is used outside of an instance method definition, it refers to the class. If we use the `self` keyword in a method definition, it will refer to the class, creating a class method definition. 
 
-In the case of a module, `self` will refer to the module name. Thus even if we mix in a module to a class, attempting to call the method on the class which has the module mixed in will return a `NoMethodError`, since the method will look for the definition in the class which has the module mixed in (where it does not exist). Thus the only way to call the method would be to reference the module specifically, using the namespace resolution operator `::`.
+Even if we mix in a module to a class, attempting to call the method on the class which has the module mixed in will return a `NoMethodError`, since the *method definition explicitly defines the location of where to look for the method with `self`* - Ruby will only look for the definition in the class which has the module mixed in (where it does not exist). Thus the only way to call the method would be to reference the module specifically, using the namespace resolution operator `::`.
 
 In our example below, we define a `Walkable` module, with a method prepended with a `self` keyword, thus creating the equivalent of a 'class' method. However, when `self` is appended to a method definition, it refers to the class. In the below example, this refers to the module itself (`Walkable`) This means that even if we mix `Walkable` into other classes, the classes where `Walkable` is mixed in will never be able to call `walk`, since the class on which the method is defined is the `Walkable` module. We would only be able to call `walk` using the namespace resolution operator on the `Walkable` module.
 ```ruby
@@ -734,7 +734,7 @@ This output is not particularly useful for human consumption, so we often make u
 
 We could achieve this by defining a public `to_s` instance method within a class, which would enable the human readable implementation to be called on the object directly.
 
-In our example below, we define a custom `to_s` method on `lines 6-8` that override the `Object#to_s` method. This is why when we pass the object referenced by `davy` as an argument to the `puts` method call, the `@name` instance variable is returned, instead of the `Person` class name and an encoding of `davy`'s object id (since the `to_s` method is called automatically on the object passed by reference as an argument to the `puts` method).
+In our example below, we define a custom `to_s` method on `lines 6-8` that overrides the `Object#to_s` method. This is why when we pass the object referenced by `davy` as an argument to the `puts` method call, the `@name` instance variable is returned, instead of the `Person` class name and an encoding of `davy`'s object id (since the `to_s` method is called automatically on the object passed by reference as an argument to the `puts` method).
 ```ruby
 class Person
   def initialize(name)
