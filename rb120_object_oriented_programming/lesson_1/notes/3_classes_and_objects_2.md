@@ -224,3 +224,19 @@ From __within__ a class:
   2. `self`, __outside__ of an instance method, references the __class__ and can be used to define class methods (this also includes when `self` is used *within a class method*). Therefore if we were to define a `name` class method, `def self.name=(n)` is the same as `def GoodDog.name=(n)`.
 
 Thus, we can see that `self` is a way of being explicit about what our program is referencing and what our intentions are as far as behavior. `self` changes *depending on the scope it is used in*, so pay attention to see if you're inside an instance method or not. 
+
+When a method is called without an explicit `self`, the __implicit__ `self` is used, which is the value of the `self` keyword. In the following example, the `Person#full_name` method uses the values from `Person#first_name` and `Person#last_name`, but does not explicitly use `self` and relies on the value of the implicit `self`.
+```ruby
+class Person
+  attr_reader :first_name, :last_name
+ 
+  def initialize(first_name, last_name)
+    @first_name = first_name
+    @last_name = last_name
+  end
+ 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+end
+```
