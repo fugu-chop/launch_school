@@ -672,7 +672,7 @@ puts t.name
 The `self` keyword can change the way a method behaves, and it's meaning can change depending on the context which it is used. 
 - When used outside of an instance method definition, it refers to the class where it is used. This means that we can define methods on a class (i.e. class methods) by appending `self` to a method definition.
 - When used inside of an instance method definition, it refers to the calling object. This may have method access control implications if we attempt to append `self` to a private getter method (since we cannot call private methods directly on objects) on versions of Ruby prior to 2.7. There is no issue with using `self` on private *setter* methods, however (in fact we need to use `self` on private setter methods - otherwise Ruby will interpret the setter method call as a local variable assignment).
-- When referencing getter methods in other instance methods, there is an implicit `self` on the getter method call.
+- When referencing getter methods in other instance methods, there is an implicit `self` on the getter method call (this is how we can call private instance methods - by only using the implicit `self` and __not__ the explicit `self`).
 
 In our below example, we show a number of different usages of `self`. 
 

@@ -225,11 +225,9 @@ From __within__ a class:
 
 Thus, we can see that `self` is a way of being explicit about what our program is referencing and what our intentions are as far as behavior. `self` changes *depending on the scope it is used in*, so pay attention to see if you're inside an instance method or not. 
 
-When a method is called without an explicit `self`, the __implicit__ `self` is used, which is the value of the `self` keyword. In the following example, the `Person#full_name` method uses the values from `Person#first_name` and `Person#last_name`, but does not explicitly use `self` and relies on the value of the implicit `self`.
+When a method is called without an explicit `self`, the __implicit__ `self` is used, which is the value of the `self` keyword. In the following example, the `Person#full_name` method uses the values from `Person#first_name` and `Person#last_name`, but does not explicitly use `self` and relies on the value of the implicit `self`. The *implicit `self`* is how we call private methods from other methods (an *explicit* `self` on private methods in versions of Ruby prior to 2.7 will return a `NoMethodError`, even if `self` is referencing the same thing).
 ```ruby
 class Person
-  attr_reader :first_name, :last_name
- 
   def initialize(first_name, last_name)
     @first_name = first_name
     @last_name = last_name
@@ -238,5 +236,9 @@ class Person
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  private
+
+  attr_reader :first_name, :last_name
 end
 ```
