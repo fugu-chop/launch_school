@@ -1,4 +1,4 @@
- # February 2021 (Total minutes: 2,333)
+ # February 2021 (Total minutes: 2,453)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -16,6 +16,7 @@
 - [15th, Mon](#150221-mon)
 - [16th, Tue](#160221-tue)
 - [17th, Wed](#170221-wed)
+- [18th, Thu](#180221-thu)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -213,3 +214,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 More talking. I think by slowing down, I'm more able to articulate all the relevant points in an answer. A few more rounds of talking through the written answers and I'll be able to start incorporating code examples into my explanations.
+
+##### 18/02/21 (Thu)
+__*Concepts covered*__<br/>
+- Revision
+  - Study Group
+  - Talking through written answers
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I had another 3am study session, which went significantly better than last time - I was actually able to answer questions despite being half asleep. Not sure if I'm tired or something, but this afternoon I suddenly found it hard to recall answers to the written assessment practice questions. I've also booked in my interview assessment for RB129 in a week's time. That should be ample preparation.
