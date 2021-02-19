@@ -221,7 +221,7 @@ puts %(The author of "#{book.title}" is #{book.author}.)
 puts %(book = #{book}.)
 
 # 4b) What do you think of this way of creating and initializing Book objects? (The two steps are separate.) Would it be better to create and initialize at the same time like in the previous exercise? What potential problems, if any, are introduced by separating the steps?
-puts "Initialising an object by sequentially setting instance variables seems time consuming and prone to error - e.g. if the user had attempted to utilise the to_s instance method before setting either the title or author instance variables would have resulted in an error. This could be prevented by getting all this information upfront when the object is first initialised."
+puts "Initialising an object by sequentially setting instance variables seems time consuming and prone to error - e.g. if the user had attempted to utilise the to_s instance method before setting either the title or author instance variables would still enable the `title` and `author` instance methods to be called. However, because neither instance variable is initialised, these both return nil. Calling the String#to_s method nil objects return blank string objects. This could be prevented by getting all this information upfront when the object is first initialised."
 
 # 5) Complete this program so that it produces the expected output:
 =begin
@@ -261,7 +261,7 @@ class Person
   end
 
   def to_s
-    "#{@first_name.capitalize} #{@last_name.capitalize}"
+    "#{@first_name} #{@last_name}"
   end
 end
 
@@ -325,7 +325,7 @@ class Car
   end
 end
 
-# 8) Given the following class, write a class called Square that inherits from Rectangle:
+# 8)* Given the following class, write a class called Square that inherits from Rectangle:
 =begin
 class Rectangle
   def initialize(height, width)

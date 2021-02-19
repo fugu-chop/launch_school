@@ -55,8 +55,7 @@ class Machine
 
   private
 
-  attr_writer :switch
-  attr_reader :switch
+  attr_accessor :switch
 
   def flip_switch(desired_state)
     self.switch = desired_state
@@ -120,7 +119,7 @@ class FixedArray
   end
 
   def []=(idx, new_element)
-    # Use the method defined above to access IndexError via .fetch
+    # Use the method defined above to access IndexError via .fetch. Since it's not the last line of the method and there's no explicit return, it's a check done behind the scenes
     # Remember also this is just syntactical sugar for @arr.[](idx)
     self[idx]
     @arr[idx] = new_element
@@ -177,13 +176,13 @@ class Graduate < Student
   end
 
   def say_hello
-    super + " from a graduate student!"
+    super() + " from a graduate student!"
   end
 end
 
 class Undergraduate < Student
   def say_hello
-    super + " from an undergraduate student!"
+    super() + " from an undergraduate student!"
   end
 end
 
@@ -339,8 +338,6 @@ Your guess is too low.
 You have no more guesses. You lost!
 =end
 class GuessingGame
-
-
   def initialize
     @guesses = 7
     @correct_answer = (1..100).to_a.sample
@@ -493,8 +490,7 @@ puts cards.min.rank == 8
 puts cards.max.rank == 8
 =end
 class Card
-  NUM_RANKING = (('2'..'10').to_a +
-                %w(Jack Queen King Ace)).zip((2..14).to_a).to_h
+  NUM_RANKING = (('2'..'10').to_a + %w(Jack Queen King Ace)).zip((2..14).to_a).to_h
 
   attr_reader :rank, :suit
 
@@ -541,8 +537,7 @@ puts cards.max == Card.new(8, 'Spades')
 
 =end
 class Card
-  NUM_RANKING = (('2'..'10').to_a +
-                %w(Jack Queen King Ace)).zip((2..14).to_a).to_h
+  NUM_RANKING = (('2'..'10').to_a + %w(Jack Queen King Ace)).zip((2..14).to_a).to_h
   SUIT_RANKING = (%w(Diamonds Clubs Hearts Spades).zip((1..4).to_a)).to_h
 
   attr_reader :rank, :suit

@@ -457,6 +457,8 @@ miller_contracting.add(natasha) # => Employee added.
 
 miller_contracting.display_all_employees
 
+puts "In order to make this work, we can make serial_number a protected method. Recall that from outside the class, protected methods work just like private methods. From inside the class, however, protected methods are accessible and may be invoked with an explicit caller."
+
 # 5) You started writing a very basic class for handling files. However, when you begin to write some simple test code, you get a NameError. The error message complains of an uninitialized constant File::FORMAT. What is the problem and what are possible ways to fix it?
 =begin
 class File
@@ -906,6 +908,7 @@ class TaskManager
   end
 
   def display_high_priority_tasks
+    # We don't use self.tasks as that would change the value assigned to the @tasks instance variable
     high_priority_tasks = tasks.select do |task|
       task.priority == :high
     end
@@ -1145,6 +1148,10 @@ johns_postal_service  = PostalService.new('John', '47 Sunshine Ave.')
 ellens_postal_service = PostalService.new('Ellen', '860 Blackbird Ln.')
 
 puts johns_postal_service.send_mail(ellens_postal_service.street_address, Postcard.new('Greetings from Silicon Valley!'))
+
+puts "This is a case of accidental method overriding. On line 91, we intended to call Mailing#send, but since we forgot to include Mailing in PostalService, this does not happen. 
+
+Why does Ruby not complain that there is no method send? First it looks for send on the method lookup path, and it actually finds a method with this name in the Object class. So it calls Object#send, which expects a method name as the first argument. Since the first argument we provide, '860 Blackbird Ln.', is not the name of any method, we get an error."
 
 # 10) In order to test the case when authentication fails, we can simply set API_KEY to any string other than the correct key. Now, when using a wrong API key, we want our mock search engine to raise an AuthenticationError, and we want the find_out method to catch this error and print its error message API key is not valid. Is this what you expect to happen given the code? And why do we always get the following output instead?
 =begin

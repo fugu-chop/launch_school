@@ -197,7 +197,7 @@ end
 class Motorboat < SeaVessel
   def initialize(km_traveled_per_liter, liters_of_fuel_capacity)
     # In the SeaVessel class, the initialize method takes two additional arguments in addition to those provided on initialisation here
-    # We are calling SeaVessel#initialize and autofilling two of those arguments (We don't have to define them within Motorboat#initialize)
+    # We are calling SeaVessel#initialize and autofilling two of those arguments (We don't have to define them within Motorboat#initialize as we don't expect the user to provide these when calling the method)
     super(1, 1, km_traveled_per_liter, liters_of_fuel_capacity)
   end
 end
@@ -383,11 +383,11 @@ myObj = MyCustomClass.new
 
 myObj.class.ancestors
 # Note that the ancestors method is available on the class of the object, which comes from `Class`
-# returns [MyCustomClass, Object, Kernel, BasicObject]
+# => [MyCustomClass, Object, Kernel, BasicObject]
 
 MyCustomClass.class.ancestors
 # Note that MyCustomClass is an object - an instance of the `Class` class
-# returns [Class, Module, Object, Kernel, BasicObject]
+# => [Class, Module, Object, Kernel, BasicObject]
 ```
 ### More modules
 The first use case we'll discuss is using modules for __namespacing__. In this context, __namespacing__ means *organizing similar classes under a module*. In other words, we'll use modules to group related classes. 

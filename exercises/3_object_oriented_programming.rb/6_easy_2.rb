@@ -1,4 +1,4 @@
-# 1) Correct the following program so it will work properly. Assume that the Customer and Employee classes have complete implementations; just make the smallest possible change to ensure that objects of both types have access to the print_address method.
+# 1)* Correct the following program so it will work properly. Assume that the Customer and Employee classes have complete implementations; just make the smallest possible change to ensure that objects of both types have access to the print_address method.
 =begin
 module Mailable
   def print_address
@@ -65,7 +65,7 @@ end
 bobs_car = Car.new
 bobs_car.drive
 
-# 3) Modify the House class so that the above program will work. You are permitted to define only one new method in House.
+# 3)* Modify the House class so that the above program will work. You are permitted to define only one new method in House.
 =begin
 class House
   attr_reader :price
@@ -194,7 +194,7 @@ else
   puts 'Bill and Penny have the same amount of money.'
 end
 
-# 7) Write the classes and methods that will be necessary to make this code run, and print the following output. The order of the output does not matter, so long as all of the information is presented.
+# 7)* Write the classes and methods that will be necessary to make this code run, and print the following output. The order of the output does not matter, so long as all of the information is presented.
 =begin
 butterscotch = Pet.new('cat', 'Butterscotch')
 pudding      = Pet.new('cat', 'Pudding')
@@ -442,7 +442,7 @@ class Cheetah
   end
 end
 
-# 10) We need a new class Noble that shows the title and name when walk is called. We must have access to both name and title because they are needed for other purposes that we aren't showing here.
+# 10)* We need a new class Noble that shows the title and name when walk is called. We must have access to both name and title because they are needed for other purposes that we aren't showing here.
 =begin
 byron = Noble.new("Byron", "Lord")
 p byron.walk
