@@ -1,4 +1,4 @@
- # February 2021 (Total minutes: 2,453)
+ # February 2021 (Total minutes: 2,570)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -17,6 +17,7 @@
 - [16th, Tue](#160221-tue)
 - [17th, Wed](#170221-wed)
 - [18th, Thu](#180221-thu)
+- [19th, Fri](#190221-fri)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -226,3 +227,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I had another 3am study session, which went significantly better than last time - I was actually able to answer questions despite being half asleep. Not sure if I'm tired or something, but this afternoon I suddenly found it hard to recall answers to the written assessment practice questions. I've also booked in my interview assessment for RB129 in a week's time. That should be ample preparation.
+
+##### 19/02/21 (Fri)
+__*Concepts covered*__<br/>
+- Revision
+  - Code revisions
+  - Talking through written answers
+
+__*Time spent*__<br/>
+117 minutes
+
+__*Thoughts*__<br/>
+Going through even very basic code examples (like the practice problems) is helpful - in preparing for the written assessment, I've been so railroaded into specific examples demonstrating principles that I've become overly reliant on them. The basic code examples are helpful for consolidating concepts that have become overly restricted through my preparations.
