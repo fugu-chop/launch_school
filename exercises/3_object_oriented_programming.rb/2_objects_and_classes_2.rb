@@ -13,7 +13,7 @@ end
 
 Cat.generic_greeting
 
-# 2) Using the following code, add an instance method named #rename that renames kitty when invoked.
+# 2) * Using the following code, add an instance method named #rename that renames kitty when invoked.
 =begin
 class Cat
   attr_accessor :name
@@ -36,6 +36,7 @@ class Cat
   end
 
   def rename(new_name)
+    # self is necessary to call the setter method defined elsewhere
     self.name = new_name
   end
 end
@@ -182,7 +183,7 @@ end
 kitty = Cat.new('Sophie')
 puts kitty
 
-# 8) Using the following code, create a class named Person with an instance variable named @secret. Use a setter method to add a value to @secret, then use a getter method to print @secret.
+# 8) * Using the following code, create a class named Person with an instance variable named @secret. Use a setter method to add a value to @secret, then use a getter method to print @secret.
 =begin
 person1 = Person.new
 person1.secret = 'Shh.. this is a secret!'
@@ -244,11 +245,13 @@ person2 = Person.new
 person2.secret = 'Shh.. this is a different secret!'
 
 puts person1.compare_secret(person2)
+# => false
 =end
 class Person
   attr_writer :secret
 
   def compare_secret(other_secret)
+    # Using the String#== method
     secret == other_secret.secret
   end
 

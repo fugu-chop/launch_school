@@ -62,7 +62,7 @@ class Machine
   end
 end
 
-# 2) A fixed-length array is an array that always has a fixed number of elements. Write a class that implements a fixed-length array, and provides the necessary methods to support the following code:
+# 2) * A fixed-length array is an array that always has a fixed number of elements. Write a class that implements a fixed-length array, and provides the necessary methods to support the following code:
 =begin
 fixed_array = FixedArray.new(5)
 puts fixed_array[3] == nil
@@ -151,10 +151,6 @@ class Graduate < Student
 end
 
 class Undergraduate < Student
-  # Since we have a restriction of altering no more than 5 lines of code, we call super. Otherwise we could just dump the initialize method
-  def initialize(name, year)
-    super
-  end
 end
 
 # 3b) There is one other "form" of the keyword super. We can call it as super(). This calls the superclass method of the same name as the calling method, but here no arguments are passed to the superclass method at all. Can you think of a way to use super() in another Student related class?

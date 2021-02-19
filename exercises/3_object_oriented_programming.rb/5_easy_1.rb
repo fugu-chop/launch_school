@@ -147,7 +147,7 @@ puts name
 =end
 puts "On line 1, we initialise a local variable 42 and assign the integer object 42 to it. On line 2, we instantiate a new object from the Pet class, passing in the integer object 42 to the method parameter name, and assign it to the fluffy local variable. When this object is created, the initialize method is immediately called, which in our implementation, calls the Object#to_s method on the integer object 42.
 
-The object referenced by the local variable name is not linked in a deeper fashion to the object referenced by fluffy. Once the object has been instantiated from the Pet class, it does not update if the object passed to it on initialisation changes."
+The object referenced by the local variable name is not linked in a deeper fashion to the object referenced by fluffy. Once the object has been instantiated from the Pet class, it does not update if the object passed to it on initialisation changes, since state is encapsulated within objects."
 
 # 3) Complete this program so that it produces the expected output:
 =begin
@@ -325,7 +325,7 @@ class Car
   end
 end
 
-# 8)* Given the following class, write a class called Square that inherits from Rectangle:
+# 8) * Given the following class, write a class called Square that inherits from Rectangle:
 =begin
 class Rectangle
   def initialize(height, width)

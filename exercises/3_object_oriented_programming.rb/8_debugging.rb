@@ -43,7 +43,7 @@ community_library.check_in(wrinkle_in_time)
 
 community_library.books.display_data
 =end
-puts "The error occurs because the Library class does not have a display_data method. We could use the display_data method in the Book class within another method in the Library class. We would need to iterate through each book object contained in the @book instance variable and call the display_data method on it."
+puts "The error occurs because we are attempting to call the display_data method on an array (return value of the books instance method). We could use the display_data method in the Book class within another method in the Library class. We would need to iterate through each book object contained in the @book instance variable and call the display_data method on it."
 
 class Library
   attr_accessor :address, :phone, :books
@@ -795,7 +795,7 @@ puts "In Ruby, setter methods always return the argument that was passed in, eve
 
 Because of this behavior, the invocation of balance= on line 21 of the original code will have a truthy return value even when our setter method does not re-assign @balance; it will never return false."
 
-# 8) Valentina is using a new task manager program she wrote. When interacting with her task manager, an error is raised that surprises her. Can you find the bug and fix it?
+# 8) * Valentina is using a new task manager program she wrote. When interacting with her task manager, an error is raised that surprises her. Can you find the bug and fix it?
 =begin
 class TaskManager
   attr_reader :owner

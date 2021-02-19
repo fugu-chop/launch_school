@@ -34,7 +34,7 @@ puts truck1.year
 car1 = Car.new(2006)
 puts car1.year
 
-# 2)* Change the following code so that creating a new Truck automatically invokes #start_engine.
+# 2) * Change the following code so that creating a new Truck automatically invokes #start_engine.
 =begin
 class Vehicle
   attr_reader :year
@@ -292,7 +292,7 @@ bird1.color
 =end
 puts "The method lookup path for the color method invocation is the Bird class, then the Flyable module, then the Animal Class. The method lookup stops at the Animal class as this is where the method can be found."
 
-# 10)* Create a module named Transportation that contains three classes: Vehicle, Truck, and Car. Truck and Car should both inherit from Vehicle.
+# 10) * Create a module named Transportation that contains three classes: Vehicle, Truck, and Car. Truck and Car should both inherit from Vehicle.
 module Transportation
   class Vehicle
   end
