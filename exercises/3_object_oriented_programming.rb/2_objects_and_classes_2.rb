@@ -147,7 +147,7 @@ class Cat
   end
 
   def greet
-    puts "Hello! My name is #{@name} and I'm a #{COLOR} cat!"
+    puts "Hello! My name is #{@name} and I'm a #{self.class::COLOR} cat!"
   end
 end
 
@@ -193,6 +193,7 @@ class Person
 end
 
 person1 = Person.new
+# The setter method simultaneously initialises an instance variable and assigns a value to it
 person1.secret = 'Shh.. this is a secret!'
 puts person1.secret
 

@@ -290,7 +290,7 @@ end
 bird1 = Bird.new('Red')
 bird1.color
 =end
-puts "The method lookup path for the color method invocation is the Cat class, then the Flyable module, then the Animal Class. The method lookup stops at the Animal class as this is where the method can be found."
+puts "The method lookup path for the color method invocation is the Bird class, then the Flyable module, then the Animal Class. The method lookup stops at the Animal class as this is where the method can be found."
 
 # 10) Create a module named Transportation that contains three classes: Vehicle, Truck, and Car. Truck and Car should both inherit from Vehicle.
 module Transportation
@@ -298,8 +298,18 @@ module Transportation
   end
 
   class Truck < Vehicle
+    def greet
+      "Hello!"
+    end
   end
 
   class Car < Vehicle
+  end
+end
+
+class Thing
+  def initialize
+    # We don't need to use include when we reference classes & methods defined within a module
+    puts Transportation::Truck.new.greet
   end
 end

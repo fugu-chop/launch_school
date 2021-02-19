@@ -82,7 +82,7 @@ class Person
   attr_accessor :first_name
   attr_writer :last_name
 
-  # Public methods, like first_equals_last?, can be used to access @last_name through the private accessor method. If we don't set a reader method, then the public method will not be able to reference the return value of last_name (since there is no getter method defined to return a value).
+  # Public methods, like first_equals_last?, can be used to access @last_name through the private accessor method. If we don't set a reader method, then the method will not be able to reference the return value of last_name (since there is no getter method defined to return a value) - otherwise we can reference the instance variable directly.
   def first_equals_last?
     first_name == last_name
   end

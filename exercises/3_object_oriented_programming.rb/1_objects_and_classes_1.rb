@@ -4,9 +4,9 @@ puts "Hello"
 puts 5
 puts [1, 2, 3]
 =end
-'Hello'.class
-5.class
-[1, 2, 3].class
+puts 'Hello'.class
+puts 5.class
+puts [1, 2, 3].class
 
 # 2) Create an empty class named Cat.
 class Cat
@@ -69,8 +69,6 @@ kitty.greet
 
 # 8) Using the code from the previous exercise, add a setter method named #name. Then, rename kitty to 'Luna' and invoke #greet again.
 class Cat
-  attr_accessor :name
-
   def initialize(name)
     @name = name
   end
