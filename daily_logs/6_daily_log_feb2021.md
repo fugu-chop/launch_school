@@ -1,4 +1,4 @@
- # February 2021 (Total minutes: 2,570)
+ # February 2021 (Total minutes: 2,744)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -18,6 +18,7 @@
 - [17th, Wed](#170221-wed)
 - [18th, Thu](#180221-thu)
 - [19th, Fri](#190221-fri)
+- [20th, Sat](#200221-sat)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -232,10 +233,21 @@ I had another 3am study session, which went significantly better than last time 
 __*Concepts covered*__<br/>
 - Revision
   - Code revisions
-  - Talking through written answers
 
 __*Time spent*__<br/>
 117 minutes
 
 __*Thoughts*__<br/>
 Going through even very basic code examples (like the practice problems) is helpful - in preparing for the written assessment, I've been so railroaded into specific examples demonstrating principles that I've become overly reliant on them. The basic code examples are helpful for consolidating concepts that have become overly restricted through my preparations.
+
+##### 20/02/21 (Sat)
+__*Concepts covered*__<br/>
+- Revision
+  - Code revisions
+  - Note revision
+
+__*Time spent*__<br/>
+174 minutes
+
+__*Thoughts*__<br/>
+Today was another day of just reading through code examples and previous notes. Positively, I'm not picking up as much 'new' or unfamiliar materials when I'm revising. I'm getting there!
