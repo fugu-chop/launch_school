@@ -547,7 +547,9 @@ abc2 = Abc.new(8)
 puts abc1.add(abc2)
 # => 13
 ```
-This code works because `get_val` is protected -- it lets the `abc1` instance access the `get_val` method in the `abc2` instance. Had `get_val` been declared as `private`, then this code would fail because an object (`abc1` here) __can't access a private method from any other object__ - they can only access `get_val` (prior to Ruby 2.7, we would have to remove the `self.` prefix), not `other.get_val`. When a method is private, only the *class* - __not__ *instances* of the class - can access it. 
+This code works because `get_val` is protected -- it lets the `abc1` instance access the `get_val` method in the `abc2` instance. Had `get_val` been declared as `private`, then this code would fail because an object (`abc1` here) __can't access a private method from any other object__ - they can only access `get_val` (prior to Ruby 2.7, we would have to remove the `self.` prefix), not `other.get_val`. 
+
+When a method is `private`, only the *class* - __not__ *instances* of the class - can access it. When a method is `protected`, we can still use the `self` literal to call that protected method. 
 
 Had `get_val` been declared as public, then this code would work, but anyone could call `abc1.get_val`, which may not be desired. A protected method can be __called by any instance of the class__ - either `self` or some other object of the same type.
 

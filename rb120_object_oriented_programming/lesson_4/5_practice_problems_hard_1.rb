@@ -89,7 +89,7 @@ class WheeledVehicle
 
   def initialize(tire_array, km_traveled_per_liter, liters_of_fuel_capacity)
     @tires = tire_array
-    # We can also use @fuel_*, but since we defined the setter methods in the Moveable module, we should use them
+    # We can also use @fuel_* instance variables, but since we defined the setter methods in the Moveable module, we should use them
     self.fuel_efficiency = km_traveled_per_liter
     self.fuel_capacity = liters_of_fuel_capacity
   end

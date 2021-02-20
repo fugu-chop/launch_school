@@ -158,7 +158,7 @@ In this example, you can see that the `Book` object `book_1` is not added to the
 
 Note: You can also see from this example that `book_1` has a title; `@title` is a _String object collaborator_ of objects of the `Book` class, which is made explicit in the `Book#initialize` method.
 
-The `@books` object is technically an `Array`. However, the array is just a way to organize and store the `Book` objects that will fill it, providing us with a number of `Array` methods with which to interact with our collection of books. *It is the relationship between `Library` and `Books` that is meaningful in terms of the design of our program*, not the relationship between Library and Array.
+The `@books` object is technically an `Array`. However, the array is just a way to organize and store the `Book` objects that will fill it, providing us with a number of `Array` methods with which to interact with our collection of books. *It is the relationship between `Library` and `Books` that is meaningful in terms of the design of our program*, not the relationship between `Library` and `Array.`
 
 Collaboration occurs when one object is __added to the state of another object__ (i.e., when a method is invoked on an object). In our previous example above, collaboration occurs when we define the `BullDog` class, and add it to the `@pets` instance variable.
 

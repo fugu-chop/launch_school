@@ -92,7 +92,7 @@ class Wedding
   attr_reader :guests, :flowers, :songs
 
   # self refers to an object instantiated from the Wedding class
-  # w = Wedding.new => w.prepare(Chef) => Chef.prepare_wedding(w) via the w.prepare instance method
+  # w = Wedding.new => w.prepare(Chef.new) => Chef.new.prepare_wedding(w) via the w.prepare instance method
   def prepare(preparers)
     preparers.each do |preparer|
       preparer.prepare_wedding(self)

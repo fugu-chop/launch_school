@@ -20,7 +20,7 @@ We would use _instance variables_ to track this information. This should tell yo
 
 Even though they're two different objects, both `"Fido"` and `"Sparky"` are still objects (or instances) of class `GoodDog` and contain identical behaviors. For example, both `GoodDog` objects should be able to `bark`, `run`, `fetch`, and perform other common behaviors of good dogs. We define these behaviors as __instance methods in a class__. Instance methods defined in a class are available to objects (or instances) of that class.
 
-In summary, instance *variables* keep track of __state__, and instance *methods* expose __behavior__ for objects. State *sets or determines the attributes* of an object. We can think of the _instance variables themselves_ as the __attributes__ (which are shared by __all objects__ of that class) and the *actual objects* referenced by those instance variables as the _state_ (which is specific to each object). 
+In summary, instance *variables* keep track of __state__, and instance *methods* expose __behavior__ for objects.
 
 ### Attributes versus State
 Another useful mental model is that classes don't define instance variables, they _define attributes_ (since attributes are getter/setter methods that can be inherited). Note that the instance name and variable __behind__ the attribute are not inherited - these are defined when an object is instantiated from the class and are unique to each object.
@@ -196,7 +196,7 @@ sparky.set_name = "Spartacus"
 puts sparky.get_name
 # => "Spartacus"
 ```
-Note that in Ruby, setter methods always return the _argument that was passed in_, even when you add an explicit return statement, or mutate the argument within the method body.
+Note that in Ruby, setter methods always return the _argument that was passed in_, even when you add an explicit `return` statement, or mutate the argument within the method body.
 
 The first thing you should notice about the setter method `set_name=` is that Ruby gives us a special syntax to use it. 
 
@@ -344,7 +344,7 @@ sparky.change_info('Spartacus', '24 inches', '45 lbs')
 puts sparky.info
 # => "Spartacus weighs 45 lbs and is 24 inches tall."
 ```
-### Calling methods with self
+### Calling methods with `self`
 Just like when we replaced accessing the instance variable directly with getter methods, we'd also like to do the same with our setter methods. Let's change the implementation of the `change_info` method to this:
 ```ruby
 def change_info(n, h, w)
