@@ -84,7 +84,7 @@ class Musician
   end
 end
 ```
-If you change anything within those classes that impacts `Wedding#prepare`, you need to refactor the method. For instance, if we need to add another wedding preparer, we must add another case statement. Before long, the method will become long and messy.
+If you change anything within those classes that impacts `Wedding#prepare`, you need to refactor the method. For instance, if we need to add another wedding preparer, we must add another `case` statement. Before long, the method will become long and messy.
 
 We can clean up the code using duck-typing:
 ```ruby
@@ -92,7 +92,7 @@ class Wedding
   attr_reader :guests, :flowers, :songs
 
   # self refers to an object instantiated from the Wedding class
-  # w = Wedding.new => w.prepare(Chef.new) => Chef.new.prepare_wedding(w) via the w.prepare instance method
+  # w = Wedding.new => w.prepare(Chef.new) => Chef.new.prepare_wedding(w) => Chef.new.prepare_food(w.guests) via the w.prepare instance method
   def prepare(preparers)
     preparers.each do |preparer|
       preparer.prepare_wedding(self)

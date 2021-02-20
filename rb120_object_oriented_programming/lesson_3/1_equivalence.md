@@ -29,7 +29,7 @@ str2.equal? str1_copy   # => false
 
 Ruby gives the `==` method a special syntax to make it look like a normal operator. For example, instead of calling the method as `str1.==(str2)`, we can use the more natural syntax `str1 == str2`. Both options are functionally equivalent. 
 
-Since it's an instance method, the answer to "how does == know what value to use for comparison" is: it's _determined by the class_.
+Since it's an instance method, the answer to "how does `==` know what value to use for comparison" is: it's _determined by the class_.
 
 The original `==` method is defined in the `BasicObject` class, which is the _parent class for all classes_ in Ruby. This implies __every object in Ruby__ has a `==` method. However, each class should define the `==` method to specify the value to compare, since the default implementation is to compare whether the two __objects__ are the same, which is a much more strict definition.
 ```ruby

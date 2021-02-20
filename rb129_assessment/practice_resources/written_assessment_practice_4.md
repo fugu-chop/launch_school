@@ -524,7 +524,7 @@ Modules can also be used for namespacing, or grouping classes and methods togeth
 #### Why should methods in mixin modules be defined without using `self.` in the name? *
 Methods in mixin modules should not be defined using `self`. Typically, when `self` is used outside of an instance method definition, it refers to the class. If we use the `self` keyword in a method definition, it will refer to the class, creating a class method definition. 
 
-Even if we mix in a module to a class, attempting to call the method on the class which has the module mixed in will return a `NoMethodError`, since the *method definition explicitly defines the location of where to look for the method with `self`* - Ruby will only look for the definition in the class which has the module mixed in (where it does not exist). Thus the only way to call the method would be to reference the module specifically, using the namespace resolution operator `::`.
+Even if we mix in a module to a class, attempting to call the method on the class which has the module mixed in will return a `NoMethodError`, since through the `self` keyword, have directly defined the method *on the module*. When we call the class method, we need to specify the class in which the method was defined. Ruby will then look for the class method definition in the class from which the object was instantiated (where it does not exist). Thus the only way to call the method would be to reference the module specifically, using the namespace resolution operator `::`.
 
 In our example below, we define a `Walkable` module, with a method prepended with a `self` keyword, thus creating the equivalent of a 'class' method. However, when `self` is appended to a method definition, it refers to the class. In the below example, this refers to the module itself (`Walkable`) This means that even if we mix `Walkable` into other classes, the classes where `Walkable` is mixed in will never be able to call `walk`, since the class on which the method is defined is the `Walkable` module. We would only be able to call `walk` using the namespace resolution operator on the `Walkable` module.
 ```ruby
@@ -671,7 +671,8 @@ puts t.name
 #### What is the self keyword? How do we use it? *
 The `self` keyword can change the way a method behaves, and it's meaning can change depending on the context which it is used. 
 - When used outside of an instance method definition, it refers to the class where it is used. This means that we can define methods on a class (i.e. class methods) by appending `self` to a method definition.
-- When used inside of an instance method definition, it refers to the calling object. This may have method access control implications if we attempt to append `self` to a private getter method (since we cannot call private methods directly on objects) on versions of Ruby prior to 2.7. There is no issue with using `self` on private *setter* methods, however (in fact we need to use `self` on private setter methods - otherwise Ruby will interpret the setter method call as a local variable assignment).
+- When used inside of an instance method definition, it refers to the calling object. This may have method access control implications if we attempt to append `self` to a private getter method (since we cannot call private methods directly on objects) on versions of Ruby prior to 2.7. There is no issue with using `self` on private *setter* methods, however (in fact we need to use `self` on all setter methods - otherwise Ruby will interpret the setter method call as a local variable assignment).
+  - We can use `self` to reference public and protected getter methods.
 - When referencing getter methods in other instance methods, there is an implicit `self` on the getter method call (this is how we can call private instance methods - by only using the implicit `self` and __not__ the explicit `self`).
 
 In our below example, we show a number of different usages of `self`. 
@@ -760,7 +761,7 @@ The concept of equivalence in Ruby can have two meanings:
 1. Whether the value of two objects are the same
 2. Whether the two objects occupy the same space in memory.
 
-In Ruby, the `BasicObject#==` method compares whether two objects occupy the same space in memory (i.e. are the same object). However, most classes have their own implementation of the `==` method that overrides the `BasicObject#==` implementation in favour of comparing the values of two objects (e.g. `String#==`, `Array#==`). 
+In Ruby, the `BasicObject#==` method compares whether two objects occupy the same space in memory (i.e. are the same object). However, most classes have their own implementation of the `==` method that overrides the `BasicObject#==` implementation in favour of comparing the values of two objects (e.g. `String#==`, `Array#==`). `Integer` and `Symbol` `#==` methods do the same thing; however in Ruby, if an `Integer` or `Symbol` object have the same value, they are also the same object (this is a performance optimisation concern though).
 
 However, the `Object#equal?` method does compare whether two objects occupy the same space in memory, and is seldom overridden by custom methods within classes, as this is a consistent way of comparing object identities. 
 

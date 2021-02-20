@@ -73,7 +73,7 @@ sparky = GoodDog.new("Sparky")
 paws = Cat.new
 
 puts sparky.speak
-Sparky says arf!
+# => Sparky says arf!
 
 puts paws.speak
 # => Hello!

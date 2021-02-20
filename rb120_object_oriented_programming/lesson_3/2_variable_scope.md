@@ -69,7 +69,7 @@ bob = Person.new
 bob.get_name
 # => nil
 ```
-With a *class instance variable* (__not__ on an instance of that class) you can store something common to that class __without having sub-classes automatically also get them__ (and vice-versa). With *class variables*, you have the convenience of not having to write `self.class` from an instance object, and (when desirable) you also get automatic sharing throughout the class hierarchy.
+With a *class instance variable* (__not__ on an instance of that class) you can store something common to that class __without having sub-classes automatically also get them__ (and vice-versa). With *class variables*, you have the convenience of not having to write `self.class` from an instance object, and (when desirable) you also get automatic sharing among objects of the same class.
 ```ruby
 # Class Instance Variable
 class Parent
@@ -99,7 +99,6 @@ p mom.things
 #=> [:car]
 p dad.things
 #=> [:car]
-
 
 # Class Variable
 class Parent

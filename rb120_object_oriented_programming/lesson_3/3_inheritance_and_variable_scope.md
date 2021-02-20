@@ -189,7 +189,7 @@ end
 
 `Triangle.new.sides` always returns a value of `3` since upon initialising a `Triangle` object, the `initialize` method overwrites anything else `@@sides` might have been set to, ensuring that the return value is `3`. If we call `Quadrilateral.sides` at this stage, this will return `3` as well. 
 
-Otherwise, `Triangle.sides` can sometimes return a value of `4`, as if we instantiate a `Quadrilateral` object without instantiating a `Triangle` object, that object will overwrite the class variable `@@sides`, which the `Triangle` class would be referencing. 
+Otherwise, `Triangle.sides` can sometimes return a value of `4`, as if we instantiate a `Quadrilateral` object after instantiating a `Triangle` object (or without instantiating a `Triangle` object), that object will overwrite the class variable `@@sides`, which the `Triangle` class would be referencing. 
 
 ### Constants
 Constants can be accessed from instance or class methods when defined within a class. However, they _cannot_ be referenced if defined in a __different__ class, unless we use the *namespace resolution operator*, `::`. The namespace resolution operator enables us to look in a different scope (i.e. outside of the immediate class scope where the constant is referenced).

@@ -123,7 +123,7 @@ bob.pets.each do |pet|
   pet.jump
 end
 ```
-Because the `@pets` variable is referencing an array, we cannot simply call the `jump` method on the array. We need to iterate through the array, and call the `jump` method on each of the objects in the array.
+Because the `@pets` variable is referencing an array, we cannot simply call the `jump` method on the array (the `Array` class in Ruby does not have a `jump` method). We need to iterate through the array, and call the `jump` method on each of the objects in the array.
 
 ### When does collaboration occur?
 Sometimes, the class definition may just define a setter or other instance method, but the collaborator object does not become part of the primary object’s state _until the setter or instance method is invoked elsewhere_, outside of the class definition.
