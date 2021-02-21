@@ -25,7 +25,7 @@ When instantiated from a class, an object is able to access the methods that wer
 Objects can also have instance variables with assigned values after instantiation. These instance variables and their assigned values constitute the state of an object. State is unique to an object (i.e. state is not shared between different objects instantiated from the same class), and cannot be inherited, as it can only exists after objects are instantiated from a class (only classes can inherit from other classes).
 
 #### What is an instance variable, and how is it related to an object? *
-An instance variable is a variable initialised after an object is instantiated. They are identified by the `@` symbol prepended to the variable name.
+An instance variable is a *variable initialised after an object is instantiated*. They are identified by the `@` symbol prepended to the variable name.
 
 Instance variables are scoped at an object level, and are accessible to instance methods within an object, regardless of where they are defined. However, they are not accessible outside of an object, unless an explicit getter or setter method is defined in the class. 
 
@@ -320,7 +320,7 @@ Greyhound.identify
 #### What is polymorphism? *
 Polymorphism describes the ability of different objects to respond to a common interface (i.e. method). It enables code to be flexible and reusable, reducing the amount of repetition that is required in our code. Polymorphism can be implemented through mixing in modules, method overriding, duck-typing and inheritance (to name a few). 
 
-Polymorphism can act as an opposite counterpart to encapsulation - encapsulation is concerned with reducing functionality of objects, while polymorphism extends functionality to reduce repetition and improve flexibility. This is often a tradeoff that must be made in the program design.
+*Polymorphism can act as an opposite counterpart to encapsulation - encapsulation is concerned with reducing functionality of objects, while polymorphism extends functionality to reduce repetition and improve flexibility. This is often a tradeoff that must be made in the program design.*
 
 In our below example, we define an `Animal` class, which superclasses the `Dog`, `Bird` and `Turtle` class. As such, objects instantiated from each of those subclasses will have access to the `speak` and `move` instance methods defined in the `Animal` class (class inheritance), despite being different objects. However, the `Dog` class has it's own implementation of the `speak` method; an example of method overriding (a type of polymorphism).
 
@@ -372,7 +372,7 @@ Party.new.party([Dog.new, Bird.new, Turtle.new])
 # => [#<Dog:0x00007fd2998561c8>, #<Bird:0x00007fd2998560b0>, #<Turtle:0x00007fd299856088>]
 ```
 #### What is inheritance? *
-Inheritance is a mechanism that allows classes to access methods from classes higher in an hierarchical chain. Classes can inherit methods from a single superclass, which gives them access to methods defined in that superclass without having to explicitly define those methods in the subclass.
+Inheritance is a mechanism that allows classes to access methods from classes higher in an hierarchical chain. Classes can inherit methods from a single superclass, which gives them access to methods defined in that superclass without having to explicitly define those methods in the subclass. *Note that a class can only inherit from a single other class.*
 
 Inheritance enables us to model classes that fit a hierarchical relationship (i.e. "is-a" relationships between classes) and reduce the amount of repeated code in our program. We can make a class inherit from another class by adding a `<` symbol next to a class definition, followed by the name of the class from which it should inherit methods from.
 
@@ -517,7 +517,7 @@ puts Dog.new.speak
 # => nil
 ```
 #### What is a module? When would we use a module? (classes and methods, or just methods?)
-A module can be a grouping of methods that can be mixed into classes, allowing those classes to access the methods defined in the module. Modules are a way that we can implement polymorphism into our code, since any number of modules can be mixed into any class (there is no requirement that classes be related to each other), though objects cannot be instantiated from modules. 
+A module can be a grouping of methods that can be mixed into classes, allowing those classes to access the methods defined in the module. Modules are a way that we can implement polymorphism into our code, since *any number of modules can be mixed into any class* (there is no requirement that classes be related to each other), though objects cannot be instantiated from modules.
 
 Modules can also be used for namespacing, or grouping classes and methods together. Namespacing assists in organising code, as well as preventing naming conflicts where methods may have the same name across different classes by allowing us to reference which class a module method comes from, with the namespace resolution operator `::`.
 
@@ -575,7 +575,7 @@ puts Dog.new.speak
 # => nil
 ```
 #### What are class variables? Why is it not recommended to use them? *
-A class variable is a variable scoped at the class level. It can be identified by the `@@` symbols preceding the variable name and is initialised when the class is evaluated by Ruby. Class variables are accessible to both class and instance methods, regardless of where a class variable is defined. 
+A class variable is a variable scoped at the class level. It can be identified by the `@@` symbols preceding the variable name and is *initialised when the class is evaluated by Ruby. Class variables are accessible to both class and instance methods, regardless of where a class variable is defined*.
 
 They can be useful when tracking data that is not linked to the state of objects, but can prove problematic for the fact that all instances of the class where the class variable was defined (and subclasses of that class, and objects instantiated from those subclasses) share a single copy of that class variable, meaning that any change to the class variable across any of those classes or objects will mean that change will be reflected across all of the subclasses and objects instantiated from the class and subclasses.
 
@@ -615,7 +615,7 @@ Dog.new.legs
 # => 2
 ```
 #### What are constants? What do we need to be careful of when dealing with constants? *
-Constants are variables that should not have their value reassigned throughout the course of the program's operation (Ruby does allow reassignment of values, but will raise a warning). They can be identified by a variable name with a capital letter (though convention usually dictates that the entire variable name is in capital letters). Constants are accessible to both class and instance methods, and have lexical scope. Constants are also unique compared with class or instance variables in that they can be referenced from other, unrelated classes by using the namespace resolution operator `::`.
+Constants are variables that should not have their value reassigned throughout the course of the program's operation (Ruby does allow reassignment of values, but will raise a warning). They can be identified by a variable name with a capital letter (though convention usually dictates that the entire variable name is in capital letters). *Constants are accessible to both class and instance methods*, and have lexical scope. Constants are also unique compared with class or instance variables in that they can be referenced from other, unrelated classes by using the namespace resolution operator `::`.
 
 This means that when Ruby encounters a method that requires evaluation of the constant, Ruby will look at the class or module where that method was defined for the definition of the constant, which can prove problematic if a constant is defined in a different class to where the method is defined.
 
@@ -766,21 +766,35 @@ In Ruby, the `BasicObject#==` method compares whether two objects occupy the sam
 However, the `Object#equal?` method does compare whether two objects occupy the same space in memory, and is seldom overridden by custom methods within classes, as this is a consistent way of comparing object identities. 
 
 #### What is the `===` method?
-The `===` method returns `true` if the object passed as an argument is part of the set on which the method is called. It is commonly used in `case` statements when evaluating whether conditional statements are met.
+By default, the `Object#===` method returns `true` if two objects occupy the same space in memory (same as the `BasicObject#==` method). However, mnost classes override this method to compare whether the object passed as an argument is part of the set on which the method is called. It is commonly used in `case` statements when evaluating whether conditions in the `when` statements are met.
 ```ruby
 String === 'hello'
 # => true
 'hello' === 'hello'
 # => true
 
-number = 42
+# Case statement implementation
+num = 25
 
-case number
+case num
+when 1..50
+  puts "small number"
+when 51..100
+  puts "large number"
+else
+  puts "not in range"
+end
+
+# Is equivalent to
+num = 25
+
 # Using Range#===
-when 10...40 then 'A'
-# Using Integer#===
-when 42 then 'B'
-else 'N/A'
+if (1..50) === num
+  puts "small number"
+elsif (51..100) === num
+  puts "large number"
+else
+  puts "not in range"
 end
 ```
 #### What is the `eql?` method? *
