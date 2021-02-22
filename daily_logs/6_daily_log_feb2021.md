@@ -1,4 +1,4 @@
- # February 2021 (Total minutes: 2,926)
+ # February 2021 (Total minutes: 3,049)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -20,6 +20,7 @@
 - [19th, Fri](#190221-fri)
 - [20th, Sat](#200221-sat)
 - [21st, Sun](#210221-sun)
+- [22nd, Mon](#220221-mon)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -264,3 +265,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 More explanations. I didn't seem to lose too much of my rehearsed answers, and I managed to enhance the answers using the revision materials. Pretty worthwhile exercises. That being said, I'll need to practice speaking through my rehearsed answers, as well as writing code examples while speaking. 
+
+##### 22/02/21 (Mon)
+__*Concepts covered*__<br/>
+- Revision
+  - Note revision
+  - Code explanations
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+It feels good getting back to writing code again. I'm starting to incorporate the code into my explanations. Progress again.
