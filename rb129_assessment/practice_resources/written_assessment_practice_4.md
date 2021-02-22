@@ -54,7 +54,7 @@ puts ted.name
 # => nil
 ```
 #### What is an instance method? *
-An instance method is a method that is defined within a class. Once an object is instantiated from that class, it will have access to those methods, depending on the level of method access control applied to a method (all objects instantiated from a particular class will have access to the same set of methods). Instance methods can be inherited from superclasses.
+An instance method is a method that is defined within a class. Once an object is instantiated from that class, it will have access to those methods, depending on the level of method access control applied to a method (all objects instantiated from a particular class will have access to the same set of methods). *Instance methods can be inherited from superclasses or mixed in through modules.*
 
 In our below example, we define the `Dog` class on `lines 1-5` using the `class` and `end` reserved words. Within this class, we define a public `speak` instance method using the `def` and `end` reserved words. This method returns a string object, `"Woof!"`.
 
@@ -372,7 +372,7 @@ Party.new.party([Dog.new, Bird.new, Turtle.new])
 # => [#<Dog:0x00007fd2998561c8>, #<Bird:0x00007fd2998560b0>, #<Turtle:0x00007fd299856088>]
 ```
 #### What is inheritance? *
-Inheritance is a mechanism that allows classes to access methods from classes higher in an hierarchical chain. Classes can inherit methods from a single superclass, which gives them access to methods defined in that superclass without having to explicitly define those methods in the subclass. *Note that a class can only inherit from a single other class.*
+Inheritance is a mechanism that allows classes to access behaviours from classes higher in an hierarchical chain. Classes can inherit methods from a single superclass, which gives them access to methods defined in that superclass without having to explicitly define those methods in the subclass. *Note that a class can only inherit from a single other class.*
 
 Inheritance enables us to model classes that fit a hierarchical relationship (i.e. "is-a" relationships between classes) and reduce the amount of repeated code in our program. We can make a class inherit from another class by adding a `<` symbol next to a class definition, followed by the name of the class from which it should inherit methods from.
 
@@ -517,7 +517,7 @@ puts Dog.new.speak
 # => nil
 ```
 #### What is a module? When would we use a module? (classes and methods, or just methods?)
-A module can be a grouping of methods that can be mixed into classes, allowing those classes to access the methods defined in the module. Modules are a way that we can implement polymorphism into our code, since *any number of modules can be mixed into any class* (there is no requirement that classes be related to each other), though objects cannot be instantiated from modules.
+A module can be a grouping of methods that can be mixed into classes, allowing those classes to access the methods defined in the module. Modules are a way that we can implement polymorphism into our code, since *any number of modules can be mixed into any class* (there is no requirement that classes be related to each other), though *objects cannot be instantiated from modules*.
 
 Modules can also be used for namespacing, or grouping classes and methods together. Namespacing assists in organising code, as well as preventing naming conflicts where methods may have the same name across different classes by allowing us to reference which class a module method comes from, with the namespace resolution operator `::`.
 
@@ -615,7 +615,9 @@ Dog.new.legs
 # => 2
 ```
 #### What are constants? What do we need to be careful of when dealing with constants? *
-Constants are variables that should not have their value reassigned throughout the course of the program's operation (Ruby does allow reassignment of values, but will raise a warning). They can be identified by a variable name with a capital letter (though convention usually dictates that the entire variable name is in capital letters). *Constants are accessible to both class and instance methods*, and have lexical scope. Constants are also unique compared with class or instance variables in that they can be referenced from other, unrelated classes by using the namespace resolution operator `::`.
+Constants are variables that should not have their value reassigned throughout the course of the program's operation (Ruby does allow reassignment of values, but will raise a warning). They can be identified by a variable name with a capital letter (though convention usually dictates that the entire variable name is in capital letters). 
+
+Constants are *defined at a class level (attempting to define a constant within an instance or class method will return a `SyntaxError - dynamic constant assignment`)*. As such, *constants are accessible to both class and instance methods*, and have lexical scope. Constants are also unique compared with class or instance variables in that they can be referenced from other, unrelated classes by using the namespace resolution operator `::`.
 
 This means that when Ruby encounters a method that requires evaluation of the constant, Ruby will look at the class or module where that method was defined for the definition of the constant, which can prove problematic if a constant is defined in a different class to where the method is defined.
 
@@ -766,7 +768,7 @@ In Ruby, the `BasicObject#==` method compares whether two objects occupy the sam
 However, the `Object#equal?` method does compare whether two objects occupy the same space in memory, and is seldom overridden by custom methods within classes, as this is a consistent way of comparing object identities. 
 
 #### What is the `===` method?
-By default, the `Object#===` method returns `true` if two objects occupy the same space in memory (same as the `BasicObject#==` method). However, mnost classes override this method to compare whether the object passed as an argument is part of the set on which the method is called. It is commonly used in `case` statements when evaluating whether conditions in the `when` statements are met.
+By default, the `Object#===` method returns `true` if two objects occupy the same space in memory (same as the `BasicObject#==` method). However, most classes override this method to compare whether the object passed as an argument is part of the set on which the method is called. It is commonly used in `case` statements when evaluating whether conditions in the `when` statements are met.
 ```ruby
 String === 'hello'
 # => true

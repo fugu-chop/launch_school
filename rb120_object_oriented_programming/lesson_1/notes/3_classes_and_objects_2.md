@@ -53,7 +53,7 @@ We have a class variable called `@@number_of_dogs`, which we initialize to 0. Th
 This also demonstrates that we can _access class variables from within an instance method_ (`initialize` is an instance method) of the same class. Finally, we just return the value of the class variable in the class method `self.total_number_of_dogs`. This is an example of using a class variable and a class method to keep track of a class level detail that pertains only to the class, and not to individual objects.
 
 ### Constants
-When creating classes there may also be certain variables that you never want to change. You can do this by creating what are called __constants__. You define a constant by using an uppercase letter at the beginning of the variable name. If you want to access a constant outside of the class then you would have to use `classname::constant`.
+When creating classes there may also be certain variables that you never want to change. You can do this by creating what are called __constants__. You define a constant within by using an uppercase letter at the beginning of the variable name (attempting to define a constant in an instance method will return a `SyntaxError - dynamic constant assignment`). If you want to access a constant outside of the class then you would have to use `classname::constant`.
 
 While technically constants just need to begin with a capital letter, most Rubyists will make the entire variable uppercase.
 ```ruby
