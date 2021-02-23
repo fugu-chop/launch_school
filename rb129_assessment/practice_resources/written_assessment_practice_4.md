@@ -27,7 +27,7 @@ Objects can also have instance variables with assigned values after instantiatio
 #### What is an instance variable, and how is it related to an object? *
 An instance variable is a *variable initialised after an object is instantiated*. They are identified by the `@` symbol prepended to the variable name.
 
-Instance variables are scoped at an object level, and are accessible to instance methods within an object, regardless of where they are defined. However, they are not accessible outside of an object, unless an explicit getter or setter method is defined in the class. 
+Instance variables are scoped at an object level, and are accessible to instance methods within an object, regardless of where they are defined. However, *they are not accessible outside of an object, unless an explicit getter or setter method is defined in the class*. 
 
 Instance variables, and their assigned values, contribute to the state of an object. State is unique to an object (i.e. state is not shared between different instances of an object) and cannot be inherited. 
 
@@ -583,7 +583,7 @@ puts Dog.new.speak
 # => nil
 ```
 #### What are class variables? Why is it not recommended to use them? *
-A class variable is a variable scoped at the class level. It can be identified by the `@@` symbols preceding the variable name and is *initialised when the class is evaluated by Ruby. Class variables are accessible to both class and instance methods, regardless of where a class variable is defined*.
+A class variable is a variable scoped at the class level. It can be identified by the `@@` symbols preceding the variable name and is *initialised when the class is evaluated by Ruby. Class variables are accessible to both class and instance methods, regardless of where a class variable is defined (though class variables are generally defined at the class level)*.
 
 They can be useful when tracking data that is not linked to the state of objects, but can prove problematic for the fact that all instances of the class where the class variable was defined (and subclasses of that class, and objects instantiated from those subclasses) share a single copy of that class variable, meaning that any change to the class variable across any of those classes or objects will mean that change will be reflected across all of the subclasses and objects instantiated from the class and subclasses.
 
