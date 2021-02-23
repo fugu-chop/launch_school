@@ -165,3 +165,135 @@ s = Stroller.new
 
 [g, d, s].each { |object| puts object.walk }
 [g, d].each { |object| puts object.bark }
+
+# What is the super method?
+class Animal
+  def speak
+    "Hello!"
+  end
+
+  def initialize(name)
+    @name = name
+  end
+end
+
+class Dog < Animal
+  def initialize(name, age)
+    super(name)
+    @age = age
+  end
+
+  def speak
+    super() + " I am a #{self.class}!"
+  end
+end
+
+ted = Dog.new("Ted", 4)
+ted.speak
+
+# What are constants? What do we need to be careful of when dealing with constants?
+class Animal
+  LEGS = 4
+
+  def self.legs
+    self::LEGS
+  end
+
+  def legs
+    self.class::LEGS
+  end
+end
+
+class Bird < Animal
+  LEGS = 2
+end
+
+Bird.legs
+Bird.new.legs
+
+# What is the self keyword? How do we use it?
+class Animal
+  def self.identify
+    self
+  end
+
+  def initialize(name, age)
+    @name = name
+    @age = age
+  end
+
+  def say_hello
+    "My name is #{name} and I am #{self.age} years old!"
+  end
+
+  def rename(name)
+    self.name = name
+  end
+
+  protected
+  attr_reader :age
+
+  private
+  attr_accessor :name
+end
+
+ted = Animal.new("ted", 4)
+
+# What is the default `to_s` method in Ruby?
+class Dog
+  def initialize(name)
+    @name = name
+  end
+
+  def to_s
+    "Hello! My name is #{@name} and I am a #{self.class}!"
+  end
+end
+
+ted = Dog.new("Ted")
+puts ted
+"#{ted}"
+
+# What is the `===` method?
+num = 25
+case num
+when 26 then puts "26!"
+when 0..25 then puts "0 to 25!"
+else puts "Nah"
+end
+
+if 26 === num
+  puts "26!"
+elsif (0..25) === num
+  puts "0 to 25!"
+else
+  puts "Nah"
+end
+
+# Explain element reference getter and element assignment setter methods?
+class Library
+  attr_reader :books
+
+  def initialize
+    @books = ["The Bible"]
+  end
+
+  def [](position)
+    @books[position]
+  end
+
+  def []=(position, element)
+    @books[position] = element
+  end
+
+  def <<(book)
+    @books.push(book)
+  end
+end
+
+lib = Library.new
+lib.books
+lib[0]
+lib[1] = "I am a champion"
+lib << "A cool day"
+lib.books

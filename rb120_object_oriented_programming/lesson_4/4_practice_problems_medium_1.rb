@@ -143,7 +143,7 @@ class Light
   end
 
   def self.light_status
-    "I have a brightness level of #{brightness} and a color of #{color}"
+    "I am a #{self}!"
   end
 end
 =end

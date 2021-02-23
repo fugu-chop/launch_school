@@ -60,7 +60,7 @@ In our below example, we define the `Dog` class on `lines 1-5` using the `class`
 
 On `line 7-8`, we define another class, `Greyhound`, which subclasses `Dog` (denoted by the `<` symbol, followed by the `Dog` class). This means that `Greyhound` has access to the instance methods defined within the `Dog` class. 
 
-This is shown on `line 11` - after we instantiate an object from the `Greyhound` class using the `new` method, we are able to call the `speak` method directly on the object (as it is a public instance method), even though the `speak` method was not explicitly defined within the `Greyhound` class.
+This is shown on `line 11` - after we instantiate an object from the `Greyhound` class using the `new` method, we are able to call the `speak` method directly on the object (as it is a public instance method), even though the `speak` method was not explicitly defined within the `Greyhound` class (the `speak` method is still being called through the `Greyhound` class).
 ```ruby
 class Dog
   def speak
@@ -253,9 +253,13 @@ class Dog
     "Hello! My name is #{name}!"
   end
 
+  def rename(new_name)
+    self.name = new_name
+  end
+
   private
 
-  attr_reader :name
+  attr_accessor :name
 end
 
 ben = Dog.new
@@ -265,6 +269,10 @@ ben.name
 puts ben.identify
 # "Hello! My name is Ben!"
 # => nil
+
+ben.rename("Jeff")
+ben.identify
+# "Hello! My name is Jeff!"
 ```
 #### What is the protected method used for? *
 Protected methods are a form of method access control. They ensure the protected methods cannot be called directly on objects, but only from within the class where the instance method was defined, or by other instances of the same class. They act as a 'middle' ground between public and private methods.
@@ -378,7 +386,7 @@ Inheritance enables us to model classes that fit a hierarchical relationship (i.
 
 In our example below, we define a `Dog` class, which inherits from the `Animal` class (we set up the hierarchical inheritance relationship by using the `<` symbol followed by the superclass). This means that objects instantiated from the `Dog` class will also have access to instance methods defined in the `Animal` superclass through the method lookup path. 
 
-When we attempt to call the `speak` method on an instance of `Dog`, Ruby will first attempt to find a method definition in the `Dog` class. Since this does not exist, Ruby will look up the method lookup chain to the superclass `Animal`, where it finds the appropriate definition. Ruby will then call the `speak` method from the `Dog` class, taking the definition from the `Animal` class. This is how the object instantiated from the `Dog` class on `line 10` is able to call the `Animal#speak` method.
+When we attempt to call the `speak` method on an instance of `Dog`, Ruby will first attempt to find a method definition in the `Dog` class. Since this does not exist, Ruby will look up the method lookup chain to the superclass `Animal`, where it finds the appropriate definition. Ruby will then call the `speak` method *from the `Dog` class*, taking the definition from the `Animal` class. This is how the object instantiated from the `Dog` class on `line 10` is able to call the `Animal#speak` method.
 ```ruby
 class Animal
   def speak
