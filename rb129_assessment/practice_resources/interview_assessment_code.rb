@@ -191,6 +191,34 @@ end
 ted = Dog.new("Ted", 4)
 ted.speak
 
+# What are class variables? Why do we need to be careful of class variables?
+class Animal
+  @@legs = 4
+
+  def legs
+    @@legs
+  end
+
+  def self.legs
+    @@legs
+  end
+end
+
+horse = Animal.new
+dog = Animal.new
+
+Animal.legs
+horse.legs
+dog.legs
+
+class Bird < Animal
+  @@legs = 2
+end
+
+Animal.legs
+horse.legs
+dog.legs
+
 # What are constants? What do we need to be careful of when dealing with constants?
 class Animal
   LEGS = 4

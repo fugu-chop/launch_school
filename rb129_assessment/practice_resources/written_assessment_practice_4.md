@@ -326,7 +326,7 @@ Greyhound.identify
 # => Greyhound
 ```
 #### What is polymorphism? *
-Polymorphism describes the ability of different objects to respond to a common interface (i.e. method). It enables code to be flexible and reusable, reducing the amount of repetition that is required in our code. Polymorphism can be implemented through mixing in modules, method overriding, duck-typing and inheritance (to name a few). 
+Polymorphism describes the ability of different types of data (objects from different classes) to respond to a common interface (i.e. method). It enables code to be flexible and reusable, reducing the amount of repetition that is required in our code. Polymorphism can be implemented through mixing in modules, method overriding, duck-typing and inheritance (to name a few). 
 
 *Polymorphism can act as an opposite counterpart to encapsulation - encapsulation is concerned with reducing functionality of objects, while polymorphism extends functionality to reduce repetition and improve flexibility. This is often a tradeoff that must be made in the program design.*
 
