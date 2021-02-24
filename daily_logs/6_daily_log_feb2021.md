@@ -1,4 +1,4 @@
- # February 2021 (Total minutes: 3,168)
+ # February 2021 (Total minutes: 3,287)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -22,6 +22,7 @@
 - [21st, Sun](#210221-sun)
 - [22nd, Mon](#220221-mon)
 - [23rd, Tue](#230221-tue)
+- [24th, Wed](#240221-wed)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -290,3 +291,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 After browsing the Launch School Slack, I've realised that my functional programming skills have atrophied considerably. I barely remember any of the methods that I used to solve for problems in RB109. I think once I finish RB129, I'll swing back to RB109 and revise all the concepts, and practice the problems again. I think migrating my notes to Notion will also help this. 
+
+##### 24/02/21 (Wed)
+__*Concepts covered*__<br/>
+- Revision
+  - Answer explanations
+  - Code writing
+  - Exercise revision
+
+__*Time spent*__<br/>
+119 minutes
+
+__*Thoughts*__<br/>
+More practice. I'm reaching the point where it's hard to keep pushing. I'm glad I only have two full days of revision left here. I'm pushing towards the finish line. 
