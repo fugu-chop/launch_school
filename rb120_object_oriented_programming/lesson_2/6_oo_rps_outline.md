@@ -212,8 +212,7 @@ For now, develop the initial instinct to smell out code that contains long metho
 move = human.move
 puts move.display.size if move
 ```
-#### Avoid design patterns for now.
-
+#### Avoid design patterns for now
 One of the biggest mistakes beginner programmers make is mis-application of "best practices" or "design patterns" to improve performance or flexibility. This is such a common phenomenon that experienced programmers have a quote: "premature optimization is the root of all evil".
 
 Don't worry about optimization at this point. Don't write overly clever code. Granted, you won't know what's considered "clever" vs "normal" without reading a lot of code, but over time, you will start to hone your senses.

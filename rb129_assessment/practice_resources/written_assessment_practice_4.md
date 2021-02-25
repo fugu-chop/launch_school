@@ -138,7 +138,7 @@ Classes can inherit methods from other classes, while objects cannot be inherite
 #### When defining a class, we usually focus on state and behaviors. What is the difference between these two concepts?
 Behaviours refer to the instance methods that are defined within a class, that an object can have access to once they are instantiated from that class. Behaviours can be explicitly defined within the class, inherited from a superclass or mixed in via modules. All objects instantiated from the same class will gain access to the same set of instance methods (whether they can call those methods depends on method access control).
 
-State refers to the series of instance variables and their assigned values encapsulated within an object. State does not exist until the instance variable is initialised and a value assigned to it, which can only occur after an object is instantiated. State is unique to each object (i.e. different instances of the same class do not share state between them) and cannot be inherited, since objects and their data cannot be inherited (only classes can be inherited).
+State refers to the series of instance variables and their assigned values encapsulated within an object. State does not exist until the instance variable is initialised and a value assigned to it, which can only occur after an object is instantiated. State is unique to each object (i.e. different instances of the same class do not share state between them) and cannot be inherited, since objects and their data cannot be inherited (only classes can be inherited). *Changing state does not change the object_id of an object.*
 
 #### How do objects encapsulate state? *
 Objects encapsulate state as the instance variables (and their assigned values) are not accessible outside of the object unless a getter or setter method exists. Thus the data within the object is protected unless there is an explicit method to interface with it. 
@@ -439,7 +439,7 @@ Airshow.new.show_off([Kite.new, Bird.new, Plane.new])
 # => [#<Kite:0x00007f9f2f8e0578>, #<Bird:0x00007f9f2f8e0500>, #<Plane:0x00007f9f2f8e04d8>]
 ```
 #### What is the super method? *
-The `super` method is a way we can call methods of the same name defined in a superclass or a mixed-in module - it is a way we can implement method overriding and polymorphism into our code. The functionality of the `super` method can differ, depending on whether arguments are provided to it:
+The `super` method is a way we can call methods of the same name defined higher in the class hierarchy chain (whether in a superclass or a mixed-in module) - it is a way we can implement method overriding and polymorphism into our code. The functionality of the `super` method can differ, depending on whether arguments are provided to it:
 - Calling `super` without any parentheses or arguments will forward all arguments provided to the subclass method to the superclass/module method, and call that method.
 - Calling `super()` with parentheses but without arguments will call the superclass/module method without any arguments. This is often the safest way to avoid `ArgumentErrors` when the superclass/module method does not take any arguments.
 - Calling `super(arg1, arg2)` will forward `arg1` and `arg2` to the superclass/module method, and then call that method.
@@ -606,7 +606,8 @@ end
 class Dog < Animal
 end
 
-Dog.new.legs
+d = Dog.new
+d.legs
 # => 4
 
 Dog.legs
@@ -619,7 +620,7 @@ end
 Dog.legs
 # => 2
 
-Dog.new.legs 
+d.legs 
 # => 2
 ```
 #### What are constants? What do we need to be careful of when dealing with constants? *
