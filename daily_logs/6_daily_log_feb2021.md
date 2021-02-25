@@ -1,4 +1,4 @@
- # February 2021 (Total minutes: 3,287)
+ # February 2021 (Total minutes: 3,437)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -23,6 +23,7 @@
 - [22nd, Mon](#220221-mon)
 - [23rd, Tue](#230221-tue)
 - [24th, Wed](#240221-wed)
+- [25th, Thu](#250221-thu)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -304,3 +305,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 More practice. I'm reaching the point where it's hard to keep pushing. I'm glad I only have two full days of revision left here. I'm pushing towards the finish line. 
+
+##### 25/02/21 (Wed)
+__*Concepts covered*__<br/>
+- RB129 Interview Assessment
+- Revision
+  - Exercise revision
+  - Quiz Revision
+
+__*Time spent*__<br/>
+150 minutes
+
+__*Thoughts*__<br/>
+Whoops, I had one full day of revision, not two (I got the days confused). I had a headache leading up to the assessment, which was bothersome. The actual test was quite challenging - the last question in particular required chaining methods together and replacing what Ruby was interpreting as an instance variable with a method call. I definitely didn't do as well this time, but I'm happy that I was actually able to solve all of the problems without prompting from the assessor.
