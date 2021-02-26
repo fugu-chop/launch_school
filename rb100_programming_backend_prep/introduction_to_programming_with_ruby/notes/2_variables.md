@@ -63,7 +63,7 @@ a.object_id
 b.object_id
 # => 70294044643900
 ```
-The exceptions are __integers, booleans and symbols__, which occupy the same physical space in memory (they are the same objects), even if assigned to different variables:
+The exceptions are __integers, booleans and symbols__, which occupy the same physical space in memory if they have the same value (they are the same objects), even if assigned to different variables:
 ```ruby
 a = 5
 b = 5
@@ -119,9 +119,9 @@ greeting.object_id
 whazzup.object_id
 # => 70101471431160
 ```
-This demonstrates that both `greeting` and `whazzup` not only reference a `String` with the same value, but are, in fact, references to the same String; `greeting` and `whazzup` are *aliases for each other*, since in the variable assignment, the specific object `greeting` is referencing, has been assigned to `whazzup`.
+This demonstrates that both `greeting` and `whazzup` not only reference a `String` with the same value, but are, in fact, references to the *same* `String`; `greeting` and `whazzup` are *aliases for each other*, since in the variable assignment, the specific object `greeting` is referencing, has been assigned to `whazzup`.
 
-We can show this by using one of the two variables to change the object. 
+We can show this by using a destructive method change the underlying object. 
 ```ruby
 greeting.upcase!
 # => "HELLO"
@@ -330,32 +330,32 @@ def fix(value)
 end
 
 s = 'hello'
-"hello"
+# => "hello"
 
 s.object_id
-70363946430440
+# => 70363946430440
 
 t = fix(s)
-"HELLO!"
+# => "HELLO!"
 
 s
-"HELLO!"
+# => "HELLO!"
 
 t
-"HELLO!"
+# => "HELLO!"
 
 s.object_id
-70363946430440
+# => 70363946430440
 
 t.object_id
-70363946430440
+# => 70363946430440
 ```
-Though we assigned a reference to `value`, we end up with both `s` and `t` referring to the same object. The reason for this is that `String#upcase!` returns a reference to its caller, `value`. 
+Though we assigned a reference to `value`, we end up with both `s` and `t` referring to the same object. The reason for this is that `String#upcase!` returns a reference to its caller, `value`. What's important here is to consider whether what you're assigning to a variable is actually a different object, based on the *return value* of any methods you're calling on the object (__not__ whether that method is destructive, since methods like `each` return their calling object).
 
 Since the reference returned by `value.upcase!` is the same (albeit modified) String we started with, the assignment effectively __rebinds `value` back to the object it was previously bound to__; nothing is changed by the assignment.
 
 ###### Method definitions
-Method definitions (i.e. creating new methods) are *self-contained* with respect to local variables. Local variables outside the method definition are __not visible__ *inside* the method definition, __unless passed in as arguments__ (at which point, either a reference to, or a copy of the reference to, the object is assigned as a method parameter and made available to the method body as a *distinct* local variable). The method never actually has access to the local variable itself. 
+Method definitions (i.e. creating new methods) are *self-contained* with respect to local variables. Local variables outside the method definition are __not visible__ *inside* the method definition, __unless passed in as arguments__ (at which point, either a reference to, or a copy of the reference to, the object is assigned as a method parameter and made available to the method body as a *distinct* local variable). The __method never has access to the local variable itself__. 
 
 Furthermore, local variables *inside* the method definition are not visible outside the method definition.
 
@@ -372,6 +372,39 @@ puts a
 
 7
 # => nil
+```
+In the below example, we're using a mutable object (a `String` object) as an argument. We assign the string object `"Terry"` to the local variable `a`. We pass in a *reference* to that object to the `yell` method, which initialises a local variable `b` within the method (remember methods are __self-contained__ in respect of scope). 
+
+The underlying object referenced by the `a` local variable outside of the method is __changed in place__, since the `upcase!` method is destructive (instead of returning a new string object). The local variable assignment __inside__ the method is simply pointing to the same object as before. `b` will return a `NameError` since local variables initialised inside methods are not accessible outside of that method.
+```ruby
+a = "Terry"
+
+def yell(str)
+  b = str.upcase!
+end
+
+yell(a)
+# => "TERRY"
+
+a
+# => "TERRY"
+
+b
+# => NameError (undefined local variable or method `b' for main:Object)
+```
+In this final example, we don't use a destructive method. As such, the `upcase` method returns a __different string object__ to the one that was passed by reference to the method. As such, the local variable `a` is still `"Terry"`.
+```ruby
+a = "Terry"
+
+def yell(str)
+  a = str.upcase
+end
+
+yell(a)
+# => "TERRY"
+
+a
+# => "Terry"
 ```
 ### Types of Variables
 ###### Constants
@@ -398,4 +431,3 @@ We'll learn more when we get to OOP.
 
 ###### Local
 Local variables are the most common variables you will come across and *obey all scope boundaries*. These variables are declared by starting the variable name with neither `$` nor `@`, as well as not capitalising the entire variable name.
-

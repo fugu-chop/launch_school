@@ -55,7 +55,7 @@ end
 
 example('hello')
 ```
-On lines 1–8 we are defining the method `example` which takes 1 __parameter__. 
+On lines 1–8 we are defining the method `example` which takes an `str` __parameter__. 
 
 On line 2 of this code we are initializing the local variable `i` and assigning to it an integer with value `3`.
 
@@ -91,7 +91,8 @@ def some_method
 end
 
 puts a
-# => 5
+# 5
+# => nil
 ```
 `a` is still 5, because method definitions create their own scope that's entirely outside of the execution flow.
 
@@ -251,14 +252,14 @@ def add_three(n)
 end
 
 add_three(1).times { puts "This should now print 4 times" }
-This should now print 4 times
-This should now print 4 times
-This should now print 4 times
-This should now print 4 times
+# This should now print 4 times
+# This should now print 4 times
+# This should now print 4 times
+# This should now print 4 times
 # => 4
 ```
 ### Method calls as arguments
-Ruby allows us to pass a method call as an argument to other methods. 
+Ruby allows us to pass a method call as an argument to other methods, so long as those method calls return something meaningful.
 ```ruby
 def add(a, b)
   a + b

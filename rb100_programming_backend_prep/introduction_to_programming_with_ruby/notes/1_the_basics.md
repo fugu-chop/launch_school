@@ -152,7 +152,7 @@ __nil__ represents 'nothing', 'completely empty', or 'not a specific type'. A si
 The `puts` method prints out a string and returns nothing, so we see `nil` being returned after the string is displayed.
 ```ruby
 puts "Hello, World!"
-Hello, World!
+# => Hello, World!
 # => nil
 ```
 It is possible to check if something is a nil type by using `.nil?`
@@ -169,7 +169,7 @@ end
 ```
 ### Operations
 ###### Arithmetic
-We can apply the `+, -, *, /` signs to perform arithmetic on integers, floats, as well as strings (concatenation and duplication). We can't add, subtract or divide strings and integers together, however. 
+We can apply the `+, -, *, /` signs to perform arithmetic on integers, floats, as well as strings (concatenation and duplication). Note that these are actually methods, and their implementation depends on the object we call it upon. 
 
 Note that with *integers*, we only ever get a whole number returned when using `*` or `/`. To get decimal places, we need to use *floats*. When we use a float in an operation, a float will be returned, even if the other operand is an integer. 
 
@@ -231,7 +231,7 @@ puts 'stuff'
 stuff
 # => nil
 ```
-The word `stuff` was printed to the console and then a `nil`, which is Ruby's way of saying 'nothing', was returned. See this:
+The string object `"stuff"` was printed to the console and then a `nil`, which is Ruby's way of saying 'nothing', was returned. See this:
 ```ruby
 a = puts "stuff"
 puts a
@@ -247,42 +247,47 @@ This is important because if you’re trying to `puts` an array with nil values,
 If we want to `puts` an array, it's a good idea to add the `.inspect` method onto it, to ensure an intact printable version of the array.
 ```ruby
 puts 123
-puts 456
+# 123
+# => nil
 
-123
-456
+puts 456
+# 456
+# => nil
 
 # puts on an array
 puts [1, 2]
-
-1
-2
+# 1
+# 2
+# => nil
 
 # puts with nil values
 puts [1,nil,nil,2]
-
-1
-
-
-2
+# 1
+# 
+#
+# 2
+# => nil
 
 # puts on an array with the inspect method
 puts [1, 2].inspect
-
-[1, 2]
+# [1, 2]
+# => nil
 ```
 `print` will show something, but __not__ add a new line after whatever is shown. `p` returns `nil`.
 ```ruby
 print 123
-print 456
+# 123=> nil
 
-123456
+print 456
+# 456=> nil
 ```
 `p` is a more *raw* method of displaying something. It doesn't attempt to convert the output to a string, and is useful for debugging, since it both __displays and returns__ whatever object you pass to it. This makes it particularly useful for *displaying arrays and hashes*. 
 ```ruby
 puts "Ruby Is Cool"
-Ruby Is Cool
+# Ruby Is Cool
+# => nil
 
+# Notice how we have quotation marks and return the object passed
 p "Ruby Is Cool"
-"Ruby Is Cool"
+# => "Ruby Is Cool"
 ```
