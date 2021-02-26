@@ -24,6 +24,7 @@
 - [23rd, Tue](#230221-tue)
 - [24th, Wed](#240221-wed)
 - [25th, Thu](#250221-thu)
+- [26th, Fri](#260221-fri)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -306,7 +307,7 @@ __*Time spent*__<br/>
 __*Thoughts*__<br/>
 More practice. I'm reaching the point where it's hard to keep pushing. I'm glad I only have two full days of revision left here. I'm pushing towards the finish line. 
 
-##### 25/02/21 (Wed)
+##### 25/02/21 (Thu)
 __*Concepts covered*__<br/>
 - RB129 Interview Assessment
 - Revision
@@ -318,3 +319,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Whoops, I had one full day of revision, not two (I got the days confused). I had a headache leading up to the assessment, which was bothersome. The actual test was quite challenging - the last question in particular required chaining methods together and replacing what Ruby was interpreting as an instance variable with a method call. I definitely didn't do as well this time, but I'm happy that I was actually able to solve all of the problems without prompting from the assessor.
+
+##### 26/02/21 (Fri)
+__*Concepts covered*__<br/>
+- Revision
+  - RB101 Revision
+    - Ruby Basics
+    - Ruby Variables & Variable Scoping
+
+__*Time spent*__<br/>
+124 minutes
+
+__*Thoughts*__<br/>
+I ended up acing the interview assessment, though it was certainly harder than the last time. Before proceeding to RB130, I think I'm going to sweep through and revise RB101, since I feel like I've forgotten a fair bit of useful knowledge. It's interesting re-reading my notes from RB101, since a lot of the definitions make a lot more sense/are more contextual after covering RB120.
