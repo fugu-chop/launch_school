@@ -175,14 +175,14 @@ Iterators are methods that naturally loop over a given set of data and allow you
 names = ['Bob', 'Joe', 'Steve']
 
 names.each { |name| puts name }
-Bob
-Joe
-Steve
+# Bob
+# Joe
+# Steve
 # => ['Bob', 'Joe', 'Steve']
 ```
 We have called the `each` method using the dot operator (`.`) on our array. The `each` method is functionally equivalent to using `loop` and represents a simpler way of accomplishing the same task. 
 
-What this method does is loop through each element in our array, in order, starting from 'Bob'. Then it begins executing the code within the block. The block's starting and ending points are defined by the curly braces `{ }`. 
+What this method does is loop through each element in our array, in order, starting from `'Bob'`. Then it begins executing the code within the block. The block's starting and ending points are defined by the curly braces `{ }`. 
 
 Each time we iterate over the array, we need to assign the value of the element to a variable. In this example we have named the variable `name` and placed it in between two pipes (`|name|`). After that, we write the logic that we want to use to operate on the variable, which represents the current array element. Here, the *original array* is returned after the `puts` statements. 
 
@@ -201,9 +201,9 @@ names.each do |name|
   x += 1
 end
 
-1. Bob
-2. Joe
-3. Steve
+# 1. Bob
+# 2. Joe
+# 3. Steve
 # => ['Bob', 'Joe', 'Steve']
 ```
 ### Recursion
@@ -225,19 +225,19 @@ def doubler(start)
 end
 
 doubler(2)
-2
-4
-8
-16
+# 2
+# 4
+# 8
+# 16
 # => nil
 ```
-The logic behind the above project is this:
-1. We input `start` = 2 in `doubler`. The method starts to execute.
-2. We print 2 to the console
+The logic behind the above:
+1. We pass the integer object `2` as an argument to `doubler`. A local variable `start` is initialized in the `doubler` method and assigned to the integer object `2`.
+2. We print `2` to the console
 3. We hit the `if` statement -> 2 is less than 10, and so we enter the loop
-4. We print `start` * 2 as per line 173 (as if we're running the method fresh, but now `start` is 2 * 2)
+4. We print `start` * 2 as per line 10 (as if we're running the method fresh, but now `start` is 2 * 2)
 5. `start` * 2 is less than 10. 
 6. We print `start` * 2 * 2 (which is 8)
 7. `start` * 2 * 2 is less than 10.
 8. We print `start` * 2 * 2 * 2 (16)
-9. `start` now exceeds 10, and so the loop is exited. Since there's no more code in the method, the method ends as well. Phew!
+9. `start` now exceeds 10, and so the `if` statement is not executed. Since there's no more code in the method, the method ends as well.

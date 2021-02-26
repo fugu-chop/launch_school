@@ -169,6 +169,6 @@ if a == 5
   elsif a == 6 
     "a is 6"
   else
-    "a is neither 5, nor 6 
+    "a is neither 5, nor 6"
   end
 ```
