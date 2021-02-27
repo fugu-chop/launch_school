@@ -1,4 +1,4 @@
- # February 2021 (Total minutes: 3,437)
+ # February 2021 (Total minutes: 3,682)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -25,6 +25,7 @@
 - [24th, Wed](#240221-wed)
 - [25th, Thu](#250221-thu)
 - [26th, Fri](#260221-fri)
+- [27th, Sat](#270221-sat)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -332,3 +333,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I ended up acing the interview assessment, though it was certainly harder than the last time. Before proceeding to RB130, I think I'm going to sweep through and revise RB101, since I feel like I've forgotten a fair bit of useful knowledge. It's interesting re-reading my notes from RB101, since a lot of the definitions make a lot more sense/are more contextual after covering RB120.
+
+##### 27/02/21 (Sat)
+__*Concepts covered*__<br/>
+- Revision
+  - RB101 Revision
+    - Ruby Arrays, Hashes, Assorted Things
+    - Pass by Value & Reference
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+Today was mostly brushing up on pass by reference (basically everything) and values (immutable objects & variable reassignment), as well as some of the more commonly used array and hash methods. Pretty good revision, especially since the OOP content I just covered gives more flavour to the definitions around mutable objects just being changes in state to an object (since the `object_id` does not change, even if we change the state of an object).
