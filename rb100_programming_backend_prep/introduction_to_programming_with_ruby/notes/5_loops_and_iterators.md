@@ -45,11 +45,11 @@ loop do
   end
 end
 
-2
-4
-6
-8
-10 
+# 2
+# 4
+# 6
+# 8
+# 10 
 # => nil
 ```
 ### Next
@@ -67,10 +67,10 @@ loop do
   end
 end
 
-2
-6
-8
-10
+# 2
+# 6
+# 8
+# 10
 # => nil
 ```
 ### While loops
@@ -86,11 +86,11 @@ while x >= 0
 end
 puts "Done!"
 
-3
-2
-1
-0
-"Done!"
+# 3
+# 2
+# 1
+# 0
+# "Done!"
 # => nil
 ```
 ### Until loops
@@ -104,11 +104,11 @@ until x < 0
 end
 puts "Done!"
 
-3
-2
-1
-0
-"Done!"
+# 3
+# 2
+# 1
+# 0
+# "Done!"
 # => nil
 ```
 ### Do While loops
@@ -138,11 +138,11 @@ for i in 1..x
 end
 puts "Done!"
 
-1
-2
-3
+# 1
+# 2
+# 3
 # => 1..3
-Done
+# Done
 # => nil
 ```
 ### Conditional within loops
@@ -160,10 +160,10 @@ while x <= 10
   x += 1
 end
 
-1
-5
-7
-9
+# 1
+# 5
+# 7
+# 9
 # => nil
 ```
 Note how if you place the `next` reserved word in a loop, it will jump from that line to the next loop iteration without executing the code beneath it. If you place the `break` reserved word in a loop, it will exit the loop immediately without executing any more code in the loop.

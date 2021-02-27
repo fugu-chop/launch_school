@@ -154,6 +154,7 @@ end
 talk.call
 
 # I am talking.
+# => nil
 ```
 Procs can also *take arguments* if specified.
 ```ruby
@@ -164,6 +165,7 @@ end
 talk.call("Bob")
 
 # I am talking to Bob.
+# => nil
 ```
 Procs can also be *passed to methods*.
 ```ruby
@@ -235,7 +237,12 @@ def divide(number, divisor)
 end
 
 puts divide(16, 4)
+# 4
+# => nil
+
 puts divide(4, 0)
+# divided by 0
+# => nil
 ```
 Here we are rescuing the `ZeroDivisionError` and saving it into a variable `e`. We then have access to the message method that the `ZeroDivisionError` object has available.
 

@@ -56,9 +56,9 @@ a.delete_at(2)
 a
 # => [1, 2, 4]
 ```
-If we __don't__ know the index, but know what the value is, we can use the `delete` method instead. Again, this permanently mutates the original array. `delete` returns the deleted item.
+If we __don't__ know the index, but know what the value is, we can use the `delete` method instead. Note that this will delete __all__ instances of the value. This permanently mutates the original array. `delete` returns the deleted item.
 ```ruby
-a = [1, 2, 3, 4]
+a = [1, 2, 3, 4, 2]
 a.delete(2)
 # => 2
 
@@ -189,16 +189,16 @@ The `each_index` method iterates through the array much like the `each` method, 
 ```ruby
 a = [1, 2]
 a.each_index { |index| puts "This is index #{index}" }
-"This is index 0"
-"This is index 1"
+# "This is index 0"
+# "This is index 1"
 # => [1, 2]
 ```
 The `each_with_index` method allows us to iterate through the array with both the index, and element at that index. The *first parameter passed to the block is the value and the second is the index*. Again, the original array is returned.
 ```ruby
 a = [1, 2]
 a.each_with_index { |value, index| puts "The value at index #{index} is: #{value}" }
-The value at index 0 is: 1.
-The value at index 1 is: 2.
+# The value at index 0 is: 1.
+# The value at index 1 is: 2.
 # => [1, 2]
 ```
 The `sort` method allows us to sort the elements of an array. It returns the sorted array, but __does not__ modify the original array.
@@ -232,8 +232,8 @@ Let's walk through what happens when `.each` is called:
   puts arr.first
 end
 
-1
-3
+# 1
+# 3
 # => [[1, 2], [3, 4]]
 ```
 The `Array#each` method is being called on the multi-dimensional array `[[1, 2], [3, 4]]`. Each inner array is passed to the block in turn and assigned to the local variable `arr`. The `Array#first` method is called on `arr` and returns the object at index `0` of the current array - in this case the integers `1` and `3`, respectively. 
@@ -255,7 +255,7 @@ end
 
 Where it really differs from `each` is the __returned value__. Unlike `each`, `map` performs transformation based on the __return value of the block__. `map` takes the return value and places it in a __new array__ (*even if called on a hash*). This process is repeated for each element in the original collection. 
 
-This means that if we write some code in the block that's not a transformation instruction (e.g. it *returns* a boolean instead), `map` will evaluate the *truthiness* of the statement, meaning an *array of booleans*. 
+This means that if we write some code in the block that's not a transformation instruction (e.g. it *returns* a boolean instead), `map` will return *array of booleans*, since `map` does not care about the truthiness of the return value of the block.
 
 Alternatively, if the last line of code to be evaluated in the block is a `puts` statement, a new __array__ of `nil` will be returned (since `puts` returns `nil`).
 

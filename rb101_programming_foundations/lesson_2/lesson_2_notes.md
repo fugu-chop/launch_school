@@ -231,6 +231,8 @@ nil && 1 / 0         # nil
 ```
 In all 3 cases, `1 / 0` never gets executed, even though operator precedence would suggest that it should be evaluated first. In all 3 expressions, this is simply the way Ruby works - it treats `?:`, `&&`, and `||` differently from other operators and doesn't evaluate subexpressions unless it needs them.
 
+In our case, the ternary operator, `&&` and `||` all evaluate truthiness. In examples 1 and 2, since `nil` is falsy, Ruby does not need to evaluate the `false` side of the condition. In example 3, `5` is truthy, and so the rest of the `||` statement does not need to be evaluated.
+
 ###### Weird edge cases
 Ruby has some weirdly specific edge cases when it comes to precedence. Compare the following - a `.map` method called on an array. 
 ```ruby
@@ -273,7 +275,7 @@ p(array.map { |num| num + 1 })      # [2, 3, 4]
                                     # => [2, 3, 4]
 ```
 ###### The `tap` method
-There is an Object instance method, `tap`. It passes the calling object into a block, then returns that __calling__ object itself. It allows you do something with an object inside of a block, and *always have that block return the object itself*.
+There is an `Object` instance method, `tap`. It passes the calling object into a block, then returns that __calling__ object itself. It allows you do something with an object inside of a block, and *always have that block return the object itself*.
 ```ruby
 array = [1, 2, 3]
 
@@ -474,7 +476,7 @@ print_id(value)
 # Outside method object id = 67
 # In method object id = 67
 ```
-Here, `number` and `value` reference the same object despite the object being immutable. We can also see that `value` was not copied. Thus, Ruby is not using pass by value. It appears to be using *pass by reference*.
+Here, `number` and `value` reference the same object despite the object being immutable. We can also see that `value` was not copied. Thus, Ruby is not using pass by value (if this was the case, we would expect the `object_id` of `value` to be different). It appears to be using *pass by reference*.
 
 The key here is that __pass by reference isn’t limited to mutating methods or mutable objects__. A non-mutating method can use pass by reference as well, so pass by reference can be used with immutable objects. There may be a reference passed, but the reference isn’t a guarantee that the object can be modified.
 

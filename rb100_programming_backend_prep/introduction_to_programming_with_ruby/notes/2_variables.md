@@ -392,7 +392,7 @@ a
 b
 # => NameError (undefined local variable or method `b' for main:Object)
 ```
-In this final example, we don't use a destructive method. As such, the `upcase` method returns a __different string object__ to the one that was passed by reference to the method. As such, the local variable `a` is still `"Terry"`.
+In this final example, we don't use a destructive method. As such, the `upcase` method returns a __different string object__ to the one that was __passed by reference__ to the method. As such, the local variable `a` is still `"Terry"`.
 ```ruby
 a = "Terry"
 

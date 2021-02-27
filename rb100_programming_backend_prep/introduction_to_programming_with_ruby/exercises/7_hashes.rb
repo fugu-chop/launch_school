@@ -46,7 +46,7 @@ x = "hi there"
 my_hash = {x: "some value"}
 my_hash2 = {x => "some value"}
 =end
-puts "my_hash uses Ruby 1.9 syntax to create a hash. my_hash2 will throw an error, since the type of the key hasn't been specified."
+puts "my_hash uses Ruby 1.9 syntax to create a hash (a symbol will be used as a key). my_hash2 uses a string object as a key (referenced by the local variable x)."
 
 # 7) What does this error mean? NoMethodError: undefined method `keys' for Array
 puts "The user has tried to enter a .keys method for an array, which doesn't exist."
@@ -73,6 +73,3 @@ end
 result.each_value do |value|
   p value
 end
-
-
-

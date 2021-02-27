@@ -146,7 +146,7 @@ name_and_age.select { |key, value| (key == "Bob") }
 name_and_age.select { |key, value| (key == "Bob") || (value == 19) }
 # => {"Bob"=>42, "Joe"=>19}
 ```
-The `fetch` method allows you to pass a given key and it will *return the value* for that key if it exists. You can also specify an option for return __if that key is not present__ either as a block, or as an argument. 
+The `fetch` method allows you to pass a given key and it will *return the value* for that key if it exists. You can also specify an option for return __if that key is not present either as a block, or as an argument__. 
 ```ruby
 name_and_age.fetch("Steve")
 # => 31

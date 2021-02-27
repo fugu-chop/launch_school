@@ -36,9 +36,9 @@ h[:e] = 5
 h.delete_if { |key, value| value < 3.5 }
 
 # 10) Can hash values be arrays? Can you have an array of hashes? (give examples)
-puts "You can definitely has arrays as hash values. You can also have an array of hashes."
+puts "You can definitely have arrays as hash values. You can also have an array of hashes."
 hash_array_value = { key1: [1, 2, 3] }
-array_of_hashes = [{key1: 1}, 2, 3]
+array_of_hashes = [{ key1: 1 }, 2, 3]
 
 # 11) Given the following data structures. Write a program that copies the information from the array into the empty hash that applies to the correct person.
 contact_data = [["joe@email.com", "123 Main st.", "555-123-4567"], ["sally@email.com", "404 Not Found Dr.", "123-234-3454"]]
