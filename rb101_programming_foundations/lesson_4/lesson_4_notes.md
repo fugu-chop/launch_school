@@ -376,3 +376,42 @@ long.to_h
 short.to_h
 # => { :a => "ant", :c => "cat" }
 ```
+`Enumerable#each_slice(n)` <br/>
+`each_slice(n)` will pass an array of `n` elements at a time to the block, with any leftovers passed at the end.
+```ruby
+(1..10).each_slice(3) { |a| p a }
+
+# [1, 2, 3]
+# [4, 5, 6]
+# [7, 8, 9]
+# [10]
+```
+`Enumerable#each_cons(n)` <br/>
+`each_cons(n)` will pass an array of rolling `n` elements at a time to the block.
+```ruby
+(1..10).each_cons(3) { |a| p a }
+# [1, 2, 3]
+# [2, 3, 4]
+# [3, 4, 5]
+# [4, 5, 6]
+# [5, 6, 7]
+# [6, 7, 8]
+# [7, 8, 9]
+# [8, 9, 10]
+```
+`Enumerable#chunk_while` <br/>
+`chunk_while` splits up an Enumerable when the criteria is evaluated as `false`. This is probably the version we'll use most frequently (compared with `slice_when`):
+```ruby
+a = [1,2,4,9,10,11,12,15,16,19,20,21]
+
+p a.chunk_while {|i, j| i+1 == j }.to_a
+# [[1, 2], [4], [9, 10, 11, 12], [15, 16], [19, 20, 21]]
+```
+`Enumerable#slice_when` <br/>
+`slice_when` splits up an Enumerable when the criteria is evaluated as `true`:
+```ruby
+a = [1,2,4,9,10,11,12,15,16,19,20,21]
+
+p a.slice_when {|i, j| i+1 == j }.to_a
+# [[1], [2, 4, 9], [10], [11], [12, 15], [16, 19], [20], [21]]
+```
