@@ -1,4 +1,4 @@
- # February 2021 (Total minutes: 3,682)
+ # February 2021 (Total minutes: 3,864)
 - [1st, Mon](#010221-mon)
 - [2nd, Tue](#020221-tue)
 - [3rd, Wed](#030221-wed)
@@ -26,6 +26,7 @@
 - [25th, Thu](#250221-thu)
 - [26th, Fri](#260221-fri)
 - [27th, Sat](#270221-sat)
+- [28th, Sun](#280221-sun)
 
 ##### 01/02/21 (Mon)
 __*Concepts covered*__<br/>
@@ -346,3 +347,23 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Today was mostly brushing up on pass by reference (basically everything) and values (immutable objects & variable reassignment), as well as some of the more commonly used array and hash methods. Pretty good revision, especially since the OOP content I just covered gives more flavour to the definitions around mutable objects just being changes in state to an object (since the `object_id` does not change, even if we change the state of an object).
+
+##### 28/02/21 (Sun)
+__*Concepts covered*__<br/>
+- Revision
+  - RB101 Revision
+  - RB109 Problem Solving
+- RB130
+  - Closures
+
+__*Time spent*__<br/>
+182 minutes
+
+__*Thoughts*__<br/>
+More revision is helpful - even though objects might duplicated and different from one another, if they are collections, the objects within the collections can be shared. We need to check if the operation we're performing is at an element, or object level - an element level change (e.g. element reassignment, or mutating method on each element) will alter the element across both collections, whereas altering something at the object level (e.g. `map` called on a collection), will __not__ alter both collections.
+
+Assuming an object is frozen (i.e. has `.freeze` called on it):
+- `dup` will __not__ preserve the frozen status (i.e. we can alter the object at an object level without issue)
+- `clone` __will__ preserve the frozen status (we __cannot__ alter the object at an object level)
+
+I'm also committing to doing a small amount of the collated Codewars problem from RB109, just so my skills don't totally atrophy again. Just 2 a day, to keep things fresh. I am very rusty - the first two problems took me 33 minutes together, which is pretty long. Hopefully as I keep doing these, I'll get back to my original level.
