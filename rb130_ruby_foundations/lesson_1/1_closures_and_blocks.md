@@ -1,4 +1,4 @@
-# Lesson 1
+# Closures and Blocks
 
 ## Table of Contents
 - [Closures](#closures)
@@ -11,6 +11,7 @@
 - [Return value of yielding to the block](#return-value-of-yielding-to-the-block)
 - [When should we use blocks?](#when-should-we-use-blocks)
 - [Methods with an explicit block parameter](#methods-with-an-explicit-block-parameter)
+- [Summary](#summary)
 
 ### Closures
 A __closure__ is a general programming concept that allows programmers to *save a "chunk of code"* and execute it at a later time. It's called a "closure" because it's said to __bind its surrounding artifacts__ (i.e. variables, methods, objects, etc) and build an "enclosure" around everything so that they can be referenced when the closure is later executed. 
@@ -385,7 +386,7 @@ end
 
 def test(&block)
   puts "1"
-  # Pass in the Proc object as an argument
+  # Pass in the converted Proc object as an argument
   test2(block)
   puts "2"
 end
@@ -402,3 +403,10 @@ Note that you only need to use `&` for the block parameter in `#test`. Since `bl
 Note that we also use `block.call` inside `test2` to invoke the `Proc` instead of `yield`. If you wanted to invoke the `Proc` from `test`, you would do the same thing: `block.call`). It's not often that you need to pass a block around like this, but the need does arise.
 
 The above discussion of explicit blocks is simplified from reality. Things get a bit more complicated if the caller passes in a `Proc` object, a lambda, or some other object to a method that takes an explicit block. For now, you just need to know that __Ruby converts blocks passed in as explicit blocks to a simple `Proc` object__ (this is why we need to use `#call` to invoke the `Proc` object).
+
+### Summary
+- Blocks are one way that Ruby implements closures. Closures are a way to pass around an unnamed "chunk of code" to be executed later.
+- Blocks can take arguments, just like normal methods. But unlike normal methods, it won't complain about wrong number of arguments passed to it (based on lenient arity rules).
+- Blocks return a value, just like normal methods.
+- Blocks are a way to defer some implementation decisions to method invocation time. It allows method callers to refine a method at invocation time for a specific use case. It allows method implementors to build generic methods that can be used in a variety of ways.
+- Blocks are a good use case for "sandwich code" scenarios, like closing a `File` automatically.
