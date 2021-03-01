@@ -36,7 +36,7 @@ new_hash.delete(:key)
 We can __conditionally remove__ a key-value pair using the `delete_if` method. Again, this __permanently__ alters the hash. It returns the mutated hash.
 ```ruby
 hash = { "a" => 100, "b" => 200, "c" => 300 }
-hash.delete_if {|key, value| key >= "b" }   
+hash.delete_if { |key, value| key >= "b" }   
 
 # => {"a"=>100}
 ```
