@@ -361,13 +361,13 @@ end
 We don't currently understand exactly how blocks work, and so we can't exactly say why we don't have the close the file. However, we can guess that the method implementor of `File::open` opens the file, yields to the block, then closes the file. This means the method caller only needs to pass in the relevant file manipulation code in the block without worrying about closing the file.
 
 ### Methods with an explicit block parameter
-Until now, we've passed blocks to methods implicitly. Every method, regardless of its definition, takes an implicit block. It may *ignore the implicit block, but it still accepts it*. However, there are times when you want a method to take an __explicit block__; you do that by defining a parameter prefixed by an `&` character in the method definition.
+Until now, we've passed blocks to methods __implicitly__. Every method, regardless of its definition, takes an implicit block. It may *ignore the implicit block, but it still accepts it*. However, there are times when you want a method to take an __explicit block__; you do that by defining a parameter prefixed by an `&` character in the method definition.
 ```ruby
 def test(&block)
   puts "What's &block? #{block}"
 end
 ```
-The &block is a special parameter that *converts the block argument* to what we call a "simple" `Proc` object (the exact definition of a simple `Proc` object isn't important at this time). Notice that we drop the `&` when referring to the parameter inside the method.
+The `&block` is a special parameter that *converts the block argument* to what we call a "simple" `Proc` object (the exact definition of a simple `Proc` object isn't important at this time). Notice that we drop the `&` when referring to the parameter inside the method.
 ```ruby
 test { sleep(1) }
 # What's &block? #<Proc:0x007f98e32b83c8@(irb):59>

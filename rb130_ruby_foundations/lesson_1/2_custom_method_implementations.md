@@ -159,7 +159,9 @@ end
 
 # => NoMethodError: undefined method `+' for nil:NilClass
 ```
-You might have expected the answer to be `4`, thinking that the code will add up `1` and `3` together, skipping `2`. However, remember what the `reduce` method does: it __sets the accumulator to the return value of the block__, and then __passes the accumulator to the block on the next `yield`__. When it got to `2`, the line `acc + num if num.odd?` returned `nil`. The accumulator is now set to `nil`, and the next time reduce yielded to the block, this accumulator (which is now `nil`) was passed to the block. That's why we get the `NoMethodError`. Note that if our array is `[1, 2]`, the above code will return `nil`, because after iterating through the array, it returns the accumulator (which is `nil` since it's not odd).
+You might have expected the answer to be `4`, thinking that the code will add up `1` and `3` together, skipping `2`. However, remember what the `reduce` method does: it __sets the accumulator to the return value of the block__, and then __passes the accumulator to the block on the next `yield`__. When it got to `2`, the line `acc + num if num.odd?` returned `nil`. 
+
+The accumulator is now set to `nil`, and the next time reduce yielded to the block, this accumulator (which is now `nil`) was passed to the block. That's why we get the `NoMethodError`. Note that if our array is `[1, 2]`, the above code will return `nil`, because after iterating through the array, it returns the accumulator (which is `nil` since it's not odd).
 
 Another interesting behavior for the `Enumerable#reduce` method is that you can initialize the accumulator to a default value. For example, let's say we wanted to add up all the elements of an array, but we wanted to start the accumulator from `10`. We can do this:
 ```ruby
