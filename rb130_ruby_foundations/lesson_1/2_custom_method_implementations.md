@@ -200,18 +200,44 @@ One other thing you may notice is that we use a number (`0`) as the default init
 
 For an extra challenge, how would you implement this improved default behavior? Try it on your own.
 ```ruby
-def reduce(array, default_value = array.first)
-  accumulator = default_value
-  for element in array[1..-1]
-    accumulator = yield(accumulator, element)
+def reduce(array, start_val = omitted = true)
+  accumulator = omitted ? array.first : start_val
+  counter = omitted ? 1 : 0
+
+  while counter < array.size
+      accumulator = yield(accumulator, array[counter])
+      counter += 1
   end
 
   accumulator
 end
 
+array = [1, 2, 3, 4, 5]
+
+reduce(array) { |acc, num| acc + num }
+# => 15
+reduce(array, 10) { |acc, num| acc + num }
+# => 25
+reduce(array, 1) { |acc, num| acc + num }
+# => 16
 reduce(['a', 'b', 'c']) { |acc, value| acc += value }
 # => 'abc'
-
 reduce([[1, 2], ['a', 'b']]) { |acc, value| acc + value }
 # => [1, 2, 'a', 'b']
+```
+The omitted flag is required to handle the edge case where the first element of the array is the same as the optional accumulator argument passed in by the user. If this occurs, the counter would otherwise skip the first element, and undercount the total (see 3rd example, which would equal `15` in that case).
+
+We could also have implemented it as such:
+```ruby
+def reduce(array, start_val = nil)
+  accumulator = start_val.nil? ? array.first : start_val
+  counter = start_val.nil? ? 1 : 0
+
+  while counter < array.size
+    accumulator = yield(accumulator, array[counter])
+    counter += 1
+  end
+
+  accumulator
+end
 ```

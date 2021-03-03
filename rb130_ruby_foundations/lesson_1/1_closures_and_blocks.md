@@ -279,7 +279,7 @@ The two main use cases are:
 #### Defer some implementation code to method invocation decision
 There are two roles involved with any method: the __method implementor__ and the __method caller__ (note that this could be the same person/developer). There are times when the method implementor is not 100% certain of how the method will be called. Maybe the method implementor is 90% certain, but wants to leave that 10% decision up to the method caller at method invocation time.
 
-Without using blocks, the method implementor can allow method callers to pass in some flag. For example, take our compare method above. Suppose we don't use blocks. We can still achieve similar functionality, like this:
+Without using blocks, the method implementor can allow method callers to pass in some flag. For example, take our `compare` method above. Suppose we don't use blocks. We can still achieve similar functionality, like this:
 ```ruby
 def compare(str, flag)
   after = case flag
@@ -373,20 +373,20 @@ test { sleep(1) }
 # What's &block? #<Proc:0x007f98e32b83c8@(irb):59>
 # => nil
 ```
-The `block` local variable is now a `Proc` object. Note that we can name it whatever we please; it doesn't have to be `block`, just as long as we define it with a leading `&`.
+__The `block` local variable is now a `Proc` object__. Note that we can name it whatever we please; it doesn't have to be `block`, just as long as we define it with a leading `&`.
 
 Why do we now need an explicit block instead? Chiefly, the answer is that it _provides additional flexibility_. Before, we didn't have a handle (a variable) for the implicit block, so we couldn't do much with it except yield to it and test whether a block was provided. Now we have a variable that represents the block, so we can __pass the block to another method__:
 ```ruby
 def test2(block)
   puts "hello"
-  # calls the Proc object that was originally passed to test()
+  # calls the Proc object that was originally passed to test() - the converted block
   block.call
   puts "good-bye"
 end
 
 def test(&block)
   puts "1"
-  # Pass in the converted Proc object as an argument
+  # Pass in the block that's converted to a Proc object as an argument
   test2(block)
   puts "2"
 end
