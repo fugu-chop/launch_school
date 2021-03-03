@@ -361,13 +361,15 @@ end
 We don't currently understand exactly how blocks work, and so we can't exactly say why we don't have the close the file. However, we can guess that the method implementor of `File::open` opens the file, yields to the block, then closes the file. This means the method caller only needs to pass in the relevant file manipulation code in the block without worrying about closing the file.
 
 ### Methods with an explicit block parameter
-Until now, we've passed blocks to methods __implicitly__. Every method, regardless of its definition, takes an implicit block. It may *ignore the implicit block, but it still accepts it*. However, there are times when you want a method to take an __explicit block__; you do that by defining a parameter prefixed by an `&` character in the method definition.
+Until now, we've passed blocks to methods __implicitly__. Every method, regardless of its definition, takes an implicit block. It may *ignore the implicit block, but it still accepts it*. However, there are times when you want a method to take an __explicit block__; you do that by defining a parameter prefixed by an `&` character in the method definition. 
+
+The block must always be referenced by the __last parameter in the method definition prepended by a `&` symbol__. This syntax signals that any block passed into the method upon method invocation can be used as a `Proc` (but is optionally passed in - not passing in a block in our below method does not result in an error). __The block is converted to a `Proc` object__ and will no longer be anonymous inside the method definition.
 ```ruby
 def test(&block)
   puts "What's &block? #{block}"
 end
 ```
-The `&block` is a special parameter that *converts the block argument* to what we call a "simple" `Proc` object (the exact definition of a simple `Proc` object isn't important at this time). Notice that we drop the `&` when referring to the parameter inside the method.
+The `&block` is a special parameter that *converts the optional block argument* to what we call a "simple" `Proc` object (the exact definition of a simple `Proc` object isn't important at this time). Notice that we drop the `&` when referring to the parameter inside the method. 
 ```ruby
 test { sleep(1) }
 # What's &block? #<Proc:0x007f98e32b83c8@(irb):59>
@@ -379,18 +381,19 @@ Why do we now need an explicit block instead? Chiefly, the answer is that it _pr
 ```ruby
 def test2(block)
   puts "hello"
-  # calls the Proc object that was originally passed to test() - the converted block
+  # calls the Proc object that was originally passed to test()
   block.call
   puts "good-bye"
 end
 
 def test(&block)
   puts "1"
-  # Pass in the block that's converted to a Proc object as an argument
+  # The & symbol converts the block to a Proc object, which is passed as an argument to test2
   test2(block)
   puts "2"
 end
 
+# Note how the method invocation syntax is the same as if we had an implicit block
 test { puts "xyz" }
 # => 1
 # => hello
@@ -398,7 +401,7 @@ test { puts "xyz" }
 # => good-bye
 # => 2
 ```
-Note that you only need to use `&` for the block parameter in `#test`. Since `block` is already a `Proc` object when we call `test2`, no conversion is needed.
+Note that you only need to use `&` for the block parameter in `#test`. Since `block` is already referencing a `Proc` object when we call `test2`, no additional conversion is needed.
 
 Note that we also use `block.call` inside `test2` to invoke the `Proc` instead of `yield`. If you wanted to invoke the `Proc` from `test`, you would do the same thing: `block.call`). It's not often that you need to pass a block around like this, but the need does arise.
 

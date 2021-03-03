@@ -8,6 +8,9 @@
 A block is how Ruby implements the idea of a __closure__, which is a general computing concept of a "chunk of code" that you can pass around and execute at some later time. In order for this "chunk of code" to be executed later, it must understand the surrounding context from when it was initialized. 
 
 In Ruby, this "chunk of code" or closure is represented by a `Proc` object, a lambda, or a block. Remember that __blocks are a form of `Proc`__.
+
+If we wanted to be really picky, we could say that technically blocks aren't real closures since we can't pass them around (without first converting them to a `Proc`-like object by using an explicit block parameter). For the purposes of discussing closures in Ruby though, it's easier just to think of blocks as closures. 
+
 ```ruby
 name = "Robert"
 chunk_of_code = Proc.new { puts "hi #{name}" }
@@ -15,7 +18,7 @@ chunk_of_code = Proc.new { puts "hi #{name}" }
 If you try to run that code, nothing will happen. That's because we've created a `Proc` and saved it to `chunk_of_code`, but haven't executed it yet. We can now pass around this local variable, `chunk_of_code` and execute it at any time later. Suppose we have a completely different method, and we pass in this `chunk_of_code` into that method, then the method executes that `chunk_of_code`. 
 ```ruby
 def call_me(some_code)
-  # call will execute the "chunk of code" that gets passed in
+  # call will execute the Proc object that gets passed in
   some_code.call
 end
 
@@ -36,7 +39,7 @@ def call_me(some_code)
 end
 
 name = "Robert"
-chunk_of_code = Proc.new {puts "hi #{name}"}
+chunk_of_code = Proc.new { puts "hi #{name}" }
 # re-assign name after Proc initialization
 name = "Griffin III"
 
@@ -53,6 +56,30 @@ This not only includes local variables, but also _method references, constants a
 
 This is at the core of variable scoping rules in Ruby, and it's why "inner scopes can access outer scopes".
 
+Another important point is that whatever we define within the `Proc` doesn't really matter __unless it actually gets invoked__.
+```ruby
+# madeup_method is referenced here but not invoked so it doesn't matter if it exists or not
+my_proc = Proc.new { madeup_method }
+
+# but when we call the Proc madeup_method is invoked, resulting in a NameError
+my_proc.call
+# NameError: undefined local variable or method madeup_method for main:Object
+```
+The `to_proc` method doesn't care what symbol is being passed in, it will not check if there is a real `madeup_method` was defined beforehand. 
+```ruby
+# madeup_method is referenced here but not invoked so it doesn't matter if it exists or not
+my_proc = Proc.new { madeup_method }
+
+# we then define a method called madeup_method
+def madeup_method
+  puts 'Hello!'
+end
+
+# now when we call the Proc madeup_method is invoked, outputting the String 'Hello!'
+my_proc.call 
+# => 'Hello!'
+```
+The important thing to note here is the reason this works __isn't__ because our defintion of `madeup_method` is in the binding of `my_proc` (it is defined __after__ `my_proc` is instantiated), but because `madeup_method` is defined __before__ it is effectively invoked by `my_proc.call`.
 ### Symbol to proc
 When working with collections, we often want to transform all items in that collection. For example, suppose we have an array of integers and we want to transform every element in the array into strings.
 ```ruby
@@ -88,11 +115,15 @@ Suppose you want to use `String#prepend` to prepend each value with `"The number
 #### `Symbol#to_proc`
 What the above shortcut is doing, is effectively converting `(&:to_s)` to `{ |n| n.to_s }`. The mechanism at work here is related to the use of `&` with explicit blocks, but since it isn't applied to a method parameter, it's also different. 
 
-Let's break down the code `(&:to_s)`. First, when we add a `&` in front of an object, it tells Ruby to try to __convert this object into a block__. To do so, it's expecting a `Proc` object. If this object is not a `Proc` object, it will __call `#to_proc` on the object__. So two things are happening:
+Let's break down the code `(&:to_s)`. First, when we add a `&` in front of an object, it tells Ruby to try to __convert this object into a block__. To do so, it's expecting a `Proc` object. If this object is not a `Proc` object, it will __call `#to_proc` on the object__. 
+
+Put another way, when the object prefixed with the` &` in a method invocation is a `Proc`, that tells Ruby to treat the `Proc` object __as if it were a regular block following a method invocation__.
+
+So two things are happening during method __invocation__:
 1. Ruby checks whether the object __after__ `&` is a `Proc`. 
   - If it is, it uses the object __as-is__. 
   - Otherwise, it tries to call `#to_proc` on the object, which should return a `Proc` object. An error will occur if the `#to_proc` fails to return a `Proc` object.
-2. If all is well, the `&` turns the `Proc` into a __block__.
+2. If all is well, the __`&` turns the `Proc` into a block__.
 
 This means that Ruby is trying to turn `:to_s` into a block. However, it's not a `Proc`; it's a `Symbol`. Ruby will then try to call the `Symbol#to_proc` method -- and there is one! This method will return a `Proc` object, which will execute the method based on the name of the symbol. In other words, `Symbol#to_proc` returns a `Proc`, which `&` turns into a block, which turns our shortcut into the long form block usage.
 
@@ -109,6 +140,11 @@ my_method(&:to_s)
 # If we break up the shortcut syntax into two steps:
 # explicitly call to_proc on the symbol
 a_proc = :to_s.to_proc
-# convert Proc into block, then pass block in. Returns "2"
+# convert Proc into block, then pass block in.
 my_method(&a_proc)
+# => "2"
 ```
+#### The `&` symbol
+When used in a method __definition__, the unary `&` __expects to be passed a block__ which it then __converts to a `Proc` object__ (we can leverage this fact to write methods with an explicit block parameter). 
+
+When used in a method __invocation__, unary `&` __expects a `Proc` object__ which it then __converts to a block__ (which is used as the block for the called method). If a non-`Proc` object is used as the operand, then Ruby will attempt to call `to_proc` on it first, the resulting `Proc` object then being __converted to a block__ by `&`. This is why we can use a symbol object as the operand, since the `Symbol` class has a `#to_proc` instance method.

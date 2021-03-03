@@ -1,10 +1,10 @@
 # Custom Method Implementations
 
 ## Table of Contents
-- [The `times` method](#the-`times`-method)
-- [The `each` method](#the-`each`-method)
-- [The `select` method](#the-`select`-method)
-- [The `reduce` method](#the-`reduce`-method)
+- [The `times` method](#the-times-method)
+- [The `each` method](#the-each-method)
+- [The `select` method](#the-select-method)
+- [The `reduce` method](#the-reduce-method)
 
 ### The `times` method
 Let's write our own `times` method that mimics the behavior of the `Integer#times` method.
@@ -225,7 +225,7 @@ reduce(['a', 'b', 'c']) { |acc, value| acc += value }
 reduce([[1, 2], ['a', 'b']]) { |acc, value| acc + value }
 # => [1, 2, 'a', 'b']
 ```
-The omitted flag is required to handle the edge case where the first element of the array is the same as the optional accumulator argument passed in by the user. If this occurs, the counter would otherwise skip the first element, and undercount the total (see 3rd example, which would equal `15` in that case).
+The `omitted` flag is required to handle the edge case where the first element of the array is the same as the optional accumulator argument passed in by the user. If this occurs, the counter would otherwise skip the first element, and undercount the total (see 3rd test case, which would equal `15` if we did not apply the `omitted` flag).
 
 We could also have implemented it as such:
 ```ruby
