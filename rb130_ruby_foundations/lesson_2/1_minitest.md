@@ -1,22 +1,47 @@
 # Minitest
 
 ## Table of Contents
-- [Why minitest?](#why-minitest?)
+- [Why minitest?](#why-minitest)
 - [Vocabulary](#vocabulary)
 - [Breaking down the test](#breaking-down-the-test)
 - [Breaking down the output](#breaking-down-the-output)
+- [Failures](#failures)
+- [Skipping Tests](#skipping-tests)
+- [Expectation Syntax](#expectation-syntax)
 
 ### Why minitest?
+One of the biggest keys to producing quality software is properly testing your program under a wide variety of conditions. Doing this manually is tedious and error-prone, and frequently doesn’t get done at all. This leads to buggy software, and sometimes software that doesn’t work at all.
+
 For beginners, we write tests to __prevent regression__ - that's what we'll focus on for now. We want to write tests so that when *we make changes in our code, we don't have to manually verify everything still works*. You can write tests first if you like, or you can write your tests after implementation. Most likely, you'll need to take some mixture of both, jumping back and forth between implementation and testing code.
 
 Though many people use RSpec, Minitest is the default testing library that comes with Ruby. From a pure functionality standpoint, Minitest can do everything RSpec can, except Minitest uses a more straight forward syntax. RSpec bends over backwards to allow developers to write code that reads like natural English, but at the cost of simplicity. RSpec is what we call a __Domain Specific Language__; it's a DSL for writing tests.
 
+We install Minitest through the gem package manager:
+```
+# To install Minitest:
+gem install minitest
+
+# Verify minitest has installed:
+gem list minitest
+
+# To add color:
+gem install minitest-reporters
+```
+Typically, test suites are stored in in a special tests directory beneath your main application’s development directory. For example, if you are working on a to-do application that is stored in `/Users/me/todo`, then you will place your test suite files in `/Users/me/todo/tests`. This isn’t a requirement, but is good practice for source organization, particularly when working with large projects.
 ### Vocabulary
 In the world of testing, a whole new vocabulary is necessary to talk about the new concepts. There is a lot of jargon when working with tests, but for now, we'll just focus on a few terms below.
 
-- __Test Suite__: this is the entire set of tests that accompanies your program or application. You can think of this as __all the tests__ for a project.
-- __Test__: this describes a *situation or context* in which tests are run. For example, this test is about making sure you get an error message after trying to log in with the wrong password. A test can contain multiple assertions.
+A _testing framework_ is software that provides a way to test each of the components of an application. These can be methods or entire programs; the framework should be able to provide appropriate inputs, check return values, examine outputs, and even determine if errors occur when they should.
+
+Testing frameworks provide 3 basic features:
+- a way to describe the tests you want to run,
+- a way to execute those tests,
+- a way to report the results of those tests.
+
+There is a hierarchy to tests. Since there isn’t any formal agreement on exactly which terms are used to describe this hierarchy, we will use the following definitions:
 - __Assertion__: this is the actual verification step to confirm that the data returned by your program or application is indeed what is expected. You make one or more assertions within a test.
+- __Test__: this describes a *situation or context* in which tests are run. For example, this test is about making sure you get an error message after trying to log in with the wrong password. A test can contain multiple assertions.
+- __Test Suite__: this is the entire set of tests that accompanies your program or application. You can think of this as __all the tests__ for a project.
 
 ### Breaking down the test
 We start with the following code, in `1_car.rb`.
@@ -78,3 +103,121 @@ This output means our test passed. The last line states: 1 assertions, 0 failure
 The first "`seed`" tells Minitest _what order the tests were run in_. In our example, we only have 1 test, but most test suites have many tests that are run in random order. The "seed" is how you tell Minitest to run the entire test suite __in a particular order__. This is rarely used, but is sometimes helpful when you have an especially tricky bug that only comes up when certain specific situations come up.
 
 The next important thing to notice is the `.`. There's only 1 here, so it looks like an inconsequential period, but it's very important. That means the __test was run and nothing went wrong__. If you skip a test with the "`skip`" keyword, it'll say "`S`". If you have a failure, it'll say "`F`". Pay attention to that to see if you have a failing test.
+
+### Failures
+If we specifically add a test to ensure a failure:
+```ruby
+require 'minitest/autorun'
+
+require_relative '1_car'
+
+class CarTest < MiniTest::Test
+  def test_wheels
+    car = Car.new
+    assert_equal(4, car.wheels)
+  end
+
+  def test_bad_wheels
+    car = Car.new
+    assert_equal(3, car.wheels)
+  end
+end
+```
+We will get this output.
+```
+$ ruby 1_car_test.rb
+
+Run options: --seed 8732
+
+# Running:
+
+CarTest F.
+
+Finished in 0.001222s, 1636.7965 runs/s, 1636.7965 assertions/s.
+
+  1) Failure:
+CarTest#test_bad_wheels [1_car_test.rb:13]:
+Expected: 3
+  Actual: 4
+
+2 runs, 2 assertions, 1 failures, 0 errors, 0 skips
+```
+The last line gives us a quick summary, and we can see that there are now 2 assertions and 1 failure. Minitest further gives us the exact failing test, and also tells us the expected value vs the actual value. Also notice at the top, there's a "`F.`", which means there were 2 tests, one of which failed (that's the "`F`") and one of which passed (that's the "`.`").
+
+### Skipping Tests
+Minitest allows us to skip tests via the `skip` keyword. All you have to do is put `skip` at the beginning of the test, and Minitest will skip it. It will also report that you have skipped tests in your suite, and output an "`S`" instead of a dot. You could also pass a string into `skip` if you want a more custom display message (displays by default in Minitest Reporters, need to run the script with the `--verbose` flag for default).
+```ruby
+require 'minitest/autorun'
+# require "minitest/reporters"
+require_relative '1_car'
+
+# Minitest::Reporters.use!
+
+class CarTest < MiniTest::Test
+  def test_wheels
+    car = Car.new
+    assert_equal(4, car.wheels)
+  end
+
+  def test_bad_wheels
+    skip
+    car = Car.new
+    assert_equal(3, car.wheels)
+  end
+end
+```
+The default output:
+```
+Run options: --seed 32489
+
+# Running:
+
+S.
+
+Finished in 0.001072s, 1865.6716 runs/s, 932.8358 assertions/s.
+
+2 runs, 1 assertions, 0 failures, 0 errors, 1 skips
+
+You have skipped tests. Run with --verbose for details.
+```
+With Minitest Reporters, the skipped test is represented in yellow and is highlighted showing that you should go back and take care of it.
+```
+Started with run options --seed 23047
+
+ SKIP CarTest#test_bad_wheels (0.00s)
+        Skipped, no message given
+        1_car_test.rb:16:in `test_bad_wheels'
+
+  2/2: [==================================================================================================] 100% Time: 00:00:00, Time: 00:00:00
+
+Finished in 0.00115s
+2 tests, 1 assertions, 0 failures, 0 errors, 1 skips
+```
+### Expectation Syntax
+Thus far, we've been using the assertion or assert-style syntax. Minitest also has a completely different syntax called _expectation_ or _spec-style_ syntax.
+
+In expectation style, tests are grouped into `describe` blocks, and individual tests are written with the `it` method. We no longer use assertions, and instead use expectation matchers.
+```ruby
+require 'minitest/autorun'
+
+require_relative '1_car'
+
+describe 'Car#wheels' do
+  it 'has 4 wheels' do
+    car = Car.new
+    car.wheels.must_equal 4           # this is the expectation
+  end
+end
+```
+The above test gives us the following output.
+```
+Run options: --seed 51670
+
+# Running:
+
+Car#wheels .
+
+Finished in 0.001067s, 937.0051 runs/s, 937.0051 assertions/s.
+
+1 runs, 1 assertions, 0 failures, 0 errors, 0 skips
+```
