@@ -49,13 +49,13 @@ call_me(chunk_of_code)
 # hi Griffin III
 # => nil
 ```
-If we reassign the local variable `name` __after__ the `Proc` object is assigned to `chunk_of_code`, the output changes. This implies that the `Proc` __keeps track of its surrounding context__, and drags it around wherever the chunk of code is passed to. 
+If we reassign the local variable `name` __after__ the `Proc` object is assigned to `chunk_of_code`, the output changes. This implies that the `Proc` __keeps track of its surrounding context__, and drags it around wherever the chunk of code is passed to. Another way to think about it is that the binding has __access to the variable, not the value it's assigned to__. 
 
-In Ruby, we call this its __binding__, or surrounding environment/context. A closure must keep track of its surrounding context in order to have all the information it needs in order to be executed later. 
+In Ruby, we call this its __binding__, or surrounding environment/context. A closure must keep track of its surrounding context in order to have all the information it needs in order to be executed later. The binding is not something that's created afresh every time it's required, but is __just a reference to variables__, and the values returned will be relevant to the point in the program the binding is invoked.
 
 This not only includes local variables, but also _method references, constants and other artifacts_ in your code -- __whatever it needs to execute correctly__, it will drag all of it around. It's why code like the above will work fine, seemingly violating the variable scoping rules we learned earlier.
 
-This is at the core of variable scoping rules in Ruby, and it's why "inner scopes can access outer scopes".
+This is at the core of variable scoping rules in Ruby, and it's why "inner scopes can access outer scopes". This is why anything __defined before__ a block is passed as an argument to a method invocation is *part of that block's binding*.
 
 Whatever we define within the `Proc` doesn't really matter __unless it actually gets invoked__.
 ```ruby
