@@ -1,11 +1,12 @@
- # March 2021 (Total minutes: 369)
+ # March 2021 (Total minutes: 490)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
+- [4th, Thu](#040321-thu)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
-- RB130 - Implementing our own methods
+- RB130 - Ruby Foundations
   - Closures & Blocks revision
   - Custom method implementations
   - Todo List Problem
@@ -20,7 +21,7 @@ Working with blocks and implementing our own custom implementations of existing 
 
 ##### 02/03/21 (Tue)
 __*Concepts covered*__<br/>
-- RB130 - Implementing our own methods
+- RB130 - Ruby Foundations
   - Todo List Problem
   - Blocks and Variable Scope
   - `Symbol#to_proc`
@@ -35,7 +36,7 @@ I finished Lesson 1 of what looks to be a pretty short module. I did some revisi
 
 ##### 03/03/21 (Wed)
 __*Concepts covered*__<br/>
-- RB130 - Implementing our own methods
+- RB130 - Ruby Foundations
   - Revision
 - Revision
   - Codewar Problems
@@ -47,3 +48,18 @@ __*Thoughts*__<br/>
 After some revision, I realised that the implementation for one of my code examples was wrong since it was an edge case I didn't think of. This is probably a habit I need to get used to - I can practice this through my Codewars revision. Positively, I am also getting better at Codewars problems. Today was pretty fast and got through the solution relatively easily.
 
 Blocks and Procs are pretty tricky. I was having a hard time distinguishing between use of the unary `&` operator in the context of method invocation versus method definition. The next point of confusion for tomorrow is binding and what's in scope when a Proc object is created.
+
+##### 04/03/21 (Thu)
+__*Concepts covered*__<br/>
+- RB130 - Ruby Foundations
+  - Revision
+  - Quiz 1
+  - Lesson 2: Minitest
+- Revision
+  - Codewar Problems
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+The Codewars problems were particularly tricky today. That's ok, they were rated as pretty hard. Testing is pretty weird. The syntax and language are completely different to what I'm used to, and the testing suite output is pretty unfamiliar. All very exciting!
