@@ -2,6 +2,7 @@
 
 ## Table of Contents
 - [Closure and Binding](#closure-and-binding)
+- [Binding Scope](#binding-scope)
 - [Symbol to proc](#symbol-to-proc)
 
 ### Closure and Binding
@@ -56,7 +57,7 @@ This not only includes local variables, but also _method references, constants a
 
 This is at the core of variable scoping rules in Ruby, and it's why "inner scopes can access outer scopes".
 
-Another important point is that whatever we define within the `Proc` doesn't really matter __unless it actually gets invoked__.
+Whatever we define within the `Proc` doesn't really matter __unless it actually gets invoked__.
 ```ruby
 # madeup_method is referenced here but not invoked so it doesn't matter if it exists or not
 my_proc = Proc.new { madeup_method }
@@ -65,7 +66,7 @@ my_proc = Proc.new { madeup_method }
 my_proc.call
 # NameError: undefined local variable or method madeup_method for main:Object
 ```
-The `to_proc` method doesn't care what symbol is being passed in, it will not check if there is a real `madeup_method` was defined beforehand. 
+The `to_proc` method doesn't care what symbol is being passed in, it will not check if `madeup_method` was defined beforehand. 
 ```ruby
 # madeup_method is referenced here but not invoked so it doesn't matter if it exists or not
 my_proc = Proc.new { madeup_method }
@@ -79,7 +80,58 @@ end
 my_proc.call 
 # => 'Hello!'
 ```
-The important thing to note here is the reason this works __isn't__ because our defintion of `madeup_method` is in the binding of `my_proc` (it is defined __after__ `my_proc` is instantiated), but because `madeup_method` is defined __before__ it is effectively invoked by `my_proc.call`.
+The reason this works __isn't__ because our definition of `madeup_method` is in the binding of `my_proc` (it is defined __after__ `my_proc` is instantiated), but because `madeup_method` is defined __before__ it is effectively invoked by `my_proc.call`.
+
+### Binding Scope
+The binding is what is in scope when the closure is __created__. Any variables that need to be accessed in a proc (or block/ lambda) __must be defined before the proc is created__ (or __passed as an argument__ when the proc is called). This does not stop the Proc from '*updating*' the state of it's information (e.g. see our previous example with the local variable `name`).
+```ruby
+a = 1
+b = 2
+
+my_proc = Proc.new do 
+  p a
+  p b
+end
+
+c = 3
+my_proc.call
+# => [:my_proc, :b, :a, ...]
+
+p local_variables
+# => [:c, :my_proc, :b, :a, ...]
+```
+In the code above, `a` and `b` are __in scope__ when the closure `my_proc` is created on line 4. When we execute the Proc on line 8, we output the return of `Kernel#local_variables`. 
+
+This basically tells us the local variables that are in scope. `c` is not included even though we call the proc after `c` is assigned on line 6. When we output the return of `local_variables` outside of the closure on line 10, `c` is included.
+
+In the following example, the __local variable__ `a` is not defined until __after `my_proc` is created__ (and as such is __not part of `my_proc`'s binding__).
+```ruby
+my_proc = Proc.new { puts a }
+a = 'hello'
+
+my_proc.call
+# NameError (undefined local variable or method `a' for main:Object)
+```
+In the following example, we define an `a` __method__, which we define __subsequent__ to our Proc. In this case, `my_proc` is able to call the method, since it is defined elsewhere __before__ `my_proc` is called.
+```ruby
+my_proc = Proc.new { puts a }
+
+def a
+  'hello'
+end
+
+my_proc.call
+# => 'hello'
+```
+In this final example, this works, but only because we are passing in `c` as __an argument__ to the `Proc.call` method, *not* because `c` is part of the proc's binding.
+```ruby
+my_proc = Proc.new do |num|
+  p num
+end
+
+c = 3
+my_proc.call(c)
+```
 ### Symbol to proc
 When working with collections, we often want to transform all items in that collection. For example, suppose we have an array of integers and we want to transform every element in the array into strings.
 ```ruby
@@ -147,4 +199,6 @@ my_method(&a_proc)
 #### The `&` symbol
 When used in a method __definition__, the unary `&` __expects to be passed a block__ which it then __converts to a `Proc` object__ (we can leverage this fact to write methods with an explicit block parameter). 
 
-When used in a method __invocation__, unary `&` __expects a `Proc` object__ which it then __converts to a block__ (which is used as the block for the called method). If a non-`Proc` object is used as the operand, then Ruby will attempt to call `to_proc` on it first, the resulting `Proc` object then being __converted to a block__ by `&`. This is why we can use a symbol object as the operand, since the `Symbol` class has a `#to_proc` instance method.
+When used in a method __invocation__, unary `&` __expects a `Proc` object__ which it then __converts to a block__ (which is used as the block for the called method). 
+
+If a non-`Proc` object is used as the operand, then Ruby will attempt to call `to_proc` on it first, the resulting `Proc` object then being __converted to a block__ by `&`. This is why we can use a symbol object as the operand, since the `Symbol` class has a `#to_proc` instance method.
