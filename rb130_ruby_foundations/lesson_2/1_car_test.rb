@@ -7,6 +7,9 @@ require_relative '1_car'
 # Minitest::Reporters.use!
 
 class CarTest < MiniTest::Test
+  # Use this if you need to run your tests in order (lol). We also need to ensure that our tests are ordered alphabetically.
+  # i_suck_and_my_tests_are_order_dependent!()
+
   def test_wheels
     car = Car.new
     assert_equal(4, car.wheels)

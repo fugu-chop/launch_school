@@ -41,77 +41,75 @@ class TodoList
     @todos = []
   end
 
-  def add(todo)
-    raise TypeError, "Can only add Todo objects" unless todo.instance_of?(Todo)
-    todos.push(todo)
-    todos
-  end
-
-  alias_method :<<, :add
-
   def size
-    todos.size
+    @todos.size
   end
 
   def first
-    todos.first.to_s
+    @todos.first
   end
 
   def last
-    todos.last.to_s
-  end
-
-  def to_a
-    # Using collect to return an array instead of the calling object like each does
-    todos.collect { |todo| todo.to_s }
-  end
-
-  def done?
-    todos.all? { |todo| todo.done? }
-  end
-
-  def item_at(position)
-    # Using fetch to ensure indices are not out of bounds, and to_s to make output readable
-    todos.fetch(position).to_s
-  end
-
-  def mark_done_at(position)
-    # Not using item_at because we applied to_s, which changes the return value to a string object
-    todos.fetch(position).done!
-  end
-
-  def mark_undone_at(position)
-    todos.fetch(position).undone!
-  end
-
-  def done!
-    todos.each { |todo| todo.done! }
+    @todos.last
   end
 
   def shift
-    todos.shift
+    @todos.shift
   end
 
   def pop
-    todos.pop
+    @todos.pop
   end
 
-  def remove_at(position)
-    todos.delete_at(position)
+  def done?
+    @todos.all? { |todo| todo.done? }
+  end
+
+  def <<(todo)
+    raise TypeError, 'can only add Todo objects' unless todo.instance_of? Todo
+
+    @todos << todo
+  end
+  alias_method :add, :<<
+
+  def item_at(idx)
+    @todos.fetch(idx)
+  end
+
+  def mark_done_at(idx)
+    item_at(idx).done!
+  end
+
+  def mark_undone_at(idx)
+    item_at(idx).undone!
+  end
+
+  def done!
+    @todos.each_index do |idx|
+      mark_done_at(idx)
+    end
+  end
+
+  def remove_at(idx)
+    @todos.delete(item_at(idx))
   end
 
   def to_s
-    puts "---- #{title} ----"
-    todos.each { |todo| puts todo }
+    text = "---- #{title} ----\n"
+    text << @todos.map(&:to_s).join("\n")
+    text
+  end
+
+  def to_a
+    @todos.clone
   end
 
   # In most cases, we prefer to work with the TodoList object directly and invoke method calls on `list`. We would rather not access an internal state of the TodoList, which in this case is @todos. 
   # This is the idea behind encapsulation: we want to hide implementation details from users of the TodoList class, and not encourage users of this class to reach into its internal state. 
   # Instead, we want to encourage users of the class to use the interfaces (ie, public methods) we created for them.
   def each
-    # Reference the @todos instance variable, which is an array
-    for i in todos
-      yield(i)
+    @todos.each do |todo|
+      yield(todo)
     end
     # Remember that Array#each returns the object on which it was called
     self
@@ -129,40 +127,35 @@ class TodoList
 
   # We use this implementation to follow Ruby's existing pattern of returning the same type of object that called the method
   def select
-    new_list = TodoList.new(title)
-    # We're referencing the @todos instance variable in the current object and using that to populate new_list
-    # We are also using the TodoList#<< method
-    each do |item|
-      new_list << item if yield(item)
+    list = TodoList.new(title)
+    each do |todo|
+      list.add(todo) if yield(todo)
     end
-    new_list
+    list
   end
 
-  def find_by_title(str)
-    select { |item| item.title == str }.first
+  # returns first Todo by title, or nil if no match
+  def find_by_title(title)
+    select { |todo| todo.title == title }.first
   end
 
   def all_done
-    select { |item| item.done? }
+    select { |todo| todo.done? }
   end
 
   def all_not_done
-    select { |item| !item.done? }
+    select { |todo| !todo.done? }
   end
 
-  def mark_done(str)
-    find_by_title(str).done!
+  def mark_done(title)
+    find_by_title(title) && find_by_title(title).done!
   end
 
   def mark_all_done
-    each { |item| item.done! }
+    each { |todo| todo.done! }
   end
 
   def mark_all_undone
-    each { |item| item.undone! }
+    each { |todo| todo.undone! }
   end
-
-  private 
-
-  attr_reader :todos
 end
