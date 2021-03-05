@@ -1,8 +1,9 @@
- # March 2021 (Total minutes: 490)
+ # March 2021 (Total minutes: 613)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
 - [4th, Thu](#040321-thu)
+- [5th, Fri](#050321-fri)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -63,3 +64,17 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The Codewars problems were particularly tricky today. That's ok, they were rated as pretty hard. Testing is pretty weird. The syntax and language are completely different to what I'm used to, and the testing suite output is pretty unfamiliar. All very exciting!
+
+##### 05/03/21 (Fri)
+__*Concepts covered*__<br/>
+- RB130 - Ruby Foundations
+  - Lesson 2: Minitest
+  - [Blog Post](https://launchschool.com/blog/assert-yourself-an-introduction-to-minitest)
+- Revision
+  - Codewar Problems
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+Writing tests is kinda fun. You have to create some scenarios in your head, attempting to find edge cases that could break your code. It's another way to make your code more resilient to errors when writing it in the first place - thinking about the tests you would write.
