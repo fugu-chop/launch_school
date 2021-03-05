@@ -66,10 +66,11 @@ class TodoList
   end
 
   def <<(todo)
-    raise TypeError, 'can only add Todo objects' unless todo.instance_of? Todo
+    raise TypeError, 'can only add Todo objects' unless todo.instance_of?(Todo)
 
     @todos << todo
   end
+  # This allows us to give the same method a different name
   alias_method :add, :<<
 
   def item_at(idx)
@@ -91,6 +92,7 @@ class TodoList
   end
 
   def remove_at(idx)
+    # We use this implementation to return an index error if out of bounds (delete_at does not do this)
     @todos.delete(item_at(idx))
   end
 

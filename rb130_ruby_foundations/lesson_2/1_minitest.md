@@ -256,8 +256,13 @@ class MyApp
     @db.finish
   end
 
-  def count; ...; end
-  def create(value); ...; end
+  def count
+    # Do something
+  end
+
+  def create(value)
+    # Do something
+  end
 end
 
 class DatabaseTest < Minitest::Test

@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 
-require_relative '1_car'
+require_relative 'car'
 
 describe 'Car#wheels' do
   it 'has 4 wheels' do

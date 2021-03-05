@@ -5,6 +5,7 @@
 - [Refutations](#refutations)
 - [Testing Equality](#testing-equality)
 - [Equality with a custom class](#equality-with-a-custom-class)
+- [Code coverage](#code-coverage)
 
 ### Assertions
 Besides equality, sometimes we want to assert that a specific error is raised, or that something is printed out to standard out, or an object must be an object of a specific class, or that something must be `nil`, or that it must not be `nil`, etc. 
@@ -187,7 +188,7 @@ end
 ```
 Note that in the `setup` method, we __must now use an instance variable__, `@car`. We can't use a local variable in `setup`, because the tests, which are just instance methods, __won't be able to access it__. But they can access an instance variable. Because we changed `car` to `@car`, we also have to make the same update in the actual tests. Finally, note that we __do not use `@car`__ in the `test_raise_initialize_with_arg` test, because we're using `Car.new` *with arguments* in this test.
 
-The `setup` method will be called before running every test, and the `teardown` method (which we don't have) will be called after running every test. In our case, we don't have any tear down activity, so it's not necessary. In some cases, we will need a tear down for cleaning up files or logging some information, or closing database connections.
+The `setup` method will be called __before running every test__, and the `teardown` method (which we don't have) will be called after running every test. In our case, we don't have any tear down activity, so it's not necessary. In some cases, we will need a tear down for cleaning up files or logging some information, or closing database connections.
 
 ### Testing Equality
 When we use `assert_equal`, we are testing for __value equality__. Specifically, we're invoking the `==` method on the object. If we're looking for more strict object equality, then we need to use the `assert_same` assertion.
@@ -283,3 +284,22 @@ class CarTest < MiniTest::Test
   end
 end
 ```
+### Code coverage
+When writing tests, we want to get an idea of code coverage, or how much of our actual program code is tested by a test suite. Code coverage is based on all of your code, both public and private. Also, this doesn't mean every edge case is considered, or that even our program is working correctly. It only means that we have some tests in place for every method.
+
+There are other ways to measure code coverage too besides looking at public methods. For example, more sophisticated tools can help with ensuring that all branching logic is tested. While not foolproof, code coverage is one metric that you can use to gauge code quality.
+
+One tool we can use is the gem `simplecov`.
+```
+gem install simplecov
+```
+We can use it by inserting the following lines above the rest of our test file. 
+```ruby
+require 'simplecov'
+SimpleCov.start
+```
+If your test file and original file are in different directories, `simplecov` will fail to pick up the code correctly. If however, you __navigate in the terminal to the directory with the original file__, then run the test file, the correct `/coverage/` directory is created and you get a meaningful code coverage percent.
+
+Once we have this, when we run our tests, we'll get a new directory in our file system called `coverage`. Open up the `index.html` file in that directory, and you should see something like this:
+
+![simplecov Diagram](https://d1b1wr57ag5rdp.cloudfront.net/images/simplecov_output_92.jpg)

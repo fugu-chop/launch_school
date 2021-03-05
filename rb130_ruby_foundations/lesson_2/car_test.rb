@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 # This adds the colour
 # require "minitest/reporters"
-require_relative '1_car'
+require_relative 'car'
 
 # Tell Ruby to use the Reporters module method to add color
 # Minitest::Reporters.use!
