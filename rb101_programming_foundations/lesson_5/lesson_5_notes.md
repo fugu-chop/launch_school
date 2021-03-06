@@ -77,6 +77,12 @@ Some useful rules to remember are:
 - Digits and (most) punctuation come before letters
 - There is an extended ASCII table containing accented and other characters - this comes after the main ASCII table
 
+As a side note, we can convert from an integer returned by `#ord` with the `#chr` method.
+```ruby
+num = 'b'.ord
+num.chr
+# => 'b'
+```
 ### Sort
 We can also call sort with *a block*; this gives us more control over how the items are sorted. 
 
