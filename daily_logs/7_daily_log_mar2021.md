@@ -1,9 +1,10 @@
- # March 2021 (Total minutes: 613)
+ # March 2021 (Total minutes: 793)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
 - [4th, Thu](#040321-thu)
 - [5th, Fri](#050321-fri)
+- [6th, Sat](#060321-sat)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -78,3 +79,18 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Writing tests is kinda fun. You have to create some scenarios in your head, attempting to find edge cases that could break your code. It's another way to make your code more resilient to errors when writing it in the first place - thinking about the tests you would write.
+
+##### 06/03/21 (Sat)
+__*Concepts covered*__<br/>
+- RB130 - Ruby Foundations
+  - Lesson 2: Minitest
+- Exercises
+  - RB130 - Easy 1
+- Revision
+  - Codewar Problems
+
+__*Time spent*__<br/>
+180 minutes
+
+__*Thoughts*__<br/>
+It's good to go back to coding the exercises. Unlike previous sets of exercises, the Easy 1 problems are actually interesting and I get a lot of value by reading other students' solutions. It's quite good.
