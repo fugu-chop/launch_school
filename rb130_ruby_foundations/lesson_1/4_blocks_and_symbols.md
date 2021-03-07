@@ -162,8 +162,19 @@ The above code iterates through every element in the array and calls `to_s` on i
 ```
 The above code transforms all elements to strings, then back to integers. Note that the `&` __must be followed by a symbol name for a method that can be invoked on each element__. In the last example, we use the symbols `:to_s` and `:to_i` to represent the `#to_s` and `#to_i` methods.
 
-Suppose you want to use `String#prepend` to prepend each value with `"The number is:"`. Unfortunately, we can't use the shortcut to do that; it __doesn't work for methods that take arguments__.
+Suppose you want to use `String#prepend` to prepend each value with `"The number is:"`. Unfortunately, we can't use the shortcut to do that; it __doesn't work for methods that take arguments__. We would need to use a `Proc` object for this, which we can obtain by using the `Method#to_proc` method.
+```ruby
+def convert_to_base_8(n)
+  # The #to_s method converts an integer to Base 8
+  n.to_s(8).to_i
+end
 
+# We can convert methods to procs with Method#to_proc. This requires a Method object, which we create with Object#method(:method_name) 
+base8_proc = method(:convert_to_base_8).to_proc
+
+[8, 10, 12, 14, 16, 33].map(&base8_proc)
+``` 
+In the above code, the `map` method expects a block, passing individual elements of the array to that block. The `&` symbol converts our `base8_proc` Proc object into a block. The actual proc object is a method which accepts an argument, which is exactly what we want with the `map` method and how we get around the issue of `&:method_name` not taking an argument.
 #### `Symbol#to_proc`
 What the above shortcut is doing, is effectively converting `(&:to_s)` to `{ |n| n.to_s }`. The mechanism at work here is related to the use of `&` with explicit blocks, but since it isn't applied to a method parameter, it's also different. 
 
@@ -202,3 +213,5 @@ When used in a method __definition__, the unary `&` __expects to be passed a blo
 When used in a method __invocation__, unary `&` __expects a `Proc` object__ which it then __converts to a block__ (which is used as the block for the called method). 
 
 If a non-`Proc` object is used as the operand, then Ruby will attempt to call `to_proc` on it first, the resulting `Proc` object then being __converted to a block__ by `&`. This is why we can use a symbol object as the operand, since the `Symbol` class has a `#to_proc` instance method.
+
+In essence, the two uses of `&` are opposites.

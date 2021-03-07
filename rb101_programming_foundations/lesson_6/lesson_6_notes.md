@@ -70,7 +70,7 @@ go("a", "b", "c")
 In our above example, `'a'` is passed to the `go` method as an argument, via the `x` parameter, as it is the first value passed. The `*args` parameter will capture the rest of any values we pass in to `go`.
 
 *Using an array to pass multiple arguments* <br/>
-They let you pass an array into a function expecting multiple arguments. The first item in the array becomes the first argument, the second item becomes the second argument and so on.
+The splat operator lets you pass an array into a method expecting multiple arguments (it effectively converts the array into a __list of elements__). The first item in the array becomes the first argument, the second item becomes the second argument and so on.
 ```ruby
 def go(x, y)
   puts x.inspect
@@ -85,3 +85,45 @@ go(*point)
 # => nil
 ```
 The splat operator here is effectively acting as a wildcard - it is effectively creating a variable to hold each element in the array. It allows us to *destructure* an array - it is basically the same as calling `.flatten(1)` on an array, meaning it will only unnest __one__ level (won't unnest subarrays, etc).
+
+In our example below, we now have to use the splat operator in order to allow the method to access the individual items within the `items` array as parameters.
+```ruby
+items = %w(apples corn cabbage wheat)
+
+def gather(apples, *assorted)
+  puts "Let's start gathering food."
+  puts apples
+  puts assorted.join(', ')
+  puts "We've finished gathering!"
+end
+
+gather(*items)
+```
+There is a key difference between how arrays are passed as parameters either to a block or a method. When yielded to a __block__, an array's individual elements will get _converted to a list of items_ if the block parameters call for that conversion(such as when we have parameters like `|apples, *assorted|`).
+
+When passing an array to a __method__, we need to be _explicit_ in how we pass it. If we want to change that array into a list of items, we'll have to do so with the splat operator `*`.
+```ruby
+items = %w(apples corn cabbage wheat)
+
+# We simply pass in the array as an argument to the array, and allow the block parameters create the list of items
+def gather(items)
+  puts "Let's start gathering food."
+  yield(items)
+  puts "We've finished gathering!"
+end
+
+gather(items) do |apples, *assorted|
+  puts apples
+  puts assorted.join(', ')
+end
+
+# We have to explicitly say to Ruby 'turn this array into a list of items'
+def gather(apples, *assorted)
+  puts "Let's start gathering food."
+  puts apples
+  puts assorted.join(', ')
+  puts "We've finished gathering!"
+end
+
+gather(*items)
+```
