@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 977)
+# March 2021 (Total minutes: 1,100)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -6,6 +6,7 @@
 - [5th, Fri](#050321-fri)
 - [6th, Sat](#060321-sat)
 - [7th, Sun](#070321-sun)
+- [8th, Mon](#080321-mon)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -108,3 +109,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The testing exercises were pretty cool, and the exercises more generally are quite good at assessing my comprehension of concepts. It didn't seem to click to me that `yield` actually returns something, which was a blocker for one of my solutions.
+
+##### 08/03/21 (Mon)
+__*Concepts covered*__<br/>
+- Exercises
+  - RB130 - Medium 1, Medium Testing
+- Revision
+  - Codewar Problems
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+I still find `Proc` objects slightly confusing conceptually. I need to revise the concepts and apply them more. Working across different classes in collaboration for testing is quite challenging - I need to get used to this again.
