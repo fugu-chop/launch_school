@@ -25,6 +25,7 @@ class CashRegisterTest < MiniTest::Test
   # 3) Write a test for method CashRegister#give_receipt that ensures it displays a valid receipt
   def test_give_receipt
     # Test text output - the output of puts is a side effect, so we need to use an assertion that tests side effects.
+    # puts appends a newline to the message that is output. We must include that newline character in our expected value as well when making an assertion with assert_output.
     assert_output("You've paid $10.\n") do
       @register.give_receipt(@transaction)
     end

@@ -313,6 +313,7 @@ There will be times when you want to write a generic method that performs some _
 Suppose we want to write a method that outputs how long something takes. Our method doesn't care what that _something_ is; our method just cares about displaying how long it took.
 ```ruby
 def time_it
+  # Assign a returned value to a method local variable
   time_before = Time.now
   # do something
   time_after= Time.now
@@ -363,7 +364,7 @@ We don't currently understand exactly how blocks work, and so we can't exactly s
 ### Methods with an explicit block parameter
 Until now, we've passed blocks to methods __implicitly__. Every method, regardless of its definition, takes an implicit block. It may *ignore the implicit block, but it still accepts it*. However, there are times when you want a method to take an __explicit block__; you do that by defining a parameter prefixed by an `&` character in the method definition. 
 
-The block must always be referenced by the __last parameter in the method definition prepended by a `&` symbol__. This syntax signals that any block passed into the method upon method invocation can be used as a `Proc` (but is optionally passed in - not passing in a block in our below method __does not result in an error__). __The block is converted to a `Proc` object__ and will no longer be anonymous inside the method definition.
+The block must always be referenced by the __last parameter in the method definition prepended by a `&` symbol__. This syntax signals that any block passed into the method upon method invocation can be used as a `Proc` (but is optionally passed in - not passing in a block in our below method __does not result in an error__, rather the block simply returns `nil`). __The block is converted to a `Proc` object__ and will no longer be anonymous inside the method definition.
 ```ruby
 def test(&block)
   puts "What's &block? #{block}"
@@ -377,7 +378,7 @@ test { sleep(1) }
 ```
 __The `block` local variable is now a `Proc` object__. Note that we can name it whatever we please; it doesn't have to be `block`, just as long as we define it with a leading `&`.
 
-Why do we now need an explicit block instead? Chiefly, the answer is that it _provides additional flexibility_. Before, we didn't have a handle (a variable) for the implicit block, so we couldn't do much with it except `yield` to it and test whether a block was provided. Now we have a variable that represents the block, so we can __pass the block to another method__:
+Why do we now need an explicit block instead? Chiefly, the answer is that it _provides additional flexibility_. Before, we didn't have a handle (a variable) for the implicit block, so we couldn't do much with it except `yield` to it and test whether a block was provided. Now we have a variable that represents the block, so we can __pass the block to another method__ (this is more useful when we define a Proc object outside of a method, and pass it as an argument to different methods):
 ```ruby
 def test(&block)
   puts "1"

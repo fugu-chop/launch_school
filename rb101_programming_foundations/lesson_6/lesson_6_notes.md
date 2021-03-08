@@ -99,7 +99,7 @@ end
 
 gather(*items)
 ```
-There is a key difference between how arrays are passed as parameters either to a block or a method. When yielded to a __block__, an array's individual elements will get _converted to a list of items_ if the block parameters call for that conversion(such as when we have parameters like `|apples, *assorted|`).
+There is a key difference between how arrays are passed as parameters either to a block or a method. When yielded to a __block__, an array's individual elements will get _converted to a list of items_ if the block parameters call for that conversion (such as when we have parameters like `|apples, *assorted|`).
 
 When passing an array to a __method__, we need to be _explicit_ in how we pass it. If we want to change that array into a list of items, we'll have to do so with the splat operator `*`.
 ```ruby
@@ -114,6 +114,7 @@ end
 
 gather(items) do |apples, *assorted|
   puts apples
+  # We can reference the assorted parameter like any other
   puts assorted.join(', ')
 end
 
