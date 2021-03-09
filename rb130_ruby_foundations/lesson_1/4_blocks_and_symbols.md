@@ -80,7 +80,7 @@ end
 my_proc.call 
 # => 'Hello!'
 ```
-The reason this works __isn't__ because our definition of `madeup_method` is in the binding of `my_proc` (it is defined __after__ `my_proc` is instantiated), but because `madeup_method` is defined __before__ it is effectively invoked by `my_proc.call`.
+The reason this works __isn't__ because our definition of `madeup_method` is in the binding of `my_proc` (it is defined __after__ `my_proc` is instantiated), but because `madeup_method` is defined __before it is effectively invoked__ by `my_proc.call`.
 
 ### Binding Scope
 The binding is what is in scope when the closure is __created__. Any variables that need to be accessed in a proc (or block/ lambda) __must be defined before the proc is created__ (or __passed as an argument__ when the proc is called). This does not stop the Proc from '*updating*' the state of it's information (e.g. see our previous example with the local variable `name`).
@@ -112,7 +112,7 @@ a = 'hello'
 my_proc.call
 # NameError (undefined local variable or method `a' for main:Object)
 ```
-In the following example, we define an `a` __method__, which we define __subsequent__ to our Proc. In this case, `my_proc` is able to call the method, since it is defined elsewhere __before__ `my_proc` is called.
+In the following example, we define an `a` __method__, which we define __subsequent__ to our Proc. In this case, `my_proc` is able to call the method, since it is defined elsewhere __before `my_proc` is called__.
 ```ruby
 my_proc = Proc.new { puts a }
 
