@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 1,100)
+# March 2021 (Total minutes: 1,222)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -7,6 +7,7 @@
 - [6th, Sat](#060321-sat)
 - [7th, Sun](#070321-sun)
 - [8th, Mon](#080321-mon)
+- [9th, Tue](#090321-tue)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -122,3 +123,17 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I still find `Proc` objects slightly confusing conceptually. I need to revise the concepts and apply them more. Working across different classes in collaboration for testing is quite challenging - I need to get used to this again.
+
+##### 09/03/21 (Tue)
+__*Concepts covered*__<br/>
+- Exercises
+  - RB130 - Medium Testing
+- Revision
+  - RB130 Concepts
+  - Codewar Problems
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+Woke up feeling not particularly refreshed. I spent some time in the morning doing revision instead - I feel like I'm moving a little too quickly through the content. The Medium testing stuff is getting weird. There's a lot of working with concepts that haven't been introduced thus far, like working with `StringIO` objects.
