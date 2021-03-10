@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 1,222)
+# March 2021 (Total minutes: 1,345)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -8,6 +8,7 @@
 - [7th, Sun](#070321-sun)
 - [8th, Mon](#080321-mon)
 - [9th, Tue](#090321-tue)
+- [10th, Wed](#100321-wed)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -137,3 +138,18 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Woke up feeling not particularly refreshed. I spent some time in the morning doing revision instead - I feel like I'm moving a little too quickly through the content. The Medium testing stuff is getting weird. There's a lot of working with concepts that haven't been introduced thus far, like working with `StringIO` objects.
+
+##### 10/03/21 (Wed)
+__*Concepts covered*__<br/>
+- Exercises
+  - RB130 - Medium Testing, Advanced 1
+- RB130 Study Session
+- RB130 Quiz
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+The study session was a bit of a wash. We really didn't cover off anything useful to RB130, and went off on various tangents beyond the curriculum. I'm not going to log the hours as part of study. 
+
+The quiz wasn't too bad. I found I retained a fair bit of information, but need to brush up on the specifics of the test outputs when they fail.
