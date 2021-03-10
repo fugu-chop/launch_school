@@ -79,6 +79,19 @@ end
 say()
 # => Hello!
 ```
+We can also use an alternative syntax for setting default parameters, by using the `:` symbol. The difference is in how you call the method when you supply a non-default value:
+```ruby
+def xyz(x: 0)
+end
+
+def abc(x = 0)
+end
+
+xyz(x: 5)
+avc(5)
+```
+Note how you have to specify the parameter name when calling `xyz`. There's little benefit to this when there's only one parameter, but if you have something like `def pqr(a: 1, b: 2 c: 3); end`, you can call `pqr(c: 3, a: 2)` - the __order of the arguments can differ__, and you don't have to specify them all.
+
 ### Method Definition and Local Variable Scope
 A method definition __creates its own scope__ outside the regular flow of execution. Method parameters (assigned as local variables within the method definition) are scoped at the *method definition level*, and are __not__ available *outside* of the method definition.
 
