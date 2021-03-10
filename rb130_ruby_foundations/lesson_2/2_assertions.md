@@ -41,6 +41,25 @@ def test_car_exists
   assert(car, "The car object is falsy")
 end
 ```
+Note that while `assert` can evaluate truthiness, `assert` can't distinguish between the expected and actual values when producing an output.
+```ruby
+# Assuming this test fails, minitest won't be able to tell what the output should be
+assert(@kitty.name == 'Milo')
+# Expected false to be truthy.
+
+# If we want the below output (i.e. distinguish between an expected v actual result), we need to use assert_equal
+=begin
+1) Failure:
+CatTest#test_name [minitest_test.rb:21]:
+Expected: "Milo"
+Actual: "Kitty"
+=end
+```
+We also can't use it to evaluate exceptions (unless rescued, the exception will also terminate the rest of the tests).
+```ruby
+assert(Cat.new == ArgumentError)
+# This will raise an Argument error, and terminate the rest of the tests since the exception is not rescued
+```
 `assert_equal`
 ```ruby
 def test_wheels
@@ -287,7 +306,7 @@ end
 ### Code coverage
 When writing tests, we want to get an idea of code coverage, or how much of our actual program code is tested by a test suite. Code coverage is based on all of your code, both public and private. Also, this doesn't mean every edge case is considered, or that even our program is working correctly. It only means that we have some tests in place for every method.
 
-There are other ways to measure code coverage too besides looking at public methods. For example, more sophisticated tools can help with ensuring that all branching logic is tested. While not foolproof, code coverage is one metric that you can use to gauge code quality.
+There are other ways to measure code coverage too besides looking at public methods. For example, more sophisticated tools can help with ensuring that all branching logic is tested. While not foolproof, code coverage is one metric that you can use to gauge *code quality*.
 
 One tool we can use is the gem `simplecov`.
 ```

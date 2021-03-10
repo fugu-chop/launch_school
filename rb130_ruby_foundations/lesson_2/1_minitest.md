@@ -16,6 +16,8 @@ One of the biggest keys to producing quality software is properly testing your p
 
 For beginners, we write tests to __prevent regression__ - that's what we'll focus on for now. We want to write tests so that when *we make changes in our code, we don't have to manually verify everything still works*. You can write tests first if you like, or you can write your tests after implementation. Most likely, you'll need to take some mixture of both, jumping back and forth between implementation and testing code.
 
+Remember that the minitest file is still a Ruby script - if any of the tests raises an unrescued exception, it will terminate execution of the script (the rest of the tests will not run and the file stops being evaluated). 
+
 Though many people use RSpec, Minitest is the default testing library that comes with Ruby. From a pure functionality standpoint, Minitest can do everything RSpec can, except Minitest uses a more straight forward syntax. RSpec bends over backwards to allow developers to write code that reads like natural English, but at the cost of simplicity. RSpec is what we call a __Domain Specific Language__; it's a DSL for writing tests.
 
 We install Minitest through the gem package manager:

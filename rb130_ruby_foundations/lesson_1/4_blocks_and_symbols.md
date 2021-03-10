@@ -82,6 +82,74 @@ my_proc.call
 ```
 The reason this works __isn't__ because our definition of `madeup_method` is in the binding of `my_proc` (it is defined __after__ `my_proc` is instantiated), but because `madeup_method` is defined __before it is effectively invoked__ by `my_proc.call`.
 
+Remember back to Object Oriented Programming - Wwen we don't use an explicit caller, the method is implicitly called on `self`. To be a little more precise here, if we try to invoke a method without an explicit caller and __without parentheses__, Ruby will first check to see if there is _a local variable of that name_ within scope (which in the case of a block __includes its binding__). If there is, then Ruby will return the object referenced by the local variable. If not, it will attempt to call a method of that name on `self`.
+
+Ruby doesn't know whether `my_method` is a local variable or a method, and so first looks for the local variable, and __then__ tries calling the method on `self`.
+```ruby
+my_method 
+# => NameError: undefined local variable or method `my_method' for main:Object
+```
+In the below example, because of the parentheses, Ruby knows this is a method invocation and so skips the local variable part and just tries calling the method on `self`.
+```ruby
+my_method() 
+# => NoMethodError: undefined method `my_method' for main:Object
+```
+If we explicitly call `my_method` on `self` we get the same result (Ruby knows this is a method invocation, and so skips the local variable part).
+```ruby
+self.my_method 
+# => NoMethodError: undefined method `my_method' for main:Object
+```
+If we look at the last part of the error message for `main:Object`, we see that `self` in the `main` scope is the `main` object. The `main` scope is an __instance of the `Object` class__, but it's also the `Object` __class itself__ (It's more complex than that, but for the purposes of this discussion, that's a good enough mental model).
+```ruby
+self
+# => main
+
+self.class 
+# => Object
+```
+This means that we can define methods in the `main` scope, and then call those methods on `self`.
+```ruby
+def greeting
+  puts 'Hello!'
+end
+
+greeting
+# => 'Hello!'
+
+self.greeting
+# => 'Hello!'
+```
+As an aside here, since all custom classes inherit from `Object`, we can also call the method on objects of custom classes; but __only if we make them public__, since methods defined in the `main` scope are __private by default__.
+```ruby
+public
+
+def greeting
+  puts 'Hello!'
+end
+
+class MyClass; end
+
+MyClass.new.greeting 
+# => 'Hello!'
+```
+So looking at the following example:
+```ruby
+my_proc_4 = Proc.new { puts d }
+
+def d
+  4
+end
+
+my_proc_4.call
+# => 4
+```
+1. We create the Proc object and assign it to the local variable `my_proc_4`. The __name__ `d` is part of the Proc's binding. At this stage, it doesn't really matter what `d` is.
+2. We then define a method `d` on the `main` object
+3. We then invoke the `call` method on `my_proc_4`. 
+
+Since Ruby can't disambiguate between `d` being a local variable or a method, it first looks to see if there is a local variable `d` in scope. Since there isn't a local variable `d` in the Proc's binding, it then implicitly calls `d` as a method on `self`. Since `self` here is the `main` object, and since we have defined a `d` method on that object, we are able to successfully invoke the method.
+
+If we had reversed the order (i.e. defined the method __after__ `my_proc_4.call`, we would get a `NameError: undefined local variable or method 'd' for main:Object`).
 ### Binding Scope
 The binding is what is in scope when the closure is __created__. Any variables that need to be accessed in a proc (or block/ lambda) __must be defined before the proc is created__ (or __passed as an argument__ when the proc is called). This does not stop the Proc from '*updating*' the state of it's information (e.g. see our previous example with the local variable `name`).
 ```ruby

@@ -409,6 +409,11 @@ Note that we also use `block.call` inside `test2` to invoke the `Proc` instead o
 
 The above discussion of explicit blocks is simplified from reality. Things get a bit more complicated if the caller passes in a `Proc` object, a lambda, or some other object to a method that takes an explicit block. For now, you just need to know that __Ruby converts blocks passed in as explicit blocks to a simple `Proc` object__ (this is why we need to use `#call` to invoke the `Proc` object).
 
+#### Lambdas (not examinable - see Advanced 1 Exercises)
+Lambdas are types of Proc's. Technically they are both Proc objects. An implicit block is a grouping of code, a type of closure, it is not an Object.
+
+Lambdas enforce the number of arguments passed to them (strict arity rules). Implicit blocks and Procs do not enforce the number of arguments passed in.
+
 ### Summary
 - Blocks are one way that Ruby implements closures. Closures are a way to pass around an unnamed "chunk of code" to be executed later.
 - Blocks can take arguments, just like normal methods. But unlike normal methods, it won't complain about wrong number of arguments passed to it (based on lenient arity rules).
