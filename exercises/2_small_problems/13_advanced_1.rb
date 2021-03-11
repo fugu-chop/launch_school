@@ -132,5 +132,102 @@ end
 
 # 2b) Write a transpose! method that transposes a matrix in place. 
 def transpose!(matrix)
-  # Using map! doesn't work as we're mutating as we iterate through - we probably have to iterate through each element of the sub arrays and swap
+  0.upto(2) do |row|
+    0.upto(2) do |col|
+      matrix[row][col], matrix[col][row] = matrix[col][row], matrix[row][col] if row < col
+    end
+  end
+end
+
+=begin
+# Skipping steps when row >= col
+[[1, 5, 8], [4, 7, 2], [3, 9, 6]]
+matrix[0][1], matrix[1][0]
+5, 4 = 4, 5
+[[1, 4, 8], [5, 7, 2], [3, 9, 6]]
+matrix[0][2], matrix[2][0]
+8, 3 = 3, 8
+[[1, 4, 3], [5, 7, 2], [8, 9, 6]]
+matrix[1][2], matrix[2][1]
+2, 9 = 9, 2
+[[1, 4, 3], [5, 7, 9], [8, 2, 6]]
+=end
+
+# 3) Modify your transpose method from the previous exercise so it works with any matrix with at least 1 row and 1 column.
+=begin
+transpose([[1, 2, 3, 4]]) == [[1], [2], [3], [4]]
+transpose([[1], [2], [3], [4]]) == [[1, 2, 3, 4]]
+transpose([[1, 2, 3, 4, 5], [4, 3, 2, 1, 0], [3, 7, 8, 6, 2]]) ==
+  [[1, 4, 3], [2, 3, 7], [3, 2, 8], [4, 1, 6], [5, 0, 2]]
+transpose([[1]]) == [[1]]
+=end
+def transpose(matrix)
+  result = []
+  # The trickiest part of this is naming the variables so we know what are rows and columns
+  number_of_rows = matrix.size
+  number_of_columns = matrix.first.size
+  # Remember, the outer loop holds constant while the inner loop continues to iterate
+  (0...number_of_columns).each do |column_index|
+    # Here, map returns an array of all the returned values
+    new_row = (0...number_of_rows).map { |row_index| matrix[row_index][column_index] }
+    result << new_row
+  end
+  result
+end
+
+# 4) Write a method that takes an arbitrary matrix and rotates it 90 degrees clockwise
+=begin
+matrix1 = [
+  [1, 5, 8],
+  [4, 7, 2],
+  [3, 9, 6]
+]
+
+matrix2 = [
+  [3, 7, 4, 2],
+  [5, 1, 0, 8]
+]
+
+new_matrix1 = rotate90(matrix1)
+new_matrix2 = rotate90(matrix2)
+new_matrix3 = rotate90(rotate90(rotate90(rotate90(matrix2))))
+
+p new_matrix1 == [[3, 4, 1], [9, 7, 5], [6, 2, 8]]
+p new_matrix2 == [[5, 3], [1, 7], [0, 4], [8, 2]]
+p new_matrix3 == matrix2
+=end
+def rotate90(matrix)
+  new_mat = []
+  rows = matrix.size - 1
+  columns = matrix.first.size - 1
+  (0..columns).each do |col|
+    new_mat << (0..rows).to_a.map do |row|
+      matrix[row][col]
+    end.reverse
+  end
+
+  new_mat
+end
+
+# 3b) Can you modify your solution to perform 90, 180, 270, and 360 degree rotations based on an argument?
+def rotate(matrix, times)
+  rows = matrix.size - 1
+  columns = matrix.first.size - 1
+
+  new_mat = []
+
+  return matrix if times == 0
+  rotations = (times / 90).floor
+
+  rotations.times do |_|
+    new_mat = []
+    # Need to somehow use new_mat instead of matrix
+    (0..columns).each do |col|
+      new_mat << (0..rows).to_a.map do |row|
+        matrix[row][col]
+      end.reverse
+    end
+    matrix = new_mat
+  end
+  new_mat
 end
