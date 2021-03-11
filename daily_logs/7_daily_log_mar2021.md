@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 1,345)
+# March 2021 (Total minutes: 1,476)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -9,6 +9,7 @@
 - [8th, Mon](#080321-mon)
 - [9th, Tue](#090321-tue)
 - [10th, Wed](#100321-wed)
+- [11th, Thu](#110321-thu)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -153,3 +154,14 @@ __*Thoughts*__<br/>
 The study session was a bit of a wash. We really didn't cover off anything useful to RB130, and went off on various tangents beyond the curriculum. I'm not going to log the hours as part of study. 
 
 The quiz wasn't too bad. I found I retained a fair bit of information, but need to brush up on the specifics of the test outputs when they fail.
+
+##### 11/03/21 (Thu)
+__*Concepts covered*__<br/>
+- Exercises
+  - RB109 - Advanced 1
+
+__*Time spent*__<br/>
+131 minutes
+
+__*Thoughts*__<br/>
+A bit hit and miss with the advanced exercises. I sometimes hit a mental block, and then I get PTSD flashbacks of my time in RB109, hitting my head against a wall. However, once I calm down, I realise that the problems aren't actually that hard to solve - it's just hard to figure out what exactly I am supposed to do. I just need to calm down, break down the problem.
