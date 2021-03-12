@@ -221,7 +221,6 @@ def rotate(matrix, times)
 
   rotations.times do |_|
     new_mat = []
-    # Need to somehow use new_mat instead of matrix
     (0..columns).each do |col|
       new_mat << (0..rows).to_a.map do |row|
         matrix[row][col]
@@ -230,4 +229,160 @@ def rotate(matrix, times)
     matrix = new_mat
   end
   new_mat
+end
+
+# 4) Fix the bug in the code
+=begin
+def my_method(array)
+  if array.empty?
+    []
+  elsif
+    array.map do |value|
+      value * value
+    end
+  else
+    [7 * array.first]
+  end
+end
+
+p my_method([])
+p my_method([3])
+p my_method([3, 4])
+p my_method([5, 6, 7])
+=end
+def my_method(array)
+  if array.empty?
+    []
+  elsif !array.empty?
+    array.map do |value|
+      value * value
+    end
+  else
+    [7 * array.first]
+  end
+end
+
+puts "The original code had no elsif condition that checked for array size. As such, Ruby would interpret the map method call (alongside the block passed as an argument). The map method always returns an array (could be empty), which is truthy. As such, the elsif branch will be executed. As the map method has been used for the conditional evaluation, there is no actual code in the elsif branch, which will simply return nil."
+
+# 5) Write a method that takes two sorted Arrays as arguments, and returns a new Array that contains all elements from both arguments in sorted order. You may not provide any solution that requires you to sort the result array. You must build the result array one element at a time in the proper order. Your solution should not mutate the input arrays.
+=begin
+merge([1, 5, 9], [2, 6, 8]) == [1, 2, 5, 6, 8, 9]
+merge([1, 1, 3], [2, 2]) == [1, 1, 2, 2, 3]
+merge([], [1, 4, 5]) == [1, 4, 5]
+merge([1, 4, 5], []) == [1, 4, 5]
+=end
+def merge(arr1, arr2)
+  arr1_dup = arr1.map { |el| el.dup }
+  arr2_dup = arr2.map { |el| el.dup }
+  new_arr = []
+
+  loop do
+    arr1_dup.each do |element|
+      new_arr << arr1_dup.shift if arr2_dup.all? { |el2| el2 > element }
+    end
+    arr2_dup.each do |element|
+      new_arr << arr2_dup.shift if arr1_dup.all? { |el1| el1 > element }
+    end
+    break if arr1_dup.empty? && arr2_dup.empty?
+  end
+
+  new_arr
+end
+
+# 6) Sort an array of passed in values using merge sort. You can assume that this array may contain only one type of data. And that data may be either all numbers or all strings. Merge sort is a recursive sorting algorithm that works by breaking down the array elements into nested sub-arrays, then recombining those nested sub-arrays in sorted order.
+=begin
+merge_sort([9, 5, 7, 1]) == [1, 5, 7, 9]
+merge_sort([5, 3]) == [3, 5]
+merge_sort([6, 2, 7, 1, 4]) == [1, 2, 4, 6, 7]
+merge_sort(%w(Sue Pete Alice Tyler Rachel Kim Bonnie)) == %w(Alice Bonnie Kim Pete Rachel Sue Tyler)
+merge_sort([7, 3, 9, 15, 23, 1, 6, 51, 22, 37, 54, 43, 5, 25, 35, 18, 46]) == [1, 3, 5, 6, 7, 9, 15, 18, 22, 23, 25, 35, 37, 43, 46, 51, 54]
+=end
+def merge_sort(array)
+  return array if array.size == 1
+
+  # It doesn't matter if the array size is odd - so long as the odd element lands in one of the subarrs
+  sub_array_1 = array[0...array.size / 2]
+  sub_array_2 = array[array.size / 2...array.size]
+
+  # Each of these two calls will break down the size of the subarrays until they are 1 element long.
+  # With recursion, they make use of the call stack - execution of the rest of the 'outer layers' of code is paused until the inner layers are completed executing - the previous values of sub_array_1 and 2 are saved in memory (they're only overwritten in the inner loops)
+  sub_array_1 = merge_sort(sub_array_1)
+  sub_array_2 = merge_sort(sub_array_2)
+
+  # Use merge from previous solution. This only executes once the subarrays are one element long
+  merge(sub_array_1, sub_array_2)
+end
+
+# 6b) Write the above solution without recursion
+def merge_sort(arr)
+  # This method kind of operates backwards - we first nest each element in an array, then wrap pairs in another array
+  arr = arr.map { |v| [v] }
+  arr << [] if arr.size.odd?
+
+  loop do 
+    # create an even pair, & merge each pair
+    arr = arr.each_slice(2).to_a.map { |a, b| merge(a, b) }
+    # Map will return a nested array, so once we have a single subarray, we return that value
+    break arr.first if arr.size <= 1
+    # This ensures there is a second slice if the array is odd in length
+    arr << [] if arr.size.odd?
+  end
+end
+
+# 7) Write two methods: one that takes a Rational number as an argument, and returns an Array of the denominators that are part of an Egyptian Fraction representation of the number, and another that takes an Array of numbers in the same format, and calculates the resulting Rational number. You will need to use the Rational class provided by Ruby.
+=begin
+egyptian(Rational(2, 1))    # -> [1, 2, 3, 6]
+egyptian(Rational(137, 60)) # -> [1, 2, 3, 4, 5]
+egyptian(Rational(3, 1))    # -> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 230, 57960]
+
+unegyptian(egyptian(Rational(1, 2))) == Rational(1, 2)
+unegyptian(egyptian(Rational(3, 4))) == Rational(3, 4)
+unegyptian(egyptian(Rational(39, 20))) == Rational(39, 20)
+unegyptian(egyptian(Rational(127, 130))) == Rational(127, 130)
+unegyptian(egyptian(Rational(5, 7))) == Rational(5, 7)
+unegyptian(egyptian(Rational(1, 1))) == Rational(1, 1)
+unegyptian(egyptian(Rational(2, 1))) == Rational(2, 1)
+unegyptian(egyptian(Rational(3, 1))) == Rational(3, 1)
+=end
+def egyptian(rational_num)
+  arr_denom = []
+  denominator = 1
+
+  while rational_num > 0
+    # For some reason, the evaluation actually executes this, so we have to make a duplicate and reassign every time
+    rational_dup = rational_num.dup
+    if (rational_dup -= Rational(1, denominator)) < 0
+      denominator += 1
+    else
+      rational_num -= Rational(1, denominator)
+      arr_denom << denominator
+      denominator += 1
+    end
+  end
+
+  arr_denom
+end
+
+# We don't have to break out the denom into another step - we simply apply the Rational method directly
+def unegyptian(array)
+  array.reduce(0) do |accum, denom|
+    accum += Rational(1, denom)
+  end
+end
+
+# Alt solution that doesn't deal with this stupid evaluation execution problem
+def egyptian(target_value)
+  denominators = []
+  unit_denominator = 1
+  until target_value == 0
+    unit_fraction = Rational(1, unit_denominator)
+    # We flip the evaluation - is the proposed fraction smaller or equal to the remaining target value?
+    if unit_fraction <= target_value
+      target_value -= unit_fraction
+      denominators << unit_denominator
+    end
+    unit_denominator += 1
+  end
+
+  denominators
 end
