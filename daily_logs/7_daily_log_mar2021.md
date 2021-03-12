@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 1,476)
+# March 2021 (Total minutes: 1,596)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -10,6 +10,7 @@
 - [9th, Tue](#090321-tue)
 - [10th, Wed](#100321-wed)
 - [11th, Thu](#110321-thu)
+- [12th, Fri](#120321-fri)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -165,3 +166,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 A bit hit and miss with the advanced exercises. I sometimes hit a mental block, and then I get PTSD flashbacks of my time in RB109, hitting my head against a wall. However, once I calm down, I realise that the problems aren't actually that hard to solve - it's just hard to figure out what exactly I am supposed to do. I just need to calm down, break down the problem.
+
+##### 12/03/21 (Fri)
+__*Concepts covered*__<br/>
+- Exercises
+  - RB109 - Advanced 1
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Recursion is pretty tricky for me to wrap my head around. The order of method execution and what actually gets executed before the loop begins is hard for me to tackle. These problems are also getting a lot harder - I can't reliably solve them now. I still need to take a deep breath and resolve the panic mode that I can get into if I can't unpack the problem quickly.
