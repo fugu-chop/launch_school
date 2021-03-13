@@ -1,4 +1,4 @@
-# 7) Implement octal to decimal conversion. Given an octal input string, your program should produce a decimal output. Treat invalid input as octal 0. Note: Implement the conversion yourself. 
+# 7) Implement octal to decimal conversion. Given an octal input string, your program should produce a decimal output. Treat invalid input as octal 0. Note: Implement the conversion yourself. Octal numbers use the digits 0 to 7.
 =begin
   233 # octal
 = 2*8^2 + 3*8^1 + 3*8^0
@@ -22,7 +22,20 @@ class Octal
   end
 
   def to_decimal
-    return 0 if !('0'..'9').include?(@octal_num[-1]) || @octal_num[-1] >= '8'
-    digit_arr = @octal_num.chars.map(&:to_i)
+    return 0 unless valid_input?
+    digit_arr = @octal_num.chars.map(&:to_i).reverse
+
+    digit_arr.map.with_index do |digit, idx|
+      digit * 8 ** idx
+    end.reduce(&:+)
+  end
+
+  private
+
+  def valid_input?
+    @octal_num.chars.select do |char| 
+      ('8'..'9').include?(char) ||
+      ('a'..'z').include?(char.downcase)
+    end.empty?
   end
 end
