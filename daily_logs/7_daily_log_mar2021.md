@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 1,596)
+# March 2021 (Total minutes: 1,784)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -11,6 +11,7 @@
 - [10th, Wed](#100321-wed)
 - [11th, Thu](#110321-thu)
 - [12th, Fri](#120321-fri)
+- [13th, Sat](#130321-sat)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -177,3 +178,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Recursion is pretty tricky for me to wrap my head around. The order of method execution and what actually gets executed before the loop begins is hard for me to tackle. These problems are also getting a lot harder - I can't reliably solve them now. I still need to take a deep breath and resolve the panic mode that I can get into if I can't unpack the problem quickly.
+
+##### 13/03/21 (Sat)
+__*Concepts covered*__<br/>
+- Exercises
+  - Ruby Challenges
+
+__*Time spent*__<br/>
+188 minutes
+
+__*Thoughts*__<br/>
+The challenges are pretty fun, and the test suite makes identifying edge cases a lot easier. I am going through them pretty easily, though I did have an issue with the Roman numeral conversion. I had to make use of the `divmod` method, which I didn't think of, and tried to use some hacky mathematics which didn't allow for correct calculation of remainders. 
