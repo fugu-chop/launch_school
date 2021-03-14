@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 1,784)
+# March 2021 (Total minutes: 1,974)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -12,6 +12,7 @@
 - [11th, Thu](#110321-thu)
 - [12th, Fri](#120321-fri)
 - [13th, Sat](#130321-sat)
+- [14th, Sun](#140321-sun)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -182,10 +183,21 @@ Recursion is pretty tricky for me to wrap my head around. The order of method ex
 ##### 13/03/21 (Sat)
 __*Concepts covered*__<br/>
 - Exercises
-  - Ruby Challenges
+  - Ruby Challenges (Easy)
 
 __*Time spent*__<br/>
 188 minutes
 
 __*Thoughts*__<br/>
 The challenges are pretty fun, and the test suite makes identifying edge cases a lot easier. I am going through them pretty easily, though I did have an issue with the Roman numeral conversion. I had to make use of the `divmod` method, which I didn't think of, and tried to use some hacky mathematics which didn't allow for correct calculation of remainders. 
+
+##### 14/03/21 (Sun)
+__*Concepts covered*__<br/>
+- Exercises
+  - Ruby Challenges (Easy, Medium)
+
+__*Time spent*__<br/>
+190 minutes
+
+__*Thoughts*__<br/>
+The first Medium challenge was a doozy, and took almost two hours to do. The output of failed tests isn't particularly helpful when there's a lot of annoying string display issues, making it almost guesswork when trying to decipher where to add new lines. 
