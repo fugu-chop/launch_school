@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 1,974)
+# March 2021 (Total minutes: 2,106)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -13,6 +13,7 @@
 - [12th, Fri](#120321-fri)
 - [13th, Sat](#130321-sat)
 - [14th, Sun](#140321-sun)
+- [15th, Mon](#150321-mon)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -201,3 +202,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The first Medium challenge was a doozy, and took almost two hours to do. The output of failed tests isn't particularly helpful when there's a lot of annoying string display issues, making it almost guesswork when trying to decipher where to add new lines. 
+
+##### 15/03/21 (Mon)
+__*Concepts covered*__<br/>
+- Exercises
+  - Ruby Challenges (Medium)
+
+__*Time spent*__<br/>
+132 minutes
+
+__*Thoughts*__<br/>
+The problems are interesting now. They mix a combination of problems which have slightly hard to understand use cases, as well as interesting implementation challenges (e.g. creating instances/using instance variables within class methods) that I haven't encountered before. I do need some level of prompt before I can fully code out the problem.
