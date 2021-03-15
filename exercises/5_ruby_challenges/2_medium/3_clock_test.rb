@@ -17,7 +17,6 @@ class ClockTest < Minitest::Test
   end
 
   def test_subtract_fifty_minutes
-    skip
     clock = Clock.at(0) - 50
     assert_equal '23:10', clock.to_s
   end
@@ -38,25 +37,21 @@ class ClockTest < Minitest::Test
   end
 
   def test_subtract_a_few_minutes
-    skip
     clock = Clock.at(10, 30) - 5
     assert_equal '10:25', clock.to_s
   end
 
   def test_subtract_minutes
-    skip
     clock = Clock.at(10) - 90
     assert_equal '08:30', clock.to_s
   end
 
   def test_wrap_around_at_negative_midnight
-    skip
     clock = Clock.at(0, 30) - 60
     assert_equal '23:30', clock.to_s
   end
 
   def test_subtract_more_than_a_day
-    skip
     clock = Clock.at(10) - 3061
     assert_equal '06:59', clock.to_s
   end
@@ -76,7 +71,6 @@ class ClockTest < Minitest::Test
   end
 
   def test_wrap_around_backwards
-    skip
     clock1 = Clock.at(0, 30) - 60
     clock2 = Clock.at(23, 30)
     assert_equal clock1, clock2
