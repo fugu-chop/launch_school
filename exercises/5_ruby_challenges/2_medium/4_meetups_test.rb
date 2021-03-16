@@ -159,127 +159,106 @@ class MeetupTest < Minitest::Test
   end
 
   def test_fifth_wednesday_of_october_2015
-    skip
     meetup = Meetup.new(2015, 10)
     assert_nil meetup.day('Wednesday', 'fifth')
   end
 
   def test_fifth_thursday_of_november_2015
-    skip
     meetup = Meetup.new(2015, 11)
     assert_nil meetup.day('Thursday', 'fifth')
   end
 
   def test_fifth_friday_of_december_2015
-    skip
     meetup = Meetup.new(2015, 12)
     assert_nil meetup.day('Friday', 'fifth')
   end
 
   def test_fifth_saturday_of_january_2016
-    skip
     meetup = Meetup.new(2016, 1)
     assert_equal Date.civil(2016, 1, 30), meetup.day('Saturday', 'fifth')
   end
 
   def test_fifth_sunday_of_february_2016
-    skip
     meetup = Meetup.new(2016, 2)
     assert_nil meetup.day('Sunday', 'fifth')
   end
 
   def test_fifth_monday_of_february_2016
-    skip
     meetup = Meetup.new(2016, 2)
     assert_equal Date.civil(2016, 2, 29), meetup.day('Monday', 'fifth')
   end
 
   def test_last_monday_of_march_2016
-    skip
     meetup = Meetup.new(2016, 3)
     assert_equal Date.civil(2016, 3, 28), meetup.day('Monday', 'last')
   end
 
   def test_last_tuesday_of_april_2016
-    skip
     meetup = Meetup.new(2016, 4)
     assert_equal Date.civil(2016, 4, 26), meetup.day('Tuesday', 'last')
   end
 
   def test_last_wednesday_of_may_2016
-    skip
     meetup = Meetup.new(2016, 5)
     assert_equal Date.civil(2016, 5, 25), meetup.day('Wednesday', 'last')
   end
 
   def test_last_thursday_of_june_2016
-    skip
     meetup = Meetup.new(2016, 6)
     assert_equal Date.civil(2016, 6, 30), meetup.day('Thursday', 'last')
   end
 
   def test_last_friday_of_july_2016
-    skip
     meetup = Meetup.new(2016, 7)
     assert_equal Date.civil(2016, 7, 29), meetup.day('Friday', 'last')
   end
 
   def test_last_saturday_of_august_2016
-    skip
     meetup = Meetup.new(2016, 8)
     assert_equal Date.civil(2016, 8, 27), meetup.day('Saturday', 'last')
   end
 
   def test_last_sunday_of_september_2016
-    skip
     meetup = Meetup.new(2016, 9)
     assert_equal Date.civil(2016, 9, 25), meetup.day('Sunday', 'last')
   end
 
   def test_last_sunday_of_february_2015
-    skip
     meetup = Meetup.new(2015, 2)
     assert_equal Date.civil(2015, 2, 22), meetup.day('Sunday', 'last')
   end
 
   def test_teenth_monday_of_october_2016
-    skip
     meetup = Meetup.new(2016, 10)
     assert_equal Date.civil(2016, 10, 17), meetup.day('Monday', 'teenth')
   end
 
   def test_teenth_tuesday_of_november_2016
-    skip
     meetup = Meetup.new(2016, 11)
     assert_equal Date.civil(2016, 11, 15), meetup.day('Tuesday', 'teenth')
   end
 
   def test_teenth_wednesday_of_december_2016
-    skip
     meetup = Meetup.new(2016, 12)
     assert_equal Date.civil(2016, 12, 14), meetup.day('Wednesday', 'teenth')
   end
 
   def test_teenth_thursday_of_january_2017
-    skip
     meetup = Meetup.new(2017, 1)
     assert_equal Date.civil(2017, 1, 19), meetup.day('Thursday', 'teenth')
   end
 
   def test_teenth_friday_of_february_2017
-    skip
     meetup = Meetup.new(2017, 2)
     assert_equal Date.civil(2017, 2, 17), meetup.day('Friday', 'teenth')
   end
 
   def test_teenth_saturday_of_march_2017
-    skip
     meetup = Meetup.new(2017, 3)
     assert_equal Date.civil(2017, 3, 18), meetup.day('Saturday', 'teenth')
   end
 
   def test_teenth_sunday_of_april_2017
-    skip
     meetup = Meetup.new(2017, 4)
     assert_equal Date.civil(2017, 4, 16), meetup.day('Sunday', 'teenth')
   end

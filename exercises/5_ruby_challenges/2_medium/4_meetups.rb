@@ -18,13 +18,13 @@ You can determine the last day of the month by using the Date class by passing a
 require 'date'
 
 class Meetup
-  DATE_RANGES = { 'first' => (1..7).to_a,
-                 'second' => (8..14).to_a,
-                 'third' => (15..21).to_a,
-                 'fourth' => (22..28).to_a,
-                 'fifth' => (29..31).to_a,
-                 'last' => (22..31).to_a,
-                 'teenth' => (13..19).to_a }
+  DATE_RANGES = { 'first' => (1..7),
+                 'second' => (8..14),
+                 'third' => (15..21),
+                 'fourth' => (22..28),
+                 'fifth' => (29..31),
+                 'last' => (22..31),
+                 'teenth' => (13..19) }
 
   DAY_INDEX = %w(sunday monday tuesday wednesday thursday friday saturday).zip((0..6).to_a).to_h
 
@@ -35,36 +35,33 @@ class Meetup
   end
 
   def day(day, incidence)
-    # @year = 2015
-    # @month = 8
-    # day = 'Monday'
-    # incidence = 'fifth'
     day = day.downcase
     incidence = incidence.downcase
-
-    # Need to account for Feb as well
-    # Return nil where date doesn't exist
     day_range =  DATE_RANGES[incidence]
-    day_range.pop if [4, 6, 9, 11].include?(@month) && (incidence == 'fifth' || incidence == 'last')
+    date_objects = validate_days(day_range)
+    week_day = calculate_weekday(date_objects, day)
 
-    date_objs = day_range.map do |day|
-      Date.civil(@year, @month, day)
-    end
+    # Return nil if the day doesn't exist
+    return nil if week_day.empty?
 
-    week_day = date_objs.select do |obj|
-      obj.wday == DAY_INDEX[day]
-    end.first.day
+    # Return the last object, as there might be multiple instances of a day in 'last'
+    week_day = week_day.last.day
 
     Date.civil(@year, @month, week_day)
   end
-end
 
-=begin
-Algo
-  Capture ranges of DOWM in a hash - with the keys as the descriptors, values as the day range (array?)
-  We can then create an array of potential dates
-  We then iterate through this array of dates, checking for the day 
-    The .wday method on a date object returns 0-6, where 0 is sunday
-  We return that date as an integer, then return a Date object using the .civil method
-  
-=end
+  private
+
+  def validate_days(day_range)
+    day_range.map do |day|
+      Date.valid_date?(@year, @month, day) ? Date.civil(@year, @month, day) : next
+    end
+  end
+
+  def calculate_weekday(dates, day)
+    # next will return nils, but compact can deal with this
+    dates.compact.select do |date_object|
+      date_object.wday == DAY_INDEX[day]
+    end
+  end
+end

@@ -74,10 +74,6 @@ class Clock
     end
   end
 
-  def subtract_minute_helper(hours, minutes)
-
-  end
-
   def subtract_day_helper(hours)
     if @hour - hours < 0
       days, additional_hours = hours.divmod(24)
@@ -100,11 +96,9 @@ class Clock
 
   def convert_time(total)
     @total = total
-    # Ignores the impact of days - you now have minutes effective within a 24 hour window
-    @total %= MINS_IN_DAY 
-    # Uses implicit floor method
-    @hours = @total / MINS_IN_HOUR
-    @minutes = @total % MINS_IN_HOUR
+    # Removes the impact of days - you now have minutes effective within a 24 hour window
+    @total %= MINS_IN_DAY
+    @hours, @minutes = @total.divmod(MINS_IN_HOUR)
   end
 
   # We can define a custom definition of the explicit self
