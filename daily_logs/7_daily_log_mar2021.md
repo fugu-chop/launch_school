@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 2,106)
+# March 2021 (Total minutes: 2,234)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -14,6 +14,7 @@
 - [13th, Sat](#130321-sat)
 - [14th, Sun](#140321-sun)
 - [15th, Mon](#150321-mon)
+- [16th, Tue](#160321-tue)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -213,3 +214,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The problems are interesting now. They mix a combination of problems which have slightly hard to understand use cases, as well as interesting implementation challenges (e.g. creating instances/using instance variables within class methods) that I haven't encountered before. I do need some level of prompt before I can fully code out the problem.
+
+##### 16/03/21 (Tue)
+__*Concepts covered*__<br/>
+- Exercises
+  - Ruby Challenges (Medium)
+
+__*Time spent*__<br/>
+128 minutes
+
+__*Thoughts*__<br/>
+The domain of the problems continue to be tricky. I think my solutions are pretty brute force, and hard to actually code up because there are weird edge cases with the domain (e.g. time). I have to get better at figuring out what is actually needed as the output of a problem versus the logic needed for a particular method.
