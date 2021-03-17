@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 2,234)
+# March 2021 (Total minutes: 2,353)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -15,6 +15,7 @@
 - [14th, Sun](#140321-sun)
 - [15th, Mon](#150321-mon)
 - [16th, Tue](#160321-tue)
+- [17th, Wed](#170321-wed)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -225,3 +226,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The domain of the problems continue to be tricky. I think my solutions are pretty brute force, and hard to actually code up because there are weird edge cases with the domain (e.g. time). I have to get better at figuring out what is actually needed as the output of a problem versus the logic needed for a particular method.
+
+##### 17/03/21 (Wed)
+__*Concepts covered*__<br/>
+- Exercises
+  - Ruby Challenges (Medium)
+
+__*Time spent*__<br/>
+119 minutes
+
+__*Thoughts*__<br/>
+The problems haven't been too bad. My approach is to read through all of the methods defined in the test cases, try to figure out what it's supposed to do, then apply the PEDAC method. It seems to be working fairly well and I'm moving relatively quickly and producing somewhat short solutions.
