@@ -21,7 +21,6 @@ class SimpleLinkedList
 
   # We have to insert an element here, at the front of the array
   def push(item)
-    # Make use of sandwich code
     prev_item = @element.first
     @element.insert(0, Element.new(item))
     # We also have to update the next_field of the previous item in this method
@@ -55,8 +54,7 @@ class SimpleLinkedList
   end
 
   def reverse
-    # We don't have to return the exact same object!
-    # We have to return a linked_list object, (i.e. we have to apply the peek method)
+    # We should return a new object (no mutation)
     reverse_list = SimpleLinkedList.new
     @element.each { |item| reverse_list.push(item.datum) }
     reverse_list
@@ -65,15 +63,12 @@ end
 
 # We'll need an Element class per test_access_head_element
 class Element
+  attr_reader :datum
   attr_writer :next_field
 
   def initialize(element, next_field = nil)
-    @element = element
+    @datum = element
     @next_field = next_field
-  end
-  
-  def datum
-    @element
   end
 
   def next

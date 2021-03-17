@@ -157,14 +157,12 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_reverse_10_element_list
-    skip
     data = (1..10).to_a
     list = SimpleLinkedList.from_a(data)
     assert_equal data.reverse, list.reverse.to_a
   end
 
   def test_roundtrip_10_element_array
-    skip
     data = (1..10).to_a
     assert_equal data, SimpleLinkedList.from_a(data).to_a
   end
