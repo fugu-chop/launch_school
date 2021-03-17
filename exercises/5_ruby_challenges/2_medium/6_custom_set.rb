@@ -12,29 +12,44 @@ class CustomSet
     @set.include?(element)
   end
 
-  def subset?(new_set)
-    # Need to check if @set contains the elements in the set, where set is a CustomSet object (new_set.set as a protected method)
+  def subset?(larger_set)
+    @set.all? { |item| larger_set.set.include?(item) }
   end
 
-  def disjoint?(set)
+  def disjoint?(other_set)
+    @set.none? { |item| other_set.set.include?(item) }
   end
 
-  def eql?(set)
+  def eql?(other_set)
+    @set.uniq.sort == other_set.set.uniq.sort
   end
 
-  def add?(element)
+  def add(element)
+    @set << element
+    @set.uniq!
+    self
   end
 
-  def intersection(set)
+  def intersection(other_set)
+    common_elements = @set.select { |element| other_set.set.include?(element) }
+    CustomSet.new(common_elements)
   end
 
-  def difference(set)
+  def difference(other_set)
+    uniq_elements = @set.reject { |element| other_set.set.include?(element) }
+    CustomSet.new(uniq_elements)
   end
 
-  def union(set)
+  def union(other_set)
+    combined = @set + other_set.set
+    CustomSet.new(combined.uniq.sort)
+  end
+
+  def ==(other)
+    @set == other.set
   end
 
   protected
 
-  attr_reader: set
+  attr_reader :set
 end
