@@ -1,4 +1,4 @@
-# Managing Ruby
+# Ruby Version Managers
 
 ## Table of Contents
 - [Ruby on a Mac](#ruby-on-a-mac)
@@ -10,6 +10,7 @@
 - [Ruby version managers](#ruby-version-managers)
 - [RVM](#RVM)
 - [Installing Rubies](#installing-rubies)
+- [Troubleshooting]
 
 ### Ruby on a Mac
 On Macs, Ruby is part of the standard OS X/macOS installation. We can find out where it is installed by running the following in the CLI.
@@ -44,14 +45,14 @@ Besides the `ruby` command, a Ruby installation contains a host of other files a
 ### Gems
 RubyGems, often just called Gems, are packages of code that you can download, install, and use in your Ruby programs or from the command line. The gem command manages your Gems; all versions of Ruby since version 1.9 supply gem as part of the standard installation. 
 
-The basics of Gems are pretty simple: you can search the RubyGems website to find a Gem you want to install, and then run `gem install` to install the Gem on your system. Once installed, you can start using most Gems immediately, though you may have to read the [documentation first](#http://guides.rubygems.org/).
+The basics of Gems are pretty simple: you can search the RubyGems website to find a Gem you want to install, and then run `gem install` to install the Gem on your system. Once installed, you can start using most Gems immediately, though you may have to read the [documentation first](http://guides.rubygems.org/).
 
-The [RubyGems Basics](#http://guides.rubygems.org/rubygems-basics/) page provides a nice synopsis of the commands you will use most often, and there's a useful [command reference](#http://guides.rubygems.org/command-reference/) for the `gem` command.
+The [RubyGems Basics](http://guides.rubygems.org/rubygems-basics/) page provides a nice synopsis of the commands you will use most often, and there's a useful [command reference](http://guides.rubygems.org/command-reference/) for the `gem` command.
 
 ### Interacting with Gems
 Since your Ruby installation already includes the `gem` program (provided you're using version 1.9 or higher of Ruby), all you need to do is find the Gems you want, and install them.
 
-When you first start using Ruby, someone will usually tell you to install certain Gems. Eventually, though, you will need to search through a remote Gem library. The one you will use most often is the main [RubyGems Library](#https://rubygems.org/gems). You may also need to search a specialized remote library provided by your employer.
+When you first start using Ruby, someone will usually tell you to install certain Gems. Eventually, though, you will need to search through a remote Gem library. The one you will use most often is the main [RubyGems Library](https://rubygems.org/gems). You may also need to search a specialized remote library provided by your employer.
 
 Note that Gem descriptions at the RubyGems library are often extremely minimal. You will find some additional links on the right hand side of the Gem's main page; the "Homepage" and "Documentation" pages often contain more detailed information. In some cases, you may actually have to read the source code to figure out how to use a Gem. 
 
@@ -242,7 +243,7 @@ At RVM's core is a set of directories in which RVM stores all your Ruby versions
 
 Note that the standard Ruby __executables__ are found in the `rubies` subdirectory of RVM's main directory, while __Gems__ are found in the `gems` subdirectory. Note also that the Gem version numbers can differ between Rubies: in this case, Ruby `2.2.2` uses Rubocop `0.43.1`, while Ruby `2.3.1` uses Rubocop `0.45.0`.
 
-RVM defines a *shell function* (see your shell's documentation for information on functions) named `rvm`. Your shell uses this function _in preference to executing the disk-based `rvm` command_. There are complex reasons behind using shell functions, but the main reason is that _a function can modify your environment_, while a disk-based command cannot.
+RVM defines a *shell function* (see your shell's documentation for information on functions) named `rvm`. Your shell uses this function _in preference to executing the disk-based `rvm` command_. There are complex reasons behind using shell functions, but the main reason is that _a function can modify your environment_, while a *disk-based* command cannot.
 
 When you run `rvm use VERSION` to change the Ruby version you want to use, you actually invoke the `rvm` function. It modifies your environment so that the various ruby commands invoke the correct version. For instance, `rvm use 2.2.2` modifies your PATH variable so that the `ruby` command uses the Ruby installed in the `ruby-2.2.2` directory. It makes other changes as well, but the `PATH` change is the most noticeable.
 
@@ -272,6 +273,20 @@ $ rvm use 2.2.2
 ```
 This command modifies your environment to ensure that the first ruby your system finds is version `2.2.2`. This same change also works for related commands such as `gem`, `irb` and `rubocop`.
 
+Once we are using a version, we can quickly see some condensed information about our current version using:
+```
+rvm info rvm
+```
+This will output
+```
+ruby-3.0.0:
+  rvm:
+    version:      "1.29.12 (latest)"
+    updated:      "11 hours 9 minutes 50 seconds ago"
+    path:         "/Users/dean/.rvm"
+    autolibs:     "[4] Allow RVM to use package manager if found, install missing dependencies, install package manager (only OS X)."
+```
+#### Set a default version
 Usually, you won't use this command. Instead, you will define a default version, and then override the default on a directory-by-directory basis. To define the default version -- the Ruby version that RVM uses automatically in a new terminal session or shell -- just run:
 ```
 $ rvm use 2.3.1 --default
@@ -280,3 +295,50 @@ If you later set a different version as the current Ruby, you can restore the de
 ```
 $ rvm use default
 ```
+#### Set a project specific version
+There are [a number of ways to do this](https://rvm.io/workflow/projects), but the easiest is to create a `.ruby-version` file in your project's root directory; the content of this file is just the version number of ruby that you want to use when using programs from that directory.
+
+Suppose we want to use Ruby `2.2.2` for the project in our `~/src/magic` directory.
+```
+$ cd ~/src/magic
+$ rvm --ruby-version use 2.2.2
+```
+This creates a `.ruby-version` file in the directory. Once set, you don't need to worry about setting the version for this project. For good measure, you should set your __default version in your home directory__:
+```
+$ cd ~
+$ rvm --ruby-version default
+```
+To make use of the `.ruby-version` file, RVM replaces the `cd` command from your shell with a shell __function__. This function invokes the real `cd` command, then checks for the `.ruby-version` file (it also checks for some other files we won't discuss). 
+
+If it finds one of these files, it retrieves the version number from the file, and then modifies your environment in the same way the `rvm` function does. Thus, every time you change directories with the `cd` command, RVM modifies your environment to run the proper Ruby version.
+
+RVM also uses the Gemfile for ruby projects that use Bundler. If the Gemfile contains a ruby directive, RVM uses that version of ruby to run the program. Note, however, that the `.ruby-version` file takes precedence.
+
+### Troubleshooting
+The most likely issue with RVM is that you get confused about which version of Ruby you are running, or you install or update Gems with the wrong gem command. When trying to diagnose an RVM problem, first make sure that you are using the correct Ruby version, then check for Gem versioning issues.
+
+Some additional tips include:
+
+__Directory Names__<br/>
+Make sure your directory name __does not include any spaces__, and none of its ancestors (parents, grandparents, etc) do either. RVM does not currently support directory names with spaces.
+
+__Shell Functions__<br/>
+Verify that you are using the `cd` and `rvm` functions, not the built-in `cd` command nor the executable file `rvm`. We can verify this with the below command. If it fails to print out the below output, the `cd` and `rvm` functions aren't defined properly and RVM fails to work.
+```
+type cd | head -1 ; type rvm | head -1
+cd is a function
+rvm is a function
+```
+To load `cd` and `rvm` as functions, confirm that your shell startup file (`.profile`, `.bash_profile`, etc) includes a command that looks like something like this:
+```
+$ source "{RVM PATH}"/scripts/rvm"
+```
+Where `"{RVM PATH}"` is the name of our RVM path. This command should be near the __end__ of the file, __after__ any commands that set or modify your `PATH` variable or replace built-in commands with functions. If you must change the file, start a new terminal session after making the changes, then close any previously open terminal sessions.
+
+__Verify Gem and Rubies `PATH` precedence__<br/>
+We can use `echo $PATH` to confirm that the `{RVM PATH}/rubies-{VERSION}/bin` and `{RVM PATH}/gem/rubies-{VERSION}/bin` directories are present in your PATH, and listed before any other directories that may contain programs with the same name.
+
+If, for example, `/usr/bin` occurs before `{RVM_PATH}/rubies-{VERSION}/bin` in your `PATH`, your system may load the system version of Ruby instead of one managed by RVM.
+
+__RVM Info__<br/>
+Display information about the __current__ RVM environment, similar to `gem env`.
