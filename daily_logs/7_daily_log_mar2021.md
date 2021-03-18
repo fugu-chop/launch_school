@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 2,353)
+# March 2021 (Total minutes: 2,476)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -16,6 +16,7 @@
 - [15th, Mon](#150321-mon)
 - [16th, Tue](#160321-tue)
 - [17th, Wed](#170321-wed)
+- [18th, Thu](#180321-thu)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -237,3 +238,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The problems haven't been too bad. My approach is to read through all of the methods defined in the test cases, try to figure out what it's supposed to do, then apply the PEDAC method. It seems to be working fairly well and I'm moving relatively quickly and producing somewhat short solutions.
+
+##### 18/03/21 (Thu)
+__*Concepts covered*__<br/>
+- Exercises
+  - Ruby Challenges (Medium)
+- RB130 - Packaging code into a Project
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+Finished off the Medium problems. In the end, they weren't too hard. Just some of the problem domains were a bit weird. The next section, managing Gems and Ruby versions, is different, if a little tedious. It will be helpful to resolve all the weird compatibility issues I've been having with using a version of Ruby earlier than 2.7.
