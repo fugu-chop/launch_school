@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 2,476)
+# March 2021 (Total minutes: 2,595)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -17,6 +17,7 @@
 - [16th, Tue](#160321-tue)
 - [17th, Wed](#170321-wed)
 - [18th, Thu](#180321-thu)
+- [19th, Fri](#190321-fri)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -25,7 +26,7 @@ __*Concepts covered*__<br/>
   - Custom method implementations
   - Todo List Problem
 - Revision
-  - Codewar Problems
+  - Codewars Problems
 
 __*Time spent*__<br/>
 124 minutes
@@ -40,7 +41,7 @@ __*Concepts covered*__<br/>
   - Blocks and Variable Scope
   - `Symbol#to_proc`
 - Revision
-  - Codewar Problems
+  - Codewars Problems
 
 __*Time spent*__<br/>
 121 minutes
@@ -53,7 +54,7 @@ __*Concepts covered*__<br/>
 - RB130 - Ruby Foundations
   - Revision
 - Revision
-  - Codewar Problems
+  - Codewars Problems
 
 __*Time spent*__<br/>
 124 minutes
@@ -70,7 +71,7 @@ __*Concepts covered*__<br/>
   - Quiz 1
   - Lesson 2: Minitest
 - Revision
-  - Codewar Problems
+  - Codewars Problems
 
 __*Time spent*__<br/>
 121 minutes
@@ -84,7 +85,7 @@ __*Concepts covered*__<br/>
   - Lesson 2: Minitest
   - [Blog Post](https://launchschool.com/blog/assert-yourself-an-introduction-to-minitest)
 - Revision
-  - Codewar Problems
+  - Codewars Problems
 
 __*Time spent*__<br/>
 123 minutes
@@ -99,7 +100,7 @@ __*Concepts covered*__<br/>
 - Exercises
   - RB130 - Easy 1
 - Revision
-  - Codewar Problems
+  - Codewars Problems
 
 __*Time spent*__<br/>
 155 minutes
@@ -112,7 +113,7 @@ __*Concepts covered*__<br/>
 - Exercises
   - RB130 - Easy 1, 2, Easy Testing
 - Revision
-  - Codewar Problems
+  - Codewars Problems
 
 __*Time spent*__<br/>
 209 minutes
@@ -125,7 +126,7 @@ __*Concepts covered*__<br/>
 - Exercises
   - RB130 - Medium 1, Medium Testing
 - Revision
-  - Codewar Problems
+  - Codewars Problems
 
 __*Time spent*__<br/>
 123 minutes
@@ -139,7 +140,7 @@ __*Concepts covered*__<br/>
   - RB130 - Medium Testing
 - Revision
   - RB130 Concepts
-  - Codewar Problems
+  - Codewars Problems
 
 __*Time spent*__<br/>
 122 minutes
@@ -244,9 +245,23 @@ __*Concepts covered*__<br/>
 - Exercises
   - Ruby Challenges (Medium)
 - RB130 - Packaging code into a Project
+  - Core Ruby Tools Book
 
 __*Time spent*__<br/>
 123 minutes
 
 __*Thoughts*__<br/>
 Finished off the Medium problems. In the end, they weren't too hard. Just some of the problem domains were a bit weird. The next section, managing Gems and Ruby versions, is different, if a little tedious. It will be helpful to resolve all the weird compatibility issues I've been having with using a version of Ruby earlier than 2.7.
+
+##### 19/03/21 (Fri)
+__*Concepts covered*__<br/>
+- RB130 - Packaging code into a Project
+  - Core Ruby Tools Book
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+119 minutes
+
+__*Thoughts*__<br/>
+I'm pretty happy with my progression for solving Codewars problems. I marked one of the two problems as hard, but was able to solve it pretty quickly with significantly less code than last time. My solution for the other problem was also much shorter than my previous attempt. 
