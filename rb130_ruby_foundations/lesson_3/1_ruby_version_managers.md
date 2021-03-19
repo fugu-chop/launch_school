@@ -10,7 +10,13 @@
 - [Ruby version managers](#ruby-version-managers)
 - [RVM](#RVM)
 - [Installing Rubies](#installing-rubies)
-- [Troubleshooting]
+- [Troubleshooting RVM](#troubleshooting-rvm)
+- [Uninstalling RVM](#uninstalling-rvm)
+- [Rbenv](#rbenv)
+- [Installing rubies through Rbenv](#installing-rubies-through-rbenv)
+- [Troubleshooting Rbenv](#troubleshooting-rbenv)
+- [Rbenv plugins](#rbenv-plugins)
+- [Summary](#summary)
 
 ### Ruby on a Mac
 On Macs, Ruby is part of the standard OS X/macOS installation. We can find out where it is installed by running the following in the CLI.
@@ -43,7 +49,7 @@ Besides the `ruby` command, a Ruby installation contains a host of other files a
 - Documentation tools (`rdoc` and `ri`)
 
 ### Gems
-RubyGems, often just called Gems, are packages of code that you can download, install, and use in your Ruby programs or from the command line. The gem command manages your Gems; all versions of Ruby since version 1.9 supply gem as part of the standard installation. 
+RubyGems, often just called Gems, are packages of code that you can download, install, and use in your Ruby programs or from the command line. The `gem` command manages your Gems; all versions of Ruby since version 1.9 supply gem as part of the standard installation. 
 
 The basics of Gems are pretty simple: you can search the RubyGems website to find a Gem you want to install, and then run `gem install` to install the Gem on your system. Once installed, you can start using most Gems immediately, though you may have to read the [documentation first](http://guides.rubygems.org/).
 
@@ -314,7 +320,7 @@ If it finds one of these files, it retrieves the version number from the file, a
 
 RVM also uses the Gemfile for ruby projects that use Bundler. If the Gemfile contains a ruby directive, RVM uses that version of ruby to run the program. Note, however, that the `.ruby-version` file takes precedence.
 
-### Troubleshooting
+### Troubleshooting RVM
 The most likely issue with RVM is that you get confused about which version of Ruby you are running, or you install or update Gems with the wrong gem command. When trying to diagnose an RVM problem, first make sure that you are using the correct Ruby version, then check for Gem versioning issues.
 
 Some additional tips include:
@@ -342,3 +348,142 @@ If, for example, `/usr/bin` occurs before `{RVM_PATH}/rubies-{VERSION}/bin` in y
 
 __RVM Info__<br/>
 Display information about the __current__ RVM environment, similar to `gem env`.
+
+__Verify current version__<br/>
+We can use `rvm current` to display the current, active version of Ruby.
+
+__Repair permissions__<br/>
+We can fix permissions on RVM files using `rvm fix-permissions`. This may be useful if you accidentally use `sudo` to install, modify or update RVM, or any of its rubies or Gems. If you see "permission denied" messages on any of these files, try running this command.
+
+__Repair everything__<br/>
+We can repair files that help RVM manage the different rubies using `rvm repair all`. This may be useful if RVM seems completely broken in areas.
+
+__Update RVM__<br/>
+We can download and install the latest version of RVM using `rvm get latest`. This is most useful when you are using a new or unfamiliar feature that may not be available or working correctly in your current version of RVM.
+
+### Uninstalling RVM
+`rvm implode` will remove the `rvm/` directory and all the rubies built within it. In order to remove the final trace of rvm, you need to remove the `rvm` gem, through `gem uninstall rvm`. We will also need to check that our shell startup file (`.profile`, `.bash_profile`, etc) has the relevant `PATH` removed. You also need to restart your CLI.
+### Rbenv
+At `rbenv`'s heart is a set of directories very similar to the directories at RVM's core. It stores and uses the rubies, associated tools, and Gems from these directories. There are subdirectories for each version of Ruby located in the versions directory. If you need Ruby `2.3.1`, `rbenv` uses the files in the `2.3.1` directory; if you need Ruby `2.2.2` it gets the files from the `2.2.2` directory.
+```
+$ tree /usr/local/rbenv   # the following is partial output
+/usr/local/rbenv          # rbenv root directory
+├── shims
+│   ├── bundle
+│   ├── irb
+│   ├── rubocop
+│   └── ruby
+└── versions
+    ├── 2.2.2
+    │   ├── bin
+    │   │   ├── bundle
+    │   │   ├── irb
+    │   │   ├── rubocop
+    │   │   └── ruby
+    │   └── lib
+    │       └── ruby
+    │           └── gems
+    │               └── 2.2.0
+    │                   └── gems
+    │                       ├── bundler-1.12.5
+    │                       ├── freewill-1.0.0
+    │                       │   └── lib
+    │                       │       └── freewill.rb
+    │                       ├── pry-0.10.4
+    │                       └── rubocop-0.43.1
+    └── 2.3.1
+        ├── bin
+        │   ├── bundle
+        │   ├── irb
+        │   ├── rubocop
+        │   └── ruby
+        └── lib
+            └── ruby
+                └── gems
+                    └── 2.2.0
+                        └── gems
+                            ├── bundler-1.12.5
+                            ├── freewill-1.0.0
+                            │   └── lib
+                            │       └── freewill.rb
+                            ├── pry-0.10.4
+                            └── rubocop-0.45.0
+```
+Under the hood, how `rbenv` manages Rubies is a significant departure from how RVM does it. `rbenv` uses a set of small scripts called __shims__. The scripts have the same names as the various ruby and Gem programs. They live in the `shims` sub-directory of the main `rbenv` installation directory. 
+
+Valid `rbenv` installations include the `shims` directory in the `PATH`; `rbenv` places it before any other directories that contain ruby or any related programs; this ensures that the __system searches the shims directory first__. 
+
+This way, when you run one of the ruby commands or Gems, the system executes the proper shim script. The shim script, in turn, executes `rbenv exec PROGRAM`; this command determines what version of Ruby it should use, and executes the appropriate program from the Ruby version-specific directories, e.g. `/usr/local/rbenv/versions/2.3.1/bin`.
+
+The `shims` directory contains all the shims used by rbenv, while versions contains all the different Rubies. Inside the `versions` directory, you will find one directory for each Ruby version you have installed; inside each of these directories, you will find the specific version of Ruby, all its companion programs, and your Gems for that version.
+
+### Installing rubies through Rbenv
+Let's say you're about to start work on a project that requires Ruby 2.2.2. You first need to check whether you already have Ruby `2.2.2` installed. To do this, run:
+```
+$ rbenv versions
+
+system
+2.1.5
+* 2.3.1 (set by /Users/.../project/.ruby-version)
+```
+This command shows that you currently have Ruby versions `2.1.5` and `2.3.1` installed, and that version `2.3.1` is the currently selected Ruby version. Since the listing does not show version 2.2.2, we need to install it. 
+
+However, unlike RVM, `rbenv` __does not provide a way to install new Rubies by default__. Fortunately, there's an easy fix: just install the `ruby-build` `rbenv` plugin. If you're on a Mac with a Homebrew version of Ruby, just run
+```
+$ brew install ruby-build
+```
+Once you've installed the `ruby-build` plugin, you can install Ruby `2.2.2` with:
+```
+$ rbenv install 2.2.2
+```
+### Setting local rubies
+There are several ways to use a particular version of Ruby in `rbenv`, which can be found in the [Github readme](https://github.com/rbenv/rbenv).
+
+One way is to set it __globally__, which means everything you do in Ruby will be set using the specified version:
+```
+$ rbenv global 2.3.1
+```
+Another way is to set it __locally__, meaning the version of Ruby is specific to that directory:
+```
+$ cd ~/src/magic
+$ rbenv local 2.0.0
+```
+This creates a `.ruby-version file` in the `~/src/magic` directory; when you run any Ruby-based programs stored in this directory, `rbenv` checks the `.ruby-version` file, and uses that version of Ruby for the program. If there is no `.ruby-version` file, rbenv launches a search for an alternative `.ruby-version` file, and, if it still can't find one, it uses the __global version__ of Ruby.
+
+Note that this `.ruby-version` file is identical to the `.ruby-version` file used by RVM: same name, same content, same function, and the same search sequence.
+
+#### Where are the files?
+Rbenv creates a directory at installation known as the rbenv `root` directory; it also installs all rbenv related files, including all the Rubies and Gems that it manages, in this directory. To determine the location of the rbenv `root` directory, run:
+```
+$ rbenv root
+
+/Users/dean/.rbenv
+```
+
+### Troubleshooting Rbenv
+Compared to RVM, rbenv uses a conservative approach to perform its tasks: it doesn't rely on making dynamic changes to your environment or system commands. Instead, it makes __a small, one-time change to your PATH__, and leaves your system to run exactly as designed. 
+
+This is the real strength of rbenv, and the main reason many developers prefer it over RVM; it's less likely to go wrong. There's just not that many moving parts to worry about. The most likely issue with rbenv is that you get confused about which version of Ruby you are running, or you use the wrong gem command to install or update some Gems.
+
+The troubleshooting steps are broadly the same:
+
+__Correct version__<br/>
+We can check we're using the right version of Ruby by using `rbenv version`.
+
+__Confirm directory__<br/>
+By using `echo $PATH`, We can confirm that the `local/bin` directory is occuring before the `Library/Apple/usr/bin`, such that our system is loading the Rbenv directory in preference to the system directory.
+
+__Confirm command location__<br/>
+By using `rbenv which COMMAND`, we can display the disk location of the command named by `COMMAND` (e.g. `ruby`, `irb`, `rubocop`)
+
+__Rebuild shims directory__<br/>
+By using `rbenv rehash`, we can rebuild the `shims` directory. If you can't execute some commands or rbenv doesn't appear to be running the correct commands, try this command.
+
+__Make sure the correct shim is installed__<br/>
+We can display a list of all current shims by using `rbenv shims`.
+
+### Rbenv plugins
+Rbenv has a number of [plugins](https://github.com/rbenv/rbenv/wiki/Plugins) that extend the capabilities provided by Rbenv. 
+
+### Summary
+By default, RVM has more features, but rbenv plugins provide much of the functionality not provided by the base install of rbenv. RVM works by dynamically managing your environment, mostly by modifying your PATH variable and replacing the built-in `cd` command with an RVM-aware shell function; rbenv works by just modifying your PATH and some other environment variables.
