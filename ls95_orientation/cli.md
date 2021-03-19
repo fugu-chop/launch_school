@@ -64,7 +64,7 @@ We can do this by defining variables in our `.zshrc` and `.zprofile` files for `
 ### $PATH
 `PATH` is a variable that provides context for the CLI to run commands like `cd` and `echo`, without having the user specify where those commands exist on the file system. 
 
-When we type in a word into the command line that doesn't start with `/`, `~` or `.` (since those are partsh to files or directories), the command line will search directories listed in the PATH environmental variable. 
+When we type in a word into the command line that doesn't start with `/`, `~` or `.` (since those are paths to files or directories), the command line will search directories listed in the PATH environmental variable. 
 
 We are able to add directories to the `PATH` variable through the `~/.zshrc` file like:
 `export PATH="/directory/to/executable:$PATH"`
@@ -102,14 +102,14 @@ Each level of ownership can be granted to __any or all access types__. We can se
 
 We can also set permissions for users, groups and other all at once, using
 - `chmod ugo text.txt`, where `u`, `g` and `o` represent a single digit from 0-7 for users, groups and other.
-    - `0` => No permissions
-    - `1` => Execute
-    - `2` => Write
-    - `3` => Write & execute (1 + 2)
-    - `4` => Read
-    - `5` => Read & execute (4 + 1)
-    - `6` => Read & write (4 + 2)
-    - `7` => Read, write & execute (4 + 2 + 1)
+  - `0` => No permissions
+  - `1` => Execute
+  - `2` => Write
+  - `3` => Write & execute (1 + 2)
+  - `4` => Read
+  - `5` => Read & execute (4 + 1)
+  - `6` => Read & write (4 + 2)
+  - `7` => Read, write & execute (4 + 2 + 1)
 
 ### Root User and Sudo 
 The `root` user has `7` access to all files and directories. As such, it's generally __not recommended__ to log in as the root user, unless strictly necessary to avoid the risk of deleting something you shouldn't. 
