@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 2,595)
+# March 2021 (Total minutes: 2,772)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -18,6 +18,7 @@
 - [17th, Wed](#170321-wed)
 - [18th, Thu](#180321-thu)
 - [19th, Fri](#190321-fri)
+- [20th, Sat](#200321-sat)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -265,3 +266,18 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I'm pretty happy with my progression for solving Codewars problems. I marked one of the two problems as hard, but was able to solve it pretty quickly with significantly less code than last time. My solution for the other problem was also much shorter than my previous attempt. 
+
+##### 20/03/21 (Sat)
+__*Concepts covered*__<br/>
+- RB130 - Packaging code into a Project
+  - Core Ruby Tools Book
+  - Setting up rake tasks and Gemfile
+  - Quiz
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+177 minutes
+
+__*Thoughts*__<br/>
+Finally finished off RB130 after a detour doing practice problems. Not too bad, though I felt the course was a little disconnected - testing, deploying a gem and blocks feel disparate. Oh well, onto RB139 preparation!
