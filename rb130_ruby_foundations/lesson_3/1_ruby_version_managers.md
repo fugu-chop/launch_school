@@ -417,6 +417,11 @@ This way, when you run one of the ruby commands or Gems, the system executes the
 
 The `shims` directory contains all the shims used by rbenv, while versions contains all the different Rubies. Inside the `versions` directory, you will find one directory for each Ruby version you have installed; inside each of these directories, you will find the specific version of Ruby, all its companion programs, and your Gems for that version.
 
+When installing on a Mac, we need to add some code to the end of the `.bash_profile`, `.bashrc`, or `.zshrc` file:
+```
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+```
 ### Installing rubies through Rbenv
 Let's say you're about to start work on a project that requires Ruby 2.2.2. You first need to check whether you already have Ruby `2.2.2` installed. To do this, run:
 ```

@@ -16,9 +16,26 @@ In Ruby, most developers use a Ruby version manager such as RVM or rbenv to mana
 The most widely used dependency manager in the Ruby community is the Bundler Gem. This Gem lets you configure which Ruby and which Gems each of your projects need.
 
 ### Gemfile
-Bundler relies on a file named Gemfile to tell it which version of Ruby and its Gems it should use. This file is a simple Ruby program that uses a Domain Specific Language (DSL) to provide details about the Ruby and Gem versions. It's the configuration or instruction file for Bundler. We need to create this file in our application directory.
+Bundler relies on a file named `Gemfile` to tell it which version of Ruby and its Gems it should use. This file is a simple Ruby program that uses a Domain Specific Language (DSL) to provide details about the Ruby and Gem versions. It's the configuration or instruction file for Bundler. We need to create this file in our application directory.
 
-After you create a Gemfile, the `bundle install` command scans it, downloads and installs all the dependencies listed, and produces a `Gemfile.lock` file. `Gemfile.lock` shows all the dependencies for your program; this includes the Gems listed in Gemfile, as well as the Gems they depend on (the dependencies), which may not be explicitly listed in the Gemfile. It's very common for __RubyGems you install for use in your project to rely on many other gems__, creating a large dependency tree.
+A Gemfile typically needs four main pieces of information:
+- Where should Bundler look for Rubygems it needs to install?
+- Do you need a `.gemspec` file?
+- What version of Ruby does your program need? (Recommended, not required)
+- What Rubygems does your program use?
+
+1. The first part is typically easy: most projects find Rubygems at the [official Rubygems site](https://rubygems.org). Your company or school or project group may have a private repository, but for now, you can use the official site.
+2. We usually want a `project_name.gemspec` file (which is basically a description of the Gem) - Bundler checks for a `.gemspec` file when the Gemfile contains a gemspec statement. If you decide to release a program or library as a Gem, you must include a `.gemspec` file. 
+3. The Ruby version is a bit harder. You must decide whether you want to support an older version of Ruby or a more recent version. Ideally, you should support the newest versions, but this isn't always possible: some users may need to use older versions.
+4. The easiest way to find the Rubygems needed is to examine the `require` statements in your code: in all your code, even code that you run only during development, such as tests. One difficulty, though, is that it isn't always evident what Gem a particular require file loads. You may need to search your Gem directories to determine which Gem you use.
+
+After you create a Gemfile, the `bundle install` command scans it, downloads and installs all the dependencies listed (including those not already installed), and produces a `Gemfile.lock` file. `Gemfile.lock` shows all the dependencies for your program; this includes the Gems listed in Gemfile, as well as the Gems they depend on (the dependencies), which may not be explicitly listed in the Gemfile. 
+
+By recursively scanning the Gemfiles for each Gem, Bundler builds a complete dependency list that identifies all the Gems your application needs, even those you don't know you need. Once Bundler has the dependency list, it installs any Gems that are not yet part of your Ruby installation.
+
+It's very common for __RubyGems you install for use in your project to rely on many other gems__, creating a large dependency tree.
+
+It's easy to see the names `Gemfile` and `Gemfile.lock` and think that these files must be part of Rubygems. Bundler uses both files; it depends on `Gemfile` to provide information on the Gems your project uses, and it creates `Gemfile.lock` based on that. If you ever create your own Rubygem, you will probably use Bundler, but you don't have to. Hence, you don't need `Gemfile` or `Gemfile.lock` to create a Rubygem.
 
 Suppose you are writing a program that requires Ruby `2.3.1` and the `sinatra`, `erubis`, and `rack` Gems. Our Gemfile incorporates these dependencies, and looks like this:
 ```ruby
