@@ -29,3 +29,15 @@
 ### Explain the limitations of Symbol#to_proc, and how we can get around them.
 
 ### Explain what the `&` symbol in different contexts, and what it does.
+
+### What is regression testing?
+
+### What is a testing framework? What are the associated steps?
+
+### What is the difference between assertion and expectation syntax?
+
+### What are some of the limitations with `assert` when testing?
+
+### What is the SEAT approach in testing? Why is it beneficial?
+
+### When do we need the `setup` and `teardown` methods for testing? What do they do?

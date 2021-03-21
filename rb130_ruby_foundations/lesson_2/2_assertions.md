@@ -78,7 +78,7 @@ end
 `assert_raises`
 ```ruby
 def test_raise_initialize_with_arg
-  assert_raises(ArgumentError, "No ArgumentError was raised") do
+  assert_raises(ArgumentError) do
     # this code raises ArgumentError, so this assertion passes
     car = Car.new("Joey")
   end

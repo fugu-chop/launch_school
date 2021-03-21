@@ -16,9 +16,9 @@ One of the biggest keys to producing quality software is properly testing your p
 
 For beginners, we write tests to __prevent regression__ - that's what we'll focus on for now. We want to write tests so that when *we make changes in our code, we don't have to manually verify everything still works*. You can write tests first if you like, or you can write your tests after implementation. Most likely, you'll need to take some mixture of both, jumping back and forth between implementation and testing code.
 
-Remember that the minitest file is still a Ruby script - if any of the tests raises an unrescued exception, it will terminate execution of the script (the rest of the tests will not run and the file stops being evaluated). 
+Remember that the minitest file is still a Ruby script - if any of the tests raises an unrescued exception, it will __terminate execution of the script__ (the rest of the tests will not run and the file stops being evaluated). 
 
-Though many people use RSpec, Minitest is the default testing library that comes with Ruby. From a pure functionality standpoint, Minitest can do everything RSpec can, except Minitest uses a more straight forward syntax. RSpec bends over backwards to allow developers to write code that reads like natural English, but at the cost of simplicity. RSpec is what we call a __Domain Specific Language__; it's a DSL for writing tests.
+Though many people use RSpec, Minitest is the default testing library that comes with Ruby. From a pure functionality standpoint, Minitest can do everything RSpec can, except Minitest uses a more straightforward syntax. RSpec bends over backwards to allow developers to write code that reads like natural English, but at the cost of simplicity. RSpec is what we call a __Domain Specific Language__; it's a DSL for writing tests.
 
 We install Minitest through the gem package manager:
 ```
@@ -31,7 +31,7 @@ gem list minitest
 # To add color:
 gem install minitest-reporters
 ```
-Typically, test suites are stored in in a special tests directory beneath your main application’s development directory. For example, if you are working on a to-do application that is stored in `/Users/me/todo`, then you will place your test suite files in `/Users/me/todo/tests`. This isn’t a requirement, but is good practice for source organization, particularly when working with large projects.
+Typically, test suites are stored in in a special `tests` directory beneath your main application’s development directory. For example, if you are working on a to-do application that is stored in `/Users/me/todo`, then you will place your test suite files in `/Users/me/todo/tests`. This isn’t a requirement, but is good practice for source organization, particularly when working with large projects.
 
 ### Test Driven Development
 While we won’t be doing any actual development in this post, it’s important to understand how testing fits into the software development cycle. Ideally, your test cases should be run before writing any code. This is frequently called Test-Driven Development (TDD), and follows a simple pattern:
@@ -96,7 +96,7 @@ There are many types of assertions, but for now, just focus on `assert_equal`. S
 
 `assert_equal` takes two parameters: the first is the *expected* value, and the second is the *test or actual* value. If there's a discrepancy, `assert_equal` will save the error and Minitest will report that error to you at the end of the test run.
 
-It's sometimes useful to have multiple assertions within one test (ie, instance method that starts with "`test_`"), but in the beginning, we'll only show one assertion within one test.
+It's sometimes useful to have multiple assertions within one test (i.e. multiple verifications per instance method that starts with "`test_`"), but in the beginning, we'll only show one assertion within one test.
 
 ### Breaking down the output
 Running the test file produces the following output.
@@ -214,7 +214,7 @@ Finished in 0.00115s
 ### Expectation Syntax
 Thus far, we've been using the assertion or assert-style syntax. Minitest also has a completely different syntax called _expectation_ or _spec-style_ syntax.
 
-In expectation style, tests are grouped into `describe` blocks, and individual tests are written with the `it` method. We no longer use assertions, and instead use expectation matchers.
+In expectation style, tests are grouped into `describe` blocks, and individual tests are written with the `it` method. We no longer use assertions, and instead use expectation matchers. This is what RSpec uses. The documentation for the Minitest expectation methods can be found [here](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Expectations.html).
 ```ruby
 require 'minitest/autorun'
 
