@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 2,772)
+# March 2021 (Total minutes: 2,954)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -19,6 +19,7 @@
 - [18th, Thu](#180321-thu)
 - [19th, Fri](#190321-fri)
 - [20th, Sat](#200321-sat)
+- [21st, Sun](#210321-sun)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -281,3 +282,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Finally finished off RB130 after a detour doing practice problems. Not too bad, though I felt the course was a little disconnected - testing, deploying a gem and blocks feel disparate. Oh well, onto RB139 preparation!
+
+##### 21/03/21 (Sun)
+__*Concepts covered*__<br/>
+- RB130 - Ruby Foundations
+  - Concept Revision
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+182 minutes
+
+__*Thoughts*__<br/>
+I think for this assessment, I'll sweep through and revise the concepts. After I feel solid, I'm going to try actually coding out examples and trying to find the edge cases. That should reduce the amount of weirdness that I might struggle with in the actual assessment.
