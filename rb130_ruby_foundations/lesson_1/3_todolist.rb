@@ -70,7 +70,7 @@ class TodoList
 
     @todos << todo
   end
-  # This allows us to give the same method a different name
+  # This allows us to give the same method a different name - start with what you want to call it, followed by the existing method
   alias_method :add, :<<
 
   def item_at(idx)

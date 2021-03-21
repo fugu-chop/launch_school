@@ -64,7 +64,7 @@ echo("hello!") { puts "world" }
 echo("hello", "world!") { puts "world" }
 # => ArgumentError: wrong number of arguments (2 for 1)
 ```
-It's almost as if the block wasn't even being passed to the method.
+However, just because a method __can__ take a block, doesn't mean it does anything with it. In our examples, the block is ignored by our `echo` method - it's almost as if the block wasn't even being passed to the method.
 
 ### Yielding
 One way that we can invoke the passed-in block argument from within the method is by using the `yield` keyword.
@@ -130,9 +130,9 @@ end
 say("hi there") do
   system 'clear'
 end                                                
-# clears screen first, then outputs "> hi there"
+# clears screen first, then outputs "> hi there", then returns nil
 ```
-1. Execution starts at method invocation, on line 8. The `say` method is invoked with two arguments: a string and a block (the block is an __implicit parameter and not part of the method definition__).
+1. Execution starts at method invocation, on line 8. The `say` method is invoked with two arguments: a string and a block (the block is an __implicit parameter and not part of the method definition__). The block itself __doesn't__ need to take an argument to be classified as a block.
 2. Execution goes to line 2, where the method local variable `words` is assigned the string `"hi there"`. The __block is passed in implicitly, without being assigned to a variable__.
 3. Execution continues into the first line of the method implementation, line 3, which immediately yields to the block.
 4. The block, line 9, is now executed, which clears the screen.
@@ -182,7 +182,7 @@ The above method invocation outputs `6`. Notice the use of `block_given?`, which
 7. Execution continues to line 11, where we output the block local variable `num`.
 8. Execution continues to line 12, where the end of the block is reached.
 9. Execution now jumps back to the method implementation, where we just finished executing line 4.
-10. Execution continues to line #5, the end of the `if`.
+10. Execution continues to line 5, the end of the `if`.
 11. Line 6 returns the value of the incremented argument to line 10.
 12. The program ends (the return value of `#increment` is not used)
 
@@ -359,7 +359,7 @@ File.open("some_file.txt", "w+") do |file|
   # write to this file using file.write
 end
 ```
-We don't currently understand exactly how blocks work, and so we can't exactly say why we don't have the close the file. However, we can guess that the method implementor of `File::open` opens the file, yields to the block, then closes the file. This means the method caller only needs to pass in the relevant file manipulation code in the block without worrying about closing the file.
+We don't currently understand exactly how blocks work, and so we can't exactly say why we don't have to close the file. However, we can guess that the method implementor of `File::open` opens the file, yields to the block, then closes the file. This means the method caller only needs to pass in the relevant file manipulation code in the block without worrying about closing the file.
 
 ### Methods with an explicit block parameter
 Until now, we've passed blocks to methods __implicitly__. Every method, regardless of its definition, takes an implicit block. It may *ignore the implicit block, but it still accepts it*. However, there are times when you want a method to take an __explicit block__; you do that by defining a parameter prefixed by an `&` character in the method definition. 
@@ -368,6 +368,7 @@ The block must always be referenced by the __last parameter in the method defini
 ```ruby
 def test(&block)
   puts "What's &block? #{block}"
+  # Note how we don't have the yield keyword, so the block never actually executes - the method doesn't actually accept a block
 end
 ```
 The `&block` is a special parameter that *converts the optional block argument* to what we call a "simple" `Proc` object (the exact definition of a simple `Proc` object isn't important at this time). Notice that we drop the `&` when referring to the parameter inside the method. 
@@ -382,26 +383,27 @@ Why do we now need an explicit block instead? Chiefly, the answer is that it _pr
 ```ruby
 def test(&block)
   puts "1"
-  # The & symbol converts the block to a Proc object, which is passed as an argument to test2
+  # The & symbol converts the block to a Proc object when we invoke the method, which is passed as an argument to test2
   test2(block)
   puts "2"
 end
 
-# test2 is expecting a Proc object as an argument - hence we don't convert to a block by prepending &
+# test2 is expecting a Proc object as an argument in order to use Proc#call - hence we don't convert to a block by prepending &
 def test2(block)
   puts "hello"
-  # The #call method calls the Proc object that was originally passed to test()
+  # We call the Proc#call method on the Proc object that was originally passed to test()
   block.call
   puts "good-bye"
 end
 
 # Note how the method invocation syntax is the same as if we had an implicit block
 test { puts "xyz" }
-# => 1
-# => hello
-# => xyz
-# => good-bye
-# => 2
+# 1
+# hello
+# xyz
+# good-bye
+# 2
+# => nil
 ```
 Note that you only need to use `&` for the block parameter in `#test`. Since `block` is already referencing a `Proc` object when we call `test2`, no additional conversion is needed.
 
@@ -409,7 +411,7 @@ Note that we also use `block.call` inside `test2` to invoke the `Proc` instead o
 
 The above discussion of explicit blocks is simplified from reality. Things get a bit more complicated if the caller passes in a `Proc` object, a lambda, or some other object to a method that takes an explicit block. For now, you just need to know that __Ruby converts blocks passed in as explicit blocks to a simple `Proc` object__ (this is why we need to use `#call` to invoke the `Proc` object).
 
-#### Lambdas (not examinable - see Advanced 1 Exercises)
+#### Lambdas (not examinable - see Ruby Foundations Exercises, Advanced 1 Exercise 2)
 Lambdas are types of Proc's. Technically they are both Proc objects. An implicit block is a grouping of code, a type of closure, it is not an Object.
 
 Lambdas enforce the number of arguments passed to them (strict arity rules). Implicit blocks and Procs do not enforce the number of arguments passed in.

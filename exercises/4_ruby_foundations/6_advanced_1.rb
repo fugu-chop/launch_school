@@ -56,7 +56,7 @@ my_proc.call('cat')
 =begin
 Lambdas objects are an instance of the Proc class. 
 We can instantiate a lambda object using lambda or ->, but not Lambda.new (it's not a class itself)
-While a Lambda is a Proc, it maintains a separate identity from a plain Proc. This can be seen when displaying a Lambda: the string displayed contains an extra "(lambda)" that is not present for regular Procs. 
+While a Lambda is a Proc, it maintains a separate identity from a plain Proc. This can be seen when displaying a Lambda object: the string displayed contains an extra "(lambda)" that is not present for regular Procs. 
 Lambdas have strict arity rules.
 =end
 my_lambda = lambda { |thing| puts "This is a #{thing}." }

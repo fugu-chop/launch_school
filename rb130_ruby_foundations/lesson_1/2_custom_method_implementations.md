@@ -151,7 +151,7 @@ end
 
 # => 6
 ```
-The return value of the block is then assigned to the accumulator object. Therefore, the below code is __incorrect__.
+The __return value of the block is then assigned to the accumulator object__. Therefore, the below code is __incorrect__.
 ```ruby
 [1, 2, 3].reduce do |acc, num|
   acc + num if num.odd?
@@ -231,6 +231,7 @@ We could also have implemented it as such:
 ```ruby
 def reduce(array, start_val = nil)
   accumulator = start_val.nil? ? array.first : start_val
+  # If the start_val is blank, the accumulator is set to the first element of the array. Therefore we can skip it for the purposes of iteration
   counter = start_val.nil? ? 1 : 0
 
   while counter < array.size

@@ -82,9 +82,12 @@ my_proc.call
 ```
 The reason this works __isn't__ because our definition of `madeup_method` is in the binding of `my_proc` (it is defined __after__ `my_proc` is instantiated), but because `madeup_method` is defined __before it is effectively invoked__ by `my_proc.call`.
 
-Remember back to Object Oriented Programming - Wwen we don't use an explicit caller, the method is implicitly called on `self`. To be a little more precise here, if we try to invoke a method without an explicit caller and __without parentheses__, Ruby will first check to see if there is _a local variable of that name_ within scope (which in the case of a block __includes its binding__). If there is, then Ruby will return the object referenced by the local variable. If not, it will attempt to call a method of that name on `self`.
+#### Why does it work like this?
+Basically, because Ruby needs to be able to disambiguate between variables and methods when it isn't clear purely from the written code. 
 
-Ruby doesn't know whether `my_method` is a local variable or a method, and so first looks for the local variable, and __then__ tries calling the method on `self`.
+Remember back to OOP - When we don't use an explicit caller, the method is implicitly called on `self`. To be a little more precise here, if we try to invoke a method without an explicit caller and __without parentheses__, Ruby will first check to see if there is _a local variable of that name_ within scope (which in the case of a block __includes variables within its binding__). If there is, then Ruby will return the object referenced by the local variable. If not, it will attempt to call a method of that name on `self`.
+
+Ruby doesn't know whether `my_method` is a local variable or a method, and so __first__ looks for the local __variable__, and __then__ tries calling the __method__ on `self`.
 ```ruby
 my_method 
 # => NameError: undefined local variable or method `my_method' for main:Object
@@ -99,7 +102,7 @@ If we explicitly call `my_method` on `self` we get the same result (Ruby knows t
 self.my_method 
 # => NoMethodError: undefined method `my_method' for main:Object
 ```
-If we look at the last part of the error message for `main:Object`, we see that `self` in the `main` scope is the `main` object. The `main` scope is an __instance of the `Object` class__, but it's also the `Object` __class itself__ (It's more complex than that, but for the purposes of this discussion, that's a good enough mental model).
+If we look at the last part of the error message for our first example (i.e. referencing `main:Object`), we see that `self` in the `main` scope is the `main` object. The `main` scope is an __instance of the `Object` class__, but it's also the `Object` __class itself__ (It's more complex than that, but for the purposes of this discussion, that's a good enough mental model).
 ```ruby
 self
 # => main
@@ -107,7 +110,7 @@ self
 self.class 
 # => Object
 ```
-This means that we can define methods in the `main` scope, and then call those methods on `self`.
+This means that we can define methods in the `main` scope, and then call those methods on `self`. Any methods defined in the `main` scope become instance methods of `Object` (__not__ the `main` scope itself). This makes them available everywhere, meaning that we can call the method without an explicit caller.
 ```ruby
 def greeting
   puts 'Hello!'
@@ -117,6 +120,9 @@ greeting
 # => 'Hello!'
 
 self.greeting
+# => 'Hello!'
+
+Object.greeting
 # => 'Hello!'
 ```
 As an aside here, since all custom classes inherit from `Object`, we can also call the method on objects of custom classes; but __only if we make them public__, since methods defined in the `main` scope are __private by default__.
@@ -144,7 +150,7 @@ my_proc_4.call
 # => 4
 ```
 1. We create the Proc object and assign it to the local variable `my_proc_4`. The __name__ `d` is part of the Proc's binding. At this stage, it doesn't really matter what `d` is.
-2. We then define a method `d` on the `main` object
+2. We then define a method `d` in the `main` scope.
 3. We then invoke the `call` method on `my_proc_4`. 
 
 Since Ruby can't disambiguate between `d` being a local variable or a method, it first looks to see if there is a local variable `d` in scope. Since there isn't a local variable `d` in the Proc's binding, it then implicitly calls `d` as a method on `self`. Since `self` here is the `main` object, and since we have defined a `d` method on that object, we are able to successfully invoke the method.
@@ -153,24 +159,53 @@ If we had reversed the order (i.e. defined the method __after__ `my_proc_4.call`
 ### Binding Scope
 The binding is what is in scope when the closure is __created__. Any variables that need to be accessed in a proc (or block/ lambda) __must be defined before the proc is created__ (or __passed as an argument__ when the proc is called). This does not stop the Proc from '*updating*' the state of it's information (e.g. see our previous example with the local variable `name`).
 ```ruby
+# This works, and outputs the values of a and b
 a = 1
 b = 2
 
-my_proc = Proc.new do 
+my_proc = Proc.new do
   p a
   p b
 end
 
-c = 3
 my_proc.call
-# => [:my_proc, :b, :a, ...]
+c = 3
+
+# This doesn't work, because c was not in scope (and so not part of the proc's binding), when the proc was created
+my_proc = Proc.new do
+  p c
+end
+
+my_proc.call
+# => Undefined local variable or method `c' for main:Object (NameError)
+c = 3 
+
+# This doesn't work, for the same reasons as example 2 even though we call the proc after c is defined it wasn't in scope when the proc was created and so is still not part of the binding
+my_proc = Proc.new do
+  p c
+end
+
+c = 3
+
+my_proc.call
+# => Undefined local variable or method `c' for main:Object (NameError)
+```
+In the code below, `a` and `b` are __in scope__ when the closure `my_proc` is created on line 4. When we execute the Proc on line 8, we output the return of `Kernel#local_variables`. 
+```ruby
+a = 1
+b = 2
+
+my_proc = Proc.new { p local_variables }
+
+c = 3
+
+my_proc.call 
+# =>[:a, :b, :my_proc]
 
 p local_variables
-# => [:c, :my_proc, :b, :a, ...]
+# => [:a, :b, :my_proc, :c]
 ```
-In the code above, `a` and `b` are __in scope__ when the closure `my_proc` is created on line 4. When we execute the Proc on line 8, we output the return of `Kernel#local_variables`. 
-
-This basically tells us the local variables that are in scope. `c` is not included even though we call the proc after `c` is assigned on line 6. When we output the return of `local_variables` outside of the closure on line 10, `c` is included.
+This basically tells us the local variables that are in scope. `c` is not included even though we call the Proc after `c` is assigned on line 6. When we output the return of `local_variables` outside of the closure on line 10, `c` is included, as it's been defined in the `main` scope.
 
 In the following example, the __local variable__ `a` is not defined until __after `my_proc` is created__ (and as such is __not part of `my_proc`'s binding__).
 ```ruby
@@ -191,7 +226,7 @@ end
 my_proc.call
 # => 'hello'
 ```
-In this final example, this works, but only because we are passing in `c` as __an argument__ to the `Proc.call` method, *not* because `c` is part of the proc's binding.
+In this final example, this works, but only because we are passing in `c` as __an argument__ to the `Proc.call` method, *not* because `c` is part of the Proc's binding (our Proc definition does not require a `c` variable or method) - we have __explicitly required the block to take an argument__.
 ```ruby
 my_proc = Proc.new do |num|
   p num
@@ -242,13 +277,13 @@ base8_proc = method(:convert_to_base_8).to_proc
 
 [8, 10, 12, 14, 16, 33].map(&base8_proc)
 ``` 
-In the above code, the `map` method expects a block, passing individual elements of the array to that block. The `&` symbol converts our `base8_proc` Proc object into a block. The actual proc object is a method which accepts an argument, which is exactly what we want with the `map` method and how we get around the issue of `&:method_name` not taking an argument.
+In the above code, the `map` method expects a block, passing individual elements of the array to that block. At method invocation, the `&` symbol converts our `base8_proc` Proc object into a block. The actual proc object is a method which accepts an argument, which is exactly what we want with the `map` method and how we get around the issue of `&:method_name` not taking an argument.
 #### `Symbol#to_proc`
 What the above shortcut is doing, is effectively converting `(&:to_s)` to `{ |n| n.to_s }`. The mechanism at work here is related to the use of `&` with explicit blocks, but since it isn't applied to a method parameter, it's also different. 
 
 Let's break down the code `(&:to_s)`. First, when we add a `&` in front of an object, it tells Ruby to try to __convert this object into a block__. To do so, it's expecting a `Proc` object. If this object is not a `Proc` object, it will __call `#to_proc` on the object__. 
 
-Put another way, when the object prefixed with the` &` in a method invocation is a `Proc`, that tells Ruby to treat the `Proc` object __as if it were a regular block following a method invocation__.
+Put another way, when the object prefixed with the `&` in a method invocation is a `Proc`, that tells Ruby to treat the `Proc` object __as if it were a regular block following a method invocation__.
 
 So two things are happening during method __invocation__:
 1. Ruby checks whether the object __after__ `&` is a `Proc`. 

@@ -35,7 +35,6 @@ end
 126 words
 =end
 class TextAnalyzer
-  # This method is generic, we would use 
   def process
     return if !block_given?
     file = File.open('sample_text.txt', 'r')
