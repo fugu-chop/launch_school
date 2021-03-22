@@ -36,8 +36,22 @@
 
 ### What is the difference between assertion and expectation syntax?
 
+### What's the difference between Minitest and RSpec?
+
 ### What are some of the limitations with `assert` when testing?
 
 ### What is the SEAT approach in testing? Why is it beneficial?
 
 ### When do we need the `setup` and `teardown` methods for testing? What do they do?
+
+### What is code coverage? What does it measure?
+
+### What is Rbenv/RVM? What do they do?
+
+### What is the difference between Rbenv and RVM?
+
+### What is a gem? Why might we use gems?
+
+### What is Bundler? What does it do?
+
+### What is Rake? What does it do?

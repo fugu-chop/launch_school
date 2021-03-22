@@ -18,7 +18,7 @@ For beginners, we write tests to __prevent regression__ - that's what we'll focu
 
 Remember that the minitest file is still a Ruby script - if any of the tests raises an unrescued exception, it will __terminate execution of the script__ (the rest of the tests will not run and the file stops being evaluated). 
 
-Though many people use RSpec, Minitest is the default testing library that comes with Ruby. From a pure functionality standpoint, Minitest can do everything RSpec can, except Minitest uses a more straightforward syntax. RSpec bends over backwards to allow developers to write code that reads like natural English, but at the cost of simplicity. RSpec is what we call a __Domain Specific Language__; it's a DSL for writing tests.
+Though many people use RSpec, Minitest is the default testing library that comes with Ruby (RSpec __does not__ come with the default system installation of Ruby). From a pure functionality standpoint, Minitest can do everything RSpec can, except Minitest uses a more straightforward syntax. RSpec bends over backwards to allow developers to write code that reads like natural English, but at the cost of simplicity. RSpec is what we call a __Domain Specific Language__; it's a DSL for writing tests.
 
 We install Minitest through the gem package manager:
 ```

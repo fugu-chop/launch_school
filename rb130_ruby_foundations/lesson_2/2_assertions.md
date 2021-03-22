@@ -15,7 +15,8 @@ Minitest can support virtually every kind of assertion you'd want to make. We'll
 | Assertion | Description |
 |-|-|
 | `assert(test)` | Fails unless test is truthy. |
-| `assert_equal(exp, act)` |	Fails unless `exp == act`. |
+| `assert_equal(exp, act)` |	Fails unless `exp == act`, depending on the objects being compared (can use custom `==`) |
+| `assert_same(exp, act)` |	Fails unless `exp` is the same object as `act`. |
 | `assert_nil(obj)` | Fails unless obj is `nil`. |
 | `assert_raises(*exp) { ... }` |	Fails unless block raises one of `*exp`. |
 | `assert_instance_of(cls, obj)` |	Fails unless obj is an instance of `cls`. |

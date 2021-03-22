@@ -23,7 +23,7 @@ The idea of having an unnamed "chunk of code" that we can pass around is very ha
 There are three main ways to work with closures in Ruby:
 1. Instantiating an object from the `Proc` class
 2. Using __lambdas__
-3. Using __blocks__
+3. Using __blocks__ (i.e. by passing a block to a method)
 
 ### Calling Methods with Blocks
 In the below code snippet:

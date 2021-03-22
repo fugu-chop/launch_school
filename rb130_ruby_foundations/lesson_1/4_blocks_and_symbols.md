@@ -53,6 +53,24 @@ If we reassign the local variable `name` __after__ the `Proc` object is assigned
 
 In Ruby, we call this its __binding__, or surrounding environment/context. A closure must keep track of its surrounding context in order to have all the information it needs in order to be executed later. The binding is not something that's created afresh every time it's required, but is __just a reference to variables__, and the values returned will be relevant to the point in the program the binding is invoked.
 
+Remember, since blocks are also closures, the same rules for binding apply to them:
+```ruby
+ARRAY = [1, 2, 3]
+
+def abc
+  a = 3
+end
+
+def xyz(collection)
+  collection.map { |x| yield x }
+end
+
+xyz(ARRAY) do
+  # block body
+end
+```
+In our above example, the block on line 12 has `ARRAY`, the `abc` method and the `xyz` method as part of it's binding (the `xyz` method is also part of the binding since it's defined before the block is executed).
+
 This not only includes local variables, but also _method references, constants and other artifacts_ in your code -- __whatever it needs to execute correctly__, it will drag all of it around. It's why code like the above will work fine, seemingly violating the variable scoping rules we learned earlier.
 
 This is at the core of variable scoping rules in Ruby, and it's why "inner scopes can access outer scopes". This is why anything __defined before__ a block is passed as an argument to a method invocation is *part of that block's binding*.

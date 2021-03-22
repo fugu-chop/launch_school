@@ -91,6 +91,7 @@ RubyGems Environment:
      ...
 ```
 __What do these mean?__<br/>
+
 __RUBY VERSION__<br/>
 This is the version number of the Ruby associated with the `gem` command you just ran. Each version of Ruby on your system has its own `gem` command; if you have multiple versions of Ruby installed, then you have multiple versions of gem installed. Checking the `RUBY VERSION` is a helpful diagnostic: if you see an unexpected version, you are likely using the wrong version of `gem` or ruby.
 
