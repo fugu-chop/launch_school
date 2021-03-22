@@ -254,7 +254,7 @@ RVM defines a *shell function* (see your shell's documentation for information o
 
 When you run `rvm use VERSION` to change the Ruby version you want to use, you actually invoke the `rvm` function. It modifies your environment so that the various ruby commands invoke the correct version. For instance, `rvm use 2.2.2` modifies your PATH variable so that the `ruby` command uses the Ruby installed in the `ruby-2.2.2` directory. It makes other changes as well, but the `PATH` change is the most noticeable.
 
-If you want to run, say, `rubocop` from the `Ruby 2.2.2` directory, you tell RVM to use Ruby `2.2.2`, then run the `rubocop` command. The system searches for a `rubocop` command in your `PATH`, and runs the _first one it finds_. Since the RVM directories usually occur early in your `PATH`, the system finds the desired rubocop command that pertains to Ruby `2.2.2`. In our above example, we can see that the `rubocop` command lives in `/usr/local/rvm/gems/ruby-2.2.2/bin`.
+If you want to run, say, `rubocop` from the `Ruby 2.2.2` directory, you tell RVM to use Ruby `2.2.2`, then run the `rubocop` command. The system searches for a `rubocop` command in your `PATH`, and runs the _first one it finds_. Since the RVM directories usually occur early in your `PATH`, the system finds the desired `rubocop` command that pertains to Ruby `2.2.2`. In our above example, we can see that the `rubocop` command lives in `/usr/local/rvm/gems/ruby-2.2.2/bin`.
 
 ### Installing Rubies
 Let's say you're about to start work on a project that requires Ruby `2.2.2`. The first thing you should do is to check whether you already have Ruby `2.2.2` installed.
@@ -348,7 +348,7 @@ We can use `echo $PATH` to confirm that the `{RVM PATH}/rubies-{VERSION}/bin` an
 If, for example, `/usr/bin` occurs before `{RVM_PATH}/rubies-{VERSION}/bin` in your `PATH`, your system may load the system version of Ruby instead of one managed by RVM.
 
 __RVM Info__<br/>
-Display information about the __current__ RVM environment, similar to `gem env`.
+We can display information about the __current__ RVM environment using `rvm info`, similar to `gem env`.
 
 __Verify current version__<br/>
 We can use `rvm current` to display the current, active version of Ruby.
@@ -363,7 +363,7 @@ __Update RVM__<br/>
 We can download and install the latest version of RVM using `rvm get latest`. This is most useful when you are using a new or unfamiliar feature that may not be available or working correctly in your current version of RVM.
 
 ### Uninstalling RVM
-`rvm implode` will remove the `rvm/` directory and all the rubies built within it. In order to remove the final trace of rvm, you need to remove the `rvm` gem, through `gem uninstall rvm`. We will also need to check that our shell startup file (`.profile`, `.bash_profile`, etc) has the relevant `PATH` removed. You also need to restart your CLI.
+`rvm implode` will remove the `rvm/` directory and all the rubies built within it. In order to remove the final trace of RVM, you need to remove the `rvm` gem, through `gem uninstall rvm`. We will also need to check that our shell startup file (`.profile`, `.bash_profile`, etc) has the relevant `PATH` removed. You also need to restart your CLI.
 ### Rbenv
 At `rbenv`'s heart is a set of directories very similar to the directories at RVM's core. It stores and uses the rubies, associated tools, and Gems from these directories. There are subdirectories for each version of Ruby located in the versions directory. If you need Ruby `2.3.1`, `rbenv` uses the files in the `2.3.1` directory; if you need Ruby `2.2.2` it gets the files from the `2.2.2` directory.
 ```
@@ -414,9 +414,20 @@ Under the hood, how `rbenv` manages Rubies is a significant departure from how R
 
 Valid `rbenv` installations include the `shims` directory in the `PATH`; `rbenv` places it before any other directories that contain ruby or any related programs; this ensures that the __system searches the shims directory first__. 
 
+Shims are lightweight executables that simply pass your command along to `rbenv`. So with `rbenv` installed, when you run, say, `rake`, your operating system will do the following:
+1. Search your `PATH` for an executable file named `rake`
+2. Find the `rbenv` shim named `rake` at the beginning of your `PATH`
+3. Run the shim named `rake`, which in turn passes the command along to `rbenv`
+
+When you execute a shim, `rbenv` determines which Ruby version to use by reading it from the following sources, in this order:
+1. The `RBENV_VERSION` environment variable, if specified. You can use the `rbenv shell` command to set this environment variable in your current shell session.
+2. The first `.ruby-version` file found by searching the __directory of the script you are executing__ and each of its parent directories until reaching the root of your filesystem.
+3. The first `.ruby-version` file found by searching the __current working directory__ and each of its parent directories until reaching the root of your filesystem. You can modify the `.ruby-version` file in the current working directory with the `rbenv local` command.
+4. The global `~/.rbenv/version` file. You can modify this file using the `rbenv global` command. If the global version file is not present, `rbenv` assumes you want to use the "system" Ruby — i.e. whatever version would be run if `rbenv` weren't in your path.
+
 This way, when you run one of the ruby commands or Gems, the system executes the proper shim script. The shim script, in turn, executes `rbenv exec PROGRAM`; this command determines what version of Ruby it should use, and executes the appropriate program from the Ruby version-specific directories, e.g. `/usr/local/rbenv/versions/2.3.1/bin`.
 
-The `shims` directory contains all the shims used by rbenv, while versions contains all the different Rubies. Inside the `versions` directory, you will find one directory for each Ruby version you have installed; inside each of these directories, you will find the specific version of Ruby, all its companion programs, and your Gems for that version.
+The `shims` directory contains all the shims used by `rbenv`, while versions contains all the different Rubies. Inside the `versions` directory, you will find one directory for each Ruby version you have installed; inside each of these directories, you will find the specific version of Ruby, all its companion programs, and your Gems for that version.
 
 When installing on a Mac, we need to add some code to the end of the `.bash_profile`, `.bashrc`, or `.zshrc` file:
 ```
@@ -454,12 +465,12 @@ Another way is to set it __locally__, meaning the version of Ruby is specific to
 $ cd ~/src/magic
 $ rbenv local 2.0.0
 ```
-This creates a `.ruby-version file` in the `~/src/magic` directory; when you run any Ruby-based programs stored in this directory, `rbenv` checks the `.ruby-version` file, and uses that version of Ruby for the program. If there is no `.ruby-version` file, rbenv launches a search for an alternative `.ruby-version` file, and, if it still can't find one, it uses the __global version__ of Ruby.
+This creates a `.ruby-version` file in the `~/src/magic` directory; when you run any Ruby-based programs stored in this directory, `rbenv` checks the `.ruby-version` file, and uses that version of Ruby for the program. If there is no `.ruby-version` file, `rbenv` launches a search for an alternative `.ruby-version` file, and, if it still can't find one, it uses the __global version__ of Ruby.
 
 Note that this `.ruby-version` file is identical to the `.ruby-version` file used by RVM: same name, same content, same function, and the same search sequence.
 
 #### Where are the files?
-Rbenv creates a directory at installation known as the rbenv `root` directory; it also installs all rbenv related files, including all the Rubies and Gems that it manages, in this directory. To determine the location of the rbenv `root` directory, run:
+Rbenv creates a directory at installation known as the `rbenv` `root` directory; it also installs all `rbenv` related files, including all the Rubies and Gems that it manages, in this directory. To determine the location of the `rbenv` `root` directory, run:
 ```
 $ rbenv root
 
@@ -467,9 +478,9 @@ $ rbenv root
 ```
 
 ### Troubleshooting Rbenv
-Compared to RVM, rbenv uses a conservative approach to perform its tasks: it doesn't rely on making dynamic changes to your environment or system commands. Instead, it makes __a small, one-time change to your PATH__, and leaves your system to run exactly as designed. 
+Compared to RVM, `rbenv` uses a conservative approach to perform its tasks: it doesn't rely on making dynamic changes to your environment or system commands. Instead, it makes __a small, one-time change to your `PATH`__, and leaves your system to run exactly as designed (it relies on shims to do things, rather than changing directories in the `PATH`). 
 
-This is the real strength of rbenv, and the main reason many developers prefer it over RVM; it's less likely to go wrong. There's just not that many moving parts to worry about. The most likely issue with rbenv is that you get confused about which version of Ruby you are running, or you use the wrong gem command to install or update some Gems.
+This is the real strength of `rbenv`, and the main reason many developers prefer it over RVM; it's less likely to go wrong. There's just not that many moving parts to worry about. The most likely issue with `rbenv` is that you get confused about which version of Ruby you are running, or you use the wrong gem command to install or update some Gems.
 
 The troubleshooting steps are broadly the same:
 
@@ -492,4 +503,4 @@ We can display a list of all current shims by using `rbenv shims`.
 Rbenv has a number of [plugins](https://github.com/rbenv/rbenv/wiki/Plugins) that extend the capabilities provided by Rbenv. 
 
 ### Summary
-By default, RVM has more features, but rbenv plugins provide much of the functionality not provided by the base install of rbenv. RVM works by dynamically managing your environment, mostly by modifying your PATH variable and replacing the built-in `cd` command with an RVM-aware shell function; rbenv works by just modifying your PATH and some other environment variables.
+By default, RVM has more features, but `rbenv` plugins provide much of the functionality not provided by the base install of `rbenv`. RVM works by __dynamically managing your environment__, mostly by modifying your PATH variable and replacing the built-in `cd` command with an RVM-aware shell function; `rbenv` works by just modifying your PATH once and some other environment variables, relying on shims to execute commands.

@@ -46,9 +46,11 @@
 
 ### What is code coverage? What does it measure?
 
-### What is Rbenv/RVM? What do they do?
+### What is Rbenv/RVM? What do they do? Why would we use them?
 
 ### What is the difference between Rbenv and RVM?
+
+### What is the `PATH` variable? How is it used in the context of Rbenv versus RVM?
 
 ### What is a gem? Why might we use gems?
 
