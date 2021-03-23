@@ -476,7 +476,6 @@ $ rbenv root
 
 /Users/dean/.rbenv
 ```
-
 ### Troubleshooting Rbenv
 Compared to RVM, `rbenv` uses a conservative approach to perform its tasks: it doesn't rely on making dynamic changes to your environment or system commands. Instead, it makes __a small, one-time change to your `PATH`__, and leaves your system to run exactly as designed (it relies on shims to do things, rather than changing directories in the `PATH`). 
 
@@ -503,4 +502,4 @@ We can display a list of all current shims by using `rbenv shims`.
 Rbenv has a number of [plugins](https://github.com/rbenv/rbenv/wiki/Plugins) that extend the capabilities provided by Rbenv. 
 
 ### Summary
-By default, RVM has more features, but `rbenv` plugins provide much of the functionality not provided by the base install of `rbenv`. RVM works by __dynamically managing your environment__, mostly by modifying your PATH variable and replacing the built-in `cd` command with an RVM-aware shell function; `rbenv` works by just modifying your PATH once and some other environment variables, relying on shims to execute commands.
+By default, RVM has more features, but `rbenv` plugins provide much of the functionality not provided by the base install of `rbenv`. RVM works by __dynamically managing your environment__, mostly by modifying your `PATH` variable and replacing the built-in `cd` command with an RVM-aware shell function; `rbenv` works by just modifying your PATH once and some other environment variables, relying on shims to execute commands.

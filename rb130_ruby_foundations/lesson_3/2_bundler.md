@@ -197,11 +197,11 @@ If you use `bundle` from version 2.2.2 of Ruby when you mean to use Ruby 2.3.1, 
 Other things to try include:
 - Removing the `Gemfile.lock` file and running `bundle install` again, which should generate a new `Gemfile.lock` file.
 - Remove the `.bundle` directory and its contents from your project directory and run `bundle install` again.
-- If you're using the `binstubs` feature, remove the directory used by `binstubs` and run `bundle install --binstubs again`. __Don't do this if you aren't using `binstubs`__.
-- Remove and reinstall bundler
+- If you're using the `binstubs` feature, remove the directory used by `binstubs` and run `bundle install --binstubs` again. __Don't do this if you aren't using `binstubs`__.
+- Remove and reinstall `bundler`
 - If `gem list` shows that either `rubygems-bundler` or `open_gem` are installed, __uninstall them__. These old Gems are _incompatible with Bundler_. Repeat the above items if you remove either Gem.
 - Issue this command in the command line from your app's top-level directory: `rm Gemfile.lock ; DEBUG_RESOLVER=1 bundle install`
 
 This command removes the `Gemfile.lock` file, then runs `bundle install` while producing debug information. You can use the debug information to see how Bundler resolves each Gem. This can be valuable when you aren't sure if your app is loading the correct Gems. 
 
-Note that you must include the `rm Gemfile.lock` part; this mode __only produces useful output when `Gemfile.lock` doesn't exist__. More information on how this works can be found [here](http://patshaughnessy.net/2011/9/24/how-does-bundler-bundle)
+Note that you must include the `rm Gemfile.lock` part; this mode __only produces useful output when `Gemfile.lock` doesn't exist__. More information on how this works can be found [here](http://patshaughnessy.net/2011/9/24/how-does-bundler-bundle).

@@ -56,4 +56,10 @@
 
 ### What is Bundler? What does it do?
 
+### What is `bundle-exec`? How is it different from `binstubs`?
+
+### How does Bundler work?
+
 ### What is Rake? What does it do?
+
+### How does Rake work?
