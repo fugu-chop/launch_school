@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 3,193)
+# March 2021 (Total minutes: 3,314)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -22,6 +22,7 @@
 - [21st, Sun](#210321-sun)
 - [22nd, Mon](#220321-mon)
 - [23rd, Tue](#230321-tue)
+- [24th, Wed](#240321-wed)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -323,3 +324,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Polished off the first review of my notes. Tomorrow will be properly writing out answers and testing code. Hope it works well!
+
+##### 24/03/21 (Wed)
+__*Concepts covered*__<br/>
+- RB130 - Ruby Foundations
+  - Concept Revision
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+Completely slept through my alarm this morning, meaning I had to readjust my study schedule. I do not like having to code for two hours after work - it's much more exhausting than studying when I wake up (even though I might be tired).
