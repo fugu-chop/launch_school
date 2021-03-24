@@ -43,13 +43,13 @@ execute_proc(proc_b)
 execute_proc(proc_c)
 # I am defined after the proc is created
 ```
-In our example above, we define a method `execute_proc`, which takes a Proc object as an argument and calls the `Proc#call` method. This is a generic method that takes advantage of closures in that it does not actually care what the Proc returns when executed - it defers that implementation code to the Proc object itself. 
+In our example above, we define a method `execute_proc` on `lines 1-3`, which takes a Proc object as an argument and calls the `Proc#call` method. This is a generic method that takes advantage of closures in that it does not actually care what the Proc returns when executed - it defers that implementation code to the Proc object itself. 
 
-We then define a `some_method` method, which returns a string `"I am defined before the proc is created"`. We also define a local variable `a`, which returns the `'hello'` string object. When we instantiate proc objects `proc_a`, `proc_b` and `proc_c` using `Proc.new`, we append a block, which defines what that proc should do when executed. 
+We then define a `some_method` method on `lines 5-7`, which returns a string `"I am defined before the proc is created"`. We also define a local variable `a` on `line 9`, which returns the `'hello'` string object. When we instantiate proc objects `proc_a`, `proc_b` and `proc_c` using `Proc.new` on `lines 11-13`, we append a block, which defines what that proc should do when executed. 
 
-When we instantiate `proc_a`, `proc_b` and `proc_c`, the local variable `a` and method `some_method` are both part of those proc objects' binding, since they have been initialised/defined respectively before the proc object is instantiated. Since the binding of a closure points to variables and methods themselves (rather than their referenced values), we are able to reassign value that local variable `a` is pointing to and redefine the `some_method` method. Therefore, when we call `execute_proc(proc_a)` and `execute_proc(proc_c)`, those method calls return values that were different to the referenced values when `proc_a` and `proc_c` were instantiated.
+When we instantiate `proc_a`, `proc_b` and `proc_c`, the local variable `a` and method `some_method` are both part of those proc objects' binding, since they have been initialised/defined respectively before the proc object is instantiated. Since the binding of a closure points to variables and methods themselves (rather than their referenced values), we are able to reassign the value that local variable `a` is pointing (`line 15`) to and redefine the `some_method` method (`lines 18-20`). Therefore, when we call `execute_proc(proc_a)` and `execute_proc(proc_c)` on `lines 22` and `28`, those method calls return values that were different to the referenced values when `proc_a` and `proc_c` were instantiated.
 
-In the case of `proc_b`, we initialise the local variable `b` to point to the string object `'yo!'` __after__ the proc object referenced by the local variable `proc_b`. As such, the local variable `b` is __not__ part of `proc_b`'s binding - this is why a `NameError` is raised when calling `execute_proc(proc_b)` - `proc_b` does not have context of what the local variable `b` is.
+In the case of `proc_b`, we initialise the local variable `b` to point to the string object `'yo!'` __after__ the proc object referenced by the local variable `proc_b` (`line 16`). As such, the local variable `b` is __not__ part of `proc_b`'s binding - this is why a `NameError` is raised when calling `execute_proc(proc_b)` - `proc_b` does not have context of what the local variable `b` is.
 
 ### What is a block?
 A block is a closure denoted by a pair of curly braces `{}` or `do..end` reserved word pair immediately following a method call. They act as an argument passed to a method when that method is called, allowing us to add additional flexibility to a method, since we can defer some implementation code to the block instead of having to define it explicitly within the method. 
@@ -75,9 +75,9 @@ method_two { puts "Do something!" }
 # Done!
 # => nil
 ```
-In our example above, we define two methods, `method_one` and `method_two`. With `method_one`, we have not provided the ability to deal with a block - passing `method_one` a block as an implicit argument when calling it does nothing (note that it still _accepts_ the block), and the block is ignored. 
+In our example above, we define two methods, `method_one` (`lines 1-3`) and `method_two` (`lines 5-8`). With `method_one`, we have not provided the ability to execute a block as there is no `yield` keyword - passing `method_one` a block as an implicit argument when calling it does nothing (note that it still _accepts_ the block), and the block is ignored, on `line 10`.
 
-With `method_two`, we use `yield` to allow the method to accept a block. The `yield` keyword allows the block to execute - `method_two` waits until the block finishes executing (outputs a string `"Do something!"`), and then resumes execution (outputs the string `"Done!"` and returns `nil`).
+With `method_two`, we use `yield` to allow the method to accept a block. When calling `method_two` on `line 14`, the `yield` keyword allows the block to execute - `method_two` yields execution to the block, waiting until the block finishes executing (outputs a string `"Do something!"`), and then resumes execution (outputs the string `"Done!"` and returns `nil`).
 
 ### When would we use a block?
 We can use blocks to add additional flexibility to our code. Some instances where we might want to use a block as an argument to a method include:
@@ -99,7 +99,9 @@ time_logger { puts "I'm a puts statement and I return nil!" }
 # The action took 1.8e-05 seconds.
 # => nil
 ```
-In our example above, we define a `time_logger` method, which returns `nil` (due to the `puts` method call) and outputs a string indicating how long it takes for a block to return by subtracting the local variable `prior_time` from the local variable `end_time`. The `time_logger` method is generic in that it doesn't require a block to return a specific value or do a specific thing, but still retain's it's core functionality, irrespective of what the block does or returns. 
+In our example above, we define a `time_logger` method on `lines 1-7`. When we call `time_logger` on `line 9`, we initialise two local variables - `prior_time`, which captures a timestamp prior to the block execution, and `end_time`, which captures the timestamp after the block completes execution.
+
+`time_logger` returns `nil` (due to the `puts` method call) and outputs a string indicating how long it takes for the provided block to return by subtracting `prior_time` from `end_time`. The `time_logger` method is generic in that it doesn't require a block to return a specific value or do a specific thing, but still retains it's core functionality (displaying how long the block took to execute), irrespective of what the block does or returns.
 
 _Deferring implementation code to the method's caller_. Blocks can be flexible in what they return, so it is possible to write generic methods that accept a block that will change in functionality depending on what the block returns. Thus, blocks allow us to write generic methods that can do different things based on the block's return value, adding significant flexibility to that generic method. 
 
@@ -125,12 +127,39 @@ select([1, 2, 3, 4]) { |element| element <= 3 }
 select({ a: 3, b: 2, c: 4 }) { |key, value| value <= 3 }
 # => { a: 3, b: 2 }
 ```
-In our method above, we iterate through a collection passed as an argument to the `select` method, passing each element (in the case of an array) or key-value pair (in the case of a hash) to a block through the `yield` keyword. 
+In our `select` method above, we iterate through a collection passed as an argument to the `select` method, passing each element (in the case of an array) or key-value pair (in the case of a hash) to a block through the `yield` keyword. 
 
-The `select` method doesn't care what the block is doing - it only cares whether the block returns `true` or not. If the block returns `true`, the `select` method adds that element/key-value pair to the collection referenced by the `items` local variable, returning that collection once the collection has been iterated through completely.
+The `select` method doesn't care what the block is doing - it only cares whether the block returns `true` or not. If the block returns `true`, the `select` method adds that element/key-value pair to the collection referenced by the `items` local variable, returning that collection once the collection has been iterated through completely. We only need to worry what object type is being passed to the method as an argument.
 
 ### What is the `yield` keyword and what does it do?
 The `yield` keyword is something we can use within a method definition to allow the method to accept a block. During method execution, the method will execute until it reaches the `yield` keyword, at which point, the block passed as an argument to that method will execute. Once the block completes it's execution, the method will resume. Note that calling `yield` without passing a block will return a `LocalJumpError`, unless we use the `Kernel#block_given?` method, which skips executing the block if a block is not passed as an argument to the method.
+```ruby
+def method_no_yield
+end
+
+def method_yield
+  puts "I am yielder!"
+  yield
+  puts "Done yielding!"
+end
+
+def method_yield_condition
+  puts "I am yielder!"
+  yield if block_given?
+  puts "Done yielding!"
+end
+
+method_no_yield { puts "Hello!" }
+# => nil
+
+method_yield
+# LocalJumpError (no block given (yield))
+
+method_yield_condition
+# I am yielder!
+# Done yielding!
+```
+
 
 ### Explain the arity rules for a block.
 Arity refers to the ability of a closure to react when it is accepts a different number of arguments to what the calling methods provides. Blocks have lenient arity rules, meaning we are able to pass in a different number of arguments to a block than what the method is equipped to do, without raising an error.
@@ -151,11 +180,11 @@ hello_many("Jack", "Jill", "Bill") { |friend1, friend2| puts "My friends are #{f
 # "My friends are Jack and Jill!"
 # => nil
 ```
-In our example above, we define a `hello` method to accept a `str` parameter. When we call the `hello` method, we pass the string object passed as an argument to the block. Because blocks have lenient arity rules, no error is raised, despite the block expecting two arguments and only being provided one. 
+In our example above, we define a `hello` method to accept a `str` parameter on `lines 1-3`. When we call the `hello` method on `line 9`, we pass the string object passed as an argument to the block. Because blocks have lenient arity rules, no error is raised, despite the block expecting two arguments and only being provided one. 
 
 As a second argument is not provided, the block parameter `friend2` is `nil`, which is why there is an empty space in the output string `"My friends are Jack and !"` - string interpolation calls `to_s` on `nil`, which returns an empty string. 
 
-We also define a `hello_many` method, which accepts three arguments. When we call `hello_many`, while we `yield` three arguments to the block, the block is only equipped to take two arguments. Again, since blocks have lenient arity rules, no error is raised, and the last argument passed to the block is simply ignored.
+We also define a `hello_many` method on `lines 5-7`, which accepts three arguments. When we call `hello_many` on `line 13`, while we `yield` three arguments to the block, the block is only equipped to take two arguments. Again, since blocks have lenient arity rules, no error is raised, and the last argument passed to the block is simply ignored.
 
 ### What are the scoping rules for a block?
 Blocks are able to access local variables defined outside of the block. However, blocks have their own scope, meaning that variables initialised within a block cannot be accessed outside of the block.
@@ -177,18 +206,34 @@ end
 c
 # NameError (undefined local variable or method `c' for main:Object)
 ```
-In our example above, we initialise the local variable `a` and assign it to the string object `'hello!'`. We then define a `greeting` method, which passes the string object `"I say "` as an argument to a block on execution. 
+In our example above, on `line 1`, we initialise the local variable `a` and assign it to the string object `'hello!'`. We then define a `greeting` method on `lines 3-5`, which passes the string object `"I say "` as an argument to a block on execution. 
 
-When we call the `greeting` method, we pass a block (denoted by the `do..end` reserved word pair immediately following the `greeting` method call) as an argument. The `greeting` method then passes the string object `"I say "` to the block, and the block executes. 
+When we call the `greeting` method on `line 7`, we pass a block (denoted by the `do..end` reserved word pair immediately following the `greeting` method call) as an argument. The `greeting` method then passes the string object `"I say "` to the block, and the block executes. 
 
-Within the block, a block local variable `c` is initialised, and assigned to the string object `"local block variable"`. The block accesses the string object passed as an argument to the block parameter `str` by the `greeting` method (`"I say "`), as well as the local variable `a` that was initialised outside of the block to output `"I say hello!"` and return `nil`.
+Within the block, a block local variable `c` is initialised on `line 8`, and assigned to the string object `"local block variable"`. The block accesses the string object passed as an argument to the block parameter `str` by the `greeting` method (`"I say "`), as well as the local variable `a` that was initialised outside of the block to output `"I say hello!"` and return `nil`.
 
-However, when we attempted to return the value of local variable `c`, a `NameError` was raised. Since blocks create their own scope, attempting to access local variables defined inside of a block outside of that block scope will raise a `NameError`. 
+However, when we attempted to return the value of local variable `c` on `line 14`, a `NameError` was raised. Since blocks create their own scope, attempting to access local variables defined inside of a block outside of that block scope will raise a `NameError`. 
 
 ### How do blocks interact with methods?
 All methods in Ruby can be passed a block as an implicit argument. This does not guarantee that the method will execute whatever code is contained within the block - a method must make use of the `yield` keyword in order to interact with a block. 
 ```ruby
+def method_yield
+  yield
+end
+
+def method_no_yield
+end
+
+method_yield { puts "I yield!" }
+# I yield!
+# => nil
+
+method_no_yield { puts "I do not yield" }
+# => nil
 ```
+In our example above, we define two methods - on `line 1-3` we define the `method_yield` method, which is able to execute a block by virtue of the `yield` keyword on `line 2`. Thus we see on `line 8`, we call `method_yield`, passing a block. Since the `method_yield` method definition contains the `yield` keyword, when calling `method_yield`, execution will pass to the block, which outputs the string `"I yield!"` and returns `nil`.
+
+On `line 5-6` we define the `method_no_yield` method, which does not contain the `yield` keyword. As such, while `method_no_yield` will implicitly accept a block as an argument, it will not yield to the block (it will not execute whatever code is in the block). As `method_no_yield` is an empty method, it just returns `nil`.
 
 ### How do we pass arguments to a block?
 A block can be passed an argument by a method by adding block parameter(s) to the block, and within the method definition, passing arguments through the `yield` keyword.
@@ -201,7 +246,9 @@ method_name("hello") { |string| puts "The block says #{string}!" }
 # The block says hello!
 # => nil
 ```
-In our above example, we define a method `method_name` with a single `str` parameter. When we call `method_name`, we pass it the string object `"hello"` as an argument. Within our method definition, we use `yield(str)`, which enables us to pass the string object `"hello"` as an argument to the block. The block is defined to take a `string` parameter - `yield(str)` enables us to pass the string object `"hello"` that was passed to the `method_name` method to the block. The block is then able to access the value referenced by the block parameter `string`, which it uses through string interpolation to output `"The block says hello!"` and return `nil`.
+In our above example, we define a method `method_name` with a single `str` parameter on `lines 1-3`. When we call `method_name` on `line 5`, we pass it the string object `"hello"` as an argument. Within our method definition, we use `yield(str)` (`line 2`), which enables us to pass the string object `"hello"` as an argument to the block. 
+
+The block is defined to take a `string` parameter - `yield(str)` enables us to pass the string object `"hello"` that was passed to the `method_name` method to the block. The block is then able to access the value referenced by the block parameter `string`, which it uses through string interpolation to output `"The block says hello!"` and return `nil`.
 
 ### What is an explicit block parameter?
 
