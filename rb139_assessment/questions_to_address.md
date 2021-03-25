@@ -158,8 +158,13 @@ method_yield
 method_yield_condition
 # I am yielder!
 # Done yielding!
+# => nil
 ```
+On `line 1`, we define a method `method_no_yield`, which returns `nil` when called. While we do not explicitly include the `yield` keyword within the definition, like all other methods within Ruby, it is still able to accept a block as an implicit parameter when called, per `line 16` - however, as there is no `yield` keyword within the method definition, `method_no_yield` does not do anything with the block passed to it and simply returns `nil`, as if we had not passed a block as an argument.
 
+We also define a method `method_yield` on `lines 4-8`, which __does__ include a `yield` keyword. This means that the `method_yield` method expects a block as an argument when it is called. Per `line 19`, calling `method_yield` without a block will raise a `LocalJumpError`. 
+
+On `lines 10-14` we define the `method_yield_condition` method. This method does include a `yield` keyword, which means it will pass execution to the block when `method_yield_condition` is called. Since we also add a conditional with the `Kernel#block_given?` method, the method no longer __requires__ a block - per `line 22`, calling `method_yield_condition` without a block means that when executing the code within `method_yield_condition`, Ruby will identify that a block has not been passed to the method, and will not `yield` to a block. Instead, it will execute the rest of the code within the method definition, outputting the strings `"I am yielder!"` and `"Done yielding!"`, and return `nil` (the `puts` method always returns `nil`).
 
 ### Explain the arity rules for a block.
 Arity refers to the ability of a closure to react when it is accepts a different number of arguments to what the calling methods provides. Blocks have lenient arity rules, meaning we are able to pass in a different number of arguments to a block than what the method is equipped to do, without raising an error.
@@ -188,7 +193,6 @@ We also define a `hello_many` method on `lines 5-7`, which accepts three argumen
 
 ### What are the scoping rules for a block?
 Blocks are able to access local variables defined outside of the block. However, blocks have their own scope, meaning that variables initialised within a block cannot be accessed outside of the block.
-
 ```ruby
 a = 'hello!'
 
@@ -215,7 +219,7 @@ Within the block, a block local variable `c` is initialised on `line 8`, and ass
 However, when we attempted to return the value of local variable `c` on `line 14`, a `NameError` was raised. Since blocks create their own scope, attempting to access local variables defined inside of a block outside of that block scope will raise a `NameError`. 
 
 ### How do blocks interact with methods?
-All methods in Ruby can be passed a block as an implicit argument. This does not guarantee that the method will execute whatever code is contained within the block - a method must make use of the `yield` keyword in order to interact with a block. 
+All methods in Ruby can be passed a block as an implicit argument. This does not guarantee that the method will execute whatever code is contained within the block - a method must make use of the `yield` keyword in order to interact with a block (i.e. temporarily halt execution of the code defined within the method and execute the block). 
 ```ruby
 def method_yield
   yield
@@ -251,14 +255,100 @@ In our above example, we define a method `method_name` with a single `str` param
 The block is defined to take a `string` parameter - `yield(str)` enables us to pass the string object `"hello"` that was passed to the `method_name` method to the block. The block is then able to access the value referenced by the block parameter `string`, which it uses through string interpolation to output `"The block says hello!"` and return `nil`.
 
 ### What is an explicit block parameter?
+While blocks are 'closures' in the sense that they are a snippet of code that can be passed to a method, they are actually implicit parameters - they cannot be assigned to local variables and passed to multiple methods/'reused' (and so strictly speaking, blocks are not closures). However, when we define a method, we can make use of the `&` symbol to convert a block passed as an argument to the method to a simple `Proc` object. 
+```ruby
+a = { puts "I am a string object!" }
+# SyntaxError ((irb):1: syntax error, unexpected '}', expecting =>)
 
-### Explain the difference between an explicit block and implicit block parameter?
+def call_proc(str, &block1, &block2)
+  block1.call(str)
+  block2.call(str)
+end
+
+call_proc("Joe") { |str| puts "#{str}, I am a string object!" }
+# I am a string object
+# => nil
+``` 
+In our above example, we demonstrate on `line 1` that blocks cannot be assigned to local variables - Ruby will interpret the 'block' as an attempt to create a hash object, and thus raise a `SyntaxError`. However, on `line 4-6`, we define a `call_proc` method with an `str` parameter and a `&block` parameter. 
+
+On `line 8`, we call the `call_proc` method, passing in a string object `"Joe"` as an argument. We also pass a block as an argument to the `call_proc` method, defining the block with a block parameter `str`. Within the method definition, the `&block` syntax allows us to pass a block to the method, and convert that method to a simple `Proc` object as we pass the block to the `call_proc` method. As a side note, in order for this to work, the `&` syntax must be applied to the __last__ parameter in the method (only a single block can be passed to the method in this fashion).
+
+As we convert the block to a `Proc` object, the `Proc` object is assigned to the method local variable `block`. The `block.call(str)` syntax then is a call to `Proc#call`, which executes the newly converted `Proc` object, outputting `"Joe, I am a string object!"` and returning `nil`.
+
+Unlike blocks, `Proc` objects can be assigned to local variables and executed numerous times across different methods. In order to execute a `Proc` object, we don't use the `yield` keyword like we do with blocks; instead, we use the `Proc#call` method. 
+```ruby
+def some_method(a_proc, str)
+  a_proc.call(str)
+end
+
+proc_obj = Proc.new { |str| puts "Hi there, your name is #{str}" }
+
+some_method(proc_obj, "Bill")
+# Hi there, your name is Bill
+# => nil
+
+some_method(proc_obj, "Jim")
+# Hi there, your name is Jim
+# => nil
+```
+In our example above, on `lines 1-3`, we define a method `some_method` with two parameters, `a_proc` and `str`. The object passed as an argument to the `a_proc` parameter is expected to be a `Proc` object, since we are using the `Proc#call` instance method to execute the proc. 
+
+On `line 5`, we instantiate a `Proc` object with an `str` parameter, that we can pass as an argument to our `some_method` method. The `Proc` object takes a block as an argument, which is the code that will be executed once the `Proc#call` instance method is invoked.
+
+On `line 7`, we call the `some_method` method, passing in the `proc_obj` Proc object, and the string object `"Bill"` as an argument. The `Proc#call` instance method is called, which executes the block, outputting the `"Hi there, your name is Bill"` (using string interpolation to use the object referenced by the `str` argument to populate the string) and output `nil`.
+
+On `line 11`, we call the `some_method` method again, this time passing in a different string object to the `str` parameter, but passing in the same `Proc` object. This demonstrates that unlike blocks, `Proc` objects are "true closures", in that they can be assigned to local variables and passed to different method calls. 
 
 ### What is a Proc object? How do we call it? When do we need to pass arguments to the Proc#call method?
+A `Proc` object is an object of the `Proc` class, which is effectively a block that has been converted to an object that is a "true" closure, in that it can be assigned to a local variable and passed around to different parts of the program. Like blocks, they can be passed as arguments to methods - however, instead of using the `yield` keyword to execute a block, we must make use of the `Proc#call` instance method to execute a `Proc` object. The `Proc#call` instance method is able to pass objects that were passed as arguments to the method to the `Proc` object as part of that `Proc` object's execution.
+```ruby
+def some_method(proc_obj, age)
+  proc_obj.call(age)
+end
 
-### How do we access methods defined in the `main` scope in custom classes we create and why?
+a_proc = Proc.new { |int| puts "#{int} + 1 is equal to #{int + 1}!" }
+
+some_method(a_proc, 5)
+# => 5 + 1 is equal to 6!
+# => nil
+```
+In our example above, we define the `some_method` method on `line 1-3`, with two parameters, `proc_obj` and `age`. In our method definition, the object passed to the `proc_obj` parameter is expected to be a `Proc` object, as we are calling the `Proc#call` instance method on that object on execution (per `line 2`).
+
+On `line 5`, we instantiate a `Proc` object, passing it a block with a block parameter `int` as an argument. This is the code that will be executed when we invoke `proc_obj.call`. We assign this `Proc` object to the local variable `a_proc`.
+
+On `line 7`, we invoke the `some_method` method, passing it the `Proc` object referenced by the local variable `a_proc`. The `Proc` object then invokes the `Proc#call` instance method, which executes the block that was passed as an argument when we instantiated the `Proc` object on `line 5`. This will output `"5 + 1 is equal to 6!"` and return `nil`. 
+
+### How do we access methods defined in the `main` scope in objects instantiated from custom classes we create and why?
+The `main` scope is part of the `Object` class, while simultaneously an instance of the `Object` class (as a general mental model - it's a bit more complex than this). When we define a method outside of a custom class, that method is accessible in the `main` scope. By default, methods defined in the `main` scope are private to the `main` scope. If we want to access them within custom classes, we must make those methods public. 
+```ruby
+class Robot
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+end
+
+public
+
+def say_hello
+  puts "#{self.name} says hello!"
+end
+
+r = Robot.new("Bob")
+r.say_hello
+# Bob says hello!
+# => nil
+```
+In our example above, on `lines 1-7`, we define a `Robot` class. This `Robot` class has access to two instance methods - an `initialize` method with a `name` parameter which is called on instantiation of an object from the `Robot` class, and a getter instance method that returns the object passed as an argunent to the `@name` instance variable. 
+
+On `lines 11-13`, we define a `say_hello` method in the `main` scope (i.e. it is defined outside of a custom class). In order to make `say_hello` accessible to objects instantiated from the `Robot` class, we need to add the `public` keyword above the `say_hello` method definition, as methods defined in the `main` scope are private (i.e. they are otherwise inaccessible to objects of custom classes). As such, we are able to call the `say_hello` method on the object instantiated from the `Robot` class, per `line 16`.
 
 ### Explain how Symbol#to_proc works.
+Similar to how we can convert blocks to `Proc` objects in a method definition, the `Symbol#to_proc` instance method allows us to apply a method that does not take an argument to each element of a collection. 
+
+By prepending a `:` symbol to the method name, we turn that method into a symbol. When this symbol is passed to a method on __execution__, a `&` symbol is prepended to the symbol. As the method executes, Ruby will check whether the object following the `&` symbol is a `Proc` object. Since the `&` is followed by a symbol (i.e. not a `Proc` object), Ruby will attempt to call `Symbol#to_proc`, which will convert the symbol to a `Proc` object. Once a `Proc` object exists, the `&` symbol will convert that `Proc` object to a block.
+
 
 ### Explain the limitations of Symbol#to_proc, and how we can get around them.
 
