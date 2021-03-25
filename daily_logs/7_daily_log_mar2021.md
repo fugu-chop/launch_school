@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 3,314)
+# March 2021 (Total minutes: 3,432)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -23,6 +23,7 @@
 - [22nd, Mon](#220321-mon)
 - [23rd, Tue](#230321-tue)
 - [24th, Wed](#240321-wed)
+- [25th, Thu](#250321-thu)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -337,3 +338,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Completely slept through my alarm this morning, meaning I had to readjust my study schedule. I do not like having to code for two hours after work - it's much more exhausting than studying when I wake up (even though I might be tired).
+
+##### 25/03/21 (Thu)
+__*Concepts covered*__<br/>
+- RB130 - Ruby Foundations
+  - Concept Revision
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+118 minutes
+
+__*Thoughts*__<br/>
+Today was pretty brutal in respect of getting my study hours in. I mistimed my trip into work, meaning I ended up with less time studying in the morning than I had hoped. I also finished work relatively late, meaning after all my general life admin, I only started studying at 9pm, with about 70 minutes left to study. 
