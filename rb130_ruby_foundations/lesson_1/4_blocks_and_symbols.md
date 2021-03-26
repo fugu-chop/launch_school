@@ -244,7 +244,7 @@ end
 my_proc.call
 # => 'hello'
 ```
-In this final example, this works, but only because we are passing in `c` as __an argument__ to the `Proc.call` method, *not* because `c` is part of the Proc's binding (our Proc definition does not require a `c` variable or method) - we have __explicitly required the block to take an argument__.
+In this final example, this works, but only because we are passing in `c` as __an argument__ to the `Proc.call` method, *not* because `c` is part of the Proc's binding (our Proc definition does not require a specific `c` variable or method) - we have __explicitly required the block to take an argument__, but that argument itself could be any object.
 ```ruby
 my_proc = Proc.new do |num|
   p num

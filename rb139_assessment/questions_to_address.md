@@ -346,29 +346,140 @@ On `lines 11-13`, we define a `say_hello` method in the `main` scope (i.e. it is
 
 ### Explain how Symbol#to_proc works.
 Similar to how we can convert blocks to `Proc` objects in a method definition, the `Symbol#to_proc` instance method allows us to apply a method that does not take an argument to each element of a collection. 
+```ruby
+[1, 2, 3].map(&:to_s)
+# => ["1", "2", "3"]
+```
+In our example above, we have prepended a `:` symbol to the `to_s` method name, thereby turning that method into a symbol. As the `map` method __executes__, as we have passed an argument prepended with a `&` symbol, Ruby will check whether the object following the `&` symbol is a `Proc` object. 
 
-By prepending a `:` symbol to the method name, we turn that method into a symbol. When this symbol is passed to a method on __execution__, a `&` symbol is prepended to the symbol. As the method executes, Ruby will check whether the object following the `&` symbol is a `Proc` object. Since the `&` is followed by a symbol (i.e. not a `Proc` object), Ruby will attempt to call `Symbol#to_proc`, which will convert the symbol to a `Proc` object. Once a `Proc` object exists, the `&` symbol will convert that `Proc` object to a block.
-
+As `:to_s` is a symbol (i.e. not a `Proc` object), Ruby will then attempt to call `Symbol#to_proc`, which will convert the symbol to a `Proc` object. Once a `Proc` object exists, the `&` symbol will convert that `Proc` object to a block at method invocation time. In our example above, the `(&:to_s)` syntax is equivalent to `{ |n| n.to_s }`.
 
 ### Explain the limitations of Symbol#to_proc, and how we can get around them.
+The `Symbol#to_proc` instance method allows us to convert a symbol to a `Proc` object, which is useful during method execution if we want to apply a method to each element of a collection. It is a useful way of reducing the amount of code we write.
+
+One key limitation however, is that `Symbol#to_proc` only works with methods that do not take an argument (e.g. `to_s`, `odd?`), as converting the argument passed to the method to a symbol doesn't really work here (a `SyntaxError` will be raised).
+
+We can get around this limitation by using the `Method#to_proc` instance method.
+```ruby
+def appender(word)
+  "Hello, my name is #{word}!"
+end
+
+appender_proc = method(:appender).to_proc
+
+['James', 'Bill', 'Bob'].map(&appender_proc)
+# => ["Hello, my name is James!", "Hello, my name is Bill!", "Hello, my name is Bob!"]
+```
+In our example above, we define an `appender` method with a `word` parameter on `lines 1-3`. Since we cannot use `Symbol#to_proc` on methods that take an argument, we need to use the `Method#to_proc` instance method to convert this method into a `Proc` object, per `line 5`. 
+
+We cast our `appender` method as a symbol and pass it as an argument to the `method` method, which converts our local `appender` method into a `Method` object, giving it access to the `Method#to_proc` instance method. We assign this to the local variable `appender_proc`
+
+On method invocation at `line 7`, we pass the `Proc` object assigned to the local variable `appender_proc` as an argument to the `map` method. Note that at invocation, we prepend a `&` symbol, which converts the `appender_proc` object into a block, which the `map` method is expecting. As such, the `map` method is able to apply the `appender` method to each string object in the array. Note that this only works with methods that take a single argument, as we cannot pass multiple arguments to the block with the shorthand syntax.
 
 ### Explain what the `&` symbol in different contexts, and what it does.
+The `&` symbol has different functionality in respect of closures, depending on the context in which it is used. In a method __definition__, when a parameter has `&` prepended to it, this means that on method _execution_, the method will expect a block to be passed as an argument. The method will then convert that block to a `Proc` object and assign it to a local variable inside the method based on the parameter name. This is how we can create explicit block parameters, and pass `Proc` objects around to other methods. 
+
+During method __execution__, if we prepend the `&` symbol to an argument, the method will expect to be passed a `Proc` object, and will then convert this to a block. If a non-`Proc` object is passed as an argument, Ruby will attempt to call `Symbol#to_proc` in order to convert the object to a `Proc` object, and then convert this converted `Proc` object to a block (if a non-`Symbol`, non-`Proc` object is passed as an argument, Ruby will raise a `TypeError`).
+```ruby
+def accept_block(str, &block)
+  call_proc(block, str)
+end
+
+def call_proc(block, str)
+  block.call(str)
+end
+
+accept_block('Joe') { |string| puts "The string object passed is #{string}" }
+# The string object passed is Joe
+# => nil
+```
+In our example above, we define a `accept_block` method with two parameters, `str` and `&block` on `line 1-3`. By prepending `&` to the `block` parameter, we are telling Ruby that the object passed as an argument to `block` should be a block. On `line 9`, we call the `accept_block` method, passing the string object `'Joe'` to the `str` parameter, and the block `{ |string| puts "The string object passed is #{string}" }` to the `block` parameter. As this method executes, the `&` symbol means that Ruby will try to convert the block to a `Proc` object and assign it to the local variable `block`. 
+
+The conversion is successful - ordinarily, we cannot assign blocks to local variables - however, as the block is now converted to a `Proc` object, we can assign it to a local variable `block` and pass it as an object to the `call_proc` method. The `call_proc` method, defined on `lines 5-7` has two parameters, `block` and `str`. The `block` parameter expects to be passed a `Proc` object, as on execution, the `call_proc` method will attempt to invoke the `Proc#call` instance method, passing the string object `'Joe'` to the `str` parameter. As the `Proc` object executes, it executes the code that was originally in the block - it outputs a string `"The string object passed is Joe"` and returns `nil`.
+```ruby
+def some_method(str)
+  yield(str)
+end
+
+a_proc = Proc.new { |input| puts "#{input} says hello!" }
+
+some_method('Joe', &a_proc)
+# Joe says hello!
+# => nil
+```
+In our example above, we define a method `some_method` on `line 1-3` accepting a `str` parameter. On execution of `some_method`, it will `yield` to a block, passing the object assigned to the method parameter `str` to the block. 
+
+On `line 5`, we instantiate a `Proc` object and assign it to the local variable `a_proc`, which when executed, will expect an object passed to a block parameter `input` and use this object as part of outputting a string, returning `nil`.
+
+On `line 7`, we invoke `some_method`, passing in the string object `'Joe'` as an argument, as well as the `Proc` object referenced by the `a_proc` local variable, despite us not explicitly allowing `some_method` to take more than a single argument. What happens on execution is that by prepending the `&` symbol to the `Proc` object passed as an argument, Ruby converts this `Proc` object to a block. There's no `ArgumentError`, since all methods implicitly accept a block. As such, the `some_method` is able to `yield` to the newly converted block, and the string `"Joe says hello!"` is output, and `nil` is returned by the `puts` method call.
 
 ### What is regression testing?
+Regression testing is the process of ensuring that once new code is added to a program/changed, no bugs are introduced as a result of this change/addition, by checking that existing functionality still works as expected through a test suite.
 
 ### What is a testing framework? What are the associated steps?
+A testing framework is code that seeks to test the individual components of a program. It should be able to take inputs, use those inputs to test functionality/expected outputs and raise errors where appropriate. A good testing framework should be able to handle three key requirements:
+1. Being able to describe the tests that should be run
+2. Being able to execute these tests
+3. Being able to compare the results of tests against expected outputs (i.e. reporting the output of tests)
+
+Within the testing framework, there is a hierarchy to the framework:
+1. Assertion - This is a verification step that validates whether a expression behaves as intended, compared to an expected value
+2. Test - This could be a series of assertions, or a single assertion that assesses whether a particular component of our program works as intended within a specific situation or context
+3. Test Suite - This is the series of tests that assesses multiple components of our program
 
 ### What is the difference between assertion and expectation syntax?
+Assertion and expectation syntax are two different styles of writing tests for our program. Which one we use is a matter of personal preference (or preferred company style), as they can achieve the same outcomes.
+```ruby
+# Assertion syntax
+def test_equal_value
+  car = Car.new
+  assert_equal(4, car.wheels)
+end
+
+# Expectation syntax
+describe 'Car#wheels' do
+  it 'has 4 wheels' do
+    car = Car.new
+    car.wheels.must_equal(4)
+  end
+end
+```
+In our above example, both tests are testing for the same thing (i.e. whether `car.wheels` returns the integer object `4`); they are just expressed in different ways.
 
 ### What's the difference between Minitest and RSpec?
+Minitest is the testing framework that comes installed with the system version of Ruby. `RSpec` is another testing framework that is commonly used by developers. While both are capable of using expectation syntax, `RSpec` can be more flexible in respect of the syntax it can write (such that it can read more like natural English), at the cost of simplicity. `RSpec` uses a domain specific language (DSL), and may be less interpretable to someone who is not familiar with `RSpec`. Contrast this with `minitest`, which uses standard Ruby syntax to write tests. 
 
 ### What are some of the limitations with `assert` when testing?
+The `assert` method assesses for truthiness. If a test fails, it does not provide a lot of detail as to _why_ a test has failed, only that it has failed. An alternative is to use `assert_equal`, which provides a more verbose output if a test fails (e.g. the expected versus returned value).
+```ruby
+# Assume this test fails
+def test_name_assert
+  assert('Jelly', menu.dessert)
+end
+# Expected false to be truthy.
+
+def test_name_assert_equal
+  assert_equal('Jelly', menu.dessert)
+end
+# Failure:
+# MenuTest#test_name_assert_equal [minitest_test.rb:10]:
+# Expected: "Jelly"
+# Actual: "Cake"
+```
+As we can see above in our example, the `test_name_assert` method uses the `assert` method - when the test fails, the error message raised is not particularly helpful - it does not tell us what the expected value is, only that the test failed. Contrast this with the `test_name_assert_equal` method, which provides a bit more context and verbose error logging, stating what the expected and actual values were, which can aid in debugging.
 
 ### What is the SEAT approach in testing? Why is it beneficial?
+The SEAT approach is a series of steps we adhere to when testing, ensuring that our tests have reduced repetition and overhead required to run tests. SEAT stands for:
+1. (S)etup - this is the process of instantiating objects required to run tests upon
+2. (E)xecuting the code against the object we're testing against
+3. (A)sserting the results of the execution, evaluating whether the tests have passed
+4. (T)eardown - removing and cleaning any artefacts that may exist as a result of our testing, freeing up system resources
 
 ### When do we need the `setup` and `teardown` methods for testing? What do they do?
+The `setup` method within Minitest allows us to create a single instance of an object that we can execute our tests against. It is invoked each time a test is executed. This reduces the amount of code duplication required in our test methods. We usually assign the object to an instance variable, so that it can be accessed by other instance methods in our test class. The `teardown` method cleans up our program, by removing any remaining artefacts that may have been created as a result of testing. It also runs every time a test is completed, allowing us to free up system and/or network resources.
 
 ### What is code coverage? What does it measure?
+In the context of testing, code coverage refers to the amount of our code that is being tested through various means. It is a measure of code quality, in that a higher code coverage indicates that more of the program has been tested for bugs. We can use a gem called `simplecov` to provide us with a % of a code's methods (both private and public) that has been covered through tests. It is not foolproof, as it is unable to assess all the different edge cases that could exist within a program. Other ways we can improve code coverage is through other tools that test branching logic, etc.
 
 ### What is Rbenv/RVM? What do they do? Why would we use them?
 
