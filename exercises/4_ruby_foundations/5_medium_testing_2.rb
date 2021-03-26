@@ -1,37 +1,33 @@
 require 'minitest/autorun'
-require_relative 'text'
+# Two require_relative are necessary to gain access to both classes
+require_relative 'cash_register'
+require_relative 'transaction_1'
 
-class TextTest < MiniTest::Test
+class CashRegisterTest < MiniTest::Test
   def setup
-    @file = File.open('test_sample_text.txt', 'r')
-    @text = Text.new(@file.read)
+    @register = CashRegister.new(100)
+    @transaction = Transaction.new(30)
   end
 
-  # 6) Your task is to write a test suite for class Text. In that test suite write a test for the Text method swap. 
-  # For this exercise, you are required to use the minitest methods #setup and #teardown. 
-  def test_swap
-    # We use chomp to remove remove trailing new lines
-    expected_text = <<~TEXT.chomp
-    Lorem ipsum dolor sit emet, consectetur edipiscing elit. Cres sed vulputete ipsum.
-    Suspendisse commodo sem ercu. Donec e nisi elit. Nullem eget nisi commodo, volutpet
-    quem e, viverre meuris. Nunc viverre sed messe e condimentum. Suspendisse ornere justo
-    nulle, sit emet mollis eros sollicitudin et. Etiem meximus molestie eros, sit emet dictum
-    dolor ornere bibendum. Morbi ut messe nec lorem tincidunt elementum vitee id megne. Cres
-    et verius meuris, et pheretre mi.
-    TEXT
-    assert_equal(expected_text, @text.swap('a', 'e'))
+  # 4) Write a test that verifies that Transaction#prompt_for_payment sets the amount_paid correctly. 
+  def test_prompt_for_payment
+    # When testing interactive programs, you don't want to sit at the keyboard and provide the same inputs over and over. It would be nice if we could "mock" the keyboard input - that is, send input to the program in such a way that it can read it without changing any code. 
+    # Ruby provides a string stream class called StringIO. To use it, all you need to do is create a StringIO object that contains all of your simulated keyboard inputs, then pass it to prompt_for_payment.
+    # The object assigned to input here is a StringIO object that simulates the keyboard by acting like the user type the number 30, then pressed the Return key (\n). 
+    # input.gets works just like the normal gets, but gets information from the object specified by input (instead of $stdin).
+    input = StringIO.new("30\n")
+    # This method calls the setter amount_paid method in the Transaction object
+    @transaction.prompt_for_payment(input: input)
+    assert_equal(30, @transaction.amount_paid)
   end
 
-  # 7) Create a test for the word_count method
-  def test_word_count
-    assert_equal(72, @text.word_count)
-  end
-
-  # If we didn't call @file.close, then the File object associated with @file would be closed when our script is finished running. This is a failsafe implemented by the IO class
-  # However, always remember to close down our file! It's best to be explicit, especially when we're dealing with multiple files
-  def teardown
-    @file.close
-    # Provides visual check of whether file is closed ()
-    puts "File has been closed: #{@file.closed?}"
+  # 5) Clean up the output so that we don't get residual text from the previous test
+  def test_prompt_for_payment_clean
+    input = StringIO.new("30\n")
+    # StringIO objects can consume text output as well. We don't have to provide a string for a StringIO object
+    output = StringIO.new
+    # Note that we had to alter the method in order for this solution to work
+    @transaction.prompt_for_payment(input: input, output: output)
+    assert_equal(30, @transaction.amount_paid)
   end
 end

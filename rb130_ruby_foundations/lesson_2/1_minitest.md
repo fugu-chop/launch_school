@@ -214,7 +214,7 @@ Finished in 0.00115s
 ### Expectation Syntax
 Thus far, we've been using the assertion or assert-style syntax. Minitest also has a completely different syntax called _expectation_ or _spec-style_ syntax.
 
-In expectation style, tests are grouped into `describe` blocks, and individual tests are written with the `it` method. We no longer use assertions, and instead use expectation matchers. This is what RSpec uses. The documentation for the Minitest expectation methods can be found [here](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Expectations.html).
+In expectation style, tests are grouped into `describe` blocks, and individual tests are written with the `it` method. We no longer use assertions, and instead use *expectation matchers*. This is what RSpec uses. The documentation for the Minitest expectation methods can be found [here](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Expectations.html).
 ```ruby
 require 'minitest/autorun'
 

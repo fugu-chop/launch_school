@@ -428,7 +428,7 @@ Within the testing framework, there is a hierarchy to the framework:
 3. Test Suite - This is the series of tests that assesses multiple components of our program
 
 ### What is the difference between assertion and expectation syntax?
-Assertion and expectation syntax are two different styles of writing tests for our program. Which one we use is a matter of personal preference (or preferred company style), as they can achieve the same outcomes.
+Assertion and expectation syntax are two different styles of writing tests for our program. Which one we use is a matter of personal preference (or preferred company style), as they can achieve the same outcomes. In expectation syntax, we organise tests into `describe` blocks, with individual tests written with the `it` method. Instead of assertions, we use *expectation matchers* (e.g. `must_equal` in our example below).
 ```ruby
 # Assertion syntax
 def test_equal_value
@@ -447,7 +447,7 @@ end
 In our above example, both tests are testing for the same thing (i.e. whether `car.wheels` returns the integer object `4`); they are just expressed in different ways.
 
 ### What's the difference between Minitest and RSpec?
-Minitest is the testing framework that comes installed with the system version of Ruby. `RSpec` is another testing framework that is commonly used by developers. While both are capable of using expectation syntax, `RSpec` can be more flexible in respect of the syntax it can write (such that it can read more like natural English), at the cost of simplicity. `RSpec` uses a domain specific language (DSL), and may be less interpretable to someone who is not familiar with `RSpec`. Contrast this with `minitest`, which uses standard Ruby syntax to write tests. 
+Minitest is the testing framework that comes installed with the system version of Ruby. `RSpec` is another testing framework that is commonly used by developers. While both are capable of using expectation syntax (note that `RSpec` does __not__ have assertion syntax), `RSpec` can be more flexible in respect of the syntax it can write (such that it can read more like natural English), at the cost of simplicity. `RSpec` uses a domain specific language (DSL), and may be less interpretable to someone who is not familiar with `RSpec`. Contrast this with `minitest`, which uses standard Ruby syntax to write tests. 
 
 ### What are some of the limitations with `assert` when testing?
 The `assert` method assesses for truthiness. If a test fails, it does not provide a lot of detail as to _why_ a test has failed, only that it has failed. An alternative is to use `assert_equal`, which provides a more verbose output if a test fails (e.g. the expected versus returned value).
@@ -469,14 +469,47 @@ end
 As we can see above in our example, the `test_name_assert` method uses the `assert` method - when the test fails, the error message raised is not particularly helpful - it does not tell us what the expected value is, only that the test failed. Contrast this with the `test_name_assert_equal` method, which provides a bit more context and verbose error logging, stating what the expected and actual values were, which can aid in debugging.
 
 ### What is the SEAT approach in testing? Why is it beneficial?
-The SEAT approach is a series of steps we adhere to when testing, ensuring that our tests have reduced repetition and overhead required to run tests. SEAT stands for:
+The SEAT approach is a series of steps we adhere to when writing tests, ensuring that our tests have reduced repetition and there are no lingering artefacts after we finish running our tests. SEAT stands for:
 1. (S)etup - this is the process of instantiating objects required to run tests upon
-2. (E)xecuting the code against the object we're testing against
-3. (A)sserting the results of the execution, evaluating whether the tests have passed
+2. (E)xecuting the code against the object we're testing
+3. (A)sserting the results of the execution
 4. (T)eardown - removing and cleaning any artefacts that may exist as a result of our testing, freeing up system resources
 
 ### When do we need the `setup` and `teardown` methods for testing? What do they do?
 The `setup` method within Minitest allows us to create a single instance of an object that we can execute our tests against. It is invoked each time a test is executed. This reduces the amount of code duplication required in our test methods. We usually assign the object to an instance variable, so that it can be accessed by other instance methods in our test class. The `teardown` method cleans up our program, by removing any remaining artefacts that may have been created as a result of testing. It also runs every time a test is completed, allowing us to free up system and/or network resources.
+```ruby
+require 'minitest'
+require_relative 'text_analyser'
+
+class FileReview
+  def initialize(file_name)
+    @file = File.open(file_name, 'r').read
+  end
+
+  def lines
+    @file.split("\n").count
+  end
+
+  def close
+    @file.close
+  end
+end
+
+class FileReviewTest < MiniTest::Test
+  def setup
+    @new_file = FileReview.new('sample_text.txt')
+  end
+
+  def test_lines
+    assert_equal(5, @new_file.lines)
+  end
+
+  def teardown
+    @new_file.close
+  end
+end
+```
+In our example above, we define a `FileReview` class, with a number of instance methods. We also define a `FileReviewTest` class, where we write our test suite (inherits from the `MiniTest::Test` class). In our `FileReviewTest` class, we make use of the `setup` and `teardown` methods in order to open a file and close a file respectively, ensuring we don't have to instantiate a new instance of the `FileReview` class in each of our tests (we assign the `FileReview` instance to an instance variable so that subsequent test methods are able to access it), and that system resources are freed once each of our individual tests are completed by closing the file.
 
 ### What is code coverage? What does it measure?
 In the context of testing, code coverage refers to the amount of our code that is being tested through various means. It is a measure of code quality, in that a higher code coverage indicates that more of the program has been tested for bugs. We can use a gem called `simplecov` to provide us with a % of a code's methods (both private and public) that has been covered through tests. It is not foolproof, as it is unable to assess all the different edge cases that could exist within a program. Other ways we can improve code coverage is through other tools that test branching logic, etc.

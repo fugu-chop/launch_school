@@ -21,6 +21,8 @@ Minitest can support virtually every kind of assertion you'd want to make. We'll
 | `assert_raises(*exp) { ... }` |	Fails unless block raises one of `*exp`. |
 | `assert_instance_of(cls, obj)` |	Fails unless obj is an instance of `cls`. |
 | `assert_includes(collection, obj)` | Fails unless `collection` includes `obj`. |
+| `assert_output(str) { ... }` | Fails unless `str` matches the side effect of executing the block. |
+| `assert_same(obj1, obj2)` | Fails unless objects occupy the same space in memory. |
 
 We'll use the following code for testing our assertions.
 ```ruby
@@ -85,13 +87,15 @@ def test_raise_initialize_with_arg
   end
 end
 ```
-`assert_instance_of`. This test is more useful when dealing with inheritance (i.e. testing which objects are direct instances of a class) and is analogous to the method `Object#instance_of?`.
+`assert_instance_of`
 ```ruby
 def test_instance_of_car
   car = Car.new
   assert_instance_of(Vehicle, car, "The car object isn't an instance of the Vehicle class")
 end
 ```
+This test is more useful when dealing with inheritance (i.e. testing which objects are direct instances of a class) and is analogous to the method `Object#instance_of?`.
+
 `assert_includes`
 ```ruby
 def test_includes_car
@@ -105,6 +109,24 @@ end
 # assert_includes calls assert_equal in its implementation, and Minitest counts that call as a separate assertion. For each assert_includes call, you will get 2 assertions, not 1.
 ```
 In our assertions above, we've defined an optional argument, `msg`, which outputs the string object if the test fails. The `assert_mock`, `assert_raises`, `assert_silent` assertions __do not__ accept an optional message.
+
+`assert_output`
+```ruby
+def test_output
+  assert_output("You've paid $10.\n") do
+    puts "You've paid $10."
+  end
+end
+```
+This test is useful particularly when we are testing the output of a `puts` method call - since `puts` returns `nil`, we need this assertion to test the side effect of the `puts` method - i.e. ensuring that the string output matches our expected string, which we pass as an argument to `assert_output`. Note that the `puts` method appends a newline to the end of a string output, so we need to account for that in our expected value by appending `"\n"`.
+
+`assert_same`
+```ruby
+def test_same_object
+  assert_same(3, 3)
+end
+```
+This test is useful when we want to ensure that the two objects passed as arguments to the `assert_same` method are the same object - i.e. occupy the same physical space in memory.
 
 ### Refutations
 Refutations are the opposite of assertions. That is, they refute rather than assert. __Every assertion has a corresponding refutation__. 
@@ -241,18 +263,16 @@ If we didn't have a custom `==` method, this is what happens:
 class Car
   attr_accessor :wheels, :name
 
-  def initialize
+  def initialize(name)
     @wheels = 4
+    @name = name
   end
 end
 
 class CarTest < MiniTest::Test
   def test_value_equality
-    car1 = Car.new
-    car2 = Car.new
-
-    car1.name = "Kim"
-    car2.name = "Kim"
+    car1 = Car.new("Kim")
+    car2 = Car.new("Kim")
 
     assert_equal(car1, car2)
   end
@@ -279,8 +299,9 @@ As such, we should implement our own `==` instance method within the `Car` class
 class Car
   attr_accessor :wheels, :name
 
-  def initialize
+  def initialize(name)
     @wheels = 4
+    @name = name
   end
 
   # assert_equal would fail without this method
@@ -291,11 +312,8 @@ end
 
 class CarTest < MiniTest::Test
   def test_value_equality
-    car1 = Car.new
-    car2 = Car.new
-
-    car1.name = "Kim"
-    car2.name = "Kim"
+    car1 = Car.new("Kim")
+    car2 = Car.new("Kim")
 
     # this will pass
     assert_equal(car1, car2)
@@ -318,7 +336,7 @@ We can use it by inserting the following lines above the rest of our test file.
 require 'simplecov'
 SimpleCov.start
 ```
-If your test file and original file are in different directories, `simplecov` will fail to pick up the code correctly. If however, you __navigate in the terminal to the directory with the original file__, then run the test file, the correct `/coverage/` directory is created and you get a meaningful code coverage percent.
+If your test file and original file are in different directories, `simplecov` will fail to pick up the code correctly. If however, you __navigate in the terminal to the directory with the original file__ (i.e. `pwd` in the terminal shows the location of the original file), then run the test file, the correct `/coverage/` directory is created and you get a meaningful code coverage percent.
 
 Once we have this, when we run our tests, we'll get a new directory in our file system called `coverage`. Open up the `index.html` file in that directory, and you should see something like this:
 

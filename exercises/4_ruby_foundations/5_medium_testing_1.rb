@@ -1,33 +1,36 @@
 require 'minitest/autorun'
 # Two require_relative are necessary to gain access to both classes
 require_relative 'cash_register'
-require_relative 'transaction_1'
+require_relative 'transaction'
 
 class CashRegisterTest < MiniTest::Test
   def setup
     @register = CashRegister.new(100)
-    @transaction = Transaction.new(30)
+    @transaction = Transaction.new(10)
   end
 
-  # 4) Write a test that verifies that Transaction#prompt_for_payment sets the amount_paid correctly. 
-  def test_prompt_for_payment
-    # When testing interactive programs, you don't want to sit at the keyboard and provide the same inputs over and over. It would be nice if we could "mock" the keyboard input - that is, send input to the program in such a way that it can read it without changing any code. 
-    # Ruby provides a string stream class called StringIO. To use it, all you need to do is create a StringIO object that contains all of your simulated keyboard inputs, then pass it to prompt_for_payment.
-    # The object assigned to input here is a StringIO object that simulates the keyboard by acting like the user type the number 30, then pressed the Return key (\n). 
-    # input.gets works just like the normal gets, but gets information from the object specified by input (instead of $stdin).
-    input = StringIO.new("30\n")
-    # This method calls the setter amount_paid method in the Transaction object
-    @transaction.prompt_for_payment(input: input)
-    assert_equal(30, @transaction.amount_paid)
+  # 1) Write a test for the #accept_money method
+  def test_accept_money
+    # We have to set this instance variable using the setter method
+    @transaction.amount_paid = 25
+    assert_equal(125, @register.accept_money(@transaction))
   end
 
-  # 5) Clean up the output so that we don't get residual text from the previous test
-  def test_prompt_for_payment_clean
-    input = StringIO.new("30\n")
-    # StringIO objects can consume text output as well. We don't have to provide a string for a StringIO object
-    output = StringIO.new
-    # Note that we had to alter the method in order for this solution to work
-    @transaction.prompt_for_payment(input: input, output: output)
-    assert_equal(30, @transaction.amount_paid)
+  # 2) Write a test for the method, CashRegister#change
+  def test_change
+    @transaction.amount_paid = 30
+    assert_equal(20, @register.change(@transaction))
+  end
+
+  # 3) Write a test for method CashRegister#give_receipt that ensures it displays a valid receipt
+  def test_give_receipt
+    # Test text output - the output of puts is a side effect, so we need to use an assertion that tests side effects.
+    # We pass in code that will produce the "actual" output via a block
+    # puts appends a newline to the message that is output. We must include that newline character in our expected value as well when making an assertion with assert_output.
+    assert_output("You've paid $10.\n") do
+      @register.give_receipt(@transaction)
+    end
+    # Test return value
+    assert_nil(@register.give_receipt(@transaction))
   end
 end
