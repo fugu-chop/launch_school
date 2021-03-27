@@ -27,7 +27,8 @@ class TextTest < MiniTest::Test
     assert_equal(72, @text.word_count)
   end
 
-  # If we didn't call @file.close, then the File object associated with @file would be closed when our script is finished running. This is a failsafe implemented by the IO class
+  # If we didn't call @file.close, then the File object associated with @file would be closed when our script is finished running. 
+  # This is a failsafe implemented by the IO class.
   # However, always remember to close down our file! It's best to be explicit, especially when we're dealing with multiple files
   def teardown(output: $stdout)
     output = StringIO.new

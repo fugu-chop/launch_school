@@ -24,6 +24,8 @@ class Series
     end
   end
 
+  private
+
   def convert_string_to_num
     @num_str.chars.map(&:to_i)
   end

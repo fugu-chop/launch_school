@@ -1,11 +1,12 @@
 # 9) Write a program that can generate the lyrics of the 99 Bottles of Beer song.
 class BeerSong
   def self.verse(*verse)
-    self.verses(*verse)
+    # We don't need the self prefix to call class methods within the class
+    verses(*verse)
   end
 
   def self.verses(*verses)
-    verses = (verses.max).downto(verses.min).to_a
+    verses = (verses.max).downto(verses.min)
     verses.map do |verse|
       quantity = verse == 1 ? "bottle" : "bottles"
       removed = verse == 1 ? "it" : "one"
@@ -18,6 +19,6 @@ class BeerSong
   end
 
   def self.lyrics
-    self.verses(99,0)
+    verses(99,0)
   end
 end

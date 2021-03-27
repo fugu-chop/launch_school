@@ -515,16 +515,28 @@ In our example above, we define a `FileReview` class, with a number of instance 
 In the context of testing, code coverage refers to the amount of our code that is being tested through various means. It is a measure of code quality, in that a higher code coverage indicates that more of the program has been tested for bugs. We can use a gem called `simplecov` to provide us with a % of a code's methods (both private and public) that has been covered through tests. It is not foolproof, as it is unable to assess all the different edge cases that could exist within a program. Other ways we can improve code coverage is through other tools that test branching logic, etc.
 
 ### What is Rbenv/RVM? What do they do? Why would we use them?
+Rbenv and RVM are Ruby version managers - they let us set different versions of Ruby in our programs depending on what versions of Ruby our program needs to support (e.g. there might be gems in use that require a particular version of Ruby, or there might be particular syntax that exists within specific versions of Ruby).
 
 ### What is the difference between Rbenv and RVM?
+The main difference between Rbenv and RVM is how each ruby version manager changes the Ruby version. RVM defines a shell function `rvm`, which is used in preference to the disk-based command, as it can modify the environment in which a program is executed. As we use commands such as `rvm use 2.2.2`, RVM dynamically alters the `PATH` variable such that when we execute commands in the CLI, RVM ensures we are using the right versions of Ruby and gems.
+
+With Rbenv, the `PATH` variable is not dynamically changed. It is altered to include a reference to a `shims` directory before any other directories in the `PATH` variable to ensure it is looked through before any other Ruby related directories. Shims are executable scripts that Rbenv uses to run commands in the CLI. An Rbenv shim intercepts a ruby related command in the CLI and calls `rbenv exec PROGRAM`, which determines what version of Ruby it should use, and executes the appropriate program from the Ruby version-specific directories.
+
+The other main difference is the folder structure. In Rbenv, gems and executables are stored within folders labelled according to the version of Ruby, while in RVM, gems and rubies have their own directories, where different versions of gems or versions of Ruby are subfolders within those parent directories. 
 
 ### What is the `PATH` variable? How is it used in the context of Rbenv versus RVM?
+The `PATH` variable stores a series of directories, which give context to commands run in the CLI (such as `cd`, `ruby`), without having the user manually specify where that command comes from everytime they want to run that particular command. With RVM, the `PATH` variable is dynamically changed as different versions of Ruby are used. With Rbenv, the `PATH` variable usually has a `shims` directory added in front of other directories, to enable the shim scripts to execute version-specific commands based on the version of Ruby set.
 
 ### What is a gem? Why might we use gems?
+A gem is packaged up code that can be downloaded and used within our own programs to extend it's functionality. We can install gems by running `gem install PACKAGE` in the CLI (works with all versions of Ruby after 1.9). Gems allow us to avoid having to 'reinvent the wheel' for common or useful functionality that could be in our own programs. 
 
 ### What is Bundler? What does it do?
+Bundler is a gem that handles dependencies, meaning it allows us to manage the different version requirements of gems and Ruby within our project. It relies on a `Gemfile` to tell it what Ruby version, gems and their versions are used within a program. We then run `bundler install`, which scans the list of gems and installs them. 
 
-### What is `bundle-exec`? How is it different from `binstubs`?
+It also generates a `Gemfile.lock` file, which lists all the dependencies within our programs (including gems which depend on other gems not explicitly listed within our `Gemfile`). Once this `Gemfile.lock` file is generated, we can use `bundle exec GEM_NAME` to run versions of gems specific to our `Gemfile.lock` file, ignoring the other versions installed on our system. It allows us to resolve dependency conflicts when issuing shell commands. 
+
+### What is `bundle exec`? How is it different from `binstubs`?
+`bundle exec` is a shell command that allows us to run versions of gems specified in the `Gemfile.lock` file, ignoring other versions installed on our systems. It is a way to resolve dependency conflicts. `binstubs` is an alternative of `bundle exec`. It installs a series of Ruby scripts with the same name as executables installed by gems, but __ignores__ gems not explicitly listed within the `Gemfile.lock` file, which can be problematic if we want to use gems that aren't directly used inside the program, but are used in conjunction with it (e.g. `rubocop` or `pry`).
 
 ### How does Bundler work?
 

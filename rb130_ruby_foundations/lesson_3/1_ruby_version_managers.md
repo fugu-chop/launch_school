@@ -419,6 +419,8 @@ Shims are lightweight executables that simply pass your command along to `rbenv`
 2. Find the `rbenv` shim named `rake` at the beginning of your `PATH`
 3. Run the shim named `rake`, which in turn passes the command along to `rbenv`
 
+An Rbenv shim intercepts a ruby related command and calls `rbenv exec` which takes care of running the right executable.
+
 When you execute a shim, `rbenv` determines which Ruby version to use by reading it from the following sources, in this order:
 1. The `RBENV_VERSION` environment variable, if specified. You can use the `rbenv shell` command to set this environment variable in your current shell session.
 2. The first `.ruby-version` file found by searching the __directory of the script you are executing__ and each of its parent directories until reaching the root of your filesystem.
