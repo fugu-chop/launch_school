@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 3,553)
+# March 2021 (Total minutes: 3,737)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -25,6 +25,7 @@
 - [24th, Wed](#240321-wed)
 - [25th, Thu](#250321-thu)
 - [26th, Fri](#260321-fri)
+- [27th, Sat](#270321-sat)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -365,3 +366,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Writing answers for conceptual questions without code kind of sucks. It's boring to me, not being able to tie theory to useful, practical applications. The revision is starting to get a bit grindy, but it is uncovering areas I'm not good at (writing theoretical answers for testing terminology).
+
+##### 27/03/21 (Sat)
+__*Concepts covered*__<br/>
+- RB130 - Ruby Foundations
+  - Concept Revision
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+184 minutes
+
+__*Thoughts*__<br/>
+The grind continues. At least with this Ruby Core tool material, there's a bit of challenge trying to synthesise all the disparate materials, making it slightly challenging. Otherwise, the conceptual stuff is again pretty boring, and hard to motivate myself to keep doing it.
