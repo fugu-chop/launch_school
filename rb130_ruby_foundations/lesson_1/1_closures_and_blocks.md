@@ -40,7 +40,7 @@ The __block is an argument__ to the method call. In other words, `[1, 2, 3].each
 The entire block is passed in to the method like any other argument, and it's _up to the method implementation to decide what to do with the block_, or chunk of code, that you passed in. The method could take that block and execute it, or just as likely, it could completely ignore it -- it's up to the method implementation to decide what to do with the block of code given to it.
 
 ### Writing Methods that take Blocks
-In Ruby, _every method can take an optional block as an implicit parameter_. You can just tack it on at the end of the method invocation.
+In Ruby, _every method can take an optional block as an implicit parameter_. You can just tack it on at the end of the method invocation. However, just because a method __can__ take a block, doesn't mean it does anything with it. In our examples, the block is ignored by our `echo` method - it's almost as if the block wasn't even being passed to the method.
 ```ruby
 def echo(str)
   str
@@ -64,8 +64,6 @@ echo("hello!") { puts "world" }
 echo("hello", "world!") { puts "world" }
 # => ArgumentError: wrong number of arguments (2 for 1)
 ```
-However, just because a method __can__ take a block, doesn't mean it does anything with it. In our examples, the block is ignored by our `echo` method - it's almost as if the block wasn't even being passed to the method.
-
 ### Yielding
 One way that we can invoke the passed-in block argument from within the method is by using the `yield` keyword.
 ```ruby

@@ -1,16 +1,15 @@
 ### What is a closure? What are some examples of closures?
-A closure is a 'snippet' of code that can be passed around within a program. They are unique (when compared to say, methods) in that closures are able to bind to surrounding artefacts when they are created. Examples of closures include:
+A closure is a 'snippet' of code that can be passed around within a program and execute at a later time. They are unique (when compared to say, methods) in that closures are able to bind to surrounding artefacts when they are created, such that these artefacts can be referenced when the closure is executed. Examples of closures include:
 1. Blocks
-2. Procs
+2. Proc objects
 3. Lambdas
 
 If we're being strict with our definitions, a block is technically not a closure, since it cannot be passed around without converting it to a Proc object first (it is effectively a 'single use' snippet of code passed directly as an argument to a method) - we cannot assign blocks to local variables (attempting to do so will raise a `SyntaxError`, since Ruby will assume we are trying to create a Hash object).
 
 ### What is a binding?
-In the context of a closure, a binding refers to the methods and variables that are instantiated before the closure is created at the time that the closure is created, such that when executed, the closure has context of what those methods and variables are. 
+In the context of a closure, a binding refers to the methods and variables that are defined/initialised before the closure is created at the time that the closure is created, such that when executed, the closure has context of what those methods and variables are. 
 
 It's important to note that in a binding, the binding is referencing the variables and methods themselves, not the underlying values they return. This allows bindings to be flexible when a closure is used after the values referenced by local variables or method definitions have changed after the closure has been created. 
-
 ```ruby
 # Provide example of local variable and method changing
 def execute_proc(proc)
@@ -55,7 +54,6 @@ In the case of `proc_b`, we initialise the local variable `b` to point to the st
 A block is a closure denoted by a pair of curly braces `{}` or `do..end` reserved word pair immediately following a method call. They act as an argument passed to a method when that method is called, allowing us to add additional flexibility to a method, since we can defer some implementation code to the block instead of having to define it explicitly within the method. 
 
 Note that every method in Ruby implicitly accepts a block, though whether that method does anything with the block depends on that method's implementation. Blocks can return values, just like methods.
-
 ```ruby
 def method_one
   puts "Hello!"
@@ -75,7 +73,7 @@ method_two { puts "Do something!" }
 # Done!
 # => nil
 ```
-In our example above, we define two methods, `method_one` (`lines 1-3`) and `method_two` (`lines 5-8`). With `method_one`, we have not provided the ability to execute a block as there is no `yield` keyword - passing `method_one` a block as an implicit argument when calling it does nothing (note that it still _accepts_ the block), and the block is ignored, on `line 10`.
+In our example above, we define two methods, `method_one` (`lines 1-3`) and `method_two` (`lines 5-8`). With `method_one`, we have not provided the ability to interface with a block as there is no `yield` keyword - passing `method_one` a block as an implicit argument when calling it does nothing (note that it still _accepts_ the block), and the block is ignored, on `line 10`.
 
 With `method_two`, we use `yield` to allow the method to accept a block. When calling `method_two` on `line 14`, the `yield` keyword allows the block to execute - `method_two` yields execution to the block, waiting until the block finishes executing (outputs a string `"Do something!"`), and then resumes execution (outputs the string `"Done!"` and returns `nil`).
 
@@ -124,7 +122,7 @@ end
 select([1, 2, 3, 4]) { |element| element <= 3 }
 # => [1, 2, 3]
 
-select({ a: 3, b: 2, c: 4 }) { |key, value| value <= 3 }
+select({ a: 3, b: 2, c: 4 }) { |_, value| value <= 3 }
 # => { a: 3, b: 2 }
 ```
 In our `select` method above, we iterate through a collection passed as an argument to the `select` method, passing each element (in the case of an array) or key-value pair (in the case of a hash) to a block through the `yield` keyword. 
@@ -132,7 +130,7 @@ In our `select` method above, we iterate through a collection passed as an argum
 The `select` method doesn't care what the block is doing - it only cares whether the block returns `true` or not. If the block returns `true`, the `select` method adds that element/key-value pair to the collection referenced by the `items` local variable, returning that collection once the collection has been iterated through completely. We only need to worry what object type is being passed to the method as an argument.
 
 ### What is the `yield` keyword and what does it do?
-The `yield` keyword is something we can use within a method definition to allow the method to accept a block. During method execution, the method will execute until it reaches the `yield` keyword, at which point, the block passed as an argument to that method will execute. Once the block completes it's execution, the method will resume. Note that calling `yield` without passing a block will return a `LocalJumpError`, unless we use the `Kernel#block_given?` method, which skips executing the block if a block is not passed as an argument to the method.
+The `yield` keyword is something we can use within a method definition to allow the method to interface with a block. During method execution, the method will execute until it reaches the `yield` keyword, at which point, the block passed as an argument to that method will execute. Once the block completes it's execution, the method will resume. Note that calling `yield` without passing a block will return a `LocalJumpError`, unless we use the `Kernel#block_given?` method, which skips executing the block if a block is not passed as an argument to the method.
 ```ruby
 def method_no_yield
 end
@@ -166,8 +164,44 @@ We also define a method `method_yield` on `lines 4-8`, which __does__ include a 
 
 On `lines 10-14` we define the `method_yield_condition` method. This method does include a `yield` keyword, which means it will pass execution to the block when `method_yield_condition` is called. Since we also add a conditional with the `Kernel#block_given?` method, the method no longer __requires__ a block - per `line 22`, calling `method_yield_condition` without a block means that when executing the code within `method_yield_condition`, Ruby will identify that a block has not been passed to the method, and will not `yield` to a block. Instead, it will execute the rest of the code within the method definition, outputting the strings `"I am yielder!"` and `"Done yielding!"`, and return `nil` (the `puts` method always returns `nil`).
 
+### Explain what is happening in this code.
+```ruby
+def say(words)
+  yield if block_given?
+  puts "> " + words
+end
+
+say("hi there") do
+  system 'clear'
+end           
+```
+On `line 1-4` we define a `say` method, which accepts a `words` parameter. On `line 6`, we call the `say` method, passing in a string object (`"hi there"`) as an argument to the `words` parameter, and a block (as denoted by the `do`...`end` reserved words immediately following the `say` method invocation). The block is an __implicit parameter__ and not assigned to a local variable within the method. 
+
+On `line 2` in the `say` method definition, we can see that when `say` is called, the method will `yield` to a block if provided. In our method invocation on `line 6`, there is a block provided, and so execution of the rest of the `say` method is paused as the block is executed. The block has the effect of clearing the screen.
+
+Once the block is finished executing, the rest of the `say` method can execute - this will output a string `"> hi there"` and return `nil` (since the `puts` method always returns `nil`).
+
+### Describe what is happening in this code.
+```ruby
+def increment(number)
+  if block_given?
+    yield(number + 1)
+  end
+  number + 1
+end
+
+increment(5) do |num|
+  puts num
+end
+```
+In the above code, we define an `increment` method to accept a `number` parameter on `lines 1-6`. On `line 8`, we call the `increment` method, providing an integer object `5` as an argument to the `number` parameter, as well as a block (denoted by the `do`...`end` reserved words immediately following the `increment(5)` method invocation) as an implicit parameter (it is not assigned to a local variable inside during execution). The block itself has a block parameter, `num`, which generally means the block expects to be provided an argument at method execution time.
+
+During execution, the `increment` method checks if a block has been provided on `line 2`, which it has. The `increment` method then calls the `Integer#+` method on the integer object `5` that was passed as an argument to the `increment` method on invocation, returning the integer object `6`. 
+
+The method then yields this integer object `6` to the block through the `yield` keyword, passing to the block parameter `num`. The block is then executed, which outputs a string representation of the integer object `6` and returns `nil`. After the block is finished executing, the rest of the `increment` method executes on `line 5`, which returns `6` as a result of calling the `Integer#+` method on the integer object `5`.
+
 ### Explain the arity rules for a block.
-Arity refers to the ability of a closure to react when it is accepts a different number of arguments to what the calling methods provides. Blocks have lenient arity rules, meaning we are able to pass in a different number of arguments to a block than what the method is equipped to do, without raising an error.
+Arity refers to the ability of a closure to deal with a different number of arguments passed from the calling methods provides, compared to what the closure is defined to take. Blocks have lenient arity rules, meaning we are able to pass in a different number of arguments to a block than what the method is equipped to do, without raising an error.
 ```ruby
 def hello(str)
   yield(str)
@@ -190,9 +224,31 @@ In our example above, we define a `hello` method to accept a `str` parameter on 
 As a second argument is not provided, the block parameter `friend2` is `nil`, which is why there is an empty space in the output string `"My friends are Jack and !"` - string interpolation calls `to_s` on `nil`, which returns an empty string. 
 
 We also define a `hello_many` method on `lines 5-7`, which accepts three arguments. When we call `hello_many` on `line 13`, while we `yield` three arguments to the block, the block is only equipped to take two arguments. Again, since blocks have lenient arity rules, no error is raised, and the last argument passed to the block is simply ignored.
+```ruby
+def proc_caller_one(proc, str1)
+  proc.call(str1)
+end
+
+def proc_caller_three(proc, str1, str2, str3)
+  proc.call(str1, str2, str3)
+end
+
+a_proc = Proc.new { |str1, str2| puts "#{str1} and #{str2} are examples of string objects." }
+
+proc_caller_one(a_proc, "Dog")
+# Dog and  are examples of string objects.
+# => nil
+
+proc_caller_three(a_proc, "Dog", "Cat", "Plane")
+# Dog and Cat are examples of string objects.
+# => nil
+```
+We demonstrate that `Proc` objects have the same lenient set of arity rules as blocks, and treat missing block parameters as `nil` objects.
 
 ### What are the scoping rules for a block?
-Blocks are able to access local variables defined outside of the block. However, blocks have their own scope, meaning that variables initialised within a block cannot be accessed outside of the block.
+Blocks are able to access local variables defined outside of the block. However, blocks have their own scope, meaning that variables initialised within a block cannot be accessed outside of the block. 
+
+As Ruby resolves scope starting from the inner-most scope, we should be mindful to not name block parameters the same as local variables defined outside of the block - otherwise variable shadowing can occur, preventing block access to those externally defined local variables. 
 ```ruby
 a = 'hello!'
 
@@ -219,7 +275,7 @@ Within the block, a block local variable `c` is initialised on `line 8`, and ass
 However, when we attempted to return the value of local variable `c` on `line 14`, a `NameError` was raised. Since blocks create their own scope, attempting to access local variables defined inside of a block outside of that block scope will raise a `NameError`. 
 
 ### How do blocks interact with methods?
-All methods in Ruby can be passed a block as an implicit argument. This does not guarantee that the method will execute whatever code is contained within the block - a method must make use of the `yield` keyword in order to interact with a block (i.e. temporarily halt execution of the code defined within the method and execute the block). 
+All methods in Ruby can be passed a block as an implicit argument (i.e. they are not assigned to a local variable accessible within the method). This does not guarantee that the method will execute whatever code is contained within the block - a method must make use of the `yield` keyword in order to interact with a block (i.e. temporarily halt execution of the code defined within the method and execute the block). 
 ```ruby
 def method_yield
   yield
@@ -260,18 +316,19 @@ While blocks are 'closures' in the sense that they are a snippet of code that ca
 a = { puts "I am a string object!" }
 # SyntaxError ((irb):1: syntax error, unexpected '}', expecting =>)
 
-def call_proc(str, &block1, &block2)
-  block1.call(str)
-  block2.call(str)
+def call_proc(str, &block)
+  block.call(str)
 end
 
 call_proc("Joe") { |str| puts "#{str}, I am a string object!" }
-# I am a string object
+# Joe, I am a string object!
 # => nil
 ``` 
 In our above example, we demonstrate on `line 1` that blocks cannot be assigned to local variables - Ruby will interpret the 'block' as an attempt to create a hash object, and thus raise a `SyntaxError`. However, on `line 4-6`, we define a `call_proc` method with an `str` parameter and a `&block` parameter. 
 
-On `line 8`, we call the `call_proc` method, passing in a string object `"Joe"` as an argument. We also pass a block as an argument to the `call_proc` method, defining the block with a block parameter `str`. Within the method definition, the `&block` syntax allows us to pass a block to the method, and convert that method to a simple `Proc` object as we pass the block to the `call_proc` method. As a side note, in order for this to work, the `&` syntax must be applied to the __last__ parameter in the method (only a single block can be passed to the method in this fashion).
+On `line 8`, we call the `call_proc` method, passing in a string object `"Joe"` as an argument. We also pass a block as an argument to the `call_proc` method, defining the block with a block parameter `str`. Within the method definition, the `&block` syntax allows us to pass a block to the method, and convert that method to a simple `Proc` object as we pass the block to the `call_proc` method. 
+
+As a side note, in order for this to work, the `&` syntax must be applied to the __last__ parameter in the method (only a single block can be passed to the method in this fashion).
 
 As we convert the block to a `Proc` object, the `Proc` object is assigned to the method local variable `block`. The `block.call(str)` syntax then is a call to `Proc#call`, which executes the newly converted `Proc` object, outputting `"Joe, I am a string object!"` and returning `nil`.
 
@@ -300,7 +357,9 @@ On `line 7`, we call the `some_method` method, passing in the `proc_obj` Proc ob
 On `line 11`, we call the `some_method` method again, this time passing in a different string object to the `str` parameter, but passing in the same `Proc` object. This demonstrates that unlike blocks, `Proc` objects are "true closures", in that they can be assigned to local variables and passed to different method calls. 
 
 ### What is a Proc object? How do we call it? When do we need to pass arguments to the Proc#call method?
-A `Proc` object is an object of the `Proc` class, which is effectively a block that has been converted to an object that is a "true" closure, in that it can be assigned to a local variable and passed around to different parts of the program. Like blocks, they can be passed as arguments to methods - however, instead of using the `yield` keyword to execute a block, we must make use of the `Proc#call` instance method to execute a `Proc` object. The `Proc#call` instance method is able to pass objects that were passed as arguments to the method to the `Proc` object as part of that `Proc` object's execution.
+A `Proc` object is an object of the `Proc` class and is a closure, in that it is a snippet of code that can be assigned to a local variable and passed around to different parts of the program and reused. Like blocks, they can be passed as arguments to methods. It usually 'wraps' around a block to enable that block to be reused and passed to other parts of the program.
+
+However, instead of using the `yield` keyword to execute a block, we must make use of the `Proc#call` instance method to execute a `Proc` object. The `Proc#call` instance method is able to pass objects that were passed as arguments to the method to the `Proc` object's block parameters as part of that `Proc` object's execution.
 ```ruby
 def some_method(proc_obj, age)
   proc_obj.call(age)
@@ -309,12 +368,12 @@ end
 a_proc = Proc.new { |int| puts "#{int} + 1 is equal to #{int + 1}!" }
 
 some_method(a_proc, 5)
-# => 5 + 1 is equal to 6!
+# 5 + 1 is equal to 6!
 # => nil
 ```
 In our example above, we define the `some_method` method on `line 1-3`, with two parameters, `proc_obj` and `age`. In our method definition, the object passed to the `proc_obj` parameter is expected to be a `Proc` object, as we are calling the `Proc#call` instance method on that object on execution (per `line 2`).
 
-On `line 5`, we instantiate a `Proc` object, passing it a block with a block parameter `int` as an argument. This is the code that will be executed when we invoke `proc_obj.call`. We assign this `Proc` object to the local variable `a_proc`.
+On `line 5`, we instantiate a `Proc` object, passing it a block with a block parameter `int`. This is the code that will be executed when we invoke `proc_obj.call`. We assign this `Proc` object to the local variable `a_proc`.
 
 On `line 7`, we invoke the `some_method` method, passing it the `Proc` object referenced by the local variable `a_proc`. The `Proc` object then invokes the `Proc#call` instance method, which executes the block that was passed as an argument when we instantiated the `Proc` object on `line 5`. This will output `"5 + 1 is equal to 6!"` and return `nil`. 
 
