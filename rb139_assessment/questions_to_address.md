@@ -53,6 +53,8 @@ In the case of `proc_b`, we initialise the local variable `b` to point to the st
 ### What is a block?
 A block is a closure denoted by a pair of curly braces `{}` or `do..end` reserved word pair immediately following a method call. They act as an argument passed to a method when that method is called, allowing us to add additional flexibility to a method, since we can defer some implementation code to the block instead of having to define it explicitly within the method. 
 
+They are created as closures as they are passed to methods (since we can't assign them to local variables unlike Proc objects or lambdas).
+
 Note that every method in Ruby implicitly accepts a block, though whether that method does anything with the block depends on that method's implementation. Blocks can return values, just like methods.
 ```ruby
 def method_one
@@ -409,7 +411,7 @@ Similar to how we can convert blocks to `Proc` objects in a method definition, t
 [1, 2, 3].map(&:to_s)
 # => ["1", "2", "3"]
 ```
-In our example above, we have prepended a `:` symbol to the `to_s` method name, thereby turning that method into a symbol. As the `map` method __executes__, as we have passed an argument prepended with a `&` symbol, Ruby will check whether the object following the `&` symbol is a `Proc` object. 
+In our example above, we have prepended a `:` symbol to the `to_s` method name, thereby turning that method into a symbol. As the `map` method __executes__, as we have passed an argument prepended with a `&` symbol, Ruby will check whether the object following the `&` symbol is a `Proc` object. If it's not a `Proc` object, Ruby will raise a `TypeError (wrong argument type X (expected Proc))`.
 
 As `:to_s` is a symbol (i.e. not a `Proc` object), Ruby will then attempt to call `Symbol#to_proc`, which will convert the symbol to a `Proc` object. Once a `Proc` object exists, the `&` symbol will convert that `Proc` object to a block at method invocation time. In our example above, the `(&:to_s)` syntax is equivalent to `{ |n| n.to_s }`.
 
@@ -483,8 +485,8 @@ A testing framework is code that seeks to test the individual components of a pr
 
 Within the testing framework, there is a hierarchy to the framework:
 1. Assertion - This is a verification step that validates whether a expression behaves as intended, compared to an expected value
-2. Test - This could be a series of assertions, or a single assertion that assesses whether a particular component of our program works as intended within a specific situation or context
-3. Test Suite - This is the series of tests that assesses multiple components of our program
+2. Test - This could be a series of assertions, or a single assertion that assesses whether a particular piece of code intended within a specific situation or context
+3. Test Suite - This is the combined series of tests
 
 ### What is the difference between assertion and expectation syntax?
 Assertion and expectation syntax are two different styles of writing tests for our program. Which one we use is a matter of personal preference (or preferred company style), as they can achieve the same outcomes. In expectation syntax, we organise tests into `describe` blocks, with individual tests written with the `it` method. Instead of assertions, we use *expectation matchers* (e.g. `must_equal` in our example below).
@@ -506,10 +508,10 @@ end
 In our above example, both tests are testing for the same thing (i.e. whether `car.wheels` returns the integer object `4`); they are just expressed in different ways.
 
 ### What's the difference between Minitest and RSpec?
-Minitest is the testing framework that comes installed with the system version of Ruby. `RSpec` is another testing framework that is commonly used by developers. While both are capable of using expectation syntax (note that `RSpec` does __not__ have assertion syntax), `RSpec` can be more flexible in respect of the syntax it can write (such that it can read more like natural English), at the cost of simplicity. `RSpec` uses a domain specific language (DSL), and may be less interpretable to someone who is not familiar with `RSpec`. Contrast this with `minitest`, which uses standard Ruby syntax to write tests. 
+Minitest is the testing framework that comes installed with the system version of Ruby. `RSpec` is another testing framework that is commonly used by developers. While both are capable of using expectation syntax (note that `RSpec` does __not__ have assertion syntax), `RSpec` can be more flexible in respect of the syntax it can write (such that it can read more like natural English), at the cost of simplicity. `RSpec` uses a domain specific language (DSL), and may be less interpretable to someone who is not familiar with `RSpec`. Contrast this with `minitest`, which uses standard Ruby syntax to write tests and can use assertion syntax. 
 
 ### What are some of the limitations with `assert` when testing?
-The `assert` method assesses for truthiness. If a test fails, it does not provide a lot of detail as to _why_ a test has failed, only that it has failed. An alternative is to use `assert_equal`, which provides a more verbose output if a test fails (e.g. the expected versus returned value).
+The `assert` method assesses for truthiness. If a test fails, while we can provide an optional message to be displayed on failure as an argument, that message does not provide a lot of context-specific detail as to _why/in what way_ a test has failed, only that it has failed. An alternative is to use `assert_equal`, which provides a more verbose and context specific output if a test fails (e.g. the expected versus returned value).
 ```ruby
 # Assume this test fails
 def test_name_assert
@@ -526,6 +528,11 @@ end
 # Actual: "Cake"
 ```
 As we can see above in our example, the `test_name_assert` method uses the `assert` method - when the test fails, the error message raised is not particularly helpful - it does not tell us what the expected value is, only that the test failed. Contrast this with the `test_name_assert_equal` method, which provides a bit more context and verbose error logging, stating what the expected and actual values were, which can aid in debugging.
+
+### Why do we need to take care to ensure our tests themselves don't raise errors?
+When using Minitest, the testing file is still a Ruby script. That means that if any of our tests raise an unrescued exception, the script will terminate, meaning any tests that were yet to be run prior to the exception being raised are not run. 
+
+As such, if we're not sure that a particular test will not raise an exception, we are better off using the `skip` keyword in the test definition to avoid running that particular test. 
 
 ### What is the SEAT approach in testing? Why is it beneficial?
 The SEAT approach is a series of steps we adhere to when writing tests, ensuring that our tests have reduced repetition and there are no lingering artefacts after we finish running our tests. SEAT stands for:
@@ -568,31 +575,35 @@ class FileReviewTest < MiniTest::Test
   end
 end
 ```
-In our example above, we define a `FileReview` class, with a number of instance methods. We also define a `FileReviewTest` class, where we write our test suite (inherits from the `MiniTest::Test` class). In our `FileReviewTest` class, we make use of the `setup` and `teardown` methods in order to open a file and close a file respectively, ensuring we don't have to instantiate a new instance of the `FileReview` class in each of our tests (we assign the `FileReview` instance to an instance variable so that subsequent test methods are able to access it), and that system resources are freed once each of our individual tests are completed by closing the file.
+In our example above, we define a `FileReview` class, with a number of instance methods. We also define a `FileReviewTest` class, where we write the methods that make up our test suite (inherits from the `MiniTest::Test` class). In our `FileReviewTest` class, we make use of the `setup` and `teardown` methods in order to open a file and close a file respectively, ensuring we don't have to instantiate a new instance of the `FileReview` class in each of our tests (we assign the `FileReview` instance to an instance variable so that subsequent test methods are able to access it), and that system resources are freed once each of our individual tests are completed by closing the file.
 
 ### What is code coverage? What does it measure?
-In the context of testing, code coverage refers to the amount of our code that is being tested through various means. It is a measure of code quality, in that a higher code coverage indicates that more of the program has been tested for bugs. We can use a gem called `simplecov` to provide us with a % of a code's methods (both private and public) that has been covered through tests. It is not foolproof, as it is unable to assess all the different edge cases that could exist within a program. Other ways we can improve code coverage is through other tools that test branching logic, etc.
+In the context of testing, code coverage refers to the proportion of our code that is being tested through various means. It is a measure of code quality, in that a higher code coverage indicates that more of the program has been tested for bugs. 
+
+We can use a gem called `simplecov` to provide us with a % of a code's methods (both private and public) that has been covered through tests. It is not foolproof, as it is unable to assess all the different edge cases that could exist within a program. Other ways we can improve code coverage is through other tools that test branching logic, etc.
 
 ### What is Rbenv/RVM? What do they do? Why would we use them?
 Rbenv and RVM are Ruby version managers - they let us set different versions of Ruby in our programs depending on what versions of Ruby our program needs to support (e.g. there might be gems in use that require a particular version of Ruby, or there might be particular syntax that exists within specific versions of Ruby).
 
 ### What is the difference between Rbenv and RVM?
-The main difference between Rbenv and RVM is how each ruby version manager changes the Ruby version. RVM defines a shell function `rvm`, which is used in preference to the disk-based command, as it can modify the environment in which a program is executed. As we use commands such as `rvm use 2.2.2`, RVM dynamically alters the `PATH` variable such that when we execute commands in the CLI, RVM ensures we are using the right versions of Ruby and gems.
+The main difference between Rbenv and RVM is how each ruby version manager changes the Ruby version. RVM defines a shell function `rvm`, which is used in preference to the disk-based command, as it can modify the environment in which a program is executed. As we use commands such as `rvm use 2.2.2`, RVM dynamically alters the `PATH` variable such that when we execute various commands in the CLI, RVM ensures we are using shell commands instead of disk based commands, allowing us to the right versions of Ruby and gems based on our project requirements (e.g. based on a `.ruby-version` file, if available).
 
-With Rbenv, the `PATH` variable is not dynamically changed. It is altered to include a reference to a `shims` directory before any other directories in the `PATH` variable to ensure it is looked through before any other Ruby related directories. Shims are executable scripts that Rbenv uses to run commands in the CLI. An Rbenv shim intercepts a Ruby related command in the CLI and calls `rbenv exec PROGRAM`, which determines what version of Ruby it should use, and executes the appropriate program from the Ruby version-specific directories.
+With Rbenv, the `PATH` variable is not dynamically changed. The `PATH` variables is generally only altered once to include a reference to a `shims` directory before any other directories in the `PATH` variable to ensure it is looked through before any other Ruby related directories. Shims are executable scripts that Rbenv uses to run commands in the CLI. An Rbenv shim intercepts a Ruby related command in the CLI and calls `rbenv exec PROGRAM`, which determines what version of Ruby that should be used, and executes the appropriate program from the Ruby version-specific directories based on a `.ruby-version` file (if available).
 
 The other main difference is the folder structure. In Rbenv, gems and executables are stored within folders labelled according to the version of Ruby, while in RVM, gems and rubies have their own directories, where different versions of gems or versions of Ruby are subfolders within those parent directories. 
 
 ### What is the `PATH` variable? How is it used in the context of Rbenv versus RVM?
-The `PATH` variable stores a series of directories, which give context to commands run in the CLI (such as `cd`, `ruby`), without having the user manually specify where that command comes from everytime they want to run that particular command. With RVM, the `PATH` variable is dynamically changed as different versions of Ruby are used. With Rbenv, the `PATH` variable usually has a `shims` directory added in front of other directories, to enable the shim scripts to execute version-specific commands based on the version of Ruby set.
+The `PATH` variable stores a series of directories, which give context to any command run in the CLI that doesn't start with `/`, `~` or `.` (since those are paths to files or directories), such as `cd`, `ruby`, without having the user manually specify where that command comes from everytime they want to run that particular command. 
+
+With RVM, the `PATH` variable is dynamically changed as different versions of Ruby are used. With Rbenv, the `PATH` variable usually has a `shims` directory added in front of other directories, to enable the shim scripts to execute version-specific commands based on the version of Ruby set.
 
 ### What is a gem? Why might we use gems?
 A gem is packaged up code that can be downloaded and used within our own programs to extend it's functionality. We can install gems by running `gem install PACKAGE` in the CLI (works with all versions of Ruby after 1.9). Gems allow us to avoid having to 'reinvent the wheel' for common or useful functionality that could be in our own programs. 
 
 ### What is Bundler? What does it do?
-Bundler is a gem that handles dependencies, meaning it allows us to manage the different version requirements of gems and Ruby within our project. It relies on a `Gemfile` to tell it what Ruby version, gems and their versions are used within a program. We then run `bundler install`, which scans the list of gems and installs them, as well as any other gems that the gems in the `Gemfile` are dependent on. 
+Bundler is a gem that handles dependencies, meaning it allows us to manage the different version requirements of gems and Ruby within our project, allowing us to resolve dependency conflicts when issuing shell commands. It relies on a `Gemfile` to tell it what Ruby version, gems and their versions are used within a program. We then run `bundler install`, which scans the list of gems and installs them, as well as any other gems that the gems in the `Gemfile` are dependent on. 
 
-It also generates a `Gemfile.lock` file, which lists all the dependencies within our programs (including gems which depend on other gems not explicitly listed within our `Gemfile`). Once this `Gemfile.lock` file is generated, we can use `bundle exec GEM_NAME` to run versions of gems specific to our `Gemfile.lock` file, ignoring the other versions installed on our system. It allows us to resolve dependency conflicts when issuing shell commands. 
+The `bundler install` command also generates a `Gemfile.lock` file, which lists all the dependencies within our programs (including gems which depend on other gems not explicitly listed within our `Gemfile`). Once this `Gemfile.lock` file is generated, we can use `bundle exec GEM_NAME` to run versions of gems specific to our `Gemfile.lock` file, ignoring the other versions installed on our system. It also enables us to use `require bundler/setup` in our program to ensure that the correct versions of Ruby and gems are used when running our application. 
 
 ### What is `bundle exec`? How is it different from `binstubs`?
 `bundle exec` is a shell command that allows us to run versions of gems specified in the `Gemfile.lock` file, ignoring other versions installed on our systems. It is a way to resolve dependency conflicts. We could use it when we are unable to add `require bundler/setup` to our code, or our program has conflicting needs when executing, or are testing particular parts of our code outside of the context of simply running the program where our system version of a gem that has been loaded is different to the version required in the `Gemfile`.
@@ -603,4 +614,4 @@ It also generates a `Gemfile.lock` file, which lists all the dependencies within
 `Rake` is a gem that enables us to automate many tasks that may be required in the development process, like setting up directories and environments, running testing, Git commands and deployment of our program. It does this by executing a series of tasks contained in a `Rakefile`, where tasks are methods designed to execute some code using domain specific language.
 
 ### How does Rake work?
-We can execute rake tasks by using `rake TASK_NAME` (it's recommended to use `bundle exec rake TASK_NAME` in the event we're using Bundler in our application) in the CLI to run a particular task that's defined within a `Rakefile`. Otherwise, we can simply run `bundle exec rake` to execute the default task in the `Rakefile`. We can also use `rake -T` to display all the tasks that are in our `Rakefile`.
+We can execute rake tasks by using `rake TASK_NAME` (it's recommended to use `bundle exec rake TASK_NAME` in the event we're using Bundler in our application to avoid version conflicts) in the CLI to run a particular task that's defined within a `Rakefile`. Otherwise, we can simply run `bundle exec rake` to execute the default task in the `Rakefile`. We can also use `rake -T` to display all the tasks that are in our `Rakefile`.

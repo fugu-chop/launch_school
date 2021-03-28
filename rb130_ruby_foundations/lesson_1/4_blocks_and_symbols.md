@@ -306,7 +306,7 @@ Put another way, when the object prefixed with the `&` in a method invocation is
 So two things are happening during method __invocation__:
 1. Ruby checks whether the object __after__ `&` is a `Proc`. 
   - If it is, it uses the object __as-is__. 
-  - Otherwise, it tries to call `#to_proc` on the object, which should return a `Proc` object. An error will occur if the `#to_proc` fails to return a `Proc` object.
+  - Otherwise, it tries to call `#to_proc` on the object, which should return a `Proc` object. A `TypeError` error will occur if the `#to_proc` fails to return a `Proc` object.
 2. If all is well, the __`&` turns the `Proc` into a block__.
 
 This means that Ruby is trying to turn `:to_s` into a block. However, it's not a `Proc`; it's a `Symbol`. Ruby will then try to call the `Symbol#to_proc` method -- and there is one! This method will return a `Proc` object, which will execute the method based on the name of the symbol. In other words, `Symbol#to_proc` returns a `Proc`, which `&` turns into a block, which turns our shortcut into the long form block usage.
