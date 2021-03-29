@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 3,920)
+# March 2021 (Total minutes: 4,040)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -27,6 +27,7 @@
 - [26th, Fri](#260321-fri)
 - [27th, Sat](#270321-sat)
 - [28th, Sun](#280321-sun)
+- [29th, Mon](#290321-mon)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -393,3 +394,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Spent time today going over the Core Ruby Tools again. Some of the stuff is fairly technical and it's often hard to summarise all of it succinctly. 
+
+##### 29/03/21 (Mon)
+__*Concepts covered*__<br/>
+- RB130 - Ruby Foundations
+  - Concept Revision
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I need to remember that we __define__ variables, not necessarily initialise them (that's probably more of a term when describing instantiating objects). I also liked that I came up with a more detailed explanation for one of my answers. That's helpful. 
