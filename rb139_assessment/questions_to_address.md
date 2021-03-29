@@ -7,48 +7,44 @@ A closure is a 'snippet' of code that can be passed around within a program and 
 If we're being strict with our definitions, a block is technically not a closure, since it cannot be passed around without converting it to a Proc object first (it is effectively a 'single use' snippet of code passed directly as an argument to a method) - we cannot assign blocks to local variables (attempting to do so will raise a `SyntaxError`, since Ruby will assume we are trying to create a Hash object).
 
 ### What is a binding?
-In the context of a closure, a binding refers to the methods and variables that are defined/initialised before the closure is created at the time that the closure is created, such that when executed, the closure has context of what those methods and variables are. 
+A binding is the series of artefacts that a closure has context of when it is created. This means that when the closure is executed at a later point in time (compared to when it was created), it still retains references to those artefacts (e.g. references to methods and local variables). 
 
-It's important to note that in a binding, the binding is referencing the variables and methods themselves, not the underlying values they return. This allows bindings to be flexible when a closure is used after the values referenced by local variables or method definitions have changed after the closure has been created. 
+It should be noted that it is the __reference__ to local variables and methods that is part of a binding, __not__ the underlying values. This means that if we change the definition of a method or assigned value of a local variable after a closure has been created (and it's binding set), those changes will be reflected in the execution of the closure (assuming those changes are done __before__ the closure is executed). This allows bindings to be flexible when a closure is used after the values referenced by local variables or method definitions have changed after the closure has been created. 
 ```ruby
-# Provide example of local variable and method changing
-def execute_proc(proc)
-  proc.call
-end
-
-def some_method
-  "I am defined before the proc is created"
+def call_a_proc(proc_obj)
+  proc_obj.call
 end
 
 a = 'hello'
 
-proc_a = Proc.new { puts "The local variable a returns #{a}!" }
-proc_b = Proc.new { puts "The local variable b returns #{b}!" }
-proc_c = Proc.new { some_method }
+proc_a = Proc.new { "#{a} is the greeting I'll give today!" }
+proc_b = Proc.new { greetings }
+proc_c = Proc.new { "#{b} isn't yet defined or assigned a value, so I'll raise an error" }
 
-a = 'goodbye'
-b = 'yo!'
-
-def some_method
-  "I am defined after the proc is created"
+def greetings
+  puts "I'm a method that greets!"
 end
 
-execute_proc(proc_a)
-# The local variable a returns goodbye!
+a = 'goodbye'
+b = 'whatever'
 
-execute_proc(proc_b)
-# NameError (undefined local variable or method `b' for main:Object)
-
-execute_proc(proc_c)
-# I am defined after the proc is created
+call_a_proc(proc_a)
+# Goodbye is the greeting I'll give today!
+call_a_proc(proc_b)
+# I'm a method that greets!
+# => nil
+call_a_proc(proc_c)
+# NameError (undefined local variable or method `b` for main:Object)
 ```
-In our example above, we define a method `execute_proc` on `lines 1-3`, which takes a Proc object as an argument and calls the `Proc#call` method. This is a generic method that takes advantage of closures in that it does not actually care what the Proc returns when executed - it defers that implementation code to the Proc object itself. 
+On `lines 1-3`, we define a `call_a_proc` method that takes a `proc_obj` argument. We expect to pass `Proc` objects as arguments to `call_a_proc`, as well apply the `Proc#call` method on objects passed as arguments to `call_a_proc`. 
 
-We then define a `some_method` method on `lines 5-7`, which returns a string `"I am defined before the proc is created"`. We also define a local variable `a` on `line 9`, which returns the `'hello'` string object. When we instantiate proc objects `proc_a`, `proc_b` and `proc_c` using `Proc.new` on `lines 11-13`, we append a block, which defines what that proc should do when executed. 
+On `line 5`, we define a local variable `a` and assign the string object `'hello'` to it. On `line 7`, we instantiate a `Proc` object using `Proc.new`, passing in a block as an argument. Blocks are able to access the outer scope (i.e. local variables defined outside of the block), and since the local variable `a` has already been defined, it becomes part of the binding of the `Proc` object referenced by local variable `proc_a`. Therefore, even if we reassign the string object that local variable `a` is pointing to, per `line 15`, when we call `call_a_proc(proc_a)` on `line 18`, because a binding is a reference to a local variable (and not the underlying value), executing the block through `Proc#call` returns the string object `"Goodbye is the greeting I'll give today!"` - the change in string object referenced by `local variable a` is reflected when `Proc#call` is invoked.
 
-When we instantiate `proc_a`, `proc_b` and `proc_c`, the local variable `a` and method `some_method` are both part of those proc objects' binding, since they have been initialised/defined respectively before the proc object is instantiated. Since the binding of a closure points to variables and methods themselves (rather than their referenced values), we are able to reassign the value that local variable `a` is pointing (`line 15`) to and redefine the `some_method` method (`lines 18-20`). Therefore, when we call `execute_proc(proc_a)` and `execute_proc(proc_c)` on `lines 22` and `28`, those method calls return values that were different to the referenced values when `proc_a` and `proc_c` were instantiated.
+On `line 8`, we instantiate another `Proc` object, this time passing a block that will invoke a `greetings` method. At this point in time, the `greetings` method has not yet been defined (the method itself isn't actually part of the binding of the `Proc` object referenced by local variable `proc_b` - however, the `proc_b` __name__ is part of the binding). 
 
-In the case of `proc_b`, we initialise the local variable `b` to point to the string object `'yo!'` __after__ the proc object referenced by the local variable `proc_b` (`line 16`). As such, the local variable `b` is __not__ part of `proc_b`'s binding - this is why a `NameError` is raised when calling `execute_proc(proc_b)` - `proc_b` does not have context of what the local variable `b` is.
+Calling `call_a_proc(proc_b)` on `line 19` does __not__ raise a `NameError`, as for methods, so long as the method is defined __before__ the `Proc#call` method is invoked on the `Proc` object, the `Proc` object will execute. This is because in Ruby, if we do not define an explicit `self` or add parentheses after a name, Ruby will not know whether the name is a reference to a local variable or a method definition at execution time. As such, Ruby will first attempt to find whether a `proc_b` local variable has been created. There isn't such a local variable, so Ruby will prepend an implicit `self` to the `proc_b` name. There is such a method defined in the `main` scope (this is what the implicit `self` is referring to in this case), and so the method is able to execute, despite the method definition not explicitly being part of `proc_b`'s binding.
+
+Finally, on `line 9`, we instantiate a third `Proc` object, assigning it to the local variable `proc_c`. In this `Proc` object, we pass a block as an argument, which is supposed to access a local variable `b` as part of it's execution. However, at the point at which is closure is created (i.e. when the `Proc` object is instantiated and block passed to it), the local variable `b` has not yet been defined - this only occurs later on `line 16`, __after__ the closure has been created. As such, local variable `b` is not part of the `Proc` object's binding. We can see this on `line 20` - when attempting call the `call_a_proc(proc_c)` method, a `NameError` is raised, since at the time of the creation of the closure, the local variable `b` was not yet defined. 
 
 ### What is a block?
 A block is a closure denoted by a pair of curly braces `{}` or `do..end` reserved word pair immediately following a method call. They act as an argument passed to a method when that method is called, allowing us to add additional flexibility to a method, since we can defer some implementation code to the block instead of having to define it explicitly within the method. 
@@ -99,7 +95,7 @@ time_logger { puts "I'm a puts statement and I return nil!" }
 # The action took 1.8e-05 seconds.
 # => nil
 ```
-In our example above, we define a `time_logger` method on `lines 1-7`. When we call `time_logger` on `line 9`, we initialise two local variables - `prior_time`, which captures a timestamp prior to the block execution, and `end_time`, which captures the timestamp after the block completes execution.
+In our example above, we define a `time_logger` method on `lines 1-7`. When we call `time_logger` on `line 9`, we define two local variables - `prior_time`, which captures a timestamp prior to the block execution, and `end_time`, which captures the timestamp after the block completes execution.
 
 `time_logger` returns `nil` (due to the `puts` method call) and outputs a string indicating how long it takes for the provided block to return by subtracting `prior_time` from `end_time`. The `time_logger` method is generic in that it doesn't require a block to return a specific value or do a specific thing, but still retains it's core functionality (displaying how long the block took to execute), irrespective of what the block does or returns.
 
@@ -248,7 +244,7 @@ proc_caller_three(a_proc, "Dog", "Cat", "Plane")
 We demonstrate that `Proc` objects have the same lenient set of arity rules as blocks, and treat missing block parameters as `nil` objects.
 
 ### What are the scoping rules for a block?
-Blocks are able to access local variables defined outside of the block. However, blocks have their own scope, meaning that variables initialised within a block cannot be accessed outside of the block. 
+Blocks are able to access local variables defined outside of the block. However, blocks have their own scope, meaning that variables defined within a block cannot be accessed outside of the block. 
 
 As Ruby resolves scope starting from the inner-most scope, we should be mindful to not name block parameters the same as local variables defined outside of the block - otherwise variable shadowing can occur, preventing block access to those externally defined local variables. 
 ```ruby
@@ -268,11 +264,11 @@ end
 c
 # NameError (undefined local variable or method `c' for main:Object)
 ```
-In our example above, on `line 1`, we initialise the local variable `a` and assign it to the string object `'hello!'`. We then define a `greeting` method on `lines 3-5`, which passes the string object `"I say "` as an argument to a block on execution. 
+In our example above, on `line 1`, we define the local variable `a` and assign it to the string object `'hello!'`. We then define a `greeting` method on `lines 3-5`, which passes the string object `"I say "` as an argument to a block on execution. 
 
 When we call the `greeting` method on `line 7`, we pass a block (denoted by the `do..end` reserved word pair immediately following the `greeting` method call) as an argument. The `greeting` method then passes the string object `"I say "` to the block, and the block executes. 
 
-Within the block, a block local variable `c` is initialised on `line 8`, and assigned to the string object `"local block variable"`. The block accesses the string object passed as an argument to the block parameter `str` by the `greeting` method (`"I say "`), as well as the local variable `a` that was initialised outside of the block to output `"I say hello!"` and return `nil`.
+Within the block, a block local variable `c` is defined on `line 8`, and assigned to the string object `"local block variable"`. The block accesses the string object passed as an argument to the block parameter `str` by the `greeting` method (`"I say "`), as well as the local variable `a` that was defined outside of the block to output `"I say hello!"` and return `nil`.
 
 However, when we attempted to return the value of local variable `c` on `line 14`, a `NameError` was raised. Since blocks create their own scope, attempting to access local variables defined inside of a block outside of that block scope will raise a `NameError`. 
 
