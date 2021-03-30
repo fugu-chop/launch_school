@@ -9,7 +9,7 @@ If we're being strict with our definitions, a block is technically not a closure
 ### What is a binding?
 A binding is the series of artefacts that a closure has context of when it is created. This means that when the closure is executed at a later point in time (compared to when it was created), it still retains references to those artefacts (e.g. references to methods and local variables). 
 
-It should be noted that it is the __reference__ to local variables and methods that is part of a binding, __not__ the underlying values. This means that if we change the definition of a method or assigned value of a local variable after a closure has been created (and it's binding set), those changes will be reflected in the execution of the closure (assuming those changes are done __before__ the closure is executed). This allows bindings to be flexible when a closure is used after the values referenced by local variables or method definitions have changed after the closure has been created. 
+It should be noted that it is the __reference__ to local variables and methods that is part of a binding, __not__ the underlying values. This means that if we change the definition of a method or assigned value of a local variable after a closure has been created (this is the point at which the binding is set), those changes will be reflected in the execution of the closure (assuming those changes are done __before__ the closure is executed).
 ```ruby
 def call_a_proc(proc_obj)
   proc_obj.call
@@ -38,11 +38,17 @@ call_a_proc(proc_c)
 ```
 On `lines 1-3`, we define a `call_a_proc` method that takes a `proc_obj` argument. We expect to pass `Proc` objects as arguments to `call_a_proc`, as well apply the `Proc#call` method on objects passed as arguments to `call_a_proc`. 
 
-On `line 5`, we define a local variable `a` and assign the string object `'hello'` to it. On `line 7`, we instantiate a `Proc` object using `Proc.new`, passing in a block as an argument. Blocks are able to access the outer scope (i.e. local variables defined outside of the block), and since the local variable `a` has already been defined, it becomes part of the binding of the `Proc` object referenced by local variable `proc_a`. Therefore, even if we reassign the string object that local variable `a` is pointing to, per `line 15`, when we call `call_a_proc(proc_a)` on `line 18`, because a binding is a reference to a local variable (and not the underlying value), executing the block through `Proc#call` returns the string object `"Goodbye is the greeting I'll give today!"` - the change in string object referenced by `local variable a` is reflected when `Proc#call` is invoked.
+On `line 5`, we define a local variable `a` and assign the string object `'hello'` to it. On `line 7`, we instantiate a `Proc` object using `Proc.new`, passing in a block as an argument. Blocks are able to access local variables defined in the outer scope (i.e. local variables defined outside of the block), and since the local variable `a` has already been defined, it becomes part of the binding of the `Proc` object referenced by local variable `proc_a`. 
+
+Therefore, even if we reassign the string object that local variable `a` is pointing to, per `line 15`, when we call `call_a_proc(proc_a)` on `line 18`, because a binding is a reference to a local variable (and not the underlying value), executing the block through `Proc#call` returns the string object `"Goodbye is the greeting I'll give today!"` - the change in string object referenced by `local variable a` is reflected when `Proc#call` is invoked.
+
+Binding also explains how the `call_a_proc` is able violate scoping rules to access the local variable `a` defined outside of the method without passing the object assigned to the variable as an argument - the local variable `a` is part of `proc_a`'s binding. 
 
 On `line 8`, we instantiate another `Proc` object, this time passing a block that will invoke a `greetings` method. At this point in time, the `greetings` method has not yet been defined (the method itself isn't actually part of the binding of the `Proc` object referenced by local variable `proc_b` - however, the `proc_b` __name__ is part of the binding). 
 
-Calling `call_a_proc(proc_b)` on `line 19` does __not__ raise a `NameError`, as for methods, so long as the method is defined __before__ the `Proc#call` method is invoked on the `Proc` object, the `Proc` object will execute. This is because in Ruby, if we do not define an explicit `self` or add parentheses after a name, Ruby will not know whether the name is a reference to a local variable or a method definition at execution time. As such, Ruby will first attempt to find whether a `proc_b` local variable has been created. There isn't such a local variable, so Ruby will prepend an implicit `self` to the `proc_b` name. There is such a method defined in the `main` scope (this is what the implicit `self` is referring to in this case), and so the method is able to execute, despite the method definition not explicitly being part of `proc_b`'s binding.
+Calling `call_a_proc(proc_b)` on `line 19` does __not__ raise a `NameError`, as for methods, so long as the method is defined __before__ the `Proc#call` method is invoked on the `Proc` object, the `Proc` object will execute. This is because in Ruby, if we do not define an explicit caller or add parentheses after a name, Ruby will not know whether the name is a reference to a local variable or a method at execution time. 
+
+When the `Proc` object has the `Proc#call` instance method invoked, Ruby will first attempt to find whether a `greetings` local variable has been defined. There isn't such a local variable, so Ruby will attempt to call a `greetings` method with an implicit `self`. There is such a method defined in the `main` scope (this is what the implicit `self` is referring to in this case), and so the method is able to execute, despite the method definition not explicitly being part of `proc_b`'s binding.
 
 Finally, on `line 9`, we instantiate a third `Proc` object, assigning it to the local variable `proc_c`. In this `Proc` object, we pass a block as an argument, which is supposed to access a local variable `b` as part of it's execution. However, at the point at which is closure is created (i.e. when the `Proc` object is instantiated and block passed to it), the local variable `b` has not yet been defined - this only occurs later on `line 16`, __after__ the closure has been created. As such, local variable `b` is not part of the `Proc` object's binding. We can see this on `line 20` - when attempting call the `call_a_proc(proc_c)` method, a `NameError` is raised, since at the time of the creation of the closure, the local variable `b` was not yet defined. 
 
@@ -103,29 +109,23 @@ _Deferring implementation code to the method's caller_. Blocks can be flexible i
 
 An example of deferring implementation code to the method's caller might be:
 ```ruby
-def select(collection)
-  items = collection.class.new
-  if block_given?
-    for i in collection
-      if items.class == Array
-        items.push(i) if yield(i)
-      elsif items.class == Hash
-        items[i.first] = i.last if yield(i)
-      end
-    end
+def select(array)
+  truthy = []
+  for i in array
+    truthy << i if yield(i)
   end
-  items
+  truthy
 end
 
-select([1, 2, 3, 4]) { |element| element <= 3 }
+select([1, 2, 3]) { |num| num.odd? }
+# => [1, 3]
+
+select([1, 2, 3]) { |num| num }
 # => [1, 2, 3]
-
-select({ a: 3, b: 2, c: 4 }) { |_, value| value <= 3 }
-# => { a: 3, b: 2 }
 ```
-In our `select` method above, we iterate through a collection passed as an argument to the `select` method, passing each element (in the case of an array) or key-value pair (in the case of a hash) to a block through the `yield` keyword. 
+In our example above, we define a `select` method on `line 1-7` that iterates through an array object passed as an argument on method invocation, passing each element to a block, assesses the truthiness of the return value of a block, and appends it to an array (`truthy`) if the return value is truthy. Finally, the method returns an array of truthy elements.
 
-The `select` method doesn't care what the block is doing - it only cares whether the block returns `true` or not. If the block returns `true`, the `select` method adds that element/key-value pair to the collection referenced by the `items` local variable, returning that collection once the collection has been iterated through completely. We only need to worry what object type is being passed to the method as an argument.
+Blocks enable this method to be flexible and generic in it's definition - we do not have to implement complex conditional logic in a `case` statement or add additional parameters to the method definition depending on different use cases. The block takes care of the implementation details at method invocation time - the `select` method only has to worry __whether__ the block returns a truthy value, and __not how__ that value is returned.
 
 ### What is the `yield` keyword and what does it do?
 The `yield` keyword is something we can use within a method definition to allow the method to interface with a block. During method execution, the method will execute until it reaches the `yield` keyword, at which point, the block passed as an argument to that method will execute. Once the block completes it's execution, the method will resume. Note that calling `yield` without passing a block will return a `LocalJumpError`, unless we use the `Kernel#block_given?` method, which skips executing the block if a block is not passed as an argument to the method.
