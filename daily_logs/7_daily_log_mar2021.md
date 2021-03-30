@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 4,040)
+# March 2021 (Total minutes: 4,162)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -407,3 +407,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I need to remember that we __define__ variables, not necessarily initialise them (that's probably more of a term when describing instantiating objects). I also liked that I came up with a more detailed explanation for one of my answers. That's helpful. 
+
+##### 30/03/21 (Tue)
+__*Concepts covered*__<br/>
+- RB130 - Ruby Foundations
+  - Concept Revision
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+After reviewing my RB109 preparation, I think the term 'initialising' a variable is still appropriate. I can continue to use this.
