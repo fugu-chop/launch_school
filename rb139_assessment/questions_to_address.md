@@ -77,7 +77,7 @@ method_two { puts "Do something!" }
 # Done!
 # => nil
 ```
-In our example above, we define two methods, `method_one` (`lines 1-3`) and `method_two` (`lines 5-8`). With `method_one`, we have not provided the ability to interface with a block as there is no `yield` keyword - passing `method_one` a block as an implicit argument when calling it does nothing (note that it still _accepts_ the block), and the block is ignored, on `line 10`.
+In our example above, we define two methods, `method_one` (`lines 1-3`) and `method_two` (`lines 5-8`). With `method_one`, we have not provided the ability to interface with a block as there is no `yield` keyword - passing `method_one` an implicit block when calling it does nothing (note that it still _accepts_ the block), and the block is ignored, on `line 10`.
 
 With `method_two`, we use `yield` to allow the method to accept a block. When calling `method_two` on `line 14`, the `yield` keyword allows the block to execute - `method_two` yields execution to the block, waiting until the block finishes executing (outputs a string `"Do something!"`), and then resumes execution (outputs the string `"Done!"` and returns `nil`).
 
@@ -156,7 +156,7 @@ method_yield_condition
 # Done yielding!
 # => nil
 ```
-On `line 1`, we define a method `method_no_yield`, which returns `nil` when called. While we do not explicitly include the `yield` keyword within the definition, like all other methods within Ruby, it is still able to accept a block as an implicit parameter when called, per `line 16` - however, as there is no `yield` keyword within the method definition, `method_no_yield` does not do anything with the block passed to it and simply returns `nil`, as if we had not passed a block as an argument.
+On `line 1`, we define a method `method_no_yield`, which returns `nil` when called. While we do not explicitly include the `yield` keyword within the definition, like all other methods within Ruby, it is still able to accept an implicit block when called, per `line 16` - however, as there is no `yield` keyword within the method definition, `method_no_yield` does not do anything with the block passed to it and simply returns `nil`, as if we had not passed a block as an argument.
 
 We also define a method `method_yield` on `lines 4-8`, which __does__ include a `yield` keyword. This means that the `method_yield` method expects a block as an argument when it is called. Per `line 19`, calling `method_yield` without a block will raise a `LocalJumpError`. 
 
@@ -273,7 +273,7 @@ Within the block, a block local variable `c` is defined on `line 8`, and assigne
 However, when we attempted to return the value of local variable `c` on `line 14`, a `NameError` was raised. Since blocks create their own scope, attempting to access local variables defined inside of a block outside of that block scope will raise a `NameError`. 
 
 ### How do blocks interact with methods?
-All methods in Ruby can be passed a block as an implicit argument (i.e. they are not assigned to a local variable accessible within the method). This does not guarantee that the method will execute whatever code is contained within the block - a method must make use of the `yield` keyword in order to interact with a block (i.e. temporarily halt execution of the code defined within the method and execute the block). 
+All methods in Ruby can be passed a block as an implicit parameter (i.e. they are not assigned to a local variable accessible within the method). This does not guarantee that the method will execute whatever code is contained within the block - a method must make use of the `yield` keyword in order to interact with a block (i.e. temporarily halt execution of the code defined within the method and execute the block). 
 ```ruby
 def method_yield
   yield
@@ -431,12 +431,12 @@ In our example above, we define an `appender` method with a `word` parameter on 
 
 We cast our `appender` method as a symbol and pass it as an argument to the `method` method, which converts our local `appender` method into a `Method` object, giving it access to the `Method#to_proc` instance method. We assign this to the local variable `appender_proc`
 
-On method invocation at `line 7`, we pass the `Proc` object assigned to the local variable `appender_proc` as an argument to the `map` method. Note that at invocation, we prepend a `&` symbol, which converts the `appender_proc` object into a block, which the `map` method is expecting. As such, the `map` method is able to apply the `appender` method to each string object in the array. Note that this only works with methods that take a single argument, as we cannot pass multiple arguments to the block with the shorthand syntax.
+On method invocation at `line 7`, we pass the `Proc` object assigned to the local variable `appender_proc` as an argument to the `map` method. Note that at invocation, we prepend a `&`, which converts the `appender_proc` object into a block, which the `map` method is expecting. As such, the `map` method is able to apply the `appender` method to each string object in the array. Note that this only works with methods that take a single argument, as we cannot pass multiple arguments to the block with the shorthand syntax.
 
 ### Explain what the `&` symbol in different contexts, and what it does.
 The `&` symbol has different functionality in respect of closures, depending on the context in which it is used. In a method __definition__, when a parameter has `&` prepended to it, this means that on method _execution_, the method will expect a block to be passed as an argument. The method will then convert that block to a `Proc` object and assign it to a local variable inside the method based on the parameter name. This is how we can create explicit block parameters, and pass `Proc` objects around to other methods. 
 
-During method __execution__, if we prepend the `&` symbol to an argument, the method will expect to be passed a `Proc` object, and will then convert this to a block. If a non-`Proc` object is passed as an argument, Ruby will attempt to call `Symbol#to_proc` in order to convert the object to a `Proc` object, and then convert this converted `Proc` object to a block (if a non-`Symbol`, non-`Proc` object is passed as an argument, Ruby will raise a `TypeError`).
+During method __execution__, if we prepend the `&` to an argument, the method will expect to be passed a `Proc` object, and will then convert this to a block. If a non-`Proc` object is passed as an argument, Ruby will attempt to call `Symbol#to_proc` in order to convert the object to a `Proc` object, and then convert this converted `Proc` object to a block (if a non-`Symbol`, non-`Proc` object is passed as an argument, Ruby will raise a `TypeError`).
 ```ruby
 def accept_block(str, &block)
   call_proc(block, str)

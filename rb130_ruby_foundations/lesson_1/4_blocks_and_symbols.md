@@ -175,7 +175,7 @@ Since Ruby can't disambiguate between `d` being a local variable or a method, it
 
 If we had reversed the order (i.e. defined the method __after__ `my_proc_4.call`, we would get a `NameError: undefined local variable or method 'd' for main:Object`).
 ### Binding Scope
-The binding is what is in scope when the closure is __created__. Any variables that need to be accessed in a proc (or block/ lambda) __must be defined before the proc is created__ (or __passed as an argument__ when the proc is called). This does not stop the Proc from '*updating*' the state of it's information (e.g. see our previous example with the local variable `name`).
+The binding is what is in scope when the closure is __created__. Any variables that need to be accessed in a proc (or block/lambda) __must be defined before the proc is created__ (or __passed as an argument__ when the proc is called). This does not stop the Proc from '*updating*' the state of it's information (e.g. see our previous example with the local variable `name`).
 ```ruby
 # This works, and outputs the values of a and b
 a = 1
@@ -244,14 +244,16 @@ end
 my_proc.call
 # => 'hello'
 ```
-In this final example, this works, but only because we are passing in `c` as __an argument__ to the `Proc.call` method, *not* because `c` is part of the Proc's binding (our Proc definition does not require a specific `c` variable or method) - we have __explicitly required the block to take an argument__, but that argument itself could be any object.
+In this final example, this works, but only because we are passing in `c` as __an argument__ to the `Proc#call` method, *not* because `c` is part of the Proc's binding (our `Proc` definition does not require a specific `c` variable or method) - we have __explicitly required the block to take an argument__, but that argument itself could be any object.
 ```ruby
 my_proc = Proc.new do |num|
-  p num
+  puts num + 1
 end
 
 c = 3
 my_proc.call(c)
+# 4
+# nil
 ```
 ### Symbol to proc
 When working with collections, we often want to transform all items in that collection. For example, suppose we have an array of integers and we want to transform every element in the array into strings.
