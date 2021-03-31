@@ -1,4 +1,4 @@
-# March 2021 (Total minutes: 4,162)
+# March 2021 (Total minutes: 4,252)
 - [1st, Mon](#010321-mon)
 - [2nd, Tue](#020321-tue)
 - [3rd, Wed](#030321-wed)
@@ -28,6 +28,8 @@
 - [27th, Sat](#270321-sat)
 - [28th, Sun](#280321-sun)
 - [29th, Mon](#290321-mon)
+- [30th, Tue](#300321-tue)
+- [31st, Mar](#310321-wed)
 
 ##### 01/03/21 (Mon)
 __*Concepts covered*__<br/>
@@ -420,3 +422,19 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 After reviewing my RB109 preparation, I think the term 'initialising' a variable is still appropriate. I can continue to use this.
+
+##### 31/03/21 (Wed)
+__*Concepts covered*__<br/>
+- RB130 - Ruby Foundations
+  - Concept Revision
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+90 minutes
+
+__*Thoughts*__<br/>
+More language checks! All methods can __take__ implicit blocks, or accept blocks as an __implicit parameter__.
+Otherwise, I generally feel good about my concept comprehension - there's just some fuzziness around material that's useful, but not explicitly covered in the course, like `Method#to_proc`. Also, passing in an object as an argument to a `Proc` object negates the need for that object to be part of a `Proc` object's binding.
+
+Had a late finish today, so didn't manage to get the full two hours in and am extremely tired (not productive). Since Friday's a public holiday, I'll make up the difference there.
