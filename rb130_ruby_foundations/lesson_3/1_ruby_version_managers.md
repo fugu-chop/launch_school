@@ -19,7 +19,7 @@
 - [Summary](#summary)
 
 ### Ruby on a Mac
-On Macs, Ruby is part of the standard OS X/macOS installation. We can find out where it is installed by running the following in the CLI.
+On Macs, Ruby is part of the standard OSX/macOS installation. We can find out where it is installed by running the following in the CLI.
 ```
 $ which ruby
 ```
@@ -31,7 +31,7 @@ The "system Ruby" is a complete installation of Ruby and its standard components
 
 The Mac system Ruby has a characteristic that makes it undesirable for developers: it needs __root access__ to install and manipulate other Ruby components. Root access is a privileged user level that isn't always available to the developer, so the developer lacks the permissions needed to easily install these components.
 
-The system Ruby also stores some additional commands (like `irb` and `rake`) in the `/usr/bin directory`. `/usr/lib/ruby` contains other Ruby components such as the libraries and Gems. On a Mac, `/usr/lib/ruby` provides access to the Ruby components, but this is just an alias for the real directory that is nested deeply in `/System/Library/Frameworks` (you should never modify or delete files in this directory directly).
+The system Ruby also stores some additional commands (like `irb` and `rake`) in the `/usr/bin` directory. `/usr/lib/ruby` contains other Ruby components such as the libraries and Gems. On a Mac, `/usr/lib/ruby` provides access to the Ruby components, but this is just an alias for the real directory that is nested deeply in `/System/Library/Frameworks` (you should never modify or delete files in this directory directly).
 
 Generally speaking, we should install a Ruby version manager and use it to install the versions of Ruby you need (you'll see people say "Rubies" to just mean "different versions of Ruby"). 
 
@@ -189,10 +189,10 @@ $ tree /usr/local/rvm     # the following is partial output
 We now have two versions of `freewill` installed. Let's say that version `1.1.1` is not fully compatible with the older `1.0.0` version. Suppose further that we have another Ruby program that requires the version `1.0.0` of `freewill`. What happens when this program tries to `require 'freewill'`?
 
 In this situation, Ruby loads the __installed version of the Gem with the most recent version number__, namely version `1.1.1`. This means trouble for our hypothetical program that needs the older version. This can be addressed in several ways:
-- Provide an absolute path name to require.
-- Add an appropriate -I option to the Ruby invocation.
-- Modify $LOAD_PATH prior to requiring somegem.
-- Modify the RUBYLIB environment variable.
+- Provide an absolute path name to `require`.
+- Add an appropriate `-I` option to the Ruby invocation.
+- Modify `$LOAD_PATH` prior to requiring somegem.
+- Modify the `RUBYLIB` environment variable.
 
 These fixes are all hacks though; they will quickly become unmanageable and an enormous mess and source of bugs. You definitely do not want to go down this road except in the extremely short-term. The right choice is to use `Bundler`.
 
@@ -252,7 +252,7 @@ Note that the standard Ruby __executables__ are found in the `rubies` subdirecto
 
 RVM defines a *shell function* (see your shell's documentation for information on functions) named `rvm`. Your shell uses this function _in preference to executing the disk-based `rvm` command_. There are complex reasons behind using shell functions, but the main reason is that _a function can modify your environment_, while a *disk-based* command cannot.
 
-When you run `rvm use VERSION` to change the Ruby version you want to use, you actually invoke the `rvm` function. It modifies your environment so that the various ruby commands invoke the correct version. For instance, `rvm use 2.2.2` modifies your PATH variable so that the `ruby` command uses the Ruby installed in the `ruby-2.2.2` directory. It makes other changes as well, but the `PATH` change is the most noticeable.
+When you run `rvm use VERSION` to change the Ruby version you want to use, you actually invoke the `rvm` _shell_ function. It modifies your environment so that the various ruby commands invoke the correct version. For instance, `rvm use 2.2.2` modifies your `PATH` variable so that the `ruby` command uses the Ruby installed in the `ruby-2.2.2` directory. It makes other changes as well, but the `PATH` change is the most noticeable.
 
 If you want to run, say, `rubocop` from the `Ruby 2.2.2` directory, you tell RVM to use Ruby `2.2.2`, then run the `rubocop` command. The system searches for a `rubocop` command in your `PATH`, and runs the _first one it finds_. Since the RVM directories usually occur early in your `PATH`, the system finds the desired `rubocop` command that pertains to Ruby `2.2.2`. In our above example, we can see that the `rubocop` command lives in `/usr/local/rvm/gems/ruby-2.2.2/bin`.
 
@@ -317,9 +317,9 @@ $ rvm --ruby-version default
 ```
 To make use of the `.ruby-version` file, RVM replaces the `cd` command from your shell with a shell __function__. This function invokes the real `cd` command, then checks for the `.ruby-version` file (it also checks for some other files we won't discuss). 
 
-If it finds one of these files, it retrieves the version number from the file, and then modifies your environment in the same way the `rvm` function does. Thus, every time you change directories with the `cd` command, RVM modifies your environment to run the proper Ruby version.
+If it finds one of these files, it retrieves the version number from the file, and then modifies your environment in the same way the `rvm` shell function does. Thus, every time you change directories with the `cd` command, RVM modifies your environment to run the proper Ruby version.
 
-RVM also uses the Gemfile for ruby projects that use Bundler. If the Gemfile contains a ruby directive, RVM uses that version of ruby to run the program. Note, however, that the `.ruby-version` file takes precedence.
+RVM also uses the `Gemfile` for ruby projects that use Bundler. If the `Gemfile` contains a ruby directive, RVM uses that version of ruby to run the program. Note, however, that the `.ruby-version` file takes precedence.
 
 ### Troubleshooting RVM
 The most likely issue with RVM is that you get confused about which version of Ruby you are running, or you install or update Gems with the wrong gem command. When trying to diagnose an RVM problem, first make sure that you are using the correct Ruby version, then check for Gem versioning issues.
