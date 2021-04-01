@@ -4,6 +4,7 @@
 - [What is `rake`](#what-is-rake)
 - [How to use `rake`](#how-to-use-rake)
 - [Why do I need `rake`](#why-do-i-need-rake)
+- [Deploying code as a gem](#deploying-code-as-a-gem)
 
 ### What is `rake`
 Rake is a Rubygem that automates many common functions required to build, test, package, and install programs; it is part of every modern Ruby installation, so you don't need to install it yourself.
@@ -87,3 +88,17 @@ While you can always opt-out of using Rake in your projects, there is little poi
 Each step is easy enough to do manually, but you want to make sure you __execute them in the proper order__ (for instance, you want to set the new version number before you commit your changes). You also don't want to be at the mercy of arbitrary typos that may do the wrong thing. It's far better to have a way to perform these tasks automatically with just one command, which is where Rake becomes extremely useful.
 
 Your `Rakefile` likely has each of these as a separate task, as well as a single overall task (call it release, for instance) that steps through the tasks one at a time. The release task would stop __only when it completes all the tasks or one task fails__.
+
+### Deploying code as a gem
+Once we've generated a `Gemfile` and `Gemfile.lock` file, a `.gemspec` file, changed our project files to `require bundler/setp` and verified that everything works, we want to be able to publish our project as a gem for others to use. We can use some `rake` tasks in order to achieve this. 
+
+First, we want to add this requirement to the top of our `Rakefile`
+```ruby
+require "bundler/gem_tasks"
+```
+The bundler/gem_tasks require file adds several tasks to your Rakefile that are common to Rubygems. Specifically, it defines these tasks (don't forget to use bundle exec):
+- `rake build`: Constructs a `.gem` file in the `pkg` directory. This file contains the actual Rubygem that you will distribute.
+- `rake install`: runs `rake build` then installs the program in your Ruby's Gem directory. This way, you can test the Gem without having to load information from your project directory.
+- `rake release`: Send your `.gem` file to the remote Rubygems library for the world to download.
+
+`bundler/gem_tasks` provides several additional tasks, but build, install, and release are the most important.

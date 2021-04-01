@@ -1,15 +1,15 @@
 ### What is a closure? What are some examples of closures?
-A closure is a 'snippet' of code that can be passed around within a program and execute at a later time. They are unique (when compared to say, methods) in that closures are able to bind to surrounding artefacts when they are created, such that these artefacts can be referenced when the closure is executed. Examples of closures include:
+A closure is a 'snippet' of code that can be passed around within a program and executed at a later point in time. They are unique compared to methods in that closures are able to bind to surrounding artefacts when they are created, such that these artefacts can be referenced when the closure is executed. This allows closures to access local variables that were defined outside of the closure's scope, without explicitly passing those variables as arguments to the closure. Examples of closures include:
 1. Blocks
 2. Proc objects
 3. Lambdas
 
-If we're being strict with our definitions, a block is technically not a closure, since it cannot be passed around without converting it to a Proc object first (it is effectively a 'single use' snippet of code passed directly as an argument to a method) - we cannot assign blocks to local variables (attempting to do so will raise a `SyntaxError`, since Ruby will assume we are trying to create a Hash object).
+If we're being strict with our definitions, a block is technically not a closure, since it cannot be passed around without converting it to a `Proc` object first (it is effectively a 'single use' snippet of code passed directly as an argument to a method, and only 'exists' as it is being passed to a method in the course of method execution) - we cannot assign blocks to local variables (attempting to do so will raise a `SyntaxError`, since Ruby will assume we are trying to create a Hash object).
 
 ### What is a binding?
-A binding is the series of artefacts that a closure has context of when it is created. This means that when the closure is executed at a later point in time (compared to when it was created), it still retains references to those artefacts (e.g. references to methods and local variables). 
+The binding of a closure is the series of artefacts that a closure has context of when it is created. This means that when the closure is executed at a later point in time (compared to when it was created), it still retains references to those artefacts (e.g. references to methods and local variables). 
 
-It should be noted that it is the __reference__ to local variables and methods that is part of a binding, __not__ the underlying values. This means that if we change the definition of a method or assigned value of a local variable after a closure has been created (this is the point at which the binding is set), those changes will be reflected in the execution of the closure (assuming those changes are done __before__ the closure is executed).
+It should be noted that it is the __reference__ to local variables that is part of a binding, __not__ the underlying values. This means that if we change the definition of a method or assigned value of a local variable after a closure has been created (this is the point at which the binding is set), those changes will be reflected in the execution of the closure (again assuming those changes are made __before__ the closure is executed).
 ```ruby
 def call_a_proc(proc_obj)
   proc_obj.call
@@ -29,35 +29,33 @@ a = 'goodbye'
 b = 'whatever'
 
 call_a_proc(proc_a)
-# Goodbye is the greeting I'll give today!
+# goodbye is the greeting I'll give today!
 call_a_proc(proc_b)
 # I'm a method that greets!
 # => nil
 call_a_proc(proc_c)
 # NameError (undefined local variable or method `b` for main:Object)
 ```
-On `lines 1-3`, we define a `call_a_proc` method that takes a `proc_obj` argument. We expect to pass `Proc` objects as arguments to `call_a_proc`, as well apply the `Proc#call` method on objects passed as arguments to `call_a_proc`. 
+On `lines 1-3`, we define a `call_a_proc` method that takes a `proc_obj` argument. We expect to pass `Proc` objects as arguments to `call_a_proc`, as we apply the `Proc#call` method on objects passed as arguments to `call_a_proc`. 
 
 On `line 5`, we define a local variable `a` and assign the string object `'hello'` to it. On `line 7`, we instantiate a `Proc` object using `Proc.new`, passing in a block as an argument. Blocks are able to access local variables defined in the outer scope (i.e. local variables defined outside of the block), and since the local variable `a` has already been defined, it becomes part of the binding of the `Proc` object referenced by local variable `proc_a`. 
 
-Therefore, even if we reassign the string object that local variable `a` is pointing to, per `line 15`, when we call `call_a_proc(proc_a)` on `line 18`, because a binding is a reference to a local variable (and not the underlying value), executing the block through `Proc#call` returns the string object `"Goodbye is the greeting I'll give today!"` - the change in string object referenced by `local variable a` is reflected when `Proc#call` is invoked.
+Therefore, even if we reassign the string object that local variable `a` is pointing to, per `line 15`, when we call `call_a_proc(proc_a)` on `line 18`, because a binding is a reference to a local variable (and not the underlying value), executing the block through `Proc#call` returns the string object `"goodbye is the greeting I'll give today!"` - the change in string object referenced by `local variable a` is reflected when `Proc#call` is invoked. This also explains how the `call_a_proc` is able to seemingly violate scoping rules to access the local variable `a` defined outside of the `call_a_proc` method without passing it as an argument to `call_a_proc` - the local variable `a` is part of `proc_a`'s binding. 
 
-Binding also explains how the `call_a_proc` is able violate scoping rules to access the local variable `a` defined outside of the method without passing the object assigned to the variable as an argument - the local variable `a` is part of `proc_a`'s binding. 
-
-On `line 8`, we instantiate another `Proc` object, this time passing a block that will invoke a `greetings` method. At this point in time, the `greetings` method has not yet been defined (the method itself isn't actually part of the binding of the `Proc` object referenced by local variable `proc_b` - however, the `proc_b` __name__ is part of the binding). 
+On `line 8`, we instantiate another `Proc` object, this time passing a block that will invoke a `greetings` method. At this point in time (i.e. when the closure is created), the `greetings` method has not yet been defined (the method itself isn't actually part of the binding of the `Proc` object referenced by local variable `proc_b` - however, the `proc_b` __name__ is part of the binding). 
 
 Calling `call_a_proc(proc_b)` on `line 19` does __not__ raise a `NameError`, as for methods, so long as the method is defined __before__ the `Proc#call` method is invoked on the `Proc` object, the `Proc` object will execute. This is because in Ruby, if we do not define an explicit caller or add parentheses after a name, Ruby will not know whether the name is a reference to a local variable or a method at execution time. 
 
-When the `Proc` object has the `Proc#call` instance method invoked, Ruby will first attempt to find whether a `greetings` local variable has been defined. There isn't such a local variable, so Ruby will attempt to call a `greetings` method with an implicit `self`. There is such a method defined in the `main` scope (this is what the implicit `self` is referring to in this case), and so the method is able to execute, despite the method definition not explicitly being part of `proc_b`'s binding.
+When the `Proc` object has the `Proc#call` instance method invoked, Ruby will first attempt to find whether a `greetings` local variable has been defined. There isn't such a local variable, so Ruby will attempt to call a `greetings` method with an implicit `self`. There is such a method defined in the `main` scope (this is what an implicit `self` is referring to in this case), and so the method is able to execute, despite the method definition not explicitly being part of `proc_b`'s binding.
 
-Finally, on `line 9`, we instantiate a third `Proc` object, assigning it to the local variable `proc_c`. In this `Proc` object, we pass a block as an argument, which is supposed to access a local variable `b` as part of it's execution. However, at the point at which is closure is created (i.e. when the `Proc` object is instantiated and block passed to it), the local variable `b` has not yet been defined - this only occurs later on `line 16`, __after__ the closure has been created. As such, local variable `b` is not part of the `Proc` object's binding. We can see this on `line 20` - when attempting call the `call_a_proc(proc_c)` method, a `NameError` is raised, since at the time of the creation of the closure, the local variable `b` was not yet defined. 
+Finally, on `line 9`, we instantiate a third `Proc` object, assigning it to the local variable `proc_c`. In this `Proc` object, we pass a block as an argument, which is supposed to access a local variable `b` as part of it's execution. However, at the point at which is closure is created (i.e. when the `Proc` object is instantiated and block passed to it as an argument), the local variable `b` has not yet been defined - this only occurs later on `line 16`, __after__ the closure has been created. As such, local variable `b` is not part of the `Proc` object's binding. We can see this on `line 20` - when attempting call the `call_a_proc(proc_c)` method, a `NameError` is raised, since at the time of the creation of the closure, the local variable `b` was not yet defined. 
 
 ### What is a block?
 A block is a closure denoted by a pair of curly braces `{}` or `do..end` reserved word pair immediately following a method call. They act as an argument passed to a method when that method is called, allowing us to add additional flexibility to a method, since we can defer some implementation code to the block instead of having to define it explicitly within the method. 
 
-They are created as closures as they are passed to methods (since we can't assign them to local variables unlike Proc objects or lambdas).
+Blocks are 'created' as closures as they are passed to methods (since we can't assign them to local variables unlike Proc objects or lambdas) - they don't really 'exist' prior to this point. Note that strictly speaking, blocks are not closures, since they can't be passed to other parts of our program unless converted to `Proc` objects.
 
-Note that every method in Ruby implicitly accepts a block, though whether that method does anything with the block depends on that method's implementation. Blocks can return values, just like methods.
+Note that every method in Ruby implicitly accepts a block, though whether that method does anything with the block depends on that method's implementation (i.e. whether the `yield` keyword is part of that method's definition). Blocks can return values, just like methods.
 ```ruby
 def method_one
   puts "Hello!"
@@ -77,9 +75,9 @@ method_two { puts "Do something!" }
 # Done!
 # => nil
 ```
-In our example above, we define two methods, `method_one` (`lines 1-3`) and `method_two` (`lines 5-8`). With `method_one`, we have not provided the ability to interface with a block as there is no `yield` keyword - passing `method_one` a block as an implicit argument when calling it does nothing (note that it still _accepts_ the block), and the block is ignored, on `line 10`.
+In our example above, we define two methods, `method_one` (`lines 1-3`) and `method_two` (`lines 5-8`). With `method_one`, we have not provided the ability to interface with a block as there is no `yield` keyword in the method definition - passing `method_one` a block as an implicit argument when calling it does nothing (note that it still _accepts_ the block), and the block is ignored, on `line 10`.
 
-With `method_two`, we use `yield` to allow the method to accept a block. When calling `method_two` on `line 14`, the `yield` keyword allows the block to execute - `method_two` yields execution to the block, waiting until the block finishes executing (outputs a string `"Do something!"`), and then resumes execution (outputs the string `"Done!"` and returns `nil`).
+With `method_two`, we use `yield` to allow the method to accept a block. When calling `method_two` on `line 14`, the `yield` keyword allows the block to execute - `method_two` yields execution to the block, waiting until the block finishes executing (outputs a string `"Do something!"`), and then resumes execution (outputs the string `"Done!"` and returns `nil` as part of the `puts "Done!"` method call).
 
 ### When would we use a block?
 We can use blocks to add additional flexibility to our code. Some instances where we might want to use a block as an argument to a method include:
@@ -105,7 +103,7 @@ In our example above, we define a `time_logger` method on `lines 1-7`. When we c
 
 `time_logger` returns `nil` (due to the `puts` method call) and outputs a string indicating how long it takes for the provided block to return by subtracting `prior_time` from `end_time`. The `time_logger` method is generic in that it doesn't require a block to return a specific value or do a specific thing, but still retains it's core functionality (displaying how long the block took to execute), irrespective of what the block does or returns.
 
-_Deferring implementation code to the method's caller_. Blocks can be flexible in what they return, so it is possible to write generic methods that accept a block that will change in functionality depending on what the block returns. Thus, blocks allow us to write generic methods that can do different things based on the block's return value, adding significant flexibility to that generic method. 
+Blocks are also useful when we want to _defer implementation code to the method's caller_. Blocks can be flexible in what they return, so it is possible to write generic methods that accept a block, that can change output depending on what the block returns. Thus, blocks allow us to write generic methods that can do different things based on the block's return value, adding significant flexibility to that generic method. 
 
 An example of deferring implementation code to the method's caller might be:
 ```ruby
@@ -123,12 +121,12 @@ select([1, 2, 3]) { |num| num.odd? }
 select([1, 2, 3]) { |num| num }
 # => [1, 2, 3]
 ```
-In our example above, we define a `select` method on `line 1-7` that iterates through an array object passed as an argument on method invocation, passing each element to a block, assesses the truthiness of the return value of a block, and appends it to an array (`truthy`) if the return value is truthy. Finally, the method returns an array of truthy elements.
+In our example above, we define a `select` method on `line 1-7` that iterates through an array object passed as an argument on method invocation, passing each element to a block, assesses the truthiness of the return value of a block, and appends it to an array (referenced by the local variable `truthy`) if the return value is truthy. Finally, the method returns an array of truthy elements (the array referenced by the local variable `truthy`).
 
-Blocks enable this method to be flexible and generic in it's definition - we do not have to implement complex conditional logic in a `case` statement or add additional parameters to the method definition depending on different use cases. The block takes care of the implementation details at method invocation time - the `select` method only has to worry __whether__ the block returns a truthy value, and __not how__ that value is returned.
+Blocks enable this `select` method to be flexible and generic in it's definition - we do not have to implement complex conditional logic in a `case` statement or add additional parameters to the method definition to handle different use cases. The block takes care of the implementation details at method invocation time - the `select` method only has to worry __whether__ the block returns a truthy value, and __not how__ that value is returned.
 
 ### What is the `yield` keyword and what does it do?
-The `yield` keyword is something we can use within a method definition to allow the method to interface with a block. During method execution, the method will execute until it reaches the `yield` keyword, at which point, the block passed as an argument to that method will execute. Once the block completes it's execution, the method will resume. Note that calling `yield` without passing a block will return a `LocalJumpError`, unless we use the `Kernel#block_given?` method, which skips executing the block if a block is not passed as an argument to the method.
+The `yield` keyword is something we can use within a method definition to allow the method to interface with a block. During method execution, the method will execute until it reaches the `yield` keyword, at which point, the block passed as an argument to that method will execute. Once the block completes it's execution, the method will resume execution. Note that calling `yield` without passing a block will return a `LocalJumpError`, unless we use the `Kernel#block_given?` method, which skips executing the block if a block is not passed as an argument to the method.
 ```ruby
 def method_no_yield
 end
@@ -156,11 +154,13 @@ method_yield_condition
 # Done yielding!
 # => nil
 ```
-On `line 1`, we define a method `method_no_yield`, which returns `nil` when called. While we do not explicitly include the `yield` keyword within the definition, like all other methods within Ruby, it is still able to accept a block as an implicit parameter when called, per `line 16` - however, as there is no `yield` keyword within the method definition, `method_no_yield` does not do anything with the block passed to it and simply returns `nil`, as if we had not passed a block as an argument.
+On `line 1`, we define a method `method_no_yield`, which returns `nil` when called (as there are no expressions within the method definition). While we do not explicitly include the `yield` keyword within the definition, like all other methods within Ruby, it is still able to accept a block as an implicit argument when called, per `line 16` - however, as there is no `yield` keyword within the method definition, `method_no_yield` does not do anything with the block passed to it and simply returns `nil`, as if we had not passed a block as an argument.
 
 We also define a method `method_yield` on `lines 4-8`, which __does__ include a `yield` keyword. This means that the `method_yield` method expects a block as an argument when it is called. Per `line 19`, calling `method_yield` without a block will raise a `LocalJumpError`. 
 
 On `lines 10-14` we define the `method_yield_condition` method. This method does include a `yield` keyword, which means it will pass execution to the block when `method_yield_condition` is called. Since we also add a conditional with the `Kernel#block_given?` method, the method no longer __requires__ a block - per `line 22`, calling `method_yield_condition` without a block means that when executing the code within `method_yield_condition`, Ruby will identify that a block has not been passed to the method, and will not `yield` to a block. Instead, it will execute the rest of the code within the method definition, outputting the strings `"I am yielder!"` and `"Done yielding!"`, and return `nil` (the `puts` method always returns `nil`).
+
+Had we passed a block to `method_yield_condition` on method invocation, `method_yield_condition` would have output `"I am yielder!"`, executed the block, then resumed execution.
 
 ### Explain what is happening in this code.
 ```ruby
@@ -173,9 +173,9 @@ say("hi there") do
   system 'clear'
 end           
 ```
-On `line 1-4` we define a `say` method, which accepts a `words` parameter. On `line 6`, we call the `say` method, passing in a string object (`"hi there"`) as an argument to the `words` parameter, and a block (as denoted by the `do`...`end` reserved words immediately following the `say` method invocation). The block is an __implicit parameter__ and not assigned to a local variable within the method. 
+On `line 1-4` we define a `say` method with a `words` parameter. On `line 6`, we call the `say` method, passing in a string object (`"hi there"`) as an argument to the `words` parameter, and a block (as denoted by the `do`...`end` reserved words immediately following the `say` method invocation). The block is an __implicit argument__ and not assigned to a local variable within the method. 
 
-On `line 2` in the `say` method definition, we can see that when `say` is called, the method will `yield` to a block if provided. In our method invocation on `line 6`, there is a block provided, and so execution of the rest of the `say` method is paused as the block is executed. The block has the effect of clearing the screen.
+On `line 2` in the `say` method definition, we can see that when `say` is called, the method will `yield` to a block if provided due to the `Kernel#block_given?` instance method. In our method invocation on `line 6`, there is a block provided, and so execution of the rest of the `say` method is paused as the block is executed. In our implementation, the block clears the screen of any displayed output.
 
 Once the block is finished executing, the rest of the `say` method can execute - this will output a string `"> hi there"` and return `nil` (since the `puts` method always returns `nil`).
 
@@ -192,14 +192,14 @@ increment(5) do |num|
   puts num
 end
 ```
-In the above code, we define an `increment` method to accept a `number` parameter on `lines 1-6`. On `line 8`, we call the `increment` method, providing an integer object `5` as an argument to the `number` parameter, as well as a block (denoted by the `do`...`end` reserved words immediately following the `increment(5)` method invocation) as an implicit parameter (it is not assigned to a local variable inside during execution). The block itself has a block parameter, `num`, which generally means the block expects to be provided an argument at method execution time.
+In the above code, we define an `increment` method with a `number` parameter on `lines 1-6`. On `line 8`, we call the `increment` method, providing an integer object `5` as an argument to the `number` parameter, as well as a block (denoted by the `do`...`end` reserved words immediately following the `increment(5)` method invocation) as an implicit argument (it is not assigned to a local variable inside during execution). The block itself has a block parameter, `num`, which generally means the block expects to be provided an argument from the method at method execution.
 
-During execution, the `increment` method checks if a block has been provided on `line 2`, which it has. The `increment` method then calls the `Integer#+` method on the integer object `5` that was passed as an argument to the `increment` method on invocation, returning the integer object `6`. 
+During execution, the `block_given?` instance method checks if a block has been provided on `line 2`, which it has. The `increment` method then calls the `Integer#+` method on the integer object `5` that was passed as an argument to the `increment` method on invocation, returning the integer object `6`. 
 
-The method then yields this integer object `6` to the block through the `yield` keyword, passing to the block parameter `num`. The block is then executed, which outputs a string representation of the integer object `6` and returns `nil`. After the block is finished executing, the rest of the `increment` method executes on `line 5`, which returns `6` as a result of calling the `Integer#+` method on the integer object `5`.
+The method then yields this integer object `6` to the block through the `yield` keyword, passing `6` to the block parameter `num`. The block is then executed, which outputs a string representation of the integer object `6` and returns `nil`. After the block is finished executing, the rest of the `increment` method executes on `line 5`, which returns `6` as a result of calling the `Integer#+` method on the integer object `5`.
 
 ### Explain the arity rules for a block.
-Arity refers to the ability of a closure to deal with a different number of arguments passed from the calling methods provides, compared to what the closure is defined to take. Blocks have lenient arity rules, meaning we are able to pass in a different number of arguments to a block than what the method is equipped to do, without raising an error.
+Arity rules refer to the ability of a closure to deal with a different number of arguments passed from the calling methods, compared to what the closure is defined to take. Blocks have lenient arity rules, meaning we are able to pass in a different number of arguments to a block than what the method is defined to do, without raising an error.
 ```ruby
 def hello(str)
   yield(str)
@@ -217,11 +217,11 @@ hello_many("Jack", "Jill", "Bill") { |friend1, friend2| puts "My friends are #{f
 # "My friends are Jack and Jill!"
 # => nil
 ```
-In our example above, we define a `hello` method to accept a `str` parameter on `lines 1-3`. When we call the `hello` method on `line 9`, we pass the string object passed as an argument to the block. Because blocks have lenient arity rules, no error is raised, despite the block expecting two arguments and only being provided one. 
+In our example above, we define a `hello` method with an `str` parameter on `lines 1-3`. When we call the `hello` method on `line 9`, we pass the string object `"Jack"` passed as an argument to `hello` to the block. Because blocks have lenient arity rules, no error is raised, despite the block expecting two arguments and only being provided one. 
 
-As a second argument is not provided, the block parameter `friend2` is `nil`, which is why there is an empty space in the output string `"My friends are Jack and !"` - string interpolation calls `to_s` on `nil`, which returns an empty string. 
+As a second argument is not provided, the block parameter `friend2` is `nil`, which is why there is an empty space in the output string `"My friends are Jack and !"` - string interpolation calls `to_s` on the block parameter `friend2`, which is `nil`, thus returning an empty string. 
 
-We also define a `hello_many` method on `lines 5-7`, which accepts three arguments. When we call `hello_many` on `line 13`, while we `yield` three arguments to the block, the block is only equipped to take two arguments. Again, since blocks have lenient arity rules, no error is raised, and the last argument passed to the block is simply ignored.
+We also define a `hello_many` method on `lines 5-7`, which accepts three arguments. When we call `hello_many` on `line 13`, while we `yield` three arguments to the block, the block is only defined to take two arguments. Again, since blocks have lenient arity rules, no error is raised, and the last argument passed to the block is simply ignored.
 ```ruby
 def proc_caller_one(proc, str1)
   proc.call(str1)
@@ -241,7 +241,11 @@ proc_caller_three(a_proc, "Dog", "Cat", "Plane")
 # Dog and Cat are examples of string objects.
 # => nil
 ```
-We demonstrate that `Proc` objects have the same lenient set of arity rules as blocks, and treat missing block parameters as `nil` objects.
+In our example above, we demonstrate that `Proc` objects have the same lenient set of arity rules as blocks (since technically, invoking `Proc#call` on a `Proc` object executes the block that's passed to the `Proc` object as an argument), and treat missing block parameters as `nil` objects. On `lines 1-3`, we define a method `proc_caller_one` with two parameters, `proc` and `str`. Note that the `proc` parameter expects to be passed a `Proc` object as an argument, since we call the `Proc#call` instance method on that object. 
+
+On `line 9`, we instantiate a `Proc` object, passing a block with two block parameters, `str1` and `str2` as an argument, and assign it to the local variable `a_proc`. On `line 11`, we call the `proc_caller_one` method, passing in the `Proc` object referenced by `a_proc` and the string object `"Dog"` as arguments. On `line 2`, the `proc.call` method passes the `"Dog"` string object to the block that's attached to the `Proc` object. Despite this block expecting two arguments, passing only one does not raise an `ArgumentError`, as blocks have lenient arity rules per above. Thus `str2` is `nil` in our case, and the block outputs `"Dog and  are examples of string objects."` and returns `nil`.
+
+The same occurs for `proc_caller_three` - we define this method on `lines 5-7` accepting 4 arguments; a `Proc` object and three other arguments. When we call this method on `line 15`, we pass three string objects to the block attached to the `Proc` object. Again, no `ArgumentError` is raised - the excess argument is disregarded, and only the first two string objects are utilised. The block outputs `"Dog and Cat are examples of string objects."` and returns `nil`.
 
 ### What are the scoping rules for a block?
 Blocks are able to access local variables defined outside of the block. However, blocks have their own scope, meaning that variables defined within a block cannot be accessed outside of the block. 
@@ -481,11 +485,13 @@ A testing framework is code that seeks to test the individual components of a pr
 
 Within the testing framework, there is a hierarchy to the framework:
 1. Assertion - This is a verification step that validates whether a expression behaves as intended, compared to an expected value
-2. Test - This could be a series of assertions, or a single assertion that assesses whether a particular piece of code intended within a specific situation or context
+2. Test - This could be a series of assertions, or a single assertion that assesses whether a particular piece of code behaves as intended within a specific situation or context
 3. Test Suite - This is the combined series of tests
 
 ### What is the difference between assertion and expectation syntax?
-Assertion and expectation syntax are two different styles of writing tests for our program. Which one we use is a matter of personal preference (or preferred company style), as they can achieve the same outcomes. In expectation syntax, we organise tests into `describe` blocks, with individual tests written with the `it` method. Instead of assertions, we use *expectation matchers* (e.g. `must_equal` in our example below).
+Assertion and expectation syntax are two different styles of writing tests for our program. Which one we use is a matter of personal preference (or preferred company style), as they can achieve the same outcomes. 
+
+With assertion syntax, we 'assert' that running a particular piece of code should equal an expected value (or raise a specific side-effect). In expectation syntax, we organise tests into `describe` blocks, with individual tests written with the `it` method. Instead of assertions, we use *expectation matchers* (e.g. `must_equal` in our example below).
 ```ruby
 # Assertion syntax
 def test_equal_value
@@ -504,7 +510,7 @@ end
 In our above example, both tests are testing for the same thing (i.e. whether `car.wheels` returns the integer object `4`); they are just expressed in different ways.
 
 ### What's the difference between Minitest and RSpec?
-Minitest is the testing framework that comes installed with the system version of Ruby. `RSpec` is another testing framework that is commonly used by developers. While both are capable of using expectation syntax (note that `RSpec` does __not__ have assertion syntax), `RSpec` can be more flexible in respect of the syntax it can write (such that it can read more like natural English), at the cost of simplicity. `RSpec` uses a domain specific language (DSL), and may be less interpretable to someone who is not familiar with `RSpec`. Contrast this with `minitest`, which uses standard Ruby syntax to write tests and can use assertion syntax. 
+Minitest is the testing framework that comes installed with the system version of Ruby. `RSpec` is another testing framework that is commonly used by developers. `RSpec` can be more flexible in respect of the syntax it can write (such that it can read more like natural English), at the cost of simplicity. `RSpec` uses a domain specific language (DSL), and may be less interpretable to someone who is not familiar with `RSpec`. Contrast this with `minitest`, which uses standard Ruby syntax to write tests. 
 
 ### What are some of the limitations with `assert` when testing?
 The `assert` method assesses for truthiness. If a test fails, while we can provide an optional message to be displayed on failure as an argument, that message does not provide a lot of context-specific detail as to _why/in what way_ a test has failed, only that it has failed. An alternative is to use `assert_equal`, which provides a more verbose and context specific output if a test fails (e.g. the expected versus returned value).
@@ -584,20 +590,35 @@ Rbenv and RVM are Ruby version managers - they let us set different versions of 
 ### What is the difference between Rbenv and RVM?
 A key difference between Rbenv and RVM is how each ruby version manager changes the Ruby version. RVM defines a shell function `rvm`, which is used in preference to the disk-based command, as it can modify the environment in which a program is executed. As we use commands such as `rvm use 2.2.2`, or change between directories with a `.ruby-version` file, RVM dynamically alters the `PATH` variable such that when we execute various commands in the CLI, RVM ensures we are using shell commands instead of disk based commands, allowing us to the right versions of Ruby and gems based on our project requirements (e.g. based on a `.ruby-version` file, if available).
 
-With Rbenv, the `PATH` variable is not dynamically changed. The `PATH` variables is generally only altered once to include a reference to a `shims` directory before any other directories in the `PATH` variable to ensure it is looked through before any other Ruby related directories. Shims are executable scripts that Rbenv uses to run commands in the CLI. An Rbenv shim intercepts a Ruby related command in the CLI and calls `rbenv exec PROGRAM`, which determines what version of Ruby that should be used, and executes the appropriate program from the Ruby version-specific directories based on a `.ruby-version` file (if available).
+With Rbenv, the `PATH` variable is not dynamically changed. The `PATH` variables is generally only altered once to include a reference to a `shims` directory before any other directories in the `PATH` variable to ensure it is looked through before any other Ruby related directories. Shims are executable scripts that Rbenv uses to intercept Ruby related commands in the CLI, calling `rbenv exec PROGRAM` instead. This command determines what version of Ruby that should be used, and executes the appropriate program from the Ruby version-specific directories based on a `.ruby-version` file (if available).
 
 ### What is the `PATH` variable? How is it used in the context of Rbenv versus RVM?
 The `PATH` variable stores a series of directories, which give context to any command run in the CLI that doesn't start with `/`, `~` or `.` (since those are paths to files or directories), such as `cd`, `ruby`, without having the user manually specify where that command comes from everytime they want to run that particular command. 
 
 With RVM, the `PATH` variable is dynamically changed as different versions of Ruby are used. With Rbenv, the `PATH` variable usually has a `shims` directory added in front of other directories, to enable the shim scripts to execute version-specific commands based on the version of Ruby set.
 
+In general, it's also a good idea to use directories that don't contain spaces. Doing so can result in some strange bugs when using version managers, as well as Bundler and Rake.
+
 ### What is a gem? Why might we use gems?
-A gem is packaged up code that can be downloaded and used within our own programs to extend it's functionality. We can install gems by running `gem install PACKAGE` in the CLI (works with all versions of Ruby after 1.9). Gems allow us to avoid having to 'reinvent the wheel' for common or useful functionality that could be in our own programs. 
+A gem is packaged code that we can download from a source and use within our own program to extend it's own functionality. They are helpful in reducing potential duplication in our code - we can simply use the functionalities within those gems as if we had written them in our programs ourselves. 
+
+We can install gems by running `gem install PACKAGE` in the CLI (works with all versions of Ruby after 1.9). Gems allow us to avoid having to 'reinvent the wheel' for common or useful functionality that could be in our own programs. 
 
 ### What is Bundler? What does it do?
 Bundler is a gem that handles dependencies, meaning it allows us to manage the different version requirements of gems and Ruby within our project, allowing us to resolve dependency conflicts when issuing shell commands. It relies on a `Gemfile` to tell it what Ruby version, gems and their versions are used within a program. We then run `bundler install`, which scans the list of gems and installs them, as well as any other gems that the gems in the `Gemfile` are dependent on. 
 
-The `bundler install` command also generates a `Gemfile.lock` file, which lists all the dependencies within our programs (including gems which depend on other gems not explicitly listed within our `Gemfile`). Once this `Gemfile.lock` file is generated, we can use `bundle exec GEM_NAME` to run versions of gems specific to our `Gemfile.lock` file, ignoring the other versions installed on our system. It also enables us to use `require bundler/setup` in our program to ensure that the correct versions of Ruby and gems are used when running our application. 
+The `bundler install` command also generates a `Gemfile.lock` file, which lists all the dependencies within our programs (including gems which depend on other gems not explicitly listed within our `Gemfile`). Once this `Gemfile.lock` file is generated, we can use `bundle exec GEM_NAME` to run versions of gems specific to our `Gemfile.lock` file, ignoring the other versions installed on our system. It also enables us to use `require bundler/setup` in our program to ensure that the correct versions of Ruby and gems are used when running our application.
+
+### What is a Gemfile? What should we include in a Gemfile?
+A `Gemfile` is a file used by Bundler to determine what dependencies exist within a project in respect of Gems and their versions. It's used by the `bundle install` command to install said gems and generate a `Gemfile.lock` file that specifies these dependencies.
+
+A `Gemfile` should include 4 pieces of information:
+- Source: Where bundler should look in order to install Rubygems. This is generally the Rubygems official website, but may be a private repository or website that a company uses. 
+- `.gemspec` file: This is a file that provides a description of the project when we deploy our project as a gem. It's usually required that a published gem has a `.gemspec` file. 
+- Ruby version: This is generally recommended, though not required. We typically want to support newer versions of Ruby, but this may not always be possible on older applications. If this isn't specified, Bundler will use whatever version of Ruby that is defined in the project directory (usually through a Ruby version manager or sometimes the system version of Ruby).
+- Rubygems used: We want to list our all the gems across our various files (usually found as `require` statements at the top of our project files), and their versions. These are the gems (and their versions) that bundler will install and use to generate the `Gemfile.lock` file.
+
+Once these pieces of information is included in the `Gemfile`, we can run `bundle install` to install all of these gems in our project directory, which will force our application to use these versioned gems in preference to any other versions we may have installed on our system.
 
 ### What is `bundle exec`? How is it different from `binstubs`?
 `bundle exec` is a shell command that allows us to run versions of gems specified in the `Gemfile.lock` file, ignoring other versions installed on our systems. It is a way to resolve dependency conflicts. We could use it when we are unable to add `require bundler/setup` to our code, or our program has conflicting needs when executing, or are testing particular parts of our code outside of the context of simply running the program where our system version of a gem that has been loaded is different to the version required in the `Gemfile`.
@@ -608,4 +629,4 @@ The `bundler install` command also generates a `Gemfile.lock` file, which lists 
 `Rake` is a gem that enables us to automate many tasks that may be required in the development process, like setting up directories and environments, running testing, Git commands and deployment of our program. It does this by executing a series of tasks contained in a `Rakefile`, where tasks are methods designed to execute some code using domain specific language.
 
 ### How does Rake work?
-We can execute rake tasks by using `rake TASK_NAME` (it's recommended to use `bundle exec rake TASK_NAME` in the event we're using Bundler in our application to avoid version conflicts) in the CLI to run a particular task that's defined within a `Rakefile`. Otherwise, we can simply run `bundle exec rake` to execute the default task in the `Rakefile`. We can also use `rake -T` to display all the tasks that are in our `Rakefile`.
+We need to set up a number of tasks in a `Rakefile`, using the domain specific language. There is a `desc` method, which will output a short description of the task being run, as well as the `task` method, which specifies a snippet of code which is run when that task is executed using the `rake TASK_NAME` command. We can also run `rake` without a specified task name - this will cause `rake` to run a default task, which we can specify in the `Rakefile`. We can also use `rake -T` to display all the tasks that are in our `Rakefile`.
