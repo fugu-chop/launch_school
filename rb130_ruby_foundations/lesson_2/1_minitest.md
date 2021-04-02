@@ -55,7 +55,7 @@ Testing frameworks provide 3 basic features:
 
 There is a hierarchy to tests. Since there isn’t any formal agreement on exactly which terms are used to describe this hierarchy, we will use the following definitions:
 - __Assertion__: this is the actual verification step to confirm that the data returned by your program or application is indeed what is expected. You make one or more assertions within a test.
-- __Test__: this describes a *situation or context* in which tests are run. For example, this test is about making sure you get an error message after trying to log in with the wrong password. A test can contain multiple assertions.
+- __Test__: this describes a *situation or context* in which assertions are run. For example, this test is about making sure you get an error message after trying to log in with the wrong password. A test can contain multiple assertions.
 - __Test Suite__: this is the entire set of tests that accompanies your program or application. You can think of this as __all the tests__ for a project.
 
 ### Breaking down the test

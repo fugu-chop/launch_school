@@ -476,15 +476,15 @@ On `line 7`, we invoke `some_method`, passing in the string object `'Joe'` as an
 Regression testing is the process of ensuring that once new code is added to a program/changed, no bugs are introduced as a result of this change/addition, by checking that existing functionality still works as expected through a test suite.
 
 ### What is a testing framework? What are the associated steps?
-A testing framework is code that seeks to test the individual components of a program. It should be able to take inputs, use those inputs to test functionality/expected outputs and raise errors where appropriate. A good testing framework should be able to handle three key requirements:
+A testing framework is software that provides a way to test each of the components of an application. It should be able to take inputs, use those inputs to test functionality/expected outputs and raise errors where appropriate. A good testing framework should be able to handle three key requirements:
 1. Being able to describe the tests that should be run
 2. Being able to execute these tests
 3. Being able to compare the results of tests against expected outputs (i.e. reporting the output of tests)
 
 Within the testing framework, there is a hierarchy to the framework:
-1. Assertion - This is a verification step that validates whether a expression behaves as intended, compared to an expected value
-2. Test - This could be a series of assertions, or a single assertion that assesses whether a particular piece of code behaves as intended within a specific situation or context
-3. Test Suite - This is the combined series of tests
+1. Assertion - This is a verification step that validates whether the data returned by the application behaves as intended, compared to an expected value. 
+2. Test - This could be a series of assertions, or a single assertion that assesses whether a particular piece of code behaves as intended within a specific situation or context.
+3. Test Suite - This is the combined series of tests across our program.
 
 ### What is the difference between assertion and expectation syntax?
 Assertion and expectation syntax are two different styles of writing tests for our program. Which one we use is a matter of personal preference (or preferred company style), as they can achieve the same outcomes. 
@@ -515,7 +515,7 @@ The `assert` method assesses for truthiness. If a test fails, while we can provi
 ```ruby
 # Assume this test fails
 def test_name_assert
-  assert('Jelly', menu.dessert)
+  assert(menu.dessert == 'Jelly')
 end
 # Expected false to be truthy.
 
@@ -527,7 +527,7 @@ end
 # Expected: "Jelly"
 # Actual: "Cake"
 ```
-As we can see above in our example, the `test_name_assert` method uses the `assert` method - when the test fails, the error message raised is not particularly helpful - it does not tell us what the expected value is, only that the test failed. Contrast this with the `test_name_assert_equal` method, which provides a bit more context and verbose error logging, stating what the expected and actual values were, which can aid in debugging.
+As we can see above in our example, the `test_name_assert` method uses the `assert` method - when the test fails, the error message raised (whether default or a custom error message we define ourselves) is not particularly helpful - it does not tell us what the expected value is, only that the test failed. Contrast this with the `test_name_assert_equal` method, which provides a bit more context and verbose error logging, stating what the expected and actual values were, which can aid in debugging.
 
 ### Why do we need to take care to ensure our tests themselves don't raise errors?
 When using Minitest, the testing file is still a Ruby script. That means that if any of our tests raise an unrescued exception, the script will terminate, meaning any tests that were yet to be run prior to the exception being raised are not run. 
@@ -542,7 +542,9 @@ The SEAT approach is a series of steps we adhere to when writing tests, ensuring
 4. (T)eardown - removing and cleaning any artefacts that may exist as a result of our testing, freeing up system resources
 
 ### When do we need the `setup` and `teardown` methods for testing? What do they do?
-The `setup` method within Minitest allows us to create a single instance of an object that we can execute our tests against. It is invoked each time a test is executed. This reduces the amount of code duplication required in our test methods. We usually assign the object to an instance variable, so that it can be accessed by other instance methods in our test class. The `teardown` method cleans up our program, by removing any remaining artefacts that may have been created as a result of testing. It also runs every time a test is completed, allowing us to free up system and/or network resources.
+The `setup` method within Minitest is a method that is invoked each time a test method is called. One of the uses cases for the `setup` method is to create a single instance of an object that we can execute our tests against. This reduces the amount of code duplication required in our test methods. We usually assign the object to an instance variable, so that it can be accessed by other instance methods in our test class. 
+
+The `teardown` method also runs every time a test is completed, allowing us to free up system and/or network resources and removes any remaining artefacts that may have been created as a result of testing.
 ```ruby
 require 'minitest'
 require_relative 'text_analyser'
@@ -575,7 +577,9 @@ class FileReviewTest < MiniTest::Test
   end
 end
 ```
-In our example above, we define a `FileReview` class, with a number of instance methods. We also define a `FileReviewTest` class, where we write the methods that make up our test suite (inherits from the `MiniTest::Test` class). In our `FileReviewTest` class, we make use of the `setup` and `teardown` methods in order to open a file and close a file respectively, ensuring we don't have to instantiate a new instance of the `FileReview` class in each of our tests (we assign the `FileReview` instance to an instance variable so that subsequent test methods are able to access it), and that system resources are freed once each of our individual tests are completed by closing the file.
+In our example above, we define a `FileReview` class, with a number of instance methods. We also define a `FileReviewTest` class, where we write the methods that make up our test suite (inherits from the `MiniTest::Test` class). 
+
+In our `FileReviewTest` class, we make use of the `setup` and `teardown` methods in order to open and close a `FileReview` object assigned to the `@new_file` instance variable respectively, ensuring we don't have to instantiate a new instance of the `FileReview` class in each of our tests (we assign the `FileReview` instance to an instance variable so that subsequent test methods are able to access it) and that system resources are freed once each of our individual tests are completed by closing the file.
 
 ### What is code coverage? What does it measure?
 In the context of testing, code coverage refers to the proportion of our code that is being tested through various means. It is a measure of code quality, in that a higher code coverage indicates that more of the program has been tested for bugs. 
@@ -586,9 +590,9 @@ We can use a gem called `simplecov` to provide us with a % of a code's methods (
 Rbenv and RVM are Ruby version managers - they let us set different versions of Ruby in our programs depending on what versions of Ruby our program needs to support (e.g. there might be gems in use that require a particular version of Ruby, or there might be particular syntax that exists within specific versions of Ruby).
 
 ### What is the difference between Rbenv and RVM?
-A key difference between Rbenv and RVM is how each ruby version manager changes the Ruby version. RVM defines a shell function `rvm`, which is used in preference to the disk-based command, as it can modify the environment in which a program is executed. As we use commands such as `rvm use 2.2.2`, or change between directories with a `.ruby-version` file, RVM dynamically alters the `PATH` variable such that when we execute various commands in the CLI, RVM ensures we are using shell commands instead of disk based commands, allowing us to the right versions of Ruby and gems based on our project requirements (e.g. based on a `.ruby-version` file, if available).
+A key difference between Rbenv and RVM is how each ruby version manager changes the Ruby version. RVM defines a shell function `rvm`, which is used in preference to the disk-based command, as it can modify the environment in which a program is executed. As we use commands such as `rvm use 2.2.2`, or change between directories with a `.ruby-version` file, RVM dynamically alters the `PATH` variable such that when we execute various commands in the CLI, RVM ensures we are using shell commands instead of disk based commands, allowing RVM to select the correct versions of Ruby and gems based on our project requirements (e.g. based on a `.ruby-version` file, if available).
 
-With Rbenv, the `PATH` variable is not dynamically changed. The `PATH` variables is generally only altered once to include a reference to a `shims` directory before any other directories in the `PATH` variable to ensure it is looked through before any other Ruby related directories. Shims are executable scripts that Rbenv uses to intercept Ruby related commands in the CLI, calling `rbenv exec PROGRAM` instead. This command determines what version of Ruby that should be used, and executes the appropriate program from the Ruby version-specific directories based on a `.ruby-version` file (if available).
+With Rbenv, the `PATH` variable is not dynamically changed. The `PATH` variables is only altered once to include a reference to a `shims` directory before any other directories in the `PATH` variable to ensure it is looked through before any other Ruby related directories. Shims are executable scripts that Rbenv uses to intercept Ruby related commands in the CLI, calling `rbenv exec PROGRAM` instead. This command determines what version of Ruby that should be used, and executes the appropriate program from the Ruby version-specific directories based on a `.ruby-version` file (if available).
 
 ### What is the `PATH` variable? How is it used in the context of Rbenv versus RVM?
 The `PATH` variable stores a series of directories, which give context to any command run in the CLI that doesn't start with `/`, `~` or `.` (since those are paths to files or directories), such as `cd`, `ruby`, without having the user manually specify where that command comes from everytime they want to run that particular command. 
