@@ -404,7 +404,9 @@ In our example above, on `lines 1-7`, we define a `Robot` class. This `Robot` cl
 On `lines 11-13`, we define a `say_hello` method in the `main` scope (i.e. it is defined outside of a custom class). In order to make `say_hello` accessible to objects instantiated from the `Robot` class, we need to add the `public` keyword above the `say_hello` method definition, as methods defined in the `main` scope are private (i.e. they are otherwise inaccessible to objects of custom classes). As such, we are able to call the `say_hello` method on the object instantiated from the `Robot` class, per `line 16`. Without the `public` keyword, our program would raise a `NoMethodError`, on account of a `private` method being called on the `Robot` object referenced by local variable `r`.
 
 ### Explain how Symbol#to_proc works.
-Similar to how we can convert blocks to `Proc` objects in a method definition, the `Symbol#to_proc` instance method allows us to apply a method that does not take an argument to each element of a collection. 
+The `Symbol#to_proc` instance method is a helpful method that we can use to reduce the amount of code we write when dealing with blocks. 
+
+When we __call__ a method, we can add in a parameter with a `&` prepended to it. This means that when calling the method, Ruby expects the object passed to that parameter to be a `Proc` object, at which point Ruby will convert this `Proc` object to a block and execute that block.
 ```ruby
 [1, 2, 3].map(&:to_s)
 # => ["1", "2", "3"]
@@ -457,20 +459,23 @@ In our example above, we define a `accept_block` method with two parameters, `st
 The conversion is successful - ordinarily, we cannot assign blocks to local variables - however, as the block is now converted to a `Proc` object, we can assign it to a local variable `block` and pass it as an argument to the `call_proc` method. The `call_proc` method, defined on `lines 5-7` has two parameters, `block` and `str`. The `block` parameter expects to be passed a `Proc` object, as on execution, the `call_proc` method will attempt to invoke the `Proc#call` instance method, passing the string object `'Joe'` to the `str` parameter. As the `Proc` object executes, it executes the code that was originally in the block - it outputs a string `"The string object passed is Joe"` and returns `nil`.
 ```ruby
 def some_method(str)
-  yield(str)
+  yield(str) if block_given?
+  str
 end
 
 a_proc = Proc.new { |input| puts "#{input} says hello!" }
 
 some_method('Joe', &a_proc)
 # Joe says hello!
-# => nil
+# "Joe"
 ```
 In our example above, we define a method `some_method` on `line 1-3` accepting a `str` parameter. On execution of `some_method`, it will execute the block passed as an argument to the method, passing the object assigned to the method parameter `str` to the block. 
 
 On `line 5`, we instantiate a `Proc` object and assign it to the local variable `a_proc`, which when executed, will expect an object passed to a block parameter `input` and use this object as part of outputting a string, returning `nil`.
 
-On `line 7`, we invoke `some_method`, passing in the string object `'Joe'` as an argument, as well as the `Proc` object referenced by the `a_proc` local variable, despite us not explicitly defining `some_method` to take more than a single argument. What happens on execution is that by prepending the `&` symbol to the `Proc` object passed as an argument, Ruby converts this `Proc` object to a block. There's no `ArgumentError`, since all methods implicitly accept a block. As such, the `some_method` is able to execute the newly converted block, and the string `"Joe says hello!"` is output, and `nil` is returned by the `puts` method call.
+On `line 7`, we invoke `some_method`, passing in the string object `'Joe'` as an argument, as well as the `Proc` object referenced by the `a_proc` local variable, despite us not explicitly defining `some_method` to take more than a single argument. 
+
+What happens on execution is that by prepending the `&` symbol to the `Proc` object passed as an argument, Ruby converts this `Proc` object to a block. There's no `ArgumentError`, since all methods implicitly accept a block. As such, the `some_method` is able to execute the newly converted block, and the string `"Joe says hello!"` is output, and `"Joe"` is returned by the `some_method` method call, as `str` is the last evaluated expression in the method (and there is no explicit `return` statement).
 
 ### What is regression testing?
 Regression testing is the process of ensuring that once new code is added to a program/changed, no bugs are introduced as a result of this change/addition, by checking that existing functionality still works as expected through a test suite.
