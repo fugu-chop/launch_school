@@ -27,3 +27,17 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Just went through my notes and prepared answers today. Some revisions, though nothing too dramatic. I think tomorrow I'll go through the questions again, and then Sunday I'll start the Challenge exercises in preparation for taking the test on Monday.
+
+##### 03/04/21 (Sat)
+__*Concepts covered*__<br/>
+- RB130 - Ruby Foundations
+  - Concept Revision
+  - Challenge exercises
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+182 minutes
+
+__*Thoughts*__<br/>
+Revisiting the challenge exercises is interesting. They seem to be harder than I remember, but I'm somehow solving them faster than I used to. Weird. I'll continue to practice these tomorrow - I think I should be in decent shape to take the test on Monday.
