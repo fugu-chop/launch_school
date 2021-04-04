@@ -540,7 +540,7 @@ When using Minitest, the testing file is still a Ruby script. That means that if
 As such, if we're not sure that a particular test will not raise an exception, we are better off using the `skip` keyword in the test definition to avoid running that particular test. 
 
 ### What is the SEAT approach in testing? Why is it beneficial?
-The SEAT approach is a series of steps we adhere to when writing tests, ensuring that our tests have reduced repetition and there are no lingering artefacts after we finish running our tests. SEAT stands for:
+The SEAT approach is a series of steps we adhere to when writing a test, ensuring that our test have reduced duplication of code and there are no lingering artefacts after we finish running our test. SEAT stands for:
 1. (S)etup - this is the process of instantiating objects required to run tests upon
 2. (E)xecuting the code against the object we're testing
 3. (A)sserting the results of the execution
