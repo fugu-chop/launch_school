@@ -1,8 +1,9 @@
-# April 2021 (Total minutes: 427)
+# April 2021 (Total minutes: 856)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
 - [4th, Sun](#040421-sun)
+- [5th, Mon](#050421-mon)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -57,3 +58,13 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The Medium challenges were hit and miss. I completely messed up my initial implementation of the linked list challenge, making it almost impossible to solve the latter half of the test cases. I'm a bit nervous in that I might incorrectly setup up the implementation in the actual coding test, meaning I'll waste a tonne of time trying to solve it. Visions of RB109 arise, but I don't really see myself improving much, so I might as well press ahead with the actual test. I just need to slow down and apply PEDAC - hopefully the challenge doesn't have too many weird edge cases or tests that depend on a particular implementation.
+
+##### 05/04/21 (Mon)
+__*Concepts covered*__<br/>
+- RB139 Assessment
+
+__*Time spent*__<br/>
+197 minutes
+
+__*Thoughts*__<br/>
+Completed the RB139 assessment today. Overall, the coding challenge wasn't particularly difficult. The only real problem I had to think about and come back to was regarding using the `&` in both contexts (i.e. an explicit block parameter on definition, and a `Proc` object as an argument converted to a block during method execution). Otherwise, I finished with plenty of time to spare.
