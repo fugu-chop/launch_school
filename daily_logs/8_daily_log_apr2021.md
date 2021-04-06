@@ -1,9 +1,10 @@
-# April 2021 (Total minutes: 856)
+# April 2021 (Total minutes: 991)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
 - [4th, Sun](#040421-sun)
 - [5th, Mon](#050421-mon)
+- [6th, Tue](#060421-tue)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -64,7 +65,22 @@ __*Concepts covered*__<br/>
 - RB139 Assessment
 
 __*Time spent*__<br/>
-197 minutes
+212 minutes
 
 __*Thoughts*__<br/>
 Completed the RB139 assessment today. Overall, the coding challenge wasn't particularly difficult. The only real problem I had to think about and come back to was regarding using the `&` in both contexts (i.e. an explicit block parameter on definition, and a `Proc` object as an argument converted to a block during method execution). Otherwise, I finished with plenty of time to spare.
+
+##### 06/04/21 (Tue)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - What is the internet?
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Got my results for the RB139 assessment. I did well, but I dropped a point when I had to implement a `Proc#call` instance method within a block. It was a funny implementation that I hadn't seen before, and it didn't click during the assessment. 
+
+The Networking Foundations course is a huge dump of information thus far - the whole idea of different layers of protocols is very intimidating and hard to understand. It's a bit of a brain burner at the moment, and makes me not want to be a network engineer.
