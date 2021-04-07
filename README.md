@@ -1,5 +1,5 @@
 # Launch School
-A repo to house my various notes and workings for [Launch School](https://launchschool.com/). I started this course on the 10th of September, 2020. 
+A repo to house my various exercises for [Launch School](https://launchschool.com/). I started this course on the 10th of September, 2020. 
 
 ## Why?
 I've been doing various tutorials on frontend web development over the last 6 months, learning a lot of *syntax* without really understanding the principles behind actual software development. Whenever I try to solve a problem, I find that I don't really recall the syntax required, and that my approaches are railroaded into specific syntax that I've learned or can remember. 

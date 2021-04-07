@@ -1,10 +1,11 @@
-# April 2021 (Total minutes: 991)
+# April 2021 (Total minutes: 1,110)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
 - [4th, Sun](#040421-sun)
 - [5th, Mon](#050421-mon)
 - [6th, Tue](#060421-tue)
+- [7th, Wed](#070421-wed)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -84,3 +85,16 @@ __*Thoughts*__<br/>
 Got my results for the RB139 assessment. I did well, but I dropped a point when I had to implement a `Proc#call` instance method within a block. It was a funny implementation that I hadn't seen before, and it didn't click during the assessment. 
 
 The Networking Foundations course is a huge dump of information thus far - the whole idea of different layers of protocols is very intimidating and hard to understand. It's a bit of a brain burner at the moment, and makes me not want to be a network engineer.
+
+##### 07/04/21 (Wed)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - What is the internet?
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+119 minutes
+
+__*Thoughts*__<br/>
+The whole concept of protocols existing in different layers, layers being encapsulated versions of other layers, and the seeming reverse order of the layers is completely confusing. I'm finding it very hard to wrap my head around it all.
