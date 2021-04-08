@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 1,110)
+# April 2021 (Total minutes: 1,229)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -98,3 +98,17 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The whole concept of protocols existing in different layers, layers being encapsulated versions of other layers, and the seeming reverse order of the layers is completely confusing. I'm finding it very hard to wrap my head around it all.
+
+##### 08/04/21 (Thu)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - What is the internet?
+  - Lesson 1 Quiz
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+119 minutes
+
+__*Thoughts*__<br/>
+Moving pretty slowly. The content is kinda dense and I'm only feeling like I'm now starting to understand the concepts and really put the pieces together.
