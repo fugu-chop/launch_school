@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 1,229)
+# April 2021 (Total minutes: 1,349)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -6,6 +6,8 @@
 - [5th, Mon](#050421-mon)
 - [6th, Tue](#060421-tue)
 - [7th, Wed](#070421-wed)
+- [8th, Thu](#080421-thu)
+- [9th, Fri](#090421-fri)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -112,3 +114,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Moving pretty slowly. The content is kinda dense and I'm only feeling like I'm now starting to understand the concepts and really put the pieces together.
+
+##### 09/04/21 (Fri)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Lesson 1 Revision
+  - Crash Course CS Videos
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Morning revision was tough. Felt exceptionally sleepy, but managed to get some decent revision done. The Crash Course Videos were nice as a way of presenting previously convered information in a different format with different language. 
