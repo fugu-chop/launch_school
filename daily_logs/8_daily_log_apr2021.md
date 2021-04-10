@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 1,349)
+# April 2021 (Total minutes: 1,529)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -8,6 +8,7 @@
 - [7th, Wed](#070421-wed)
 - [8th, Thu](#080421-thu)
 - [9th, Fri](#090421-fri)
+- [10th, Sat](#090421-fri)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -126,3 +127,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Morning revision was tough. Felt exceptionally sleepy, but managed to get some decent revision done. The Crash Course Videos were nice as a way of presenting previously convered information in a different format with different language. 
+
+##### 09/04/21 (Sat)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Transport Layer
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+180 minutes
+
+__*Thoughts*__<br/>
+More information overload. The TCP connection stuff is confusing. In theory, the three way handshake needs to occur on every request (which is what LS is teaching as the theory), but in practice, there are various mechanisms that allow a handshake to only occur once (or at least, less frequently than once per request).
