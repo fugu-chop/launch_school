@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 1,529)
+# April 2021 (Total minutes: 1,591)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -8,7 +8,8 @@
 - [7th, Wed](#070421-wed)
 - [8th, Thu](#080421-thu)
 - [9th, Fri](#090421-fri)
-- [10th, Sat](#090421-fri)
+- [10th, Sat](#100421-sat)
+- [11th, Sun](#110421-sun)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -128,7 +129,7 @@ __*Time spent*__<br/>
 __*Thoughts*__<br/>
 Morning revision was tough. Felt exceptionally sleepy, but managed to get some decent revision done. The Crash Course Videos were nice as a way of presenting previously convered information in a different format with different language. 
 
-##### 09/04/21 (Sat)
+##### 10/04/21 (Sat)
 __*Concepts covered*__<br/>
 - LS170 - Networking Foundations
   - Transport Layer
@@ -140,3 +141,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 More information overload. The TCP connection stuff is confusing. In theory, the three way handshake needs to occur on every request (which is what LS is teaching as the theory), but in practice, there are various mechanisms that allow a handshake to only occur once (or at least, less frequently than once per request).
+
+##### 10/04/21 (Sun)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Transport Layer Revision
+  - Quiz 2
+  - Introduction to HTTP
+
+__*Time spent*__<br/>
+62 minutes
+
+__*Thoughts*__<br/>
+Polished off the quiz for the Transport layer and it wasn't too bad. Today was a pretty hectic day in respect of life stuff. I'm pretty exhausted, and so only have done about an hour's worth of study. I did do extra earlier in the month, specifically in preparation for today though, so on track to keep my monthly hours of study up.
