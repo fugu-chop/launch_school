@@ -10,6 +10,7 @@
 - [9th, Fri](#090421-fri)
 - [10th, Sat](#100421-sat)
 - [11th, Sun](#110421-sun)
+- [12th, Mon](#120421-mon)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -142,7 +143,7 @@ __*Time spent*__<br/>
 __*Thoughts*__<br/>
 More information overload. The TCP connection stuff is confusing. In theory, the three way handshake needs to occur on every request (which is what LS is teaching as the theory), but in practice, there are various mechanisms that allow a handshake to only occur once (or at least, less frequently than once per request).
 
-##### 10/04/21 (Sun)
+##### 11/04/21 (Sun)
 __*Concepts covered*__<br/>
 - LS170 - Networking Foundations
   - Transport Layer Revision
@@ -154,3 +155,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Polished off the quiz for the Transport layer and it wasn't too bad. Today was a pretty hectic day in respect of life stuff. I'm pretty exhausted, and so only have done about an hour's worth of study. I did do extra earlier in the month, specifically in preparation for today though, so on track to keep my monthly hours of study up.
+
+##### 12/04/21 (Mon)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Introduction to HTTP
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+This morning's study session was a bit distracted from life events. Still managed to push through. HTTP has so many things going on behind the scenes, it's pretty amazing that any of it works in a timely manner. The Codewars problems were a bit annoying, and relied on some Ruby dynamic typing properties in order to work properly (i.e. order of methods was important).
