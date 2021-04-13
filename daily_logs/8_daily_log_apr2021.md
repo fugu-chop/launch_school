@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 1,591)
+# April 2021 (Total minutes: 1,835)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -11,6 +11,7 @@
 - [10th, Sat](#100421-sat)
 - [11th, Sun](#110421-sun)
 - [12th, Mon](#120421-mon)
+- [13th, Tue](#130421-tue)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -168,3 +169,19 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 This morning's study session was a bit distracted from life events. Still managed to push through. HTTP has so many things going on behind the scenes, it's pretty amazing that any of it works in a timely manner. The Codewars problems were a bit annoying, and relied on some Ruby dynamic typing properties in order to work properly (i.e. order of methods was important).
+
+##### 13/04/21 (Tue)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Introduction to HTTP
+  - Revision
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+This morning's study felt particularly tough. I just couldn't wake up properly and struggled to focus at all on the material in front of me. I pushed through the evening, doing two separate sessions. The content is very theory heavy, and a little dry, even if it's applicable to everyday things, like browsing the internet.
+
+I am making progress on the Codewars problems - I did two problems I marked as very hard. One of which I was able to solve relatively straightforward, the second of which I got about 90% of the way to the solution without assistance.
