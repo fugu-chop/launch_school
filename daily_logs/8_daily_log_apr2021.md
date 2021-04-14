@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 1,835)
+# April 2021 (Total minutes: 1,957)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -12,6 +12,7 @@
 - [11th, Sun](#110421-sun)
 - [12th, Mon](#120421-mon)
 - [13th, Tue](#130421-tue)
+- [14th, wed](#140421-wed)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -185,3 +186,18 @@ __*Thoughts*__<br/>
 This morning's study felt particularly tough. I just couldn't wake up properly and struggled to focus at all on the material in front of me. I pushed through the evening, doing two separate sessions. The content is very theory heavy, and a little dry, even if it's applicable to everyday things, like browsing the internet.
 
 I am making progress on the Codewars problems - I did two problems I marked as very hard. One of which I was able to solve relatively straightforward, the second of which I got about 90% of the way to the solution without assistance.
+
+##### 14/04/21 (Wed)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Introduction to HTTP
+  - URLs
+  - Revision
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+Not much to report on. Continuing to churn through the HTTP component of the course. 
