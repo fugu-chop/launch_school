@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 2,087)
+# April 2021 (Total minutes: 2,207)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -217,3 +217,17 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The quiz was a bit difficult. Lots of different terminology and edge cases thrown in that weren't explicitly covered in the material. It's also cool learning more about bash and how we can work with it in the CLI. 
+
+##### 16/04/21 (Fri)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Working with HTTP
+  - Setting up an HTTP server
+- Revision
+  - Codewars Problems
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Setting up an HTTP server is very cool, even if it's just running locally and doesn't do anything. I'm finally building something that's somewhat reflective of how applications work in the real world.
