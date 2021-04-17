@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 2,207)
+# April 2021 (Total minutes: 2,387)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -14,6 +14,8 @@
 - [13th, Tue](#130421-tue)
 - [14th, Wed](#140421-wed)
 - [15th, Thu](#150421-thu)
+- [16th, Fri](#160421-fri)
+- [17th, Sat](#170421-sat)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -231,3 +233,17 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Setting up an HTTP server is very cool, even if it's just running locally and doesn't do anything. I'm finally building something that's somewhat reflective of how applications work in the real world.
+
+##### 17/04/21 (Sat)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Working with HTTP
+  - Setting up an HTTP server
+
+__*Time spent*__<br/>
+180 minutes
+
+__*Thoughts*__<br/>
+Spent a bunch of time troubleshooting the provided code, getting it to work on MacOS. Proud of myself for persisting and getting it right - it's a problem where Bash doesn't treat an empty line as having a character length of one (I have to pass another character after sending the `GET` request), but the browser __does__ treat the empty newline as having a character length of 1.
+
+I basically spent the rest of the revision session trying to wrap my head around the specifics of the implementation. The Bash syntax is pretty self-explanatory, but some of the looping logic wasn't exactly clear.
