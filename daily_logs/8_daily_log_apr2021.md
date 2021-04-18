@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 2,387)
+# April 2021 (Total minutes: 2,565)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -16,6 +16,7 @@
 - [15th, Thu](#150421-thu)
 - [16th, Fri](#160421-fri)
 - [17th, Sat](#170421-sat)
+- [18th, Sun](#180421-sun)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -247,3 +248,17 @@ __*Thoughts*__<br/>
 Spent a bunch of time troubleshooting the provided code, getting it to work on MacOS. Proud of myself for persisting and getting it right - it's a problem where Bash doesn't treat an empty line as having a character length of one (I have to pass another character after sending the `GET` request), but the browser __does__ treat the empty newline as having a character length of 1.
 
 I basically spent the rest of the revision session trying to wrap my head around the specifics of the implementation. The Bash syntax is pretty self-explanatory, but some of the looping logic wasn't exactly clear.
+
+##### 18/04/21 (Sun)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Setting up an HTTP server
+  - Transport Layer Security
+- Revision
+  - OOP
+
+__*Time spent*__<br/>
+178 minutes
+
+__*Thoughts*__<br/>
+Decided to change it up a little today and do some OOP revision. I was pleasantly surprised at how much of the overall concepts I still seem to retain. I guess this mastery based approach is pretty good at aiding retention - something I've traditionally struggled with.
