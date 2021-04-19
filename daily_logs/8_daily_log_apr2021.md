@@ -17,6 +17,7 @@
 - [16th, Fri](#160421-fri)
 - [17th, Sat](#170421-sat)
 - [18th, Sun](#180421-sun)
+- [19th, Mon](#190421-mon)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -262,3 +263,18 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Decided to change it up a little today and do some OOP revision. I was pleasantly surprised at how much of the overall concepts I still seem to retain. I guess this mastery based approach is pretty good at aiding retention - something I've traditionally struggled with.
+
+##### 19/04/21 (Mon)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Transport Layer Security
+- Revision
+  - HTTP
+  - OOP
+  - Codewars Problems
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Today was mainly a revision session. I'm still sometimes fuzzy on the details of HTTP, which limits my ability to process more advanced course materials. 
