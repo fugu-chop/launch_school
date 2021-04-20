@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 2,565)
+# April 2021 (Total minutes: 2,807)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -18,6 +18,7 @@
 - [17th, Sat](#170421-sat)
 - [18th, Sun](#180421-sun)
 - [19th, Mon](#190421-mon)
+- [20th, Tue](#200421-tue)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -278,3 +279,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Today was mainly a revision session. I'm still sometimes fuzzy on the details of HTTP, which limits my ability to process more advanced course materials. 
+
+##### 20/04/21 (Tue)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Transport Layer Security
+  - TLS Quiz
+  - Evolution of Networked Applications
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+The Networking history stuff is pretty interesting, since development of HTTP technology seems to be directly a result of problems with the previous versions. It's still not fully clear in my head how all of these different layers work and fit together - there's definitely a lot of revision to be done here.
