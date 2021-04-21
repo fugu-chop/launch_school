@@ -19,6 +19,7 @@
 - [18th, Sun](#180421-sun)
 - [19th, Mon](#190421-mon)
 - [20th, Tue](#200421-tue)
+- [21st, Wed](#210421-wed)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -292,3 +293,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The Networking history stuff is pretty interesting, since development of HTTP technology seems to be directly a result of problems with the previous versions. It's still not fully clear in my head how all of these different layers work and fit together - there's definitely a lot of revision to be done here.
+
+##### 21/04/21 (Wed)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Evolution of Networked Applications
+- Revision
+  - Blog Post Reading
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+Finished up the course today. A lot of revision required to ensure I can piece together all of these very detailed concepts in a cohesive way. 
