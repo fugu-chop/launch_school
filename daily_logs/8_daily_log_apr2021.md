@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 2,807)
+# April 2021 (Total minutes: 3,049)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -300,9 +300,24 @@ __*Concepts covered*__<br/>
   - Evolution of Networked Applications
 - Revision
   - Blog Post Reading
+    - [How the Internet Works, Part I](https://vahid.blog/post/2020-12-15-how-the-internet-works-part-i-infrastructure/)
 
 __*Time spent*__<br/>
 123 minutes
 
 __*Thoughts*__<br/>
 Finished up the course today. A lot of revision required to ensure I can piece together all of these very detailed concepts in a cohesive way. 
+
+##### 22/04/21 (Thu)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+- Revision
+  - Blog Post Reading
+    - [How the Internet Works, Part II](https://vahid.blog/post/2020-12-21-how-the-internet-works-part-ii-layers/)
+    - [How the Internet Works, Part III](https://vahid.blog/post/2020-12-24-how-the-internet-works-part-iii-reliability-and-security/)
+
+__*Time spent*__<br/>
+119 minutes
+
+__*Thoughts*__<br/>
+The blog series by Vahid Dejwakh on How the Internet Works is excellent. It's very detailed and clearly laid out, and provides a zoomed out, big picture view across all of the layers, something I've struggled to get a grasp of in my revision.
