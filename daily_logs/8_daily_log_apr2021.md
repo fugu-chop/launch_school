@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 3,049)
+# April 2021 (Total minutes: 3,171)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -20,6 +20,8 @@
 - [19th, Mon](#190421-mon)
 - [20th, Tue](#200421-tue)
 - [21st, Wed](#210421-wed)
+- [22nd, Thu](#220421-thu)
+- [23rd, Fri](#230421-fri)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -321,3 +323,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The blog series by Vahid Dejwakh on How the Internet Works is excellent. It's very detailed and clearly laid out, and provides a zoomed out, big picture view across all of the layers, something I've struggled to get a grasp of in my revision.
+
+##### 23/04/21 (Fri)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Revision
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+I started writing down all the different concepts from my notes. It's simply too much content to keep a track of, just by reading it. It helps me structure the concepts a little better, and deprioritise all the excessive detail/fluff that's not required for the assessment.
