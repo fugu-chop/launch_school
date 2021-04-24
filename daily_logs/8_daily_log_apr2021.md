@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 3,171)
+# April 2021 (Total minutes: 3,351)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -22,6 +22,7 @@
 - [21st, Wed](#210421-wed)
 - [22nd, Thu](#220421-thu)
 - [23rd, Fri](#230421-fri)
+- [24th, Sat](#240421-sat)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -334,3 +335,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I started writing down all the different concepts from my notes. It's simply too much content to keep a track of, just by reading it. It helps me structure the concepts a little better, and deprioritise all the excessive detail/fluff that's not required for the assessment.
+
+##### 24/04/21 (Sat)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Revision
+  - [OSI Model Video](https://www.youtube.com/watch?v=eKHCH6rw0As)
+
+__*Time spent*__<br/>
+180 minutes
+
+__*Thoughts*__<br/>
+The OSI Model video was really good. It covered the material at a pretty high level, but was a good overview of all the different layers and how they interact with each other. I'm still in need of further written revision - I'm not fully recalling all the information at demand, and I still don't think I have a good idea of a full end to end HTTP request and the different steps in that process. Revision continues!
