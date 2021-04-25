@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 3,351)
+# April 2021 (Total minutes: 3,532)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -23,6 +23,7 @@
 - [22nd, Thu](#220421-thu)
 - [23rd, Fri](#230421-fri)
 - [24th, Sat](#240421-sat)
+- [25th, Sun](#250421-sun)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -347,3 +348,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The OSI Model video was really good. It covered the material at a pretty high level, but was a good overview of all the different layers and how they interact with each other. I'm still in need of further written revision - I'm not fully recalling all the information at demand, and I still don't think I have a good idea of a full end to end HTTP request and the different steps in that process. Revision continues!
+
+##### 25/04/21 (Sun)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Revision
+
+__*Time spent*__<br/>
+181 minutes
+
+__*Thoughts*__<br/>
+Today's revision was pretty messy. I struggled to get a clean definition of what the Application layer did, and then reading through all the request related information was really hard. I'm going through it a lot slower, hoping to get some more clarity on interactions and the differences at each step.
