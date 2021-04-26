@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 3,532)
+# April 2021 (Total minutes: 3,662)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -24,6 +24,7 @@
 - [23rd, Fri](#230421-fri)
 - [24th, Sat](#240421-sat)
 - [25th, Sun](#250421-sun)
+- [26th, Mon](#260421-mon)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -359,3 +360,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Today's revision was pretty messy. I struggled to get a clean definition of what the Application layer did, and then reading through all the request related information was really hard. I'm going through it a lot slower, hoping to get some more clarity on interactions and the differences at each step.
+
+##### 26/04/21 (Mon)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Revision
+
+__*Time spent*__<br/>
+130 minutes
+
+__*Thoughts*__<br/>
+Revision continues. I'm at the point where I've covered off basically all the content in a more succinct fashion than my 'garbage dump' notes. It's time to put the pieces together now. 
