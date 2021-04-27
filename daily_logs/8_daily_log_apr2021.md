@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 3,662)
+# April 2021 (Total minutes: 3,782)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -25,6 +25,7 @@
 - [24th, Sat](#240421-sat)
 - [25th, Sun](#250421-sun)
 - [26th, Mon](#260421-mon)
+- [27th, Tue](#270421-tue)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -371,3 +372,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Revision continues. I'm at the point where I've covered off basically all the content in a more succinct fashion than my 'garbage dump' notes. It's time to put the pieces together now. 
+
+##### 27/04/21 (Tue)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Revision
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Finished up my written 'digest' notes for the course. Pretty heavy going - I spent the rest of the day just reading through my notes, and refining my mental models.
