@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 3,782)
+# April 2021 (Total minutes: 3,904)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -26,6 +26,7 @@
 - [25th, Sun](#250421-sun)
 - [26th, Mon](#260421-mon)
 - [27th, Tue](#270421-tue)
+- [28th, Wed](#280421-wed)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -383,3 +384,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Finished up my written 'digest' notes for the course. Pretty heavy going - I spent the rest of the day just reading through my notes, and refining my mental models.
+
+##### 28/04/21 (Wed)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Revision
+
+__*Time spent*__<br/>
+122 minutes
+
+__*Thoughts*__<br/>
+I started writing up my end to end HTTP process. It's very complex, and I don't have all the details either. I'm a bit confused about how the process works between the Internet/Network Layer and the Link/Data Link layer - do the routers at each network do the encapsulation of the packet to a frame?
