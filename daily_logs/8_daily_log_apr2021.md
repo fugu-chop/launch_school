@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 3,904)
+# April 2021 (Total minutes: 4,024)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -27,6 +27,7 @@
 - [26th, Mon](#260421-mon)
 - [27th, Tue](#270421-tue)
 - [28th, Wed](#280421-wed)
+- [29th, Thu](#290421-thu)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -395,3 +396,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I started writing up my end to end HTTP process. It's very complex, and I don't have all the details either. I'm a bit confused about how the process works between the Internet/Network Layer and the Link/Data Link layer - do the routers at each network do the encapsulation of the packet to a frame?
+
+##### 29/04/21 (Thu)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Revision
+  - [Network Direction Videos](https://www.youtube.com/watch?v=cNwEVYkx2Kk)
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+The Network Direction videos were recommended to me by a fellow Launch School student. Those, combined with some Slack posts, were incredibly helpful in clarifying the end to end process - the Link/Data-Link layer is __node to node__, such that the source and destination MAC addresses change at each 'hop', which is where I was failing to understand the data trasmission process.
