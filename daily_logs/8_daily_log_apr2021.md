@@ -1,4 +1,4 @@
-# April 2021 (Total minutes: 4,024)
+# April 2021 (Total minutes: 4,133)
 - [1st, Thu](#010421-thu)
 - [2nd, Fri](#020421-fri)
 - [3rd, Sat](#030421-sat)
@@ -28,6 +28,7 @@
 - [27th, Tue](#270421-tue)
 - [28th, Wed](#280421-wed)
 - [29th, Thu](#290421-thu)
+- [30th, Fri](#300421-fri)
 
 ##### 01/04/21 (Thu)
 __*Concepts covered*__<br/>
@@ -408,3 +409,17 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The Network Direction videos were recommended to me by a fellow Launch School student. Those, combined with some Slack posts, were incredibly helpful in clarifying the end to end process - the Link/Data-Link layer is __node to node__, such that the source and destination MAC addresses change at each 'hop', which is where I was failing to understand the data trasmission process.
+
+##### 30/04/21 (Fri)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Revision
+  - SPOT Study Session
+
+__*Time spent*__<br/>
+110 minutes
+
+__*Thoughts*__<br/>
+Some of the TLS protocol processes are a bit fuzzy in the end to end HTTP process. I spent a lot longer than I thought I would have to this morning going through my diagram. I also need to remember that decapsulation and re-encapsulation occurs at each device on the network, since the MAC addresses are changing at each 'hop', and do not indicate where the final destination of the packet should be.
+
+The SPOT session was helpful in confirming that I'm definitely covering the material in too much detail. I've definitely had the feeling that there are massive gaps in my knowledge from the curriculum material, but it appears a lot of this detail have deliberately been abstracted away. In fact, it seems as though the exam will actually be relatively straightforward, and conform to the study guide.
