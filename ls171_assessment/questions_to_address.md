@@ -14,7 +14,7 @@ Fundamentally, protocols are a _system of rules that govern the exchange or tran
 ### Explain the 'layered system'
 The layered system is a mental model that we can adopt to group different protocols in respect of the particular aspect of communication that they address. Protocols (depending on the layered system used) can be thought of as operating at a single, particular 'layer', to represent the system of rules for transmitting information at a particular step of the information transmission process.
 
-There are two popular 'layered' models that describe the information transmission process; the OSI (Open Systems Interconnection) model, and the Internet Protocol Suite. They are roughly equivalent (though some overlap does occur) in respect of the 'layers' that they describe:
+There are two popular 'layered' network communication models that describe the information transmission process; the OSI (Open Systems Interconnection) model, and the Internet Protocol Suite. They are roughly equivalent (though some overlap does occur) in respect of the 'layers' that they describe:
 - The top layer of the Internet Protocol Suite (Application) mostly maps to the top three layers of the OSI Model (Application, Presentation, Session).
 - The second layer of the Internet Protocol Suite (Transport) mostly maps to the fourth layer of the OSI model (Transport)
 - The third layer of the Internet Protocol Suite (Internet) mostly maps to the fifth layer of the OSI model (Network)
@@ -78,3 +78,85 @@ Since each router has a local routing table, which contains all the IP addresses
 The DNS (Domain Name System) is a method through which a URL (Uniform Resource Locator) can be 'translated' to an IP address for routing across networks. When we type in a URL into our web browser, the web browser will send a request to DNS servers in order to 'translate' the domain name of the URL (i.e. the 'host') to an IP address. DNS servers operate in a hierarchical organisation - no single DNS server can contain every single IP address corresponding to a domain name.
 
 If a DNS server does not contain a requested domain name, the DNS server routes the request to another DNS server up the hierarchy. Eventually, the address will be found in the DNS database on a particular DNS server, and the corresponding IP address will be used to receive the request. This IP address is then captured in the destination IP address header, and attached to the segment/datagram data payload that was passed to the Internet/Network layer for encapsulation as a packet, and passed to the Link/Data Link layer.
+
+### What is the transport layer?
+The Internet/Network layer is responsible for the transmission of information across different networks. However, this can prove problematic if we have multiple applications that want to send data to a server over a single connection. 
+
+The transport layer is the series of processes that is responsible for transmitting (potentially multiple) Protocol Data Unit(s) from the application layer to the Internet/Network layer - i.e. multiplexing potentially numerous sources of Application layer PDUs on a client machine over a single communication channel to the server through the use of network ports (defined as an identifier for a specific process) that is included in the header. 
+
+In the OSI model, the Transport layer is a layer between the Presentation and Network layers. In the Internet Protocol Suite, the Transport layer is layer 3 (between the Application and Internet layer), which combines parts of the Session and Transport layer in the OSI model. The Transport layer typically uses either the Transmission Control Protocol (TCP) or the User Datagram Protocol (UDP), depending on the use-case required/defined by the application, to structure the data for encapsulation, ready to be passed to the Internet layer.
+
+### What is multiplexing? Why is it necessary?
+Multiplexing is a property that enables multiple, different types of application data to be transmitted across a single connection. In a 'layered' system like OSI or the Internet Protocol Suite, it can exist at the physical layer (e.g. an optical fibre that carries multiple light signals using different angles of refraction, or radio waves being transmitted on different frequencies), but is particularly prevalent at the transport layer, where different applications can establish dedicated virtual connections over a single communication channel with a server, through the use of network ports over a single IP address. Demultiplexing is the opposite of this  - separating different types of application data being sent over a single connection, such that the server can respond with the relevant information according to the different application requests.
+
+### What is a port? What is it used for?
+A port is an identifier for a specific application process. It is a means of enabling multiplexing on the transport layer - different applications on the _client_ machine will be assigned different port numbers (generally randomly chosen ephemeral ports between 1024-65535, depending on the operating system), while the server will typically use well-established ports by convention (e.g. HTTP requests are generally sent to port 80 on a server).
+
+The benefit of using ports is that different applications are able to simultaneously send data over a single communication channel to a server (when combined with an IP address at the Internet/Network layer) - this is known as multiplexing. Demultiplexing is the opposite - the ability of the server to interpret different application layer PDUs and respond with the appropriate response data to the appropriate port on the client machine. The PDU on the transport layer will include the source and destination port in the header to assist in this 'interpretation' and correct delivery.
+
+### What is a socket? What is it used for?
+At a conceptual level, a 'socket' is a combination of the IP address and port of a machine. A socket enables multiplexing over a single communication channel, since the application data can be sent to an appropriate port on the server, and the server is able to interpret and distinguish between the different application data requests, and serve the relevant data back to the client. Sockets can be regarded as __communication end-points__. This definition should be distinguished from sockets at an implementation level (e.g. UNIX sockets).
+
+### What is a connection-oriented network system? What is an example of this?
+A connection-oriented network system is one that instantiates different socket objects on the server side, such that each application on the client-side will have a dedicated virtual connection on the server machine through the use of sockets (the combination of an IP address and port number) and enables demultiplexing capabilities on the server side. Each PDU sent to the server will have a source and destination IP, as well as a source and destination port number (known as a _four-tuple_). This provides the potential for __reliable__ connections, by enabling capabilities like in-order delivery, acknowledgments of received messages and retransmission of messages that weren't received, since a _connection must be established before data can be transferred_. The Transmission Control Protocol (TCP) at the Transport layer is an example of a protocol that is connection-oriented.
+
+### What is a connectionless network system? What is an example of this?
+A connectionless network system is one that __does not__ instantiate multiple socket objects on the server side for each source of application data - a single socket object will handle all requests, and simply respond to them in the order as and when they arrive at the server. An example of a connectionless protocol is the User Datagram Protocol (UDP). It's important to note that connectionless systems _still provide multiplexing capabilities_ (i.e. multiple different sources of application data can be transmitted over a single communication channel between client and server) - a connectionless system will not have the capability to provide for reliability related functionality.
+
+### What is network reliability? How do we achieve network reliability?
+The layers below the transport layer are _unreliable_ - they do not provide for retransmission of lost data. In the case of the Internet/Network and Link/Data-Link layers, the PDUs can have checksums in their headers which can indicate whether the PDU has become corrupted during transmission. However, in the case of corruption, these PDUs are simply dropped. It is incumbent on the transport layer to provide reliability mechanisms.
+
+Network reliability in this context can relate to four different aspects:
+1. In-order delivery - messages are typically broken up into multiple pieces for transmission; in-order delivery means that the messages are received in the order they are sent so that the overall PDU can be reconstructed correctly by the server.
+2. Error detection - Using a checksum in the header, corruption in the data can be identified. While other layers do provide error detection, this is important in the context of IPv6 in the Internet/Network layer, which no longer has a checksum header field. 
+3. Handling data loss - Missing or corrupted messages are detected through the sequence numbers in the PDU header, acknowledgement messages and timeouts, and retransmitted.
+4. Handling duplication - The sequence number in the PDU header can identify duplicate messages and disregarded.
+
+### What is TCP? What are it's downsides/upsides? *
+TCP (Transmission Control Protocol) is a connection-oriented protocol used at the Transport layer. As it is connection-oriented, it provides for reliability mechanisms, such as in-order delivery, error detection, handling data loss and data duplication. It also involves individual socket objects being instantiated on the server machine for each distinct type of application data sent by the client.
+
+Two key roles that TCP provides are:
+1. Reliability, through the TCP Handshake and fields within the header
+2. Encapsulation of the data payload, with headers, to create a TCP segment (which is passed to the Network/Internet layer).
+
+Part of the reliability of TCP comes from the TCP handshake. This is a process that theoretically must occur before each request as part of establishing a connection between two hosts (though in practice, `keep-alives` and `pipelining` is used to reduce the connection overhead by allowing a particular connection to handle multiple requests). In short:
+1. The sender sends an empty TCP segment, with the `SYN` flag set to `1`. This is the signal that the sender wishes to establish a connection. 
+2. The recipient receives the `SYN` message, and responds with a `SYN ACK` message (again, an empty message with the `SYN` and `ACK` flags set to `1`), acknowledging that it received the `SYN` message. 
+3. The sender then sends an `ACK` message, acknowledging the receipt of the `SYN ACK` message. At this point, the sender is able to start sending data to the recipient. 
+4. The recipient receives the `ACK` message. At this point, the receiver can send data back to the sender.
+
+The _headers_ in the TCP segment also provide for another element of reliability; in particular the `sequence` and `acknowledgment` numbers, which enable in-order delivery, handling data loss and duplication.  
+
+The TCP handshake process establishes a TCP connection, and enables data transmission. As there is additional latency involved with establishing a TCP connection, TCP provides two additional mechanisms to facilitate efficient data transfer (i.e. minimising the amount of data that needs to be retransmitted); _flow control_ and _congestion avoidance_.
+
+__Flow control__ is a mechanism to avoid the sender overwhelming the receiver with more data than it can process. The receiver only has a certain amount of bandwidth it can use to process data over a given period of time. Data that is sent to the receiver but awaiting processing is stored in a buffer (the size of the buffer depends on the operating system and physical resources available). Flow control can be implemented through the `window` header in a TCP segment - this indicates the amount of data both the sender and receiver are willing to accept. If the receiver's buffer is filling up, it can send an acknowledgement message with a smaller `window` size to indicate the sender needs to reduce the amount of data it is sending. 
+
+__Congestion avoidance__ occurs when there is more data being transmitted across the network than the network capacity will allow. At the Network/Internet layer, routers are responsible for transmitting data across networks. Routers typically can only process a certain amount of data at a time - excess data is stored in a abuffer, awaiting processing. However, if the router is receiving more data than can fit in the buffer, excess data is simply dropped. 
+
+As TCP provides for data retransmission, it can detect if a large amount of data is being retransmitted across the network (network congestion is likely occurring). To combat this, TCP can adjust the `window` size in the TCP segment header to reduce the amount of data being transferred.
+
+Two downsides associated with TCP are:
+1. TCP handshakes adding overhead to data transfer - additional latency must occur before any application data can be sent. 
+2. Head of Line (HOL) blocking - as TCP allows for in-order delivery, if a particular part of a message is corrupted/lost and needs to be retransmitted, this will block the delivery and processing of subsequent messages. While HOL blocking isn't unique to TCP, retransmission still increases the queuing delay, which contributes to overall latency.
+### What is UDP? What are it's downsides/upsides?
+UDP (User Datagram Protocol) is a connectionless protocol used in the Transport layer. It provides multiplexing capability for application data - i.e. it enables different applications to send data or requests to the server over a single communication channel, through the use of source ports. However, as UDP is a connectionless protocol, on the server side, only a single socket object is instantiated, meaning all of the UDP datagrams travel to the same socket. This has the effect of the server processing requests as and when they come.
+
+UDP datagram headers are much simpler - they have
+1. Source Port
+2. Destination Port
+3. Length
+4. Checksum
+
+The fact that there are much fewer header fields than with TCP indicates that UDP is much more limited in respect of the reliability capabilities than TCP. At it's heart, UDP __doesn't do anything to resolve the unreliability of protocols__ in the layers beneath it. UDP __does not__ provide for in-order delivery, retransmission of data or the state of a connection - as it is connectionless, an application can simply start sending data _without having to wait for a connection to be established_ with the application process of the receiver. 
+
+The upside of UDP (compared to TCP) is that there is much less overhead and latency when it comes to sending data - no handshake process is required, fewer headers need to be populated, and no acknowledgement messages or retransmission mean the data delivery is faster. Since there is no in-order delivery, Head of Line blocking isn't an issue at the Transport layer.
+
+The fact that UDP is much more bare bones grants it flexibility - an application may require one aspect of reliability but not require others - e.g. in-order delivery may be relevant, but not retransmission or duplication. An application developer can simply build additional services on top of UDP, rather than deal with the additional complexities within TCP.
+
+### What is the TCP handshake?
+
+### What is pipelining?
+
+### What is flow control?
+
+### What is congestion avoidance?
