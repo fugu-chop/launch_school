@@ -80,7 +80,7 @@ The DNS (Domain Name System) is a method through which a URL (Uniform Resource L
 If a DNS server does not contain a requested domain name, the DNS server routes the request to another DNS server up the hierarchy. Eventually, the address will be found in the DNS database on a particular DNS server, and the corresponding IP address will be used to receive the request. This IP address is then captured in the destination IP address header, and attached to the segment/datagram data payload that was passed to the Internet/Network layer for encapsulation as a packet, and passed to the Link/Data Link layer.
 
 ### What is the transport layer?
-The Internet/Network layer is responsible for the transmission of information across different networks. However, this can prove problematic if we have multiple applications that want to send data to a server over a single connection. 
+The Internet/Network layer is responsible for the transmission of information across different networks (socket-to-socket). However, this can prove problematic if we have multiple applications that want to send data to a server over a single connection. 
 
 The transport layer is the series of processes that is responsible for transmitting (potentially multiple) Protocol Data Unit(s) from the application layer to the Internet/Network layer - i.e. multiplexing potentially numerous sources of Application layer PDUs on a client machine over a single communication channel to the server through the use of network ports (defined as an identifier for a specific process) that is included in the header. 
 
@@ -116,28 +116,34 @@ Network reliability in this context can relate to four different aspects:
 TCP (Transmission Control Protocol) is a connection-oriented protocol used at the Transport layer. As it is connection-oriented, it provides for reliability mechanisms, such as in-order delivery, error detection, handling data loss and data duplication. It also involves individual socket objects being instantiated on the server machine for each distinct type of application data sent by the client.
 
 Two key roles that TCP provides are:
-1. Reliability, through the TCP Handshake and fields within the header
-2. Encapsulation of the data payload, with headers, to create a TCP segment (which is passed to the Network/Internet layer).
+1. Encapsulation of the data payload, with headers, to create a TCP segment (which is passed to the Network/Internet layer). 
+2. Reliability, through the TCP Handshake, acknowledgments to each message sent and fields within the header
 
-Part of the reliability of TCP comes from the TCP handshake. This is a process that theoretically must occur before each request as part of establishing a connection between two hosts (though in practice, `keep-alives` and `pipelining` is used to reduce the connection overhead by allowing a particular connection to handle multiple requests). In short:
+In respect of encapsulation, TCP provides for a number of headers which contribute to multiplexing (i.e. the source and destination ports), reliability (sequence and acknowledgment number headers) and improving bandwidth utilisation/reducing network congestion (i.e. the window size field).
+
+In respect of reliability, part of the reliability of TCP comes from the TCP handshake. This is a process that theoretically must occur before each request as part of establishing a connection between two hosts (though in practice, `keep-alives` and `pipelining` is used to reduce the connection overhead by allowing a particular connection to handle multiple requests). In short:
 1. The sender sends an empty TCP segment, with the `SYN` flag set to `1`. This is the signal that the sender wishes to establish a connection. 
 2. The recipient receives the `SYN` message, and responds with a `SYN ACK` message (again, an empty message with the `SYN` and `ACK` flags set to `1`), acknowledging that it received the `SYN` message. 
 3. The sender then sends an `ACK` message, acknowledging the receipt of the `SYN ACK` message. At this point, the sender is able to start sending data to the recipient. 
 4. The recipient receives the `ACK` message. At this point, the receiver can send data back to the sender.
 
-The _headers_ in the TCP segment also provide for another element of reliability; in particular the `sequence` and `acknowledgment` numbers, which enable in-order delivery, handling data loss and duplication.  
+With TCP, each message sent to the receiver has an accompanying acknowledgment message, notifying the sender that the message has been received by the receiver. This is part of the reliability built into TCP, and can handle a number of 'error' states:
+1. If an acknowledgment message is not received by the sender (after sending a message) within a certain timeframe, the TCP connection will re-transmit that message.
+2. If the receiver's acknowledgment message did not get through to the sender, but did in fact receive the original message, the receiver is able to handle duplicate messages (identified through the sequence number in the header) when the sender re-transmits the same message - the receiver will discard the duplicate message and attempt to send another acknowledgment.
 
 The TCP handshake process establishes a TCP connection, and enables data transmission. As there is additional latency involved with establishing a TCP connection, TCP provides two additional mechanisms to facilitate efficient data transfer (i.e. minimising the amount of data that needs to be retransmitted); _flow control_ and _congestion avoidance_.
 
-__Flow control__ is a mechanism to avoid the sender overwhelming the receiver with more data than it can process. The receiver only has a certain amount of bandwidth it can use to process data over a given period of time. Data that is sent to the receiver but awaiting processing is stored in a buffer (the size of the buffer depends on the operating system and physical resources available). Flow control can be implemented through the `window` header in a TCP segment - this indicates the amount of data both the sender and receiver are willing to accept. If the receiver's buffer is filling up, it can send an acknowledgement message with a smaller `window` size to indicate the sender needs to reduce the amount of data it is sending. 
+__Flow control__ is a mechanism to avoid the sender overwhelming the receiver with more data than it can process. The receiver only has a certain amount of bandwidth it can use to process data over a given period of time. Data that is sent to the receiver but awaiting processing is stored in a buffer (the size of the buffer depends on the operating system and physical resources available). Flow control can be implemented through the `window size` header in a TCP segment - this indicates the amount of data both the sender and receiver are willing to accept. If the receiver's buffer is filling up, it can send an acknowledgement message with a smaller `window size` to indicate the sender needs to reduce the amount of data it is sending. 
 
 __Congestion avoidance__ occurs when there is more data being transmitted across the network than the network capacity will allow. At the Network/Internet layer, routers are responsible for transmitting data across networks. Routers typically can only process a certain amount of data at a time - excess data is stored in a abuffer, awaiting processing. However, if the router is receiving more data than can fit in the buffer, excess data is simply dropped. 
 
-As TCP provides for data retransmission, it can detect if a large amount of data is being retransmitted across the network (network congestion is likely occurring). To combat this, TCP can adjust the `window` size in the TCP segment header to reduce the amount of data being transferred.
+As TCP provides for data retransmission, it can detect if a large amount of data is being retransmitted across the network (network congestion is likely occurring). To combat this, TCP can adjust the `window size` in the TCP segment header to reduce the amount of data being transferred.
 
 Two downsides associated with TCP are:
 1. TCP handshakes adding overhead to data transfer - additional latency must occur before any application data can be sent. 
-2. Head of Line (HOL) blocking - as TCP allows for in-order delivery, if a particular part of a message is corrupted/lost and needs to be retransmitted, this will block the delivery and processing of subsequent messages. While HOL blocking isn't unique to TCP, retransmission still increases the queuing delay, which contributes to overall latency.
+2. The process of having to send acknowledgments for messages means that overall data delivery is slower than Transport layer protocols like UDP, which by default don't provide for this capability.
+3. Head of Line (HOL) blocking - as TCP allows for in-order delivery, if a particular part of a message is corrupted/lost and needs to be retransmitted, this will block the delivery and processing of subsequent messages. While HOL blocking isn't unique to TCP, retransmission still increases the queuing delay, which contributes to overall latency.
+
 ### What is UDP? What are it's downsides/upsides?
 UDP (User Datagram Protocol) is a connectionless protocol used in the Transport layer. It provides multiplexing capability for application data - i.e. it enables different applications to send data or requests to the server over a single communication channel, through the use of source ports. However, as UDP is a connectionless protocol, on the server side, only a single socket object is instantiated, meaning all of the UDP datagrams travel to the same socket. This has the effect of the server processing requests as and when they come.
 
@@ -154,9 +160,22 @@ The upside of UDP (compared to TCP) is that there is much less overhead and late
 The fact that UDP is much more bare bones grants it flexibility - an application may require one aspect of reliability but not require others - e.g. in-order delivery may be relevant, but not retransmission or duplication. An application developer can simply build additional services on top of UDP, rather than deal with the additional complexities within TCP.
 
 ### What is the TCP handshake?
+The TCP handshake is a process of establishing a TCP connection between a client and a server that needs to occur (in theory) prior to each request. The process is:
+1. The sender sends an empty TCP segment (i.e. without a data payload), with the `SYN` flag set to `1`.
+2. The receiver receives the `SYN` message, and sends an empty TCP segment with the `SYN ACK` flags set to `1`.
+3. The sender receives the `SYN ACK` flag, and sends an empty message with the `ACK` flag set to `1`. After sending this `ACK` message, the sender is able to start transmitting data to the receiver. 
+4. Once the receiver receives the `ACK` message, it is able to send data back to the sender.
+
+The TCP handshake, in reality, might occur less frequently than with each request, things like `keep-alives` or pipelining exist to 're-use' a TCP connection for multiple requests. While it provides for an aspect of reliability (i.e. ensuring a live connection is established before sending data), the additional sending of messages contributes to latency, since messages cannot be sent until this handshake is complete.
 
 ### What is pipelining?
+In theory, the TCP handshake must occur prior to every request being made (i.e. establish a TCP connection). This would slow down the message delivery process, since additional latency is increased through waiting for the messages in the TCP handshake to send, and is generally an inefficient process - only a single message can be sent at a time, and much of the time is spent waiting for an acknowledgment.
+
+Pipelining is a way to reduce this connection overhead by sending multiple requests at a time over a single TCP connection (i.e. some 'persistence' is introduced to the TCP connection). The number of messages depends on the value set in the `window size` field in the TCP segment header. Pipelining does _not_ impact reliability, since each message still receives an acknowledgment, and retransmission can occur. It improves bandwidth utilisation, since more requests are being transferred over the connection for a given unit of time.
 
 ### What is flow control?
+Flow control is a way that TCP can avoid the recipient of messages from being overwhelmed by too much data (i.e. more than it can process) at a particular point in time. A receiver typically has a maximum capacity for processing data; data in excess of this processing capacity will be stored in a buffer (whose size depends on the operating system and physical resources), to be processed when the receiver has the capacity to do so. However, when this buffer is full, additional data is not added to the buffer - it is simply dropped. 
+
+While TCP does provide for retransmission, retransmission adds to latency, both through introducing additional round trips to the transmission process, but also potentially introducing queuing delay through additional Head-of-Line blocking if subsequent messages need prior messages to be resent and processed. To reduce the likelihood of this occuring, the receiver, in it's acknowledgment messages, is able to change the value in the `window size` header field, to indicate to the sender it is being overwhelmed by the amount of data being sent to it. As a result, the sender will reduce the amount of requests sent per connection, to allow the receiver to 'catch-up'.
 
 ### What is congestion avoidance?
