@@ -230,6 +230,20 @@ Resources is a generic term for anything we might interact with on the internet 
 Statelessness in the context of a protocol means that each request/response pair is independent of another - request/response pairs have no context or knowledge of the data transmitted in other request/response pairs. This is helpful for HTTP, in that information _does not need to be persisted between requests_. However, this is means that from an application developer perspective, providing a user experience that simulates statefulness can be difficult - an application that requires authentication via signing needs to remember that the user is signed it as they issue additional requests.
 
 ### How can we manage state with HTTP?
+HTTP is a stateless protocol, meaning that each request/response pair is a unique entity, and independent of any other request/response pair. However, there are methods that we can use to simulate statefulness in applications using HTTP.
+
+One of the main methods is by tracking a session, using a session identifier/token like a cookie. When a server provides a response to a request, if a cookie does not already exist within the browser, the server will append a session id as part of the request (the session id is saved within the browser), using the `set-cookie` response header. On subsequent request/response cycles, the messages will have a session id appended to it. 
+
+On a client making a request, the server will:
+1. Check if the request has the session id
+2. Verify the session id is still valid (via business rules to govern session expiry and where to store session related data)
+3. Retrieve session-specific resources based on the session id (the session data is stored on the server)
+4. Retrieve the application state-specific resources based on the session data, sending it to the client as a response.
+
+Session IDs or cookies are typically relatively short lived - if lost or expired, then the state specific data is lost, and a new cookie or session id must be passed from the server to the client.
+
+### What is AJAX?
+Asynchronous Javascript and XML (AJAX) is a feature that allows browsers to issue requests and process responses without triggering a full page refresh. Without AJAX, every user action could potentially require a full page refresh, which is very expensive, resource-wise. When a user performs an action, an AJAX request is sent to the server, just like a regular request/response cycle. However, AJAX uses callbacks, which is logic that is passed to some function after a certain event has happened - the callback is usually triggered when the response is returned. In this way, the callback function is able to update only part of the page (instead of fully refreshing the page) on receiving the response from the server.
 
 ### What is a `GET` request? Describe the process of issuing a `GET` request.
 When we type a URL into the address bar of our web browser and press Return, we are issuing a `GET` request - i.e. we want to fetch some resources from the server. As the first step, the browser will make a request to the Domain Name System servers, so that an IP address corresponding to the URL can be found to route the request (i.e. it's a field in the header of the Network/Internet layer PDU).
@@ -262,5 +276,67 @@ Some standard __response__ headers include:
 - `Content-Type`: This indicates the format of the data returned (e.g. `text/html; charset=UTF-8`)
 
 ### HTTP is a text protocol, and has some security issues. How do we mitigate these security issues?
+As HTTP is a text protocol, the request is sent as strings. This means that things like the query parameter strings in a URL, or the cookie/session id can easily be read by a hacker, using packet sniffing techniques. This means they are able to read any information sent to the server or client, and simulate application state using the session id, allowing them to pose as a client without having to access a user's username or password.
+
+In order to protect against this, there are number of methods that can be used:
+
+__HTTPS__: This is secure HTTP. We can identify resources accessed via HTTPS in the scheme of the URL (`https`). With HTTPS, every request/response pair is encrypted before it is passed to the Network layer. This means that even if a hacker were able to use a packet sniffing technique, the resulting message would be encrypted and could not be read. Transport Layer Security is the crytographic protocol used for encryption by HTTPS.
+
+__Same Origin Policy__ - Resources that originate from the same origin have unrestricted access to interact with each other. Resources that originate from different origins have more restrictions in respect of their interactions  - linking, redirects, resource embedding (scripts and CSS stylesheets, as an example) and form submissions are common exceptions to the Same Origin Policy. Resources that come from the same origin have the same `scheme`, `host` and `port`. Same Origin Policy is most useful in restricting interactions between resources that have been accessed programmatically (e.g. through an API like `XMLHttpRequest` or `fetch`).
+
+We can get around the Same Origin Policy by using CORS (Cross origin Resource Sharing), which can be implemented by including certain HTTP headers (e.g. the `Access-Control-Allow-Origin` response header) in the request/response messages.
 
 ### What are some ways in which HTTP is vulnerable to hackers?
+__Session hijacking__ occurs when a hacker is able to use packet sniffing techniques to capture the cookie or session id in a request/response message. With this session id, the hacker is able to send requests to the server with this session id, upon which the server will respond with state-specific data, allowing hackers to access a user's specific state of application without access to their username or password.
+
+This can be combatted by resetting sessions, particularly on sensitive user interactions. When a user authenticates by logging in, a successful login should render older session ids invalid, and create a new session id. Examples of this are e-Commerce sites, which usually require the user to re-login when attempting to pay with a credit card.
+
+Applications can also set expiry times on session ids - this limits the time that a hacker could have access to state-specific application data, reducing the potential harm to the user.
+
+We could also limit the potential for session hijacking by using HTTPS in the request/response cycle, thus encrypting any session ids attached to messages sent between client and server.
+
+__Cross Site Scripting (XSS)__ is another method that HTTP could be vulnerable to hackers. XSS occurs when some element of the application allows hackers to directly inject JavaScript into a site and cause the server to run that JavaScript when returning the response. A common vector for this are forms, which allow users to input text. If the server does not __sanitise__ the input text, this could cause the server to return the response with the JavaScript code injected into the relevant resources.
+
+One way of limiting the potential of XSS is to _sanitise_ user input. This could be by only limiting the input text of users to Markdown format, which prevents code from being executed, or removing certain strings such as `<script>` which enable JavaScript code to run.
+
+Another way to limit XSS is to _escape user input_. With this method, characters that could be interpreted as HTML or JavaScript code are replaced with a combination of ASCII characters, which indicate to the client to simply display the character as is and not process it like code.
+
+### What is Transport Layer Security? What does it do?
+Transport Layer Security (TLS) is a security protocol that can be used to encrypt HTTP messages as part of HTTPS (Secure HTTP). It is highly recommended to use TLS, since basic HTTP request/response messages are sent as plain text - TLS can potentially prevent packet sniffing techniques and hackers from session hijacking. It can be thought to exist between the Application and Network layers in the Internet Protocol Suite model.
+
+TLS is established after a TCP connection has been established after the TCP handshake (it is a protocol reliant on using TCP at the Transport layer). The TLS handshake then occurs, to create a _secure_ connection. No application data is sent until this TLS handshake has been completed.
+
+TLS can provide three types of security measures (though not all might be appropriate, depending on the application use case).
+- Encryption: Encoding a message so that only the intended recipient is able to decode the message.
+- Authentication: Verifying the identity of a particular party in the message exchange process.
+- Integrity: Checking whether a message has been altered or faked.
+
+### What is the TLS Handshake?
+The TLS Handshake is a process used to establish a secure connection, once a TCP connection has been established, and part of the _encryption_ capabilities of TLS. It relies on both an asymmetric and symmetric key encryption.
+
+1. The client will send a `ClientHello` message to the server, indicating a desire to set up a TLS connection. Part of this `ClientHello` message will include the highest version of the TLS that the client can support, as well as a list of Cipher Suites that the client can use to encrypt keys.
+2. Upon receiving the `ClientHello`, the server will return a `ServerHello` message, which sets the TLS protocol version, as well as the Cipher Suite to be used for key encryption. The `ServerHello` message also includes a _certificate_, which includes the server's public key, and a `ServerHelloDone` marker to indicate the server regards this part of the handshake as done.
+3. Once the client has received the `ServerHello` message, the key exchange process beings. The actual process depends on the algorithm used (decided from the Cipher Suite). 
+
+In the case of RSA:
+1. The client will send a `ClientKeyExchange` message, which includes a 'pre-master secret', which is some data that's been encrypted with the server's public key as provided through the certificate in the `ServerHello` message. This message includes the `ChangeCipherSpec` flag, which indicates to the server that the client is ready to start using encrypted communications using the symmetric key. The message also includes a `Finished` flag, which indicates the client is done with this part of the handshake process.
+2. The server receives the `ClientKeyExchange` message and decrypts it using it's private key. 
+3. The client and server then each generate a symmetric key based on the pre-master secret with some pre-agreed parameters. 
+4. The server will then send a `ChangeCipherSpec` message to the client with a `Finished` flag. This indicates that the server is ready to start using a symmetric key to start communications, and secure communications can begin.
+
+
+### What is a Cipher Suite?
+
+### What is encryption in the context of TLS?
+
+### What is authentication in the context of TLS?
+
+### What is integrity in the context of TLS?
+
+### What is symmetric key encryption? What is asymmetric key encryption? What's the difference?
+
+### What is a certificate?
+
+### What is a certificate authority?
+
+### What is the chain of trust?
