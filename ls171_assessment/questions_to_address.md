@@ -1,5 +1,5 @@
 ### What is the internet?
-The internet can be described as a network of networks - it allows for the communication between devices and the transfer of information across different networks, through various protocols operating at different 'layers', where each layer has it's own responsibility for the transmission of information and is 'independent' from other layers, in that the specific information and implementation at one layer is abstracted away from another layer through the encapsulation of a _protocol data unit_.
+The internet can be described as a _network of networks_ - it allows for the communication between devices and the transfer of information across different networks, through various protocols operating at different 'layers', where each layer has it's own responsibility for the transmission of information and is 'independent' from other layers, in that the specific information and implementation at one layer is abstracted away from another layer through the encapsulation of a _protocol data unit_. The _world wide web_ or web for short, is a __service__ that can be accessed via the internet.
 
 ### What is a network?
 A network, at it's simplest implementation, is two devices connected in such a way that they are able to communicate or exchange data between themselves. The key is that communications are limited to devices that exist within the network and are connected to each other (either directly, or through a switch or hub) - i.e. the Local Access Network (LAN). 
@@ -155,7 +155,7 @@ UDP datagram headers are much simpler - they have
 
 The fact that there are much fewer header fields than with TCP indicates that UDP is much more limited in respect of the reliability capabilities than TCP. At it's heart, UDP __doesn't do anything to resolve the unreliability of protocols__ in the layers beneath it. UDP __does not__ provide for in-order delivery, retransmission of data or the state of a connection - as it is connectionless, an application can simply start sending data _without having to wait for a connection to be established_ with the application process of the receiver. 
 
-The upside of UDP (compared to TCP) is that there is much less overhead and latency when it comes to sending data - no handshake process is required, fewer headers need to be populated, and no acknowledgement messages or retransmission mean the data delivery is faster. Since there is no in-order delivery, Head of Line blocking isn't an issue at the Transport layer.
+The upside of UDP (compared to TCP) is that there is much less overhead and latency when it comes to sending data - no handshake process is required, fewer headers need to be populated, and no acknowledgement messages or retransmission mean the data delivery is faster. Since there is no in-order delivery, Head of Line blocking isn't an issue at the Transport layer when using UDP.
 
 The fact that UDP is much more bare bones grants it flexibility - an application may require one aspect of reliability but not require others - e.g. in-order delivery may be relevant, but not retransmission or duplication. An application developer can simply build additional services on top of UDP, rather than deal with the additional complexities within TCP.
 
@@ -179,3 +179,88 @@ Flow control is a way that TCP can avoid the recipient of messages from being ov
 While TCP does provide for retransmission, retransmission adds to latency, both through introducing additional round trips to the transmission process, but also potentially introducing queuing delay through additional Head-of-Line blocking if subsequent messages need prior messages to be resent and processed. To reduce the likelihood of this occuring, the receiver, in it's acknowledgment messages, is able to change the value in the `window size` header field, to indicate to the sender it is being overwhelmed by the amount of data being sent to it. As a result, the sender will reduce the amount of requests sent per connection, to allow the receiver to 'catch-up'.
 
 ### What is congestion avoidance?
+Congestion avoidance is the ability of TCP to identify whether the amount of data transferred from sender to receiver is overwhelming the underlying network. Layers beneath the transport layer do not have reliability functionality like the Transport layer can have. When data is sent to a router (the Internet/Network layer), the router is able to store data it does not have capacity to process in a buffer. However, if that buffer becomes full, excess data is simply dropped. 
+
+TCP is responsible for monitoring and re-transmission of the lost data. Re-transmission of data is inefficient and increases the overall latency of data transmission. If the amount of re-transmission becomes excessive, TCP is able to reduce the value in the `window size` header field, which reduces the amount of requests sent on a given TCP connection. This enables the routers on the Internet/Network layer to 'catch-up' and process the data in their buffers, reducing the amount of re-transmission required.
+
+### What is the application layer?
+The application layer is the top layer in both the OSI and Internet Protocol Suite network models. The protocols at the application layer vary according to the underlying application that is trying to transmit data; the common theme is that the various protocols are responsible for _providing communication services_ to these underlying applications, and _structuring the application data_ (and what data is should contain) for transmission, so that they can be encapsulated for lower levels and _interpreted by other application services_.
+
+### What is HTTP?
+HTTP (HyperText Transfer Protocol) is a protocol used at the application layer to provide _uniformity to how resources are transferred between applications_ (i.e. __message format__). It is a text-based protocol that follows a request-response model; a client will make a request to a server, and wait for the server to response, though it is the TCP and IP protocols that are involves in the actual transfer.
+
+### What is a URL? How is it different from a URI? *
+A URL (Uniform Resource Locator) is a subset of a URI (Uniform Resource Identifier). Per RFC3986, a URI is a sequence of characters that identifies an abstract or physical resource, while a URL is a URI that provides a _means of locating that resource_ by describing it's primary access mechanism (i.e. the network address), while a URI does __not__ provide the specific protocol or directory path required to access the underlying resource.
+
+In the context of a web browser, when a user types a URL in the address bar, the browser will usually make a DNS request to translate the URL to an IP address so that the data can be transferred to the correct server.
+
+### What are the components of a URL? *
+A URL has five potential components:
+1. The __scheme__: This is identified by the characters prior to the `://` sequence of characters in a URL. It specifies the client _how to access the resource_, usually by specifying the protocol required. Examples include `http`, `ftp` or `mailto`.
+2. The __host__: This part of the URL specifies __where__ the client can find the resource - e.g. `www.google.com`
+3. The __port__: This is only explicitly specified if we want to use a non-default port when the request is made (otherwise the browser will use the default port number, which is 80 for `http`, and 443 for `https`). Otherwise, it's assumed to be part of every URL.
+4. The __path__: This is a more specific reference to a resource and is optional - e.g. `/home/`
+5. The __query string__: These are name-value pairs that can be used as part of a `GET` request to send specific information to the server, and is optional - e.g. `?product=phones`
+
+### What is a query string parameter? Why would we use it/not use it?
+A query string parameter is an optional field in a URL that can be used to communicate specific information when making a `GET` request to a server. They take the form of name value pairs. They can be identified as the name-values pairs in a URL following the `?` character (e.g. `?product=phone`). The `name` is the series of characters to the left of the `=` symbol, while the value is the string to the right of the `=` symbol. Different name-value pairs are separated by the `&` character (e.g. `?product=phone&colour=white`).
+
+Query string parameters have some limitations. 
+- As HTTP is a text-based protocol, it's not recommended to use query string parameters when sensitive information is being sent to the server (such as username, passwords, or potentially personally identifiable information), as the query string parameters are visible in the URL, and could be intercepted by a third party. 
+- Query string parameters also have a maximum length - if there is a significant amount of data that needs to be passed to the server, this may not fit within the URL.
+- Certain characters, such as `&` or `=` (e.g. characters that aren't in the standard 128-character ASCII character set, or are reserved to identify the query string parameters themselves) cannot be used in a query string (they must be encoded).
+
+If we are sending potentially sensitive information to a server, and/or a lot of data, it's recommended to use a `POST` request instead.
+
+### What is URL encoding and why would we use it?
+URL encoding is the process of replacing certain characters in a URL, where those characters aren't in the standard 128-character ASCII character set, or are otherwise reserved or unsafe (i.e. being used in a fashion different to a specific intended purpose, such as identifying query parameters). URL encoding typically replaces these offending characters with a `%` symbol, followed by two hexadecimal digits that represent the ASCII code of the chracter.
+- An _unsafe_ character is one that may be misinterpreted or potentially modified by some systems - e.g. `%` is used as part of the URL encoding process, and could be misinterpreted as being used for that purpose. 
+- A _reserved_ character is one that is reserved for a specific purpose in the URL scheme - e.g. `?` is used to denote the start of a query string.
+
+### What is a server? What are the infrastructure components of a server?
+A server is simply a machine that is designed to listen for incoming requests, and provide data in response to those requests. A server will typically comprise of three distinct pieces of infrastructure (though these infrastructure pieces may be distributed across many different machines):
+1. Web server: This is a server designed to respond to requests for static assets, like images, HTML, CSS or JavaScript files, which don't require business logic or complex processing to provide a response.
+2. Application server: This is a server designed to provide data that requires some degree of processing or business logic (this is where server-side code exists when deployed).
+3. Data Store: This is infrastructure that is designed to act as a persistent data store (e.g. a relational database), where data can be retrieved or created.
+
+### What are resources?
+Resources is a generic term for anything we might interact with on the internet with a URL. Examples include images, videos, HTML files, or even applications themselves.
+
+### What is statelessness? Why is it an issue with HTTP?
+Statelessness in the context of a protocol means that each request/response pair is independent of another - request/response pairs have no context or knowledge of the data transmitted in other request/response pairs. This is helpful for HTTP, in that information _does not need to be persisted between requests_. However, this is means that from an application developer perspective, providing a user experience that simulates statefulness can be difficult - an application that requires authentication via signing needs to remember that the user is signed it as they issue additional requests.
+
+### How can we manage state with HTTP?
+
+### What is a `GET` request? Describe the process of issuing a `GET` request.
+When we type a URL into the address bar of our web browser and press Return, we are issuing a `GET` request - i.e. we want to fetch some resources from the server. As the first step, the browser will make a request to the Domain Name System servers, so that an IP address corresponding to the URL can be found to route the request (i.e. it's a field in the header of the Network/Internet layer PDU).
+
+The `GET` request is actually a request-line - it contains additional information in _request headers_ other than just the destination IP address. This allows the server to interpret what specific information to return, and how it should return this information. Standard request headers include:
+- The `method`: the value of this is `GET` in a `GET` request. This tells the server the client wants to retrieve some information. This is required.
+- The `path`: this indicates _what specific resource_ the client is after. This is required in a request-line (contrast this with the `path` in a URL, which is optional)
+- The `host`: this is equivalent to the `host` in a URL (e.g. `www.google.com`). This is required as of HTTP 1.1.
+- The `version`: in a web browser context, this is the version of the HTTP that should be used. This is required as of HTTP 1.0.
+
+The request is then passed down the different layers, within and across different networks via routers and switches, until it is received by the server. The server will then fetch these resources and send them back to the browser. The browser then interprets the data sent from the server and displays a page (making additional `GET` requests as it interprets references to other resources in the initial response). The browser is able to interpret the response (and how it should render the page) according to the response headers.
+
+### What is a `POST` request?
+A `POST` request is a type of HTTP request, used when the user wants to add or change values that are stored on the server. It's typically used when query string parameters do not fit the use case (e.g. too much information to be sent through query string parameters, or sensitive information). Data is sent through the HTTP body. An example use case is submitting a form to a server.
+
+### What is a HTTP Header?
+HTTP headers are colon separated name-value pairs sent as plain-text with HTTP messages, which provide metadata alongside the message which can aid in the processing of the request.
+
+Some standard __request__ headers include:
+- `Host`: This is equivalent to the `host` in a URL (e.g. `www.google.com`)
+- `Accept-Language`: This specifies what language the response resources should be in (e.g. `en-US,en;q=0.8`)
+- `User-Agent`: This identifies the client (e.g. `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5)`)
+- `Connection`; This specifies what type of connection the client would prefer (e.g. `keep-alive`)
+
+Some standard __response__ headers include:
+- `Status`: This indicates the status of the request (e.g. `302 Found`). This is always returned, and required as part of a HTTP response header.
+- `Content-Encoding`: This identifies the encoding used on the data returned by the server (e.g. `gzip`)
+- `Server`: The name of the server returning the data (e.g. `thin 1.5.0 codename Knife`)
+- `Location`: In the case of a status 302, this indicates where the resource has been relocated to, and where the browser should issue another request to (e.g. `https://www.github.com/login`)
+- `Content-Type`: This indicates the format of the data returned (e.g. `text/html; charset=UTF-8`)
+
+### HTTP is a text protocol, and has some security issues. How do we mitigate these security issues?
+
+### What are some ways in which HTTP is vulnerable to hackers?
