@@ -314,7 +314,7 @@ TLS can provide three types of security measures (though not all might be approp
 ### What is the TLS Handshake?
 The TLS Handshake is a process used to establish a secure connection, once a TCP connection has been established, and part of the _encryption_ capabilities of TLS. It relies on both an asymmetric and symmetric key encryption.
 
-1. The client will send a `ClientHello` message to the server, indicating a desire to set up a TLS connection. Part of this `ClientHello` message will include the highest version of the TLS that the client can support, as well as a list of Cipher Suites that the client can use to encrypt keys.
+1. The client will send a `ClientHello` message to the server, indicating a desire to set up a TLS connection. Part of this `ClientHello` message will include the highest version of the TLS protocol that the client can support, as well as a list of Cipher Suites that the client can use to encrypt keys.
 2. Upon receiving the `ClientHello`, the server will return a `ServerHello` message, which sets the TLS protocol version, as well as the Cipher Suite to be used for key encryption. The `ServerHello` message also includes a _certificate_, which includes the server's public key, and a `ServerHelloDone` marker to indicate the server regards this part of the handshake as done.
 3. Once the client has received the `ServerHello` message, the key exchange process beings. The actual process depends on the algorithm used (decided from the Cipher Suite). 
 
@@ -324,19 +324,44 @@ In the case of RSA:
 3. The client and server then each generate a symmetric key based on the pre-master secret with some pre-agreed parameters. 
 4. The server will then send a `ChangeCipherSpec` message to the client with a `Finished` flag. This indicates that the server is ready to start using a symmetric key to start communications, and secure communications can begin.
 
+One downside of the TLS Handshake is the latency it adds to the overall connection process - there are potentially two additional round trips worth of latency before any application data is even sent (on top of the latency introduced by the TCP handshake process).
 
 ### What is a Cipher Suite?
+A cipher suite is a set of cryptographic algorithms used in encryption/decryption and other related tasks. TLS uses the cipher suite to determine which algorithm should be used to generate the symmetric key, based on the cipher suites a client supports.
 
 ### What is encryption in the context of TLS?
+Generally, encryption is the process of obscuring the contents of a message so that only an authorised party is able to decrypt that message and see it's contents. In the TLS context, encryption refers to both the client and server encrypting and decrypting their messages with a symmetric key generated through the TLS handshake process, so that no other parties are able to see what the contents of the messages being exchanged are.
 
 ### What is authentication in the context of TLS?
+Authentication more generally is the process of verifying the parties involved in the message exchange are who they say they are. In the TLS context, this is achieved through certificates (via asymmetric key encryption) and the chain of trust.
 
-### What is integrity in the context of TLS?
+During the TLS handshake process, the server will send a certificate as part of it's `ServerHello` message back to the client. This certificate (which includes the server's public key) is sent along with a __signature__, which is some data encrypted with the server's private key, as well as the unencrypted version of this same data used to generate the signature. 
+
+On receiving the `ServerHello` message, the client will then decrypt the signature using the public key contained with the certificate and compare the results to the unencrypted original data. If the two match, then this serves as proof that the server is who they say they are (as no other party should have access to the server's private key and be able to encrypt a message with it).
+
+This asymmetric key encryption is almost the opposite of what happens during _encryption_ in the TLS protocol; for encryption, the client encrypts data using the public key, and the server decrypts the message using the private key. This is because the priority here is to safeguard the message contents. For _authentication_ purposes, the contents of the message aren't so important as _who_ is sending it, and so using the public key (which is available to anyone) to decrypt the message shouldn't cause message contents to leak unnecessarily.
 
 ### What is symmetric key encryption? What is asymmetric key encryption? What's the difference?
+Symmetric key encryption is the process of parties involved in a message exchange encrypting their messages by using the same key. This symmetric key is kept secret between the two parties. This ensures that parties who aren't intended to be involved in the message exchange are not able to read the data being exchanged.
+
+However, when transferring data using digital infrastructure, the initial transfer of the symmetric key to both parties can be tricky - the message could be intercepted by a third party, giving them access to the symmetric key and thus access to the data being transferred. As such, asymmetric key encryption can be used to mitigate this risk. 
+
+With asymmetric key encryption, there are two different keys used for encryption (a _public_ key) and decryption of data (a _private_ key). In the context of a client and server, the public key is usually freely available to any client that wants to send messages to the server. However, the private key is only available to the server, meaning that only the server is able to decrypt messages encrypted using the public key. 
+
+It should be noted that asymmetric key encryption is _unidirectional_; in our example above, only data sent from the client to the server is encrypted; if the server itself did not employ some asymmetric key encryption technique, these responses could be visible to third parties. The client would also need to share a public key with the server, so that it could encrypt the messages in a way that only the client could decrypt. Otherwise, algorithms such as RSA allow both parties to agree  upon certain parameters to individually generate a common symmetric key after asymmetric key encryption occurs, without having to explicitly transmit this symmetric key over a message.
 
 ### What is a certificate?
+A certificate is a means of identifying the party who possesses it. In the context of the TLS protocol, it is involved during the TLS handshake; sent to the client along with a public key by the server as part of the `ServerHello` message. The certificate also contains the public key that the client can use for encrypting messages to be sent to the server as part of the initial TLS handshake.
 
-### What is a certificate authority?
+From an authentication perspective, the certificate provides assurance that they party is who they say they are. However, certificates could be faked - this is where Certificate Authorities (CA) come in. When a certificate is issued to a party via a CA, that CA is:
+1. Verifying the party is who they say they are (how this is actually done depends on the CA; it could be checking that the party legally owns the domain, etc.)
+2. Digitally signing the certificate being issued - when a certificate is issued, the CA usually encrypts some data in the form of a signature, and adds this along with an unencrypted version of the same data to verify that the certifcate was issued by the CA, all within the certificate itself.
 
-### What is the chain of trust?
+A certificate will generally be signed by one CA. A CA will sign the end-user's certificate, while a Root CA will sign the intermediate CA's certificate. This creates a 'chain of trust', whereby a Root CA is the end-point in the chain of trust, and assumed to be a trustworthy party. The 'chain' structure also provides a layer of security for the Certificate Authorities; Root CA private keys are typically kept behind many layers of security to prevent it from being exposed. Root CAs are also able to invalidate certificates issued by an intermediate CA in the event that the intermediate CA's private key is exposed (effectively invalidating all the certificates down the chain).
+
+### What is integrity in the context of TLS?
+Integrity is the process of ensuring that a message has not been tampered with or faked as it is transmitted to another party. In the context of the TLS protocol, the TLS record (the name for the data payload) will include a MAC (Message Authentication Code) header. This works like the `checksum` header values in the PDU of other lower layers.
+
+The sender generates a _digest_ of the payload, which is a small sample of the actual message being sent. The digest is generated using a hashing algorithm and pre-agreed hash value that was negotiated as part of the Cipher Suite in the initial TLS handshake process. This is the value in the `MAC` header.
+
+When the recipient receives the message from the sender, it will decrypt the payload using the symmetric key, and also use the same hashing algorithm and pre-agreed hash value to generate a digest from the data. If the two encrypted digests match, then this indicates the message has not been altered during transmission.
