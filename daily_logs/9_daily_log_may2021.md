@@ -1,7 +1,8 @@
-# May 2021 (Total minutes: 486)
+# May 2021 (Total minutes: 606)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
+- [4th, Tue](#040521-tue)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -35,3 +36,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I accidentally slept in today and ended up having to do the two hours of study during the evening. As per my previous experience, this doesn't work particularly well after a long day at work. The second hour of study isn't nearly as productive as the first, as fatigue starts to creep in. I finished off my templated answers and tidied them up.
+
+##### 04/05/21 (Tue)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Revision
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I'm retaining the earlier concepts reasonably well, and able to communicate them more succinctly. It's good progress, which is helpful because generally, I'm starting to feel a little burned out.
