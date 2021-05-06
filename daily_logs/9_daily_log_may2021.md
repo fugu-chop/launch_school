@@ -1,9 +1,10 @@
-# May 2021 (Total minutes: 729)
+# May 2021 (Total minutes: 854)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
 - [4th, Tue](#040521-tue)
 - [5th, Wed](#050521-wed)
+- [6th, Thu](#060521-thu)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -59,3 +60,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 More revision. The earlier topics I'm able to recall somewhat clearly, though basically anything from URLs onwards I'm struggling to recall the details of. More practice needed, but I should be ready to take the test reasonably soon.
+
+##### 06/05/21 (Thu)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Revision
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+I'm still having some trouble with TLS authentication and explaining it clearly, particularly how the chain of trust operates. I'll continue to practice this. 
