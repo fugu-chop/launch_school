@@ -86,7 +86,7 @@ Without multiplexing, the transmission of information would be extremely slow an
 A port is an identifier for a specific application process. It is used through the multiplexing capabilities of the Transport layer. A port will typically be combined with an IP address to create a socket, which provides a specific location where a request can be sent from and responded to by the server. On the server end, some ports are reserved for well known applications (e.g. port 80 is reserved on the server end for HTTP requests). On the client end, ephemeral ports (i.e. temporary ports) as assigned to applications for usage. Which ports these are depends on the client's operating system.
 
 ### What is a socket? What is it used for?
-The conceptual definition of a socket is a combination of an IP address and a port (this should be distinguished from the implementation of a socket, e.g. UNIX sockets). Sockets are used as part of the multiplexing capabilities offered at the Transport layer. In a connection-oriented system, a socket object would be instantiated for each incoming socket, such that a dedicated virtual connection is established between client and server for each application process (the combination of the source and destination socket is known as a _four-tuple_). In a connectionless system, only a single socket object is instantiated on the server, and messages are simply responded to in the order they are received. In both cases, the socket of the client helps the server identify where to send a response to.
+The conceptual definition of a socket is a combination of an IP address and a port, and can be regarded as a communication end-point (this should be distinguished from the implementation of a socket). Sockets are used as part of the multiplexing capabilities offered at the Transport layer. In a connection-oriented system, a socket object would be instantiated for each incoming socket, such that a dedicated virtual connection is established between client and server for each application process (the combination of the source and destination socket is known as a _four-tuple_). In a connectionless system, only a single socket object is instantiated on the server, and messages are simply responded to in the order they are received. In both cases, the socket of the client helps the server identify where to send a response to.
 
 ### What is a connection-oriented network system? What is an example of this?
 A connection-oriented network system establishes dedicated sockets for each source of application data between the client and the server. A connection-oriented network system enables reliability function by enabling things like:
@@ -115,40 +115,99 @@ The obvious benefit of TCP as a connection oriented network system is reliabilit
 The potential downside of TCP is the additional latency associated with having to establish a TCP connection through the TCP handshake prior to each request. Another consequence of in-order delivery (not necessarily TCP specifically) is _head of line_ blocking - this occurs when a message is received by the server out of order compared to the order in which the messages were sent. If a message is out of order, TCP will require the missing message to be received (or retransmitted, if necessary) before subsequent messages are processed (though this isn't a problem unique to the Transport layer).
 
 ### What is UDP? What are it's downsides/upsides?
+The User Datagram Protocol (UDP) is a Transport layer protocol. It is a connectionless network system, meaning that only a single socket object is instantiated on the server end to handle all incoming requests from different application sources, where requests are dealt with as and when they come. The key disadvantage when compared with TCP is the lack of reliability; by default, UDP does not provide for things like in-order delivery, retransmission or duplication checking (though these could be built in as required by a developer). The advantage is the reduced latency from not having overheads like a TCP handshake every time a message is transferred - with UDP, an application can simply start sending data without waiting for a connection to be established with the _application process of the server_.
 
 ### What is the TCP handshake?
+The TCP handshake is a process of establishing a TCP connection with the _application process of the server_ before any application data can be sent. In theory, it should occur on each request, though connection types like `keepalives` and pipelining mean that often multiple requests can be sent per connection. There are three key steps to the TCP handshake:
+1. The client sends a `SYN` message (i.e. TCP segment with no payload, and `SYN` header value of `1`) to the server.
+2. The server, receiving the `SYN` message, sends a `SYN ACK` message (i.e. TCP segment with no payload, and `SYN` and `ACK` header values of `1`) back to the client.
+3. The client, receiving the `SYN ACK` message, sends an `ACK` message back to the server. At this point, the client is able to start sending application data to the server. The server is only able to start sending application data responses _after_ it has received the `ACK` message.
 
 ### What is pipelining?
+Pipelining is the mechanism for using a single connection to send multiple requests at one time. It is a better utilisation of the available bandwidth on a connection, as particularly for TCP connections, the in-order delivery capabilities mean we would have to wait for each message to be sent and an acknowledgment received individually before the next message could be sent. Reliability is still preserved through pipelining, as the server would send multiple acknowledgments at the one time.
 
-### What is flow control?
+A TCP segment can set the number of messages to be sent simultanenously through the `window size` header value (which is also a method of ensuring congestion avoidance throughout the network and implementing flow control between devices).
 
-### What is congestion avoidance?
+### What is flow control? *
+Flow control is the ability to avoid overwhelming a receiver with too much data. The receiver has a limited capacity to process and respond to incoming requests. As that capacity is exceeded, excess data is sent to a buffer. If that buffer starts becoming full, the receiver can send an acknowledgment message with a reduced `window size` header value, indicating to the sender that it should slow down the amount of messages being sent, so that the receiver can work through the stored data in the buffer. This `window size` header value can be dynamically adjusted through the course of message exchange, allowing more messages to be sent as the receiver's buffer starts to empty.
 
-### What is the application layer?
+### What is congestion avoidance? *
+Congestion avoidance is the mechanism through which TCP ensures that the underlying network is not overwhelmed by the message exchange process between a sender and receiver. Network devices on the network through which messages are passed have a limited capacity to process and transmit messages. As this capacity is exceeded, excess messages are passed to that device's buffer. However, if that buffer becomes full, excess messages are simply dropped, and need to be retransmitted. TCP monitors the level of transmission required - if the number of messages requiring re-transmission suddenly spikes, this can indicate that a particular connection is sending too much data over the network. TCP can then adjust the `window size` header value on the segments to slow down the rate of data transfer.
+
+### What is the application layer? *
+The application layer is the top layer in both the OSI and Internet Protocol Suite network models. There are numerous protocols at the application layer, depending on the actual application itself; in general, the protocols at this layer are responsible for providing communication services to the application itself, as well as structuring the application data for encapsulation and interpretation by other application services (e.g. on a server).
 
 ### What is HTTP?
+HTTP (HyperText Transfer Protocol) is an application layer protocol that provides uniformity to the way that resources on the web are transferred. It is a text-based protocol (meaning messages are communicated in plain text) and operates on a request/response cycle; a client will issue a request, while the server will respond with a resource or action.
 
 ### What is a URL? How is it different from a URI? *
+A URI (Uniform Resource Identifier) is a sequence of characters that identify an abstract or physical resource. A URL (Uniform Resource Locator), in addition to being a URI, identifies the primary access mechanism for that resource (e.g. a network location).
 
 ### What are the components of a URL? *
+A URL has potentially 5 components:
+1. The _scheme_: This indicates _how_ a resource can be accessed, usually be specifying a protocol. The scheme is identified as the sequence of characters preceeding `://` in a URL. 
+2. The _host_: This indicates _where_ the resource is hosted on the internet (e.g. `www.google.com`). As part of accessing a host, a web browser would typically make a call to the DNS server so that the host can be translated to an IP address.
+3. The _path_: This is a more specific locator for a resource, and is optional.
+4. The _port_: This is only necessary if the request is issued to a non-default port; otherwise it is assumed to be part of a URL, even if not explicitly stated in the URL string.
+5. Query Strings: These allow for additional information to be passed to the server as part of a `GET` request. In the URL, they will be found after a `?` character, as `name=value` pairs, separated by `&` characters. These are optional.
 
 ### What is a query string parameter? Why would we use it/not use it?
+A query string parameter is an optional part of a URL, that can be used to pass additional information to a server as part of a `GET` request. They can also assist in simulating statefulness.
+
+They are `name=value` pairs that follow a `?` character in a URL, and are separated by `&` symbols. While query string parameters provide additional flexibility in `GET` requests, there are circumstances where they might not be appropriate:
+1. Query Strings have a maximum length. This means that if there is a large volume of information that needs to be conveyed to a server as part of a request, the information might be truncated. A `POST` request might be more appropriate in this case.
+2. Query Strings are unencrypted. As HTTP is a text-based protocol, query strings can easily be read in the message exchange process. This makes them unsuitable for conveying sensitive information, like passwords or usernames. `POST` requests, or encryption of messages might be useful here.
+3. Unsupported characters. If our query strings contain data that has characters outside of the 128 standard ASCII character set, or uses characters that are required for interpreting a URL, they need to be encoded first.
 
 ### What is URL encoding and why would we use it?
+URL encoding is the process of converting certain characters that are unsupported by the 128 standard ASCII character set, or are unsafe or reserved for URL use. An offending character will typically be replaced with a `%` symbol followed by a two digit hexadecimal number that represents the ASCII character (the ASCII code). Unsafe or reserved characters are those that could be interpreted as part of the data being transferred, or used in the interpretation of the URL itself. 
 
 ### What is a server? What are the infrastructure components of a server?
+A server is a machine that listens for incoming requests and responds. A server will typically have three distinct types of infrastructure to them (the actual number of components and their configuration might differ)
+1. Web server: This infrastructure is used for retrieving static assets, such as images, CSS or JavaScript files, that don't require processing or business logic applied to them
+2. Application server: This is used when the response requires some degree of processing or business logic applied. This is where server-side application code lives  when deployed.
+3. Data store: This is where data can be created, retrieved, updated or deleted in a persistent fashion, perhaps as a relational database.
 
 ### What are resources?
+Resources is the generic term for anything that can be accessed through the internet via a URL. 
 
 ### What is statelessness? Why is it an issue with HTTP?
+HTTP is a stateless protocol. This means that each request/response pair is independent of all other requests/responses, and have no context of what information those pairs contain. This is helpful in that information does not have to be persisted between requests, but does create challenges for creating good user experiences, when users might expect their previous actions to impact their future experience (e.g. logging into an application should create a different experience and provide different functionality than if they had not logged in). Developers can simulate statefulness using things like sessions, cookies and query string parameters.
 
 ### How can we manage state with HTTP?
+We can manage state with HTTP using a number of techniques. One technique is through using sessions, through a session id. On the request from a client, the server can check if there is a valid session id associated with a particular user (a session id could be something like a cookie). If there is, the server can then recreate an application state using session-specific resources, and return this as a response to the client. The steps include:
+1. Checking if a session id exists with the request (these are usually stored on the client's browser). If not, the server can generate a session id and send this as part of the response.
+2. If a session id does exist, whether that session id is still valid. 
+3. Associating the session id with resources specific to a particular application state.
+4. Retrieving the state specific application data, and returning this in the response to the user. 
+
+We can also simulate state by using a query string; the query strings provide more specific information as part of a request, and can be used to generate a more specific response, based on the information passed through the query string.
 
 ### What is a `GET` request? Describe the process of issuing a `GET` request.
+A `GET` request is a type of request issued through a web browser, usually with the intent of retrieving some information from the server. A `GET` request will be issued through a request-line, which includes information that helps the server interpret the request and what information to return as part of the response. Standard information included with a request-line include:
+1. The request `method` - this identifies the _type_ of request (e.g. `GET`, `POST` `DELETE`)
+2. The `host` - this identifies where the request should be sent to, and is required as part of HTTP v1.1.
+3. The `path` - this identifies where the specific _resource_ is located
+4. The `version` - this identifies what version of HTTP should be used as part of the request/response cycle. This is required as of HTTPv1.
 
 ### What is a `POST` request?
+A `POST` request is most frequently used when we want the server to perform some action. They are most useful when sending requests where the use of query string parameters may not be fit for use, such as sending large volumes of information (the query string has a character limit), or when there is sensitive information that needs to be sent as part of a request (since query strings are sent as plain text as part of a `GET` request).
 
 ### What is a HTTP Header?
+HTTP headers are colon-separated plaintext metadata that is sent along with a request or response that helps the host interpret the message. 
+
+Some standard __request__ headers include:
+- `Host`: This is equivalent to the `host` in a URL (e.g. `www.google.com`)
+- `Accept-Language`: This specifies what language the response resources should be in (e.g. `en-US,en;q=0.8`)
+- `User-Agent`: This identifies the client (e.g. `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5)`)
+- `Connection`; This specifies what type of connection the client would prefer (e.g. `keep-alive`)
+
+Some standard __response__ headers include:
+- `Status`: This indicates the status of the request (e.g. `302 Found`). This is always returned, and required as part of a HTTP response header.
+- `Content-Encoding`: This identifies the encoding used on the data returned by the server (e.g. `gzip`)
+- `Server`: The name of the server returning the data (e.g. `thin 1.5.0 codename Knife`)
+- `Location`: In the case of a status 302, this indicates where the resource has been relocated to, and where the browser should issue another request to (e.g. `https://www.github.com/login`)
+- `Content-Type`: This indicates the format of the data returned (e.g. `text/html; charset=UTF-8`)
 
 ### HTTP is a text protocol, and has some security issues. How do we mitigate these security issues?
 
