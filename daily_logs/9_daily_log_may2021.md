@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 977)
+# May 2021 (Total minutes: 1,155)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -6,6 +6,7 @@
 - [5th, Wed](#050521-wed)
 - [6th, Thu](#060521-thu)
 - [7th, Fri](#070521-fri)
+- [8th, Sat](#080521-sat)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -83,3 +84,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 More practice today. My recall is improving slightly, and my answers continue to get more succinct.
+
+##### 08/05/21 (Sat)
+__*Concepts covered*__<br/>
+- LS170 - Networking Foundations
+  - Revision
+
+__*Time spent*__<br/>
+178 minutes
+
+__*Thoughts*__<br/>
+I went through the quizzes today, and was able to get all of the answers right. I think I'm basically at the point where I can feel confident to take the test. 
