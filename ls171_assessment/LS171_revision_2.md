@@ -209,24 +209,68 @@ Some standard __response__ headers include:
 - `Location`: In the case of a status 302, this indicates where the resource has been relocated to, and where the browser should issue another request to (e.g. `https://www.github.com/login`)
 - `Content-Type`: This indicates the format of the data returned (e.g. `text/html; charset=UTF-8`)
 
-### HTTP is a text protocol, and has some security issues. How do we mitigate these security issues?
+### HTTP is a text protocol, and has some security issues. How do we mitigate these security issues? *
+As HTTP is a text based protocol, this means that without encryption, messages between sender and recipient can easily be read by a third party adopting packet sniffing techniques. Messages between parties that contain a session id can also be read, allowing the third party to make a request to the server with that session id, allowing them access to a specific application state unique to the original sender, without having to access their username or password. 
+
+Some ways to mitigate this include:
+- HTTPS (Secure HTTP) encrypts messages before they are sent between sender and recipient. In this way, even if a 3rd party was able to access a message, they would not be able to read the contents without the symmetric key (or private key in the case of asymmetric key encryption). HTTPS is achieved through using the Transport Layer Security protocol.
+- Same Origin Policy means that resources from the same host, scheme and port have no restrictions between their interactions, whereas resources from a different host have more limited interactions between them. There are quite a few exceptions to the Same Origin Policy, so it's most effective when restricting resource interactions where those resources have been accessed programmatically (e.g. through an API like `XMLHttpRequest` or `fetch`).
 
 ### What are some ways in which HTTP is vulnerable to hackers?
+HTTP can be vulnerable to hackers in a number of different ways:
+- Session hijacking: As HTTP is a text based protocol, without encryption, the contents of a message can easily be read if a message is intercepted by a 3rd party. If a request or response includes a session id, that 3rd party could potentially send a request with that particular session id, which the server would use to recreate an application state specific to the original user, all without the 3rd party having to know that user's username or password. 
+  - By limiting the length of a session (i.e. setting a session expiry after some time has elapsed), if a 3rd party does somehow access a session id, this limits the potential time that a 3rd party can do damage.
+  - Requiring authentication on sensitive events; this means that whenever a user is about to perform some sensitive action (e.g. purchasing an item, entering a credit card number), the application can require them to login again, with the effect of setting up a new session id and invalidating any older session ids associated with a user. This prevents older session ids from being used to recreate application state.
+- Cross Site Scripting (XSS) occurs when the application allows input of text that could be interpreted as HTML or JavaScript from a user as part of a request. If the input text is not sanitised or escaped, then if the request contains some text that could be run as a script, the server will execute that script as part of the request. Same Origin Policy will not prevent this, as the code lives on the same site. This could allow the script to log session ids or other sensitive information. Solutions to limit XSS include sanitising the input text by users, by deleting certain strings from the request (e.g. `<script>`), or even preventing HTML or JavaScript from being entered, by limiting the formats to something like Markdown. The application could also escape the input text, such that the application won't attempt to run the script - it simply interprets the input from the user as plain text.
 
 ### What is Transport Layer Security? What does it do?
+Transport Layer Security (TLS) is a protocol that is used to provide encryption, authentication and verification to the HTTP protocol. It establishes a secure connection from client to host using the TLS handshake, reducing the risk of hackers being able to access messages being transferred. It occurs after the TCP handshake has been completed. In respect of the three key security features TLS provides:
+- Encryption: Encoding messages such that only the intended recipient of the message has the ability to decode the message and read it's contents.
+- Authentication: Verifying the identity of a particular party in the message exchange through the use of certificates. 
+- Integrity: Identifying whether a message has been faked or altered before it is received.
 
-### What is the TLS Handshake?
+### What is the TLS Handshake? *
+The TLS handshake is a process that occurs after the TCP handshake has been completed, in order to establish a secure connection between hosts on which encrypted message transfer can occur. There are three key steps to the TLS handshake;
+1. The client will send a `ClientHello` message, indicating to the server that it wishes to establish a TLS connection. As part of this `ClientHello` message, the client will send the maximum version of TLS supported, and a list of Cipher Suites supported by the client. 
+2. The server, upon receipt of the `ClientHello` message, will send a `ServerHello` message, which sets the version of TLS to be used, as well as a Cipher Suite that should be used. The `ServerHello` will also include a certificate, which includes a public key used for the key exchange process, as well as authenticating it's identity. The `ServerHello` message also includes a `ServerHelloDone` marker, which indicates the server has completed this part of the handshake.
+3. The key exchange process begins. The specifics of this step of the process will depend on the Cipher Suite chosen, but in the case of RSA:
+  - The client sends a `ClientKeyExchange` message, with a `ChangeCipherSpec` marker, indicating that it wishes to start the key exchange process. As part of this, the client will encrypt some data using the public key in the server's certificate (the 'pre-master secret').
+  - The server, receiving the `ClientKeyExchange` message, decrypts the pre-master secret using it's private key. 
+  - Using the pre-agreed algorithm and values established during the Cipher Suite negotiation, each party generates a symmetric key with the pre-master secret. 
+  - The server sends a `ChangeCipherSpec` message with a `Finished` flag to indicate that the client should start using the encrypted connection. At this point, the TLS handshake process is complete.
 
 ### What is a Cipher Suite?
+A cipher suite is a series of cryptographic algorithms used for the encryption/decryption of messages and other related tasks.
 
 ### What is encryption in the context of TLS?
+In the context of TLS, encryption is the encoding of messages such that only the intended recipient is able to decode the message and read it's contents. Encryption is set up in TLS using the TLS handshake so that both parties have a symmetric key with which they can encrypt and decrypt messages.
 
 ### What is symmetric key encryption? What is asymmetric key encryption? What's the difference?
+Symmetric key encryption is useful when two parties wish to encrypt and decrypt the messages sent between them; it is a way to secure message exchange between intended parties - only parties with access to the symmetric key are able to decrypt messages encrypted with the symmetric key. The key challenge with a symmetric key is how parties can exchange this symmetric key in a network communication context - any communications prior to both parties having the symmetric key would be unecnrypted, which could potentially expose the symmetric key and allow unauthorised 3rd parties to intercept and decrypt messages. 
+
+Asymmetric key encryption is a unidirectional method of sending encrypted messages. It operates on a two key basis; a public key that is accessible to anyone (which is used for encryption) and a private key, which is only accessible to the recipient of the messages, which decrypts messages. 
 
 ### What is authentication in the context of TLS?
+Authentication is the process of verifying that a party in a message exchange is who they say they are. In the TLS context, authentication can be handled through the use of certificates (and by implication, the chain of trust), depending on the authentication algorithm selected during the Cipher Suite negotiation.
+
+During the TLS handshake, the server will send a certificate as part of the `ServerHello` message. This certificate contains the public key as well as a _signature_, which is a small piece of data that has been encrypted with the server's _private_ key, alongside that same piece of data, unencrypted. When the client receives this `ServerHello` message, it will use the public key to decrypt the signature, and compare it with the unencrypted data. If it matches, then the server is very likely to be the party who sent that message (as presumably only the server has access to it's private key).
+
+The use of keys differs from the encryption step; with authentication, the author of the message is more important than protecting the contents of the message; decryption using the public key allows any party to decrypt the signature.
 
 ### What is a certificate?
+A certificate is a signifier that identifies the user who holds it. It is an important part of authenticating the identity of a party in a message exchange process in the TLS protocol. Certificates are issued by certificate authorities (CA). When a certificate is issue by a CA, that CA is:
+- Verifying the bearer of the certificate is who they say they are (some verification process is generally required before the certificate is issued, such as the end user having to prove they own a particular domain)
+- Digitally signing the certificate. When the certificate is issued to the end user, that certificate will have the CA's name and a public key on it; using this public key, any party can then view a signature from the CA, and use the public key provided to decrypt the signature and compare it with the original piece of data in the certificate, thus verifying the CA's identity.
 
 ### What is the chain of trust?
+A certificate will generally only be signed by a single CA (an intermediate CA). The CA's certificate will generally be signed by a Root CA, which is the endpoint in the chain of trust, as the Root CA's certificate is generally self-signed.
+
+Through the 'chain' of certificates (or 'chain of trust'), the risk of a party faking a certificate is mitigated, since each certificate in the chain needs to be authenticated against a different party. If an intermediate CA's private key is leaked, the Root CA can invalidate it's certificate issued to the intermediate CA, which invalidates all certificates down the chain. It can then issue a new certificate.
+
+ However, the entire system still relies on trust; i.e. that the Root CA is who they say they are (since there is no alternate party that can verify the Root CA's certificate). Generally speaking, there are very few, but very well known Root CA's, which provides a degree of legitimacy and trust to these Root CAs.
 
 ### What is integrity in the context of TLS?
+Integrity refers to the process of checking whether a message has been faked or altered before the recipient gets that message. In the context of TLS, integrity is handled by an algorithmically generated value in the `MAC` header in a TLS record (Message Authentication Code). Depending on the algorithm selected in the Cipher Suite negotiation during the TLS handshake process, the integrity verification process might look like this:
+1. The sender of a message will generate a 'digest' value for the `MAC` header; this is a small piece of data from the underlying message that is encrypted using a hashing algorithm selected in the Cipher Suite as well as a pre-agreed hashing value. 
+2. The TLS record itself is then encrypted using the symmetric key generated as part of the TLS handshake.
+3. When the recipient receives the message, it will decrypt the message using the symmetric key to uncover the `MAC` header. Using the same hashing algorithm and hash value, the recipient will attempt to generate a digest. If that digest matches the value in the `MAC` header, then it is likely that the message has in fact been sent by the sender, and not been altered during the transfer process.
