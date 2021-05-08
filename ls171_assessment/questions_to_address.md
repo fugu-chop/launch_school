@@ -219,7 +219,7 @@ A server is simply a machine that is designed to listen for incoming requests, a
 Resources is a generic term for anything we might interact with on the internet with a URL. Examples include images, videos, HTML files, or even applications themselves.
 
 ### What is statelessness? Why is it an issue with HTTP?
-Statelessness in the context of a protocol means that each request/response pair is independent of another - request/response pairs have no context or knowledge of the data transmitted in other request/response pairs. This is helpful for HTTP, in that information _does not need to be persisted between requests_. However, this is means that from an application developer perspective, providing a user experience that simulates statefulness can be difficult - an application that requires authentication via signing needs to remember that the user is signed it as they issue additional requests.
+Statelessness in the context of a protocol means that each request/response pair is independent of another - request/response pairs have no context or knowledge of the data transmitted in other request/response pairs. This is helpful for HTTP, in that information _does not need to be persisted between requests_, and if a request is not successful, there is no clean-up required. However, this is means that from an application developer perspective, providing a user experience that simulates statefulness can be difficult - an application that requires authentication via signing needs to remember that the user is signed it as they issue additional requests.
 
 ### How can we manage state with HTTP?
 HTTP is a stateless protocol, meaning that each request/response pair is a unique entity, and independent of any other request/response pair. However, there are methods that we can use to simulate statefulness in applications using HTTP.
@@ -233,6 +233,8 @@ On a client making a request, the server will:
 4. Retrieve the application state-specific resources based on the session data, sending it to the client as a response.
 
 Session IDs or cookies are typically relatively short lived - if lost or expired, then the state specific data is lost, and a new cookie or session id must be passed from the server to the client.
+
+Another method that we could use to simulate state is query strings; the query strings provide more specific information as part of a request, and can be used by a server to generate a more specific response, based on the information passed through the query string.
 
 ### What is AJAX?
 Asynchronous Javascript and XML (AJAX) is a feature that allows browsers to issue requests and process responses without triggering a full page refresh. Without AJAX, every user action could potentially require a full page refresh, which is very expensive, resource-wise. When a user performs an action, an AJAX request is sent to the server, just like a regular request/response cycle. However, AJAX uses callbacks, which is logic that is passed to some function after a certain event has happened - the callback is usually triggered when the response is returned. In this way, the callback function is able to update only part of the page (instead of fully refreshing the page) on receiving the response from the server.

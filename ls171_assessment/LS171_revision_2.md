@@ -184,7 +184,7 @@ We can manage state with HTTP using a number of techniques. One technique is thr
 We can also simulate state by using a query string; the query strings provide more specific information as part of a request, and can be used to generate a more specific response, based on the information passed through the query string.
 
 ### What is a `GET` request? Describe the process of issuing a `GET` request.
-A `GET` request is a type of request issued through a web browser, usually with the intent of retrieving some information from the server. A `GET` request will be issued through a request-line, which includes information that helps the server interpret the request and what information to return as part of the response. Standard information included with a request-line include:
+A `GET` request is a type of request issued through a web browser, usually with the intent of retrieving some information from the server. A `GET` request will be issued through a request-line, which includes information that helps the server interpret the request and what information to return as part of the response. This is formed through a combination of the URL and the browser. Standard information included with a request-line include:
 1. The request `method` - this identifies the _type_ of request (e.g. `GET`, `POST` `DELETE`)
 2. The `host` - this identifies where the request should be sent to, and is required as part of HTTP v1.1.
 3. The `path` - this identifies where the specific _resource_ is located
