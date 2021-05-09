@@ -7,6 +7,7 @@
 - [6th, Thu](#060521-thu)
 - [7th, Fri](#070521-fri)
 - [8th, Sat](#080521-sat)
+- [9th, Sun](#090521-sun)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -95,3 +96,13 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I went through the quizzes today, and was able to get all of the answers right. I think I'm basically at the point where I can feel confident to take the test. 
+
+##### 09/05/21 (Sun)
+__*Concepts covered*__<br/>
+- LS171 Assessment
+
+__*Time spent*__<br/>
+138 minutes
+
+__*Thoughts*__<br/>
+The test went by relatively quickly. The use of templated answers was very handy, as I don't think I could have written out answers and still finished in time. This is honestly the test I'm least confident about, since so much of it is theory and dependent on interpretation of the question. Let's see how I do.
