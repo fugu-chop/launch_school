@@ -1,5 +1,20 @@
 require "socket"
 
+def parse_request(request_line)
+  split_address = request_line.split
+  path_split = split_address[1].split("?")
+  http_method = split_address.first
+  http_version = split_address.last
+  path = path_split.first
+
+  params = path_split.last.split("&").each_with_object(Hash.new) do |pair, hash| 
+    key, value = pair.split("=")
+    hash[key] = value.to_i
+  end
+
+  [http_method, http_version, path, params]
+end
+
 # Create a TCP server for the Transport layer
 # When we create a server locally we typically want to use a non-standard port to avoid conflicts with real applications
 server = TCPServer.new("localhost", 3003)
@@ -13,35 +28,32 @@ loop do
   request_line = client.gets
   # This is printed in the CLI
   puts request_line
+  # Necessary because browsers issue another request after the GET request in the URL
+  next if !request_line || request_line =~ /favicon/
 
-  # We send the first line of the request to the client so it appears in the web browser
+  http_method, http_version, path, params = parse_request(request_line)
+
+  # This required is because Chrome expects a well-formed response to be sent to it for rendering. 
+  # We need a valid response-line before anything else (i.e. the message body).
+  client.puts "#{http_version} 200 OK"
+  client.puts "Content-Type: text/html; charset=utf-8"
+  # There has to be a blank line between the status line, optional headers, and the message body.
+  client.puts
+  client.puts "<html>"
+  client.puts "<body>"
+  
+  client.puts "<pre>"
   client.puts request_line
-
-  split_address = request_line.split
-  path_split = split_address[1].split("?")
-  http_method = split_address.first
-  path = path_split.first
-
   client.puts "Method: #{http_method}"
   client.puts "Path: #{path}"
+  client.puts "HTTP Version: #{http_version}"
+  client.puts "Query Strings: #{params}"
+  client.puts "</pre>"
 
-  if request_line =~ /\?/
-    params = path_split.last.split("&").map { |pair| pair.split("=") }.to_h
-    params = params.transform_values { |value| value.to_i }
-    params["rolls"].times { |_| client.puts rand(params["sides"]) + 1 }
-  else
-    client.puts rand(6) + 1
-  end
-  
+  client.puts "<h1>Rolls</h1>"
+  params["rolls"].times { |_| client.puts "<p> #{rand(params["sides"]) + 1} </p>" }
+
+  client.puts "</body>"
+  client.puts "</html>"
   client.close
 end
-
-=begin
-If you try to run your echo server in Chrome, then you may run into some issues. 
-This is because Chrome expects a well-formed response to be sent to it for rendering. 
-To account for this, be sure to add a valid status line to your response first, before adding the content of the message body. 
-There also has to be a blank line between the status line, optional headers, and the message body.
-
-client.puts "HTTP/1.1 200 OK"
-client.puts "Content-Type: text/plain\r\n\r\n"
-=end
