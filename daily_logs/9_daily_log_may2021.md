@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 1,155)
+# May 2021 (Total minutes: 1,278)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -106,3 +106,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The test went by relatively quickly. The use of templated answers was very handy, as I don't think I could have written out answers and still finished in time. This is honestly the test I'm least confident about, since so much of it is theory and dependent on interpretation of the question. Let's see how I do.
+
+##### 10/05/21 (Mon)
+__*Concepts covered*__<br/>
+- RB130 Revision
+  - Closures, Blocks and Procs
+- LS175 Networked Applications
+  - Creating a simple echo server
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+Revision this morning was a bit distracted - I couldn't get into the zone for studying. I aced the LS175 assessment, which was nice. I started up on LS175 - it's fun to get back to the implementation side, rather than pure theory.
