@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 1,278)
+# May 2021 (Total minutes: 1,403)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -8,6 +8,8 @@
 - [7th, Fri](#070521-fri)
 - [8th, Sat](#080521-sat)
 - [9th, Sun](#090521-sun)
+- [10th, Mon](#100521-mon)
+- [11th, Tue](#110521-tue)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -119,3 +121,19 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Revision this morning was a bit distracted - I couldn't get into the zone for studying. I aced the LS175 assessment, which was nice. I started up on LS175 - it's fun to get back to the implementation side, rather than pure theory.
+
+##### 11/05/21 (Tue)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Creating a simple echo server
+  - Working with Sinatra
+    - [Overview of Ruby application servers](https://medium.com/launch-school/demystifying-ruby-applications-ruby-application-servers-and-web-servers-c3d0fd415cb3)
+    - [What is Rack](http://blog.gauravchande.com/what-is-rack-in-ruby-rails)
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+I spent the morning doing further optimisations to the simple echo server. I had some compatibility issues with Firefox in rendering the response - there were some additional `puts` statements and response headers I had to throw in before the response showed up correctly.
+
+Tracking state in the URL query strings is something covered in LS170, though it's cool to see it in action.
