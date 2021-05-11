@@ -47,6 +47,11 @@ loop do
   client.puts "<h1>Counter</h1>"
   client.puts "<p>The current number is #{number}!</p>"
   # We don't reassign the number variable, as HTTP is stateless, we need to update number based on URL
+  # The anchor tag uses the current host and path and then takes the relative path specified in href to know where to navigate from there.
+  # If you're on the page https://example.com/my-path/an-example.html and you have a link with an href of "another-example.html", then the associated anchor tag would take you to https://example.com/my-path/another-example.html.
+  # If you wanted to go somewhere else not under my-path/, you would have to use an absolute URL in the href.
+  # Single quotes are necessary so that the href value is treated as a string.
+  # While everything passed to client.puts is a string, it will still be processed as HTML when it gets to the client; implementing the expected format is important.
   client.puts "<p><a href='/?number=#{number + 1}'>Increment number!</p>"
   client.puts "<p><a href='/?number=#{number - 1}'>Decrement number!</p>"
 

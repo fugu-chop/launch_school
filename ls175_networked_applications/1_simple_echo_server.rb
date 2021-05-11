@@ -36,6 +36,7 @@ loop do
   # Ordinarily, the only mandatory component of a http response is the status line; headers and body are both optional.
   # The following is required because Chrome expects a well-formed response to be sent to it for rendering. 
   # We need a valid response-line before anything else (i.e. the message body).
+  # We would need to append \r\n\r\n to our status line if we didn't have any headers.
   client.puts "#{http_version} 200 OK"
   client.puts "Content-Type: text/html; charset=utf-8"
   # There has to be a blank line between the status line, optional headers, and the message body.
