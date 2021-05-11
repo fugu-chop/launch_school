@@ -15,7 +15,7 @@ def parse_request(request_line)
   [http_method, http_version, path, params]
 end
 
-# Create a TCP server for the Transport layer
+# Create a TCP server for the Transport layer - this is uses the Socket API of the OS (through TCPSocket) to notify the OS that our application is ready to receive connections through the port.
 # When we create a server locally we typically want to use a non-standard port to avoid conflicts with real applications
 server = TCPServer.new("localhost", 3003)
 loop do
