@@ -10,7 +10,7 @@ def parse_request(request_line)
   params = path_split.last.split("&").each_with_object(Hash.new) do |pair, hash| 
     key, value = pair.split("=")
     hash[key] = value.to_i
-  end
+  end if request_line =~ /\?/
 
   [http_method, http_version, path, params]
 end
@@ -33,7 +33,8 @@ loop do
 
   http_method, http_version, path, params = parse_request(request_line)
 
-  # This required is because Chrome expects a well-formed response to be sent to it for rendering. 
+  # Ordinarily, the only mandatory component of a http response is the status line; headers and body are both optional.
+  # The following is required because Chrome expects a well-formed response to be sent to it for rendering. 
   # We need a valid response-line before anything else (i.e. the message body).
   client.puts "#{http_version} 200 OK"
   client.puts "Content-Type: text/html; charset=utf-8"
