@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 1,403)
+# May 2021 (Total minutes: 1,523)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -10,6 +10,7 @@
 - [9th, Sun](#090521-sun)
 - [10th, Mon](#100521-mon)
 - [11th, Tue](#110521-tue)
+- [12th, Wed](#120521-wed)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -137,3 +138,15 @@ __*Thoughts*__<br/>
 I spent the morning doing further optimisations to the simple echo server. I had some compatibility issues with Firefox in rendering the response - there were some additional `puts` statements and response headers I had to throw in before the response showed up correctly.
 
 Tracking state in the URL query strings is something covered in LS170, though it's cool to see it in action.
+
+##### 12/05/21 (Wed)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Working with Sinatra
+    - [Overview of Ruby application servers](https://medium.com/launch-school/demystifying-ruby-applications-ruby-application-servers-and-web-servers-c3d0fd415cb3)
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Spent the morning doing some reading of the Ruby application server architecture. I found it pretty hard to digest, but once I got to the architectural diagram, everything made sense. The afternoon session was looking at Rack, and deploying a simply Rack application using templates (ERB).
