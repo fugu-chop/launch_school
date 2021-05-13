@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 1,523)
+# May 2021 (Total minutes: 1,643)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -11,6 +11,7 @@
 - [10th, Mon](#100521-mon)
 - [11th, Tue](#110521-tue)
 - [12th, Wed](#120521-wed)
+- [13th, Thu](#130521-thu)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -150,3 +151,18 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Spent the morning doing some reading of the Ruby application server architecture. I found it pretty hard to digest, but once I got to the architectural diagram, everything made sense. The afternoon session was looking at Rack, and deploying a simply Rack application using templates (ERB).
+
+##### 13/05/21 (Thu)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Working with Sinatra
+    - Building a simple Rack app
+    - Sinatra
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I finished up the very basic Rack app. It wasn't too hard to follow, and tied in some useful concepts previously learned, like bindings of closures, mixin modules versus class inheritance, and some refactoring of code. I also learned that if a method is expecting a positional argument at the end, any name: value pairs that aren't treated as keyword arguments get gathered up into a single hash.
+
+I moved onto the next part of the coursework, which looking at Sinatra. Using Ruby 3.0.0 keeps tripping me up, as I need to remember that the `webrick` gem is not installed by default.
