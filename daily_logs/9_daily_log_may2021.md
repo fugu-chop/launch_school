@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 1,643)
+# May 2021 (Total minutes: 1,770)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -12,6 +12,7 @@
 - [11th, Tue](#110521-tue)
 - [12th, Wed](#120521-wed)
 - [13th, Thu](#130521-thu)
+- [14th, Fri](#140521-fri)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -166,3 +167,17 @@ __*Thoughts*__<br/>
 I finished up the very basic Rack app. It wasn't too hard to follow, and tied in some useful concepts previously learned, like bindings of closures, mixin modules versus class inheritance, and some refactoring of code. I also learned that if a method is expecting a positional argument at the end, any name: value pairs that aren't treated as keyword arguments get gathered up into a single hash.
 
 I moved onto the next part of the coursework, which looking at Sinatra. Using Ruby 3.0.0 keeps tripping me up, as I need to remember that the `webrick` gem is not installed by default.
+
+##### 14/05/21 (Fri)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Working with Sinatra
+    - Building a simple Rack app
+    - Sinatra
+    - Code Directory Challenge
+
+__*Time spent*__<br/>
+127 minutes
+
+__*Thoughts*__<br/>
+Had a mini-heart attack when I thought my bundler wasn't working correctly. After wasting significant amounts of time trying to troubleshoot, I found out I was using the wrong command to execute my Ruby files. How embarrassing. In the afternoon, I tried the Dynamic Directory Index challenge. The solution relied on a `params` variable that Sinatra automatically provides as part of each request. I'm still wrapping my head around variables being passed between different files - I need to remember that a page refresh (e.g. triggered by clicking on a link that adds a query string) triggers another HTTP request, which executes the block in the `get` method in the Ruby file.
