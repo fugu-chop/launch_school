@@ -2,10 +2,23 @@
 <html>
   <body>
     <h2>This is a directory of random files!</h2>
-    <% @files.sort.each do |file| %>
-      <ul>
-        <li> <%= File.basename(file) %> </li>
-      </ul>
-    <% end %>
+    <ul>
+      <% @files.each do |file| %>
+        <li>
+          <a href="<%= file %>"><%= file %></a>
+        </li>
+      <% end %>
+    </ul>
+
+    <p>
+      <%# Accessing the params hash that is provided by Sinatra (it's always available) %>
+      <% if params[:sort] == "desc" %>
+        <%# We don't have to wrap these in logic brackets individually %>
+        <%# Clicking on the links triggers a page refresh, which triggers the block in the `get` request in the rb file %>
+        <a href="/">Sort ascending</a>
+      <% else %>
+        <a href="/?sort=desc">Sort descending</a>
+      <% end %>
+    </p>
   </body>
 </html>
