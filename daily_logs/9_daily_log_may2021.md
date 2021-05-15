@@ -13,6 +13,7 @@
 - [12th, Wed](#120521-wed)
 - [13th, Thu](#130521-thu)
 - [14th, Fri](#140521-fri)
+- [15th, Sat](#150521-sat)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -181,3 +182,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Had a mini-heart attack when I thought my bundler wasn't working correctly. After wasting significant amounts of time trying to troubleshoot, I found out I was using the wrong command to execute my Ruby files. How embarrassing. In the afternoon, I tried the Dynamic Directory Index challenge. The solution relied on a `params` variable that Sinatra automatically provides as part of each request. I'm still wrapping my head around variables being passed between different files - I need to remember that a page refresh (e.g. triggered by clicking on a link that adds a query string) triggers another HTTP request, which executes the block in the `get` method in the Ruby file.
+
+##### 15/05/21 (Sat)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Working with Sinatra
+    - Book Reader App
+
+__*Time spent*__<br/>
+185 minutes
+
+__*Thoughts*__<br/>
+Today's session was really difficult. Working through the Sinatra search enhancements in particular was difficult - I built a solution that met the needs of the assignment, but didn't leave much room for enhancements on top for the next assignment, as I basically railroaded myself into an approach that didn't allow for extraction of nested hash values in an intelligent way. The solution required use of blocks, which I understand, but still don't have a strong background with.
