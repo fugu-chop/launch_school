@@ -1,0 +1,14 @@
+<p>Hello, my name is <%= @title.capitalize %>!</p>
+<p>My email address is <a href="<%= @email %>"><%= @email %></a>.</p>
+<p>My interest are <%= @interests.map { |interest| interest }.join(', ') %>.</p>
+
+<h3>Other Users</h3>
+<% @users.keys.each do |user| %>
+  <% if user.to_s != @title %>
+    <ul>
+      <li>
+        <a href="/<%= user %>"><%= user %></a>
+      </li>
+    </ul>
+  <% end %>
+<% end %>

@@ -1,0 +1,11 @@
+<!doctype html>
+<html>
+  <body>
+    <h2><%= @title.capitalize %></h2>
+    <div>
+      <%= yield %>
+    </div>
+
+    <p>There are a total of <%= @total_users %> users with a total of <%= count_interests %> interests.</p>
+  </body>
+</html>
