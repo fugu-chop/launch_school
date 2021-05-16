@@ -14,6 +14,7 @@
 - [13th, Thu](#130521-thu)
 - [14th, Fri](#140521-fri)
 - [15th, Sat](#150521-sat)
+- [16th, Sun](#160521-sun)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -194,3 +195,22 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Today's session was really difficult. Working through the Sinatra search enhancements in particular was difficult - I built a solution that met the needs of the assignment, but didn't leave much room for enhancements on top for the next assignment, as I basically railroaded myself into an approach that didn't allow for extraction of nested hash values in an intelligent way. The solution required use of blocks, which I understand, but still don't have a strong background with.
+
+##### 16/05/21 (Sat)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Working with Sinatra
+    - Book Reader App
+    - Users and Interests Assignment
+    - Quiz
+  - [How does Sinatra work?](https://www.rubyguides.com/2017/08/how-does-sinatra-work/)
+  - Deploying Sinatra Applications
+    - Quiz
+
+__*Time spent*__<br/>
+181 minutes
+
+__*Thoughts*__<br/>
+The morning session was pretty good. I managed to finish off the Book Reader app formatting exercises, without consulting the solutions. The Users and Interests assignment also wasn't too bad - I was able to use `layout.erb` (beyond the suggested solution), which was valuable practice.
+
+The afternoon was spent on quizzes and deploying to Heroku. I felt like the course materials didn't give enough of a background to Heroku and just jumped straight into it. I had to do some additional reading and troubleshooting in order to get the application deployed, but it works, and life is good.
