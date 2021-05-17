@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 1,770)
+# May 2021 (Total minutes: 2,071)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -15,6 +15,7 @@
 - [14th, Fri](#140521-fri)
 - [15th, Sat](#150521-sat)
 - [16th, Sun](#160521-sun)
+- [17th, Mon](#170521-mon)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -196,7 +197,7 @@ __*Time spent*__<br/>
 __*Thoughts*__<br/>
 Today's session was really difficult. Working through the Sinatra search enhancements in particular was difficult - I built a solution that met the needs of the assignment, but didn't leave much room for enhancements on top for the next assignment, as I basically railroaded myself into an approach that didn't allow for extraction of nested hash values in an intelligent way. The solution required use of blocks, which I understand, but still don't have a strong background with.
 
-##### 16/05/21 (Sat)
+##### 16/05/21 (Sun)
 __*Concepts covered*__<br/>
 - LS175 Networked Applications
   - Working with Sinatra
@@ -214,3 +215,16 @@ __*Thoughts*__<br/>
 The morning session was pretty good. I managed to finish off the Book Reader app formatting exercises, without consulting the solutions. The Users and Interests assignment also wasn't too bad - I was able to use `layout.erb` (beyond the suggested solution), which was valuable practice.
 
 The afternoon was spent on quizzes and deploying to Heroku. I felt like the course materials didn't give enough of a background to Heroku and just jumped straight into it. I had to do some additional reading and troubleshooting in order to get the application deployed, but it works, and life is good.
+
+##### 17/05/21 (Mon)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Revision
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I spent the morning reading through some of the error posts in Launch School to help me understand the individual components of the book viewer app (e.g. `config.ru`, `Procfile`) and what they're used for.
+
+The afternoon was spent revision the architectural model of the application; e.g. what is a web server versus application server, where does it fit, what libraries/frameworks are used.
