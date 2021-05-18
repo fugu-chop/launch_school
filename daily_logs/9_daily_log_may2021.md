@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 2,071)
+# May 2021 (Total minutes: 2,198)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -16,6 +16,7 @@
 - [15th, Sat](#150521-sat)
 - [16th, Sun](#160521-sun)
 - [17th, Mon](#170521-mon)
+- [18th, Tue](#180521-tue)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -228,3 +229,16 @@ __*Thoughts*__<br/>
 I spent the morning reading through some of the error posts in Launch School to help me understand the individual components of the book viewer app (e.g. `config.ru`, `Procfile`) and what they're used for.
 
 The afternoon was spent revision the architectural model of the application; e.g. what is a web server versus application server, where does it fit, what libraries/frameworks are used.
+
+##### 18/05/21 (Tue)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Revision
+
+__*Time spent*__<br/>
+127 minutes
+
+__*Thoughts*__<br/>
+I spent the morning revising some of the concepts around server architecture. I feel like I have a much stronger grasp of what the technologies are and where they fit in the architecture. I also got a bit more familiar with the different functionalities of Sinatra. 
+
+In the afternoon, I moved onto the next project, a Todo List app built in Sinatra. Immediately after unzipping the template files I ran into compatibility issues. A simple deletion of the `Gemfile.lock` file and running `bundle install` with a newer version of Sinatra helped, but I feel like LS should be maintaining this sort of thing.
