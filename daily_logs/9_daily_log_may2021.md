@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 2,198)
+# May 2021 (Total minutes: 2,323)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -17,6 +17,7 @@
 - [16th, Sun](#160521-sun)
 - [17th, Mon](#170521-mon)
 - [18th, Tue](#180521-tue)
+- [19th, Wed](#190521-wed)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -234,6 +235,7 @@ The afternoon was spent revision the architectural model of the application; e.g
 __*Concepts covered*__<br/>
 - LS175 Networked Applications
   - Revision
+  - Todo List in Sinatra
 
 __*Time spent*__<br/>
 127 minutes
@@ -242,3 +244,14 @@ __*Thoughts*__<br/>
 I spent the morning revising some of the concepts around server architecture. I feel like I have a much stronger grasp of what the technologies are and where they fit in the architecture. I also got a bit more familiar with the different functionalities of Sinatra. 
 
 In the afternoon, I moved onto the next project, a Todo List app built in Sinatra. Immediately after unzipping the template files I ran into compatibility issues. A simple deletion of the `Gemfile.lock` file and running `bundle install` with a newer version of Sinatra helped, but I feel like LS should be maintaining this sort of thing.
+
+##### 19/05/21 (Wed)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Todo List in Sinatra
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+The morning was spent reading through documentation and getting a better understanding of the code so far in the Sinatra todo application. It's quite satisfying being able to read different sources of documentation for different languages and still being able to piece them together and understand what is happening. For my particular case, I was wondering how the `params[:attr_name]` was populated in a `POST` request. As I understand it, Sinatra looks at the `name` attribute of the input field, and captures the value submitted as a `name:value` pair _in the response body_.
