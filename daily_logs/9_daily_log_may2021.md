@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 2,323)
+# May 2021 (Total minutes: 2,440)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -18,6 +18,7 @@
 - [17th, Mon](#170521-mon)
 - [18th, Tue](#180521-tue)
 - [19th, Wed](#190521-wed)
+- [20th, Thu](#200521-thu)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -255,3 +256,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The morning was spent reading through documentation and getting a better understanding of the code so far in the Sinatra todo application. It's quite satisfying being able to read different sources of documentation for different languages and still being able to piece them together and understand what is happening. For my particular case, I was wondering how the `params[:attr_name]` was populated in a `POST` request. As I understand it, Sinatra looks at the `name` attribute of the input field, and captures the value submitted as a `name:value` pair _in the response body_.
+
+##### 20/05/21 (Thu)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Todo List in Sinatra
+
+__*Time spent*__<br/>
+117 minutes
+
+__*Thoughts*__<br/>
+Spent the day adding new functionality to the Todo list. I'm happy to say that I was able to handle an edge case the instructor thought was overly complex relative to the benefit (i.e. handling renaming a list when the user inputs the old name of the list). It required some tricky capturing of the state of a variable before it got changed due to a POST request. 
