@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 2,440)
+# May 2021 (Total minutes: 2,563)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -19,6 +19,7 @@
 - [18th, Tue](#180521-tue)
 - [19th, Wed](#190521-wed)
 - [20th, Thu](#200521-thu)
+- [21st, Fri](#210521-fri)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -267,3 +268,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Spent the day adding new functionality to the Todo list. I'm happy to say that I was able to handle an edge case the instructor thought was overly complex relative to the benefit (i.e. handling renaming a list when the user inputs the old name of the list). It required some tricky capturing of the state of a variable before it got changed due to a POST request. 
+
+##### 21/05/21 (Fri)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Todo List in Sinatra
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+I added in some todo features for the Todo list, including some styling, being able to add/delete todo items, and validation for todo names.
