@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 2,563)
+# May 2021 (Total minutes: 2,756)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -20,6 +20,7 @@
 - [19th, Wed](#190521-wed)
 - [20th, Thu](#200521-thu)
 - [21st, Fri](#210521-fri)
+- [22nd, Sat](#220521-sat)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -279,3 +280,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I added in some todo features for the Todo list, including some styling, being able to add/delete todo items, and validation for todo names.
+
+##### 22/05/21 (Sat)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Todo List in Sinatra
+
+__*Time spent*__<br/>
+193 minutes
+
+__*Thoughts*__<br/>
+I took on Talbet's suggestion to write a more detailed `README` to explain what the app does, how to get it running and the design choices. This is actually a pretty enjoyable exercise for me - it lets me reflect on the project thus far and explain some of the design choices used.
+
+I also like that I was able to code up most of the solutions before watching the video (in contrast to earlier study sessions), and anticipate the problems that would be encountered, and took the 'optimal path' to solving those issues.
