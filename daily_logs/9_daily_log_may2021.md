@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 2,756)
+# May 2021 (Total minutes: 2,938)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -21,6 +21,7 @@
 - [20th, Thu](#200521-thu)
 - [21st, Fri](#210521-fri)
 - [22nd, Sat](#220521-sat)
+- [23rd, Sun](#230521-sun)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -293,3 +294,17 @@ __*Thoughts*__<br/>
 I took on Talbet's suggestion to write a more detailed `README` to explain what the app does, how to get it running and the design choices. This is actually a pretty enjoyable exercise for me - it lets me reflect on the project thus far and explain some of the design choices used.
 
 I also like that I was able to code up most of the solutions before watching the video (in contrast to earlier study sessions), and anticipate the problems that would be encountered, and took the 'optimal path' to solving those issues.
+
+##### 23/05/21 (Sun)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Todo List in Sinatra
+  - Quiz
+
+__*Time spent*__<br/>
+182 minutes
+
+__*Thoughts*__<br/>
+I'm definitely lacking a bit of practice when it comes to blocks and `Proc` objects. I can understand the code when I see it, but I don't have that muscle memory of creating code that takes advantage of it. I'm also finding it hard to keep track of the correct level of nesting/granularity on my code - I'm finding that all the different methods are operating at different level of the hash, making it incredibly annoying to go through the code and understand what level I should be accessing a hash at.
+
+I managed to deploy the application to Heroku without any major issues. Today was just a bad day for studying - I just really couldn't be bothered. I completely screwed up the quiz - I just did not have the inclination to read deeply into the code to pick up small differences in where particular characters were placed, or second guess the wording of questions.
