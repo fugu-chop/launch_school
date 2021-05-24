@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 2,938)
+# May 2021 (Total minutes: 3,058)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -22,6 +22,7 @@
 - [21st, Fri](#210521-fri)
 - [22nd, Sat](#220521-sat)
 - [23rd, Sun](#230521-sun)
+- [24th, Mon](#240521-mon)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -308,3 +309,18 @@ __*Thoughts*__<br/>
 I'm definitely lacking a bit of practice when it comes to blocks and `Proc` objects. I can understand the code when I see it, but I don't have that muscle memory of creating code that takes advantage of it. I'm also finding it hard to keep track of the correct level of nesting/granularity on my code - I'm finding that all the different methods are operating at different level of the hash, making it incredibly annoying to go through the code and understand what level I should be accessing a hash at.
 
 I managed to deploy the application to Heroku without any major issues. Today was just a bad day for studying - I just really couldn't be bothered. I completely screwed up the quiz - I just did not have the inclination to read deeply into the code to pick up small differences in where particular characters were placed, or second guess the wording of questions.
+
+##### 24/05/21 (Mon)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Todo List in Sinatra
+  - Sanitising HTML
+  - Dealing with bad input
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+The morning session was to go through my terrible quiz performance and understand the answers. I don't think I would have done much better with more patience - there was a lot of weird wording and the questions were hard to understand.
+
+The evening session was adding to the Sinatra to-do list app; sanitising HTML input and preventing bad inputs from occuring by using redirects.
