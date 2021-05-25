@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 3,058)
+# May 2021 (Total minutes: 3,186)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -23,6 +23,7 @@
 - [22nd, Sat](#220521-sat)
 - [23rd, Sun](#230521-sun)
 - [24th, Mon](#240521-mon)
+- [25th, Tue](#250521-tue)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -324,3 +325,16 @@ __*Thoughts*__<br/>
 The morning session was to go through my terrible quiz performance and understand the answers. I don't think I would have done much better with more patience - there was a lot of weird wording and the questions were hard to understand.
 
 The evening session was adding to the Sinatra to-do list app; sanitising HTML input and preventing bad inputs from occuring by using redirects.
+
+##### 25/05/21 (Tue)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Revision (Blocks, `self`)
+  - HTTP Methods and Security
+  - Quiz
+
+__*Time spent*__<br/>
+128 minutes
+
+__*Thoughts*__<br/>
+I spent some more time this morning just revising blocks again, and the use of the `self` keyword, after not really understanding how the `Integer` class was able to implement an instance method like `times` - it's basically like any other method, just defined within the `Integer` class. Just as a mental note, I should add it to my problem solving mindset whether I can resolve a problem more easily using a method that yields to a block - this is especially helpful if I have to iterate through an `Enumerable` object, but the idiosyncracies of `each` or other similar methods cause issues (e.g. `each` returns the object on which it is called, which can be annoying). That will open up a whole bunch of flexibility to my problem solving techniques.
