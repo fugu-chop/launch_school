@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 3,186)
+# May 2021 (Total minutes: 3,305)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -24,6 +24,7 @@
 - [23rd, Sun](#230521-sun)
 - [24th, Mon](#240521-mon)
 - [25th, Tue](#250521-tue)
+- [26th, Wed](#260521-wed)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -338,3 +339,21 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I spent some more time this morning just revising blocks again, and the use of the `self` keyword, after not really understanding how the `Integer` class was able to implement an instance method like `times` - it's basically like any other method, just defined within the `Integer` class. Just as a mental note, I should add it to my problem solving mindset whether I can resolve a problem more easily using a method that yields to a block - this is especially helpful if I have to iterate through an `Enumerable` object, but the idiosyncracies of `each` or other similar methods cause issues (e.g. `each` returns the object on which it is called, which can be annoying). That will open up a whole bunch of flexibility to my problem solving techniques.
+
+##### 26/05/21 (Tue)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Reading
+    - Medium article on [Environmental Variables](https://medium.com/chingu/an-introduction-to-environment-variables-and-how-to-use-them-f602f66d15fa)
+    - Honey Badger article on [Environmental Variables](https://www.honeybadger.io/blog/ruby-guide-environment-variables/)
+    - Honey Badger Article on [Securing Environmental Variables](https://www.honeybadger.io/blog/securing-environment-variables/)
+  - Todo List in Sinatra
+    - Adding JavaScript
+
+__*Time spent*__<br/>
+119 minutes
+
+__*Thoughts*__<br/>
+The morning session was trying to understand why the syntax for escaping HTML in my Todo app did not react to the `<%== %>` syntax. It's because the syntax is actually part of a method call, `escape_html`, and Ruby does not like conditionals as arguments in a method call. The other reading I did in the morning was to look at environmental variables and who/why we might use them. It seems as though they're specific to different processes on a server, and are useful because they don't have to be stored directly in the code, where someone could simply look it up.
+
+The evening session was downloading jQuery and making sure it was referenced in our Todo application correctly.
