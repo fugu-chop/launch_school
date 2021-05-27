@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 3,305)
+# May 2021 (Total minutes: 3,749)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -25,6 +25,7 @@
 - [24th, Mon](#240521-mon)
 - [25th, Tue](#250521-tue)
 - [26th, Wed](#260521-wed)
+- [27th, Thu](#270521-thu)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -340,7 +341,7 @@ __*Time spent*__<br/>
 __*Thoughts*__<br/>
 I spent some more time this morning just revising blocks again, and the use of the `self` keyword, after not really understanding how the `Integer` class was able to implement an instance method like `times` - it's basically like any other method, just defined within the `Integer` class. Just as a mental note, I should add it to my problem solving mindset whether I can resolve a problem more easily using a method that yields to a block - this is especially helpful if I have to iterate through an `Enumerable` object, but the idiosyncracies of `each` or other similar methods cause issues (e.g. `each` returns the object on which it is called, which can be annoying). That will open up a whole bunch of flexibility to my problem solving techniques.
 
-##### 26/05/21 (Tue)
+##### 26/05/21 (Wed)
 __*Concepts covered*__<br/>
 - LS175 Networked Applications
   - Reading
@@ -357,3 +358,18 @@ __*Thoughts*__<br/>
 The morning session was trying to understand why the syntax for escaping HTML in my Todo app did not react to the `<%== %>` syntax. It's because the syntax is actually part of a method call, `escape_html`, and Ruby does not like conditionals as arguments in a method call. The other reading I did in the morning was to look at environmental variables and who/why we might use them. It seems as though they're specific to different processes on a server, and are useful because they don't have to be stored directly in the code, where someone could simply look it up.
 
 The evening session was downloading jQuery and making sure it was referenced in our Todo application correctly.
+
+##### 27/05/21 (Thu)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Todo List in Sinatra
+    - Adding secrets management through `dotenv`
+    - Adding JavaScript
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+I added some more intelligent secrets management in my Todo app in the morning; by storing the session key in a `.env` file (which we add to our `.gitignore` file so it can't be viewed publically) and using the `dotenv` gem. Adding the jQuery file to my app seems to slow it down significantly in production - I'm not entirely happy about adding such a massive file that currently isn't doing anything. I also added the jQuery functionality to delete a list or todo in the Todo app.
+
+The evening session was looking at using AJAX to issue HTTP requests. This was a bit hard to follow - I don't really have good context of the jQuery code and it's nuances, so I'm just trying to follow the concepts of the video. However, I'm not fully grasping it - also not helped by the fact that I am massively exhausted too.
