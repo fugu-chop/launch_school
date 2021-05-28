@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 3,749)
+# May 2021 (Total minutes: 3,874)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -26,6 +26,7 @@
 - [25th, Tue](#250521-tue)
 - [26th, Wed](#260521-wed)
 - [27th, Thu](#270521-thu)
+- [28th, Fri](#280521-fri)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -373,3 +374,18 @@ __*Thoughts*__<br/>
 I added some more intelligent secrets management in my Todo app in the morning; by storing the session key in a `.env` file (which we add to our `.gitignore` file so it can't be viewed publically) and using the `dotenv` gem. Adding the jQuery file to my app seems to slow it down significantly in production - I'm not entirely happy about adding such a massive file that currently isn't doing anything. I also added the jQuery functionality to delete a list or todo in the Todo app.
 
 The evening session was looking at using AJAX to issue HTTP requests. This was a bit hard to follow - I don't really have good context of the jQuery code and it's nuances, so I'm just trying to follow the concepts of the video. However, I'm not fully grasping it - also not helped by the fact that I am massively exhausted too.
+
+##### 28/05/21 (Fri)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Todo List in Sinatra
+    - Deleting todos
+    - Fixing todo index bugs
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+In the morning I tried to parse the content relating to deleting lists and todos from the application using jQuery. The course recomments not worrying to much about the actual jQuery syntax, and worry more about the logic. I think I have a broad understanding of what is happening and why, but it still feels very unsatisfying. Without the fundamentals, I don't think I would be able to fully recreate this on my own.
+
+The previous code used to delete todos created a bug in our application. Our previous todos in a list had ids based on their index within an array. When deleting an item via JavaScript, the index of a given todo would not update based on it's new position in the array, meaning that if were tried to check off another todo, the code would actually tick off a totally different todo item. The solution was to create a helper method to generate a fixed id that didn't depend on the position of the todo within an array. The evening was spent trying to refactor the given solutions to work within my framework.
