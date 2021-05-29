@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 3,874)
+# May 2021 (Total minutes: 4,057)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -27,6 +27,7 @@
 - [26th, Wed](#260521-wed)
 - [27th, Thu](#270521-thu)
 - [28th, Fri](#280521-fri)
+- [29th, Sat](#290521-sat)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -389,3 +390,18 @@ __*Thoughts*__<br/>
 In the morning I tried to parse the content relating to deleting lists and todos from the application using jQuery. The course recomments not worrying to much about the actual jQuery syntax, and worry more about the logic. I think I have a broad understanding of what is happening and why, but it still feels very unsatisfying. Without the fundamentals, I don't think I would be able to fully recreate this on my own.
 
 The previous code used to delete todos created a bug in our application. Our previous todos in a list had ids based on their index within an array. When deleting an item via JavaScript, the index of a given todo would not update based on it's new position in the array, meaning that if were tried to check off another todo, the code would actually tick off a totally different todo item. The solution was to create a helper method to generate a fixed id that didn't depend on the position of the todo within an array. The evening was spent trying to refactor the given solutions to work within my framework.
+
+##### 29/05/21 (Sat)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - Todo List in Sinatra
+    - Fixing list index
+    - Quiz
+  - File-based CMS project
+  - Testing in Sinatra
+
+__*Time spent*__<br/>
+183 minutes
+
+__*Thoughts*__<br/>
+Finished off the Todo List in Sinatra. Refactoring the index based code to take into account the deletion of lists/todos was very annoying, given my code was different to the boilerplate solutions. The CMS project is interesting, as it's starting to introduce testing, which is something I've been curious about how we can implement with Sinatra. Turns out Minitest works quite well with Sinatra - we just need another `rack-test` gem to create test response objects.
