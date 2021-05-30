@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 4,057)
+# May 2021 (Total minutes: 4,240)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -28,6 +28,7 @@
 - [27th, Thu](#270521-thu)
 - [28th, Fri](#280521-fri)
 - [29th, Sat](#290521-sat)
+- [30th, Sun](#300521-sun)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -405,3 +406,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Finished off the Todo List in Sinatra. Refactoring the index based code to take into account the deletion of lists/todos was very annoying, given my code was different to the boilerplate solutions. The CMS project is interesting, as it's starting to introduce testing, which is something I've been curious about how we can implement with Sinatra. Turns out Minitest works quite well with Sinatra - we just need another `rack-test` gem to create test response objects.
+
+##### 30/05/21 (Sun)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - File-based CMS project
+  - Testing in Sinatra
+
+__*Time spent*__<br/>
+183 minutes
+
+__*Thoughts*__<br/>
+I'm still pretty bad at writing tests. I need to slow down and understand the exact routing that occurs for each request, and try to emulate those steps in the tests. This could involve multiple `GET` or `POST` requests in the one test!
