@@ -1,4 +1,4 @@
-# May 2021 (Total minutes: 4,240)
+# May 2021 (Total minutes: 4,359)
 - [1st, Sat](#010521-sat)
 - [2nd, Sun](#020521-sun)
 - [3rd, Mon](#030521-mon)
@@ -29,6 +29,7 @@
 - [28th, Fri](#280521-fri)
 - [29th, Sat](#290521-sat)
 - [30th, Sun](#300521-sun)
+- [31st, Mon](#300521-sun)
 
 ##### 01/05/21 (Sat)
 __*Concepts covered*__<br/>
@@ -418,3 +419,15 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I'm still pretty bad at writing tests. I need to slow down and understand the exact routing that occurs for each request, and try to emulate those steps in the tests. This could involve multiple `GET` or `POST` requests in the one test!
+
+##### 31/05/21 (Mon)
+__*Concepts covered*__<br/>
+- LS175 Networked Applications
+  - File-based CMS project
+  - Testing in Sinatra
+
+__*Time spent*__<br/>
+119 minutes
+
+__*Thoughts*__<br/>
+I spent a fair bit of time writing out some new functionality for logging in, creating and deleting files. I think I'm improving on my ability to parse use cases and still being able to meet all the requirements without referencing answers. My main challenge is writing comprehensive tests. I don't think I'm fully across the full suite of helper methods that the `Rack/test` gem provides. 
