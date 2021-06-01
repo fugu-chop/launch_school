@@ -25,6 +25,24 @@ class AppTest < Minitest::Test
     assert_equal("text/html;charset=utf-8", last_response["Content-Type"])
     assert_equal("Hello, world!", last_response.body)
   end
+
+  # def test_sets_session_value
+  #   get "/path_that_sets_session_value"
+  #   assert_equal "expected value", session[:key]
+  # end
+
+  # We can also set the session value before the routing occurs.
+  # There are two Hashes passed as arguments to get; 
+  # the first is the Hash of parameters (which in this case is empty)
+  # the second is values to be added to the request's Rack.env hash
+  
+  # def test_index_as_signed_in_user
+  #   get "/", {}, {"rack.session" => { username: "admin"} }
+  # end
+
+  # Once values have been provided once, they will be remembered for all future calls to get or post within the same test
+  # unless those values are modified by code within your application. 
+  # This means that you can set values for the session in the first request made in a test and they will be retained until removed.
 end
 
 # Make sure you have minitest and rack-test gems in your Gemfile, and then use bundle exec ruby app_test.rb
