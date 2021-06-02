@@ -33,7 +33,7 @@ class AppTest < Minitest::Test
 
   # We can also set the session value before the routing occurs.
   # There are two Hashes passed as arguments to get; 
-  # the first is the Hash of parameters (which in this case is empty)
+  # the first is the Hash of parameters - e.g. any other parameters you might want to include as part of a post request
   # the second is values to be added to the request's Rack.env hash
   
   # def test_index_as_signed_in_user
