@@ -1,6 +1,7 @@
-# June 2021 (Total minutes: 253)
+# June 2021 (Total minutes: 373)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
+- [3rd, Thu](#030621-thu)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -29,3 +30,18 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I built some more authentication functionality within the CMS app, which now limits the number of pages that can be visited without logging in. I was also able to store additional logins in a `.yaml` file outside of the app, which caused a lot of broken tests since I had to write another method to help calculate the correct path based on which environment the application was running in.
+
+##### 03/06/21 (Thu)
+__*Concepts covered*__<br/>
+- LS175 - Networked Applications
+  - CMS Project
+    - Forum posts
+    - Hashing stored passwords
+  - Auth articles
+    - [How bcrypt works](https://www.rubyguides.com/2017/06/there-is-no-magic-in-ruby/)
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Working with `bcrypt` was slightly annoying, but I was able to debug my errors by stepping through the code and slowing down. The application is finally finished; the quiz awaits.
