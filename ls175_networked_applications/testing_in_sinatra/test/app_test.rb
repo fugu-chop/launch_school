@@ -1,5 +1,6 @@
 # This value is used by various parts of Sinatra and Rack to know if the code is being tested, and in the case of Sinatra,
 # Determine whether it will start a web server or not (we don't want it to if we're running tests)
+# This is the set of environmental variables for our local system's shell, NOT the Rack environmental settings (which is env)
 ENV["RACK_ENV"] = "test"
 
 require "minitest/autorun"
@@ -26,15 +27,16 @@ class AppTest < Minitest::Test
     assert_equal("Hello, world!", last_response.body)
   end
 
-  # def test_sets_session_value
-  #   get "/path_that_sets_session_value"
-  #   assert_equal "expected value", session[:key]
-  # end
+  def test_sets_session_value
+    get "/"
+    assert_equal("Success", session[:success])
+  end
 
   # We can also set the session value before the routing occurs.
   # There are two Hashes passed as arguments to get; 
   # the first is the Hash of parameters - e.g. any other parameters you might want to include as part of a post request
   # the second is values to be added to the request's Rack.env hash
+  # Note that we can’t set perform single test/once-off configuration of Sinatra in a test route.
   
   # def test_index_as_signed_in_user
   #   get "/", {}, {"rack.session" => { username: "admin"} }

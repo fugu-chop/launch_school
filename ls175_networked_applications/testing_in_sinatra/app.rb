@@ -12,5 +12,6 @@ def session
 end
 
 get "/" do
+  session[:success] = 'Success'
   "Hello, world!"
 end
