@@ -1,8 +1,9 @@
-# June 2021 (Total minutes: 373)
+# June 2021 (Total minutes: 674)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
 - [4th, Fri](#040621-fri)
+- [5th, Sat](#050621-sat)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -60,3 +61,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Polished off LS175 in the morning. A really enjoyable course where we actually get to build user-facing applications end to end based on non-technical requirements. It did highlight that my current knowledge of HTML and CSS is painfully limited. That's the next course (LS202) I'm going to tackle - I'll then go back to LS175 and build up an optional project, before I go onto LS180 (Database Foundations). For now though, I've been meaning to do the Regex book, which I've never set aside time to do. The evening session was going through some basic matching in regex. It's good to go through regex in a 'for dummies' manner - all the resources I've used so far have an assuemd baseline of knowledge, or those cheetsheets that accompany regex testers, which aren't ever enough to really understand it.
+
+##### 05/06/21 (Sat)
+__*Concepts covered*__<br/>
+- Regex Book
+  - Basic matching
+  - Character classes
+  - Character class shortcuts
+
+__*Time spent*__<br/>
+181 minutes
+
+__*Thoughts*__<br/>
+Regex is pretty fun, though reading and writing regex can get pretty intense, especially when trying to remember all the nuances of the shortcuts and how those actually look.
