@@ -1,9 +1,10 @@
-# June 2021 (Total minutes: 674)
+# June 2021 (Total minutes: 856)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
 - [4th, Fri](#040621-fri)
 - [5th, Sat](#050621-sat)
+- [6th, Sun](#060621-sun)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -74,3 +75,19 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Regex is pretty fun, though reading and writing regex can get pretty intense, especially when trying to remember all the nuances of the shortcuts and how those actually look.
+
+##### 06/06/21 (Sun)
+__*Concepts covered*__<br/>
+- Regex Book
+  - Anchors
+  - Quantifiers
+  - [Article on Greediness](https://d186loudes4jlv.cloudfront.net/regex/files/greedy-vs-lazy.pdf)
+  - Regex in Ruby
+- LS180 - Database Foundations
+  - Introductory Material
+
+__*Time spent*__<br/>
+182 minutes
+
+__*Thoughts*__<br/>
+Finished off the Regex module. It didn't really take that long, and I'm glad I did it. I now have a basic background of regex, and can actually reason through some regex related problems. I've started the Database Foundations course for now, but I think I'll actually pivot and do the HTML course, as I'm thinking about the potential projects to build on using knowledge from LS175, before I go onto the standard course material to assessment preparation cycle.
