@@ -1,10 +1,11 @@
-# June 2021 (Total minutes: 856)
+# June 2021 (Total minutes: 988)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
 - [4th, Fri](#040621-fri)
 - [5th, Sat](#050621-sat)
 - [6th, Sun](#060621-sun)
+- [7th, Mon](#070621-mon)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -91,3 +92,18 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Finished off the Regex module. It didn't really take that long, and I'm glad I did it. I now have a basic background of regex, and can actually reason through some regex related problems. I've started the Database Foundations course for now, but I think I'll actually pivot and do the HTML course, as I'm thinking about the potential projects to build on using knowledge from LS175, before I go onto the standard course material to assessment preparation cycle.
+
+##### 07/06/21 (Mon)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - Introductory Material
+
+__*Time spent*__<br/>
+132 minutes
+
+__*Thoughts*__<br/>
+After some more thinking, I've come to the conclusion that I'm better off just doing 2 optional projects from LS175 while continuing LS180. I don't think it's fully worth going through HTML/CSS - it would simply add complexity, when what I'm really trying to do is just better understand the backend components - I can always come back and add polish to them later.
+
+Designing an application is quite hard, especially from an application logic front - what classes should exist, how they should interact are all strange to me. More practice is both good and fun at this stage.
