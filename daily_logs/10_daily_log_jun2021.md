@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 988)
+# June 2021 (Total minutes: 1,114)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -6,6 +6,7 @@
 - [5th, Sat](#050621-sat)
 - [6th, Sun](#060621-sun)
 - [7th, Mon](#070621-mon)
+- [8th, Tue](#080621-tue)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -107,3 +108,16 @@ __*Thoughts*__<br/>
 After some more thinking, I've come to the conclusion that I'm better off just doing 2 optional projects from LS175 while continuing LS180. I don't think it's fully worth going through HTML/CSS - it would simply add complexity, when what I'm really trying to do is just better understand the backend components - I can always come back and add polish to them later.
 
 Designing an application is quite hard, especially from an application logic front - what classes should exist, how they should interact are all strange to me. More practice is both good and fun at this stage.
+
+##### 08/06/21 (Tue)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - Creating and Viewing Tables and Databases
+
+__*Time spent*__<br/>
+126 minutes
+
+__*Thoughts*__<br/>
+The app design is quite tricky. I'm not in a position where I'm clear about how the app looks as a finished product, and thus not sure whether certain methods will be useful, and whether they should be handled within the routing or application code.
