@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 1,114)
+# June 2021 (Total minutes: 1,244)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -7,6 +7,7 @@
 - [6th, Sun](#060621-sun)
 - [7th, Mon](#070621-mon)
 - [8th, Tue](#080621-tue)
+- [9th, Wed](#090621-wed)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -121,3 +122,17 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The app design is quite tricky. I'm not in a position where I'm clear about how the app looks as a finished product, and thus not sure whether certain methods will be useful, and whether they should be handled within the routing or application code.
+
+##### 09/06/21 (Wed)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - Revision
+  - Creating and Viewing Tables and Databases
+
+__*Time spent*__<br/>
+130 minutes
+
+__*Thoughts*__<br/>
+Did some revision of the Database Foundations material. It's not too bad - I have the underlying knowledge of SQL, it's more to do with conceptual terms, like DDL, DML, etc, as well as the syntax for `psql` and commands from the console. My app development continues - I think I have a decent implementation for displaying contacts (it ended up just being a getter method that returns a hash), but filtering a nested hash whilst retaining the ids from the top level is a little tricky.
