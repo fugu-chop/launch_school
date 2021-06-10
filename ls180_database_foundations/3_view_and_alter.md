@@ -16,7 +16,7 @@ CREATE TABLE countries (
   name varchar(50) UNIQUE NOT NULL,
   capital varchar(50) NOT NULL,
   population integer
-)
+);
 ```
 3) Create a table called `famous_people`. It should have the following columns:
 - An `id` column that contains auto-incrementing values
@@ -33,7 +33,7 @@ CREATE TABLE famous_people (
   occupation varchar(150),
   date_of_birth varchar(50),
   deceased boolean DEFAULT FALSE
-)
+);
 ```
 4) Create a table called `animals`, with the following requirements:
 - The database table should also contain an auto-incrementing `id` column.
@@ -42,14 +42,14 @@ CREATE TABLE famous_people (
 - The max weight column should be able to hold data in the range 0.001kg to 40,000kg
 - Conservation Status is denoted by a combination of two letters (CR, EN, VU, etc).
 ```sql
-CREATE DATABASE animals (
+CREATE TABLE animals (
   id serial,
   name varchar(100) NOT NULL,
   binomial_name varchar(100) NOT NULL,
   max_weight decimal(8, 3),
   max_age_years integer,
   conservation_status varchar(2)
-)
+);
 ```
 5) List all of the tables in the `encyclopedia` database.
 ```
@@ -82,5 +82,5 @@ CREATE TABLE orders (
   side varchar(50),
   drink varchar(50),
   order_total decimal(4, 2) NOT NULL
-)
+);
 ```
