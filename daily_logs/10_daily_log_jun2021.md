@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 1,244)
+# June 2021 (Total minutes: 1,369)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -8,6 +8,7 @@
 - [7th, Mon](#070621-mon)
 - [8th, Tue](#080621-tue)
 - [9th, Wed](#090621-wed)
+- [10th, Thu](#100621-thu)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -136,3 +137,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Did some revision of the Database Foundations material. It's not too bad - I have the underlying knowledge of SQL, it's more to do with conceptual terms, like DDL, DML, etc, as well as the syntax for `psql` and commands from the console. My app development continues - I think I have a decent implementation for displaying contacts (it ended up just being a getter method that returns a hash), but filtering a nested hash whilst retaining the ids from the top level is a little tricky.
+
+##### 10/06/21 (Thu)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - Altering Tables
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+Making good progress on my application. I've solved most of the hairy problems in the application logic, now it's just tidying it up and writing tests. There's a fair bit of duplication between the updating contact methods, but I can't seem to find any sort of solution of converting a string input and converting this to a variable name. 
