@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 1,369)
+# June 2021 (Total minutes: 1,680)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -9,6 +9,8 @@
 - [8th, Tue](#080621-tue)
 - [9th, Wed](#090621-wed)
 - [10th, Thu](#100621-thu)
+- [11th, Fri](#110621-fri)
+- [12th, Sat](#120621-sat)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -150,3 +152,31 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Making good progress on my application. I've solved most of the hairy problems in the application logic, now it's just tidying it up and writing tests. There's a fair bit of duplication between the updating contact methods, but I can't seem to find any sort of solution of converting a string input and converting this to a variable name. 
+
+##### 11/06/21 (Fri)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - Inserting Data
+
+__*Time spent*__<br/>
+133 minutes
+
+__*Thoughts*__<br/>
+On my project, I finished off the first part of routing - the login page. However, I'm finding it nearly impossible to work with the `rack/test` gem when the application files and test files are in a different subdirectory on the same level. It's incredibly infuriating, since the error messages are not useful at all, and only indicate that Ruby should be able to find the correct file, since the directory that the error is appear for definitely exists.
+
+##### 12/06/21 (Sat)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - Select queries
+  - Updating & deleting data
+  - Table relationships
+
+__*Time spent*__<br/>
+178 minutes
+
+__*Thoughts*__<br/>
+Study today was a real struggle. I'm not finding the database foundations course that interesting, it's kind of tedious, but starting to cover the database design is pretty interesting and something I think is more applicable to the real world. On the LS175 project, I finally managed to write up some tests for authenticating user credentials that actually work - I had to migrate the `.env` file back to the project root directory, since that's where the `dotenv` gem looks for it by default.
