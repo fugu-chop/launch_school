@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 1,680)
+# June 2021 (Total minutes: 1,859)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -11,6 +11,7 @@
 - [10th, Thu](#100621-thu)
 - [11th, Fri](#110621-fri)
 - [12th, Sat](#120621-sat)
+- [13th, Sun](#130621-sun)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -180,3 +181,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Study today was a real struggle. I'm not finding the database foundations course that interesting, it's kind of tedious, but starting to cover the database design is pretty interesting and something I think is more applicable to the real world. On the LS175 project, I finally managed to write up some tests for authenticating user credentials that actually work - I had to migrate the `.env` file back to the project root directory, since that's where the `dotenv` gem looks for it by default.
+
+##### 13/06/21 (Sun)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - Table relationships
+
+__*Time spent*__<br/>
+179 minutes
+
+__*Thoughts*__<br/>
+Again, database design is not my favourite topic - studying this was a struggle. The material feels a little dry, and I think it's just something that's part of being a developer. I am seeing some connections with the database design that I encounter at work, so it does provide some helpful context in that respect.
