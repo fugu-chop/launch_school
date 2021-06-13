@@ -1,9 +1,10 @@
+/*
 1) Make sure you are connected to the `encyclopedia` database. We want to hold the `continent` data in a separate table from the `country` data.
 - Create a `continents` table with an auto-incrementing `id` column (set as the Primary Key), and a `continent_name` column which can hold the same data as the `continent` column from the `countries` table.
 - Remove the `continent` column from the `countries` table.
 - Add a `continent_id` column to the `countries` table of type `integer`.
 - Add a Foreign Key constraint to the `continent_id` column which references the `id` field of the `continents` table.
-```sql
+*/
 CREATE TABLE continents (
   id serial PRIMARY KEY,
   continent_name varchar(25) NOT NULL
@@ -17,9 +18,8 @@ ADD COLUMN continent_id integer NOT NULL;
 
 ALTER TABLE country
 ADD FOREIGN KEY (continent_id) REFERENCES continents (id);
-```
-2) Write statements to add data to the `countries` and `continents` tables so that the data is correctly represented across the two tables. Add both the `countries` and the `continents` to their respective tables in alphabetical order.
-```sql
+
+-- 2) Write statements to add data to the `countries` and `continents` tables so that the data is correctly represented across the two tables. Add both the `countries` and the `continents` to their respective tables in alphabetical order.
 INSERT INTO continent (continent_name)
 VALUES ('Africa'), ('Asia'), ('Europe'), ('North America'), ('South America');
 
@@ -30,9 +30,8 @@ VALUES ('Brazil', 'Brasilia', 208385000, 5),
 ('Germany', 'Berlin', 82349400, 3),
 ('Japan', 'Tokyo', 126672000, 2),
 ('USA', 'Washington D.C.', 325365189, 4);
-```
-3) We want to create an `albums` table to hold data except the singer name, and create a reference from the `albums` table to the `singers` table to link each album to the correct singer. Write the necessary SQL statements to do this and to populate the table with data. Assume Album Name, Genre, and Label can hold strings up to 100 characters. Include an auto-incrementing `id` column in the `albums` table.
-```sql
+
+-- 3) We want to create an `albums` table to hold data except the singer name, and create a reference from the `albums` table to the `singers` table to link each album to the correct singer. Write the necessary SQL statements to do this and to populate the table with data. Assume Album Name, Genre, and Label can hold strings up to 100 characters. Include an auto-incrementing `id` column in the `albums` table.
 ALTER TABLE singers
 ADD CONSTRAINT unique_id UNIQUE (id);
 
@@ -55,9 +54,8 @@ VALUES ('Born to Run', '1975-08-25', 'Rock and roll', 'Columbia', 1),
 ('Elvis', '1956-10-19', 'Rock and roll, Rhythm and Blues', 'RCA Victor', 7),
 ('Sign o'' the Times', '1987-03-30', 'Pop, R&B, Rock, Funk', 'Paisley Park, Warner Bros', 6),
 ('G.I. Blues', '1960-10-01', 'Rock and roll, Pop', 'RCA Victor', 7);
-```
-4) Normalise the `ls_burger` `orders` table. First of all create a `customers` table to hold the customer name data and an `email_addresses` table to hold the customer email data. Create a one-to-one relationship between them, ensuring that if a customer record is deleted so is the equivalent email address record. Populate the tables with the appropriate data from the current orders table.
-```sql
+
+-- 4) Normalise the `ls_burger` `orders` table. First of all create a `customers` table to hold the customer name data and an `email_addresses` table to hold the customer email data. Create a one-to-one relationship between them, ensuring that if a customer record is deleted so is the equivalent email address record. Populate the tables with the appropriate data from the current orders table.
 CREATE TABLE customers (
   id serial PRIMARY KEY,
   customer_name varchar(100)
@@ -74,9 +72,8 @@ VALUES ('James Bergman'), ('Natasha O''Shea'), ('Aaron Muller');
 
 INSERT INTO email_addresses (customer_id, customer_email)
 VALUES (1, 'james1998@email.com'), (2, 'natasha@osheafamily.com');
-```
-5) We want to make our ordering system more flexible, so that customers can order any combination of burgers, sides and drinks. The first step towards doing this is to put all our product data into a separate table called `products`. The table should also have an auto-incrementing `id` column which acts as its PRIMARY KEY. The `product_type` column should hold strings of up to 20 characters. Other than that, the column types should be the same as their equivalent columns from the `orders` table.
-```sql
+
+-- 5) We want to make our ordering system more flexible, so that customers can order any combination of burgers, sides and drinks. The first step towards doing this is to put all our product data into a separate table called `products`. The table should also have an auto-incrementing `id` column which acts as its PRIMARY KEY. The `product_type` column should hold strings of up to 20 characters. Other than that, the column types should be the same as their equivalent columns from the `orders` table.
 CREATE TABLE products (
   id serial PRIMARY KEY,
   product_name varchar(50),
@@ -97,7 +94,8 @@ VALUES ('LS Burger', 3.00, 'Burger', 10 ),
 ('Vanilla Shake', 2.00, 'Drink', 7 ),
 ('Chocolate Shake', 2.00, 'Drink', 7 ),
 ('Strawberry Shake', 2.00, 'Drink', 7);
-```
+
+/*
 6) To associate customers with products, we need to do two more things:
 - Alter or replace the `orders` table so that we can associate a customer with one or more orders (we also want to record an order status in this table).
 - Create an `order_items` table so that an order can have one or more products associated with it.
@@ -108,7 +106,7 @@ Based on the order descriptions below, amend and create the tables as necessary 
 - Aaron has one order, consisting of an LS Burger and Fries. It has a status of 'Placed'.
 
 Assume that the `order_status` field of the orders table can hold strings of up to 20 characters.
-```sql
+*/
 DROP TABLE orders;
 
 CREATE TABLE orders (
