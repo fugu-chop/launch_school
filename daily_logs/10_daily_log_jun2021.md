@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 1,859)
+# June 2021 (Total minutes: 2,099)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -12,6 +12,8 @@
 - [11th, Fri](#110621-fri)
 - [12th, Sat](#120621-sat)
 - [13th, Sun](#130621-sun)
+- [14th, Mon](#140621-mon)
+- [15th, Tue](#150621-tue)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -194,3 +196,30 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Again, database design is not my favourite topic - studying this was a struggle. The material feels a little dry, and I think it's just something that's part of being a developer. I am seeing some connections with the database design that I encounter at work, so it does provide some helpful context in that respect.
+
+##### 14/06/21 (Mon)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - Revision
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+I spent most of today revising the LS180 content. Nothing too new, but it was a welcome change from the monotony of grinding through new content that I've been feeling. I made a bit of progress in writing some validations for contact creation, and tests for the contact list application. It's very time consuming, but I'm enjoying the overall experience thus far. 
+
+##### 15/06/21 (Tue)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - SQL Fundamentals Exercises - Easy 1
+  - Lesson 1 Quiz
+
+__*Time spent*__<br/>
+119 minutes
+
+__*Thoughts*__<br/>
+Polished off Lesson 1. It got a bit boring, and I still didn't do all that well in the quiz. It will be a struggle to complete this module; it's really not my favourite aspect of the course.
