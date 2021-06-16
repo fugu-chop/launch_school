@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 2,099)
+# June 2021 (Total minutes: 2,222)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -14,6 +14,7 @@
 - [13th, Sun](#130621-sun)
 - [14th, Mon](#140621-mon)
 - [15th, Tue](#150621-tue)
+- [16th, Wed](#160621-wed)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -223,3 +224,18 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Polished off Lesson 1. It got a bit boring, and I still didn't do all that well in the quiz. It will be a struggle to complete this module; it's really not my favourite aspect of the course.
+
+##### 16/06/21 (Wed)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - Lesson 2: Schema, Data & SQL
+    - DDL, DML, DCL Fundamentals
+    - Data Types
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+Not much to note on the LS180 front. The material so far seems to be broadly a revision of the SQL book. The Contact List project continues - I was able to figure out a bug that's been annoying me - when setting a `value=` field in an `input` element, you have to wrap the returned value in quotation marks; otherwise if your string has spaces, the `input` will cut off anything after the first space.
