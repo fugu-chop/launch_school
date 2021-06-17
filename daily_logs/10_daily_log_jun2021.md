@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 2,222)
+# June 2021 (Total minutes: 2,346)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -15,6 +15,7 @@
 - [14th, Mon](#140621-mon)
 - [15th, Tue](#150621-tue)
 - [16th, Wed](#160621-wed)
+- [17th, Thu](#170621-thu)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -239,3 +240,18 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Not much to note on the LS180 front. The material so far seems to be broadly a revision of the SQL book. The Contact List project continues - I was able to figure out a bug that's been annoying me - when setting a `value=` field in an `input` element, you have to wrap the returned value in quotation marks; otherwise if your string has spaces, the `input` will cut off anything after the first space.
+
+##### 17/06/21 (Thu)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - Lesson 2: Schema, Data & SQL
+    - DDL, DML, DCL Fundamentals
+    - Data Types
+
+__*Time spent*__<br/>
+124 minutes
+
+__*Thoughts*__<br/>
+I spent an inordinate amount of time debugging a `params` issue in Sinatra - I forgot that anything taken from the URL is a string, which is why I couldn't access hash values.
