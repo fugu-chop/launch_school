@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 2,346)
+# June 2021 (Total minutes: 2,446)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -16,6 +16,7 @@
 - [15th, Tue](#150621-tue)
 - [16th, Wed](#160621-wed)
 - [17th, Thu](#170621-thu)
+- [18th, Fri](#180621-fri)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -255,3 +256,17 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I spent an inordinate amount of time debugging a `params` issue in Sinatra - I forgot that anything taken from the URL is a string, which is why I couldn't access hash values.
+
+##### 18/06/21 (Fri)
+__*Concepts covered*__<br/>
+- LS180 - Database Foundations
+  - Lesson 2: Schema, Data & SQL
+    - Constraints
+    - `NULL`
+    - Keys
+
+__*Time spent*__<br/>
+100 minutes
+
+__*Thoughts*__<br/>
+Today was a bit of a write off. I didn't get much of a chance to study in the afternoon. Still, covered some good ground in Constraints, and getting used to the syntax of DDL, which I don't encounter much in my day to day work.
