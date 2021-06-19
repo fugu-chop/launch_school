@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 2,446)
+# June 2021 (Total minutes: 2,629)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -17,6 +17,7 @@
 - [16th, Wed](#160621-wed)
 - [17th, Thu](#170621-thu)
 - [18th, Fri](#180621-fri)
+- [19th, Sat](#190621-sat)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -270,3 +271,20 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Today was a bit of a write off. I didn't get much of a chance to study in the afternoon. Still, covered some good ground in Constraints, and getting used to the syntax of DDL, which I don't encounter much in my day to day work.
+
+##### 19/06/21 (Sat)
+__*Concepts covered*__<br/>
+- LS180 - Database Foundations
+  - Lesson 2: Schema, Data & SQL
+    - Keys
+    - Group By & Aggregations
+    - Quiz
+  - Lesson 3: Relational Data and Joins
+    - Relational Data
+    - Cardinality and Modality
+
+__*Time spent*__<br/>
+182 minutes
+
+__*Thoughts*__<br/>
+It feels good to take a break from the Contact Book app. I've been grinding away at it for a while and it's starting to get tiresome. Today was focused on just revision and drilling syntax as part of exercises. The ERD/cardinality/modality concept is interesting, contrary to my prior reservations about database design. Thinking about these things up front before applicaiton design seems pretty involved, and a difficult skill to master.
