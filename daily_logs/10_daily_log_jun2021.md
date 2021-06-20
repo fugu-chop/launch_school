@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 2,629)
+# June 2021 (Total minutes: 2,811)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -18,6 +18,7 @@
 - [17th, Thu](#170621-thu)
 - [18th, Fri](#180621-fri)
 - [19th, Sat](#190621-sat)
+- [20th, Sun](#200621-sun)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -288,3 +289,18 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 It feels good to take a break from the Contact Book app. I've been grinding away at it for a while and it's starting to get tiresome. Today was focused on just revision and drilling syntax as part of exercises. The ERD/cardinality/modality concept is interesting, contrary to my prior reservations about database design. Thinking about these things up front before applicaiton design seems pretty involved, and a difficult skill to master.
+
+##### 20/06/21 (Sun)
+__*Concepts covered*__<br/>
+- LS180 - Database Foundations
+  - Lesson 3: Relational Data and Joins
+    - Foreign Keys
+  - Exercises
+    - SQL Fundamentals - DDL (Data Definition Language)
+    - SQL Fundamentals - DML (Data Manipulation Language)
+
+__*Time spent*__<br/>
+182 minutes
+
+__*Thoughts*__<br/>
+Another reasonably successful study day. I focused mainly on SQL exercises, which is a little dull, but there's a good sense of progression I'm getting. Not too bad.
