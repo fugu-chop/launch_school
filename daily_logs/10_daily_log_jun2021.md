@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 2,811)
+# June 2021 (Total minutes: 2,931)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -19,6 +19,7 @@
 - [18th, Fri](#180621-fri)
 - [19th, Sat](#190621-sat)
 - [20th, Sun](#200621-sun)
+- [21st, Mon](#210621-mon)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -304,3 +305,19 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Another reasonably successful study day. I focused mainly on SQL exercises, which is a little dull, but there's a good sense of progression I'm getting. Not too bad.
+
+##### 21/06/21 (Mon)
+__*Concepts covered*__<br/>
+- LS180 - Database Foundations
+  - Lesson 3: Relational Data and Joins
+    - One-to-Many
+    - Many-to-Many
+  - Exercises
+    - SQL Fundamentals - DML (Data Manipulation Language)
+    - SQL FUndamentals - Many to Many
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Another day of drilling exercises. I'm becoming slightly more familiar with the syntax now - it's getting easier.
