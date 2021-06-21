@@ -110,3 +110,25 @@ SELECT d.name
   ORDER BY d.created_at ASC
   LIMIT 1;
 ```
+9) We've realized that the last two parts we're using for device number 2, "Gyroscope", actually belong to an "Accelerometer". Write an SQL statement that will associate the last two parts from our parts table with an "Accelerometer" instead of a "Gyroscope".
+```sql
+UPDATE parts SET device_id = 1
+WHERE part_number IN (2, 97);
+```
+9b) What if we wanted to set the part with the smallest part_number to be associated with "Gyroscope"? How would we go about doing that?
+```sql
+UPDATE parts SET device_id = 1
+WHERE part_number = (
+  SELECT MIN(part_number) 
+  FROM parts 
+  WHERE device_id = 2
+);
+```
+10) Delete any data related to "Accelerometer", this includes the parts associated with an Accelerometer.
+```sql
+DELETE FROM parts
+WHERE device_id = 2;
+
+DELETE FROM devices
+WHERE id = 2;
+```
