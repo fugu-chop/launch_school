@@ -107,3 +107,126 @@ VALUES (1, 1),
 (6, 6),
 (6, 7);
 ```
+2) Write a query to retrieve the customer data for every customer who currently subscribes to at least one service.
+```sql
+SELECT DISTINCT c.*
+FROM customers AS c
+JOIN customers_services AS cs
+  ON c.id = cs.customer_id
+;
+```
+3) Write a query to retrieve the customer data for every customer who does not currently subscribe to any services.
+```sql
+SELECT c.*
+FROM customers AS c
+LEFT JOIN customers_services AS cs
+  ON c.id = cs.customer_id
+WHERE cs.customer_id IS NULL;
+```
+3b) Can you write a query that displays all customers with no services and all services that currently don't have any customers?
+```sql
+SELECT c.*, s.*
+FROM customers AS c
+FULL OUTER JOIN customers_services AS cs
+  ON c.id = cs.customer_id
+FULL OUTER JOIN services AS s
+  ON cs.service_id = s.id
+WHERE cs.customer_id IS NULL 
+  OR c.id IS NULL
+;
+```
+4) Using `RIGHT OUTER JOIN`, write a query to display a list of all services that are not currently in use.
+```sql
+SELECT s.description
+FROM customers_services AS cs
+RIGHT OUTER JOIN services AS s
+  ON cs.service_id = s.id
+WHERE cs.service_id IS NULL;
+```
+5) Write a query to display a list of all customer names together with a comma-separated list of the services they use. 
+```sql
+SELECT c.name, STRING_AGG(s.description, ', ') AS services
+FROM customers AS c
+LEFT JOIN customers_services AS cs
+  ON c.id = cs.customer_id
+LEFT JOIN services AS s
+  ON cs.service_id = s.id
+GROUP BY c.name;
+```
+5b) Can you modify the above query to display the below?
+```
+     name      |    description
+---------------+--------------------
+ Chen Ke-Hua   | High Bandwidth
+               | Unix Hosting
+ Jim Pornot    | Dedicated Hosting
+               | Unix Hosting
+               | Bulk Email
+ Lynn Blake    | Whois Registration
+               | High Bandwidth
+               | Business Support
+               | DNS
+               | Unix Hosting
+ Nancy Monreal |
+ Pat Johnson   | Whois Registration
+               | DNS
+               | Unix Hosting
+ Scott Lakso   | DNS
+               | Dedicated Hosting
+               | Unix Hosting
+(17 rows)
+```
+```sql
+SELECT CASE WHEN c.name = LAG(c.name)
+         OVER (ORDER BY c.name)
+         THEN NULL
+         ELSE c.name
+         END AS name,
+       s.description
+FROM customers AS c
+LEFT JOIN customers_services AS cs
+  ON c.id = cs.customer_id
+LEFT JOIN services AS s
+  ON cs.service_id = s.id;
+```
+6) Write a query that displays the description for every service that is subscribed to by at least 3 customers. Include the customer count for each description in the report. 
+```sql
+SELECT s.description
+     , COUNT(DISTINCT cs.customer_id)
+FROM customers_services AS cs
+JOIN services AS s
+  ON cs.service_id = s.id
+GROUP BY s.description
+HAVING COUNT(DISTINCT cs.customer_id) >= 3;
+```
+7) Assuming that everybody in our database has a bill coming due, and that all of them will pay on time, write a query to compute the total gross income we expect to receive.
+```sql
+SELECT SUM(price) AS gross
+FROM customers_services AS cs
+JOIN services AS s
+  ON cs.service_id = s.id;
+```
+8) A new customer, 'John Doe', has signed up with our company. His payment token is 'EYODHLCN'. Initially, he has signed up for UNIX hosting, DNS, and Whois Registration. Create any SQL statement(s) needed to add this record to the database.
+```sql
+INSERT INTO customers (name, payment_token)
+VALUES ('John Doe', 'EYODHLCN');
+
+INSERT INTO customers_services (customer_id, service_id)
+VALUES (7, 1),
+(7, 2),
+(7, 3);
+```
+9) Calculate the amount of expected income from "big ticket" services (those services that cost more than $100) and the maximum income the company could achieve if it managed to convince all of its customers to select all of the company's big ticket items.
+```sql
+SELECT SUM(s.price)
+FROM customers_services AS cs
+JOIN services AS s
+  ON cs.service_id = s.id
+WHERE s.price > 100;
+
+SELECT SUM(s.price) * (SELECT COUNT(DISTINCT cs.customer_id) FROM customers_services AS cs)
+FROM customers_services AS cs
+RIGHT JOIN services AS s
+  ON cs.service_id = s.id
+WHERE s.price > 100;
+```
