@@ -65,5 +65,40 @@ FROM bids);
 ```
 3) Write a SELECT query that returns a list of names of everyone who has bid in the auction. While it is possible (and perhaps easier) to do this with a JOIN clause, we're going to do things differently: use a subquery with the EXISTS clause instead.
 ```sql
+SELECT b.name
+FROM bidders AS b
+WHERE EXISTS (SELECT 1 FROM bids WHERE bids.bidder_id = bidders.id);
+```
+3b) More often than not, we can get an equivalent result by using a JOIN clause, instead of a subquery. Can you figure out a SELECT query that uses a JOIN clause that returns the same output as our solution above?
+```sql
+SELECT bd.name
+FROM bidders AS bd
+JOIN bids AS b
+  ON bd.id = b.bidder_id;
+```
+4) Write an SQL query that finds the largest number of bids from an individual bidder. For this exercise, you must use a subquery to generate a result table (or virtual table), and then query that table for the largest number of bids.
+```sql
+SELECT MAX(num_bids)
+FROM (SELECT b.id, COUNT(id) AS num_bids FROM bids AS b GROUP BY b.id);
+```
+5) Use a scalar subquery to determine the number of bids on each item. The entire query should return a table that has the name of each item along with the number of bids on an item.
+```sql
+SELECT i.name, (SELECT COUNT(b.id) FROM bids AS b WHERE i.id = b.item_id) 
+FROM items AS i;
+```
+5b) If we wanted to get an equivalent result, without using a subquery, then we would have to use a LEFT OUTER JOIN. Can you come up with the equivalent query that uses a JOIN clause?
+```sql
+SELECT i.name,
+       COUNT(b.id)
+FROM items AS i
+LEFT JOIN bids AS b
+  ON i.id = b.item_id
+;
+```
+6) Write an SQL query that will display the id for the item that matches all of the data that we know, but does not use the AND keyword.
+```sql
+SELECT 
+FROM items AS i
+WHERE i.name IN ('Painting)
 
 ```
