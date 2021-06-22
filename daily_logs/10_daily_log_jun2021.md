@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 2,931)
+# June 2021 (Total minutes: 3,050)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -20,6 +20,7 @@
 - [19th, Sat](#190621-sat)
 - [20th, Sun](#200621-sun)
 - [21st, Mon](#210621-mon)
+- [22nd, Tue](#220621-tue)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -321,3 +322,21 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Another day of drilling exercises. I'm becoming slightly more familiar with the syntax now - it's getting easier.
+
+##### 22/06/21 (Tue)
+__*Concepts covered*__<br/>
+- LS180 - Database Foundations
+  - Lesson 3: Relational Data and Joins
+    - Quiz
+  - Lesson 4: Query Optimisation
+    - Indexes
+    - `EXPLAIN`, `EXPLAIN ANALYZE`
+    - Subqueries
+  - Exercises
+    - SQL Fundamentals - Many to Many
+
+__*Time spent*__<br/>
+119 minutes
+
+__*Thoughts*__<br/>
+Some new content, finally. The query optimisation stuff is pretty interesting, as I think it's directly applicable to my current job. Learning about indexes is also interesting, as well as some less well known SQL commands is helpful. There's always something you don't know, even if you work with it all day.
