@@ -65,9 +65,9 @@ FROM bids);
 ```
 3) Write a SELECT query that returns a list of names of everyone who has bid in the auction. While it is possible (and perhaps easier) to do this with a JOIN clause, we're going to do things differently: use a subquery with the EXISTS clause instead.
 ```sql
-SELECT b.name
-FROM bidders AS b
-WHERE EXISTS (SELECT 1 FROM bids WHERE bids.bidder_id = bidders.id);
+SELECT bd.name
+FROM bidders AS bd
+WHERE EXISTS (SELECT 1 FROM bids AS b WHERE b.bidder_id = bd.id);
 ```
 3b) More often than not, we can get an equivalent result by using a JOIN clause, instead of a subquery. Can you figure out a SELECT query that uses a JOIN clause that returns the same output as our solution above?
 ```sql
@@ -101,4 +101,51 @@ SELECT
 FROM items AS i
 WHERE i.name IN ('Painting)
 
+```
+7) Use EXPLAIN to check the efficiency of the query statement we used in the exercise on EXISTS:
+```sql
+EXPLAIN SELECT name FROM bidders
+WHERE EXISTS (SELECT 1 FROM bids WHERE bids.bidder_id = bidders.id);
+
+EXPLAIN ANALYZE SELECT name FROM bidders
+WHERE EXISTS (SELECT 1 FROM bids WHERE bids.bidder_id = bidders.id);
+```
+8) Run EXPLAIN ANALYZE on the two statements. Compare the planning time, execution time, and the total time required to run these two statements. Also compare the total "costs". Which statement is more efficient and why?
+```sql
+EXPLAIN ANALYZE SELECT MAX(bid_counts.count) FROM
+  (SELECT COUNT(bidder_id) FROM bids GROUP BY bidder_id) AS bid_counts;
+
+/*
+-- Subquery
+                                          QUERY PLAN
+-----------------------------------------------------------------------------------------------------------------
+Aggregate  (cost=37.15..37.16 rows=1 width=8) (actual time=0.038..0.038 rows=1 loops=1)
+  ->  HashAggregate  (cost=32.65..34.65 rows=200 width=4) (actual time=0.033..0.035 rows=6 loops=1)
+        Group Key: bids.bidder_id
+        ->  Seq Scan on bids  (cost=0.00..25.10 rows=1510 width=4) (actual time=0.006..0.012 rows=26 loops=1)
+Planning time: 0.096 ms
+Execution time: 0.164 ms
+(6 rows)
+*/
+
+EXPLAIN ANALYZE SELECT COUNT(bidder_id) AS max_bid FROM bids
+  GROUP BY bidder_id
+  ORDER BY max_bid DESC
+  LIMIT 1;
+
+/*
+-- ORDER BY and LIMIT
+                                        QUERY PLAN
+-----------------------------------------------------------------------------------------------------------------
+Limit  (cost=35.65..35.65 rows=1 width=4) (actual time=0.541..0.541 rows=1 loops=1)
+  ->  Sort  (cost=35.65..36.15 rows=200 width=4) (actual time=0.541..0.541 rows=1 loops=1)
+        Sort Key: (count(bidder_id)) DESC
+        Sort Method: top-N heapsort  Memory: 25kB
+        ->  HashAggregate  (cost=32.65..34.65 rows=200 width=4) (actual time=0.017..0.018 rows=6 loops=1)
+              Group Key: bidder_id
+              ->  Seq Scan on bids  (cost=0.00..25.10 rows=1510 width=4) (actual time=0.003..0.004 rows=26 loops=1)
+Planning time: 1.621 ms
+Execution time: 1.486 ms
+(9 rows)
+*/
 ```
