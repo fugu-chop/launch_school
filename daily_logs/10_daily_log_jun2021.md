@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 3,050)
+# June 2021 (Total minutes: 3,178)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -21,6 +21,7 @@
 - [20th, Sun](#200621-sun)
 - [21st, Mon](#210621-mon)
 - [22nd, Tue](#220621-tue)
+- [23rd, Wed](#230621-wed)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -340,3 +341,19 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Some new content, finally. The query optimisation stuff is pretty interesting, as I think it's directly applicable to my current job. Learning about indexes is also interesting, as well as some less well known SQL commands is helpful. There's always something you don't know, even if you work with it all day.
+
+##### 22/06/21 (Tue)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - Lesson 4: Query Optimisation
+    - Quiz
+  - Exercises
+    - SQL Fundamentals - Subqueries
+
+__*Time spent*__<br/>
+128 minutes
+
+__*Thoughts*__<br/>
+The subqueries exercises are a bit strange - they're covering a whole lot of techniques that weren't covered in the main course and seem like they make an extreme efforts to make contrived examples to make your life harder. The morning session was not great - I was exhausted from lack of sleep and couldn't really get into deep focus. There's an obvious difference in the speed of thought, and the ability to deconstruct concepts. Otherwise, I finished the LS180 course today. Onto the assessment preparation.
