@@ -16,6 +16,8 @@
 
 ### What is normalisation? Why would we use it?
 
+### What are anomalies?
+
 ### What is database design? What are the considerations behind it?
 
 ### What is an Entity Relationship Diagram? Why would we use it?
