@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 3,296)
+# June 2021 (Total minutes: 3,351)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -23,6 +23,7 @@
 - [22nd, Tue](#220621-tue)
 - [23rd, Wed](#230621-wed)
 - [24th, Thu](#240621-thu)
+- [25th, Fri](#250621-fri)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -369,3 +370,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 A distracted day. I felt tired waking up, and I struggled to focus all day. Study was a bit of a grind - hopefully tomorrow is a bit more productive.
+
+##### 25/06/21 (Fri)
+__*Concepts covered*__<br/>
+- LS180 - Database Foundations
+  - Revision
+
+__*Time spent*__<br/>
+55 minutes
+
+__*Thoughts*__<br/>
+The morning session was slow going and distracted. I think I just find this course a little bland and uninteresting, without having an application sit on top of it. I'm going to make up the difference over the next two days. I just don't feel all that motivated currently to study, and a light day might help me recharge.
