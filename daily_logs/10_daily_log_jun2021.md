@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 3,351)
+# June 2021 (Total minutes: 3,540)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -381,3 +381,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The morning session was slow going and distracted. I think I just find this course a little bland and uninteresting, without having an application sit on top of it. I'm going to make up the difference over the next two days. I just don't feel all that motivated currently to study, and a light day might help me recharge.
+
+##### 26/06/21 (Sat)
+__*Concepts covered*__<br/>
+- LS180 - Database Foundations
+  - Revision
+
+__*Time spent*__<br/>
+189 minutes
+
+__*Thoughts*__<br/>
+I filled in my sample theory answers today and refined them slightly. I'll continue this, and then move onto the practical exercises to brush up on my syntax. 
