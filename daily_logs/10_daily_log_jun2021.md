@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 3,540)
+# June 2021 (Total minutes: 3,720)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -24,6 +24,8 @@
 - [23rd, Wed](#230621-wed)
 - [24th, Thu](#240621-thu)
 - [25th, Fri](#250621-fri)
+- [26th, Sat](#260621-sat)
+- [27th, Sun](#270621-sun)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -392,3 +394,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I filled in my sample theory answers today and refined them slightly. I'll continue this, and then move onto the practical exercises to brush up on my syntax. 
+
+##### 27/06/21 (Sun)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - Revision
+
+__*Time spent*__<br/>
+180 minutes
+
+__*Thoughts*__<br/>
+Spent today's revision session revising my theory answers and quizzes. It felt good to jump back into the contact book application. I feel like that sense of burnout has gone away a little.
