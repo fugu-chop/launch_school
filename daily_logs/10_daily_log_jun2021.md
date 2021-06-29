@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 3,837)
+# June 2021 (Total minutes: 3,957)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -27,6 +27,7 @@
 - [26th, Sat](#260621-sat)
 - [27th, Sun](#270621-sun)
 - [28th, Mon](#280621-mon)
+- [29th, Tue](#290621-tue)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -423,3 +424,16 @@ __*Thoughts*__<br/>
 I felt like I was able to focus significantly better during this morning's revision session. I'm not sure what to put this down to, perhaps better sleep over the weekend. I did a review of all the DDL syntax that I'm not that familiar with.
 
 I feel pretty good about how much functionality and testing I was able to cram into an hour of study. Some quick refactoring made my field validation methods tidier, and I was able to extend the functionality of an existing template based on the URL. I feel happy with my work.
+
+##### 29/06/21 (Tue)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - Revision
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+Today was mostly spent drilling exercises. I'm still a little unfamiliar with the various syntax for DML v DDL SQL. I finally finished my contact list application - that felt like a massive undertaking. I'll deploy it to Heroku tomorrow.
