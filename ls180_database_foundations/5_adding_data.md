@@ -108,7 +108,7 @@ The item costs and loyalty points are listed below:
 -- 42
 INSERT INTO orders (customer_name, burger, side, drink, customer_email, customer_loyalty_points, burger_cost, side_cost, drink_cost)
 VALUES ('James', 'LS Chicken Burger', 'Fries', 'Cola', 'james1998@email.com', 28, 4.5, 0.99, 1.5), 
-('Natasha', 'LS Cheeseburger', 'Fries', NULL, 'natasha@osheafamily.com', 18, 3.5, 0.99, NULL), 
+('Natasha', 'LS Cheeseburger', 'Fries', NULL, 'natasha@osheafamily.com', 18, 3.5, 0.99, DEFAULT), 
 ('Natasha', 'LS Double Deluxe Burger', 'Onion Rings', 'Chocolate Shake', 'natasha@osheafamily.com', 42, 6, 1.5, 2),
-('Aaron', 'LS Burger', NULL, NULL, NULL, 10, 3, NULL, NULL);
+('Aaron', 'LS Burger', NULL, NULL, NULL, 10, 3, DEFAULT, DEFAULT);
 ```
