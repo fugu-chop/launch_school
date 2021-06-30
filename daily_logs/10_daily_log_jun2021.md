@@ -1,4 +1,4 @@
-# June 2021 (Total minutes: 3,957)
+# June 2021 (Total minutes: 4,090)
 - [1st, Tue](#010621-tue)
 - [2nd, Wed](#020621-wed)
 - [3rd, Thu](#030621-thu)
@@ -28,6 +28,7 @@
 - [27th, Sun](#270621-sun)
 - [28th, Mon](#280621-mon)
 - [29th, Tue](#290621-tue)
+- [30th, Wed](#300621-wed)
 
 ##### 01/06/21 (Tue)
 __*Concepts covered*__<br/>
@@ -437,3 +438,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Today was mostly spent drilling exercises. I'm still a little unfamiliar with the various syntax for DML v DDL SQL. I finally finished my contact list application - that felt like a massive undertaking. I'll deploy it to Heroku tomorrow.
+
+##### 30/06/21 (Wed)
+__*Concepts covered*__<br/>
+- LS175 - Optional Projects
+  - Contact List
+- LS180 - Database Foundations
+  - Revision
+
+__*Time spent*__<br/>
+133 minutes
+
+__*Thoughts*__<br/>
+I finally deployed my contact book application to Heroku. I had some issues with the `.env` variables not being picked up because the `.env` file wasn't checked into git (which is where Heroku pulls all of the files from). I had to manually set these in the UI, which took a bit of StackOverflow searching to figure out.
