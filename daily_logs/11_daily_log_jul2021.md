@@ -1,6 +1,7 @@
-# July 2021 (Total minutes: 185)
+# July 2021 (Total minutes: 365)
 - [1st, Thu](#010721-thu)
 - [2nd, Fri](#020721-fri)
+- [3rd, Sat](#030721-sat)
 
 ##### 01/07/21 (Thu)
 __*Concepts covered*__<br/>
@@ -25,3 +26,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Did some more drilling of SQL syntax in the morning. I think the biggest challenge for me is remembering semi-colons on the end of my queries, as well as knowing for DDL, what commands can be chained together in a single `ALTER TABLE` statement, and what has to be separated out into multiple statements. Constraints are also a little fuzzy at the moment - I'm still not always certain when I can shorten the syntax for deletion/creation of constraints.
+
+##### 03/07/21 (Sat)
+__*Concepts covered*__<br/>
+- LS181 - Database Foundations
+  - Revision
+
+__*Time spent*__<br/>
+180 minutes
+
+__*Thoughts*__<br/>
+I spent the morning writing out my thoery answers. These aren't strictly required as part of assessment preparation, but are useful in gaining mastery over database foundations and are a worthwhile investment of time, I think. I spent the rest of the day working through the SQL exercises.
