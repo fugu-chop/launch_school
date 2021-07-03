@@ -19,7 +19,7 @@ SQL can be broken down into three sub-languages:
   - Common commands for DDL include `ALTER`, `CREATE` or `DROP`
 - Data Manipulation Language (DML): This controls the creation, retrieval and modification of data stored within a database.
   - Common commands for DML include `SELECT`, `UPDATE`, `INSERT` and `DELETE`
-- Data Control Language (DCL): This controls the access privileges to the database for different users or applications.
+- Data Control Language (DCL): This controls the access privileges to the database for different users or applications. Common commands include `GRANT`, `REVOKE`.
 
 ### What is the difference between data and a schema?
 A _schema_ refers to the structure of the database that houses data. It controls what tables exist, what columns exist within the table, what the data types are for each column, and any constraints that might apply to columns or the table itself. The _data_ refers to the contents of the tables themselves. These are the specific values contained in rows and columns within a table. Data must be combined with a schema to create a useful entity of structured data with which users or applications can interact.
