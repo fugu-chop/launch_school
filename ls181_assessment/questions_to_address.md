@@ -31,7 +31,7 @@ A constraint is a limitation that can be applied to a column, table, or schema s
 Within the context of SQL, `NULL` refers to an unknown value. We need to be careful in the design and querying of our tables when dealing with `NULL` values, as when evaluated by comparison operators, they return `NULL`, making it impossible to compared them with non-`NULL` values. When columns are ordered with an `ORDER BY` clause, the order in which `NULL` values appear can also change (appears first in a descending order sort, or last in an ascending order sort), which may have implications on information returned within an application. Similarly, when using comparison operators on columns with other values, `NULL` values will _not_ be returned; e.g. `SELECT * FROM table WHERE col1 != true` will _not_ return rows where `col1` is `NULL`.
 
 ### What is normalisation? Why would we use it?
-Normalisation is the process of splitting up data into multiple tables and creating relationships between them in order to reduce data redundancy (i.e. the amount of duplicated information within a single tables) and improve data integrity through the use of keys and constraints, so that all data inserted into the tables conforms with a set of expected rules. Normalisation helps reduce the amount of _anomalies_ in databases.
+Normalisation is the process of splitting up data into multiple tables and creating relationships between them in order to reduce data redundancy (i.e. the amount of duplicated information within a single tables) and improve data integrity. Normalisation helps reduce the amount of _anomalies_ in databases.
 
 ### What are anomalies?
 Anomalies are issues that occur when tables in a database are not normalised. Three examples of anomalies include:
@@ -58,7 +58,7 @@ Keys are a type of constraint that are used to establish relationships _between_
 A primary key is a constraint that can be applied to a table that allows references to specific, individual rows within that table. They are unique identifiers for rows, and act as a way to establish relationships between two tables, in that a foreign key in a table should reference an entry in another table with the associated primary key. As part of applying a primary key constraint, this means that all values within the primary key column are intended to be unique, and not `NULL`.
 
 ### What is a foreign key?
-A foreign key is a constraint that can be applied to a column within a table such that a given row can be associated with another row in a different table, through that other table's primary key. Applying the foreign key constraint does __not__ inherently create a non-`NULL` (though it makes no sense of a foreign key to be `NULL`) or unique constraint (otherwise creating one-to-many relationships would not be possible between tables). Foreign keys help us ensure referential integrity, in that a row with a value in the foreign key column must reference a primary key value found in in another table.
+A foreign key is a constraint that can be applied to a column within a table such that a given row can be associated with another row in a different table, through that other table's primary key. Applying the foreign key constraint does __not__ inherently create a non-`NULL` (though it makes no sense for a foreign key to be `NULL`) or unique constraint (otherwise creating one-to-many relationships would not be possible between tables). Foreign keys help us ensure referential integrity, in that a row with a value in the foreign key column must reference a primary key value found in in another table.
 
 ### What is a natural key?
 A natural key is an identifier for individual records within a table that is created by using existing data within a table (e.g. through using a specific column, or combination of columns). Natural keys aren't particularly prevalent, since as they rely on context specific values and are potentially vulnerable to external changes (e.g. product SKUs used as a natural key might be carried over between different product versions, or phone numbers can change over time). 
@@ -89,7 +89,7 @@ There are three types of relationships that can exist between relations:
 - `INNER JOIN` - this returns a subset of rows that is common between tables; i.e. where the primary and foreign key can be matched across both rows in multiple tables.
 - `LEFT OUTER JOIN` - this returns all of the results from the LEFT table, and the elements of the other table that are common to the left table (again, where the primary and foreign keys can be matched)
 - `RIGHT OUTER JOIN` - this returns all of the results from the RIGHT table, and the common elements of the left table that can be matched with the right table (i.e. rows where the primary and foreign keys can be matched)
-- `FULL OUTER JOIN` - this returns all of the rows from both tables, joined where possible.
+- `FULL OUTER JOIN` - this returns all of the rows from both tables, joined where possible (the inner join is performed first, followed by a left outer join, then a right outer join).
 - `CROSS JOIN` - also known as a cartesian join, this returns each combination of possible rows between the tables. There is no `ON` clause used to match rows of data between the two fields.
 
 ### What are indexes?
