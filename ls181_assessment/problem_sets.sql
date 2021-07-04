@@ -3,7 +3,6 @@
 -- 5_adding_data
 -- 8_updating_data
 -- 9_multiple_tables
--- 11_working_with_a_single_table
 -- 13_more_single_table_queries
 -- 15_more_constraints
 -- 16_keys
@@ -41,9 +40,7 @@ CREATE TABLE animals (
 );
 
 -- \dt
-
 -- \d animals
-
 -- \c ls_burger
 
 CREATE TABLE orders (
@@ -138,7 +135,7 @@ ALTER TABLE animals
 UPDATE animals 
   SET phylum = 'Chordata';
 
--- Cannot chain SET commands here
+-- Cannot chain SET commands here since the criteria is different
 UPDATE animals
   SET kingdom = 'Animalia';
 
@@ -173,7 +170,7 @@ DELETE FROM countries;
 
 -- \c ls_burger
 
--- Can chain SET statements in one
+-- Can chain SET statements in one if the criteria is the same
 UPDATE orders 
   SET drink = 'Lemonade', 
   side = 'Fries',
@@ -214,3 +211,115 @@ UPDATE countries SET continent_id = 2
 
 UPDATE countries SET continent_id = 3
   WHERE name = 'Japan';
+
+-- \c encyclopedia
+
+CREATE TABLE albums (
+  id SERIAL PRIMARY KEY,
+  album_name VARCHAR(100),
+  released DATE,
+  genre VARCHAR(100),
+  label VARCHAR(100),
+  artist_id INTEGER NOT NULL REFERENCES singers (id)
+);
+
+-- \c ls_burger
+
+CREATE TABLE customers (
+  id SERIAL PRIMARY KEY,
+  customer_name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE email_addresses (
+  customer_id SERIAL PRIMARY KEY REFERENCES customers (id) ON DELETE CASCADE,
+  customer_email VARCHAR(100)
+);
+
+INSERT INTO customers (customer_name)
+  VALUES ('James Bergman'),
+  ('Natasha O''Shea'),
+  ('Aaron Muller');
+
+INSERT INTO email_addresses (customer_id, customer_email)
+  VALUES (1, 'james1998@email.com'),
+  (2, 'natasha@osheafamily.com');
+
+CREATE TYPE product_classes AS ENUM('Burger', 'Drink', 'Side');
+
+CREATE TABLE products (
+  id SERIAL PRIMARY KEY,
+  product_name VARCHAR(20) NOT NULL UNIQUE,
+  product_cost NUMERIC(4,2) NOT NULL DEFAULT 0,
+  product_type PRODUCT_CLASSES NOT NULL,
+  product_loyalty_points INTEGER NOT NULL DEFAULT 0
+);
+
+INSERT INTO products (product_name, product_cost, product_type, product_loyalty_points)
+  VALUES ('LS Burger', 3.00, 'Burger', 10),
+  ('LS Cheeseburger', 3.50, 'Burger', 15),
+  ('LS Chicken Burger', 4.50, 'Burger', 20),
+  ('LS Double Deluxe Burger', 6.00, 'Burger', 30),
+  ('Fries', 1.20, 'Side', 3),
+  ('Onion Rings', 1.50, 'Side', 5),
+  ('Cola', 1.50, 'Drink', 5),
+  ('Lemonade', 1.50, 'Drink', 5),
+  ('Vanilla Shake', 2.00, 'Drink', 7),
+  ('Chocolate Shake', 2.00, 'Drink', 7),
+  ('Strawberry Shake', 2.00, 'Drink', 7);
+
+DROP TABLE orders;
+
+CREATE TABLE orders (
+  id SERIAL PRIMARY KEY,
+  customer_id INTEGER NOT NULL REFERENCES customers (id) ON DELETE CASCADE,
+  order_status VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE order_items (
+  id SERIAL PRIMARY KEY,
+  order_id INTEGER NOT NULL REFERENCES orders (id) ON DELETE CASCADE,
+  product_id INTEGER NOT NULL REFERENCES products (id) ON DELETE CASCADE
+);
+
+INSERT INTO orders (customer_id, order_status)
+  VALUES (1, 'In Progress'),
+  (2, 'Placed'),
+  (2, 'Complete'),
+  (3, 'Placed');
+
+INSERT INTO order_items (order_id, product_id)
+  VALUES (1, 3),
+  (1, 5),
+  (1, 6),
+  (1, 8),
+  (2, 2),
+  (2, 5),
+  (2, 7),
+  (3, 4),
+  (3, 2),
+  (3, 5),
+  (3, 5),
+  (3, 6),
+  (3, 10),
+  (3, 9),
+  (4, 1),
+  (4, 5);
+
+-- 11_working_with_a_single_table
+-- createdb residents
+-- psql -d residents < /Users/dean/Documents/launch_school/ls180_database_foundations/residents_with_data.sql
+-- psql -d residents
+
+SELECT state,
+      COUNT(DISTINCT id)
+FROM people
+GROUP BY state
+ORDER BY count DESC
+LIMIT 10;
+
+SELECT SUBSTR(email, STRPOS(email, '@')) AS domain,
+       COUNT(DISTINCT id) AS count
+FROM people
+GROUP BY domain
+ORDER BY count DESC
+LIMIT 10;
