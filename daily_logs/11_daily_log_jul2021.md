@@ -1,7 +1,8 @@
-# July 2021 (Total minutes: 365)
+# July 2021 (Total minutes: 548)
 - [1st, Thu](#010721-thu)
 - [2nd, Fri](#020721-fri)
 - [3rd, Sat](#030721-sat)
+- [4th, Sun](#040721-sun)
 
 ##### 01/07/21 (Thu)
 __*Concepts covered*__<br/>
@@ -36,4 +37,15 @@ __*Time spent*__<br/>
 180 minutes
 
 __*Thoughts*__<br/>
-I spent the morning writing out my thoery answers. These aren't strictly required as part of assessment preparation, but are useful in gaining mastery over database foundations and are a worthwhile investment of time, I think. I spent the rest of the day working through the SQL exercises.
+I spent the morning writing out my theory answers. These aren't strictly required as part of assessment preparation, but are useful in gaining mastery over database foundations and are a worthwhile investment of time, I think. I spent the rest of the day working through the SQL exercises.
+
+##### 04/07/21 (Sun)
+__*Concepts covered*__<br/>
+- LS181 - Database Foundations
+  - Revision
+
+__*Time spent*__<br/>
+183 minutes
+
+__*Thoughts*__<br/>
+The speed of my theory answers is better, and I feel like I'm getting a much better grasp on the different theoretical concepts and how they fit in together with one another. The SQL syntax is also becoming more familiar. I feel as though I should be ready to take the assessment in a few days.
