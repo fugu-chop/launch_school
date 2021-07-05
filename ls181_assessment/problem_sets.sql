@@ -317,7 +317,7 @@ GROUP BY state
 ORDER BY count DESC
 LIMIT 10;
 
-SELECT SUBSTR(email, STRPOS(email, '@')) AS domain,
+SELECT SUBSTR(email, STRPOS(email, '@') + 1) AS domain,
        COUNT(DISTINCT id) AS count
 FROM people
 GROUP BY domain
