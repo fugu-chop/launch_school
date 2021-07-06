@@ -80,9 +80,10 @@ Modality refers to the minimum number of objects that are required when a relati
 In respect of cardinality, relations generally fall into three categories:
 1. One-to-one: Each entry in one relation corresponds to exactly one entry in the other relation. This relationship is somewhat unusual, in that it may make sense to simply combine the two relations together.
 2. One-to-many: One entry in a relation should correspond to multiple entries in the second relation. The relation is not implied in the other direction (e.g. an entry in Relation A may correspond to multiple entries in Relation B, but this does not imply that a single entry in Relation B should have multiple entries in Relation A).
+3. Many-to-many: One entry in a relation should correspond to multiple entries in the second relation. The relation is also implied in the other direction (e.g. an entry in Relation A may correspond to multiple entries in Relation B, and a single entry in Relation B can also have multiple entries in Relation A).
 
 ### What are joins? What are the different types of joins?
-Joins are a mechanism through which we can match primary and foreign keys in different relations to combine data for a query, that would otherwise not exist in a single, normalised table. There are 4 types of joins we normally see:
+Joins are a mechanism through which we can match primary and foreign keys in different relations to combine data for a query, that would otherwise not exist in a single, normalised table. There are 5 types of joins we normally see:
 1. `INNER JOIN` - Only rows that have matched primary and foreign keys are returned by the query.
 2. `LEFT JOIN` - All entries in the 'left' table are returned, while entries in the 'right' table are only returned if the foreign keys match the primary keys in the 'left' table.
 3. `RIGHT JOIN` - All entries in the 'right' table are returned, while entries in the 'left' table are only returned if the foreign keys match the primary keys in the 'right' table.

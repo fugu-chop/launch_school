@@ -77,13 +77,33 @@ Cardinality refers to the number of objects on one side of a relationship betwee
 Modality refers to the minimum number of objects that must exist in a relationship between two relations. We typically describe modality in respect of a relation requiring 'at least 0' (there is no requirement that there be a corresponding entry in the other relation) or 'at least one' (there must be at least one entry in a relation, relative to the other relation).
 
 ### What are the three types of relationships that can exist between relations?
+Relationships between relations typical fall under three categories:
+- One-to-one: One entry in a relation can correspond to precisely one entry in another relation
+- Many-to-one: One entry in a relation can correspond to many entries in another relation. The opposite is not true; i.e. a single entry in the second relation does not correspond to multiple relations in the first relation.
+- Many-to-many: One entry in a relation can correspond to many entries in another relation, and the opposite is true; one entry in the second relation can correspond to many entries in the first relation.
 
 ### What are joins? What are the different types of joins?
+Joins are a method to retrieve information from across multiple relations, where a relationship exists between the two. Joins are achieved by the `JOIN` keyword, linking two relations that have an associated primary and secondary key. There are multiple types of joins available, depending on the use case:
+- Inner Joins: This join will only return entries from both relations where the primary and secondary key can be linked. Other entries are not returned.
+- Left Outer Joins: This join will return all entries from the first relation (the 'left' relation) with entries from the second relation (the 'right' relation) where a key can be linked to the primary key of the left relation.
+- Right Outer Joins: This is the opposite version of the left outer join. All entries from the 'right' relation are returned with entries from the 'left' relation where the key of the right relation can be matched to the key of the 'left' relation.
+- Full Outer Join: This returns all entries from the relations; first by returning entries where the primary and foreign keys can be matched between the two relations, then all entries from the first relation where there are no matching keys in the second relation, then all relations from the second relation where there are no matching keys in the first relation.
+- Cross Join (Cartesian Join): This returns all combinations of row values in the two relations (i.e. the cross-product of the two relations).
 
 ### What are indexes?
+Indexes are a mechanism available in SQL engines that allow for faster retrieval of data within relations. Indexes can be set on columns, and store values from that column in a table-like structure, and link to specific rows within that relation. They allow faster querying of values in a column than without indexes, since the SQL engine does not have to sequentially scan through all rows in a relation to locate the rows where a column matches a particular value; instead using a search algorithm (the index type) to quickly fetch the relevant rows.
 
 ### When might we use an index?
+Indexes can be used wherever sequential scanning of rows might not be sufficient. Primary keys automatically have indexes applied on them; however foreign key columns can also benefit from indexing (they are not indexed by default). Indexes might also be useful on columns where those columns are frequently sorted by value, or a filtered using a `WHERE` clause.
+
+While it might be tempting to index all columns, this often comes at a performance cost when writing or updating data in a relation, since the index has to rebuilt with the new column values.
 
 ### What are the different types of index?
+Aside from the standard index, _multi-column indexes_ can be created, though there is a limit to the number of columns that can be combined for a single index, and not all index types support multi-column indexes. 
+
+_Partial indexes_ also exist, which index specific values in a column (instead of all values). This can be useful when a column is frequently used to filter for a specific value. 
 
 ### What does the `EXPLAIN` command do? How is it different from `EXPLAIN ANALYZE`?
+The `EXPLAIN` command (when prepended to a SQL query) provides a step-by-step analysis of the query execution within a SQL engine. It provides a list of 'nodes' in a node tree, which we can regard as the different 'steps' in a query, and provides a start up and total 'cost' for executing those nodes (these are often provided in arbitrary units), which provide an indication or estimate of the resources and cost of executing a given query. `EXPLAIN` also provides the number of rows that would be returned by a given query, as well as the average width of the columns returned (in bytes).
+
+`EXPLAIN ANALYZE` provides the same output as `EXPLAIN`, with the addition of the total time taken to execute queries. This can be a useful tool in benchmarking queries when attempting to optimise query speeds in an application.

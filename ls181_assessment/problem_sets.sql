@@ -305,7 +305,7 @@ INSERT INTO order_items (order_id, product_id)
   (4, 1),
   (4, 5);
 
--- 11_working_with_a_single_table
+-- 13_more_single_table_queries
 -- createdb residents
 -- psql -d residents < /Users/dean/Documents/launch_school/ls180_database_foundations/residents_with_data.sql
 -- psql -d residents
@@ -323,3 +323,132 @@ FROM people
 GROUP BY domain
 ORDER BY count DESC
 LIMIT 10;
+
+DELETE FROM people
+WHERE id = 3999;
+
+DELETE FROM people
+WHERE state = 'CA';
+
+UPDATE people SET given_name = UPPER(given_name)
+WHERE SUBSTR(email, STRPOS(email, '@') + 1) = 'teleworm.us';
+
+DELETE FROM people;
+
+-- 15_more_constraints *
+-- createdb films
+-- psql -d films < films2.sql
+-- psql -d films
+
+ALTER TABLE films
+  ALTER COLUMN title SET NOT NULL,
+  ALTER COLUMN "year" SET NOT NULL,
+  ALTER COLUMN genre SET NOT NULL,
+  ALTER COLUMN director SET NOT NULL,
+  ALTER COLUMN duration SET NOT NULL;
+
+ALTER TABLE films
+  ADD CONSTRAINT unique_title UNIQUE(title);
+
+ALTER TABLE films
+  DROP CONSTRAINT unique_title;
+
+ALTER TABLE films
+  ADD CONSTRAINT title_length CHECK(LENGTH(title) >= 1);
+
+INSERT INTO films (title, "year", genre, director, duration)
+  VALUES ('', 1989, 'something', 'something', 99);
+
+ALTER TABLE films
+  DROP CONSTRAINT title_length;
+
+ALTER TABLE films
+  ADD CONSTRAINT film_year CHECK("year" BETWEEN 1900 AND 2100);
+
+ALTER TABLE films
+  ADD CONSTRAINT director_value CHECK(LENGTH(director) >= 3 AND director LIKE '% %');
+
+UPDATE films SET director = 'Johnny'
+  WHERE title = 'Die Hard';
+
+-- NOT NULL, UNIQUE, CHECK
+
+CREATE TABLE test (
+  entry INTEGER DEFAULT 0,
+  another_entry VARCHAR(10),
+  CONSTRAINT num_entry CHECK(entry > 0)
+);
+
+INSERT INTO test (another_entry)
+  VALUES ('test');
+
+-- 16_keys
+DROP DATABASE IF EXISTS films;
+CREATE DATABASE films;
+-- psql -d films < films3.sql
+-- psql -d films
+
+CREATE SEQUENCE "counter";
+
+SELECT NEXTVAL('counter');
+
+DROP SEQUENCE "counter";
+
+CREATE SEQUENCE "even_numbers" MINVALUE 0 INCREMENT BY 2;
+
+-- regions_id_seq
+
+ALTER TABLE films
+  ADD COLUMN id SERIAL PRIMARY KEY;
+
+INSERT INTO films (id, title, year, genre, director, duration)
+  VALUES (1, 'x', 1990, 'x', 'Director Name', 190);
+
+ALTER TABLE films
+  DROP CONSTRAINT films_pkey;
+
+-- 19_foreign_keys *
+-- createdb fk
+-- psql -d fk < orders_products1.sql
+-- psql -d fk
+ALTER TABLE orders
+  ADD FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE;
+
+INSERT INTO products (name)
+  VALUES ('small bolt'),
+  ('large bolt');
+
+INSERT INTO orders (product_id, quantity)
+  VALUES(1, 10),
+  (1, 25),
+  (2, 15);
+
+
+
+-- 20_one_to_many
+-- createdb one_to_many
+-- psql -d one_to_many < one_to_many.sql
+-- plsq -d one_to_many
+INSERT INTO calls ("when", duration, contact_id)
+  VALUES ('2016-01-18 14:47:00', 632, 6);
+
+SELECT "when",
+       duration,
+       first_name
+FROM contacts AS co
+JOIN calls AS ca
+  ON co.id = ca.contact_id
+WHERE first_name || ' ' || last_name != 'William Swift';
+
+INSERT INTO contacts (first_name, last_name, "number")
+  VALUES ('Merve', 'Elk', 6343511126),
+  ('Sawa', 'Fyodorov', 6125594874);
+
+INSERT INTO calls ("when", duration, contact_id)
+  VALUES ('2016-01-17 11:52:00', 175, 26),
+  ('2016-01-18 21:22:00', 79, 27);
+
+ALTER TABLE contacts
+  ADD CONSTRAINT unique_num UNIQUE("number");
+
+-- 21_many_to_many
