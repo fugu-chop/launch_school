@@ -1,9 +1,10 @@
-# July 2021 (Total minutes: 668)
+# July 2021 (Total minutes: 791)
 - [1st, Thu](#010721-thu)
 - [2nd, Fri](#020721-fri)
 - [3rd, Sat](#030721-sat)
 - [4th, Sun](#040721-sun)
 - [5th, Mon](#050721-mon)
+- [6th, Tue](#060721-tue)
 
 ##### 01/07/21 (Thu)
 __*Concepts covered*__<br/>
@@ -61,3 +62,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I think I'll split my time between the theoretical answers and the practice questions from here on out. I think if I focus on one, I just don't retain the other effectively. I'm getting closer to being ready. Not long now.
+
+##### 06/07/21 (Tue)
+__*Concepts covered*__<br/>
+- LS181 - Database Foundations
+  - Revision
+
+__*Time spent*__<br/>
+123 minutes
+
+__*Thoughts*__<br/>
+More drilling of SQL syntax and theory. There are still some blank spots in respect of adding/removing constraints, particularly foreign keys. I will continue to practice these.
