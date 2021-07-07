@@ -59,14 +59,9 @@ ALTER TABLE famous_people
 ALTER TABLE celebrities
   RENAME COLUMN name TO first_name;
 
--- Different types of ALTER TABLE commands can't be chained
 ALTER TABLE celebrities
-  ALTER COLUMN name TYPE VARCHAR(80);
-
-ALTER TABLE celebrities
-  ADD COLUMN last_name varchar(100) NOT NULL;
-
-ALTER TABLE celebrities
+  ALTER COLUMN name TYPE VARCHAR(80),
+  ADD COLUMN last_name varchar(100) NOT NULL,
   ALTER COLUMN date_of_birth TYPE DATE
   USING date_of_birth::date,
   ALTER COLUMN date_of_birth SET NOT NULL;
@@ -121,7 +116,7 @@ INSERT INTO orders (customer_name, customer_email, customer_loyalty_points, burg
   ('Natasha O''Shea', 'natasha@osheafamily.com', 42, 'LS Double Deluxe Burger', 'Onion Rings', 'Chocolate Shake', 6.00, 1.50, 2.00),
   ('Aaron Muller', NULL, 10, 'LS Burger', NULL, NULL, 3.00, DEFAULT, DEFAULT);
 
--- 8_updating_data
+-- 8_updating_data *
 -- \c encyclopedia
 ALTER TABLE animals
   ADD COLUMN class VARCHAR(100);
@@ -133,12 +128,10 @@ ALTER TABLE animals
   ADD COLUMN kingdom VARCHAR(100);
 
 UPDATE animals 
-  SET phylum = 'Chordata';
+  SET phylum = 'Chordata',
+  kingdom = 'Animalia';
 
--- Cannot chain SET commands here since the criteria is different
-UPDATE animals
-  SET kingdom = 'Animalia';
-
+-- Cannot chain SET commands here since the criteria is different for the same column (WHERE)
 ALTER TABLE countries
   ADD COLUMN continent VARCHAR(50);
 
@@ -170,7 +163,7 @@ DELETE FROM countries;
 
 -- \c ls_burger
 
--- Can chain SET statements in one if the criteria is the same
+-- Can chain SET statements in one if the criteria is the same *
 UPDATE orders 
   SET drink = 'Lemonade', 
   side = 'Fries',

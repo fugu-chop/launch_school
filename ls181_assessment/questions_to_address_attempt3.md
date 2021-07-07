@@ -23,7 +23,7 @@ SQL can generally be divided into several sub-languages, each focussing on a dif
 A _schema_ determines the shape or structure to which data in a relation must conform. It controls aspects of data such as what types of data are allowed in a relation, what relations exist in a database, and what databases exist in a RDBMS. The data relates to the actual values within a schema. A schema without data would be an empty table, whilst data without a schema would be unstructured, and difficult to use in a consistent, scalable manner.
 
 ### What is a constraint? What purpose does it serve?
-A constraint is a limitation that can be set over the data. This can help ensure data quality, so that only data that meets certain criteria (e.g. a format, or data type) can exist within a relation. Constraints can be set at the column, table or even database level.
+A constraint is a limitation that can be set over the data. This can help ensure data quality, so that only data that meets certain criteria (e.g. a format, or data type) can exist within a relation. Constraints can be set at the column or table level.
 
 ### What is `NULL` in SQL? Why do we have to be careful with it?
 Within a SQL context, a `NULL` value in a relation can mean 'unknown', or 'yet to occur', depending on the business context. We have to be careful in interpreting `NULL` values, as it's meaning can change from relation to relation, depending on the business logic governing that relation.
