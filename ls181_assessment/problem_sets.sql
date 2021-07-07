@@ -423,7 +423,25 @@ INSERT INTO orders (product_id, quantity)
   (1, 25),
   (2, 15);
 
+INSERT INTO orders (quantity)
+  VALUES (10);
 
+DELETE FROM orders 
+  WHERE product_id IS NULL;
+
+ALTER TABLE orders
+  ALTER COLUMN product_id SET NOT NULL;
+
+CREATE TABLE reviews (
+  id SERIAL PRIMARY KEY,
+  product_id INTEGER REFERENCES products (id) ON DELETE CASCADE,
+  review TEXT
+);
+
+INSERT INTO reviews (product_id, review)
+  VALUES (1, 'a little small'),
+  (1, 'very round!'),
+  (2, 'could have been smaller');
 
 -- 20_one_to_many
 -- createdb one_to_many
@@ -452,3 +470,127 @@ ALTER TABLE contacts
   ADD CONSTRAINT unique_num UNIQUE("number");
 
 -- 21_many_to_many
+-- createdb m2m
+-- psql -d m2m < many_to_many.sql
+-- psql -d m2m
+
+ALTER TABLE books_categories
+  DROP CONSTRAINT books_categories_book_id_fkey,
+  DROP CONSTRAINT books_categories_category_id_fkey,
+  ALTER COLUMN book_id SET NOT NULL,
+  ALTER COLUMN category_id SET NOT NULL,
+  ADD FOREIGN KEY (book_id) REFERENCES books (id) ON DELETE CASCADE,
+  ADD FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE;
+
+SELECT b.id,
+       b.author,
+       STRING_AGG(c.name, ', ') AS categories
+FROM books AS b
+JOIN books_categories AS bc
+  ON b.id = bc.book_id
+JOIN categories AS c
+  ON bc.category_id = c.id
+GROUP BY b.id
+ORDER BY b.id;
+
+ALTER TABLE books
+  ALTER COLUMN title TYPE VARCHAR(100),
+  ALTER COLUMN author TYPE VARCHAR(100);
+
+INSERT INTO books (title, author)
+  VALUES ('Sally Ride: America''s First Woman in Space', 'Lynn Sherr'),
+  ('Jane Eyre', 'Charlotte Brontë'),
+  ('Vij''s: Elegant and Inspired Indian Cuisine', 'Merru Dhalwala and Vikram Vij');
+
+INSERT INTO categories (name)
+  VALUES ('Space Exploration'),
+  ('Cookbook'),
+  ('South Asia');
+
+INSERT INTO books_categories (book_id, category_id)
+  VALUES (4, 1),
+  (4, 5),
+  (4, 7),
+  (5, 2),
+  (5, 4),
+  (6, 1),
+  (6, 8),
+  (6, 9);
+
+ALTER TABLE books_categories
+  ADD CONSTRAINT book_category_id UNIQUE(book_id, category_id);
+
+SELECT c.name,
+       COUNT(DISTINCT bc.book_id) AS book_count,
+       STRING_AGG(b.title, ', ') AS book_titles
+FROM categories AS c
+JOIN books_categories AS bc
+  ON c.id = bc.category_id
+JOIN books AS b
+  ON b.id = bc.book_id
+GROUP BY c.name
+ORDER BY c.name, book_count DESC;
+
+-- 22_converting_many_to_many
+-- createdb cm2m
+-- psql -d cm2m < films7.sql
+-- psql -d cm2m
+
+CREATE TABLE directors_films (
+  id SERIAL PRIMARY KEY,
+  director_id INTEGER REFERENCES directors (id) ON DELETE CASCADE,
+  film_id INTEGER REFERENCES films (id) ON DELETE CASCADE
+);
+
+INSERT INTO directors_films (film_id, director_id)
+  VALUES (1, 1),
+  (2, 2),
+  (3, 3),
+  (4, 4),
+  (5, 5),
+  (6, 6),
+  (7, 3),
+  (8, 7),
+  (9, 8),
+  (10, 4);
+
+ALTER TABLE films
+  DROP COLUMN director_id;
+
+SELECT f.title,
+       d.name
+FROM films AS f
+JOIN directors_films AS df
+  ON f.id = df.film_id
+JOIN directors AS d
+  ON d.id = df.director_id;
+
+INSERT INTO films (title, "year", genre, duration)
+  VALUES ('Fargo', 1996, 'comedy', 98),
+  ('No Country for Old Men', 2007, 'western', 122),
+  ('Sin City', 2005, 'crime', 124),
+  ('Spy Kids', 2001, 'scifi', 88);
+
+INSERT INTO directors (name)
+  VALUES ('Joel Coen'),
+  ('Ethan Coen'),
+  ('Frank Miller'),
+  ('Robert Rodriguez');
+
+INSERT INTO directors_films (film_id, director_id)
+  VALUES (11, 9),
+  (12, 9),
+  (12, 10),
+  (13, 11),
+  (13, 12),
+  (14, 12);
+
+SELECT d.name,
+       COUNT(f.id) AS films
+FROM directors AS d
+JOIN directors_films AS df
+  ON d.id = df.director_id
+JOIN films AS f
+  ON f.id = df.film_id
+GROUP BY d.name
+ORDER BY films DESC, d.name;
