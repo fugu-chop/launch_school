@@ -1,4 +1,4 @@
-# July 2021 (Total minutes: 791)
+# July 2021 (Total minutes: 882)
 - [1st, Thu](#010721-thu)
 - [2nd, Fri](#020721-fri)
 - [3rd, Sat](#030721-sat)
@@ -73,3 +73,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 More drilling of SQL syntax and theory. There are still some blank spots in respect of adding/removing constraints, particularly foreign keys. I will continue to practice these.
+
+##### 07/07/21 (Wed)
+__*Concepts covered*__<br/>
+- LS181 - Database Foundations
+  - Revision
+
+__*Time spent*__<br/>
+91 minutes
+
+__*Thoughts*__<br/>
+The morning revision session was a write-off. I was so tired and could barely concentrate on anything I was reading. I was still able to revise a few points on the column constaints (`NOT NULL`, `DEFAULT`), which should clear up some of my past confusions. The evening was spent finishing the rest of my compiled list of problems. I feel pretty good about the syntax now. I would take the test in the next few days, but my schedule is so busy that I won't be able to actually set aside 2 hours until the weekend.
