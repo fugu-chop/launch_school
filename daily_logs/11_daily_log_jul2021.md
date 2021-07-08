@@ -1,10 +1,12 @@
-# July 2021 (Total minutes: 882)
+# July 2021 (Total minutes: 1,007)
 - [1st, Thu](#010721-thu)
 - [2nd, Fri](#020721-fri)
 - [3rd, Sat](#030721-sat)
 - [4th, Sun](#040721-sun)
 - [5th, Mon](#050721-mon)
 - [6th, Tue](#060721-tue)
+- [7th, Wed](#070721-wed)
+- [8th, Thu](#080721-thu)
 
 ##### 01/07/21 (Thu)
 __*Concepts covered*__<br/>
@@ -84,3 +86,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The morning revision session was a write-off. I was so tired and could barely concentrate on anything I was reading. I was still able to revise a few points on the column constaints (`NOT NULL`, `DEFAULT`), which should clear up some of my past confusions. The evening was spent finishing the rest of my compiled list of problems. I feel pretty good about the syntax now. I would take the test in the next few days, but my schedule is so busy that I won't be able to actually set aside 2 hours until the weekend.
+
+##### 08/07/21 (Thu)
+__*Concepts covered*__<br/>
+- LS181 - Database Foundations
+  - Revision
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+I did some revision of the SQL syntax and did a final run of my theory answers. At this stage, I don't think I'll benefit much from further revision, so I plan to take the assessment tomorrow.
