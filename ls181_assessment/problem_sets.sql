@@ -156,7 +156,7 @@ DELETE FROM celebrities
 ALTER TABLE celebrities
   RENAME TO singers;
 
-DELETE FROM celebrities
+DELETE FROM singers
   WHERE occupation NOT LIKE '%Singer%';
 
 DELETE FROM countries;
@@ -171,8 +171,9 @@ UPDATE orders
   customer_loyalty_points = 100
   WHERE name = 'James Bergman';
 
-UPDATE orders SET side_cost = 1.20
-WHERE side = 'Fries';
+UPDATE orders
+  SET side_cost = 1.20
+  WHERE side = 'Fries';
 
 -- 9_multiple_tables
 -- \c encyclopedia
@@ -323,8 +324,9 @@ WHERE id = 3999;
 DELETE FROM people
 WHERE state = 'CA';
 
-UPDATE people SET given_name = UPPER(given_name)
-WHERE SUBSTR(email, STRPOS(email, '@') + 1) = 'teleworm.us';
+UPDATE people 
+  SET given_name = UPPER(given_name)
+  WHERE SUBSTR(email, STRPOS(email, '@') + 1) = 'teleworm.us';
 
 DELETE FROM people;
 
