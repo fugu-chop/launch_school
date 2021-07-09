@@ -97,3 +97,14 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I did some revision of the SQL syntax and did a final run of my theory answers. At this stage, I don't think I'll benefit much from further revision, so I plan to take the assessment tomorrow.
+
+##### 09/07/21 (Fri)
+__*Concepts covered*__<br/>
+- LS181 - Database Foundations
+  - Written Assessment
+
+__*Time spent*__<br/>
+100 minutes
+
+__*Thoughts*__<br/>
+The written assessment didn't feel too bad. I managed to finish it ahead of time. We'll see how I go.
