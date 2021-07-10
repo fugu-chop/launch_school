@@ -1,4 +1,4 @@
-# July 2021 (Total minutes: 1,007)
+# July 2021 (Total minutes: 1,187)
 - [1st, Thu](#010721-thu)
 - [2nd, Fri](#020721-fri)
 - [3rd, Sat](#030721-sat)
@@ -7,6 +7,8 @@
 - [6th, Tue](#060721-tue)
 - [7th, Wed](#070721-wed)
 - [8th, Thu](#080721-thu)
+- [9th, Fri](#090721-fri)
+- [10th, Sat](#100721-sat)
 
 ##### 01/07/21 (Thu)
 __*Concepts covered*__<br/>
@@ -108,3 +110,19 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The written assessment didn't feel too bad. I managed to finish it ahead of time. We'll see how I go.
+
+##### 10/07/21 (Sat)
+__*Concepts covered*__<br/>
+- LS202 - HTML and CSS
+  - Your First Web Page
+    - Basic HTML
+    - Shay Howe tutorial (Parts 1-3)
+    - [Article on Semantic HTML](http://html5doctor.com/i-b-em-strong-element/) 
+
+__*Time spent*__<br/>
+180 minutes
+
+__*Thoughts*__<br/>
+Got my LS181 assessment back, nailed it. This time, I'll go through LS202 (HTML & CSS) before going back into database applications. I think it will be a nice change of pace, especially since both LS185 and LS202 both don't require assessments.
+
+Back on the HTML and CSS bus. This takes me back to when I first started learning HTML and CSS; the material I covered then certainly wasn't as detailed, or specific in respect of _why_ I should use certain tags or structures - the whole concept of semantic HTML wasn't covered, so I didn't really understand the difference between elements. I still have memories of HTML and CSS being incredibly fiddly and hard to work with, so hopefully this slightly different style of instruction should help that.
