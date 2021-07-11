@@ -126,3 +126,17 @@ __*Thoughts*__<br/>
 Got my LS181 assessment back, nailed it. This time, I'll go through LS202 (HTML & CSS) before going back into database applications. I think it will be a nice change of pace, especially since both LS185 and LS202 both don't require assessments.
 
 Back on the HTML and CSS bus. This takes me back to when I first started learning HTML and CSS; the material I covered then certainly wasn't as detailed, or specific in respect of _why_ I should use certain tags or structures - the whole concept of semantic HTML wasn't covered, so I didn't really understand the difference between elements. I still have memories of HTML and CSS being incredibly fiddly and hard to work with, so hopefully this slightly different style of instruction should help that.
+
+##### 11/07/21 (Sun)
+__*Concepts covered*__<br/>
+- LS202 - HTML and CSS
+  - Your First Web Page
+    - Basic HTML
+    - Shay Howe tutorial (Parts 1-3)
+    - Classes, ids and names
+
+__*Time spent*__<br/>
+181 minutes
+
+__*Thoughts*__<br/>
+Working through more HTML and CSS theory. So far, it's not been too bad, and feels like a nice change from the backend hammering that I've been doing for the past 8 months. Semantic HTML is a little confusing, since classifying elements appears to be highly contextual and open to opinion, certainly more than the rest of the Ruby related stuff I've been doing.
