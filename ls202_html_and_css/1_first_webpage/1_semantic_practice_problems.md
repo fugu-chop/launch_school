@@ -59,3 +59,25 @@ It's probably best to use `<blockquote>`, as the content is a fairly long piece 
 </sometag>
 ```
 The `<section>` tag is probably most appropriate here. This is because the content itself doesn't represent a self-contained, stand-alone piece of content; it looks like it fits within a broader page about CSS properties.
+
+5. Which tag should replace `<sometag>` on this page?
+```
+<h3>Hex Colors</h3>
+
+<p>
+  Most graphics and design applications like Photoshop and Pixelmator
+  display colors in hexadecimal format, so it's easy to copy and paste
+  color values you need from one program into your editor as a CSS
+  property.
+</p>
+
+<sometag>
+  <p>
+    If you're unfamiliar with the hexadecimal numbering system, it uses 16
+    different digits instead of the ten the decimal system uses. The hex
+    digits are 0 through 9, as in the decimal system, but also include a
+    through f (or A through F) as valid digits.
+  </p>
+</sometag>
+```
+The `<aside>` tag is probably most appropriate here, as it feels like a comment on the main content of the page.
