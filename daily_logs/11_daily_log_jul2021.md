@@ -1,4 +1,4 @@
-# July 2021 (Total minutes: 1,187)
+# July 2021 (Total minutes: 1,308)
 - [1st, Thu](#010721-thu)
 - [2nd, Fri](#020721-fri)
 - [3rd, Sat](#030721-sat)
@@ -9,6 +9,8 @@
 - [8th, Thu](#080721-thu)
 - [9th, Fri](#090721-fri)
 - [10th, Sat](#100721-sat)
+- [11th, Sun](#110721-sun)
+- [12th, Mon](#120721-mon)
 
 ##### 01/07/21 (Thu)
 __*Concepts covered*__<br/>
@@ -140,3 +142,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Working through more HTML and CSS theory. So far, it's not been too bad, and feels like a nice change from the backend hammering that I've been doing for the past 8 months. Semantic HTML is a little confusing, since classifying elements appears to be highly contextual and open to opinion, certainly more than the rest of the Ruby related stuff I've been doing.
+
+##### 12/07/21 (Mon)
+__*Concepts covered*__<br/>
+- LS202 - HTML and CSS
+  - Your First Web Page
+    - Walkthrough Project
+    - Exercises: Personal Profile, Text-formatting
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+Today was mostly drilling HTML and CSS syntax. It's all basically Googling various CSS properties and trying to pick out the most appropriate one to do the job. I feel like I don't know the full potential of CSS, so it's hard to know what fancy modifiers are available in the first place.
