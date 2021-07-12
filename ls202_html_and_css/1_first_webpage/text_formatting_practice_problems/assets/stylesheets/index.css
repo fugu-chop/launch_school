@@ -1,0 +1,6 @@
+body {
+  /* Needs a / to separate font-size and line-height */
+  font: italic bold 20px/2.5 Tahoma, "Trebuchet MS", Verdana, sans-serif;
+  text-align: justify;
+  text-indent: 4em;
+}

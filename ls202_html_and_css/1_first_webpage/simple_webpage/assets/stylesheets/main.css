@@ -15,3 +15,15 @@ em {
 p {
   font-size: 24px;
 }
+
+body {
+  background-color: #ffffe0;
+}
+
+.more-text {
+  color: gray;
+}
+
+#final-paragraph {
+  text-decoration: underline;
+}

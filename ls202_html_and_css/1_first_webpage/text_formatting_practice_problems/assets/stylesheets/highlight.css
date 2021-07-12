@@ -1,0 +1,17 @@
+p {
+  font-size: 18px;
+}
+
+mark {
+  font-family: Courier, monospace;
+  font-size: 12px;
+}
+
+strong {
+  font-size: 15px;
+}
+
+em {
+  text-transform: uppercase;
+  font-size: 20px;
+}
