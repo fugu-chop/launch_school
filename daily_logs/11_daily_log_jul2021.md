@@ -1,4 +1,4 @@
-# July 2021 (Total minutes: 1,308)
+# July 2021 (Total minutes: 1,433)
 - [1st, Thu](#010721-thu)
 - [2nd, Fri](#020721-fri)
 - [3rd, Sat](#030721-sat)
@@ -11,6 +11,7 @@
 - [10th, Sat](#100721-sat)
 - [11th, Sun](#110721-sun)
 - [12th, Mon](#120721-mon)
+- [13th, Tue](#130721-tue)
 
 ##### 01/07/21 (Thu)
 __*Concepts covered*__<br/>
@@ -155,3 +156,18 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 Today was mostly drilling HTML and CSS syntax. It's all basically Googling various CSS properties and trying to pick out the most appropriate one to do the job. I feel like I don't know the full potential of CSS, so it's hard to know what fancy modifiers are available in the first place.
+
+##### 13/07/21 (Tue)
+__*Concepts covered*__<br/>
+- LS202 - HTML and CSS
+  - Your First Web Page
+    - Walkthrough Project
+    - Exercises: Creating your own Simple Page, CSS Selectors
+    - Quiz
+  - [CSS Diner](https://flukeout.github.io/)
+
+__*Time spent*__<br/>
+125 minutes
+
+__*Thoughts*__<br/>
+The CSS Diner was a fun little exercise about CSS selectors. There are a lot of them and chaining them together can get quite complex over time. So far so good - nothing is too complex, and everything I've had questions on thus far is easily found on MDN. Onto the Box Model.
