@@ -1,0 +1,35 @@
+body {
+  width: 600px;
+}
+
+p {
+  font-size: 18px;
+}
+
+main li {
+  font-family: monospace;
+  color: purple;
+}
+
+a {
+  text-decoration: none;
+}
+
+article p {
+  color: brown;
+}
+
+.subheading {
+  background-color: #e0e0e0; 
+}
+
+#intro {
+  font-size: 24px;
+}
+
+/* > matches only those elements matched by the second selector that are the direct children of elements matched by the first.
+Descendent elements further down the hierarchy don't match. 
+Every element except the html element is a direct child of precisely one other element. */
+main ul > li {
+  color: green;
+}
