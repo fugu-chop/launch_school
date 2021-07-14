@@ -1,4 +1,4 @@
-# July 2021 (Total minutes: 1,433)
+# July 2021 (Total minutes: 1,554)
 - [1st, Thu](#010721-thu)
 - [2nd, Fri](#020721-fri)
 - [3rd, Sat](#030721-sat)
@@ -12,6 +12,7 @@
 - [11th, Sun](#110721-sun)
 - [12th, Mon](#120721-mon)
 - [13th, Tue](#130721-tue)
+- [14th, Wed](#140721-wed)
 
 ##### 01/07/21 (Thu)
 __*Concepts covered*__<br/>
@@ -171,3 +172,17 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The CSS Diner was a fun little exercise about CSS selectors. There are a lot of them and chaining them together can get quite complex over time. So far so good - nothing is too complex, and everything I've had questions on thus far is easily found on MDN. Onto the Box Model.
+
+##### 14/07/21 (Wed)
+__*Concepts covered*__<br/>
+- LS202 - HTML and CSS
+  - Your First Web Page
+    - Box model
+    - Visual display model
+    - [Box Sizing Article](https://css-tricks.com/box-sizing/)
+
+__*Time spent*__<br/>
+121 minutes
+
+__*Thoughts*__<br/>
+The morning's session was covering the Box and visual display models. The explanation is probably better than most that I've read, and I don't think I'd ever covered nuances like the visual display model in past material. The evening was a bit of a wash - I had a really bad stomachache, and study was mostly limited to just reading the content I'd covered during the day.
