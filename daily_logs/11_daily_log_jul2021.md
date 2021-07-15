@@ -1,4 +1,4 @@
-# July 2021 (Total minutes: 1,554)
+# July 2021 (Total minutes: 1,674)
 - [1st, Thu](#010721-thu)
 - [2nd, Fri](#020721-fri)
 - [3rd, Sat](#030721-sat)
@@ -13,6 +13,8 @@
 - [12th, Mon](#120721-mon)
 - [13th, Tue](#130721-tue)
 - [14th, Wed](#140721-wed)
+- [15th, Thu](#150721-thu)
+
 
 ##### 01/07/21 (Thu)
 __*Concepts covered*__<br/>
@@ -186,3 +188,17 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 The morning's session was covering the Box and visual display models. The explanation is probably better than most that I've read, and I don't think I'd ever covered nuances like the visual display model in past material. The evening was a bit of a wash - I had a really bad stomachache, and study was mostly limited to just reading the content I'd covered during the day.
+
+##### 15/07/21 (Thu)
+__*Concepts covered*__<br/>
+- LS202 - HTML and CSS
+  - Your First Web Page
+    - Box sizing
+    - Box Sizing Exercise
+    - Padding and Margins
+
+__*Time spent*__<br/>
+120 minutes
+
+__*Thoughts*__<br/>
+I wasn't able to study during the morning, so I had to cram it all in during the evening. Not my favourite study habit, but managed to get it done. There's a lot of little nuances and details to remember for the box model - it's hard to keep a track of. I might benefit from another revision session before pushing onwards.
