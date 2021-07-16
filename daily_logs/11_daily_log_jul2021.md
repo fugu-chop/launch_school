@@ -1,4 +1,4 @@
-# July 2021 (Total minutes: 1,674)
+# July 2021 (Total minutes: 1,859)
 - [1st, Thu](#010721-thu)
 - [2nd, Fri](#020721-fri)
 - [3rd, Sat](#030721-sat)
@@ -14,7 +14,7 @@
 - [13th, Tue](#130721-tue)
 - [14th, Wed](#140721-wed)
 - [15th, Thu](#150721-thu)
-
+- [16th, Fri](#160721-fri)
 
 ##### 01/07/21 (Thu)
 __*Concepts covered*__<br/>
@@ -202,3 +202,16 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I wasn't able to study during the morning, so I had to cram it all in during the evening. Not my favourite study habit, but managed to get it done. There's a lot of little nuances and details to remember for the box model - it's hard to keep a track of. I might benefit from another revision session before pushing onwards.
+
+##### 16/07/21 (Fri)
+__*Concepts covered*__<br/>
+- LS202 - HTML and CSS
+  - Your First Web Page
+    - Dimensions
+- LS185 - Database Applications
+
+__*Time spent*__<br/>
+185 minutes
+
+__*Thoughts*__<br/>
+I jumped back into LS185, on account of potentially getting a Ruby related interview for a junior data engineering position. 
