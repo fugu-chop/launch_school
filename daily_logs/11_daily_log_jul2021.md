@@ -1,4 +1,4 @@
-# July 2021 (Total minutes: 1,859)
+# July 2021 (Total minutes: 2,041)
 - [1st, Thu](#010721-thu)
 - [2nd, Fri](#020721-fri)
 - [3rd, Sat](#030721-sat)
@@ -15,6 +15,7 @@
 - [14th, Wed](#140721-wed)
 - [15th, Thu](#150721-thu)
 - [16th, Fri](#160721-fri)
+- [17th, Sat](#170721-sat)
 
 ##### 01/07/21 (Thu)
 __*Concepts covered*__<br/>
@@ -215,3 +216,17 @@ __*Time spent*__<br/>
 
 __*Thoughts*__<br/>
 I jumped back into LS185, on account of potentially getting a Ruby related interview for a junior data engineering position. 
+
+##### 17/07/21 (Sat)
+__*Concepts covered*__<br/>
+- LS185 - Database Applications
+  - Adding CRUD capabilities
+  - Adding UI improvements
+- Revision
+  - RB100 Concepts
+
+__*Time spent*__<br/>
+182 minutes
+
+__*Thoughts*__<br/>
+I powered through most of the CLI application requirements today. I was able to do all of the coding myself, aside from some weird edge case stuff relating to `ARGV` and how that interacts with `$stdin`. I also did some revision - the concepts are familiar, but explaining them is awkward. Definitely a worthwhile exercise I think, as I would prefer to plan for these concepts before I code, rather than remembering the concepts as I run into a bug.
